@@ -14,6 +14,7 @@ target 'Meditation' do
 	pod 'FBSDKLoginKit'
 	pod 'lottie-ios'
 	pod "GaugeKit"
+	pod 'Charts'
 
   target 'MeditationTests' do
     inherit! :search_paths

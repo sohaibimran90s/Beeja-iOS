@@ -22,12 +22,6 @@
 		2E4371982200284C00EF5D62 /* DBContactUs+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43718E2200284B00EF5D62 /* DBContactUs+CoreDataClass.swift */; };
 		2E4371992200284C00EF5D62 /* DBJournalList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43718F2200284B00EF5D62 /* DBJournalList+CoreDataProperties.swift */; };
 		2E43719A2200284C00EF5D62 /* DBContactUs+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371902200284B00EF5D62 /* DBContactUs+CoreDataProperties.swift */; };
-		2E4371AF22004D6400EF5D62 /* WAVES & CHIMES.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371A922004D6400EF5D62 /* WAVES & CHIMES.mp3 */; };
-		2E4371B022004D6400EF5D62 /* WAVES ONLY.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371AA22004D6400EF5D62 /* WAVES ONLY.mp3 */; };
-		2E4371B122004D6400EF5D62 /* JUNGLE AT DAWN.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371AB22004D6400EF5D62 /* JUNGLE AT DAWN.mp3 */; };
-		2E4371B222004D6400EF5D62 /* CHIMES ONLY.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371AC22004D6400EF5D62 /* CHIMES ONLY.mp3 */; };
-		2E4371B322004D6400EF5D62 /* BIRDSONG 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371AD22004D6400EF5D62 /* BIRDSONG 2.mp3 */; };
-		2E4371B422004D6400EF5D62 /* BIRDSONG 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371AE22004D6400EF5D62 /* BIRDSONG 1.mp3 */; };
 		2E4371C122004D9A00EF5D62 /* THRUSH.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371B622004D9900EF5D62 /* THRUSH.mp3 */; };
 		2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371B722004D9900EF5D62 /* HARP.mp3 */; };
 		2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371B822004D9900EF5D62 /* CHIME.mp3 */; };
@@ -48,6 +42,12 @@
 		2E4371DA220319FC00EF5D62 /* DBLevelData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371D8220319FC00EF5D62 /* DBLevelData+CoreDataClass.swift */; };
 		2E4371DB220319FC00EF5D62 /* DBLevelData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371D9220319FC00EF5D62 /* DBLevelData+CoreDataProperties.swift */; };
 		2E4A4730220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A472F220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift */; };
+		2E4A473A220DB22B00DF0C68 /* WAVES & CHIMES.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4734220DB22B00DF0C68 /* WAVES & CHIMES.mp3 */; };
+		2E4A473B220DB22B00DF0C68 /* WAVES ONLY.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4735220DB22B00DF0C68 /* WAVES ONLY.mp3 */; };
+		2E4A473C220DB22B00DF0C68 /* JUNGLE AT DAWN.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4736220DB22B00DF0C68 /* JUNGLE AT DAWN.mp3 */; };
+		2E4A473D220DB22B00DF0C68 /* CHIMES ONLY.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4737220DB22B00DF0C68 /* CHIMES ONLY.mp3 */; };
+		2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4738220DB22B00DF0C68 /* BIRDSONG 2.mp3 */; };
+		2E4A473F220DB22B00DF0C68 /* BIRDSONG 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A4739220DB22B00DF0C68 /* BIRDSONG 1.mp3 */; };
 		2E4B1B9E21B5044B002F8A25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B1B9D21B5044B002F8A25 /* AppDelegate.swift */; };
 		2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B1BA121B5044B002F8A25 /* Main.storyboard */; };
 		2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B1BA421B5044D002F8A25 /* Assets.xcassets */; };
@@ -183,12 +183,6 @@
 		2E43718E2200284B00EF5D62 /* DBContactUs+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBContactUs+CoreDataClass.swift"; path = "/Users/roshan.kumawat/Documents/Beeja/Meditation/Meditation/Database/DBContactUs+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		2E43718F2200284B00EF5D62 /* DBJournalList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBJournalList+CoreDataProperties.swift"; path = "/Users/roshan.kumawat/Documents/Beeja/Meditation/Meditation/Database/DBJournalList+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		2E4371902200284B00EF5D62 /* DBContactUs+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBContactUs+CoreDataProperties.swift"; path = "/Users/roshan.kumawat/Documents/Beeja/Meditation/Meditation/Database/DBContactUs+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		2E4371A922004D6400EF5D62 /* WAVES & CHIMES.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "WAVES & CHIMES.mp3"; sourceTree = "<group>"; };
-		2E4371AA22004D6400EF5D62 /* WAVES ONLY.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "WAVES ONLY.mp3"; sourceTree = "<group>"; };
-		2E4371AB22004D6400EF5D62 /* JUNGLE AT DAWN.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JUNGLE AT DAWN.mp3"; sourceTree = "<group>"; };
-		2E4371AC22004D6400EF5D62 /* CHIMES ONLY.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "CHIMES ONLY.mp3"; sourceTree = "<group>"; };
-		2E4371AD22004D6400EF5D62 /* BIRDSONG 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BIRDSONG 2.mp3"; sourceTree = "<group>"; };
-		2E4371AE22004D6400EF5D62 /* BIRDSONG 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BIRDSONG 1.mp3"; sourceTree = "<group>"; };
 		2E4371B622004D9900EF5D62 /* THRUSH.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = THRUSH.mp3; sourceTree = "<group>"; };
 		2E4371B722004D9900EF5D62 /* HARP.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HARP.mp3; sourceTree = "<group>"; };
 		2E4371B822004D9900EF5D62 /* CHIME.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CHIME.mp3; sourceTree = "<group>"; };
@@ -209,6 +203,12 @@
 		2E4371D8220319FC00EF5D62 /* DBLevelData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBLevelData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2E4371D9220319FC00EF5D62 /* DBLevelData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBLevelData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2E4A472F220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressMoodPieTVC.swift; sourceTree = "<group>"; };
+		2E4A4734220DB22B00DF0C68 /* WAVES & CHIMES.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "WAVES & CHIMES.mp3"; sourceTree = "<group>"; };
+		2E4A4735220DB22B00DF0C68 /* WAVES ONLY.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "WAVES ONLY.mp3"; sourceTree = "<group>"; };
+		2E4A4736220DB22B00DF0C68 /* JUNGLE AT DAWN.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JUNGLE AT DAWN.mp3"; sourceTree = "<group>"; };
+		2E4A4737220DB22B00DF0C68 /* CHIMES ONLY.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "CHIMES ONLY.mp3"; sourceTree = "<group>"; };
+		2E4A4738220DB22B00DF0C68 /* BIRDSONG 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BIRDSONG 2.mp3"; sourceTree = "<group>"; };
+		2E4A4739220DB22B00DF0C68 /* BIRDSONG 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BIRDSONG 1.mp3"; sourceTree = "<group>"; };
 		2E4B1B9A21B5044B002F8A25 /* Meditation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meditation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4B1B9D21B5044B002F8A25 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E4B1BA221B5044B002F8A25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -377,20 +377,6 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
-		2E4371A822004D6400EF5D62 /* Ambient Sound */ = {
-			isa = PBXGroup;
-			children = (
-				2E4371A922004D6400EF5D62 /* WAVES & CHIMES.mp3 */,
-				2E4371AA22004D6400EF5D62 /* WAVES ONLY.mp3 */,
-				2E4371AB22004D6400EF5D62 /* JUNGLE AT DAWN.mp3 */,
-				2E4371AC22004D6400EF5D62 /* CHIMES ONLY.mp3 */,
-				2E4371AD22004D6400EF5D62 /* BIRDSONG 2.mp3 */,
-				2E4371AE22004D6400EF5D62 /* BIRDSONG 1.mp3 */,
-			);
-			name = "Ambient Sound";
-			path = "../../../../../Downloads/Ambient Sound";
-			sourceTree = "<group>";
-		};
 		2E4371B522004D9900EF5D62 /* Chimes */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +393,19 @@
 				2E4371C022004D9900EF5D62 /* SUN KOSHI.mp3 */,
 			);
 			path = Chimes;
+			sourceTree = "<group>";
+		};
+		2E4A4733220DB22B00DF0C68 /* Ambient Sound */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A4734220DB22B00DF0C68 /* WAVES & CHIMES.mp3 */,
+				2E4A4735220DB22B00DF0C68 /* WAVES ONLY.mp3 */,
+				2E4A4736220DB22B00DF0C68 /* JUNGLE AT DAWN.mp3 */,
+				2E4A4737220DB22B00DF0C68 /* CHIMES ONLY.mp3 */,
+				2E4A4738220DB22B00DF0C68 /* BIRDSONG 2.mp3 */,
+				2E4A4739220DB22B00DF0C68 /* BIRDSONG 1.mp3 */,
+			);
+			path = "Ambient Sound";
 			sourceTree = "<group>";
 		};
 		2E4B1B9121B5044B002F8A25 = {
@@ -634,7 +633,7 @@
 				2E4CE2812205A4EB00059396 /* Font */,
 				2E85F1602204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 */,
 				2E4371B522004D9900EF5D62 /* Chimes */,
-				2E4371A822004D6400EF5D62 /* Ambient Sound */,
+				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
 				2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */,
 			);
@@ -1000,11 +999,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E4371B322004D6400EF5D62 /* BIRDSONG 2.mp3 in Resources */,
 				2E4371C122004D9A00EF5D62 /* THRUSH.mp3 in Resources */,
 				2EC9585C220AC1BA009D5144 /* Maax-Regular.ttf in Resources */,
 				2E4371C922004D9A00EF5D62 /* BURMESE BELL.mp3 in Resources */,
+				2E4A473C220DB22B00DF0C68 /* JUNGLE AT DAWN.mp3 in Resources */,
 				2E4B1BA821B5044D002F8A25 /* LaunchScreen.storyboard in Resources */,
+				2E4A473A220DB22B00DF0C68 /* WAVES & CHIMES.mp3 in Resources */,
+				2E4A473D220DB22B00DF0C68 /* CHIMES ONLY.mp3 in Resources */,
 				2EC95862220AC1BA009D5144 /* Maax-BoldItalic.ttf in Resources */,
 				2EC95866220C5838009D5144 /* GoogleService-Info.plist in Resources */,
 				2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */,
@@ -1012,21 +1013,17 @@
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
-				2E4371B422004D6400EF5D62 /* BIRDSONG 1.mp3 in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
-				2E4371B122004D6400EF5D62 /* JUNGLE AT DAWN.mp3 in Resources */,
 				2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
-				2E4371B022004D6400EF5D62 /* WAVES ONLY.mp3 in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
+				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
 				2EC81C5821E75BCF003B0EEE /* MoodMeterData.geojson in Resources */,
 				2EC95860220AC1BA009D5144 /* Maax-MediumItalic.otf in Resources */,
-				2E4371B222004D6400EF5D62 /* CHIMES ONLY.mp3 in Resources */,
 				2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */,
 				2EC9585F220AC1BA009D5144 /* Maax.ttf in Resources */,
 				2EC95863220AC1BA009D5144 /* Maax-Bold.ttf in Resources */,
-				2E4371AF22004D6400EF5D62 /* WAVES & CHIMES.mp3 in Resources */,
 				2E4371CA22004D9A00EF5D62 /* CRYSTAL BOWL.mp3 in Resources */,
 				2EB1F11021DF601200F98EC2 /* SplashLoader.gif in Resources */,
 				2EC81C5C21E777A7003B0EEE /* adobe.svg in Resources */,
@@ -1038,7 +1035,9 @@
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
 				2EC9585D220AC1BA009D5144 /* MaaxRounded-Bold.ttf in Resources */,
+				2E4A473B220DB22B00DF0C68 /* WAVES ONLY.mp3 in Resources */,
 				2E4371C822004D9A00EF5D62 /* MOON KOSHI.mp3 in Resources */,
+				2E4A473F220DB22B00DF0C68 /* BIRDSONG 1.mp3 in Resources */,
 				2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */,
 				2E85F1612204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
@@ -1161,6 +1160,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -1176,6 +1176,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
