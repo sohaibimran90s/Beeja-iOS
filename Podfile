@@ -15,6 +15,7 @@ target 'Meditation' do
 	pod 'lottie-ios'
 	pod "GaugeKit"
 	pod 'Charts'
+	pod 'SDWebImage'
 
   target 'MeditationTests' do
     inherit! :search_paths
