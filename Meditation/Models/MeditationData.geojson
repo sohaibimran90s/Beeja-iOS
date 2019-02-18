@@ -1,0 +1,183 @@
+{
+    "success": true,
+    "code": 200,
+    "message": "Success",
+    "result": {
+    "meditaionType": [
+        {
+            "meditationId": 1,
+            "meditationName": "Beeja",
+            "levels": [
+                {
+                    "levelId": 1,
+                    "levelName": "Beginner",
+                    "prepTime": 30,
+                    "meditationTime": 1200,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 2,
+                    "levelName": "Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1200,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 3,
+                    "levelName": "Advanced",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 4,
+                    "levelName": "Adv. Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                }
+            ]
+        },
+        {
+            "meditationId": 2,
+            "meditationName": "Vedic/Transcendental",
+            "levels": [
+                {
+                    "levelId": 5,
+                    "levelName": "Beginner",
+                    "prepTime": 30,
+                    "meditationTime": 1200,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 6,
+                    "levelName": "Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1200,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 7,
+                    "levelName": "Advanced",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 8,
+                    "levelName": "Adv. Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                }
+            ]
+        },
+        {
+            "meditationId": 3,
+            "meditationName": "Vipassana",
+            "levels": [
+                {
+                    "levelId": 9,
+                    "levelName": "Beginner",
+                    "prepTime": 30,
+                    "meditationTime": 1200,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 10,
+                    "levelName": "Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1200,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 11,
+                    "levelName": "Advanced",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 120,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                },
+                {
+                    "levelId": 12,
+                    "levelName": "Adv. Rounding",
+                    "prepTime": 300,
+                    "meditationTime": 1800,
+                    "restTime": 600,
+                    "minPrep": 0,
+                    "maxPrep": 300,
+                    "minMeditation": 0,
+                    "maxMeditation": 2400,
+                    "minRest": 0,
+                    "maxRest": 600
+                }
+            ]
+        }
+    ]
+    }
+}
