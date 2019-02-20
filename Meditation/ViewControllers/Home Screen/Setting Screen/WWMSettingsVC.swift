@@ -83,9 +83,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     // MARK:- UITextField Delegate Methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if self.player.currentTime > 0 {
-           self.player.stop()
-        }
+//        if self.player.currentTime > 0 {
+//           self.player.stop()
+//        }
+        AppDelegate.sharedDelegate().setLocalPush(in: 5)
         self.tblViewSetting.reloadData()
     }
     

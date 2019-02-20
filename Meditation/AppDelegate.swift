@@ -12,15 +12,51 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
 
     
     var window: UIWindow?
+    let center = UNUserNotificationCenter.current()
 
+    static func sharedDelegate () -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 
+    func requestAuthorization(){
+        center.requestAuthorization(options: [.alert, .sound]){(granted, error) in
+            if error == nil{
+                print("Permission Granted")
+            }
+        }
+        center.delegate = self
+    }
+
+    func setLocalPush(in time:TimeInterval){
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+        content.sound = UNNotificationSound.default
+        content.threadIdentifier = "local-notifications temp"
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: time, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "timer", content: content, trigger: trigger)
+        center.add(request){ (error) in
+            if error == nil {
+                print("schedule push succeed")
+            }
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+        
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
@@ -28,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
        // GIDSignIn.sharedInstance().delegate = self
-        
+
     FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // Analytics
@@ -39,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AnalyticsParameterContentType: "App Login"
             ])
         
+        self.requestAuthorization()
+
         return true
     }
 

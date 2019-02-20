@@ -748,7 +748,7 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="7NQ-Es-6ZG">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="145"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="141.5"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                                                                 <integer key="value" value="5"/>
@@ -756,7 +756,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gy7-gu-ZoH">
-                                                                        <rect key="frame" x="10" y="155" width="157" height="17"/>
+                                                                        <rect key="frame" x="10" y="151.5" width="157" height="17"/>
                                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -930,7 +930,7 @@
                                         <rect key="frame" x="0.0" y="556" width="365" height="264"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bmi-KM-eky" id="Kcs-UQ-vGN">
-                                            <rect key="frame" x="0.0" y="0.0" width="365" height="264"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="365" height="263.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#meditationanywhere" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRZ-7s-pXG">
@@ -963,7 +963,7 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="L9Z-Ag-Nqu">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="182"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="159.5"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                                                                 <integer key="value" value="5"/>
@@ -7128,10 +7128,10 @@
             </objects>
             <point key="canvasLocation" x="1458" y="1075"/>
         </scene>
-        <!--View Controller-->
+        <!--Upgrade BeejaVC-->
         <scene sceneID="30L-U3-AUq">
             <objects>
-                <viewController id="V7J-AO-gKL" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WWMUpgradeBeejaVC" id="V7J-AO-gKL" customClass="WWMUpgradeBeejaVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fw5-T9-EqT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
