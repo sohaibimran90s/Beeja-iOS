@@ -39,7 +39,7 @@ class WWMSignupEmailVC: WWMBaseViewController {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
             if isFromFb {
-                
+                self.loginWithSocial()
             }else {
                 self.signUpApi()
             }
@@ -50,6 +50,8 @@ class WWMSignupEmailVC: WWMBaseViewController {
 
 
     func signUpApi() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
         let param = [
             "email": txtViewEmail.text!,
             "deviceId": UIDevice.current.identifierForVendor!.uuidString,
@@ -62,12 +64,52 @@ class WWMSignupEmailVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsLogin(value: true)
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                self.navigationController?.pushViewController(vc, animated: true)
+                if let userProfile = result["userProfile"] as? [String:Any] {
+                    self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
                 
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
             }
+            WWMHelperClass.showSVHud()
+        }
+    }
+    
+    func loginWithSocial() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        let param = [
+            "email": txtViewEmail.text ?? "",
+            "password":"",
+            "deviceId": kDeviceID,
+            "DeviceType": kDeviceType,
+            "loginType": kLoginTypeFacebook,
+            "profileImage":"",
+            "socialId":"\(fbData["id"] ?? -1)",
+            "name":"\(fbData["name"] ?? "")"
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                
+                self.appPreference.setIsLogin(value: true)
+                self.appPreference.setUserData(value: result)
+                if let isProfileCompleted = result["IsProfileCompleted"] as? Bool {
+                    if isProfileCompleted {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }else {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
+                }
+            }else {
+                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                
+            }
+            WWMHelperClass.dismissSVHud()
         }
     }
 }

@@ -80,18 +80,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                 arrMeditationLevels[index].isLevelSelected = false
             }
         }
-        
-        self.appPreference.setUserData(value: [:])
-        UIView.transition(with: welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
-            self.welcomeView.isHidden = false
-        }) { (Bool) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                UIApplication.shared.keyWindow?.rootViewController = vc
-            }
-        }
-        
-        }
+    }
     
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
@@ -101,22 +90,30 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         }
         
     }
-//        UIView.animateWithDuration(0.5, delay: 0.5, options: .curveEaseOut, animations: {
-//            self.uiImageView.alpha = 0.0
-//        }, completion: nil)
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        var cellHeight:CGFloat = tableView.frame.size.height
-//        let numberOfCell = self.arrMeditationLevel.count
-//        cellHeight = cellHeight / CGFloat(numberOfCell)
-//        return cellHeight
-//}
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
+
+    func meditationApi() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        let param = [
+            "meditation_id" : "",
+            "level"         : "",
+            "user_id"       : ""
+        ]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setUserData(value: [:])
+                UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    self.welcomeView.isHidden = false
+                }) { (Bool) in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
+                }
+            }else {
+                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
 }

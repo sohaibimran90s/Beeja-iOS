@@ -35,7 +35,17 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "UserData")
         defaults.synchronize()
     }
+    
+    func setUserToken(value:String) {
+        defaults.set(value, forKey: kUserToken)
+        defaults.synchronize()
+    }
+    
 
+    func getToken() -> String {
+        return UserDefaults.standard.string(forKey: kUserToken)!
+    }
+    
     func isLogin() -> Bool {
         return UserDefaults.standard.bool(forKey: "login")
     }

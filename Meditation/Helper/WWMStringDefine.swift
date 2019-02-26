@@ -14,6 +14,10 @@ import UIKit
 ///////**********************////////
 let kDeviceToken:String!                    = "DeviceToken"
 let kUserData:String!                       = "LoginKey"
+let kUserToken:String!                       = "token"
+
+
+
 
 
 
@@ -75,6 +79,7 @@ let URL_GETMOODMETERDATA         = URL_BASE + "getmoods"
 let URL_GETMEDITATIONDATA        = URL_BASE + "getMeditationData"
 let URL_LOGIN                    = URL_BASE + "login"
 let URL_SIGNUP                   = URL_BASE + "signUp"
+let URL_MEDITATIONDATA           = URL_BASE + "meditationData"
 let URL_FORGOTPASSWORD           = URL_BASE + "forgotPassword"
 let URL_JOURNALMYPROGRESS        = URL_BASE + "journalMyProgress"
 let URL_RESETPASSWORD            = URL_BASE + "reset_password"
