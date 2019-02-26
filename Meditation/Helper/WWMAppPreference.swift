@@ -36,14 +36,40 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setUserID(value:String) {
+        defaults.set(value, forKey: "User_Id")
+        defaults.synchronize()
+    }
+    
     func setUserToken(value:String) {
         defaults.set(value, forKey: kUserToken)
         defaults.synchronize()
     }
+    func setDeviceToken(value:String) {
+        defaults.set(value, forKey: kDeviceToken)
+        defaults.synchronize()
+    }
     
+    func setIsProfileCompleted(value:Bool) {
+        defaults.set(value, forKey: "IsProfileCompleted")
+        defaults.synchronize()
+    }
+    
+    func getUserID() -> String {
+        return UserDefaults.standard.string(forKey: "User_Id") ?? ""
+    }
+    
+    func getDeviceToken() -> String {
+        return UserDefaults.standard.string(forKey: kDeviceToken) ?? ""
+    }
 
     func getToken() -> String {
-        return UserDefaults.standard.string(forKey: kUserToken)!
+        return UserDefaults.standard.string(forKey: kUserToken) ?? ""
+    }
+    
+    
+    func isProfileComplete() -> Bool {
+        return UserDefaults.standard.bool(forKey: "IsProfileCompleted")
     }
     
     func isLogin() -> Bool {

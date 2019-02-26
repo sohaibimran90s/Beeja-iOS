@@ -65,6 +65,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                     "password":"",
                                     "deviceId": kDeviceID,
                                     "DeviceType": kDeviceType,
+                                    "deviceToken" : self.appPreference.getDeviceToken(),
                                     "loginType": kLoginTypeFacebook,
                                     "profileImage":"",
                                     "socialId":"\(fbData["id"] ?? -1)",
@@ -137,6 +138,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                 "password":"",
                 "deviceId": kDeviceID,
                 "DeviceType": kDeviceType,
+                "deviceToken" : self.appPreference.getDeviceToken(),
                 "loginType": kLoginTypeGoogle,
                 "profileImage":profileImage?.absoluteString,
                 "socialId":userId,
@@ -154,8 +156,9 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
             if sucess {
                 
                 self.appPreference.setIsLogin(value: true)
-                self.appPreference.setUserData(value: result)
+                self.appPreference.setUserID(value:result["user_id"] as! String)
                 if let isProfileCompleted = result["IsProfileCompleted"] as? Bool {
+                    self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                     if isProfileCompleted {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                         UIApplication.shared.keyWindow?.rootViewController = vc

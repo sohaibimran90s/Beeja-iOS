@@ -13,8 +13,13 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var welcomeView: UIView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var tblMeditationLevels: UITableView!
+    
     //let arrMeditationLevel = ["Beginner","Intermediate 1","Intermediate 2","Advanced"]
     var arrMeditationLevels = [DBLevelData]()
+    
+    var selectedMeditation_Id = ""
+    var selectedLevel_Id = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +34,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         let meditationData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         for  data in meditationData{
             if data.isMeditationSelected {
+                self.selectedMeditation_Id = data.meditationId ?? ""
                 if let levels = data.levels?.array as? [DBLevelData] {
                     arrMeditationLevels = levels
                 }
@@ -76,10 +82,13 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         for index in 0..<arrMeditationLevels.count {
             if index == indexPath.row {
                 arrMeditationLevels[index].isLevelSelected = true
+                self.selectedLevel_Id = "\(arrMeditationLevels[index].levelId)"
             }else {
                 arrMeditationLevels[index].isLevelSelected = false
             }
         }
+        
+        self.meditationApi()
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -90,18 +99,19 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         }
         
     }
-
+    
     func meditationApi() {
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
         let param = [
-            "meditation_id" : "",
-            "level"         : "",
-            "user_id"       : ""
+            "meditation_id" : self.selectedMeditation_Id,
+            "level"         : self.selectedLevel_Id,
+            "user_id"       : self.appPreference.getUserID()
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setUserData(value: [:])
+                self.appPreference.setIsProfileCompleted(value: true)
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false
                 }) { (Bool) in

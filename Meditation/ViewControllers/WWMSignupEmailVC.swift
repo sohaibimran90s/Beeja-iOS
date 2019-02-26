@@ -47,13 +47,12 @@ class WWMSignupEmailVC: WWMBaseViewController {
         }
         
     }
-
-
     func signUpApi() {
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
         let param = [
             "email": txtViewEmail.text!,
+            "deviceToken" : appPreference.getDeviceToken(),
             "deviceId": UIDevice.current.identifierForVendor!.uuidString,
             "DeviceType": kDeviceType,
             "loginType": kLoginTypeGoogle,

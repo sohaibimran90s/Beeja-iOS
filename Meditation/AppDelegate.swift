@@ -12,6 +12,7 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     var window: UIWindow?
+    let appPreference = WWMAppPreference()
+    
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -29,15 +32,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(UIDevice.current.identifierForVendor!.uuidString)
        // GIDSignIn.sharedInstance().delegate = self
         
-    FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        // Analytics
+        if !application.isRegisteredForRemoteNotifications {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+                // Enable or disable features based on authorization.
+            }
+            application.registerForRemoteNotifications()
+        }
         
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: "id-Beeja-App-Started",
-            AnalyticsParameterItemName: "Roshan Login in Beeja app",
-            AnalyticsParameterContentType: "App Login"
-            ])
+//        // Analytics
+//
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-Beeja-App-Started",
+//            AnalyticsParameterItemName: "Roshan Login in Beeja app",
+//            AnalyticsParameterContentType: "App Login"
+//            ])
         
         return true
     }
@@ -76,7 +87,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    //WWMDatabase
+    // MARK:- Push Notification
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        appPreference.setDeviceToken(value: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print(userInfo)
+    }
+    
     
     // MARK: - Core Data stack
     

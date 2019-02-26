@@ -256,6 +256,7 @@
 		2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCustomButton.swift; sourceTree = "<group>"; };
 		2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditMeditationTimeVC.swift; sourceTree = "<group>"; };
 		2E6C8405222427180070E799 /* WWMUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMUserData.swift; sourceTree = "<group>"; };
+		2E6C840722256DFC0070E799 /* Meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meditation.entitlements; sourceTree = "<group>"; };
 		2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalVC.swift; sourceTree = "<group>"; };
 		2E85F1602204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ww_vo_jaygudurday_tk2.mp3; sourceTree = "<group>"; };
@@ -448,6 +449,7 @@
 		2E4B1B9C21B5044B002F8A25 /* Meditation */ = {
 			isa = PBXGroup;
 			children = (
+				2E6C840722256DFC0070E799 /* Meditation.entitlements */,
 				2E43717E21FF402400EF5D62 /* Database */,
 				2EE247B421E6310C00857C25 /* ThirdParty */,
 				2E99BAE921E33810009F0909 /* Helper */,
@@ -997,6 +999,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					2E4B1BAD21B5044D002F8A25 = {
@@ -1511,6 +1516,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				INFOPLIST_FILE = Meditation/Info.plist;
@@ -1534,6 +1540,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				INFOPLIST_FILE = Meditation/Info.plist;

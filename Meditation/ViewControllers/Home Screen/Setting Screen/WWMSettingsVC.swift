@@ -388,10 +388,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         
         let cancelAction = UIAlertAction.init(title: "Cancel", style: .default, handler: nil)
         let okAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-            self.appPreference.setIsLogin(value: false)
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-            let vcc = UINavigationController.init(rootViewController: vc)
-            UIApplication.shared.keyWindow?.rootViewController = vcc
+            self.logoutAPI()
         }
         alert.addAction(cancelAction)
         alert.addAction(okAction)
@@ -438,5 +435,47 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             settingData.moodMeterEnable = btn.isOn
         }
         self.tblViewSetting.reloadData()
+    }
+    
+    
+    
+    // MARK:- API Calling
+    
+    func settingAPI() {
+        WWMHelperClass.showSVHud()
+        let param = [
+            "token" : appPreference.getToken()
+        ]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setIsLogin(value: false)
+                self.appPreference.setUserToken(value: "")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                let vcc = UINavigationController.init(rootViewController: vc)
+                UIApplication.shared.keyWindow?.rootViewController = vcc
+            }else {
+                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
+    func logoutAPI() {
+        WWMHelperClass.showSVHud()
+        let param = [
+            "token" : appPreference.getToken()
+        ]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setIsLogin(value: false)
+                self.appPreference.setUserToken(value: "")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                let vcc = UINavigationController.init(rootViewController: vc)
+                UIApplication.shared.keyWindow?.rootViewController = vcc
+            }else {
+                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
 }

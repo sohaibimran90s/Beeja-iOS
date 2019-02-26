@@ -74,6 +74,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
             "email": isFromWelcomeBack ? txtViewEmail.text!: self.userData.email,
             "password":txtViewPassword.text!,
             "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+            "deviceToken" : appPreference.getDeviceToken(),
             "DeviceType": "ios",
             "loginType": "eml",
             "profileImage":"",
@@ -83,8 +84,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsLogin(value: true)
-                self.appPreference.setUserData(value: result)
+                self.appPreference.setUserID(value:result["user_id"] as! String)
                 if let isProfileCompleted = result["IsProfileCompleted"] as? Bool {
+                    self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                     if isProfileCompleted {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                         UIApplication.shared.keyWindow?.rootViewController = vc
