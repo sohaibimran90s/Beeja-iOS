@@ -16,6 +16,7 @@ target 'Meditation' do
 	pod "GaugeKit"
 	pod 'Charts'
 	pod 'SDWebImage'
+	pod 'SVProgressHUD'
 
   target 'MeditationTests' do
     inherit! :search_paths

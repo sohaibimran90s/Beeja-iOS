@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 import SystemConfiguration
+import SVProgressHUD
 
 class WWMHelperClass {
     
@@ -55,6 +56,23 @@ class WWMHelperClass {
             }
         })
     }
+    
+    class func showSVHud() {
+        DispatchQueue.main.async(execute: {() -> Void in
+            SVProgressHUD.setRingThickness(5.0)
+            SVProgressHUD.setBackgroundColor(UIColor.clear)
+            SVProgressHUD.setForegroundColor(UIColor.init(hexString: "#00eba9")!)
+            SVProgressHUD.setDefaultMaskType(.gradient)
+            SVProgressHUD.show()
+        })
+    }
+    
+    class func dismissSVHud() {
+        DispatchQueue.main.async(execute: {() -> Void in
+            SVProgressHUD.dismiss()
+        })
+    }
+    
     class func showActivity(on view: UIView, with color : UIColor) {
         DispatchQueue.main.async(execute: {() -> Void in
             let indicator = UIActivityIndicatorView(style: .gray)

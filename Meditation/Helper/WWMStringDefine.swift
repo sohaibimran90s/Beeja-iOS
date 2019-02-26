@@ -17,9 +17,15 @@ let kUserData:String!                       = "LoginKey"
 
 
 
-let  kAlertTitle : String!                 = "Alert"
-let  kGETHeader : String!                 = "GET"
-let  kPOSTHeader : String!                 = "POST"
+let  kAlertTitle : String!                    = "Alert"
+let  kGETHeader : String!                     = "GET"
+let  kPOSTHeader : String!                    = "POST"
+let  kLoginTypeEmail : String!                = "eml"
+let  kLoginTypeGoogle : String!               = "ggl"
+let  kLoginTypeFacebook : String!             = "fb"
+let  kDeviceType : String!                    = "ios"
+let  kDeviceID : String!                      = UIDevice.current.identifierForVendor!.uuidString
+
 
 
 
@@ -74,6 +80,8 @@ let URL_JOURNALMYPROGRESS        = URL_BASE + "journalMyProgress"
 let URL_RESETPASSWORD            = URL_BASE + "reset_password"
 let URL_SUPPORT                  = URL_BASE + "support"
 let URL_COMMUNITYDATA        = URL_BASE + "communityData"
+let URL_SUBSCRIPTIONPURCHASE    = URL_BASE + "subscriptionPurchase"
+let URL_GETPROFILE                  = URL_BASE + "getProfile"
 
 
 

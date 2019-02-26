@@ -13,6 +13,8 @@ class WWMSignupEmailVC: WWMBaseViewController {
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var txtViewEmail: UITextField!
     var name = ""
+    var isFromFb = Bool()
+    var fbData = [String:Any]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
@@ -36,24 +38,36 @@ class WWMSignupEmailVC: WWMBaseViewController {
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
-            self.appPreference.setIsLogin(value: true)
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-            self.navigationController?.pushViewController(vc, animated: true)
+            if isFromFb {
+                
+            }else {
+                self.signUpApi()
+            }
+            
         }
         
     }
 
 
     func signUpApi() {
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        let param = [
+            "email": txtViewEmail.text!,
+            "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+            "DeviceType": kDeviceType,
+            "loginType": kLoginTypeGoogle,
+            "profileImage":"",
+            "socialId":"",
+            "name":self.name
+        ]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
+                self.appPreference.setIsLogin(value: true)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                self.navigationController?.pushViewController(vc, animated: true)
                 
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
             }
         }
-
     }
 }

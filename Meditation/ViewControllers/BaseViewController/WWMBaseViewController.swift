@@ -11,6 +11,7 @@ import UIKit
 class WWMBaseViewController: UIViewController {
 
     let appPreference = WWMAppPreference()
+    var userData = WWMUserData()
     override func viewDidLoad() {
         super.viewDidLoad()
 
