@@ -67,8 +67,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                     "DeviceType": kDeviceType,
                                     "deviceToken" : self.appPreference.getDeviceToken(),
                                     "loginType": kLoginTypeFacebook,
-                                    "profileImage":"",
-                                    "socialId":"\(fbData["id"] ?? -1)",
+                                    "profileImage":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
+                                    "socialId":"\(fbData["id"] ?? "")",
                                     "name":"\(fbData["name"] ?? "")"
                                 ]
                                 self.loginWithSocial(param: param as Dictionary<String, Any>)

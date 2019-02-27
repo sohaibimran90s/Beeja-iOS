@@ -26,6 +26,14 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
        self.tabBar.layer.insertSublayer(layerGradient, at: 0)
+        for index in 0..<4 {
+            let item = self.tabBar.items?[index]
+            item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+            if index == 2 {
+                
+                item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+            }
+        }
         self.selectedIndex = 2
     }
     
@@ -57,16 +65,14 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
 
     // UITabBarDelegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        //item.selectedImage
-        let animationView = LOTAnimationView(name: "LottieLogo")
-       
-        
-        self.view.addSubview(animationView)
-        animationView.play{ (finished) in
-            // Do Something
+        for itemTab in  self.tabBar.items!{
+            
+            itemTab.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+            if itemTab == item {
+                
+                itemTab.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+            }
         }
-         
-        print("Selected item")
     }
     
     // UITabBarControllerDelegate

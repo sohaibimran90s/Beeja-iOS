@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Maax-Bold.ttf">
+            <string>Maax-Bold</string>
+        </array>
+        <array key="Maax-Regular.ttf">
+            <string>Maax-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="MEf-sw-5WN" customClass="WWMAddJournalView" customModule="Meditation" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-MS-iFE">
+                    <rect key="frame" x="315" y="20" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="lba-SB-yBw"/>
+                        <constraint firstAttribute="width" constant="40" id="rhA-je-c9J"/>
+                    </constraints>
+                    <state key="normal" image="Close_Icon">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add an entry." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ye-Y7-9y9">
+                    <rect key="frame" x="113" y="174" width="149.5" height="29.5"/>
+                    <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="28"/>
+                    </variation>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nuE-3E-GBX">
+                    <rect key="frame" x="56.5" y="233.5" width="262.5" height="200"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd1-AU-mxE">
+                            <rect key="frame" x="20" y="20" width="222.5" height="160"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" red="0.16078431369999999" green="0.12941176469999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.16078431369999999" green="0.12941176469999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBY-uR-6AG">
+                            <rect key="frame" x="202.5" y="140" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="06D-Gi-Ezq"/>
+                                <constraint firstAttribute="height" constant="50" id="TLb-l2-AuF"/>
+                            </constraints>
+                            <state key="normal" image="editBtn_Icon"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Cd1-AU-mxE" secondAttribute="bottom" constant="20" id="17F-IF-QJk"/>
+                        <constraint firstAttribute="height" constant="200" id="6NJ-iY-duG"/>
+                        <constraint firstAttribute="trailing" secondItem="Cd1-AU-mxE" secondAttribute="trailing" constant="20" id="IuC-uk-cG2"/>
+                        <constraint firstItem="Cd1-AU-mxE" firstAttribute="top" secondItem="nuE-3E-GBX" secondAttribute="top" constant="20" id="MfG-NF-zZR"/>
+                        <constraint firstItem="Cd1-AU-mxE" firstAttribute="centerY" secondItem="nuE-3E-GBX" secondAttribute="centerY" id="NDP-gy-F3t"/>
+                        <constraint firstItem="Cd1-AU-mxE" firstAttribute="leading" secondItem="nuE-3E-GBX" secondAttribute="leading" constant="20" id="b2v-uj-fqV"/>
+                        <constraint firstAttribute="trailing" secondItem="vBY-uR-6AG" secondAttribute="trailing" constant="10" id="sZv-4L-ORK"/>
+                        <constraint firstAttribute="bottom" secondItem="vBY-uR-6AG" secondAttribute="bottom" constant="10" id="wQF-K5-CTf"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoo-uj-PLE">
+                    <rect key="frame" x="89" y="463.5" width="197" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="IRB-qb-pkc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="9ye-Y7-9y9" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="4Kr-tz-s1y"/>
+                <constraint firstItem="nuE-3E-GBX" firstAttribute="width" secondItem="MEf-sw-5WN" secondAttribute="width" multiplier="0.7" id="Djr-VD-e6f"/>
+                <constraint firstItem="hoo-uj-PLE" firstAttribute="width" secondItem="nuE-3E-GBX" secondAttribute="width" multiplier="0.75" id="HWg-g3-p3x"/>
+                <constraint firstItem="aTo-MS-iFE" firstAttribute="top" secondItem="UuL-aR-CjX" secondAttribute="top" id="Kp1-UG-Iuw"/>
+                <constraint firstItem="UuL-aR-CjX" firstAttribute="trailing" secondItem="aTo-MS-iFE" secondAttribute="trailing" constant="20" id="MKR-0P-czT"/>
+                <constraint firstItem="hoo-uj-PLE" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="U8f-Th-nXQ"/>
+                <constraint firstItem="hoo-uj-PLE" firstAttribute="top" secondItem="nuE-3E-GBX" secondAttribute="bottom" constant="30" id="anm-ef-4LL"/>
+                <constraint firstItem="nuE-3E-GBX" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="qZA-ya-UTF"/>
+                <constraint firstItem="nuE-3E-GBX" firstAttribute="top" secondItem="9ye-Y7-9y9" secondAttribute="bottom" constant="30" id="vLu-Um-PKE"/>
+                <constraint firstItem="nuE-3E-GBX" firstAttribute="centerY" secondItem="MEf-sw-5WN" secondAttribute="centerY" id="vOr-Vr-r1i"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="UuL-aR-CjX"/>
+            <connections>
+                <outlet property="btnClose" destination="aTo-MS-iFE" id="wzw-o3-EQm"/>
+                <outlet property="btnEditText" destination="vBY-uR-6AG" id="Fgf-eb-Le5"/>
+                <outlet property="btnSubmit" destination="hoo-uj-PLE" id="pSi-sY-Dl7"/>
+                <outlet property="txtViewJournal" destination="Cd1-AU-mxE" id="JlT-DW-svS"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="Close_Icon" width="40" height="40"/>
+        <image name="editBtn_Icon" width="50" height="51"/>
+    </resources>
+</document>

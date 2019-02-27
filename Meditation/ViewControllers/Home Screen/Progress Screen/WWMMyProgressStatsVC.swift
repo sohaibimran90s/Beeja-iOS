@@ -11,7 +11,10 @@ import UIKit
 class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     
-
+    @IBOutlet weak var lblMonthYear: UILabel!
+    @IBOutlet weak var btnPreviousMonth: UIButton!
+    @IBOutlet weak var btnNextMonth: UIButton!
+    
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UIView!
     @IBOutlet weak var lblHourMeditate: UILabel!
@@ -22,6 +25,9 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     @IBOutlet weak var viewAvMinutes: UIView!
     var statsData = WWMSatsProgressData()
     var dayAdded = -1
+    var monthValue = 0
+    var strMonthYear = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,12 +41,7 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     }
     
     func setUpUI() {
-        let getData = WWMSatsProgressData()
-        statsData = getData.getStatsProgressData()
-        
-        let firstDate = self.makeDate(year: 2019, month: 2, day: 1, hr: 8, min: 30, sec: 30)
-        let weekDay = Calendar.current.ordinality(of: .day, in: .weekOfMonth, for: firstDate)
-        dayAdded = weekDay!-1
+        self.updateDate(date: Date())
         DispatchQueue.main.async {
            // self.viewAvMinutes.layer.cornerRadius = self.viewAvMinutes.frame.size.height/2
            // self.viewAvMinutes.layer.borderWidth = 1.0
@@ -51,8 +52,28 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
           //  self.viewHourMeditate.layer.borderColor = UIColor.lightGray.cgColor
         }
         
+    }
+    
+    func updateDate(date : Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
         
-        self.collectionViewCal.reloadData()
+        dateFormatter.dateFormat = "MM"
+        let month = dateFormatter.string(from: date)
+        dateFormatter.dateFormat = "yyyy"
+        let year = dateFormatter.string(from: date)
+        
+        dateFormatter.dateFormat = "MMM, yyyy"
+        self.lblMonthYear.text = dateFormatter.string(from: date)
+        self.btnNextMonth.isHidden = true
+        
+        dateFormatter.dateFormat = "yyyyMM"
+        self.strMonthYear = dateFormatter.string(from: date)
+        let firstDate = self.makeDate(year: Int(year)!, month: Int(month)!, day: 1, hr: 8, min: 30, sec: 30)
+        let weekDay = Calendar.current.ordinality(of: .day, in: .weekOfMonth, for: firstDate)
+        dayAdded = weekDay!-2
+        
+        self.getStatsData()
     }
     
     func makeDate(year: Int, month: Int, day: Int, hr: Int, min: Int, sec: Int) -> Date {
@@ -68,11 +89,27 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         
     }
     
+    @IBAction func btnNextMonthAction(_ sender: Any) {
+        monthValue = monthValue+1
+        if monthValue == 0 {
+            self.btnNextMonth.isHidden = true
+        }
+         let nextMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
+        self.updateDate(date: nextMonth!)
+    }
+    
+    @IBAction func btnPreviousMonthAction(_ sender: Any) {
+        monthValue = monthValue-1
+        self.btnNextMonth.isHidden = true
+        let previousMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
+        self.updateDate(date: previousMonth!)
+    }
+    
     
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return statsData.consecutiveDays.count+dayAdded
+        return self.statsData.consecutive_days.count + dayAdded
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,86 +118,84 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
             let blankCell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath)
             return blankCell
         }
-        
-        
-        
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
         //cell.viewDateCircle.layer.cornerRadius = cell.viewDateCircle.frame.size.width/2
         cell.imgViewLeft.isHidden = true
         cell.imgViewRight.isHidden = true
-        let data = statsData.consecutiveDays[indexPath.row-dayAdded]
-        if data.meditationStatus == 0  {
+        let data = statsData.consecutive_days[indexPath.row-dayAdded]
+        
+        if indexPath.row-dayAdded > 0 {
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status2 == 0) {
+                cell.imgViewRight.isHidden = false
+            }
+        }else if indexPath.row-dayAdded == self.statsData.consecutive_days.count-1 {
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) {
+                cell.imgViewRight.isHidden = false
+            }
+        }else {
             
-        }else if data.meditationStatus == 1 {
-            cell.viewDateCircle.layer.borderWidth = 2.0
-            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//            let arcCenter = CGPoint(x: cell.viewDateCircle.bounds.size.width / 2, y: cell.viewDateCircle.bounds.size.height / 2)
-//            let circleRadius = cell.viewDateCircle.bounds.size.width / 2
-//            let circlePath = UIBezierPath(arcCenter: arcCenter, radius: circleRadius, startAngle: CGFloat.pi/2, endAngle: CGFloat.pi * 3/2, clockwise: true)
-//
-//            let semiCirleLayer = CAShapeLayer()
-//            semiCirleLayer.path = circlePath.cgPath
-//            semiCirleLayer.strokeColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//            semiCirleLayer.lineWidth = 2.0
-//            semiCirleLayer.fillColor = UIColor.clear.cgColor
-//            cell.viewDateCircle.layer.addSublayer(semiCirleLayer)
-        }else if data.meditationStatus == 2 {
-            cell.viewDateCircle.layer.borderWidth = 2.0
-            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//            let arcCenter = CGPoint(x: cell.viewDateCircle.bounds.size.width / 2, y: cell.viewDateCircle.bounds.size.height / 2)
-//            let circleRadius = cell.viewDateCircle.bounds.size.width / 2
-//            let circlePath = UIBezierPath(arcCenter: arcCenter, radius: circleRadius, startAngle: CGFloat.pi/2, endAngle: CGFloat.pi * 3/2, clockwise: false)
-//
-//            let semiCirleLayer = CAShapeLayer()
-//            semiCirleLayer.path = circlePath.cgPath
-//            semiCirleLayer.strokeColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//            semiCirleLayer.lineWidth = 2.0
-//            semiCirleLayer.fillColor = UIColor.clear.cgColor
-//            cell.viewDateCircle.layer.addSublayer(semiCirleLayer)
-        }else if data.meditationStatus == 3 {
+        }
+        
+        if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
             cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
+            
+        }else {
+            cell.viewDateCircle.layer.borderWidth = 2.0
+            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         }
         
-//        if dayMonth == data.date {
+        
+        
+        
+        
+//        if data.meditationStatus == 0  {
+//
+//        }else if data.meditationStatus == 1 {
+//            cell.viewDateCircle.layer.borderWidth = 2.0
+//            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+//
+//        }else if data.meditationStatus == 2 {
+//            cell.viewDateCircle.layer.borderWidth = 2.0
+//            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+//
+//        }else if data.meditationStatus == 3 {
 //            cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-//            cell.lblDate.textColor = UIColor.black
 //        }
+//
+//        if indexPath.row-dayAdded > 0 {
+//            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row-1].meditationStatus == 3 {
+//                cell.imgViewLeft.isHidden = false
+//                cell.imgViewLeft.image = UIImage.init(named: "doubleLineLeft")
+//            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row-1].meditationStatus == 0 {
+//                cell.imgViewLeft.isHidden = true
+//            }else {
+//                cell.imgViewLeft.isHidden = false
+//                cell.imgViewLeft.image = UIImage.init(named: "singleLineLeft")
+//                // Single
+//            }
+//        }
+//
+//
+//        if indexPath.row < statsData.consecutiveDays.count-1 {
+//            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row+1].meditationStatus == 3 {
+//                cell.imgViewRight.isHidden = false
+//                cell.imgViewRight.image = UIImage.init(named: "doubleLineRight")
+//            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row+1].meditationStatus == 0 {
+//                cell.imgViewRight.isHidden = true
+//            }else {
+//                cell.imgViewRight.isHidden = false
+//                cell.imgViewRight.image = UIImage.init(named: "singleLineRight")
+//            }
+//        }
+
         
-        if indexPath.row > 0 {
-            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row-1].meditationStatus == 3 {
-                cell.imgViewLeft.isHidden = false
-                cell.imgViewLeft.image = UIImage.init(named: "doubleLineLeft")
-            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row-1].meditationStatus == 0 {
-                cell.imgViewLeft.isHidden = true
-            }else {
-                cell.imgViewLeft.isHidden = false
-                cell.imgViewLeft.image = UIImage.init(named: "singleLineLeft")
-                // Single
-            }
-        }
-        
-        
-        if indexPath.row < statsData.consecutiveDays.count-1 {
-            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row+1].meditationStatus == 3 {
-                cell.imgViewRight.isHidden = false
-                cell.imgViewRight.image = UIImage.init(named: "doubleLineRight")
-            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row+1].meditationStatus == 0 {
-                cell.imgViewRight.isHidden = true
-            }else {
-                cell.imgViewRight.isHidden = false
-                cell.imgViewRight.image = UIImage.init(named: "singleLineRight")
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        cell.lblDate.text = "\(data.date)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let monthDate = dateFormatter.date(from:data.date)!
+        dateFormatter.dateFormat = "d"
+        cell.lblDate.text = dateFormatter.string(from: monthDate)
         return cell
     }
     
@@ -170,14 +205,26 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         let width = (self.view.frame.size.width-80)/7
         return CGSize.init(width: width, height: width)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    func getStatsData() {
+        WWMHelperClass.showSVHud()
+        let param = ["user_id":"11",
+                     "month":self.strMonthYear]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["Response"] as? [String:Any] {
+                    self.statsData = WWMSatsProgressData.init(json: data)
+                }
+                self.collectionViewCal.reloadData()
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
-    */
+
 
 }

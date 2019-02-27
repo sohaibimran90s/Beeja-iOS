@@ -2182,7 +2182,7 @@
         <scene sceneID="EEv-HD-chS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TCE-Z3-pZk" customClass="WWMNavigationVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="setting_Icon" id="1r1-sH-KeS"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="setting_Icon" selectedImage="selected_Setting" id="1r1-sH-KeS" customClass="WWMTabBarItem" customModule="Meditation"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="b9H-6w-njg">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2202,7 +2202,7 @@
         <scene sceneID="8AP-be-zW7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="agv-g1-9To" customClass="WWMNavigationVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Community" image="community_Icon" id="Uh2-ha-6X2"/>
+                    <tabBarItem key="tabBarItem" title="Community" image="community_Icon" selectedImage="selected_Community" id="Uh2-ha-6X2" customClass="WWMTabBarItem" customModule="Meditation" customModuleProvider="target"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PKP-nf-vYE">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2928,7 +2928,7 @@
         <scene sceneID="odR-nO-QtZ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sxg-de-q97" customClass="WWMNavigationVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Timer" image="timer_Icon" id="lJc-Je-e60"/>
+                    <tabBarItem key="tabBarItem" title="Timer" image="timer_Icon" selectedImage="selected_Timer" id="lJc-Je-e60" customClass="WWMTabBarItem" customModule="Meditation" customModuleProvider="target"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GOi-vV-ndU">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3145,6 +3145,9 @@
                                                                 <state key="normal" title="&lt;">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="btnPreviousMonthAction:" destination="eSS-HZ-ypU" eventType="touchUpInside" id="x7O-MI-aBT"/>
+                                                                </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feb, 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgd-jk-e7O">
                                                                 <rect key="frame" x="50" y="0.0" width="77" height="30"/>
@@ -3161,6 +3164,9 @@
                                                                 <state key="normal" title="&gt;">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="btnNextMonthAction:" destination="eSS-HZ-ypU" eventType="touchUpInside" id="bd8-Us-INz"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3577,7 +3583,10 @@
                     </view>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="btnNextMonth" destination="idU-Ji-DLf" id="x7n-5s-nAC"/>
+                        <outlet property="btnPreviousMonth" destination="qeL-JF-om6" id="mPr-qG-9Hl"/>
                         <outlet property="collectionViewCal" destination="x34-Oc-Re9" id="jm0-hH-XiI"/>
+                        <outlet property="lblMonthYear" destination="Pgd-jk-e7O" id="ij5-TP-RHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSN-ff-myb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3588,7 +3597,7 @@
         <scene sceneID="sWv-v9-Vvm">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Mg-eb-wLz" customClass="WWMNavigationVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Progress" image="setting_Icon" id="NNr-cl-EkS"/>
+                    <tabBarItem key="tabBarItem" title="Progress" image="progress_Icon" selectedImage="selected_Progress" id="NNr-cl-EkS" customClass="WWMTabBarItem" customModule="Meditation" customModuleProvider="target"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l6J-3F-HUS">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4078,6 +4087,7 @@
                                             <outlet property="lblDateDay" destination="zHz-go-YmA" id="hBM-dO-Alb"/>
                                             <outlet property="lblDateMonth" destination="djr-og-wdq" id="2pA-7J-GsK"/>
                                             <outlet property="lblJournalDesc" destination="Ss9-s3-FtW" id="LMK-h4-Des"/>
+                                            <outlet property="lblMeditationType" destination="Yv6-ey-Y1G" id="GRM-FS-4IA"/>
                                             <outlet property="lblWeekDayAndTime" destination="xjT-zR-EtK" id="Tlu-YQ-g1G"/>
                                             <outlet property="viewShadow" destination="p85-jC-6fq" id="75F-7m-Tq6"/>
                                         </connections>
@@ -7158,7 +7168,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join the Beeja Family" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOx-aw-yIX">
-                                        <rect key="frame" x="92" y="13.5" width="191" height="23.5"/>
+                                        <rect key="frame" x="88" y="12.5" width="199.5" height="25"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -7208,7 +7218,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Increase your dynamism and creativity" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGM-T4-x9E">
-                                                <rect key="frame" x="80" y="17" width="235" height="14"/>
+                                                <rect key="frame" x="80" y="17" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -7237,7 +7247,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IUnlock meditations to boost your body's performance" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPp-Im-zs1">
-                                                <rect key="frame" x="80" y="10" width="235" height="28"/>
+                                                <rect key="frame" x="80" y="9.5" width="235" height="29"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -7266,7 +7276,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track your feelings with our moodometer" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-ck-dfu">
-                                                <rect key="frame" x="80" y="17.5" width="235" height="14"/>
+                                                <rect key="frame" x="80" y="17" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -7295,7 +7305,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Learn to meditate self-sufficiently" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ru3-DW-U7f">
-                                                <rect key="frame" x="80" y="17" width="235" height="14"/>
+                                                <rect key="frame" x="80" y="16.5" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -7324,7 +7334,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rewire yourself happy with our daily grateful diary" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRj-w3-qtq">
-                                                <rect key="frame" x="80" y="10" width="235" height="28"/>
+                                                <rect key="frame" x="80" y="9.5" width="235" height="29"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -7659,7 +7669,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Billed as one payment of £42" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lio-lF-G1i">
-                                <rect key="frame" x="120.5" y="622" width="134" height="12"/>
+                                <rect key="frame" x="118" y="622" width="139.5" height="12.5"/>
                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -7730,7 +7740,7 @@
         <image name="Logo_Login" width="227" height="108"/>
         <image name="Twitter_Icon" width="23" height="20"/>
         <image name="Youtube_Icon" width="22" height="16"/>
-        <image name="community_Icon" width="21" height="21"/>
+        <image name="community_Icon" width="28" height="28"/>
         <image name="downArrow_Color_Icon" width="17" height="9"/>
         <image name="downArrow_Icon" width="11" height="6"/>
         <image name="editBtn_Icon" width="50" height="51"/>
@@ -7738,13 +7748,18 @@
         <image name="moreOption_Icon" width="57" height="48"/>
         <image name="pause_Icon" width="46" height="46"/>
         <image name="play_Icon" width="46" height="46"/>
-        <image name="setting_Icon" width="18" height="20"/>
+        <image name="progress_Icon" width="28" height="28"/>
+        <image name="selected_Community" width="28" height="28"/>
+        <image name="selected_Progress" width="28" height="28"/>
+        <image name="selected_Setting" width="25" height="28"/>
+        <image name="selected_Timer" width="28" height="28"/>
+        <image name="setting_Icon" width="25" height="28"/>
         <image name="singleLineLeft.png" width="14" height="1"/>
         <image name="singleLineRight.png" width="14" height="1"/>
         <image name="startBeeja_Icon" width="63" height="54"/>
         <image name="stop_Icon" width="46" height="46"/>
         <image name="timer_Background_Icon" width="375" height="377"/>
-        <image name="timer_Icon" width="21" height="21"/>
+        <image name="timer_Icon" width="28" height="28"/>
         <image name="vibe_images.jpg" width="254" height="198"/>
     </resources>
 </document>

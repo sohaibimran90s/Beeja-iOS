@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E25CDC3222674FD002BDE15 /* WWMTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */; };
+		2E25CDC522267DAF002BDE15 /* WWMJournalProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */; };
+		2E25CDC722269BB9002BDE15 /* WWMAddJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */; };
+		2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E25CDC822269BE6002BDE15 /* WWMAddJournalView.xib */; };
 		2E2F8A3221BE6FB700516AFF /* WWMBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3121BE6FB700516AFF /* WWMBaseViewController.swift */; };
 		2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3321BE7C8E00516AFF /* WWMSignupNameVC.swift */; };
 		2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3521BE7CA800516AFF /* WWMSignupEmailVC.swift */; };
@@ -175,6 +179,10 @@
 		0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.debug.xcconfig"; sourceTree = "<group>"; };
 		1D9710DC757A07F39D195208 /* Pods-MeditationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationTests/Pods-MeditationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		26AE16DFE7128CFAFADB4E44 /* Pods-MeditationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationTests/Pods-MeditationTests.release.xcconfig"; sourceTree = "<group>"; };
+		2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTabBarItem.swift; sourceTree = "<group>"; };
+		2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJournalProgressData.swift; sourceTree = "<group>"; };
+		2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalView.swift; sourceTree = "<group>"; };
+		2E25CDC822269BE6002BDE15 /* WWMAddJournalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAddJournalView.xib; sourceTree = "<group>"; };
 		2E2F8A3121BE6FB700516AFF /* WWMBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMBaseViewController.swift; sourceTree = "<group>"; };
 		2E2F8A3321BE7C8E00516AFF /* WWMSignupNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupNameVC.swift; sourceTree = "<group>"; };
 		2E2F8A3521BE7CA800516AFF /* WWMSignupEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupEmailVC.swift; sourceTree = "<group>"; };
@@ -568,6 +576,8 @@
 			children = (
 				2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */,
 				2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */,
+				2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */,
+				2E25CDC822269BE6002BDE15 /* WWMAddJournalView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -614,6 +624,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */,
+				2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */,
 				2EA6DB0D21C3E2C6006A8E1D /* WWMNavigationVC.swift */,
 				2EC81C5D21E7781A003B0EEE /* WWMWebViewVC.swift */,
 				2EE247A821E4CF7700857C25 /* SideMenu */,
@@ -676,6 +687,7 @@
 				2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */,
 				2E4CE28A2208599900059396 /* WWMSatsProgressData.swift */,
 				2E6C8405222427180070E799 /* WWMUserData.swift */,
+				2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */,
 				2EC81C5B21E777A7003B0EEE /* adobe.svg */,
 				2EC81C5721E75444003B0EEE /* MoodMeterData.geojson */,
 				2E4371D02203033300EF5D62 /* MeditationData.geojson */,
@@ -1055,6 +1067,7 @@
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
 				2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */,
+				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
@@ -1247,6 +1260,7 @@
 				2EE247EE21E6315400857C25 /* AlphaPieViewLayerAnimator.swift in Sources */,
 				2EE247ED21E6315400857C25 /* PieViewLayerAnimator.swift in Sources */,
 				2EE247E421E6315400857C25 /* FloatingPoint.swift in Sources */,
+				2E25CDC3222674FD002BDE15 /* WWMTabBarItem.swift in Sources */,
 				2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */,
 				2E93D2FB21F5D14900163E57 /* WWMHelperClass.swift in Sources */,
 				2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */,
@@ -1254,6 +1268,7 @@
 				2E4371932200284C00EF5D62 /* DBTimerData+CoreDataProperties.swift in Sources */,
 				2EE247DD21E6315400857C25 /* PieSliceDelegate.swift in Sources */,
 				2EE247E121E6315400857C25 /* PieChart.swift in Sources */,
+				2E25CDC522267DAF002BDE15 /* WWMJournalProgressData.swift in Sources */,
 				2E5D1A5E21EF461C00AEB3BC /* DataCrypto.swift in Sources */,
 				2EE247F221E6315400857C25 /* PieSliceModel.swift in Sources */,
 				2EE247B321E5EFBD00857C25 /* WWMJournalTableViewCell.swift in Sources */,
@@ -1271,6 +1286,7 @@
 				2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */,
 				2EE247E721E6315400857C25 /* CGRect.swift in Sources */,
 				2EE247F021E6315400857C25 /* PieChartLayer.swift in Sources */,
+				2E25CDC722269BB9002BDE15 /* WWMAddJournalView.swift in Sources */,
 				2EE247E621E6315400857C25 /* CGPoint.swift in Sources */,
 				2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */,
 				2E4371D32203039E00EF5D62 /* WWMMeditationData.swift in Sources */,

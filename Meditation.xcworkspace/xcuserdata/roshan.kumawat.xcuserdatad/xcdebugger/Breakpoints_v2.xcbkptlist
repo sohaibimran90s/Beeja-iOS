@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Meditation/AppDelegate.swift"
-            timestampString = "572881450.1191469"
+            timestampString = "572957202.886097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "80"
             endingLineNumber = "80"
-            landmarkName = "applicationWillTerminate(_:)"
+            landmarkName = "application(_:open:options:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -26,7 +26,7 @@
                   moduleName = "Meditation"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/AppDelegate.swift"
-                  timestampString = "572881450.160182"
+                  timestampString = "572969122.4399281"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "80"
@@ -41,7 +41,7 @@
                   moduleName = "Meditation"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/AppDelegate.swift"
-                  timestampString = "572881450.166059"
+                  timestampString = "572969122.443241"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "81"
@@ -144,6 +144,54 @@
             startingLineNumber = "185"
             endingLineNumber = "185"
             landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/WWMLoginVC.swift"
+            timestampString = "572969331.947385"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "btnLoginWithFacebookAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/WWMLoginVC.swift"
+            timestampString = "572969331.947518"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "loginWithSocial(param:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/Home Screen/Progress Screen/WWMMyProgressStatsVC.swift"
+            timestampString = "572969331.947602"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "updateDate(date:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

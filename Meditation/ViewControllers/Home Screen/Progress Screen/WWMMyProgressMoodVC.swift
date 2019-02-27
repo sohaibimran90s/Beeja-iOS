@@ -12,8 +12,6 @@ import Charts
 
 
 class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
-    
-    
 
 
     var arrMoodData = [WWMMoodMeterData]()
@@ -197,6 +195,23 @@ class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
+    func getMoodSats() {
+        WWMHelperClass.showSVHud()
+        let param = ["user_id":"11",
+                     "month":"201902"]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let statsData = result["Response"] as? [String:Any] {
+                    
+                }
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
 
 
 }
