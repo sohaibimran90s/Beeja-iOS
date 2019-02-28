@@ -106,11 +106,10 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         let param = [
             "meditation_id" : self.selectedMeditation_Id,
             "level"         : self.selectedLevel_Id,
-            "user_id"       : self.appPreference.getUserID()
+            "user_id"       : "7"
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setUserData(value: [:])
                 self.appPreference.setIsProfileCompleted(value: true)
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false

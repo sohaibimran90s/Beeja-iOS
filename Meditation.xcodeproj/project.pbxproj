@@ -15,6 +15,8 @@
 		2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3321BE7C8E00516AFF /* WWMSignupNameVC.swift */; };
 		2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3521BE7CA800516AFF /* WWMSignupEmailVC.swift */; };
 		2E2F8A3821BE9BA200516AFF /* WWMSignupLetsStartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3721BE9BA200516AFF /* WWMSignupLetsStartVC.swift */; };
+		2E316FD52227C6D000018538 /* DBSettings+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FD32227C6D000018538 /* DBSettings+CoreDataClass.swift */; };
+		2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FD42227C6D000018538 /* DBSettings+CoreDataProperties.swift */; };
 		2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */; };
 		2E43718121FF402500EF5D62 /* DBMeditationComplete+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43717F21FF402400EF5D62 /* DBMeditationComplete+CoreDataClass.swift */; };
 		2E43718221FF402500EF5D62 /* DBMeditationComplete+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43718021FF402400EF5D62 /* DBMeditationComplete+CoreDataProperties.swift */; };
@@ -37,8 +39,6 @@
 		2E4371C922004D9A00EF5D62 /* BURMESE BELL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371BE22004D9900EF5D62 /* BURMESE BELL.mp3 */; };
 		2E4371CA22004D9A00EF5D62 /* CRYSTAL BOWL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371BF22004D9900EF5D62 /* CRYSTAL BOWL.mp3 */; };
 		2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371C022004D9900EF5D62 /* SUN KOSHI.mp3 */; };
-		2E4371CE2200889700EF5D62 /* DBSettings+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371CC2200889700EF5D62 /* DBSettings+CoreDataClass.swift */; };
-		2E4371CF2200889700EF5D62 /* DBSettings+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371CD2200889700EF5D62 /* DBSettings+CoreDataProperties.swift */; };
 		2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371D02203033300EF5D62 /* MeditationData.geojson */; };
 		2E4371D32203039E00EF5D62 /* WWMMeditationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */; };
 		2E4371D62203195C00EF5D62 /* DBMeditationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4371D42203195C00EF5D62 /* DBMeditationData+CoreDataClass.swift */; };
@@ -85,7 +85,7 @@
 		2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		2E6C8406222427180070E799 /* WWMUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C8405222427180070E799 /* WWMUserData.swift */; };
 		2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */; };
-		2E85F1612204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 */; };
+		2E85F1612204660B008073A2 /* JAY GURUDEV.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */; };
 		2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93D2D721F1B92B00163E57 /* WWMStartTimerVC.swift */; };
 		2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93D2D921F1F1F100163E57 /* WWMMoodJournalVC.swift */; };
 		2E93D2DD21F20C7100163E57 /* WWMMoodShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93D2DC21F20C7100163E57 /* WWMMoodShareVC.swift */; };
@@ -187,6 +187,8 @@
 		2E2F8A3321BE7C8E00516AFF /* WWMSignupNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupNameVC.swift; sourceTree = "<group>"; };
 		2E2F8A3521BE7CA800516AFF /* WWMSignupEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupEmailVC.swift; sourceTree = "<group>"; };
 		2E2F8A3721BE9BA200516AFF /* WWMSignupLetsStartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupLetsStartVC.swift; sourceTree = "<group>"; };
+		2E316FD32227C6D000018538 /* DBSettings+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSettings+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2E316FD42227C6D000018538 /* DBSettings+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSettings+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vibe_images.jpg; sourceTree = "<group>"; };
 		2E43717F21FF402400EF5D62 /* DBMeditationComplete+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationComplete+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2E43718021FF402400EF5D62 /* DBMeditationComplete+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationComplete+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -209,8 +211,6 @@
 		2E4371BE22004D9900EF5D62 /* BURMESE BELL.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "BURMESE BELL.mp3"; sourceTree = "<group>"; };
 		2E4371BF22004D9900EF5D62 /* CRYSTAL BOWL.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "CRYSTAL BOWL.mp3"; sourceTree = "<group>"; };
 		2E4371C022004D9900EF5D62 /* SUN KOSHI.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "SUN KOSHI.mp3"; sourceTree = "<group>"; };
-		2E4371CC2200889700EF5D62 /* DBSettings+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBSettings+CoreDataClass.swift"; path = "/Users/roshan.kumawat/Documents/Beeja/Meditation/Meditation/Database/DBSettings+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		2E4371CD2200889700EF5D62 /* DBSettings+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBSettings+CoreDataProperties.swift"; path = "/Users/roshan.kumawat/Documents/Beeja/Meditation/Meditation/Database/DBSettings+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		2E4371D02203033300EF5D62 /* MeditationData.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = MeditationData.geojson; sourceTree = "<group>"; };
 		2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationData.swift; sourceTree = "<group>"; };
 		2E4371D42203195C00EF5D62 /* DBMeditationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		2E6C840722256DFC0070E799 /* Meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meditation.entitlements; sourceTree = "<group>"; };
 		2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalVC.swift; sourceTree = "<group>"; };
-		2E85F1602204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ww_vo_jaygudurday_tk2.mp3; sourceTree = "<group>"; };
+		2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JAY GURUDEV.mp3"; sourceTree = "<group>"; };
 		2E93D2D721F1B92B00163E57 /* WWMStartTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMStartTimerVC.swift; sourceTree = "<group>"; };
 		2E93D2D921F1F1F100163E57 /* WWMMoodJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodJournalVC.swift; sourceTree = "<group>"; };
 		2E93D2DC21F20C7100163E57 /* WWMMoodShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodShareVC.swift; sourceTree = "<group>"; };
@@ -381,6 +381,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				2E316FD32227C6D000018538 /* DBSettings+CoreDataClass.swift */,
+				2E316FD42227C6D000018538 /* DBSettings+CoreDataProperties.swift */,
 				2E4371D8220319FC00EF5D62 /* DBLevelData+CoreDataClass.swift */,
 				2E4371D9220319FC00EF5D62 /* DBLevelData+CoreDataProperties.swift */,
 				2E4371D42203195C00EF5D62 /* DBMeditationData+CoreDataClass.swift */,
@@ -388,8 +390,6 @@
 				2E43718B2200284B00EF5D62 /* DBJournalList+CoreDataClass.swift */,
 				2E43718F2200284B00EF5D62 /* DBJournalList+CoreDataProperties.swift */,
 				2E4371882200284A00EF5D62 /* DBTimerData+CoreDataClass.swift */,
-				2E4371CC2200889700EF5D62 /* DBSettings+CoreDataClass.swift */,
-				2E4371CD2200889700EF5D62 /* DBSettings+CoreDataProperties.swift */,
 				2E4371892200284B00EF5D62 /* DBTimerData+CoreDataProperties.swift */,
 				2E43718E2200284B00EF5D62 /* DBContactUs+CoreDataClass.swift */,
 				2E4371902200284B00EF5D62 /* DBContactUs+CoreDataProperties.swift */,
@@ -670,7 +670,7 @@
 				2E4CE28E22087A0F00059396 /* singleLineLeft.png */,
 				2E4CE28C22087A0E00059396 /* singleLineRight.png */,
 				2E4CE2812205A4EB00059396 /* Font */,
-				2E85F1602204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 */,
+				2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */,
 				2E4371B522004D9900EF5D62 /* Chimes */,
 				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
@@ -1092,7 +1092,7 @@
 				2E4371C822004D9A00EF5D62 /* MOON KOSHI.mp3 in Resources */,
 				2E4A473F220DB22B00DF0C68 /* BIRDSONG 1.mp3 in Resources */,
 				2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */,
-				2E85F1612204660B008073A2 /* ww_vo_jaygudurday_tk2.mp3 in Resources */,
+				2E85F1612204660B008073A2 /* JAY GURUDEV.mp3 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
 			);
@@ -1256,7 +1256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E4371CE2200889700EF5D62 /* DBSettings+CoreDataClass.swift in Sources */,
 				2EE247EE21E6315400857C25 /* AlphaPieViewLayerAnimator.swift in Sources */,
 				2EE247ED21E6315400857C25 /* PieViewLayerAnimator.swift in Sources */,
 				2EE247E421E6315400857C25 /* FloatingPoint.swift in Sources */,
@@ -1278,9 +1277,9 @@
 				2EB9072C21B65C88009891E8 /* WWMSplashAnimationVC.swift in Sources */,
 				2E43718121FF402500EF5D62 /* DBMeditationComplete+CoreDataClass.swift in Sources */,
 				2EE247EF21E6315400857C25 /* PieCustomViewsLayer.swift in Sources */,
+				2E316FD52227C6D000018538 /* DBSettings+CoreDataClass.swift in Sources */,
 				2E4CE28722083A0000059396 /* WWMStatsCalCollectionViewCell.swift in Sources */,
 				2E5CCE9421C79ED10085224B /* WWMCommunityVC.swift in Sources */,
-				2E4371CF2200889700EF5D62 /* DBSettings+CoreDataProperties.swift in Sources */,
 				2EC81C5A21E76F67003B0EEE /* WWMMoodMeterLogVC.swift in Sources */,
 				2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */,
 				2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */,
@@ -1305,6 +1304,7 @@
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,
 				2E4371DA220319FC00EF5D62 /* DBLevelData+CoreDataClass.swift in Sources */,
 				2E2F8A3221BE6FB700516AFF /* WWMBaseViewController.swift in Sources */,
+				2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */,
 				2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */,
 				2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */,
 				2E4371D62203195C00EF5D62 /* DBMeditationData+CoreDataClass.swift in Sources */,

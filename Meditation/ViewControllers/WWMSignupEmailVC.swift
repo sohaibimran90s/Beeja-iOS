@@ -55,7 +55,7 @@ class WWMSignupEmailVC: WWMBaseViewController {
             "deviceToken" : appPreference.getDeviceToken(),
             "deviceId": UIDevice.current.identifierForVendor!.uuidString,
             "DeviceType": kDeviceType,
-            "loginType": kLoginTypeGoogle,
+            "loginType": kLoginTypeEmail,
             "profileImage":"",
             "socialId":"",
             "name":self.name
@@ -94,7 +94,6 @@ class WWMSignupEmailVC: WWMBaseViewController {
             if sucess {
                 
                 self.appPreference.setIsLogin(value: true)
-                self.appPreference.setUserData(value: result)
                 if let isProfileCompleted = result["IsProfileCompleted"] as? Bool {
                     if isProfileCompleted {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC

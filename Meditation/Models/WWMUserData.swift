@@ -7,58 +7,73 @@
 //
 
 import UIKit
-
+//"id": 11,
+//"name": "Abhi Agrawal",
+//"email": "abhi@mailinator.com",
+//"remember_token": "HlmLMbzMzalzoYcKfkrOUwu0HLVdKUKu",
+//"profile_image": null,
+//"social_id": "",
+//"meditation_id": 1,
+//"level_id": 1,
+//"is_active": 1,
+//"is_subscribed": 1,
+//"latitude": "26.989824",
+//"longitude": "75.8735234",
+//"city": "Gurgaon",
+//"country": "India",
+//"created_at": "2019-02-26 07:39:53",
+//"updated_at": "2019-02-28 06:07:21",
+//"deleted_at": null
 class WWMUserData: NSObject {
 
+    
+    
+    
+    
+    
+    
     var userId = String()
-    var token = String()
     var name = String()
     var email   = String()
+    var remember_token   = String()
     var profileImage   = String()
-    var isActive   = Bool()
-    var isSubscription   = Bool()
-    var isAfternoonReminder   = Bool()
-    var isMorningReminder   = Bool()
-    var moodMeterEnable   = Bool()
+    var is_active   = Bool()
+    var is_subscribed   = Bool()
+    var social_id = String()
+    var latitude = String()
+    var longitude = String()
+    var city = String()
+    var country = String()
+    var created_at = String()
+    var updated_at = String()
+    var deleted_at = String()
     
-    var startChime   = String()
-    var endChime   = String()
-    var finishChime   = String()
-    var intervalChime   = String()
-    var ambientChime   = String()
-    var morningReminderTime   = String()
-    var afternoonReminderTime   = String()
-    
-    var meditationType = [WWMMeditationData()]
+    var meditation_id = Int()
+    var level_id = Int()
     
     override init() {
         
     }
     init(json:[String:Any]) {
-        userId = json["userId"] as? String ?? ""
-        token = json["token"] as? String ?? ""
+        userId = "\(json["id"] ?? "")"
+        remember_token = json["remember_token"] as? String ?? ""
         name = json["name"] as? String ?? ""
         email = json["email"] as? String ?? ""
-        profileImage = json["profileImage"] as? String ?? ""
-        isActive = json["isActive"] as? Bool ?? false
-        isSubscription = json["isSubscription"] as? Bool ?? false
-        startChime = json["startChime"] as? String ?? ""
-        endChime = json["endChime"] as? String ?? ""
-        finishChime = json["finishChime"] as? String ?? ""
-        intervalChime = json["intervalChime"] as? String ?? ""
-        ambientChime = json["ambientChime"] as? String ?? ""
-        morningReminderTime = json["morningReminderTime"] as? String ?? ""
-        afternoonReminderTime = json["afternoonReminderTime"] as? String ?? ""
-        moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
-        isAfternoonReminder = json["isAfternoonReminder"] as? Bool ?? false
-        isMorningReminder = json["isMorningReminder"] as? Bool ?? false
+        profileImage = json["profile_image"] as? String ?? ""
+        social_id = json["social_id"] as? String ?? ""
         
-        if let arrMeditationType = json["meditationType"] as? [[String:Any]]{
-            for dict in arrMeditationType {
-                let data = WWMMeditationData.init(json: dict)
-                meditationType.append(data)
-            }
-        }
+        latitude = json["latitude"] as? String ?? ""
+        longitude = json["longitude"] as? String ?? ""
+        city = json["city"] as? String ?? ""
+        country = json["country"] as? String ?? ""
+        created_at = json["created_at"] as? String ?? ""
+        updated_at = json["updated_at"] as? String ?? ""
+        deleted_at = json["deleted_at"] as? String ?? ""
         
+        meditation_id = json["meditation_id"] as? Int ?? -1
+        level_id = json["level_id"] as? Int ?? -1
+        
+        is_active = json["is_active"] as? Bool ?? false
+        is_subscribed = json["is_subscribed"] as? Bool ?? false
     }
 }

@@ -17,12 +17,18 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UIView!
-    @IBOutlet weak var lblHourMeditate: UILabel!
+    @IBOutlet weak var lblMeditate: UILabel!
+    @IBOutlet weak var lblNameMeditate: UILabel!
+    
     @IBOutlet weak var lblAvMinutes: UILabel!
     @IBOutlet weak var lblDailyfrequency: UILabel!
     @IBOutlet weak var lblAvSession: UILabel!
+    @IBOutlet weak var lblValueSession: UILabel!
+    @IBOutlet weak var lblValueDays: UILabel!
     @IBOutlet weak var lblLongestSession: UILabel!
     @IBOutlet weak var viewAvMinutes: UIView!
+    @IBOutlet weak var viewDays: UIView!
+    @IBOutlet weak var viewSomeGoals: UIView!
     var statsData = WWMSatsProgressData()
     var dayAdded = -1
     var monthValue = 0
@@ -43,18 +49,24 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     func setUpUI() {
         self.updateDate(date: Date())
         DispatchQueue.main.async {
-           // self.viewAvMinutes.layer.cornerRadius = self.viewAvMinutes.frame.size.height/2
-           // self.viewAvMinutes.layer.borderWidth = 1.0
-           // self.viewAvMinutes.layer.borderColor = UIColor.lightGray.cgColor
-            
-           // self.viewHourMeditate.layer.cornerRadius = //self.viewHourMeditate.frame.size.height/2
-          //  self.viewHourMeditate.layer.borderWidth = 1.0
-          //  self.viewHourMeditate.layer.borderColor = UIColor.lightGray.cgColor
+            self.viewDays.layer.borderWidth = 2.0
+            self.viewDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            self.viewAvMinutes.layer.borderWidth = 2.0
+            self.viewAvMinutes.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            self.viewSomeGoals.layer.borderWidth = 2.0
+            self.viewSomeGoals.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            self.viewHourMeditate.layer.borderWidth = 2.0
+            self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         }
         
     }
     
     func updateDate(date : Date) {
+        if self.monthValue == 0 {
+            self.btnNextMonth.isHidden = true
+        }else {
+            self.btnNextMonth.isHidden = false
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         
@@ -65,7 +77,6 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         
         dateFormatter.dateFormat = "MMM, yyyy"
         self.lblMonthYear.text = dateFormatter.string(from: date)
-        self.btnNextMonth.isHidden = true
         
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: date)
@@ -88,19 +99,20 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     @IBAction func btnAddJournalAction(_ sender: Any) {
         
     }
-    
+    @IBAction func btnLeftAction(_ sender: Any) {
+        
+    }
+    @IBAction func btnRightAction(_ sender: Any) {
+        
+    }
     @IBAction func btnNextMonthAction(_ sender: Any) {
         monthValue = monthValue+1
-        if monthValue == 0 {
-            self.btnNextMonth.isHidden = true
-        }
          let nextMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
         self.updateDate(date: nextMonth!)
     }
     
     @IBAction func btnPreviousMonthAction(_ sender: Any) {
         monthValue = monthValue-1
-        self.btnNextMonth.isHidden = true
         let previousMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
         self.updateDate(date: previousMonth!)
     }
@@ -124,17 +136,17 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         cell.imgViewRight.isHidden = true
         let data = statsData.consecutive_days[indexPath.row-dayAdded]
         
-        if indexPath.row-dayAdded > 0 {
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status2 == 0) {
-                cell.imgViewRight.isHidden = false
-            }
-        }else if indexPath.row-dayAdded == self.statsData.consecutive_days.count-1 {
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) {
-                cell.imgViewRight.isHidden = false
-            }
-        }else {
-            
-        }
+//        if indexPath.row-dayAdded > 0 {
+//            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status2 == 0) {
+//                cell.imgViewRight.isHidden = false
+//            }
+//        }else if indexPath.row-dayAdded == self.statsData.consecutive_days.count-1 {
+//            if !(data.meditation_status == 0 && data.meditation_status2 == 0) {
+//                cell.imgViewRight.isHidden = false
+//            }
+//        }else {
+//
+//        }
         
         if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
             cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!

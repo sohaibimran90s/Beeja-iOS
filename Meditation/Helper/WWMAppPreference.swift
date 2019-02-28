@@ -31,7 +31,7 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "lastLoginDate")
         defaults.synchronize()
     }
-    func setUserData(value:[String:Any]) {
+    func setUserData(value:[String : Any]) {
         defaults.set(value, forKey: "UserData")
         defaults.synchronize()
     }

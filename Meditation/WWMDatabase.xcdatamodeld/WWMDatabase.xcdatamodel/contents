@@ -46,6 +46,7 @@
         <attribute name="prepTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="restTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startChime" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="meditationData" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBMeditationData" syncable="YES"/>
     </entity>
     <entity name="DBTimerData" representedClassName="DBTimerData" syncable="YES">
         <attribute name="levelId" optional="YES" attributeType="String" syncable="YES"/>
@@ -57,11 +58,11 @@
     <elements>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="60"/>
+        <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
         <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="105"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
-        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="240"/>
+        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="255"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
-        <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
     </elements>
 </model>

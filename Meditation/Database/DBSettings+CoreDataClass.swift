@@ -1,8 +1,9 @@
 //
 //  DBSettings+CoreDataClass.swift
-//  
+//  Meditation
 //
-//  Created by Roshan Kumawat on 29/01/19.
+//  Created by Roshan Kumawat on 28/02/19.
+//  Copyright © 2019 Cedita. All rights reserved.
 //
 //
 

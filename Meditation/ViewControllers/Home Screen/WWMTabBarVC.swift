@@ -8,16 +8,68 @@
 
 import UIKit
 import Lottie
+import CoreLocation
 
 class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
 
     let layerGradient = CAGradientLayer()
+    var currentLocation: CLLocation!
+    var city = ""
+    var country = ""
+    var lat = ""
+    var long = ""
+    let appPreffrence = WWMAppPreference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         setupView()
-        
-        self.setDataToDb()
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            
+            currentLocation = locManager.location
+            lat = "\(currentLocation.coordinate.latitude)"
+            long = "\(currentLocation.coordinate.longitude)"
+            // Add below code to get address for touch coordinates.
+            let geoCoder = CLGeocoder()
+            //let location = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
+                {
+                    placemarks, error -> Void in
+                    
+                    // Place details
+                    guard let placeMark = placemarks?.first else { return }
+                    
+                    // Location name
+                    if let locationName = placeMark.location {
+                        print(locationName)
+                    }
+                    // Street address
+                    if let street = placeMark.thoroughfare {
+                        print(street)
+                    }
+                    // City
+                    if let cityPlace = placeMark.subAdministrativeArea {
+                        self.city = cityPlace
+                        print(self.city)
+                    }
+                    // Zip code
+                    if let zip = placeMark.isoCountryCode {
+                        print(zip)
+                    }
+                    // Country
+                    if let countryPlace = placeMark.country {
+                        self.country = countryPlace
+                        print(self.country)
+                    }
+                    self.getUserProfileData()
+            })
+            
+        }else {
+            self.getUserProfileData()
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -39,28 +91,65 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
     
 
     
-    func setDataToDb() {
+    func setDataToDb(json:[String:Any]) {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             WWMHelperClass.deletefromDb(dbName: "DBSettings")
         }
-        
         let settingDB = WWMHelperClass.fetchEntity(dbName: "DBSettings") as! DBSettings
-        settingDB.afterNoonReminderTime = "14:15"
-        settingDB.ambientChime = kAmbient_WAVES_CHIMES
-        settingDB.endChime = kChimes_HIMALAYAN_BELL
-        settingDB.finishChime = kChimes_SUN_KOSHI
-        settingDB.intervalChime = kChimes_BURMESE_BELL
-        settingDB.isAfterNoonReminder = false
-        settingDB.isMorningReminder = false
-        settingDB.moodMeterEnable = true
-        settingDB.morningReminderTime = "06:30"
-        settingDB.startChime = kChimes_CHIME
+        
+        settingDB.startChime = json["startChime"] as? String ?? ""
+        settingDB.ambientChime = json["ambientSound"] as? String ?? ""
+        settingDB.endChime = json["endChime"] as? String ?? ""
+        settingDB.finishChime = json["finishChime"] as? String ?? ""
+        settingDB.intervalChime = json["intervalChime"] as? String ?? ""
+        settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
+        settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
+        settingDB.moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
+        settingDB.morningReminderTime = json["MorningReminderTime"] as? String ?? ""
+        settingDB.afterNoonReminderTime = json["AfternoonReminderTime"] as? String ?? ""
+        
         settingDB.prepTime = "10"
         settingDB.meditationTime = "90"
         settingDB.restTime = "20"
         
+        
+        var arrMeditationData = [WWMMeditationData]()
+        if let dataMeditation = json["meditation_data"] as? [[String:Any]]{
+            for dict in dataMeditation {
+                let data = WWMMeditationData.init(json: dict)
+                arrMeditationData.append(data)
+            }
+        }
+        
+        for  index in 0..<arrMeditationData.count {
+            let dataM = arrMeditationData[index]
+            let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
+            meditationDB.meditationId = "\(dataM.meditationId)"
+            meditationDB.meditationName = dataM.meditationName
+            meditationDB.isMeditationSelected = dataM.isSelected
+            
+            for  index in 0..<dataM.levels.count {
+                let dic = dataM.levels[index]
+                let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
+                levelDB.isLevelSelected = dic.isSelected
+                levelDB.levelId = Int32(dic.levelId)
+                levelDB.levelName = dic.levelName
+                levelDB.prepTime = Int32(dic.prepTime)!
+                levelDB.meditationTime = Int32(dic.meditationTime)!
+                levelDB.restTime = Int32(dic.restTime)!
+                levelDB.minPrep = Int32(dic.minPrep)!
+                levelDB.minRest = Int32(dic.minRest)!
+                levelDB.minMeditation = Int32(dic.minMeditation)!
+                levelDB.maxPrep = Int32(dic.maxPrep)!
+                levelDB.maxRest = Int32(dic.maxRest)!
+                levelDB.maxMeditation = Int32(dic.maxMeditation)!
+                meditationDB.addToLevels(levelDB)
+            }
+            settingDB.addToMeditationData(meditationDB)
+        }
         WWMHelperClass.saveDb()
+        
     }
 
     // UITabBarDelegate
@@ -81,7 +170,28 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
     }
     
     func getUserProfileData() {
-        
+        WWMHelperClass.showSVHud()
+        let param = [
+            "user_id":7,
+            "lat": lat,
+            "long":long,
+            "city":city,
+            "country":country
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                var userData = WWMUserData()
+                userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
+                print(userData)
+                //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                self.setDataToDb(json: result["settings"] as! [String:Any])
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
     
 }

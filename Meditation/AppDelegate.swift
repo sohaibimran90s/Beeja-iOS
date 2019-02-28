@@ -13,6 +13,7 @@ import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
 import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
         
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
 //        // Analytics
 //
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [

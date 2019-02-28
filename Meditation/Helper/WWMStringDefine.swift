@@ -63,7 +63,7 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 
 // MARK:- Jai Guru Dev Mantra
 
-let kChimes_JaiGuruDev                          = "ww_vo_jaygudurday_tk2"
+let kChimes_JaiGuruDev                          = "JAY GURUDEV"
 
 #if DEVELOPMENT
 let URL_BASE  = "http://staging.beejameditation.com/api/v1/"
