@@ -46,12 +46,12 @@ class WWMSupportVC: WWMBaseViewController {
     
     func submitQueryAPI() {
         let param = [
-                      "user_id" : 1,
+                      "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
                       "email" : txtViewEmail.text!,
                       "queryText" : txtViewQuery.text!
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)
                 WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)

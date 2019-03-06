@@ -83,9 +83,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     // MARK:- UITextField Delegate Methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if self.player.currentTime > 0 {
-           self.player.stop()
-        }
+//        if self.player.currentTime > 0 {
+//           self.player.stop()
+//        }
+        callPushNotification()
+        self.settingAPI()
         self.tblViewSetting.reloadData()
     }
     
@@ -161,7 +163,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     return ((data.levels?.count)!+1)
                 }
             }
-            return 1
+            return 0
         }else {
             return arrSettings.count+1
         }
@@ -251,7 +253,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     cell.btnSwitch.isOn = settingData.moodMeterEnable
                 }
                 
-            }else {
+            }else if indexPath.row == 2 || indexPath.row == 4  {
+                
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
                 cell.lblTitle.text = self.arrSettings[indexPath.row-1]
                 cell.lblTime.isHidden = false
@@ -281,9 +284,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.btnPicker.indexPath = indexPath
                         cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
                     }
-                }else {
-                    cell.lblTime.isHidden = true
                 }
+            }else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
+                cell.lblTitle.text = self.arrSettings[indexPath.row-1]
             }
         }
         return cell
@@ -314,6 +318,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         
                     }
                 }
+                self.settingAPI()
                 self.tblViewSetting.reloadData()
             }
             
@@ -422,18 +427,27 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
 
     
+    func callPushNotification() {
+        AppDelegate.sharedDelegate().setLocalPush()
+    }
+    
     // MARK: - UIButton Action
+    
+    
     
     
     @IBAction func btnSwitchAction(_ sender: Any) {
         let btn = sender as! UISwitch
         if btn.tag == 1 {
             settingData.isMorningReminder = btn.isOn
+            callPushNotification()
         }else if btn.tag == 3 {
             settingData.isAfterNoonReminder = btn.isOn
+            callPushNotification()
         }else if btn.tag == 5 {
             settingData.moodMeterEnable = btn.isOn
         }
+        self.settingAPI()
         self.tblViewSetting.reloadData()
     }
     
@@ -443,21 +457,69 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func settingAPI() {
         WWMHelperClass.showSVHud()
+        
+        var meditation_data = [[String:Any]]()
+        let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
+        for dic in meditationData!{
+                let levels = dic.levels?.array as? [DBLevelData]
+                var levelDic = [[String:Any]]()
+                for level in levels! {
+                    let leveldata = [
+                                     "level_id": level.levelId,
+                                     "isSelected": level.isLevelSelected,
+                                     "name": level.levelName!,
+                                     "prep_time": "\(level.prepTime)",
+                                     "meditation_time": "\(level.meditationTime)",
+                                     "rest_time": "\(level.restTime)",
+                                     "prep_min": "\(level.minPrep)",
+                                     "prep_max": "\(level.maxPrep)",
+                                     "med_min": "\(level.minMeditation)",
+                                     "med_max": "\(level.maxMeditation)",
+                                     "rest_min": "\(level.minRest)",
+                                     "rest_max": "\(level.maxRest)"
+                        ] as [String : Any]
+                    levelDic.append(leveldata)
+                }
+            
+            let data = ["meditation_id":dic.meditationId!,
+                        "meditation_name":dic.meditationName!,
+                        "isSelected":dic.isMeditationSelected,
+                        "levels":levelDic] as [String : Any]
+            meditation_data.append(data)
+        }
+        
+        let group = [
+            "startChime": self.settingData.startChime!,
+            "endChime": self.settingData.endChime!,
+            "finishChime": self.settingData.finishChime!,
+            "intervalChime": self.settingData.intervalChime!,
+            "ambientSound": self.settingData.ambientChime!,
+            "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMorningReminder": self.settingData.isMorningReminder,
+            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "meditation_data" : meditation_data
+            ] as [String : Any]
+        
         let param = [
-            "token" : appPreference.getToken()
-        ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            "user_id": self.appPreference.getUserID(),
+            "isJson": true,
+            "group": group
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setIsLogin(value: false)
-                self.appPreference.setUserToken(value: "")
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                let vcc = UINavigationController.init(rootViewController: vc)
-                UIApplication.shared.keyWindow?.rootViewController = vcc
+                if let success = result["success"] as? Bool {
+                    print(success)
+                }
             }else {
-                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                if error != nil {
+                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
             }
             WWMHelperClass.dismissSVHud()
-        }
+            }
     }
     
     func logoutAPI() {
@@ -465,10 +527,12 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let param = [
             "token" : appPreference.getToken()
         ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsLogin(value: false)
                 self.appPreference.setUserToken(value: "")
+                self.appPreference.setUserID(value: "")
+                self.appPreference.setIsProfileCompleted(value: false)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc

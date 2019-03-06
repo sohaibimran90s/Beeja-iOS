@@ -15,6 +15,7 @@ class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataS
 
 
     var arrMoodData = [WWMMoodMeterData]()
+    var moodProgressDurationView = WWMMoodProgressDurationView()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +25,28 @@ class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataS
         // Do any additional setup after loading the view.
     }
     
+    // MARK:- UIButton Action
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        moodProgressDurationView.removeFromSuperview()
+    }
+    
+    @IBAction func btnChangeDurationAction(_ sender: Any) {
+        moodProgressDurationView = UINib(nibName: "WWMMoodProgressDurationView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMoodProgressDurationView
+        let window = UIApplication.shared.keyWindow!
+        
+        moodProgressDurationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        moodProgressDurationView.btnYear.layer.borderWidth = 2.0
+        moodProgressDurationView.btnYear.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnMonth.layer.borderWidth = 2.0
+        moodProgressDurationView.btnMonth.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        
+        moodProgressDurationView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        
+        window.rootViewController?.view.addSubview(moodProgressDurationView)
+    }
 
     // MARK:- UITable View Delegates Methods
     
@@ -195,11 +218,11 @@ class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
-    func getMoodSats() {
+    func getMoodProgress() {
         WWMHelperClass.showSVHud()
         let param = ["user_id":"11",
                      "month":"201902"]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let statsData = result["Response"] as? [String:Any] {
                     

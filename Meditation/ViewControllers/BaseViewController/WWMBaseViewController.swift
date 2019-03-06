@@ -11,10 +11,14 @@ import UIKit
 class WWMBaseViewController: UIViewController {
 
     let appPreference = WWMAppPreference()
-    var userData = WWMUserData()
+    var userData = WWMUserData.sharedInstance
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if self.appPreference.isLogout() {
+            userData = WWMUserData.init(json: self.appPreference.getUserData())
+        }
+        
         // Do any additional setup after loading the view.
     }
     

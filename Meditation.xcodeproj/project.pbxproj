@@ -17,6 +17,13 @@
 		2E2F8A3821BE9BA200516AFF /* WWMSignupLetsStartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2F8A3721BE9BA200516AFF /* WWMSignupLetsStartVC.swift */; };
 		2E316FD52227C6D000018538 /* DBSettings+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FD32227C6D000018538 /* DBSettings+CoreDataClass.swift */; };
 		2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FD42227C6D000018538 /* DBSettings+CoreDataProperties.swift */; };
+		2E316FD82228080F00018538 /* WWMAddSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FD72228080F00018538 /* WWMAddSessionView.swift */; };
+		2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E316FD92228082500018538 /* WWMAddSessionView.xib */; };
+		2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FDB222812A200018538 /* WWMMoodProgressDurationView.swift */; };
+		2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E316FDD222812B300018538 /* WWMMoodProgressDurationView.xib */; };
+		2E316FE02229346F00018538 /* WWMSetMyOwnVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FDF2229346F00018538 /* WWMSetMyOwnVC.swift */; };
+		2E326ECB222EB4B700A0F1A1 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */; };
+		2E326ECD222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */; };
 		2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */; };
 		2E43718121FF402500EF5D62 /* DBMeditationComplete+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43717F21FF402400EF5D62 /* DBMeditationComplete+CoreDataClass.swift */; };
 		2E43718221FF402500EF5D62 /* DBMeditationComplete+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E43718021FF402400EF5D62 /* DBMeditationComplete+CoreDataProperties.swift */; };
@@ -189,6 +196,13 @@
 		2E2F8A3721BE9BA200516AFF /* WWMSignupLetsStartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupLetsStartVC.swift; sourceTree = "<group>"; };
 		2E316FD32227C6D000018538 /* DBSettings+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSettings+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2E316FD42227C6D000018538 /* DBSettings+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSettings+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2E316FD72228080F00018538 /* WWMAddSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddSessionView.swift; sourceTree = "<group>"; };
+		2E316FD92228082500018538 /* WWMAddSessionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAddSessionView.xib; sourceTree = "<group>"; };
+		2E316FDB222812A200018538 /* WWMMoodProgressDurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressDurationView.swift; sourceTree = "<group>"; };
+		2E316FDD222812B300018538 /* WWMMoodProgressDurationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMoodProgressDurationView.xib; sourceTree = "<group>"; };
+		2E316FDF2229346F00018538 /* WWMSetMyOwnVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSetMyOwnVC.swift; sourceTree = "<group>"; };
+		2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
+		2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMBackgroundVedioView.swift; sourceTree = "<group>"; };
 		2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vibe_images.jpg; sourceTree = "<group>"; };
 		2E43717F21FF402400EF5D62 /* DBMeditationComplete+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationComplete+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2E43718021FF402400EF5D62 /* DBMeditationComplete+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationComplete+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -575,7 +589,12 @@
 			isa = PBXGroup;
 			children = (
 				2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */,
+				2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */,
 				2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */,
+				2E316FDB222812A200018538 /* WWMMoodProgressDurationView.swift */,
+				2E316FDD222812B300018538 /* WWMMoodProgressDurationView.xib */,
+				2E316FD72228080F00018538 /* WWMAddSessionView.swift */,
+				2E316FD92228082500018538 /* WWMAddSessionView.xib */,
 				2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */,
 				2E25CDC822269BE6002BDE15 /* WWMAddJournalView.xib */,
 			);
@@ -674,6 +693,7 @@
 				2E4371B522004D9900EF5D62 /* Chimes */,
 				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
+				2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */,
 				2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */,
 			);
 			path = Resources;
@@ -711,6 +731,7 @@
 				2E2F8A3721BE9BA200516AFF /* WWMSignupLetsStartVC.swift */,
 				2EA6DB0521C38A9D006A8E1D /* WWMMeditationListVC.swift */,
 				2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */,
+				2E316FDF2229346F00018538 /* WWMSetMyOwnVC.swift */,
 				2EB9072921B65C88009891E8 /* WWMSplashAnimationVC.swift */,
 				2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */,
 			);
@@ -1070,6 +1091,7 @@
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
+				2E326ECB222EB4B700A0F1A1 /* Burn.mp4 in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
 				2EC81C5821E75BCF003B0EEE /* MoodMeterData.geojson in Resources */,
@@ -1084,6 +1106,8 @@
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
+				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
+				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
@@ -1260,6 +1284,7 @@
 				2EE247ED21E6315400857C25 /* PieViewLayerAnimator.swift in Sources */,
 				2EE247E421E6315400857C25 /* FloatingPoint.swift in Sources */,
 				2E25CDC3222674FD002BDE15 /* WWMTabBarItem.swift in Sources */,
+				2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */,
 				2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */,
 				2E93D2FB21F5D14900163E57 /* WWMHelperClass.swift in Sources */,
 				2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */,
@@ -1289,6 +1314,7 @@
 				2EE247E621E6315400857C25 /* CGPoint.swift in Sources */,
 				2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */,
 				2E4371D32203039E00EF5D62 /* WWMMeditationData.swift in Sources */,
+				2E326ECD222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift in Sources */,
 				2EE247AC21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift in Sources */,
 				2EE247F321E6315400857C25 /* PieSliceData.swift in Sources */,
 				2E6C8406222427180070E799 /* WWMUserData.swift in Sources */,
@@ -1347,12 +1373,14 @@
 				2E4371922200284C00EF5D62 /* DBTimerData+CoreDataClass.swift in Sources */,
 				2E4A4730220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift in Sources */,
 				2E4966172218089D00BC6219 /* WWMCommunityCollectionViewCell.swift in Sources */,
+				2E316FD82228080F00018538 /* WWMAddSessionView.swift in Sources */,
 				2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */,
 				2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */,
 				2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */,
 				2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */,
 				2EE247E221E6315400857C25 /* Globals.swift in Sources */,
 				2EE247E021E6315400857C25 /* PieChartDelegate.swift in Sources */,
+				2E316FE02229346F00018538 /* WWMSetMyOwnVC.swift in Sources */,
 				2E93D2FF21F5FFC300163E57 /* WWMDatabase.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1533,6 +1561,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				INFOPLIST_FILE = Meditation/Info.plist;
@@ -1543,10 +1572,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1557,6 +1587,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				INFOPLIST_FILE = Meditation/Info.plist;
@@ -1567,9 +1598,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -20,7 +20,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var prepTime = 0
     var meditationTime = 0
     var restTime = 0
-    
+    var backgroundvedioView = WWMBackgroundVedioView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -57,8 +57,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.navigationController?.isNavigationBarHidden = false
             self.navigationController?.popToRootViewController(animated: false)
         }else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
-            self.navigationController?.pushViewController(vc, animated: true)
+            backgroundvedioView.frame = self.view.frame
+            backgroundvedioView.createBackground(name: "Burn", type: "mp4")
+            self.view.addSubview(backgroundvedioView)
+            
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
        
     }

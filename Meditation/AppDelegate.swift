@@ -13,16 +13,19 @@ import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
 import UserNotifications
-import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
     
 
     
     var window: UIWindow?
     let appPreference = WWMAppPreference()
-    
+    let center = UNUserNotificationCenter.current()
+
+    static func sharedDelegate () -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -43,8 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
         
-        let locManager = CLLocationManager()
-        locManager.requestWhenInUseAuthorization()
 //        // Analytics
 //
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -52,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            AnalyticsParameterItemName: "Roshan Login in Beeja app",
 //            AnalyticsParameterContentType: "App Login"
 //            ])
+        self.requestAuthorization()
+        self.setLocalPush()
         
         return true
     }
@@ -90,6 +93,103 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    
+    
+    // MARK:- Local Notification
+    //Local Notification Request Authorization.
+    func requestAuthorization(){
+        center.requestAuthorization(options: [.alert, .sound]){(granted, error) in
+            if error == nil{
+                print("Permission Granted")
+            }
+        }
+        center.delegate = self
+    }
+    
+    
+    
+    func setLocalPush(){
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+          let settingData = data[0]
+            if settingData.isMorningReminder {
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
+                var strDate = dateFormate.string(from: Date())
+                strDate = strDate + " \(settingData.morningReminderTime!)"
+                dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                print(settingData.morningReminderTime!)
+                let date = dateFormate.date(from: strDate)
+                print(date!)
+                
+               // let timeStemp = Int(date!.timeIntervalSince1970)
+                let content = UNMutableNotificationContent()
+                content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.sound = UNNotificationSound.default
+                content.threadIdentifier = "local-notifications-MorningReminder"
+                //print(Int(Date().timeIntervalSince1970))
+                //print(timeStemp)
+                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+               // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
+               // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
+                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
+                toDateComponents.second = 0
+                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                    //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
+                let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
+                    }
+                
+                
+            }
+            if settingData.isAfterNoonReminder {
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
+                var strDate = dateFormate.string(from: Date())
+                strDate = strDate + " \(settingData.afterNoonReminderTime!)"
+                dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                print(settingData.afterNoonReminderTime!)
+                let date = dateFormate.date(from: strDate)
+                print(date!)
+                
+               // let timeStemp = Int(date!.timeIntervalSince1970)
+                let content = UNMutableNotificationContent()
+                content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.sound = UNNotificationSound.default
+                content.threadIdentifier = "local-notifications-AfterNoonReminder"
+               // print(Int(Date().timeIntervalSince1970))
+               // print(timeStemp)
+                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+                   // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: false)
+                    var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
+                    toDateComponents.second = 0
+                    let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                    let request = UNNotificationRequest(identifier: "AfternoonTimer", content: content, trigger: notificationTrigger)
+                    //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+                    
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
+                    }
+                
+                
+            }
+        }
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+        
+    }
     // MARK:- Push Notification
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }

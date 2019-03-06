@@ -31,35 +31,46 @@ class WWMTimerHomeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpView()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.getSettingData),
+            name: NSNotification.Name(rawValue: "GETSettingData"),
+            object: nil)
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
-        for dic in data{
-            if dic.isMeditationSelected {
-                self.selectedMeditationData = dic
-                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                for level in levels! {
-                    if level.isLevelSelected {
-                        selectedLevelData = level
-                        self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+        self.getSettingData()
+    }
+    
+    @objc func getSettingData() {
+        print(self.userData.name)
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+            let meditationData = settingData.meditationData!.array as? [DBMeditationData]
+            for dic in meditationData!{
+                if dic.isMeditationSelected {
+                    self.selectedMeditationData = dic
+                    let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+                    for level in levels! {
+                        if level.isLevelSelected {
+                            selectedLevelData = level
+                            self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+                            self.setUpSliderTimesAccordingToLevels()
+                        }
                     }
                 }
             }
         }
-        
-        self.setUpSliderTimesAccordingToLevels()
     }
+    
+    
     func setUpView() {
         self.setUpNavigationBarForDashboard(title: "Timer")
         self.btnStartTimer.layer.borderWidth = 2.0
         self.btnStartTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
-        }
-        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-        if data.count > 0 {
-            settingData = data[0]
         }
     }
     func setAnimationForExpressMood() {
@@ -195,16 +206,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

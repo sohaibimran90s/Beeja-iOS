@@ -67,6 +67,10 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: kUserToken) ?? ""
     }
     
+    func getUserData() -> [String:Any] {
+        return UserDefaults.standard.dictionary(forKey: "UserData")!
+    }
+    
     
     func isProfileComplete() -> Bool {
         return UserDefaults.standard.bool(forKey: "IsProfileCompleted")

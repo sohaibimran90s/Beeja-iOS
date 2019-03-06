@@ -10,7 +10,6 @@ import UIKit
 
 class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
 
-//    let arrMeditationList = ["Vedic","Vipassana","Transcendential","Zen","Mindfulness","Set My Own"]
     var arrMeditationDataList = [DBMeditationData]()
     @IBOutlet weak var tblMeditationList: UITableView!
     override func viewDidLoad() {
@@ -36,7 +35,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.arrMeditationDataList.count
+        return self.arrMeditationDataList.count+1
     }
     
     // create a cell for each table view row
@@ -45,12 +44,17 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
         var cell:UITableViewCell = UITableViewCell()
             cell = tableView.dequeueReusableCell(withIdentifier: "secondCell")!
         
-        let data = self.arrMeditationDataList[indexPath.row]
-            let btn = cell.viewWithTag(101) as! UIButton
+        let btn = cell.viewWithTag(101) as! UIButton
+        
+        btn.layer.borderWidth = 2.0
+        btn.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        if indexPath.row == self.arrMeditationDataList.count {
+            btn.setTitle("Set MY Own", for: .normal)
+        }else {
+            let data = self.arrMeditationDataList[indexPath.row]
             btn.setTitle(data.meditationName, for: .normal)
-            btn.layer.borderWidth = 2.0
-            btn.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            
+        }
         
         return cell
     }
@@ -58,6 +62,10 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
+        if indexPath.row == self.arrMeditationDataList.count {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSetMyOwnVC") as! WWMSetMyOwnVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
         for index in 0..<arrMeditationDataList.count {
             if index == indexPath.row {
                 arrMeditationDataList[index].isMeditationSelected = true
@@ -66,24 +74,10 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
             }
         }
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
-            self.navigationController?.pushViewController(vc, animated: false)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         
     }
 
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        var cellHeight:CGFloat = tableView.frame.size.height
-//        let numberOfCell = self.arrMeditationList.count+1
-//        cellHeight = cellHeight / CGFloat(numberOfCell)
-//        return cellHeight
-//    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

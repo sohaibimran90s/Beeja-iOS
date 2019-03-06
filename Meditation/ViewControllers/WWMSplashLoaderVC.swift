@@ -26,7 +26,8 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: "b96BKmGNsXnEyf4DR3KRMYfI6AIsl6UcD4nwLgDT+vQ=", key: key)
         print("decryptedString \(decryptedString! as String)")
         
-        
+        print(UIDevice.current.localizedModel)
+        print(UIDevice.current.model)
         
         
 //        do {
@@ -98,11 +99,11 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         }
     }
     func saveMeditationDataToDB(data:[String:Any]) {
-        let dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        var dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         if dbData.count > 0 {
              WWMHelperClass.deletefromDb(dbName: "DBMeditationData")
         }
-    
+     
         var arrMeditationData = [WWMMeditationData]()
         if let dataMeditation = data["result"] as? [[String:Any]]{
             for dict in dataMeditation {
@@ -136,6 +137,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 WWMHelperClass.saveDb()
             }
         
+        dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                     self.loadSplashScreenafterDelay()

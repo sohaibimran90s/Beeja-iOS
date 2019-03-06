@@ -25,7 +25,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
         self.delegate = self
         setupView()
         let locManager = CLLocationManager()
-        locManager.requestWhenInUseAuthorization()
+        locManager.requestAlwaysAuthorization()
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways){
             
@@ -133,6 +133,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
                 let dic = dataM.levels[index]
                 let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
                 levelDB.isLevelSelected = dic.isSelected
+                if dic.isSelected {
+                    settingDB.prepTime = "\(dic.prepTime)"
+                    settingDB.meditationTime = "\(dic.meditationTime)"
+                    settingDB.restTime = "\(dic.restTime)"
+                }
                 levelDB.levelId = Int32(dic.levelId)
                 levelDB.levelName = dic.levelName
                 levelDB.prepTime = Int32(dic.prepTime)!
@@ -149,6 +154,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
             settingDB.addToMeditationData(meditationDB)
         }
         WWMHelperClass.saveDb()
+        let dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
         
     }
 
@@ -172,7 +179,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
     func getUserProfileData() {
         WWMHelperClass.showSVHud()
         let param = [
-            "user_id":7,
+            "user_id":self.appPreffrence.getUserID(),
             "lat": lat,
             "long":long,
             "city":city,
@@ -180,11 +187,15 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                var userData = WWMUserData()
-                userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                print(userData)
-                //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
-                self.setDataToDb(json: result["settings"] as! [String:Any])
+                if result["success"] as! Bool {
+                    var userData = WWMUserData.sharedInstance
+                    userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
+                    print(userData)
+                    self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                    
+                    self.setDataToDb(json: result["settings"] as! [String:Any])
+                }
+                
             }else {
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)

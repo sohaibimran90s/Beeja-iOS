@@ -53,27 +53,32 @@ class WWMSignupEmailVC: WWMBaseViewController {
         let param = [
             "email": txtViewEmail.text!,
             "deviceToken" : appPreference.getDeviceToken(),
-            "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+            "deviceId": kDeviceID,
             "DeviceType": kDeviceType,
             "loginType": kLoginTypeEmail,
-            "profileImage":"",
-            "socialId":"",
-            "name":self.name
+            "name":self.name,
+            "model": UIDevice.current.model,
+            "version": UIDevice.current.systemVersion
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setIsLogin(value: true)
-                if let userProfile = result["userProfile"] as? [String:Any] {
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
                     self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                    self.appPreference.setUserID(value: "\(userProfile["user_id"] as! Int)")
+                    self.appPreference.setIsLogin(value: true)
+                    self.appPreference.setIsProfileCompleted(value: false)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                     self.navigationController?.pushViewController(vc, animated: true)
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
                 }
                 
                 
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
             }
-            WWMHelperClass.showSVHud()
+            WWMHelperClass.dismissSVHud()
         }
     }
     
@@ -84,23 +89,31 @@ class WWMSignupEmailVC: WWMBaseViewController {
             "email": txtViewEmail.text ?? "",
             "password":"",
             "deviceId": kDeviceID,
+            "deviceToken" : appPreference.getDeviceToken(),
             "DeviceType": kDeviceType,
             "loginType": kLoginTypeFacebook,
-            "profileImage":"",
+            "profileImage":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
             "socialId":"\(fbData["id"] ?? -1)",
-            "name":"\(fbData["name"] ?? "")"
+            "name":"\(fbData["name"] ?? "")",
+            "model": UIDevice.current.model,
+            "version": UIDevice.current.systemVersion
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
-                self.appPreference.setIsLogin(value: true)
-                if let isProfileCompleted = result["IsProfileCompleted"] as? Bool {
-                    if isProfileCompleted {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
-                    }else {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsLogin(value: true)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        if isProfileCompleted {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }else {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }
                     }
                 }
             }else {

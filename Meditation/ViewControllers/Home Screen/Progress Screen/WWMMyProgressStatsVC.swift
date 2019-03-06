@@ -8,7 +8,9 @@
 
 import UIKit
 
-class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource {
+    
+    
     
     
     @IBOutlet weak var lblMonthYear: UILabel!
@@ -33,6 +35,19 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
     var dayAdded = -1
     var monthValue = 0
     var strMonthYear = ""
+    
+    var hour1:Int = 0
+    var minutes1:Int = 0
+    var seconds1:Int = 0
+    
+    var hour2:Int = 0
+    var minutes2:Int = 0
+    var seconds2:Int = 0
+    
+    var strDateTime = ""
+    var addSessionView = WWMAddSessionView()
+    
+    var pickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,11 +109,186 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         return calendar.date(from: components)!
     }
     
+    
+    // MARK:- UIPicker View Delegate Methods
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return 25
+        case 1,2:
+            return 60
+            
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return "\(row) hours"
+        case 1:
+            return "\(row) min"
+        case 2:
+            return "\(row) sec"
+        default:
+            return ""
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            if pickerView.tag == 1 {
+               hour1 = row
+               addSessionView.lblHrs.text = "\(hour1) hrs"
+            }else {
+                hour2 = row
+                addSessionView.lblHrs.text = "\(hour2) hrs"
+            }
+            
+        case 1:
+            if pickerView.tag == 1 {
+                minutes1 = row
+                addSessionView.lblMin.text = "\(minutes1) min"
+            }else {
+                minutes2 = row
+                addSessionView.lblMin.text = "\(minutes2) min"
+            }
+            
+        case 2:
+            if pickerView.tag == 1 {
+                seconds1 = row
+                addSessionView.lblSec.text = "\(seconds1) sec"
+            }else {
+                seconds2 = row
+                addSessionView.lblSec.text = "\(seconds2) sec"
+            }
+        default:
+            break;
+        }
+    }
+
+
+    
+    
+    
+    
     // MARK:- Button Action
     
-    @IBAction func btnAddJournalAction(_ sender: Any) {
+    @IBAction func btnAddSessionAction(_ sender: Any) {
+        addSessionView = UINib(nibName: "WWMAddSessionView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAddSessionView
+        let window = UIApplication.shared.keyWindow!
+        
+        addSessionView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        addSessionView.btnDone.layer.borderWidth = 2.0
+        addSessionView.btnDone.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        addSessionView.btnTime1.layer.borderWidth = 2.0
+        addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        addSessionView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        addSessionView.btnDate.addTarget(self, action: #selector(btnDateAction(_:)), for: .touchUpInside)
+        
+        addSessionView.btnTimer.addTarget(self, action: #selector(btnTimerAction(_:)), for: .touchUpInside)
+        addSessionView.btnTime1.addTarget(self, action: #selector(btnTime1Action(_:)), for: .touchUpInside)
+        addSessionView.btnTime2.addTarget(self, action: #selector(btnTime2Action(_:)), for: .touchUpInside)
+        
+         addSessionView.btnDone.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        
+        self.pickerView.tag = 1
+        addSessionView.lblSec.text = "\(seconds1) sec"
+        addSessionView.lblMin.text = "\(minutes1) min"
+        addSessionView.lblHrs.text = "\(hour1) hrs"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
+        strDateTime = "\(Int(Date().timeIntervalSince1970*1000))"
+        window.rootViewController?.view.addSubview(addSessionView)
+    }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        if sender.tag == 1 {
+            addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
+            strDateTime = "\(Int(sender.date.timeIntervalSince1970*1000))"
+        }
         
     }
+    
+    @IBAction func btnDateAction(_ sender: Any) {
+        let datePickerView = UIDatePicker()
+        datePickerView.datePickerMode = .date
+        addSessionView.txtViewDate.inputView = datePickerView
+        addSessionView.txtViewDate.becomeFirstResponder()
+        datePickerView.tag = 1
+        datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+    }
+    
+    @IBAction func btnTimerAction(_ sender: Any) {
+        
+        
+        self.pickerView.delegate = self
+        self.pickerView.dataSource = self
+        addSessionView.txtViewTime.inputView = pickerView
+        addSessionView.txtViewTime.becomeFirstResponder()
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        addSessionView.removeFromSuperview()
+    }
+    
+    @IBAction func btnTime1Action(_ sender: Any) {
+        addSessionView.btnTime2.layer.borderWidth = 2.0
+        addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        addSessionView.btnTime2.setTitleColor(UIColor.white, for: .normal)
+        addSessionView.btnTime2.backgroundColor = UIColor.clear
+        addSessionView.btnTime1.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        addSessionView.btnTime1.setTitleColor(UIColor.black, for: .normal)
+        self.pickerView.tag = 1
+        addSessionView.lblSec.text = "\(seconds1) sec"
+        addSessionView.lblMin.text = "\(minutes1) min"
+        addSessionView.lblHrs.text = "\(hour1) hrs"
+    }
+    
+    @IBAction func btnTime2Action(_ sender: Any) {
+        addSessionView.btnTime1.layer.borderWidth = 2.0
+        addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        addSessionView.btnTime1.setTitleColor(UIColor.white, for: .normal)
+        addSessionView.btnTime1.backgroundColor = UIColor.clear
+        addSessionView.btnTime2.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        addSessionView.btnTime2.setTitleColor(UIColor.black, for: .normal)
+        self.pickerView.tag = 2
+        addSessionView.lblSec.text = "\(seconds2) sec"
+        addSessionView.lblMin.text = "\(minutes2) min"
+        addSessionView.lblHrs.text = "\(hour2) hrs"
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        let meditationTime1 = hour1*3600 + minutes1*60 + seconds1
+        let meditationTime2 = hour2*3600 + minutes2*60 + seconds2
+        
+        let param = ["user_id":"7",
+                     "meditation_id":"1",
+                     "level_id":"1",
+                     "dateTime":strDateTime,
+                     "prepTime1":"0",
+                     "meditationTime1":"\(meditationTime1)",
+                     "restTime1":"0",
+                     "prepTime2":"0",
+                     "meditationTime2":"\(meditationTime2)",
+                     "restTime2":"0"
+                    ]
+        
+        self.addSessionAPI(param: param)
+    }
+    
+    
     @IBAction func btnLeftAction(_ sender: Any) {
         
     }
@@ -217,6 +407,23 @@ class WWMMyProgressStatsVC: UIViewController,UICollectionViewDelegate,UICollecti
         let width = (self.view.frame.size.width-80)/7
         return CGSize.init(width: width, height: width)
     }
+    
+    
+    func addSessionAPI(param:[String:Any]) {
+        WWMHelperClass.showSVHud()
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.addSessionView.removeFromSuperview()
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
     
     
     func getStatsData() {

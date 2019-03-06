@@ -31,7 +31,7 @@ class WWMUserData: NSObject {
     
     
     
-    
+    private static var singleTonVar:WWMUserData?
     var userId = String()
     var name = String()
     var email   = String()
@@ -47,10 +47,18 @@ class WWMUserData: NSObject {
     var created_at = String()
     var updated_at = String()
     var deleted_at = String()
+    var loginType = String()
     
     var meditation_id = Int()
     var level_id = Int()
     
+    class var sharedInstance: WWMUserData {
+        guard let unshared = singleTonVar else {
+            singleTonVar = WWMUserData()
+            return singleTonVar!
+        }
+        return unshared
+    }
     override init() {
         
     }
@@ -61,6 +69,7 @@ class WWMUserData: NSObject {
         email = json["email"] as? String ?? ""
         profileImage = json["profile_image"] as? String ?? ""
         social_id = json["social_id"] as? String ?? ""
+        loginType = json["loginType"] as? String ?? ""
         
         latitude = json["latitude"] as? String ?? ""
         longitude = json["longitude"] as? String ?? ""
