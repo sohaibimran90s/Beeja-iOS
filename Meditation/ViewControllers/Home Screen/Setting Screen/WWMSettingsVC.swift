@@ -19,7 +19,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     var arrPickerSound = [String]()
     
-    let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Time","Reset Time","Finish Chime","Interval Chime","Ambient Sound"]
+    let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Time","Rest Time","Finish Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
@@ -34,14 +34,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var arrMeditationData = [DBMeditationData]()
     var selectedMeditationData  = DBMeditationData()
     
+    var isSetMyOwn = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
-        if data.count > 0 {
-            arrMeditationData = data
-        }
-        
         self.setUpNavigationBarForDashboard(title: "Settings")
         pickerStartChimes.delegate = self
         pickerStartChimes.dataSource = self
@@ -53,6 +48,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+            if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
+                arrMeditationData = meditationData
+            }
         }
         self.tblViewSetting.reloadData()
     }
@@ -86,9 +84,18 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 //        if self.player.currentTime > 0 {
 //           self.player.stop()
 //        }
-        callPushNotification()
-        self.settingAPI()
-        self.tblViewSetting.reloadData()
+        if isSetMyOwn {
+            self.isSetMyOwn = false
+            self.tblViewSetting.reloadData()
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSetMyOwnVC") as! WWMSetMyOwnVC
+            vc.isFromSetting = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
+            callPushNotification()
+            self.settingAPI()
+            self.tblViewSetting.reloadData()
+        }
+        
     }
     
     // MARK:- UIPickerView Delegate Methods
@@ -99,7 +106,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerStartChimes.tag == 10  {
-            return arrMeditationData.count
+            
+            for dic in self.arrMeditationData {
+                if dic.setmyown == 1{
+                  return arrMeditationData.count
+                }
+            }
+            return arrMeditationData.count+1
         }else {
             return arrPickerSound.count
         }
@@ -107,6 +120,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerStartChimes.tag == 10 {
+            if row == arrMeditationData.count {
+                return "Set My Own"
+            }
             return arrMeditationData[row].meditationName
         }
         return arrPickerSound[row]
@@ -115,19 +131,37 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if self.pickerStartChimes.tag == 10 {
+            if row == arrMeditationData.count  {
+                self.isSetMyOwn = true
+            }else {
+                self.isSetMyOwn = false
             for index in 0..<arrMeditationData.count {
                 if index == row {
+                    self.selectedMeditationData = arrMeditationData[index]
                     arrMeditationData[index].isMeditationSelected = true
                     if arrMeditationData[index].meditationName == "Beeja" || arrMeditationData[index].meditationName == "Vedic/Transcendental" {
                         settingData.endChime = kChimes_JaiGuruDev
                     }else {
                         settingData.endChime = kChimes_HIMALAYAN_BELL
                     }
+                    if let levels = arrMeditationData[index].levels?.array as? [DBLevelData] {
+                        for index in 0..<levels.count {
+                            if index == 0 {
+                                levels[index].isLevelSelected = true
+                                self.settingData.prepTime = "\(levels[index].prepTime)"
+                                self.settingData.meditationTime = "\(levels[index].meditationTime)"
+                                self.settingData.restTime = "\(levels[index].restTime)"
+                            }else {
+                                levels[index].isLevelSelected = false
+                            }
+                        }
+                    }
                     
                 }else {
                     arrMeditationData[index].isMeditationSelected = false
                     
                 }
+            }
             }
             
         }else {
@@ -180,6 +214,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else {
                 if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell.checkImage.isHidden = true
                     cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
                     cell.lblTime.isHidden = false
                     if indexPath.row == 1 {
@@ -230,6 +265,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     level = levels![indexPath.row-1]
                     cell.lblTitle.text = level.levelName
                     cell.lblTime.text = "\(self.secondsToMinutesSeconds(second: Int(level.prepTime))) | \(self.secondsToMinutesSeconds(second: Int(level.meditationTime))) | \(self.secondsToMinutesSeconds(second: Int(level.restTime)))"
+                    cell.checkImage.isHidden = true
+                    if level.isLevelSelected {
+                        cell.checkImage.isHidden = false
+                    }
+                    
                 }
                 
             }
@@ -258,6 +298,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
                 cell.lblTitle.text = self.arrSettings[indexPath.row-1]
                 cell.lblTime.isHidden = false
+                cell.checkImage.isHidden = true
                 if indexPath.row == 2 {
                     cell.lblTime.text = settingData.morningReminderTime
                     
@@ -481,9 +522,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     levelDic.append(leveldata)
                 }
             
-            let data = ["meditation_id":dic.meditationId!,
+            let data = ["meditation_id":dic.meditationId,
                         "meditation_name":dic.meditationName!,
                         "isSelected":dic.isMeditationSelected,
+                        "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]
             meditation_data.append(data)
         }
@@ -512,6 +554,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    self.tblViewSetting.reloadData()
                 }
             }else {
                 if error != nil {
@@ -532,6 +575,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setIsLogin(value: false)
                 self.appPreference.setUserToken(value: "")
                 self.appPreference.setUserID(value: "")
+                self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)

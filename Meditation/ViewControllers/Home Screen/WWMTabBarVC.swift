@@ -10,10 +10,11 @@ import UIKit
 import Lottie
 import CoreLocation
 
-class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
+class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
     let layerGradient = CAGradientLayer()
     var currentLocation: CLLocation!
+    let locManager = CLLocationManager()
     var city = ""
     var country = ""
     var lat = ""
@@ -24,54 +25,90 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         setupView()
-        let locManager = CLLocationManager()
+        WWMHelperClass.showSVHud()
+        //self.getUserProfileData()
+        locManager.delegate = self
+        locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestAlwaysAuthorization()
-        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
-            
-            currentLocation = locManager.location
-            lat = "\(currentLocation.coordinate.latitude)"
-            long = "\(currentLocation.coordinate.longitude)"
-            // Add below code to get address for touch coordinates.
-            let geoCoder = CLGeocoder()
-            //let location = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-            geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
-                {
-                    placemarks, error -> Void in
-                    
-                    // Place details
-                    guard let placeMark = placemarks?.first else { return }
-                    
-                    // Location name
-                    if let locationName = placeMark.location {
-                        print(locationName)
-                    }
-                    // Street address
-                    if let street = placeMark.thoroughfare {
-                        print(street)
-                    }
-                    // City
-                    if let cityPlace = placeMark.subAdministrativeArea {
-                        self.city = cityPlace
-                        print(self.city)
-                    }
-                    // Zip code
-                    if let zip = placeMark.isoCountryCode {
-                        print(zip)
-                    }
-                    // Country
-                    if let countryPlace = placeMark.country {
-                        self.country = countryPlace
-                        print(self.country)
-                    }
-                    self.getUserProfileData()
-            })
-            
-        }else {
-            self.getUserProfileData()
-        }
-        // Do any additional setup after loading the view.
+        locManager.startUpdatingLocation()
+        
     }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+         currentLocation = locations[0]
+        if lat == "" {
+            getCityAndCountry()
+        }
+        
+        locManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if self.appPreffrence.isLogout() {
+            var userData = WWMUserData()
+            userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+            print(userData)
+            lat = userData.latitude
+            long = userData.longitude
+            city = userData.city
+            country = userData.country
+        }
+        
+        getUserProfileData()
+    }
+    
+    func getCityAndCountry() {
+        lat = "\(currentLocation.coordinate.latitude)"
+        long = "\(currentLocation.coordinate.longitude)"
+        let geoCoder = CLGeocoder()
+        //let location = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
+            {
+                placemarks, error -> Void in
+                
+                // Place details
+                guard let placeMark = placemarks?.first else {
+                    if self.appPreffrence.isLogout() {
+                        var userData = WWMUserData()
+                        userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+                        print(userData)
+                        self.lat = userData.latitude
+                        self.long = userData.longitude
+                        self.city = userData.city
+                        self.country = userData.country
+                    }
+                    
+                    self.getUserProfileData()
+                    return
+                }
+                
+                // Location name
+                if let locationName = placeMark.location {
+                    print(locationName)
+                }
+                // Street address
+                if let street = placeMark.thoroughfare {
+                    print(street)
+                }
+                // City
+                if let cityPlace = placeMark.subAdministrativeArea {
+                    self.city = cityPlace
+                    print(self.city)
+                }
+                // Zip code
+                if let zip = placeMark.isoCountryCode {
+                    print(zip)
+                }
+                // Country
+                if let countryPlace = placeMark.country {
+                    self.country = countryPlace
+                    print(self.country)
+                }
+                self.getUserProfileData()
+        })
+    }
+    
     
     func setupView() {
         
@@ -125,7 +162,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
         for  index in 0..<arrMeditationData.count {
             let dataM = arrMeditationData[index]
             let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
-            meditationDB.meditationId = "\(dataM.meditationId)"
+            meditationDB.meditationId = Int32(dataM.meditationId)
+            meditationDB.setmyown = Int32(dataM.setmyown)
             meditationDB.meditationName = dataM.meditationName
             meditationDB.isMeditationSelected = dataM.isSelected
             
@@ -154,7 +192,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
             settingDB.addToMeditationData(meditationDB)
         }
         WWMHelperClass.saveDb()
-        let dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
         
     }
@@ -177,7 +214,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
     }
     
     func getUserProfileData() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
         let param = [
             "user_id":self.appPreffrence.getUserID(),
             "lat": lat,
@@ -194,14 +231,41 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate {
                     self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                     
                     self.setDataToDb(json: result["settings"] as! [String:Any])
+                }else {
+                    self.getDataFromDatabase()
                 }
                 
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+                self.getDataFromDatabase()
             }
             WWMHelperClass.dismissSVHud()
+        }
+    }
+    
+    
+    func getDataFromDatabase() {
+        if self.appPreffrence.isLogout() {
+            var userData = WWMUserData.sharedInstance
+            userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+            print(userData)
+            let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+            if data.count > 0 {
+                NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
+            }
+            
+        }else {
+            let alert = UIAlertController(title: kAlertTitle,
+                                          message: "Your connection may lost, please try again!",
+                                          preferredStyle: UIAlertController.Style.alert)
+            
+            
+            let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
+               WWMHelperClass.showSVHud()
+                self.getUserProfileData()
+            }
+            
+            alert.addAction(okAction)
+            self.navigationController!.present(alert, animated: true,completion: nil)
         }
     }
     

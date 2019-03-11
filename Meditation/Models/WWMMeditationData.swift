@@ -14,13 +14,14 @@ class WWMMeditationData: NSObject {
     var meditationName = String()
     var isSelected = Bool()
     var levels   = [WWMLevelData]()
-    
+    var setmyown = Int()
     
     override init() {
         
     }
     init(json:[String:Any]) {
         meditationId = json["meditation_id"] as? Int ?? -1
+        setmyown = json["setmyown"] as? Int ?? 0
         meditationName = json["meditation_name"] as? String ?? ""
         isSelected = json["isSelected"] as? Bool ?? false
         if let arrLevels = json["levels"] as? [[String:Any]]{

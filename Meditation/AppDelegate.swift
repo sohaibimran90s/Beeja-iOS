@@ -14,10 +14,15 @@ import FBSDKCoreKit
 import CoreData
 import UserNotifications
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
-    
 
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,SPTAppRemoteDelegate {
+    
+    
+    fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
+    fileprivate let clientIdentifier = "2fd82c511bd74915b2b16ff1903eeb2b"
+    fileprivate let name = "spotify"
+    static fileprivate let kAccessTokenKey = "access-token-key"
     
     var window: UIWindow?
     let appPreference = WWMAppPreference()
@@ -75,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        WWMSpotifyManager.sharedManager.connect();
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -84,16 +90,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let parameters = appRemote.authorizationParameters(from: url);
         if url.absoluteString.contains("fb") {
             return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        }else if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+            
+        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            
         }else {
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
                                                  annotation: [:])
         }
+        return true
     }
 
+    var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(accessToken, forKey: AppDelegate.kAccessTokenKey)
+            defaults.synchronize()
+        }
+    }
     
+    lazy var appRemote: SPTAppRemote = {
+        let configuration = SPTConfiguration(clientID: self.clientIdentifier, redirectURL: self.redirectUri)
+        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
+        appRemote.connectionParameters.accessToken = self.accessToken
+        appRemote.delegate = self
+        return appRemote
+    }()
+    
+    func setupSpotify(url: URL!) {
+        let parameters = appRemote.authorizationParameters(from: url);
+        // SPTPlaylistReadPrivateScope
+        if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            
+        }
+        
+    }
+    
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        self.appRemote = appRemote
+        //  playerViewController.appRemoteConnected()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        print("didFailConnectionAttemptWithError")
+        //  playerViewController.appRemoteDisconnect()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        print("didDisconnectWithError")
+        //    playerViewController.appRemoteDisconnect()
+    }
     
     // MARK:- Local Notification
     //Local Notification Request Authorization.
@@ -146,6 +201,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 
                 
+            }else {
+                center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
             }
             if settingData.isAfterNoonReminder {
                 let dateFormate = DateFormatter()
@@ -182,6 +239,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 
             }
+        }else {
+            center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
         }
         
     }

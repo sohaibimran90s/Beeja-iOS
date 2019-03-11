@@ -74,7 +74,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         }
         
         let moodDB = WWMHelperClass.fetchEntity(dbName: "DBMoodMeter") as! DBMoodMeter
-        moodDB.data = data.description
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: data, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        moodDB.data = myString
         WWMHelperClass.saveDb()
         
         self.getMeditationDataAPI()
@@ -114,7 +116,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
             for  index in 0..<arrMeditationData.count {
                 let dataM = arrMeditationData[index]
                 let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
-                meditationDB.meditationId = "\(dataM.meditationId)"
+                meditationDB.meditationId = Int32(dataM.meditationId)
                 meditationDB.meditationName = dataM.meditationName
                 meditationDB.isMeditationSelected = false
                 for  index in 0..<dataM.levels.count {

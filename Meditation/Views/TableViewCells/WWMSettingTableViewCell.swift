@@ -17,6 +17,8 @@ class WWMSettingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDropDown: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var checkImage: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

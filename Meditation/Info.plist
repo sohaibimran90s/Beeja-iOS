@@ -24,6 +24,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb665281887221137</string>
+				<string>beeja-med-test-app</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,6 +34,10 @@
 			<array>
 				<string>com.googleusercontent.apps.46067628020-ivi4t01urefdlj9hld1e0ebf9bp2moko</string>
 			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.beejameditation.beeja</string>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -47,6 +52,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>spotify</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

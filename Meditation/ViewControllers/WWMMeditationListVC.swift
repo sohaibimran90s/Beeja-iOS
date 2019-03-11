@@ -50,7 +50,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
         btn.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         if indexPath.row == self.arrMeditationDataList.count {
-            btn.setTitle("Set MY Own", for: .normal)
+            btn.setTitle("Set My Own", for: .normal)
         }else {
             let data = self.arrMeditationDataList[indexPath.row]
             btn.setTitle(data.meditationName, for: .normal)

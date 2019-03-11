@@ -30,11 +30,11 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func setupView(){
         
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok You"
+        self.userName.text = "Ok \(self.appPreference.getUserName())"
         let meditationData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         for  data in meditationData{
             if data.isMeditationSelected {
-                self.selectedMeditation_Id = data.meditationId ?? ""
+                self.selectedMeditation_Id = "\(data.meditationId)"
                 if let levels = data.levels?.array as? [DBLevelData] {
                     arrMeditationLevels = levels
                 }

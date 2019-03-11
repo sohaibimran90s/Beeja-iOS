@@ -97,6 +97,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
                         self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                        self.appPreference.setUserName(value: userProfile["name"] as! String)
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC

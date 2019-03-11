@@ -134,6 +134,9 @@ let URL_FAQ   = "http://staging.beejameditation.com/faq"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_FINDCOURSE   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_OurStory   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
+let URL_LEARN   = "https://www.willwilliamsmeditation.co.uk/love-to-learn"
+let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
+
 
 // Social Links **************************
 let URL_Facebook   = "https://www.facebook.com/WillWilliamsMeditation"

@@ -29,7 +29,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     func loadWebView() {
         let url = URL.init(string: strUrl)
         let request = URLRequest.init(url: url!)
-        WWMHelperClass.showSVHud()
+        WWMHelperClass.showActivity(on: self.view, with: UIColor.init(hexString: "#00eba9")!)
         self.webView.load(request)
     }
 
@@ -40,7 +40,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print(error.localizedDescription)
-        WWMHelperClass.dismissSVHud()
+        WWMHelperClass.hideActivity(fromView: self.view)
         
     }
     

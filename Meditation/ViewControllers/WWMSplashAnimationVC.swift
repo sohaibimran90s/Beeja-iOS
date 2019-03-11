@@ -55,7 +55,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         
         if self.arrViewSplashTxt.count > 0 {
             self.lblSplashTxt.text = self.arrViewSplashTxt.first
-            self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage.first!)
+            self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[currentIndex])
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showSplashAnimatedWord(arrData: self.arrViewSplashTxt)
@@ -71,9 +71,10 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         UIView.animate(withDuration: 0.5, delay: 1.0, options: .transitionCrossDissolve, animations: {
             self.lblSplashTxt.alpha = 0.0
             self.currentIndex += 1
-            self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.currentIndex])
+           /* self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.currentIndex])*/
         }) { (_) in
             self.lblSplashTxt.text = arrData[self.currentIndex]
+            self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.currentIndex+1])
             
             UIView.animate(withDuration: 0.5, animations: {
                 self.lblSplashTxt.alpha = 1.0
@@ -180,7 +181,8 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         case 1:
             arrDailyUser = ["Howdy!","Hope you're feeling tip top 🙂","Let's keep up the good work"]
         case 2:
-            arrDailyUser = ["Buongiorno!","It's time for another blast","Let's get ready to rumble (UK only)","Let's dive in"]
+            arrDailyUser = ["Buongiorno!","It's time for another blast","Let's get ready to rumble","Let's dive in"]
+            //"Let's get ready to rumble"(UK only)
         case 3:
             arrDailyUser = ["Buongiorno!","It's time for another blast","Let's continue the good vibes","Let's dive in"]
         default:

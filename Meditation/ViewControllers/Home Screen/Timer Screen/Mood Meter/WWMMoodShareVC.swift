@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import SDWebImage
 
-class WWMMoodShareVC: UIViewController {
+class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    
 
+    var moodData = WWMMoodMeterData()
+    var arrImages = [String]()
+    
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var btnShare: UIButton!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,12 +29,53 @@ class WWMMoodShareVC: UIViewController {
     func setUpUI() {
         self.btnShare.layer.borderWidth = 2.0
         self.btnShare.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.getVibesAPI()
     }
 
+    
+    // MARK:- UICollectionView Delegate Methods
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.pageControl.numberOfPages = 3//self.arrImages.count
+        return 3//self.arrImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        if  let imgView = cell.viewWithTag(101) {
+            //let data = self.arrImages[indexPath.row]
+            //imgView.sd_setImageLoad(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        }
+        self.pageControl.currentPage = indexPath.row
+        
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize.init(width: 300, height: 300)
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // MARK:- Button Action
     
     @IBAction func btnSendToFriendAction(_ sender: Any) {
-        
+        self.btnShare.setTitle("Done", for: .normal)
         if !self.btnShare.isSelected {
             // image to share
             let img = UIImage.init(named: "vibe_images.jpg")
@@ -34,11 +83,11 @@ class WWMMoodShareVC: UIViewController {
             let imageToShare = [img!, url!] as [Any]
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            self.btnShare.isSelected = true
             
             // present the view controller
             self.present(activityViewController, animated: true, completion: nil)
-            self.btnShare.isSelected = true
-            self.btnShare.setTitle("Done", for: .normal)
+            
         }else {
             self.navigationController?.isNavigationBarHidden = false
             
@@ -48,14 +97,30 @@ class WWMMoodShareVC: UIViewController {
             self.navigationController?.popToRootViewController(animated: false)
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    func getVibesAPI() {
+        WWMHelperClass.showSVHud()
+        let param = [
+                "mood_id":self.moodData.id
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETVIBESIMAGES, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    self.arrImages = result["result"] as! [String]
+                }else {
+                    
+                }
+                self.imageCollectionView.reloadData()
+                
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
-    */
 
 }

@@ -18,7 +18,8 @@ extension DBMeditationData {
     }
 
     @NSManaged public var meditationName: String?
-    @NSManaged public var meditationId: String?
+    @NSManaged public var meditationId: Int32
+    @NSManaged public var setmyown: Int32
     @NSManaged public var isMeditationSelected: Bool
     @NSManaged public var levels: NSOrderedSet?
 

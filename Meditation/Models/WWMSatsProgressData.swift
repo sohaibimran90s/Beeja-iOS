@@ -21,7 +21,7 @@ class WWMSatsProgressData: NSObject {
     override init() {
         
     }
-    init(json:[String:Any]) {
+    init(json:[String:Any], dayAdded:Int) {
         cons_days = json["cons_days"] as? Int ?? -2
         total_Session = json["total_Session"] as? Int ?? -2
         weekly_session = json["weekly_session"] as? Int ?? -2
@@ -29,6 +29,11 @@ class WWMSatsProgressData: NSObject {
         avg_min_daily = json["avg_min_daily"] as? Int ?? -2
         avg_session = json["avg_session"] as? Int ?? -2
         longest_session = json["longest_session"] as? String ?? ""
+        for index in 0..<dayAdded {
+            print(index)
+            let levelData = WWMConsecutiveDaysData.init()
+            consecutive_days.append(levelData)
+        }
         if let arrLevels = json["consecutive_days"] as? [[String:Any]]{
             for dict in arrLevels {
                 let levelData = WWMConsecutiveDaysData.init(json: dict)
@@ -48,7 +53,7 @@ class WWMSatsProgressData: NSObject {
                 if let jsonResult = jsonResult as? Dictionary<String, AnyObject>, let result = jsonResult["Result"] as? [String:Any] {
                     
                         
-                             statsData = WWMSatsProgressData.init(json: result)
+                             //statsData = WWMSatsProgressData.init(json: result)
                             
                         
                     }
@@ -70,6 +75,13 @@ class WWMConsecutiveDaysData: NSObject {
     var meditation_status = Int()
     var meditation_status2 = Int()
     var meditation_id = Int()
+    
+    override init() {
+        date = ""
+        meditation_status = -2
+        meditation_id = -2
+        meditation_status2 =  -2
+    }
     
     init(json:[String:Any]) {
         date = json["date"] as? String ?? ""

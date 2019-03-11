@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMMyProgressJournalVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var tableViewJournal: UITableView!
     
@@ -93,10 +93,11 @@ class WWMMyProgressJournalVC: UIViewController,UITableViewDelegate,UITableViewDa
     
     func getJournalList() {
         WWMHelperClass.showSVHud()
-        let param = ["user_id":"11"]
+        let param = ["user_id":self.appPreference.getUserID()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
+                    self.journalData.removeAll()
                     var journal = WWMJournalProgressData()
                     for dict in arrJournal {
                         journal = WWMJournalProgressData.init(json: dict)
@@ -154,7 +155,7 @@ class WWMMyProgressJournalVC: UIViewController,UITableViewDelegate,UITableViewDa
             "mood_color":"",
             "mood_text":"",
             "tell_us_why":journalView.txtViewJournal.text!,
-            "user_id":"11",
+            "user_id":self.appPreference.getUserID(),
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
             "mood_id":""
         ]

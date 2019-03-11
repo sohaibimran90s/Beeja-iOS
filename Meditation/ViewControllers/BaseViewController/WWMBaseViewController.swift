@@ -15,11 +15,15 @@ class WWMBaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setUserDataFromPreference()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func setUserDataFromPreference() {
         if self.appPreference.isLogout() {
             userData = WWMUserData.init(json: self.appPreference.getUserData())
         }
-        
-        // Do any additional setup after loading the view.
     }
     
 
@@ -91,10 +95,28 @@ class WWMBaseViewController: UIViewController {
     }
     @IBAction func btnFlightModeAction(_ sender: UIButton) {
         let settingsUrl = URL.init(string: UIApplication.openSettingsURLString)
-        if let url = settingsUrl {
+        //App-prefs:root=AIRPLANE_MODE
+        let url1 = URL.init(string: "App-prefs:root=AIRPLANE_MODE")
+        if let url = url1 {
+            if UIApplication.shared.canOpenURL(url){
             UIApplication.shared.open(url, options: [:]) { (Bool) in
                 print("Sucess")
             }
+            }else {
+                if let setUrl = settingsUrl {
+                    UIApplication.shared.open(setUrl, options: [:]) { (Bool) in
+                        print("Sucess")
+                    }
+                }
+                
+            }
+        }else {
+            if let setUrl = settingsUrl {
+                UIApplication.shared.open(setUrl, options: [:]) { (Bool) in
+                    print("Sucess")
+                }
+            }
+            
         }
     }
     @IBAction func btnBackAction(_ sender: UIButton) {

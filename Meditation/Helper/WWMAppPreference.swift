@@ -50,6 +50,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setUserName(value:String) {
+        defaults.set(value, forKey: "UserName")
+        defaults.synchronize()
+    }
+    
     func setIsProfileCompleted(value:Bool) {
         defaults.set(value, forKey: "IsProfileCompleted")
         defaults.synchronize()
@@ -57,6 +62,10 @@ class WWMAppPreference: NSObject {
     
     func getUserID() -> String {
         return UserDefaults.standard.string(forKey: "User_Id") ?? ""
+    }
+    
+    func getUserName() -> String {
+        return UserDefaults.standard.string(forKey: "UserName") ?? ""
     }
     
     func getDeviceToken() -> String {

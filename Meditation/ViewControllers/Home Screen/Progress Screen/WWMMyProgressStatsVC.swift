@@ -48,11 +48,29 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var addSessionView = WWMAddSessionView()
     
     var pickerView = UIPickerView()
+    var settingData = DBSettings()
     
+    var selectedMeditationId = -1
+    var selectedLevelId = -1
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+            let meditationData = settingData.meditationData!.array as? [DBMeditationData]
+            for dic in meditationData!{
+                if dic.isMeditationSelected {
+                    self.selectedMeditationId = Int(dic.meditationId)
+                    let levels = dic.levels?.array as? [DBLevelData]
+                    for level in levels! {
+                        if level.isLevelSelected {
+                            self.selectedLevelId = Int(level.levelId)
+                        }
+                    }
+                }
+            }
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -200,23 +218,36 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
          addSessionView.btnDone.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         
         self.pickerView.tag = 1
+        addSessionView.txtViewDate.isUserInteractionEnabled = false
+        seconds1 = 0
+        minutes1 = 0
+        hour1 = 0
+        seconds2 = 0
+        minutes2 = 0
+        hour2 = 0
+        strDateTime = ""
         addSessionView.lblSec.text = "\(seconds1) sec"
         addSessionView.lblMin.text = "\(minutes1) min"
         addSessionView.lblHrs.text = "\(hour1) hrs"
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = Locale.init(identifier: "")
         addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
         strDateTime = "\(Int(Date().timeIntervalSince1970*1000))"
         window.rootViewController?.view.addSubview(addSessionView)
     }
     
     @objc func handleDatePicker(sender: UIDatePicker) {
+        addSessionView.txtViewDate.isUserInteractionEnabled = false
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        sender.timeZone = TimeZone(abbreviation: "GMT")
+        sender.datePickerMode = .dateAndTime
         dateFormatter.dateFormat = "dd MMM yyyy"
         if sender.tag == 1 {
             addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
-            strDateTime = "\(Int(sender.date.timeIntervalSince1970*1000))"
+            self.strDateTime = "\(Int(sender.date.timeIntervalSince1970))"
         }
         
     }
@@ -224,6 +255,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBAction func btnDateAction(_ sender: Any) {
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
+        datePickerView.maximumDate = Date()
+        addSessionView.txtViewDate.isUserInteractionEnabled = true
         addSessionView.txtViewDate.inputView = datePickerView
         addSessionView.txtViewDate.becomeFirstResponder()
         datePickerView.tag = 1
@@ -273,9 +306,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let meditationTime1 = hour1*3600 + minutes1*60 + seconds1
         let meditationTime2 = hour2*3600 + minutes2*60 + seconds2
         
-        let param = ["user_id":"7",
-                     "meditation_id":"1",
-                     "level_id":"1",
+        let param = ["user_id":self.appPreference.getUserID(),
+                     "meditation_id":self.selectedMeditationId,
+                     "level_id":self.selectedLevelId,
                      "dateTime":strDateTime,
                      "prepTime1":"0",
                      "meditationTime1":"\(meditationTime1)",
@@ -283,7 +316,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                      "prepTime2":"0",
                      "meditationTime2":"\(meditationTime2)",
                      "restTime2":"0"
-                    ]
+            ] as [String : Any]
         
         self.addSessionAPI(param: param)
     }
@@ -311,12 +344,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.statsData.consecutive_days.count + dayAdded
+        return self.statsData.consecutive_days.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row < dayAdded {
+        let data = statsData.consecutive_days[indexPath.row]
+        if data.date == ""{
             let blankCell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath)
             return blankCell
         }
@@ -324,7 +358,37 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //cell.viewDateCircle.layer.cornerRadius = cell.viewDateCircle.frame.size.width/2
         cell.imgViewLeft.isHidden = true
         cell.imgViewRight.isHidden = true
-        let data = statsData.consecutive_days[indexPath.row-dayAdded]
+        cell.viewDateCircle.backgroundColor = UIColor.clear
+        cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
+        cell.lblDate.textColor = UIColor.white
+        if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
+            cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
+            cell.lblDate.textColor = UIColor.black
+        }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
+            cell.viewDateCircle.backgroundColor = UIColor.clear
+            cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
+        }else {
+            cell.viewDateCircle.layer.borderWidth = 2.0
+            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        }
+        
+        
+        if indexPath.row == dayAdded {
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
+                cell.imgViewRight.isHidden = false
+            }
+        }else if indexPath.row == self.statsData.consecutive_days.count-1 {
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
+                cell.imgViewLeft.isHidden = false
+            }
+        }else {
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
+                cell.imgViewLeft.isHidden = false
+            }
+            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
+                cell.imgViewRight.isHidden = false
+            }
+        }
         
 //        if indexPath.row-dayAdded > 0 {
 //            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status2 == 0) {
@@ -338,14 +402,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
 //
 //        }
         
-        if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
-            cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-        }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
-            
-        }else {
-            cell.viewDateCircle.layer.borderWidth = 2.0
-            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        }
+        
         
         
         
@@ -415,6 +472,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.addSessionView.removeFromSuperview()
+                self.getStatsData()
             }else {
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
@@ -428,13 +486,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func getStatsData() {
         WWMHelperClass.showSVHud()
-        let param = ["user_id":"11",
+        let param = ["user_id":self.appPreference.getUserID(),
                      "month":self.strMonthYear]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
-                    self.statsData = WWMSatsProgressData.init(json: data)
+                    self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
+                
                 self.collectionViewCal.reloadData()
             }else {
                 if error != nil {

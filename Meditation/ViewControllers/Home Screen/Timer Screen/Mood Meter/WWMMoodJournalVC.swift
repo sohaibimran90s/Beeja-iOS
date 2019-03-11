@@ -8,10 +8,19 @@
 
 import UIKit
 
-class WWMMoodJournalVC: UIViewController {
+class WWMMoodJournalVC: WWMBaseViewController {
 
     @IBOutlet weak var txtViewLog: UITextView!
     @IBOutlet weak var btnSubmit: UIButton!
+    
+    
+    var type = ""   // Pre | Post
+    var prepTime = 0
+    var meditationTime = 0
+    var restTime = 0
+    var meditationID = ""
+    var levelID = ""
+    var moodData = WWMMoodMeterData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,20 +42,63 @@ class WWMMoodJournalVC: UIViewController {
     // MARK:- Button Action
     
     @IBAction func btnSkipAction(_ sender: Any) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.popToRootViewController(animated: true)
+        self.completeMeditationAPI()
     }
     
     @IBAction func btnSubmitAction(_ sender: Any) {
+        self.completeMeditationAPI()
+    }
+
+    
+    func completeMeditationAPI() {
+        WWMHelperClass.showSVHud()
+        let param = [
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":txtViewLog.text,
+            "prep_time":prepTime,
+            "meditation_time":meditationTime,
+            "rest_time":restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id":self.moodData.id == -1 ? "" : self.moodData.id,
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                }else {
+                    self.saveToDB(param: param)
+                }
+                
+            }else {
+                self.saveToDB(param: param)
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
+    
+    func saveToDB(param:[String:Any]) {
+        let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        meditationDB.meditationData = myString
+        WWMHelperClass.saveDb()
+    }
+    
+    func logExperience() {
+        
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 4
+            tabController.selectedIndex = 3
         }
         self.navigationController?.popToRootViewController(animated: false)
         
     }
-
+    
     /*
     // MARK: - Navigation
 

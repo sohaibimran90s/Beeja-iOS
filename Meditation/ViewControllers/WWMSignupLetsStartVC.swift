@@ -39,10 +39,16 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnGuideAction(_ sender: UIButton) {
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        vc.strUrl = URL_LEARN
+        vc.strType = "Learn"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnLearnAction(_ sender: UIButton) {
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        vc.strUrl = URL_GUIDED
+        vc.strType = "Guided"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     /*
     // MARK: - Navigation

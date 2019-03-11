@@ -28,6 +28,8 @@ class WWMSupportVC: WWMBaseViewController {
         self.setNavigationBar(isShow: false, title: "")
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.txtViewName.text = self.userData.name
+        self.txtViewEmail.text = self.userData.email
     }
     // MARK: Button Action
     
@@ -45,6 +47,7 @@ class WWMSupportVC: WWMBaseViewController {
 
     
     func submitQueryAPI() {
+        WWMHelperClass.showSVHud()
         let param = [
                       "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
@@ -60,6 +63,7 @@ class WWMSupportVC: WWMBaseViewController {
                     WWMHelperClass.showPopupAlertController(sender: self, message:error?.localizedDescription ?? "" , title: kAlertTitle)
                 }
             }
+            WWMHelperClass.dismissSVHud()
         }
         
     }
