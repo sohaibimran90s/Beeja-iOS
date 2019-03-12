@@ -34,7 +34,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        WWMHelperClass.dismissSVHud()
+        WWMHelperClass.hideActivity(fromView: self.view)
         print("Finished navigating to url \(String(describing: webView.url))");
     }
     

@@ -15,7 +15,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
 
     var moodData = WWMMoodMeterData()
     var arrImages = [String]()
-    
+    var isselected = false
+    var selectedIndex = 0
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var btnShare: UIButton!
     @IBOutlet weak var imageCollectionView: UICollectionView!
@@ -36,21 +37,27 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     // MARK:- UICollectionView Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.pageControl.numberOfPages = 3//self.arrImages.count
-        return 3//self.arrImages.count
+        self.pageControl.numberOfPages = self.arrImages.count
+        return self.arrImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
-        if  let imgView = cell.viewWithTag(101) {
-            //let data = self.arrImages[indexPath.row]
-            //imgView.sd_setImageLoad(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        if  let imgView = cell.viewWithTag(101) as? UIImageView{
+            let data = self.arrImages[indexPath.row]
+            
+            imgView.sd_setImage(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        
         }
-        self.pageControl.currentPage = indexPath.row
         
         return cell
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.pageControl.currentPage = indexPath.row
+        self.selectedIndex = indexPath.row
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -75,18 +82,21 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     // MARK:- Button Action
     
     @IBAction func btnSendToFriendAction(_ sender: Any) {
-        self.btnShare.setTitle("Done", for: .normal)
-        if !self.btnShare.isSelected {
+        
+        if !isselected {
             // image to share
-            let img = UIImage.init(named: "vibe_images.jpg")
-            let url = URL.init(string: "https://itunes.apple.com/gb/app/meditation-timer/id1185954064?mt=8")
-            let imageToShare = [img!, url!] as [Any]
-            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-            self.btnShare.isSelected = true
-            
-            // present the view controller
-            self.present(activityViewController, animated: true, completion: nil)
+            self.btnShare.setTitle("Done", for: .normal)
+            isselected = true
+            let url = URL.init(string: self.arrImages[self.selectedIndex])
+            self.downloaded(url: url!)
+//            let img = UIImage.init(named: "vibe_images.jpg")
+//            let url = URL.init(string: "https://itunes.apple.com/gb/app/meditation-timer/id1185954064?mt=8")
+//            let imageToShare = [img!, url!] as [Any]
+//            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+//            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+//            self.btnShare.setTitle("Done", for: .normal)
+//            isselected = true
+//            self.present(activityViewController, animated: true, completion: nil)
             
         }else {
             self.navigationController?.isNavigationBarHidden = false
@@ -97,7 +107,30 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
             self.navigationController?.popToRootViewController(animated: false)
         }
     }
-    
+    func downloaded(url: URL) {
+        WWMHelperClass.showSVHud()
+        URLSession.shared.dataTask(with: url) { data, response, error in
+        
+                if  let data = data, error == nil{
+                if let image = UIImage(data: data) {
+                    let imageToShare = [image] as [Any]
+                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                    
+                    self.present(activityViewController, animated: true, completion: nil)
+                }else {
+                    let image = UIImage.init(named: "AppIcon")
+                    let imageToShare = [image!] as [Any]
+                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                    
+                    self.present(activityViewController, animated: true, completion: nil)
+                    }
+            
+            } else { return }
+            WWMHelperClass.dismissSVHud()
+            }.resume()
+    }
     
     func getVibesAPI() {
         WWMHelperClass.showSVHud()
@@ -108,9 +141,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    self.arrImages.removeAll()
                     self.arrImages = result["result"] as! [String]
-                }else {
-                    
                 }
                 self.imageCollectionView.reloadData()
                 
