@@ -33,6 +33,11 @@ class WWMSupportVC: WWMBaseViewController {
     }
     // MARK: Button Action
     
+    @IBAction func btnEditTextAction(_ sender: Any) {
+        self.txtViewQuery.isEditable = true
+        self.txtViewQuery.becomeFirstResponder()
+    }
+    
     @IBAction func btnSubmitAction(_ sender: UIButton) {
         if  txtViewName.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_NameMessage, title: kAlertTitle)

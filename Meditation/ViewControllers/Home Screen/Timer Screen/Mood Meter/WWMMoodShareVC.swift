@@ -77,7 +77,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize.init(width: 300, height: 300)
+        return CGSize.init(width: self.imageCollectionView.frame.size.width, height: 300)
     }
 
     

@@ -10,6 +10,7 @@ import UIKit
 
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
+    @IBOutlet weak var lblMoodselect: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
     @IBOutlet weak var moodView: UIView?
     @IBOutlet weak var circularSlider: CircularSlider?
@@ -104,6 +105,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let mood = self.arrMoodData[moodIndex]
         print("selected mood = \(mood.name)")
         self.btnConfirm.isHidden = false
+        self.lblMoodselect.text = "Move dot to select your current feeling"
         // show your button here
     }
 
