@@ -210,9 +210,19 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     @IBAction func btnViewAllEventsAction(_ sender: Any) {
         
     }
-    
+    var imageData = Data()
     @IBAction func btnUploadHashTagsAction(_ sender: Any) {
         
+        print("btnUploadHashTagsAction detect")
+        let ImagePickerManager = WWMImagePickerManager()
+        ImagePickerManager.pickImage(self){ image in
+            //here is the image
+            self.imageData = image.jpegData(compressionQuality: 0.75)!
+            
+            print("%@",self.imageData)
+            self.uploadHashtagAPI()
+            print("Get Image Data")
+        }
     }
     
     
@@ -220,12 +230,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         WWMHelperClass.showSVHud()
         let param = [
             "user_Id":self.appPreference.getUserID(),
-            "month":self.strMonthYear
+            "type" : "Image",
+            "tagname":"#meditationanywhere"
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_UPLOADHASHTAG, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                self.communityData = WWMCommunityData.init(json: result["result"] as! [String : Any])
-                self.tblViewCommunity.reloadData()
+        
+        WWMWebServices.formRequestApiWithBody(param: param, urlString: URL_UPLOADHASHTAG, imgData: self.imageData, isHeader: true) { (result, error, success) in
+            if success {
+                print(result)
             }else {
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
@@ -233,6 +244,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             }
             WWMHelperClass.dismissSVHud()
         }
+        
     }
     
     

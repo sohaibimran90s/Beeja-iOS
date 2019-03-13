@@ -17,6 +17,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     var arrImages = [String]()
     var isselected = false
     var selectedIndex = 0
+    let arrStaticImages = ["AppIcon","AppIcon","AppIcon"]
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var btnShare: UIButton!
     @IBOutlet weak var imageCollectionView: UICollectionView!
@@ -37,6 +38,10 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     // MARK:- UICollectionView Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if self.arrImages.count == 0 {
+           self.pageControl.numberOfPages = self.arrStaticImages.count
+            return self.arrStaticImages.count
+        }
         self.pageControl.numberOfPages = self.arrImages.count
         return self.arrImages.count
     }
@@ -45,9 +50,14 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
         if  let imgView = cell.viewWithTag(101) as? UIImageView{
-            let data = self.arrImages[indexPath.row]
+            if self.arrImages.count == 0 {
+                imgView.image = UIImage.init(named: self.arrStaticImages[indexPath.row])
+            }else {
+                let data = self.arrImages[indexPath.row]
+                
+                imgView.sd_setImage(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            }
             
-            imgView.sd_setImage(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         
         }
         
@@ -87,22 +97,30 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
             // image to share
             self.btnShare.setTitle("Done", for: .normal)
             isselected = true
-            let url = URL.init(string: self.arrImages[self.selectedIndex])
-            self.downloaded(url: url!)
-//            let img = UIImage.init(named: "vibe_images.jpg")
-//            let url = URL.init(string: "https://itunes.apple.com/gb/app/meditation-timer/id1185954064?mt=8")
-//            let imageToShare = [img!, url!] as [Any]
-//            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-//            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-//            self.btnShare.setTitle("Done", for: .normal)
-//            isselected = true
-//            self.present(activityViewController, animated: true, completion: nil)
+            if self.arrImages.count == 0 {
+                let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
+                let imageToShare = [image!] as [Any]
+                let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                
+                self.present(activityViewController, animated: true, completion: nil)
+            }else {
+                let url = URL.init(string: self.arrImages[self.selectedIndex])
+                self.downloaded(url: url!)
+            }
             
         }else {
             self.navigationController?.isNavigationBarHidden = false
             
             if let tabController = self.tabBarController as? WWMTabBarVC {
-                tabController.selectedIndex = 4
+                tabController.selectedIndex = 3
+                for index in 0..<tabController.tabBar.items!.count {
+                    let item = tabController.tabBar.items![index]
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                    if index == 3 {
+                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                    }
+                }
             }
             self.navigationController?.popToRootViewController(animated: false)
         }
@@ -147,9 +165,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 self.imageCollectionView.reloadData()
                 
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+               self.imageCollectionView.reloadData()
             }
             WWMHelperClass.dismissSVHud()
         }

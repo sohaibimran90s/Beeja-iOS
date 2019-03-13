@@ -20,13 +20,25 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var lat = ""
     var long = ""
     let appPreffrence = WWMAppPreference()
-    
+    let reachable = Reachability()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         setupView()
         WWMHelperClass.showSVHud()
         //self.getUserProfileData()
+//        if !reachable.isConnectedToNetwork() {
+//            if self.appPreffrence.isLogout() {
+//                var userData = WWMUserData()
+//                userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+//                print(userData)
+//                lat = userData.latitude
+//                long = userData.longitude
+//                city = userData.city
+//                country = userData.country
+//            }
+//        }
+        
         locManager.delegate = self
         locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestAlwaysAuthorization()

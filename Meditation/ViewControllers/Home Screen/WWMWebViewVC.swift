@@ -21,7 +21,22 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         self.setNavigationBar(isShow: false, title: strType)
         self.lblTitle.text = self.strType
         webView.navigationDelegate = self
-        self.loadWebView()
+        let reachable = Reachability()
+        if !reachable.isConnectedToNetwork(){
+            let alert = UIAlertController(title: "Alert",
+                                          message: "The Internet connection appears to be offline.",
+                                          preferredStyle: UIAlertController.Style.alert)
+            
+            
+            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
+                self.navigationController?.popViewController(animated: true)
+            }
+            alert.addAction(OKAction)
+            self.present(alert, animated: true,completion: nil)
+        }else {
+            self.loadWebView()
+        }
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
          self.webView.stopLoading()
