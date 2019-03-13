@@ -53,6 +53,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     // MARK:- Button Action
     
     @IBAction func btnSkipAction(_ sender: Any) {
+        self.txtViewLog.text = ""
         self.completeMeditationAPI()
     }
     
@@ -157,37 +158,45 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     
     func logExperience() {
-        let alert = UIAlertController.init(title: "Your Meditation experienced has been logged", message: nil, preferredStyle: .alert)
         
-        self.present(alert, animated: true, completion: nil)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.dismiss(animated: true, completion: {
-                if self.type == "Pre" {
-                    self.navigationController?.isNavigationBarHidden = false
-                    self.navigationController?.popToRootViewController(animated: false)
-                }else {
-                    
-                    if !self.moodData.show_burn && self.moodData.id != -1 {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
-                        vc.moodData = self.moodData
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }else {
-                        self.navigationController?.isNavigationBarHidden = false
-                        
-                        if let tabController = self.tabBarController as? WWMTabBarVC {
-                            tabController.selectedIndex = 3
-                        }
-                        self.navigationController?.popToRootViewController(animated: true)
-                    }
-                    
-                    
-                }
-            })
+        if self.txtViewLog.text != "" {
+            let alert = UIAlertController.init(title: "Your Meditation experienced has been logged", message: nil, preferredStyle: .alert)
             
+            self.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.dismiss(animated: true, completion: {
+                    self.navigateToDashboard()
+                })
+            }
+        }else {
+            self.navigateToDashboard()
         }
+        
     }
 
+    func navigateToDashboard() {
+        if self.type == "Pre" {
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.popToRootViewController(animated: false)
+        }else {
+            
+            if !self.moodData.show_burn && self.moodData.id != -1 {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
+                vc.moodData = self.moodData
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else {
+                self.navigationController?.isNavigationBarHidden = false
+                
+                if let tabController = self.tabBarController as? WWMTabBarVC {
+                    tabController.selectedIndex = 3
+                }
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            
+            
+        }
+
+    }
     /*
     // MARK: - Navigation
 

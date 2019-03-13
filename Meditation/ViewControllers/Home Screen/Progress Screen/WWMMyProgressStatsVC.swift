@@ -32,7 +32,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewDays: UIView!
     @IBOutlet weak var viewSomeGoals: UIView!
     var statsData = WWMSatsProgressData()
-    var dayAdded = -1
+    var dayAdded = 0
     var monthValue = 0
     var strMonthYear = ""
     
@@ -116,6 +116,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let firstDate = self.makeDate(year: Int(year)!, month: Int(month)!, day: 1, hr: 8, min: 30, sec: 30)
         let weekDay = Calendar.current.ordinality(of: .day, in: .weekOfMonth, for: firstDate)
         dayAdded = weekDay!-2
+        if dayAdded < 0 {
+            dayAdded = 6
+        }
         
         self.getStatsData()
     }
@@ -217,6 +220,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
          addSessionView.btnDone.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         
+        addSessionView.btnTime2.layer.borderWidth = 2.0
+        addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        addSessionView.btnTime2.setTitleColor(UIColor.white, for: .normal)
+        addSessionView.btnTime2.backgroundColor = UIColor.clear
+        addSessionView.btnTime1.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        addSessionView.btnTime1.setTitleColor(UIColor.black, for: .normal)
         self.pickerView.tag = 1
         addSessionView.txtViewDate.isUserInteractionEnabled = false
         seconds1 = 0
@@ -232,23 +241,27 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
-        dateFormatter.locale = Locale.init(identifier: "")
+       // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
-        strDateTime = "\(Int(Date().timeIntervalSince1970*1000))"
+        let strDate = dateFormatter.string(from: Date())
+        let date = dateFormatter.date(from: strDate)
+        strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
         window.rootViewController?.view.addSubview(addSessionView)
     }
     
     @objc func handleDatePicker(sender: UIDatePicker) {
-        addSessionView.txtViewDate.isUserInteractionEnabled = false
+        //addSessionView.txtViewDate.isUserInteractionEnabled = false
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        sender.timeZone = TimeZone(abbreviation: "GMT")
-        sender.datePickerMode = .dateAndTime
+        print(sender.date)
         dateFormatter.dateFormat = "dd MMM yyyy"
-        if sender.tag == 1 {
-            addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
-            self.strDateTime = "\(Int(sender.date.timeIntervalSince1970))"
-        }
+        dateFormatter.locale = NSLocale.current
+        
+        addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        let strDate = dateFormatter.string(from: sender.date)
+        let date = dateFormatter.date(from: strDate)
+        self.strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
+        
         
     }
     
@@ -256,6 +269,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
         datePickerView.maximumDate = Date()
+        datePickerView.timeZone = TimeZone(abbreviation: "UTC")
         addSessionView.txtViewDate.isUserInteractionEnabled = true
         addSessionView.txtViewDate.inputView = datePickerView
         addSessionView.txtViewDate.becomeFirstResponder()
@@ -311,10 +325,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                      "level_id":self.selectedLevelId,
                      "dateTime":strDateTime,
                      "prepTime1":"0",
-                     "meditationTime1":"\(meditationTime1)",
+                     "meditationTime1":meditationTime1,
                      "restTime1":"0",
                      "prepTime2":"0",
-                     "meditationTime2":"\(meditationTime2)",
+                     "meditationTime2":meditationTime2,
                      "restTime2":"0"
             ] as [String : Any]
         

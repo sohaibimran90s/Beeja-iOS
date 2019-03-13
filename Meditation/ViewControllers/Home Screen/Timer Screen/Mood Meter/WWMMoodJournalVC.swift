@@ -42,11 +42,16 @@ class WWMMoodJournalVC: WWMBaseViewController {
     // MARK:- Button Action
     
     @IBAction func btnSkipAction(_ sender: Any) {
+        self.txtViewLog.text = ""
         self.completeMeditationAPI()
     }
     
     @IBAction func btnSubmitAction(_ sender: Any) {
-        self.completeMeditationAPI()
+        if  txtViewLog.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
+        }else {
+            self.completeMeditationAPI()
+        }
     }
 
     
@@ -68,6 +73,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    self.logExperience()
                 }else {
                     self.saveToDB(param: param)
                 }
@@ -86,6 +92,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         meditationDB.meditationData = myString
         WWMHelperClass.saveDb()
+        self.logExperience()
     }
     
     func logExperience() {
