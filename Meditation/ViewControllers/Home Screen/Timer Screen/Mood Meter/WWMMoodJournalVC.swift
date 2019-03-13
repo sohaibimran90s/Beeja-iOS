@@ -101,6 +101,13 @@ class WWMMoodJournalVC: WWMBaseViewController {
         
         if let tabController = self.tabBarController as? WWMTabBarVC {
             tabController.selectedIndex = 3
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 3 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
         }
         self.navigationController?.popToRootViewController(animated: false)
         

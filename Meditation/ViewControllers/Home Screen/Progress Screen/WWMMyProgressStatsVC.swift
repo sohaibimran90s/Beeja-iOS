@@ -496,7 +496,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
     }
     
-    
+    func setData() {
+        self.lblMeditate.text = "\(self.statsData.hours_of_meditate)"
+        self.lblValueSession.text = "\(self.statsData.total_Session)"
+        self.lblValueDays.text = "\(self.statsData.cons_days)"
+        
+    }
     
     func getStatsData() {
         WWMHelperClass.showSVHud()
@@ -507,7 +512,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 if let data = result["Response"] as? [String:Any] {
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
-                
+                self.setData()
                 self.collectionViewCal.reloadData()
             }else {
                 if error != nil {

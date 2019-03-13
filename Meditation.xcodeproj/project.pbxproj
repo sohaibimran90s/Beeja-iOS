@@ -105,6 +105,7 @@
 		2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAEC21E38860009F0909 /* WWMLoginWithEmailVC.swift */; };
 		2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAEE21E47B58009F0909 /* WWMForgotPasswordVC.swift */; };
 		2E99BAF121E48605009F0909 /* WWMWelcomeBackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAF021E48605009F0909 /* WWMWelcomeBackVC.swift */; };
+		2E9E879F223906D80096DD90 /* WWMImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */; };
 		2EA6DB0621C38A9D006A8E1D /* WWMMeditationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0521C38A9D006A8E1D /* WWMMeditationListVC.swift */; };
 		2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */; };
 		2EA6DB0C21C3C5A6006A8E1D /* WWMTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */; };
@@ -299,6 +300,7 @@
 		2E99BAEC21E38860009F0909 /* WWMLoginWithEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLoginWithEmailVC.swift; sourceTree = "<group>"; };
 		2E99BAEE21E47B58009F0909 /* WWMForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMForgotPasswordVC.swift; sourceTree = "<group>"; };
 		2E99BAF021E48605009F0909 /* WWMWelcomeBackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWelcomeBackVC.swift; sourceTree = "<group>"; };
+		2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMImagePickerManager.swift; sourceTree = "<group>"; };
 		2EA6DB0521C38A9D006A8E1D /* WWMMeditationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationListVC.swift; sourceTree = "<group>"; };
 		2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationLevelVC.swift; sourceTree = "<group>"; };
 		2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTabBarVC.swift; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5CCE9321C79ED10085224B /* WWMCommunityVC.swift */,
+				2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */,
 				2E4966162218089D00BC6219 /* WWMCommunityCollectionViewCell.swift */,
 				2E496618221808CD00BC6219 /* WWMCommunityTableViewCell.swift */,
 			);
@@ -1390,6 +1393,7 @@
 				2E93D2F921F5CABE00163E57 /* WWMStringDefine.swift in Sources */,
 				2E4371982200284C00EF5D62 /* DBContactUs+CoreDataClass.swift in Sources */,
 				2E4371922200284C00EF5D62 /* DBTimerData+CoreDataClass.swift in Sources */,
+				2E9E879F223906D80096DD90 /* WWMImagePickerManager.swift in Sources */,
 				2EAE29B722326452008E4361 /* WWMMoodProgressCVC.swift in Sources */,
 				2E4A4730220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift in Sources */,
 				2E4966172218089D00BC6219 /* WWMCommunityCollectionViewCell.swift in Sources */,
