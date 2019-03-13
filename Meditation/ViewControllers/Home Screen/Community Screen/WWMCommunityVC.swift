@@ -18,11 +18,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var strMonthYear = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
@@ -43,6 +38,11 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             }
             
         ]
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     

@@ -45,7 +45,7 @@ class WWMBaseViewController: UIViewController {
     func setUpNavigationBarForDashboard(title:String) {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
         sideMenuBtn.setImage(UIImage.init(named: "sideMenu_Icon"), for: .normal)
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
         sideMenuBtn.contentMode = .scaleAspectFit

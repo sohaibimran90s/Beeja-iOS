@@ -11,7 +11,9 @@ import UIKit
 class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
 
     @IBOutlet weak var btnNext: UIButton!
+    @IBOutlet weak var viewName: UIView!
     @IBOutlet weak var txtViewName: UITextField!
+    var tap = UITapGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,13 +28,28 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         self.btnNext.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
     }
     
+    @objc func KeyPadTap() -> Void {
+        self.view .endEditing(true)
+    }
+    
     //MARK:- UITextField Delegate Methods
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
+        view.addGestureRecognizer(tap)
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.view.endEditing(true)
+        self.view .removeGestureRecognizer(tap)
+        if txtViewName.text! == ""{
+            self.viewName.layer.borderColor = UIColor.clear.cgColor
+            self.btnNext.setTitleColor(UIColor.white, for: .normal)
+            self.btnNext.backgroundColor = UIColor.clear
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let str = txtViewName.text! + string
         if string == "" {
             return true
         }
@@ -43,7 +60,13 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         }
         if  textField == txtViewName {
             
-            let str = txtViewName.text! + string
+            
+            if str.count > 0 {
+                self.viewName.layer.borderWidth = 1.0
+                self.viewName.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+                self.btnNext.setTitleColor(UIColor.black, for: .normal)
+                self.btnNext.backgroundColor = UIColor.init(hexString: "#00eba9")!
+            }
             if str.count > 50 {
                 return false
             }

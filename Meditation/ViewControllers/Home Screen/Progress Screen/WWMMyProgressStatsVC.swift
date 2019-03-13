@@ -17,11 +17,16 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var btnPreviousMonth: UIButton!
     @IBOutlet weak var btnNextMonth: UIButton!
     
+    
+    @IBOutlet weak var btnLeft: UIButton!
+    @IBOutlet weak var btnRight: UIButton!
+    
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UIView!
     @IBOutlet weak var lblMeditate: UILabel!
     @IBOutlet weak var lblNameMeditate: UILabel!
     
+    @IBOutlet weak var viewBottom: UIStackView!
     @IBOutlet weak var lblAvMinutes: UILabel!
     @IBOutlet weak var lblDailyfrequency: UILabel!
     @IBOutlet weak var lblAvSession: UILabel!
@@ -52,6 +57,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     var selectedMeditationId = -1
     var selectedLevelId = -1
+    var isLeft = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -337,10 +343,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     
     @IBAction func btnLeftAction(_ sender: Any) {
-        
+        self.isLeft = false
+        self.setData()
     }
     @IBAction func btnRightAction(_ sender: Any) {
-        
+        self.isLeft = true
+        self.setData()
     }
     @IBAction func btnNextMonthAction(_ sender: Any) {
         monthValue = monthValue+1
@@ -403,64 +411,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 cell.imgViewRight.isHidden = false
             }
         }
-        
-//        if indexPath.row-dayAdded > 0 {
-//            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-dayAdded+1].meditation_status2 == 0) {
-//                cell.imgViewRight.isHidden = false
-//            }
-//        }else if indexPath.row-dayAdded == self.statsData.consecutive_days.count-1 {
-//            if !(data.meditation_status == 0 && data.meditation_status2 == 0) {
-//                cell.imgViewRight.isHidden = false
-//            }
-//        }else {
-//
-//        }
-        
-        
-        
-        
-        
-        
-        
-//        if data.meditationStatus == 0  {
-//
-//        }else if data.meditationStatus == 1 {
-//            cell.viewDateCircle.layer.borderWidth = 2.0
-//            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//
-//        }else if data.meditationStatus == 2 {
-//            cell.viewDateCircle.layer.borderWidth = 2.0
-//            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//
-//        }else if data.meditationStatus == 3 {
-//            cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-//        }
-//
-//        if indexPath.row-dayAdded > 0 {
-//            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row-1].meditationStatus == 3 {
-//                cell.imgViewLeft.isHidden = false
-//                cell.imgViewLeft.image = UIImage.init(named: "doubleLineLeft")
-//            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row-1].meditationStatus == 0 {
-//                cell.imgViewLeft.isHidden = true
-//            }else {
-//                cell.imgViewLeft.isHidden = false
-//                cell.imgViewLeft.image = UIImage.init(named: "singleLineLeft")
-//                // Single
-//            }
-//        }
-//
-//
-//        if indexPath.row < statsData.consecutiveDays.count-1 {
-//            if data.meditationStatus == 3 && statsData.consecutiveDays[indexPath.row+1].meditationStatus == 3 {
-//                cell.imgViewRight.isHidden = false
-//                cell.imgViewRight.image = UIImage.init(named: "doubleLineRight")
-//            }else if data.meditationStatus == 0 || statsData.consecutiveDays[indexPath.row+1].meditationStatus == 0 {
-//                cell.imgViewRight.isHidden = true
-//            }else {
-//                cell.imgViewRight.isHidden = false
-//                cell.imgViewRight.image = UIImage.init(named: "singleLineRight")
-//            }
-//        }
 
         
         let dateFormatter = DateFormatter()
@@ -497,9 +447,38 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     func setData() {
-        self.lblMeditate.text = "\(self.statsData.hours_of_meditate)"
-        self.lblValueSession.text = "\(self.statsData.total_Session)"
-        self.lblValueDays.text = "\(self.statsData.cons_days)"
+        if isLeft {
+            self.btnLeft.isHidden = false
+            self.btnRight.isHidden = true
+            self.lblMeditate.text = "\(self.statsData.weekly_session ?? "")"
+            self.lblValueSession.text = "\(self.statsData.avg_session ?? "")"
+            self.lblValueDays.text = "\(self.statsData.longest_session ?? "")"
+            self.lblNameMeditate.text = "Weekly Session"
+            self.lblAvSession.text = "Av. Session"
+            self.lblLongestSession.text = "Longest Session"
+            self.viewBottom.isHidden = false
+            if let meditationData = self.settingData.meditationData?.array as?  [DBMeditationData] {
+                for data in meditationData {
+                    if data.isMeditationSelected {
+                        if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendential" {
+                            self.viewBottom.isHidden = true
+                        }
+                    }
+                }
+            }
+            
+        }else {
+            self.btnLeft.isHidden = true
+            self.btnRight.isHidden = false
+            self.viewBottom.isHidden = false
+            self.lblNameMeditate.text = "Hours Meditated"
+            self.lblAvSession.text = "Total Sessions"
+            self.lblLongestSession.text = "Consecutive Days"
+            self.lblMeditate.text = "\(self.statsData.hours_of_meditate ?? "")"
+            self.lblValueSession.text = "\(self.statsData.total_Session ?? "")"
+            self.lblValueDays.text = "\(self.statsData.cons_days ?? "")"
+        }
+        
         
     }
     
@@ -512,6 +491,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 if let data = result["Response"] as? [String:Any] {
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
+                self.isLeft = false
                 self.setData()
                 self.collectionViewCal.reloadData()
             }else {

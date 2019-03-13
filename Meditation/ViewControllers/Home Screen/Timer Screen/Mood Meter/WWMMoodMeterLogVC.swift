@@ -52,6 +52,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     // MARK:- Button Action
     
+    @IBAction func btnEditTextAction(_ sender: Any) {
+        self.txtViewLog.isEditable = true
+        self.txtViewLog.becomeFirstResponder()
+    }
+    
     @IBAction func btnSkipAction(_ sender: Any) {
         self.txtViewLog.text = ""
         self.completeMeditationAPI()
