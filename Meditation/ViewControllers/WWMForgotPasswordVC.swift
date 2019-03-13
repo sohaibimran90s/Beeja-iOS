@@ -42,16 +42,22 @@ class WWMForgotPasswordVC: WWMBaseViewController {
     
     
     func forgotPasswordAPI() {
+        WWMHelperClass.showSVHud()
         let param = [
-            "email": "naushad.ali@iris-worldwide.com"
+            "email": txtViewEmail.text!
         ]
-        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_FORGOTPASSWORD, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_FORGOTPASSWORD, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 print(result)
+                self.navigationController?.popViewController(animated: true)
+                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                
+                
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                 
             }
+            WWMHelperClass.dismissSVHud()
         }
     }
     /*

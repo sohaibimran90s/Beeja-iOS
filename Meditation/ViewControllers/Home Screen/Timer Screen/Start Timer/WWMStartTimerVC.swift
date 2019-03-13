@@ -18,6 +18,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     var prepTime = 0
     var meditationTime = 0
     var restTime = 0
+    var meditationID = ""
+    var levelID = ""
     var player = AVAudioPlayer()
     var playerAmbient = AVAudioPlayer()
     var settingData = DBSettings()
@@ -27,6 +29,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblTimerType: UILabel!
+    @IBOutlet weak var spinnerImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,26 +42,19 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
         self.playerAmbient.stop()
-    }
-    func colorCombination() {
-        UIView.animate(withDuration: 1, delay: 0.0, options:[.repeat, .curveLinear], animations: {
-            self.view.backgroundColor = UIColor.black
-            self.view.backgroundColor = UIColor.green
-            self.view.backgroundColor = UIColor.gray
-            self.view.backgroundColor = UIColor.red
-        }, completion: nil)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
-//    func getRandomColor() {
-//        let red   = Float((arc4random() % 256)) / 255.0
-//        let green = Float((arc4random() % 256)) / 255.0
-//        let blue  = Float((arc4random() % 256)) / 255.0
-//        let alpha = Float(1.0)
-//
-//        UIView.animate(withDuration: 1.0, delay: 0.0, options:[.repeat, .autoreverse], animations: {
-//            self.view.backgroundColor = UIColor.init(displayP3Red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
-//        }, completion:nil)
-//    }
+    func rotationImage() {
+        
+        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
+            
+            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
+        }) { (finished) in
+            self.rotationImage()
+        }
+    }
+    
     @objc func appMovedToBackground() {
         print("App moved to background!")
         self.pauseAction()
@@ -66,22 +62,63 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     func setUpView() {
-        self.seconds = self.prepTime
-        lblTimerType.text = "Prep"
-        lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
         }
-       // self.playAudioFile(fileName: "CONCH")
+        
+        if self.prepTime > 0 {
+            self.seconds = self.prepTime
+            lblTimerType.text = "Prep"
+            timerType = "Prep"
+            lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
+        }else if self.meditationTime > 0 {
+            self.lblTimerType.text = "Meditation"
+            self.timerType = "Meditation"
+            self.seconds = self.meditationTime
+            self.playAudioFile(fileName: settingData.startChime!)
+            lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
+        }else if self.restTime > 0 {
+            self.lblTimerType.text = "Rest"
+            self.timerType = "Rest"
+            self.seconds = self.restTime
+            lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
+        }else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            vc.type = "Post"
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime
+            vc.restTime = self.restTime
+            
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
         self.playAmbientSoundAudioFile(fileName: settingData.ambientChime!)
         runTimer()
-       // self.colorCombination()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-       // self.getRandomColor()
+        UIApplication.shared.isIdleTimerDisabled = true
+        gradientSet.append([gradientOne, gradientTwo])
+        gradientSet.append([gradientTwo, gradientThree])
+        gradientSet.append([gradientThree, gradientOne])
+        
+        
+        gradient.frame = self.view.bounds
+        gradient.colors = gradientSet[currentGradient]
+        gradient.type = .radial
+        gradient.startPoint = CGPoint(x:0, y:0)
+        gradient.endPoint = CGPoint(x:1, y:1)
+        gradient.drawsAsynchronously = true
+        
+        
+        animateGradient()
+        self.spinnerImage.rotate360Degrees()
+        //self.spinnerImage.layer.removeAllAnimations()
+        //self.rotationImage()
     }
     
     func playAudioFile(fileName:String) {
@@ -161,24 +198,17 @@ class WWMStartTimerVC: WWMBaseViewController {
             if self.seconds == 1 {
                 self.playAudioFile(fileName: settingData.finishChime!)
                 self.timer.invalidate()
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.player.duration) {
-                    if self.settingData.moodMeterEnable {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-                        vc.type = "Post"
-                        vc.prepTime = self.prepTime
-                        vc.meditationTime = self.meditationTime
-                        vc.restTime = self.restTime
-                        self.navigationController?.pushViewController(vc, animated: false)
-                    }else {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-                        vc.type = "Post"
-                        vc.prepTime = self.prepTime
-                        vc.meditationTime = self.meditationTime
-                        vc.restTime = self.restTime
-                        self.navigationController?.pushViewController(vc, animated: false)
-                    }
-                    
-                }
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                vc.type = "Post"
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime
+                vc.restTime = self.restTime
+                
+                vc.meditationID = self.meditationID
+                vc.levelID = self.levelID
+                self.navigationController?.pushViewController(vc, animated: true)
+//                DispatchQueue.main.asyncAfter(deadline: .now() + self.player.duration) {
+                    //}
             }
                 seconds = seconds-1
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
@@ -226,6 +256,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
+            self.spinnerImage.layer.removeAllAnimations()
         }, completion: nil)
     }
     // MARK:- Button Action
@@ -236,11 +267,13 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = false
             self.runTimer()
             self.playerAmbient.play()
+            self.spinnerImage.rotate360Degrees()
         }, completion: nil)
         
     }
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
+        self.spinnerImage.layer.removeAllAnimations()
     }
     
     @IBAction func btnPauseAction(_ sender: Any) {
@@ -248,6 +281,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
+            self.spinnerImage.layer.removeAllAnimations()
         }
         let alert = UIAlertController.init(title: "End your Meditation Session", message: "Is this really the end?", preferredStyle: .alert)
         //let btnCancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
@@ -255,44 +289,28 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = false
             self.runTimer()
             self.playerAmbient.play()
+            self.spinnerImage.rotate360Degrees()
         }
         let btnOk = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-            
-            if self.settingData.moodMeterEnable {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-                vc.type = "Post"
-                if self.timerType == "Prep"{
-                    vc.prepTime = self.seconds
-                    vc.meditationTime = 0
-                    vc.restTime = 0
-                }else if self.timerType == "Meditation"{
-                    vc.prepTime = self.prepTime
-                    vc.meditationTime = self.seconds
-                    vc.restTime = 0
-                }else if self.timerType == "Rest"{
-                    vc.prepTime = self.prepTime
-                    vc.meditationTime = self.meditationTime
-                    vc.restTime = self.seconds
-                }
-                self.navigationController?.pushViewController(vc, animated: false)
-            }else {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-                vc.type = "Post"
-                if self.timerType == "Prep"{
-                    vc.prepTime = self.seconds
-                    vc.meditationTime = 0
-                    vc.restTime = 0
-                }else if self.timerType == "Meditation"{
-                    vc.prepTime = self.prepTime
-                    vc.meditationTime = self.seconds
-                    vc.restTime = 0
-                }else if self.timerType == "Rest"{
-                    vc.prepTime = self.prepTime
-                    vc.meditationTime = self.meditationTime
-                    vc.restTime = self.seconds
-                }
-                self.navigationController?.pushViewController(vc, animated: false)
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            vc.type = "Post"
+            if self.timerType == "Prep"{
+                vc.prepTime = self.prepTime - self.seconds
+                vc.meditationTime = 0
+                vc.restTime = 0
+            }else if self.timerType == "Meditation"{
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime - self.seconds
+                vc.restTime = 0
+            }else if self.timerType == "Rest"{
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime
+                vc.restTime = self.restTime - self.seconds
             }
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         }
         alert.addAction(btnCancel)
         alert.addAction(btnOk)
@@ -302,7 +320,27 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     
     
-    
+//    <color name="gradient1">#00EBA9</color>
+//    <color name="gradient2">#49298A</color>
+//    <color name="gradient3">#001252</color>
+//
+//    <color name="gradient4">#FFC02F</color>
+//    <color name="gradient5">#49298A</color>
+//    <color name="gradient6">#FF3A49</color>
+//
+//    <!--*  Yellow purple    ///  gradient colors
+//    FFC02F
+//    49298A
+//    FF3A49
+//    *  Red Purple
+//    001252
+//    49298A
+//    FF3A49
+//
+//    *  Blue Green
+//    00EBA9
+//    49298A
+//    001252-->
     
     
     
@@ -310,28 +348,29 @@ class WWMStartTimerVC: WWMBaseViewController {
     var gradientSet = [[CGColor]]()
     var currentGradient: Int = 0
     
-    let gradientOne = UIColor(red: 48/255, green: 62/255, blue: 103/255, alpha: 1).cgColor
-    let gradientTwo = UIColor(red: 244/255, green: 88/255, blue: 53/255, alpha: 1).cgColor
-    let gradientThree = UIColor(red: 196/255, green: 70/255, blue: 107/255, alpha: 1).cgColor
+    let gradientOne = UIColor.init(hexString: "#00EBA9")!.cgColor
+    let gradientTwo = UIColor.init(hexString: "#49298A")!.cgColor
+    let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        gradientSet.append([gradientOne, gradientTwo])
-        gradientSet.append([gradientTwo, gradientThree])
-        gradientSet.append([gradientThree, gradientOne])
-        
-        
-        gradient.frame = self.view.bounds
-        gradient.colors = gradientSet[currentGradient]
-        gradient.startPoint = CGPoint(x:0, y:0)
-        gradient.endPoint = CGPoint(x:1, y:1)
-        gradient.drawsAsynchronously = true
-        
-        
-        animateGradient()
-        
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        gradientSet.append([gradientOne, gradientTwo])
+//        gradientSet.append([gradientTwo, gradientThree])
+//        gradientSet.append([gradientThree, gradientOne])
+//
+//
+//        gradient.frame = self.view.bounds
+//        gradient.colors = gradientSet[currentGradient]
+//        gradient.type = .radial
+//        gradient.startPoint = CGPoint(x:0, y:0)
+//        gradient.endPoint = CGPoint(x:1, y:1)
+//        gradient.drawsAsynchronously = true
+//
+//
+//        animateGradient()
+//
+//    }
     
     func animateGradient() {
         if currentGradient < gradientSet.count - 1 {
@@ -362,5 +401,17 @@ extension WWMStartTimerVC: CAAnimationDelegate {
             gradient.colors = gradientSet[currentGradient]
             animateGradient()
         }
+    }
+}
+
+extension UIView {
+    func rotate360Degrees(duration: CFTimeInterval = 8) {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(Double.pi * 2)
+        rotateAnimation.isRemovedOnCompletion = false
+        rotateAnimation.duration = duration
+        rotateAnimation.repeatCount=Float.infinity
+        self.layer.add(rotateAnimation, forKey: nil)
     }
 }

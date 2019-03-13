@@ -44,12 +44,13 @@ class WWMResetPasswordVC: WWMBaseViewController {
     }
 
     func resetPassword() {
+        WWMHelperClass.showSVHud()
         let param = [
-            "user_id" : 1,
+            "user_id" : self.appPreference.getUserID(),
             "oldPassword" : txtViewOldPassword.text ?? "",
             "newPassword" : txtViewNewPassword.text ?? ""
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)
                 WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)
@@ -58,16 +59,11 @@ class WWMResetPasswordVC: WWMBaseViewController {
                     WWMHelperClass.showPopupAlertController(sender: self, message:error?.localizedDescription ?? "" , title: kAlertTitle)
                 }
             }
+            WWMHelperClass.dismissSVHud()
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
+    
+    
 
 }

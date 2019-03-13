@@ -15,10 +15,15 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnForgotPassword: UIButton!
     
+    @IBOutlet weak var lblUserName: UILabel!
+    @IBOutlet weak var lblUserEmail: UILabel!
+    
     @IBOutlet weak var viewContinueAsEmail: UIView!
     @IBOutlet weak var viewEmail: UIView!
     
+    
     var isFromWelcomeBack = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
         
         if isFromWelcomeBack {
             viewContinueAsEmail.isHidden = false
+            self.lblUserName.text = self.userData.name
+            self.lblUserEmail.text = self.userData.email
             viewEmail.isHidden = true
         }else {
             viewContinueAsEmail.isHidden = true
@@ -47,8 +54,10 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
         if !isFromWelcomeBack {
             if txtViewEmail.text == "" {
                 WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailMessage, title: kAlertTitle)
+                return
             }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
                 WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
+                return
             }
         }
         if self.txtViewPassword.text == "" {
@@ -66,26 +75,47 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
     }
     
     func loginWithEmail() {
+        WWMHelperClass.showSVHud()
         let param = [
-            "email": "naushad.ali@iris-worldwide.com",
-            "password":"12345",
-            "deviceId": "89sdf79s8",
-            "DeviceType": "android",
-            "loginType": "eml",
+            "email": isFromWelcomeBack ? self.userData.email: txtViewEmail.text!,
+            "password":txtViewPassword.text!,
+            "deviceId": kDeviceID,
+            "deviceToken" : appPreference.getDeviceToken(),
+            "DeviceType": kDeviceType,
+            "loginType": kLoginTypeEmail,
             "profileImage":"",
             "socialId":"",
-            "name":""
+            "name":"",
+            "model": UIDevice.current.model,
+            "version": UIDevice.current.systemVersion
         ]
-        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setIsLogin(value: true)
-                self.appPreference.setUserData(value: result)
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsLogin(value: true)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                        self.appPreference.setUserName(value: userProfile["name"] as! String)
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        if isProfileCompleted {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }else {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }
+                    }
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                }
+                
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
 
             }
+            WWMHelperClass.dismissSVHud()
         }
     }
     

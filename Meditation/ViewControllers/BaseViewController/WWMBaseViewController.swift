@@ -11,10 +11,19 @@ import UIKit
 class WWMBaseViewController: UIViewController {
 
     let appPreference = WWMAppPreference()
+    var userData = WWMUserData.sharedInstance
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setUserDataFromPreference()
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func setUserDataFromPreference() {
+        if self.appPreference.isLogout() {
+            userData = WWMUserData.init(json: self.appPreference.getUserData())
+        }
     }
     
 
@@ -44,7 +53,7 @@ class WWMBaseViewController: UIViewController {
         let leftTitle = UIButton.init()
         if title == "Timer" {
             leftTitle.setTitle("  Enable Flight Mode", for: .normal)
-            leftTitle.setTitleColor(UIColor.init(displayP3Red: 0, green: 18, blue: 82, alpha: 0.45), for: .normal)
+            leftTitle.setTitleColor(UIColor.init(displayP3Red: 0/255, green: 18/255, blue: 82/255, alpha: 0.45), for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax", size: 14)
             leftTitle.setImage(UIImage.init(named: "FlightMode_Icon"), for: .normal)
             leftTitle.addTarget(self, action: #selector(btnFlightModeAction(_:)), for: .touchUpInside)
@@ -86,10 +95,28 @@ class WWMBaseViewController: UIViewController {
     }
     @IBAction func btnFlightModeAction(_ sender: UIButton) {
         let settingsUrl = URL.init(string: UIApplication.openSettingsURLString)
-        if let url = settingsUrl {
+        //App-prefs:root=AIRPLANE_MODE
+        let url1 = URL.init(string: "App-prefs:root=AIRPLANE_MODE")
+        if let url = url1 {
+            if UIApplication.shared.canOpenURL(url){
             UIApplication.shared.open(url, options: [:]) { (Bool) in
                 print("Sucess")
             }
+            }else {
+                if let setUrl = settingsUrl {
+                    UIApplication.shared.open(setUrl, options: [:]) { (Bool) in
+                        print("Sucess")
+                    }
+                }
+                
+            }
+        }else {
+            if let setUrl = settingsUrl {
+                UIApplication.shared.open(setUrl, options: [:]) { (Bool) in
+                    print("Sucess")
+                }
+            }
+            
         }
     }
     @IBAction func btnBackAction(_ sender: UIButton) {

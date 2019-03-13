@@ -14,12 +14,22 @@ import UIKit
 ///////**********************////////
 let kDeviceToken:String!                    = "DeviceToken"
 let kUserData:String!                       = "LoginKey"
+let kUserToken:String!                       = "token"
 
 
 
-let  kAlertTitle : String!                 = "Alert"
-let  kGETHeader : String!                 = "GET"
-let  kPOSTHeader : String!                 = "POST"
+
+
+
+let  kAlertTitle : String!                    = "Alert"
+let  kGETHeader : String!                     = "GET"
+let  kPOSTHeader : String!                    = "POST"
+let  kLoginTypeEmail : String!                = "eml"
+let  kLoginTypeGoogle : String!               = "ggl"
+let  kLoginTypeFacebook : String!             = "fb"
+let  kDeviceType : String!                    = "ios"
+let  kDeviceID : String!                      = UIDevice.current.identifierForVendor!.uuidString
+
 
 
 
@@ -53,7 +63,7 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 
 // MARK:- Jai Guru Dev Mantra
 
-let kChimes_JaiGuruDev                          = "ww_vo_jaygudurday_tk2"
+let kChimes_JaiGuruDev                          = "JAY GURUDEV"
 
 #if DEVELOPMENT
 let URL_BASE  = "http://staging.beejameditation.com/api/v1/"
@@ -68,12 +78,26 @@ let URL_BASE  = "http://staging.beejameditation.com/api/v1/"
 let URL_GETMOODMETERDATA         = URL_BASE + "getmoods"
 let URL_GETMEDITATIONDATA        = URL_BASE + "getMeditationData"
 let URL_LOGIN                    = URL_BASE + "login"
-let URL_SIGNUP                   = URL_BASE + "signUp"
+let URL_SIGNUP                   = URL_BASE + "signup"
+let URL_LOGOUT                    = URL_BASE + "logout"
+let URL_MEDITATIONDATA           = URL_BASE + "meditationData"
 let URL_FORGOTPASSWORD           = URL_BASE + "forgotPassword"
 let URL_JOURNALMYPROGRESS        = URL_BASE + "journalMyProgress"
+let URL_STATSMYPROGRESS        = URL_BASE + "statsMyProgress"
+let URL_MOODPROGRESS               = URL_BASE + "moodProgress"//
+let URL_ADDJOURNAL               = URL_BASE + "addJournal"
+let URL_MEDITATIONCOMPLETE               = URL_BASE + "meditationComplete"//
 let URL_RESETPASSWORD            = URL_BASE + "reset_password"
 let URL_SUPPORT                  = URL_BASE + "support"
 let URL_COMMUNITYDATA        = URL_BASE + "communityData"
+let URL_SUBSCRIPTIONPURCHASE    = URL_BASE + "subscriptionPurchase"//
+let URL_GETSUBSCRIPTIONPPLANS    = URL_BASE + "getSubscriptionPlans"//
+let URL_GETPROFILE                  = URL_BASE + "getProfile"
+let URL_UPLOADHASHTAG                  = URL_BASE + "uploadHashTag"//
+let URL_GETVIBESIMAGES                  = URL_BASE + "getVibesImages"//getVibesImages
+let URL_ADDSESSION                  = URL_BASE + "addSession"//
+let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
+let URL_SETTINGS                  = URL_BASE + "settings"//
 
 
 
@@ -110,6 +134,9 @@ let URL_FAQ   = "http://staging.beejameditation.com/faq"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_FINDCOURSE   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_OurStory   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
+let URL_LEARN   = "https://www.willwilliamsmeditation.co.uk/love-to-learn"
+let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
+
 
 // Social Links **************************
 let URL_Facebook   = "https://www.facebook.com/WillWilliamsMeditation"

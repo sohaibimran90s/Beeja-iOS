@@ -3,3 +3,4 @@
 //
 
 #import "CryptLib.h"
+#import <SpotifyiOS/SpotifyiOS.h>

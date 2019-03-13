@@ -11,41 +11,77 @@ import GaugeKit
 import Charts
 
 
-class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
-    
-    
+class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
 
     var arrMoodData = [WWMMoodMeterData]()
+    var moodProgressDurationView = WWMMoodProgressDurationView()
+    var moodProgressData = [String:Any]()
+    
+    @IBOutlet weak var tblMoodProgress: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let moodMeter = WWMMoodMeterData.init()
-        arrMoodData = moodMeter.getMoodMeterData()
+        self.getMoodProgress()
         
         // Do any additional setup after loading the view.
     }
     
+    // MARK:- UIButton Action
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        moodProgressDurationView.removeFromSuperview()
+    }
+    
+    @IBAction func btnChangeDurationAction(_ sender: Any) {
+        moodProgressDurationView = UINib(nibName: "WWMMoodProgressDurationView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMoodProgressDurationView
+        let window = UIApplication.shared.keyWindow!
+        
+        moodProgressDurationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        moodProgressDurationView.btnYear.layer.borderWidth = 2.0
+        moodProgressDurationView.btnYear.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnMonth.layer.borderWidth = 2.0
+        moodProgressDurationView.btnMonth.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnDays.addTarget(self, action: #selector(btnWeeKAction(_:)), for: .touchUpInside)
+        moodProgressDurationView.btnMonth.addTarget(self, action: #selector(btnMonthAction(_:)), for: .touchUpInside)
+        moodProgressDurationView.btnYear.addTarget(self, action: #selector(btnYearAction(_:)), for: .touchUpInside)
+        
+        moodProgressDurationView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        
+        window.rootViewController?.view.addSubview(moodProgressDurationView)
+    }
+    
+    @IBAction func btnWeeKAction(_ sender: Any) {
+        moodProgressDurationView.removeFromSuperview()
+        self.getMoodProgress()
+    }
+    
+    @IBAction func btnMonthAction(_ sender: Any) {
+        moodProgressDurationView.removeFromSuperview()
+        self.getMoodProgress()
+    }
+    
+    @IBAction func btnYearAction(_ sender: Any) {
+        moodProgressDurationView.removeFromSuperview()
+        self.getMoodProgress()
+    }
 
     // MARK:- UITable View Delegates Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+       if self.moodProgressData.count > 0 {
+            return 2
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellPieChart") as! WWMProgressMoodPieTVC
-            
-            cell.viewCircle1.rate = 7
-            cell.viewCircle2.rate = 3
-            cell.viewCircle3.rate = 4
-            cell.viewCircle4.rate = 1
-            
-            cell.lblPercentage1.text = "70%"
-            cell.lblPercentage2.text = "30%"
-            cell.lblPercentage3.text = "40%"
-            cell.lblPercentage4.text = "10%"
+            cell.collectionView.tag = indexPath.row
+            cell.collectionView.reloadData()
             return cell
         }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellGraphChart") as! WWMProgressMoodPieTVC
@@ -197,6 +233,98 @@ class WWMMyProgressMoodVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
+    // MARK:- UICollectionView Delegate Methods
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView.tag == 0 {
+            return 2
+        }else {
+            return 1
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellCiruclarGraph", for: indexPath) as! WWMMoodProgressCVC
+        let color_score = self.moodProgressData["color_score"] as? [String:Any]
+       
+        
+        cell.pageController.currentPage = indexPath.row
+        var meditationData = [[String:Any]]()
+        if indexPath.row == 0 {
+            meditationData = (color_score?["pre"] as? [[String:Any]])!
+            cell.btnMeditationType.setTitle("Pre Medtiation", for: .normal)
+        }else {
+            meditationData = (color_score?["post"] as? [[String:Any]])!
+            cell.btnMeditationType.setTitle("Post Medtiation", for: .normal)
+        }
+        
+        cell.viewCircle1.rate = 0
+        cell.viewCircle2.rate = 0
+        cell.viewCircle3.rate = 0
+        cell.viewCircle4.rate = 0
+        
+        cell.lblPercentage1.text = "0%"
+        cell.lblPercentage2.text = "0%"
+        cell.lblPercentage3.text = "0%"
+        cell.lblPercentage4.text = "0%"
+        for dic in meditationData {
+            if dic["quad_number"] as! Int == 1 {
+//                cell.viewCircle1.animateRate(1.0, newValue:(dic["mood"] as! CGFloat)/10) { (Bool) in
+//                    
+//                }
+                cell.viewCircle1.rate = (dic["mood"] as! CGFloat)/10
+                cell.lblPercentage1.text = "\(dic["mood"] as! CGFloat)%"
+            }else if dic["quad_number"] as! Int == 2 {
+                cell.viewCircle2.rate = (dic["mood"] as! CGFloat)/10
+                cell.lblPercentage2.text = "\(dic["mood"] as! CGFloat)%"
+            }else if dic["quad_number"] as! Int == 3 {
+                cell.viewCircle3.rate = (dic["mood"] as! CGFloat)/10
+                cell.lblPercentage3.text = "\(dic["mood"] as! CGFloat)%"
+            }else if dic["quad_number"] as! Int == 4 {
+                cell.viewCircle4.rate = (dic["mood"] as! CGFloat)/10
+                cell.lblPercentage4.text = "\(dic["mood"] as! CGFloat)%"
+            }
+        }
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        if collectionView.tag == 0 {
+            return CGSize.init(width: self.view.frame.size.width, height: 447)
+        }
+        return CGSize.init(width: 300, height: 300)
+    }
+
+    
+    
+    
+    func getMoodProgress() {
+        WWMHelperClass.showSVHud()
+        let param = ["user_id":self.appPreference.getUserID(),
+                     ]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let statsData = result["result"] as? [String:Any] {
+                    self.moodProgressData = statsData
+                    self.tblMoodProgress.reloadData()
+                    
+                }
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
 
 
 }

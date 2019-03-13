@@ -89,6 +89,7 @@ PODS:
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
   - Charts
@@ -100,6 +101,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - lottie-ios
   - SDWebImage
+  - SVProgressHUD
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -123,6 +125,7 @@ SPEC REPOS:
     - lottie-ios
     - nanopb
     - SDWebImage
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -145,7 +148,8 @@ SPEC CHECKSUMS:
   lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: b303c6bc6cfc03415f82ed00ae615e9beb342e4e
+PODFILE CHECKSUM: 730d68ed5c393efad58dbcafb303fc218d9e357f
 
 COCOAPODS: 1.5.3

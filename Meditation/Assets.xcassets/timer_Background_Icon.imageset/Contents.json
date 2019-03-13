@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "asset_5_2_x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "audio_wave.png",
+      "filename" : "asset_5_2_x-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "asset_5_2_x-2.png",
       "scale" : "3x"
     }
   ],

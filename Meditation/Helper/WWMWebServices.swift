@@ -12,6 +12,8 @@ import UIKit
 
 class WWMWebServices {
     
+    
+    
     typealias ASCompletionBlockAsDictionary = (_ result: Dictionary<String, Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsArray = (_ result: Array<Any>, _ error: Error?, _ success: Bool) -> Void
     
@@ -44,8 +46,8 @@ class WWMWebServices {
         
         
         if isUserToken {
-            
-            request.setValue(UserDefaults.standard.value(forKey: "89sd7f89sd") as? String, forHTTPHeaderField: "token")
+            let appPreference = WWMAppPreference()
+            request.setValue(appPreference.getToken(), forHTTPHeaderField: "header")
         }
         
         request.timeoutInterval = 45

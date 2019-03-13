@@ -28,6 +28,8 @@ class WWMSupportVC: WWMBaseViewController {
         self.setNavigationBar(isShow: false, title: "")
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.txtViewName.text = self.userData.name
+        self.txtViewEmail.text = self.userData.email
     }
     // MARK: Button Action
     
@@ -45,13 +47,14 @@ class WWMSupportVC: WWMBaseViewController {
 
     
     func submitQueryAPI() {
+        WWMHelperClass.showSVHud()
         let param = [
-                      "user_id" : 1,
+                      "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
                       "email" : txtViewEmail.text!,
                       "queryText" : txtViewQuery.text!
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)
                 WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)
@@ -60,6 +63,7 @@ class WWMSupportVC: WWMBaseViewController {
                     WWMHelperClass.showPopupAlertController(sender: self, message:error?.localizedDescription ?? "" , title: kAlertTitle)
                 }
             }
+            WWMHelperClass.dismissSVHud()
         }
         
     }

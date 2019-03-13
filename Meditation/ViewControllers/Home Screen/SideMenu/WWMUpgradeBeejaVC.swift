@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import SVProgressHUD
 
 class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPaymentTransactionObserver {
     
@@ -19,11 +20,12 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var selectedProductIndex = 1
     var transactionInProgress = false
     var productsArray = [SKProduct]()
-    var productIDs = ["get_6_gbp_monthly_sub","get_42_gbp_annual_sub","get_108_gbp_lifetime_sub"]
+    var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        WWMHelperClass.showSVHud()
         self.setNavigationBar(isShow: false, title: "")
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
@@ -71,6 +73,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
             self.transactionInProgress = true
+            WWMHelperClass.showSVHud()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
@@ -90,22 +93,40 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewAnnually.isHidden = true
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = false
-        self.selectedProductIndex = 0
+        for index in 0..<self.productsArray.count {
+            let product = self.productsArray[index]
+            if product.productIdentifier == "get_6_gbp_monthly_sub" {
+                self.selectedProductIndex = index
+            }
+            print(product.productIdentifier)
+        }
+        
     }
     
     @IBAction func btnAnnuallyAction(sender: AnyObject) {
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = true
-        self.selectedProductIndex = 1
-        
+        for index in 0..<self.productsArray.count {
+            let product = self.productsArray[index]
+            if product.productIdentifier == "get_42_gbp_annual_sub" {
+                self.selectedProductIndex = index
+            }
+            print(product.productIdentifier)
+        }
     }
     
     @IBAction func btnLifeTimeAction(sender: AnyObject) {
         self.viewAnnually.isHidden = true
         self.viewLifeTime.isHidden = false
         self.viewMonthly.isHidden = true
-        self.selectedProductIndex = 2
+        for index in 0..<self.productsArray.count {
+            let product = self.productsArray[index]
+            if product.productIdentifier == "get_108_gbp_lifetime_sub" {
+                self.selectedProductIndex = index
+            }
+            print(product.productIdentifier)
+        }
         
     }
     
@@ -121,6 +142,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         if response.products.count != 0 {
             for product in response.products {
                 productsArray.append(product )
+                print(product.localizedTitle)
+                print(product.productIdentifier)
             }
         }
         else {
@@ -130,6 +153,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         if response.invalidProductIdentifiers.count != 0 {
             print(response.invalidProductIdentifiers.description)
         }
+        WWMHelperClass.dismissSVHud()
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
@@ -139,11 +163,23 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
+                print(transaction.transactionIdentifier as Any)
+                let param = [
+                    "plan_id" : transaction.payment.productIdentifier,
+                    "user_id" : "",
+                    "subscription_plan" : "monthly",
+                    "date_time" : transaction.transactionDate as Any,
+                    "transaction_id" : transaction.transactionIdentifier as Any,
+                    "amount" : ""
+                    ] as [String : Any]
+                
+                self.subscriptionSucessAPI(param: param)
                 
             case SKPaymentTransactionState.failed:
                 print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
+                WWMHelperClass.dismissSVHud()
                 
             default:
                 print(transaction.transactionState.rawValue)
@@ -151,5 +187,18 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         }
     }
     
+    func subscriptionSucessAPI(param : [String : Any]) {
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+            if sucess {
+                WWMHelperClass.showPopupAlertController(sender: self, message: response["message"] as! String, title: kAlertTitle)
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+        
+    }
     
 }

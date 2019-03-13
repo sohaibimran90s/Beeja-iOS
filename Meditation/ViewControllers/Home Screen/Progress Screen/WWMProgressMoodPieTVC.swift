@@ -7,22 +7,14 @@
 //
 
 import UIKit
-import GaugeKit
+
 
 class WWMProgressMoodPieTVC: UITableViewCell {
 
-    @IBOutlet weak var lblPercentage1: UILabel!
-    @IBOutlet weak var lblPercentage2: UILabel!
-    @IBOutlet weak var lblPercentage3: UILabel!
-    @IBOutlet weak var lblPercentage4: UILabel!
+    //CellCiruclarGraph
     
-    @IBOutlet weak var viewCircle1: Gauge!
-    @IBOutlet weak var viewCircle2: Gauge!
-    @IBOutlet weak var viewCircle3: Gauge!
-    @IBOutlet weak var viewCircle4: Gauge!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var pageController: UIPageControl!
-    @IBOutlet weak var btnMeditationType: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

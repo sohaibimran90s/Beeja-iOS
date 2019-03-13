@@ -31,35 +31,47 @@ class WWMTimerHomeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpView()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.getSettingData),
+            name: NSNotification.Name(rawValue: "GETSettingData"),
+            object: nil)
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
-        for dic in data{
-            if dic.isMeditationSelected {
-                self.selectedMeditationData = dic
-                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                for level in levels! {
-                    if level.isLevelSelected {
-                        selectedLevelData = level
-                        self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+        self.getSettingData()
+    }
+    
+    @objc func getSettingData() {
+        print(self.userData.name)
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+            let meditationData = settingData.meditationData!.array as? [DBMeditationData]
+            for dic in meditationData!{
+                if dic.isMeditationSelected {
+                    self.selectedMeditationData = dic
+                    let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+                    for level in levels! {
+                        if level.isLevelSelected {
+                            selectedLevelData = level
+                            self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+                            self.setUserDataFromPreference()
+                            self.setUpSliderTimesAccordingToLevels()
+                        }
                     }
                 }
             }
         }
-        
-        self.setUpSliderTimesAccordingToLevels()
     }
+    
+    
     func setUpView() {
         self.setUpNavigationBarForDashboard(title: "Timer")
         self.btnStartTimer.layer.borderWidth = 2.0
         self.btnStartTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
-        }
-        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-        if data.count > 0 {
-            settingData = data[0]
         }
     }
     func setAnimationForExpressMood() {
@@ -86,6 +98,21 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderRestTime.maximumValue = Float(selectedLevelData.maxRest)
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+        if !self.userData.is_subscribed {
+            let alert = UIAlertController(title: kAlertTitle,
+                                          message: "Your subscription plan is expired to continue please upgrade.",
+                                          preferredStyle: UIAlertController.Style.alert)
+            
+            
+            let okAction = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            
+            alert.addAction(okAction)
+            self.navigationController!.present(alert, animated: true,completion: nil)
+            
+        }
     }
 
     
@@ -129,13 +156,17 @@ class WWMTimerHomeVC: WWMBaseViewController {
         vc.prepTime = Int(self.sliderPrepTime.value)
         vc.meditationTime = Int(self.sliderMeditationTime.value)
         vc.restTime = Int(self.sliderRestTime.value)
-        
+        vc.meditationID = "\(self.selectedMeditationData.meditationId)"
+        vc.levelID = "\(self.selectedLevelData.levelId)"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnExpressMoodAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
         vc.type = "Pre"
+        
+        vc.meditationID = "\(self.selectedMeditationData.meditationId)"
+        vc.levelID = "\(self.selectedLevelData.levelId)"
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -155,22 +186,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         }
         
         alert.view.tintColor = UIColor.black
-//        alert.addAction(UIAlertAction(title: "Approve", style: .default , handler:{ (UIAlertAction)in
-//            print("User click Approve button")
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
-//            print("User click Edit button")
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler:{ (UIAlertAction)in
-//            print("User click Delete button")
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
-//            print("User click Dismiss button")
-//        }))
-        
         self.present(alert, animated: true, completion: {
             print("completion block")
         })
@@ -181,30 +196,14 @@ class WWMTimerHomeVC: WWMBaseViewController {
         for indexLevel in 0..<levels!.count {
             let level = levels![indexLevel]
                 if index == indexLevel {
-                    settingData.prepTime = "\(level.prepTime)"
-                    settingData.meditationTime = "\(level.meditationTime)"
-                    settingData.restTime = "\(level.restTime)"
-                    level.isLevelSelected =  true
                     selectedLevelData = level
                     self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
-                }else {
-                    level.isLevelSelected =  false
                 }
         }
         self.setUpSliderTimesAccordingToLevels()
                 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }

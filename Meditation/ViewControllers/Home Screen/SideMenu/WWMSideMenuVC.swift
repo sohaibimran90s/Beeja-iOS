@@ -8,15 +8,19 @@
 
 import UIKit
 
-class WWMSideMenuVC: UIViewController {
+class WWMSideMenuVC: WWMBaseViewController {
 
     @IBOutlet weak var btnLearn: UIButton!
     @IBOutlet weak var btnGuided: UIButton!
     @IBOutlet weak var btnTimer: UIButton!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.btnTimer.setTitleColor(UIColor.init(hexString: "#00eba9")!, for: .normal)
+        self.lblName.text = self.userData.name
+        self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
         
         // Do any additional setup after loading the view.
     }
@@ -54,11 +58,11 @@ class WWMSideMenuVC: UIViewController {
     }
     
     @IBAction func btnLearnAction(_ sender: Any) {
-        
+        self.openWebView(index: 9)
     }
     
     @IBAction func btnGuidedAction(_ sender: Any) {
-        
+        self.openWebView(index: 10)
     }
     
     @IBAction func btnTimerAction(_ sender: Any) {
@@ -153,6 +157,12 @@ class WWMSideMenuVC: UIViewController {
         case 8:
             vc.strUrl = URL_FINDCOURSE
             vc.strType = "Find a Course"
+        case 9:
+            vc.strUrl = URL_LEARN
+            vc.strType = "Learn"
+        case 10:
+            vc.strUrl = URL_GUIDED
+            vc.strType = "Guided"
         default:
             return
         }

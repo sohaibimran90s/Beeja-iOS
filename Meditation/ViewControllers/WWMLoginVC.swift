@@ -63,16 +63,21 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                 let param = [
                                     "email": fbEmail,
                                     "password":"",
-                                    "deviceId": "",
-                                    "DeviceType": "ios",
-                                    "loginType": "fb",
-                                    "profileImage":"",
-                                    "socialId":"\(fbData["id"] ?? -1)",
-                                    "name":"\(fbData["name"] ?? "")"
+                                    "deviceId": kDeviceID,
+                                    "DeviceType": kDeviceType,
+                                    "deviceToken" : self.appPreference.getDeviceToken(),
+                                    "loginType": kLoginTypeFacebook,
+                                    "profileImage":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
+                                    "socialId":"\(fbData["id"] ?? "")",
+                                    "name":"\(fbData["name"] ?? "")",
+                                    "model": UIDevice.current.model,
+                                    "version": UIDevice.current.systemVersion
                                 ]
                                 self.loginWithSocial(param: param as Dictionary<String, Any>)
                             }else {
                                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+                                vc.isFromFb = true
+                                vc.fbData = fbData
                                 self.navigationController?.pushViewController(vc, animated: true)
                             }
                         }
@@ -126,48 +131,63 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         } else {
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
+           // let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-            let givenName = user.profile.givenName
-            let familyName = user.profile.familyName
+           // let givenName = user.profile.givenName
+           // let familyName = user.profile.familyName
             let email = user.profile.email
             let profileImage = user.profile.imageURL(withDimension: 400)
             let param = [
-                "email": user.profile.email,
+                "email": email,
                 "password":"",
-                "deviceId": "",
-                "DeviceType": "ios",
-                "loginType": "gmail",
+                "deviceId": kDeviceID,
+                "DeviceType": kDeviceType,
+                "deviceToken" : self.appPreference.getDeviceToken(),
+                "loginType": kLoginTypeGoogle,
                 "profileImage":profileImage?.absoluteString,
                 "socialId":userId,
-                "name":fullName
+                "name":fullName,
+                "model": UIDevice.current.model,
+                "version": UIDevice.current.systemVersion
             ]
+            
+            
             self.loginWithSocial(param: param as Dictionary<String, Any>)
             
-            
-            // ...
         }
     }
     
-    func loginWithSocial(param:Dictionary<String, Any>) {
-        let param1 = [
-            "email": "naushad.ali@iris-worldwide.com",
-            "password":"12345",
-            "deviceId": "89sdf79s8",
-            "DeviceType": "android",
-            "loginType": "eml",
-            "profileImage":"",
-            "socialId":"",
-            "name":""
-        ]
-        WWMWebServices.requestAPIWithBody(param:param1 , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+    func loginWithSocial(param:[String : Any]) {
+        
+        WWMHelperClass.showSVHud()
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                self.navigationController?.pushViewController(vc, animated: true)
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsLogin(value: true)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                        self.appPreference.setUserName(value: userProfile["name"] as! String)
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        if isProfileCompleted {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }else {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                        }
+                    }
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                }
+                
             }else {
-                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
                 
             }
+            WWMHelperClass.dismissSVHud()
         }
     }
     

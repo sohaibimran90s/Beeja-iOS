@@ -16,6 +16,7 @@ class WWMJournalTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDateMonth: UILabel!
     @IBOutlet weak var lblDateDay: UILabel!
     
+    @IBOutlet weak var lblMeditationType: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

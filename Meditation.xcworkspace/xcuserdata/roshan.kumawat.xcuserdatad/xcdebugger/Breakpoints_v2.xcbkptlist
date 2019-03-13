@@ -9,46 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Meditation/AppDelegate.swift"
-            timestampString = "572003289.678735"
+            filePath = "Meditation/ViewControllers/Home Screen/SideMenu/WWMUpgradeBeejaVC.swift"
+            timestampString = "573747819.279026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "application(_:open:options:)"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "default argument 2 of Meditation.AppDelegate.application(_: __C.UIApplication, open: Foundation.URL, options: Swift.Dictionary&lt;__C.UIApplicationOpenURLOptionsKey, Any&gt;) -&gt; Swift.Bool"
-                  moduleName = "Meditation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/AppDelegate.swift"
-                  timestampString = "572186289.113175"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "69"
-                  endingLineNumber = "69"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Meditation.AppDelegate.application(_: __C.UIApplication, open: Foundation.URL, options: Swift.Dictionary&lt;__C.UIApplicationOpenURLOptionsKey, Any&gt;) -&gt; Swift.Bool"
-                  moduleName = "Meditation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/AppDelegate.swift"
-                  timestampString = "572186289.116737"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "70"
-                  endingLineNumber = "70"
-                  offsetFromSymbolStart = "52">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -58,12 +26,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Meditation/ViewControllers/Home Screen/SideMenu/WWMUpgradeBeejaVC.swift"
-            timestampString = "572186289.059382"
+            timestampString = "573747819.279098"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "productsRequest(_:didReceive:)"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/Home Screen/SideMenu/WWMUpgradeBeejaVC.swift"
+            timestampString = "573747819.279156"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/Home Screen/Community Screen/WWMCommunityVC.swift"
+            timestampString = "574086998.271579"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/AppDelegate.swift"
+            timestampString = "574150973.1709599"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "appRemoteDidEstablishConnection(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Meditation/ViewControllers/Home Screen/WWMTabBarVC.swift"
+            timestampString = "574065389.2545249"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "locationManager(_:didFailWithError:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

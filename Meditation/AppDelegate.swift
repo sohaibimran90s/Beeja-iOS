@@ -12,13 +12,25 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
+import UserNotifications
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,SPTAppRemoteDelegate {
     
-
+    
+    fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
+    fileprivate let clientIdentifier = "2fd82c511bd74915b2b16ff1903eeb2b"
+    fileprivate let name = "spotify"
+    static fileprivate let kAccessTokenKey = "access-token-key"
     
     var window: UIWindow?
+    let appPreference = WWMAppPreference()
+    let center = UNUserNotificationCenter.current()
+
+    static func sharedDelegate () -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -29,15 +41,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(UIDevice.current.identifierForVendor!.uuidString)
        // GIDSignIn.sharedInstance().delegate = self
         
-    FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        // Analytics
+        if !application.isRegisteredForRemoteNotifications {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+                // Enable or disable features based on authorization.
+            }
+            application.registerForRemoteNotifications()
+        }
         
-        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-            AnalyticsParameterItemID: "id-Beeja-App-Started",
-            AnalyticsParameterItemName: "Roshan Login in Beeja app",
-            AnalyticsParameterContentType: "App Login"
-            ])
+//        // Analytics
+//
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-Beeja-App-Started",
+//            AnalyticsParameterItemName: "Roshan Login in Beeja app",
+//            AnalyticsParameterContentType: "App Login"
+//            ])
+        self.requestAuthorization()
+        self.setLocalPush()
         
         return true
     }
@@ -58,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        WWMSpotifyManager.sharedManager.connect();
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -67,16 +90,182 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let parameters = appRemote.authorizationParameters(from: url);
         if url.absoluteString.contains("fb") {
             return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        }else if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+            
+        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            
         }else {
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
                                                  annotation: [:])
         }
+        return true
     }
 
-    //WWMDatabase
+    var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(accessToken, forKey: AppDelegate.kAccessTokenKey)
+            defaults.synchronize()
+        }
+    }
+    
+    lazy var appRemote: SPTAppRemote = {
+        let configuration = SPTConfiguration(clientID: self.clientIdentifier, redirectURL: self.redirectUri)
+        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
+        appRemote.connectionParameters.accessToken = self.accessToken
+        appRemote.delegate = self
+        return appRemote
+    }()
+    
+    func setupSpotify(url: URL!) {
+        let parameters = appRemote.authorizationParameters(from: url);
+        // SPTPlaylistReadPrivateScope
+        if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
+            appRemote.connectionParameters.accessToken = access_token
+            self.accessToken = access_token
+        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
+            
+        }
+        
+    }
+    
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        self.appRemote = appRemote
+        //  playerViewController.appRemoteConnected()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        print("didFailConnectionAttemptWithError")
+        //  playerViewController.appRemoteDisconnect()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        print("didDisconnectWithError")
+        //    playerViewController.appRemoteDisconnect()
+    }
+    
+    // MARK:- Local Notification
+    //Local Notification Request Authorization.
+    func requestAuthorization(){
+        center.requestAuthorization(options: [.alert, .sound]){(granted, error) in
+            if error == nil{
+                print("Permission Granted")
+            }
+        }
+        center.delegate = self
+    }
+    
+    
+    
+    func setLocalPush(){
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+          let settingData = data[0]
+            if settingData.isMorningReminder {
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
+                var strDate = dateFormate.string(from: Date())
+                strDate = strDate + " \(settingData.morningReminderTime!)"
+                dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                print(settingData.morningReminderTime!)
+                let date = dateFormate.date(from: strDate)
+                print(date!)
+                
+               // let timeStemp = Int(date!.timeIntervalSince1970)
+                let content = UNMutableNotificationContent()
+                content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.sound = UNNotificationSound.default
+                content.threadIdentifier = "local-notifications-MorningReminder"
+                //print(Int(Date().timeIntervalSince1970))
+                //print(timeStemp)
+                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+               // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
+               // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
+                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
+                toDateComponents.second = 0
+                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                    //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
+                let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
+                    }
+                
+                
+            }else {
+                center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
+            }
+            if settingData.isAfterNoonReminder {
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
+                var strDate = dateFormate.string(from: Date())
+                strDate = strDate + " \(settingData.afterNoonReminderTime!)"
+                dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                print(settingData.afterNoonReminderTime!)
+                let date = dateFormate.date(from: strDate)
+                print(date!)
+                
+               // let timeStemp = Int(date!.timeIntervalSince1970)
+                let content = UNMutableNotificationContent()
+                content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.sound = UNNotificationSound.default
+                content.threadIdentifier = "local-notifications-AfterNoonReminder"
+               // print(Int(Date().timeIntervalSince1970))
+               // print(timeStemp)
+                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+                   // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: false)
+                    var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
+                    toDateComponents.second = 0
+                    let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                    let request = UNNotificationRequest(identifier: "AfternoonTimer", content: content, trigger: notificationTrigger)
+                    //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+                    
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
+                    }
+                
+                
+            }
+        }else {
+            center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
+        }
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+        
+    }
+    // MARK:- Push Notification
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        appPreference.setDeviceToken(value: token)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print(userInfo)
+    }
+    
     
     // MARK: - Core Data stack
     
