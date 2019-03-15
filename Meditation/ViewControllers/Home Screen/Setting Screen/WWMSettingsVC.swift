@@ -19,7 +19,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     var arrPickerSound = [String]()
     
-    let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Time","Rest Time","Finish Chime","Interval Chime","Ambient Sound"]
+    let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
@@ -213,7 +213,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 cell.imgViewDropDown.isHidden = true
             }else {
                 if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
                     cell.checkImage.isHidden = true
                     cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
                     cell.lblTime.isHidden = false
@@ -257,7 +257,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 cell.btnPicker.indexPath = indexPath
                 cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
             }else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
                 cell.lblTime.isHidden = false
                 let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
                 var level = DBLevelData()
@@ -373,7 +373,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                 }
             }else if indexPath.row == 7 {
-                let url = URL.init(string: "https://itunes.apple.com/gb/app/meditation-timer/id1185954064?mt=8")
+                let url = URL.init(string: "http://itunes.com/apps/Beeja Meditation")
                 let imageToShare = [url!] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.view

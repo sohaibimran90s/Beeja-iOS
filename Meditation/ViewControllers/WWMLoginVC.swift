@@ -15,19 +15,33 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     var isFromWelcomeBack = false
     
     @IBOutlet weak var viewStartBeeja: UIView!
+    @IBOutlet weak var lblSignup: UILabel!
+    @IBOutlet weak var imgSignup: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
        
-        self.setupView()
+        //self.setupView()
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.setNavigationBar(isShow: false, title: "")
+        setupView()
+        
     }
+    @IBAction func btnSignupTouchDown(_ sender: Any) {
+        self.viewStartBeeja.backgroundColor = UIColor.white
+        viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
+        self.lblSignup.textColor = UIColor.black
+        self.imgSignup.image = UIImage.init(named: "Logo_Icon")
+    }
+    
     func setupView(){
         
+        self.setNavigationBar(isShow: false, title: "")
+        self.lblSignup.textColor = UIColor.white
+        self.imgSignup.image = UIImage.init(named: "startBeeja_Icon")
+        self.viewStartBeeja.backgroundColor = UIColor.clear
         viewStartBeeja.layer.borderWidth = 2.0
         viewStartBeeja.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
 //        if isFromWelcomeBack {

@@ -19,7 +19,13 @@ class WWMSatsProgressData: NSObject {
     var consecutive_days = [WWMConsecutiveDaysData]()
     
     override init() {
-        
+        cons_days = 0
+        total_Session = 0
+        weekly_session = 0
+        hours_of_meditate = 0
+        avg_min_daily = 0
+        avg_session = 0
+        longest_session = 0
     }
     init(json:[String:Any], dayAdded:Int) {
         
