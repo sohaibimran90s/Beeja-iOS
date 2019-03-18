@@ -54,9 +54,9 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//    }
     
     override func viewDidLayoutSubviews() {
         self.layoutSliderPrepTimeWidth.constant = self.sliderPrepTime.superview?.frame.size.height ?? 0.0

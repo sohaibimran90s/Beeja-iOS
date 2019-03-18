@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMLoginWithEmailVC:WWMBaseViewController {
+class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     
     @IBOutlet weak var txtViewPassword: UITextField!
     @IBOutlet weak var txtViewEmail: UITextField!
@@ -18,9 +18,12 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var lblUserEmail: UILabel!
     
+    @IBOutlet weak var viewUserEmail: UIView!
+    @IBOutlet weak var viewUserPass: UIView!
+    
     @IBOutlet weak var viewContinueAsEmail: UIView!
     @IBOutlet weak var viewEmail: UIView!
-    
+    var tap = UITapGestureRecognizer()
     
     var isFromWelcomeBack = false
     
@@ -48,6 +51,49 @@ class WWMLoginWithEmailVC:WWMBaseViewController {
         self.btnLogin.layer.borderWidth = 2.0
         self.btnLogin.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
     }
+    
+    @objc func KeyPadTap() -> Void {
+        self.view .endEditing(true)
+    }
+    
+    //MARK:- UITextField Delegate Methods
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view .removeGestureRecognizer(tap)
+        if txtViewPassword.text! == ""{
+            self.viewUserPass.layer.borderColor = UIColor.clear.cgColor
+            self.btnLogin.setTitleColor(UIColor.white, for: .normal)
+            self.btnLogin.backgroundColor = UIColor.clear
+        }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "" {
+            return true
+        }
+        if textField == txtViewPassword {
+            let str = txtViewPassword.text! + string
+            if str.count > 0 {
+                self.viewUserPass.layer.borderWidth = 1.0
+                self.viewUserPass.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+                self.btnLogin.setTitleColor(UIColor.black, for: .normal)
+                self.btnLogin.backgroundColor = UIColor.init(hexString: "#00eba9")!
+            }
+            if str.count > 50 {
+                return false
+            }
+        }
+        return true
+    }
+    
     // MARK: Button Action
     
     @IBAction func btnLoginAction(_ sender: UIButton) {

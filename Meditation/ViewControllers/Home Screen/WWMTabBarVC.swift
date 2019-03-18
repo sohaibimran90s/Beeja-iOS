@@ -27,22 +27,28 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         setupView()
         WWMHelperClass.showSVHud()
         //self.getUserProfileData()
-//        if !reachable.isConnectedToNetwork() {
-//            if self.appPreffrence.isLogout() {
-//                var userData = WWMUserData()
-//                userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-//                print(userData)
-//                lat = userData.latitude
-//                long = userData.longitude
-//                city = userData.city
-//                country = userData.country
-//            }
-//        }
         
-        locManager.delegate = self
-        locManager.desiredAccuracy = kCLLocationAccuracyBest
-        locManager.requestAlwaysAuthorization()
-        locManager.startUpdatingLocation()
+        if !reachable.isConnectedToNetwork() {
+            if self.appPreffrence.isLogout() {
+                var userData = WWMUserData()
+                userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+                print(userData)
+                lat = userData.latitude
+                long = userData.longitude
+                city = userData.city
+                country = userData.country
+                self.getUserProfileData()
+            }else {
+                self.connectionLost()
+            }
+        }else {
+            locManager.delegate = self
+            locManager.desiredAccuracy = kCLLocationAccuracyBest
+            locManager.requestAlwaysAuthorization()
+            locManager.startUpdatingLocation()
+        }
+        
+        
         
     }
     
@@ -263,22 +269,27 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
             if data.count > 0 {
                 NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
+            }else {
+                self.connectionLost()
             }
             
         }else {
-            let alert = UIAlertController(title: kAlertTitle,
-                                          message: "Your connection may lost, please try again!",
-                                          preferredStyle: UIAlertController.Style.alert)
-            
-            
-            let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
-               WWMHelperClass.showSVHud()
-                self.getUserProfileData()
-            }
-            
-            alert.addAction(okAction)
-            self.navigationController!.present(alert, animated: true,completion: nil)
+            self.connectionLost()
         }
     }
     
+    func connectionLost(){
+        let alert = UIAlertController(title: kAlertTitle,
+                                      message: "Your connection may lost, please try again!",
+                                      preferredStyle: UIAlertController.Style.alert)
+        
+        
+        let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
+            WWMHelperClass.showSVHud()
+            self.getUserProfileData()
+        }
+        
+        alert.addAction(okAction)
+        self.navigationController!.present(alert, animated: true,completion: nil)
+    }
 }

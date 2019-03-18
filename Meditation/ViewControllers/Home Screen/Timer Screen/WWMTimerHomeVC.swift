@@ -131,7 +131,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
         if second<60 {
             return "\(second) secs"
         }else {
-            return String.init(format: "%d:2%d min", second/60,second%60)
+            return String.init(format: "%d:%02d min", second/60,second%60)
         }
         
     }

@@ -127,10 +127,10 @@ let Validation_PasswordMatchMessage:String!                  = "New password and
 /************************************/
 //Static Urls
 
-let URL_PrivacyPolicy   = "http://staging.beejameditation.com/privacy"
-let URL_TermsnCondition   = "http://staging.beejameditation.com/terms-and-condition"
+let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy"
+let URL_TermsnCondition   = "https://staging.beejameditation.com/terms-and-condition"
 let URL_Help   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
-let URL_FAQ   = "http://staging.beejameditation.com/faq"
+let URL_FAQ   = "https://staging.beejameditation.com/faq"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_FINDCOURSE   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_OurStory   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
@@ -139,14 +139,11 @@ let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
 
 
 // Social Links **************************
-let URL_Facebook   = "https://www.facebook.com/WillWilliamsMeditation"
-let URL_Insta   = "http://www.instagram.com/willwilliamsmeditation/"
-let URL_Twitter   = "http://twitter.com/wwmeditation"
+let URL_Facebook   = "https://www.facebook.com/BeejaMeditation/"
+let URL_Insta   = "https://www.instagram.com/beejameditation/"
+let URL_Twitter   = "https://twitter.com/beejameditation"
 let URL_LinkedIn   = "http://www.linkedin.com/pub/will-williams/64/56/b"
 let URL_YouTube = "https://www.youtube.com/channel/UCysJyoHtICcn2vdNeyLhV_A/feed"
-
-
-
 
 
 

@@ -38,7 +38,10 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
         view.addGestureRecognizer(tap)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view .removeGestureRecognizer(tap)
         if txtViewName.text! == ""{

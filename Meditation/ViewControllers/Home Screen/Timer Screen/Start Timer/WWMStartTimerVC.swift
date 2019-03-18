@@ -84,6 +84,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.seconds = self.restTime
             lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }else {
+            self.timerType = ""
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
             vc.type = "Post"
             vc.prepTime = self.prepTime
@@ -169,22 +170,56 @@ class WWMStartTimerVC: WWMBaseViewController {
     //#selector(self.updateTimer)
     @objc func updateTimer() {
         if timerType == "Prep"{
-            if self.seconds == 1 {
-                self.lblTimerType.text = "Meditation"
-                self.timerType = "Meditation"
-                self.seconds = self.meditationTime
-                self.playAudioFile(fileName: settingData.startChime!)
+            if self.seconds < 1 {
+                if self.meditationTime > 0 {
+                    self.lblTimerType.text = "Meditation"
+                    self.timerType = "Meditation"
+                    self.seconds = self.meditationTime
+                    self.playAudioFile(fileName: settingData.startChime!)
+                }else if self.restTime > 0 {
+                    self.lblTimerType.text = "Rest"
+                    self.timerType = "Rest"
+                    self.seconds = self.restTime
+                    self.playAudioFile(fileName: settingData.endChime!)
+                }else {
+                    self.playAudioFile(fileName: settingData.finishChime!)
+                    self.timer.invalidate()
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    vc.type = "Post"
+                    vc.prepTime = self.prepTime
+                    vc.meditationTime = 0
+                    vc.restTime = 0
+                    
+                    vc.meditationID = self.meditationID
+                    vc.levelID = self.levelID
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
             }
                 seconds = seconds-1
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
             
         }else if timerType == "Meditation"{
-            if self.seconds == 1 {
-                self.lblTimerType.text = "Rest"
-                self.timerType = "Rest"
-                self.seconds = self.restTime
-                self.playAudioFile(fileName: settingData.endChime!)
+            if self.seconds < 1 {
+                if self.restTime > 0 {
+                    self.lblTimerType.text = "Rest"
+                    self.timerType = "Rest"
+                    self.seconds = self.restTime
+                    self.playAudioFile(fileName: settingData.endChime!)
+                }else {
+                    self.playAudioFile(fileName: settingData.finishChime!)
+                    self.timer.invalidate()
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    vc.type = "Post"
+                    vc.prepTime = self.prepTime
+                    vc.meditationTime = self.meditationTime
+                    vc.restTime = 0
+                    
+                    vc.meditationID = self.meditationID
+                    vc.levelID = self.levelID
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }else{
                 if self.seconds == self.meditationTime/2+1 {
                     self.playAudioFile(fileName: settingData.intervalChime!)
@@ -195,7 +230,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
         }else if timerType == "Rest"{
-            if self.seconds == 1 {
+            if self.seconds < 1 {
                 self.playAudioFile(fileName: settingData.finishChime!)
                 self.timer.invalidate()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC

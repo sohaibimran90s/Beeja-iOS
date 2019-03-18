@@ -42,7 +42,10 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
         view.addGestureRecognizer(tap)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view .removeGestureRecognizer(tap)
         if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
@@ -148,6 +151,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setUserToken(value: userProfile["token"] as! String)
                         self.appPreference.setUserName(value: userProfile["name"] as! String)
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserData(value: [:])
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc

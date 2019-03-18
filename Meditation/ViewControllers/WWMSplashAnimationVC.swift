@@ -123,12 +123,12 @@ class WWMSplashAnimationVC: WWMBaseViewController {
                 self.lblSplashTxt.alpha = 0.0
             
             if self.appPreference.isLogin() {
-                if self.appPreference.isLogout() {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
-                }else if !self.appPreference.isProfileComplete() {
+                if !self.appPreference.isProfileComplete() {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                     self.navigationController?.pushViewController(vc, animated: true)
+                }else if self.appPreference.isLogout() {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                    UIApplication.shared.keyWindow?.rootViewController = vc
                 }else {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                     self.navigationController?.pushViewController(vc, animated: false)

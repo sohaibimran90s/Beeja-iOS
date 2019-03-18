@@ -73,69 +73,63 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-<<<<<<< HEAD
-=======
             filePath = "Meditation/ViewControllers/Home Screen/WWMTabBarVC.swift"
-            timestampString = "574166048.524804"
+            timestampString = "574263259.8385611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "locationManager(_:didFailWithError:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-<<<<<<< HEAD
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Meditation/ViewControllers/Home Screen/Community Screen/WWMCommunityVC.swift"
-            timestampString = "574166048.524866"
+            filePath = "Meditation/ViewControllers/Home Screen/Setting Screen/WWMSettingsVC.swift"
+            timestampString = "574581270.532632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "btnUploadHashTagsAction(_:)"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
+            landmarkName = "moveToEditMeditationTimeScreen()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meditation.WWMSettingsVC.moveToEditMeditationTimeScreen() -&gt; ()"
+                  moduleName = "Meditation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/ViewControllers/Home%20Screen/Setting%20Screen/WWMSettingsVC.swift"
+                  timestampString = "574603750.543108"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "448"
+                  endingLineNumber = "448"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meditation.WWMSettingsVC.moveToEditMeditationTimeScreen() -&gt; ()"
+                  moduleName = "Meditation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/ViewControllers/Home%20Screen/Setting%20Screen/WWMSettingsVC.swift"
+                  timestampString = "574603750.54558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "448"
+                  endingLineNumber = "448"
+                  offsetFromSymbolStart = "520">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Meditation/ViewControllers/Home Screen/Community Screen/WWMCommunityVC.swift"
-            timestampString = "574166048.524927"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "btnUploadHashTagsAction(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
->>>>>>> dev-RK
-            filePath = "Meditation/ViewControllers/Home Screen/WWMTabBarVC.swift"
-            timestampString = "574166048.524989"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "tabBar(_:didSelect:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-=======
->>>>>>> dev-RK
    </Breakpoints>
 </Bucket>
