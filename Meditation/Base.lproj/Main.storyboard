@@ -2415,9 +2415,6 @@
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="sliderPrepTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="hcO-W2-5f3"/>
-                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2477,9 +2474,6 @@
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="sliderMeditationTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="xQ7-69-n8e"/>
-                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2524,15 +2518,15 @@
                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                 </variation>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bwd-9q-nTx">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7D-1T-hRc">
                                                 <rect key="frame" x="0.0" y="79" width="87.5" height="235"/>
                                                 <subviews>
-                                                    <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="RIG-WO-0sm" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NtI-y2-ulS" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
                                                         <rect key="frame" x="26.5" y="92.5" width="54" height="51"/>
                                                         <color key="tintColor" red="0.40000000000000002" green="0.83137254900000002" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="54Z-gv-Tem"/>
-                                                            <constraint firstAttribute="height" constant="50" id="Hb6-vX-ypJ"/>
+                                                            <constraint firstAttribute="height" constant="50" id="Id3-w4-CeR"/>
+                                                            <constraint firstAttribute="width" constant="50" id="KcZ-qL-NSh"/>
                                                         </constraints>
                                                         <color key="minimumTrackTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="maximumTrackTintColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2540,29 +2534,29 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="sliderRestTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="uI7-bM-Zhq"/>
+                                                            <action selector="sliderRestTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="E6g-Ma-R7e"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="RIG-WO-0sm" firstAttribute="centerY" secondItem="bwd-9q-nTx" secondAttribute="centerY" id="SRY-He-g5z"/>
-                                                    <constraint firstItem="RIG-WO-0sm" firstAttribute="centerX" secondItem="bwd-9q-nTx" secondAttribute="centerX" constant="10" id="tic-1q-cRG"/>
+                                                    <constraint firstItem="NtI-y2-ulS" firstAttribute="centerX" secondItem="C7D-1T-hRc" secondAttribute="centerX" constant="10" id="Sn2-ri-5f4"/>
+                                                    <constraint firstItem="NtI-y2-ulS" firstAttribute="centerY" secondItem="C7D-1T-hRc" secondAttribute="centerY" id="w8u-Oo-wZN"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="bwd-9q-nTx" firstAttribute="top" secondItem="ie3-QC-cRH" secondAttribute="bottom" constant="30" id="2se-fe-2hW"/>
-                                            <constraint firstAttribute="trailing" secondItem="bwd-9q-nTx" secondAttribute="trailing" id="IBA-Ke-zSo"/>
+                                            <constraint firstAttribute="trailing" secondItem="C7D-1T-hRc" secondAttribute="trailing" id="73j-Ks-1Q1"/>
+                                            <constraint firstItem="C7D-1T-hRc" firstAttribute="top" secondItem="ie3-QC-cRH" secondAttribute="bottom" constant="30" id="GNU-fg-reo"/>
                                             <constraint firstAttribute="trailing" secondItem="ie3-QC-cRH" secondAttribute="trailing" id="Ifc-FM-X7X"/>
+                                            <constraint firstItem="C7D-1T-hRc" firstAttribute="leading" secondItem="QbD-8g-6Hv" secondAttribute="leading" id="Tkb-go-LwT"/>
+                                            <constraint firstAttribute="bottom" secondItem="C7D-1T-hRc" secondAttribute="bottom" constant="30" id="U5f-mv-IJa"/>
                                             <constraint firstItem="1hJ-Gy-4Sf" firstAttribute="top" secondItem="QbD-8g-6Hv" secondAttribute="top" constant="10" id="ZHQ-W6-yRG"/>
                                             <constraint firstAttribute="trailing" secondItem="1hJ-Gy-4Sf" secondAttribute="trailing" id="eRR-Zq-Jnr"/>
                                             <constraint firstItem="ie3-QC-cRH" firstAttribute="leading" secondItem="QbD-8g-6Hv" secondAttribute="leading" id="gK7-Su-3JE"/>
                                             <constraint firstItem="1hJ-Gy-4Sf" firstAttribute="leading" secondItem="QbD-8g-6Hv" secondAttribute="leading" id="gZY-zI-qbP"/>
                                             <constraint firstItem="ie3-QC-cRH" firstAttribute="top" secondItem="1hJ-Gy-4Sf" secondAttribute="bottom" constant="5" id="jYH-U1-1FF"/>
-                                            <constraint firstItem="bwd-9q-nTx" firstAttribute="leading" secondItem="QbD-8g-6Hv" secondAttribute="leading" id="uKL-3H-txM"/>
-                                            <constraint firstAttribute="bottom" secondItem="bwd-9q-nTx" secondAttribute="bottom" constant="30" id="ySB-HM-Ruj"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2751,14 +2745,14 @@
                         <outlet property="layoutMoodWidth" destination="dUp-OX-ups" id="NAX-Hq-Nno"/>
                         <outlet property="layoutSliderMeditationTimeWidth" destination="vug-7E-1Yz" id="NCH-FN-FL4"/>
                         <outlet property="layoutSliderPrepTimeWidth" destination="x0m-Mm-9zA" id="oMW-Pi-4AU"/>
-                        <outlet property="layoutSliderRestTimeWidth" destination="54Z-gv-Tem" id="p8A-7a-zQs"/>
+                        <outlet property="layoutSliderRestTimeWidth" destination="KcZ-qL-NSh" id="Tvs-Mw-PgN"/>
                         <outlet property="lblExpressMood" destination="oDx-5B-vfr" id="hvS-LK-oUz"/>
                         <outlet property="lblMeditationTime" destination="U6q-hL-hUP" id="M2d-av-UbW"/>
                         <outlet property="lblPrepTime" destination="d4X-p4-4HB" id="N5t-c2-vuK"/>
                         <outlet property="lblRestTime" destination="ie3-QC-cRH" id="nv1-8W-I18"/>
                         <outlet property="sliderMeditationTime" destination="Io4-6A-OAh" id="BIE-PR-w9p"/>
                         <outlet property="sliderPrepTime" destination="97g-LC-2zF" id="8bQ-N7-qjz"/>
-                        <outlet property="sliderRestTime" destination="RIG-WO-0sm" id="fZf-Fk-b5H"/>
+                        <outlet property="sliderRestTime" destination="NtI-y2-ulS" id="fLk-Cw-8yH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Esi-34-xjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5601,7 +5595,6 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="sliderPrepTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="9jn-pn-gjp"/>
                                                             <action selector="sliderPrepTimeValueChangedAction:" destination="tdy-3z-K1x" eventType="valueChanged" id="zD4-E7-y2q"/>
                                                         </connections>
                                                     </slider>
@@ -5658,7 +5651,6 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="sliderMeditationTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="Cps-kb-rVf"/>
                                                             <action selector="sliderMeditationTimeValueChangedAction:" destination="tdy-3z-K1x" eventType="touchUpInside" id="WzL-yT-hVF"/>
                                                         </connections>
                                                     </slider>
@@ -5699,15 +5691,15 @@
                                                 <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fep-o5-yFm">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mTp-CQ-Js7">
                                                 <rect key="frame" x="0.0" y="81.5" width="100" height="248.5"/>
                                                 <subviews>
-                                                    <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y2M-pZ-B46" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3C5-2j-OWP" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
                                                         <rect key="frame" x="33" y="99.5" width="54" height="51"/>
                                                         <color key="tintColor" red="0.40000000000000002" green="0.83137254900000002" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="Wid-vV-hSa"/>
-                                                            <constraint firstAttribute="height" constant="50" id="ZrB-1f-prk"/>
+                                                            <constraint firstAttribute="width" constant="50" id="QSh-vU-Qhh"/>
+                                                            <constraint firstAttribute="height" constant="50" id="ko0-3W-Yji"/>
                                                         </constraints>
                                                         <color key="minimumTrackTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="maximumTrackTintColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -5715,27 +5707,26 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="sliderRestTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="H9X-9N-B75"/>
-                                                            <action selector="sliderRestTimeValueChangedAction:" destination="tdy-3z-K1x" eventType="touchUpInside" id="vLU-Ai-iRB"/>
+                                                            <action selector="sliderRestTimeValueChangedAction:" destination="tdy-3z-K1x" eventType="valueChanged" id="5yJ-8O-vqR"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="Y2M-pZ-B46" firstAttribute="centerY" secondItem="Fep-o5-yFm" secondAttribute="centerY" id="3fX-jb-gke"/>
-                                                    <constraint firstItem="Y2M-pZ-B46" firstAttribute="centerX" secondItem="Fep-o5-yFm" secondAttribute="centerX" constant="10" id="57d-Pr-Yra"/>
+                                                    <constraint firstItem="3C5-2j-OWP" firstAttribute="centerY" secondItem="mTp-CQ-Js7" secondAttribute="centerY" id="JF5-Ig-Knb"/>
+                                                    <constraint firstItem="3C5-2j-OWP" firstAttribute="centerX" secondItem="mTp-CQ-Js7" secondAttribute="centerX" constant="10" id="x3e-OL-PWM"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="RNV-ek-WRg" firstAttribute="top" secondItem="mke-gL-8RM" secondAttribute="bottom" constant="5" id="C8W-2G-UgV"/>
-                                            <constraint firstItem="Fep-o5-yFm" firstAttribute="leading" secondItem="DDq-H6-JL5" secondAttribute="leading" id="JJ6-2O-9FQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="mTp-CQ-Js7" secondAttribute="bottom" constant="30" id="EbF-E4-h7Z"/>
+                                            <constraint firstAttribute="trailing" secondItem="mTp-CQ-Js7" secondAttribute="trailing" id="GHW-SO-oYs"/>
                                             <constraint firstAttribute="trailing" secondItem="mke-gL-8RM" secondAttribute="trailing" id="OgY-ae-G4g"/>
-                                            <constraint firstAttribute="bottom" secondItem="Fep-o5-yFm" secondAttribute="bottom" constant="30" id="aBx-fk-vMQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="Fep-o5-yFm" secondAttribute="trailing" id="aC4-dz-GDj"/>
+                                            <constraint firstItem="mTp-CQ-Js7" firstAttribute="top" secondItem="RNV-ek-WRg" secondAttribute="bottom" constant="30" id="ZFn-JN-bog"/>
                                             <constraint firstAttribute="trailing" secondItem="RNV-ek-WRg" secondAttribute="trailing" id="c4g-nV-cv0"/>
-                                            <constraint firstItem="Fep-o5-yFm" firstAttribute="top" secondItem="RNV-ek-WRg" secondAttribute="bottom" constant="30" id="g2o-0J-0w1"/>
+                                            <constraint firstItem="mTp-CQ-Js7" firstAttribute="leading" secondItem="DDq-H6-JL5" secondAttribute="leading" id="h8r-ae-KRE"/>
                                             <constraint firstItem="mke-gL-8RM" firstAttribute="top" secondItem="DDq-H6-JL5" secondAttribute="top" constant="10" id="hKl-Na-LZo"/>
                                             <constraint firstItem="mke-gL-8RM" firstAttribute="leading" secondItem="DDq-H6-JL5" secondAttribute="leading" id="mlt-zw-4Ie"/>
                                             <constraint firstItem="RNV-ek-WRg" firstAttribute="leading" secondItem="DDq-H6-JL5" secondAttribute="leading" id="pzA-Hk-oTD"/>
@@ -5820,13 +5811,13 @@
                         <outlet property="btnSaveSettings" destination="WLp-8F-q0n" id="kc5-KJ-ITQ"/>
                         <outlet property="layoutSliderMeditationTimeWidth" destination="d8e-m2-epF" id="rQa-4c-JMq"/>
                         <outlet property="layoutSliderPrepTimeWidth" destination="ghY-DO-ygZ" id="ftv-hA-SLB"/>
-                        <outlet property="layoutSliderRestTimeWidth" destination="Wid-vV-hSa" id="PB6-YY-qPx"/>
+                        <outlet property="layoutSliderRestTimeWidth" destination="QSh-vU-Qhh" id="vZ0-cU-OjU"/>
                         <outlet property="lblMeditationTime" destination="uE6-99-Nds" id="UBx-pe-Pu6"/>
                         <outlet property="lblPrepTime" destination="gKJ-IE-BKy" id="J3g-Pf-yRy"/>
                         <outlet property="lblRestTime" destination="RNV-ek-WRg" id="M8S-he-MUI"/>
                         <outlet property="sliderMeditationTime" destination="Dyn-gm-ahQ" id="HqM-T7-Fpe"/>
                         <outlet property="sliderPrepTime" destination="wl3-Wp-fiG" id="PLN-vt-yRW"/>
-                        <outlet property="sliderRestTime" destination="Y2M-pZ-B46" id="3Mm-Hp-1Fw"/>
+                        <outlet property="sliderRestTime" destination="3C5-2j-OWP" id="C49-6D-BbI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fxc-S3-AsG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6879,6 +6870,9 @@
                                                         <variation key="heightClass=regular-widthClass=regular">
                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                         </variation>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="Am9-VD-9le" id="0Xz-3C-yuC"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6953,6 +6947,7 @@
                     <connections>
                         <outlet property="btnEmailMagicLink" destination="Qrx-VM-4oY" id="lKo-Pj-Ymv"/>
                         <outlet property="txtViewEmail" destination="2EY-aE-fEc" id="nph-Vn-taE"/>
+                        <outlet property="viewEmail" destination="VWR-cn-o1c" id="wlr-hD-W2F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xpl-wy-n1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7088,7 +7083,6 @@
                                                         </variation>
                                                         <connections>
                                                             <action selector="btnContinueAction:" destination="zXI-e6-Hbv" eventType="touchUpInside" id="3jL-7o-MZG"/>
-                                                            <action selector="btnEmailMagicLinkAction:" destination="Am9-VD-9le" eventType="touchUpInside" id="ucq-Vf-Pw9"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yba-xG-52a">
@@ -7111,7 +7105,6 @@
                                                         </variation>
                                                         <connections>
                                                             <action selector="btnAnotherAccountAction:" destination="zXI-e6-Hbv" eventType="touchUpInside" id="dSD-wy-7xg"/>
-                                                            <action selector="btnEmailMagicLinkAction:" destination="Am9-VD-9le" eventType="touchUpInside" id="vck-hO-5WW"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -7794,7 +7787,6 @@
                                 <connections>
                                     <action selector="btnContinueAction:" destination="zXI-e6-Hbv" eventType="touchUpInside" id="xgT-VI-kew"/>
                                     <action selector="btnContinuePaymentActionWithSender:" destination="V7J-AO-gKL" eventType="touchUpInside" id="dif-r8-YnM"/>
-                                    <action selector="btnEmailMagicLinkAction:" destination="Am9-VD-9le" eventType="touchUpInside" id="JYY-vr-2Li"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Billed as one payment of £42" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lio-lF-G1i">
@@ -8078,15 +8070,15 @@
                                                 <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJy-vB-nkR">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9KD-Ym-mJ9">
                                                 <rect key="frame" x="0.0" y="81.5" width="100" height="259.5"/>
                                                 <subviews>
-                                                    <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cLN-Gk-2ly" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Z3I-71-rYN" customClass="WWMSlider" customModule="Meditation" customModuleProvider="target">
                                                         <rect key="frame" x="33" y="105" width="54" height="51"/>
                                                         <color key="tintColor" red="0.40000000000000002" green="0.83137254900000002" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="bLU-Sn-qk6"/>
-                                                            <constraint firstAttribute="width" constant="50" id="xts-1H-wCe"/>
+                                                            <constraint firstAttribute="width" constant="50" id="OOO-co-iRe"/>
+                                                            <constraint firstAttribute="height" constant="50" id="nr1-Zb-TJZ"/>
                                                         </constraints>
                                                         <color key="minimumTrackTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="maximumTrackTintColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -8094,30 +8086,29 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="ascending" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="sliderRestTimeValueChangedAction:" destination="WYT-8O-wCj" eventType="touchUpInside" id="M5P-PD-qQw"/>
-                                                            <action selector="sliderRestTimeValueChangedAction:" destination="TrW-SF-hww" eventType="valueChanged" id="yDB-H8-NeW"/>
+                                                            <action selector="sliderRestTimeValueChangedAction:" destination="WYT-8O-wCj" eventType="valueChanged" id="V1m-BX-qth"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="cLN-Gk-2ly" firstAttribute="centerY" secondItem="CJy-vB-nkR" secondAttribute="centerY" id="KBO-Z0-bJN"/>
-                                                    <constraint firstItem="cLN-Gk-2ly" firstAttribute="centerX" secondItem="CJy-vB-nkR" secondAttribute="centerX" constant="10" id="XTU-bH-S59"/>
+                                                    <constraint firstItem="Z3I-71-rYN" firstAttribute="centerX" secondItem="9KD-Ym-mJ9" secondAttribute="centerX" constant="10" id="4ao-sY-b3L"/>
+                                                    <constraint firstItem="Z3I-71-rYN" firstAttribute="centerY" secondItem="9KD-Ym-mJ9" secondAttribute="centerY" id="kG6-ei-CPW"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="QmJ-Za-up9" firstAttribute="top" secondItem="R4I-RF-iWx" secondAttribute="bottom" constant="5" id="8UW-Gt-SN9"/>
-                                            <constraint firstItem="CJy-vB-nkR" firstAttribute="top" secondItem="QmJ-Za-up9" secondAttribute="bottom" constant="30" id="AJF-fS-Xxs"/>
+                                            <constraint firstItem="9KD-Ym-mJ9" firstAttribute="top" secondItem="QmJ-Za-up9" secondAttribute="bottom" constant="30" id="R7o-oT-KCS"/>
                                             <constraint firstItem="R4I-RF-iWx" firstAttribute="leading" secondItem="zPF-7T-f3w" secondAttribute="leading" id="X2a-CH-cAA"/>
                                             <constraint firstItem="QmJ-Za-up9" firstAttribute="leading" secondItem="zPF-7T-f3w" secondAttribute="leading" id="XJD-ee-yF4"/>
-                                            <constraint firstAttribute="trailing" secondItem="CJy-vB-nkR" secondAttribute="trailing" id="bqw-Sc-yuz"/>
-                                            <constraint firstAttribute="bottom" secondItem="CJy-vB-nkR" secondAttribute="bottom" constant="30" id="gLL-lM-NCd"/>
+                                            <constraint firstAttribute="bottom" secondItem="9KD-Ym-mJ9" secondAttribute="bottom" constant="30" id="d5W-7H-Hk8"/>
+                                            <constraint firstItem="9KD-Ym-mJ9" firstAttribute="leading" secondItem="zPF-7T-f3w" secondAttribute="leading" id="hAV-L1-wpq"/>
                                             <constraint firstItem="R4I-RF-iWx" firstAttribute="top" secondItem="zPF-7T-f3w" secondAttribute="top" constant="10" id="ipV-ZN-BiD"/>
+                                            <constraint firstAttribute="trailing" secondItem="9KD-Ym-mJ9" secondAttribute="trailing" id="pnK-uy-lQE"/>
                                             <constraint firstAttribute="trailing" secondItem="R4I-RF-iWx" secondAttribute="trailing" id="x3n-Cv-x0F"/>
                                             <constraint firstAttribute="trailing" secondItem="QmJ-Za-up9" secondAttribute="trailing" id="zAf-Et-4ON"/>
-                                            <constraint firstItem="CJy-vB-nkR" firstAttribute="leading" secondItem="zPF-7T-f3w" secondAttribute="leading" id="zqi-IQ-5y4"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -8216,13 +8207,13 @@
                         <outlet property="btnSubmit" destination="FwP-GA-GbH" id="Al3-eA-GWv"/>
                         <outlet property="layoutSliderMeditationTimeWidth" destination="ddy-hU-58d" id="SfW-9m-euq"/>
                         <outlet property="layoutSliderPrepTimeWidth" destination="ZaC-ZW-bep" id="bL1-ez-ajC"/>
-                        <outlet property="layoutSliderRestTimeWidth" destination="xts-1H-wCe" id="agn-OJ-XQQ"/>
+                        <outlet property="layoutSliderRestTimeWidth" destination="OOO-co-iRe" id="udh-oa-aRB"/>
                         <outlet property="lblMeditationTime" destination="3bO-fx-sqK" id="A58-59-oLg"/>
                         <outlet property="lblPrepTime" destination="yKs-Kt-raZ" id="lMS-pB-rKB"/>
                         <outlet property="lblRestTime" destination="QmJ-Za-up9" id="FcX-1s-9ZN"/>
                         <outlet property="sliderMeditationTime" destination="1dp-EU-hCF" id="X9m-Ct-0EE"/>
                         <outlet property="sliderPrepTime" destination="1HT-7C-m6J" id="vlc-A4-fwo"/>
-                        <outlet property="sliderRestTime" destination="cLN-Gk-2ly" id="GP1-Lu-l6m"/>
+                        <outlet property="sliderRestTime" destination="Z3I-71-rYN" id="hbA-Gh-1xK"/>
                         <outlet property="txtViewMeditationName" destination="sDY-Gk-N3b" id="1zH-De-hk5"/>
                         <outlet property="userName" destination="Jx2-U1-EWM" id="Lzn-ay-qZX"/>
                         <outlet property="welcomeView" destination="jMm-fF-MK7" id="oqz-MX-PzN"/>

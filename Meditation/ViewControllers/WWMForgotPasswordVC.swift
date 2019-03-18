@@ -8,11 +8,13 @@
 
 import UIKit
 
-class WWMForgotPasswordVC: WWMBaseViewController {
+class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
 
     @IBOutlet weak var txtViewEmail: UITextField!
     @IBOutlet weak var btnEmailMagicLink: UIButton!
     
+    @IBOutlet weak var viewEmail: UIView!
+    var tap = UITapGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,6 +29,44 @@ class WWMForgotPasswordVC: WWMBaseViewController {
         self.btnEmailMagicLink.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
     }
 
+    
+    
+    @objc func KeyPadTap() -> Void {
+        self.view .endEditing(true)
+    }
+    
+    //MARK:- UITextField Delegate Methods
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
+        view.addGestureRecognizer(tap)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view .removeGestureRecognizer(tap)
+        if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+            self.viewEmail.layer.borderColor = UIColor.clear.cgColor
+            self.btnEmailMagicLink.setTitleColor(UIColor.white, for: .normal)
+            self.btnEmailMagicLink.backgroundColor = UIColor.clear
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let str = txtViewEmail.text! + string
+        
+        if (self.isValidEmail(strEmail: str)) {
+            self.viewEmail.layer.borderWidth = 1.0
+            self.viewEmail.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            self.btnEmailMagicLink.setTitleColor(UIColor.black, for: .normal)
+            self.btnEmailMagicLink.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        }
+        
+        return true
+        
+    }
     
     // MARK: Button Action
     

@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import GoogleSignIn
+import FBSDKLoginKit
 
 class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate{
     
@@ -577,6 +579,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setUserID(value: "")
                 self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
+                let loginManager = FBSDKLoginManager()
+                FBSDKAccessToken.setCurrent(nil)
+                loginManager.logOut()
+                GIDSignIn.sharedInstance()?.signOut()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc
