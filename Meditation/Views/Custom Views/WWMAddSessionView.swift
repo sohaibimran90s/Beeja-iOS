@@ -16,7 +16,7 @@ class WWMAddSessionView: UIView {
     @IBOutlet weak var btnTime2: UIButton!
     @IBOutlet weak var txtViewDate: UITextField!
     @IBOutlet weak var txtViewTime: UITextField!
-    @IBOutlet weak var viewTime: UIStackView!
+    @IBOutlet weak var viewTime: UIView!
     @IBOutlet weak var lblHrs: UILabel!
     @IBOutlet weak var lblMin: UILabel!
     @IBOutlet weak var lblSec: UILabel!

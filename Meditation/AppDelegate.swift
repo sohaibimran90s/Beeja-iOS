@@ -259,6 +259,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(error.localizedDescription)
+        appPreference.setDeviceToken(value: "fhsdfhddjhfkj")
     }
     
     

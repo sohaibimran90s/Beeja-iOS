@@ -78,6 +78,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             }
         }
         
+
+        
         // Do any additional setup after loading the view.
     }
     
@@ -213,8 +215,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.btnDone.layer.borderWidth = 2.0
         addSessionView.btnDone.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        addSessionView.btnTime1.layer.borderWidth = 2.0
-        addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+       // addSessionView.btnTime1.layer.borderWidth = 2.0
+       // addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         addSessionView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
@@ -226,8 +228,25 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
          addSessionView.btnDone.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         
-        addSessionView.btnTime2.layer.borderWidth = 2.0
-        addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        
+        addSessionView.viewTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        addSessionView.viewTime.layer.borderWidth = 2.0
+        
+        self.roundCorners(view: addSessionView.btnTime1, corners: [.bottomLeft, .topLeft], radius: 20.0)
+        self.roundCorners(view: addSessionView.btnTime2, corners: [.bottomRight, .topRight], radius: 20.0)
+        
+        // 0 235 169
+      //  addSessionView.btnTime1.layer.borderColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+       // addSessionView.btnTime1.layer.borderWidth = 1.0
+        
+      //  addSessionView.btnTime2.layer.borderColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+     //   addSessionView.btnTime2.layer.borderWidth = 1.0
+        
+        
+        
+        //addSessionView.btnTime2.layer.borderWidth = 2.0
+        //addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         addSessionView.btnTime2.setTitleColor(UIColor.white, for: .normal)
         addSessionView.btnTime2.backgroundColor = UIColor.clear
         addSessionView.btnTime1.backgroundColor = UIColor.init(hexString: "#00eba9")!
@@ -297,8 +316,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @IBAction func btnTime1Action(_ sender: Any) {
-        addSessionView.btnTime2.layer.borderWidth = 2.0
-        addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         addSessionView.btnTime2.setTitleColor(UIColor.white, for: .normal)
         addSessionView.btnTime2.backgroundColor = UIColor.clear
         addSessionView.btnTime1.backgroundColor = UIColor.init(hexString: "#00eba9")!
@@ -310,8 +327,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @IBAction func btnTime2Action(_ sender: Any) {
-        addSessionView.btnTime1.layer.borderWidth = 2.0
-        addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         addSessionView.btnTime1.setTitleColor(UIColor.white, for: .normal)
         addSessionView.btnTime1.backgroundColor = UIColor.clear
         addSessionView.btnTime2.backgroundColor = UIColor.init(hexString: "#00eba9")!
@@ -320,6 +335,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.lblSec.text = "\(seconds2) sec"
         addSessionView.lblMin.text = "\(minutes2) min"
         addSessionView.lblHrs.text = "\(hour2) hrs"
+    }
+    
+    
+    func roundCorners(view :UIButton, corners: UIRectCorner, radius: CGFloat){
+        let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        view.layer.mask = mask
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -490,6 +513,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
+                   
                 }
                 self.isLeft = false
                 self.setData()

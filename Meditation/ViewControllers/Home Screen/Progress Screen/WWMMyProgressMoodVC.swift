@@ -14,9 +14,10 @@ import Charts
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
 
-    var arrMoodData = [WWMMoodMeterData]()
     var moodProgressDurationView = WWMMoodProgressDurationView()
-    var moodProgressData = [String:Any]()
+    var moodProgressData = WWMMoodProgressData()
+    
+    var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
     @IBOutlet weak var tblMoodProgress: UITableView!
     
@@ -71,10 +72,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     // MARK:- UITable View Delegates Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       if self.moodProgressData.count > 0 {
-            return 2
-        }
-        return 0
+       return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,9 +89,10 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             //chartView.delegate = self as! ChartViewDelegate
             
             chartView.chartDescription?.enabled = false
-            chartView.dragEnabled = false
+            chartView.dragEnabled = true
             chartView.setScaleEnabled(false)
             chartView.pinchZoomEnabled = true
+            
             chartView.drawGridBackgroundEnabled = false
             chartView.gridBackgroundColor = UIColor.clear
             
@@ -104,6 +103,41 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             llXAxis.labelPosition = .rightBottom
             llXAxis.valueFont = .systemFont(ofSize: 10)
             llXAxis.valueTextColor = UIColor.white
+            
+            
+            // Done by prachi
+            chartView.xAxis.labelPosition = XAxis.LabelPosition.bottom
+            chartView.xAxis.drawGridLinesEnabled = false
+            //chartView.xAxis.drawLabelsEnabled = false
+            chartView.leftAxis.drawGridLinesEnabled = false
+
+            chartView.highlightValue(nil)
+            
+           // chartView.data?.highlightEnabled = false
+            
+            
+            chartView.scaleXEnabled = true
+            chartView.scaleYEnabled = true
+            
+            chartView.viewPortHandler.setMaximumScaleX(4)
+            chartView.viewPortHandler.setMaximumScaleY(4)
+            
+            //chartView.dragDecelerationEnabled = false
+            
+            
+            
+            
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
           //  chartView.xAxis.gridLineDashLengths = [10, 10]
           //  chartView.xAxis.gridLineDashPhase = 0
             
@@ -127,8 +161,9 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             leftAxis.removeAllLimitLines()
            // leftAxis.addLimitLine(ll1)
            // leftAxis.addLimitLine(ll2)
-            leftAxis.axisMaximum = 200
-            leftAxis.axisMinimum = 0
+            leftAxis.axisMaximum = 30.0
+            leftAxis.axisMinimum = 0.0
+            
             //leftAxis.gridLineDashLengths = [5, 5]
             //leftAxis.drawLimitLinesBehindDataEnabled = true
             leftAxis.labelTextColor = UIColor.white
@@ -139,13 +174,35 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             let xAxix = chartView.xAxis
             xAxix.removeAllLimitLines()
             
-            xAxix.axisMaximum = 40
-            xAxix.axisMinimum = 0
+            
+            
+//            let arr = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"]
+//            for index in 0..<arr.count {
+//                let limit = ChartLimitLine.init(limit: Double(index), label: arr[index])
+//
+//                xAxix.addLimitLine(limit)
+//
+//            }
+            
+//
+//            let chartFormmater=BarChartFormatter()
+//
+//            for i in 0..<11{
+//                chartFormmater.stringForValue(Double(i), axis: xAxis)
+//            }
+//
+//            xAxix.valueFormatter=chartFormmater
+//            chartView.xAxis.valueFormatter=xAxis.valueFormatter
+            
+            
+            //xAxix.valueFormatter = self
+            
+             xAxix.axisMaximum = 30
+             xAxix.axisMinimum = 1
+            
             xAxix.labelTextColor = UIColor.white
             
             
-            //[_chartView.viewPortHandler setMaximumScaleY: 2.f];
-            //[_chartView.viewPortHandler setMaximumScaleX: 2.f];
             
 //            let marker = BalloonMarker(color: UIColor(white: 180/255, alpha: 1),
 //                                       font: .systemFont(ofSize: 12),
@@ -155,7 +212,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 //            marker.minimumSize = CGSize(width: 80, height: 40)
             let marke = MarkerView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 40))
             marke.chartView = chartView
-            marke.backgroundColor = UIColor.white
+            marke.backgroundColor = UIColor.clear
             
             chartView.marker = marke
             
@@ -163,22 +220,58 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             
             chartView.animate(xAxisDuration: 2.5)
             
-            let arrData = [0,9,15,21,26,33,38,40]
-            let values = (0..<arrData.count).map { (i) -> ChartDataEntry in
-                let val = Double(arc4random_uniform(100) + 3)
-                return ChartDataEntry.init(x:Double(arrData[i]) , y: val)
-                //return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
+            
+            
+            let preData = self.moodProgressData.graph_score.pre
+            var values1 = [ChartDataEntry]()
+            for data in preData {
+                //12/03/2019
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let monthDate = dateFormatter.date(from:data.date)!
+                dateFormatter.dateFormat = "d"
+                let xData = dateFormatter.string(from: monthDate)
+                let value = ChartDataEntry.init(x: Double(xData) ?? 0.0, y: Double(data.mood) ?? 0.0 )
+                
+                values1.append(value)
             }
             
-            let values1 = (0..<arrData.count).map { (i) -> ChartDataEntry in
-                let val = Double(arc4random_uniform(150) + 3)
-                return ChartDataEntry.init(x:Double(arrData[i]) , y: val)
-                //return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
+            let postData = self.moodProgressData.graph_score.post
+            var values2 = [ChartDataEntry]()
+            for data in postData {
+                //12/03/2019
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let monthDate = dateFormatter.date(from:data.date)!
+                dateFormatter.dateFormat = "d"
+                let xData = dateFormatter.string(from: monthDate)
+                let value = ChartDataEntry.init(x: Double(xData) ?? 0.0, y: Double(data.mood) ?? 0.0 )
+                values2.append(value)
             }
             
+           
             
-            let set1 = LineChartDataSet(values: values, label: "")
+            //print(moodChart1)
+            
+            
+//            let arrData = [0,9,15,21,26,33,38,40]
+//            let values = (0..<moodChart1.count).map { (i) -> ChartDataEntry in
+//                let val = Double(arc4random_uniform(100) + 3)
+//                return ChartDataEntry.init(x:Double(moodChart1[i]) , y: val)
+//                //return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
+//            }
+//
+//            let values1 = (0..<arrData.count).map { (i) -> ChartDataEntry in
+//                let val = Double(arc4random_uniform(150) + 3)
+//                return ChartDataEntry.init(x:Double(arrData[i]) , y: val)
+//                //return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
+//            }
+            
+            let set1 = LineChartDataSet(values: values1, label: "")
             set1.drawIconsEnabled = false
+            set1.drawValuesEnabled = false
             
             //set1.lineDashLengths = [5, 2.5]
            // set1.highlightLineDashLengths = [5, 2.5]
@@ -193,18 +286,34 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
            // set1.formLineWidth = 1
            // set1.formSize = 15
             
+            //
+            //111962
+            //64FFD4
             
-            let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
-                                  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
+            //001252
+            //284DD0
+            let gradientColors = [ChartColorTemplates.colorFromString("#11196200").cgColor,
+                                  ChartColorTemplates.colorFromString("#64FFD400").cgColor]
+            //let gradientColors = [UIColor.init(hexString: "#111962")!.cgColor,
+                                 // UIColor.init(hexString: "#64FFD4")!.cgColor]
             let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
             
+            let gradientColors1 = [ChartColorTemplates.colorFromString("#00125200").cgColor,
+                                  ChartColorTemplates.colorFromString("#284DD000").cgColor]
+//            let gradientColors1 = [UIColor.init(hexString: "#001252")!.cgColor,
+//                                  UIColor.init(hexString: "#284DD0")!.cgColor]
+            let gradient1 = CGGradient(colorsSpace: nil, colors: gradientColors1 as CFArray, locations: nil)!
+            
+            
             set1.fillAlpha = 1
-            set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
+            
+            set1.fill = Fill(linearGradient: gradient1, angle: 90) //.linearGradient(gradient, angle: 90)
             set1.drawFilledEnabled = true
             
             
-            let set2 = LineChartDataSet(values: values1, label: "")
+            let set2 = LineChartDataSet(values: values2, label: "")
             set2.drawIconsEnabled = false
+            set2.drawValuesEnabled = false
             
             set2.lineDashLengths = [5, 2.5]
              set2.highlightLineDashLengths = [5, 2.5]
@@ -227,10 +336,29 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             
             chartView.data = data
             
+            
+            
+            
+//            let formato:BarChartFormatter = BarChartFormatter()
+//            var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+//
+//
+//            let xaxis:XAxis = XAxis()
+//            for i in 0..<months.count{
+//                formato.stringForValue(Double(i), axis: xaxis)
+//                xaxis.valueFormatter = formato
+//                chartView.xAxis.valueFormatter = xaxis.valueFormatter
+            
+            
+
+            
+            
             return cell
         }
         
     }
+    
+
     
     
     // MARK:- UICollectionView Delegate Methods
@@ -246,16 +374,16 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellCiruclarGraph", for: indexPath) as! WWMMoodProgressCVC
-        let color_score = self.moodProgressData["color_score"] as? [String:Any]
+        let color_score = self.moodProgressData.color_score
        
         
         cell.pageController.currentPage = indexPath.row
-        var meditationData = [[String:Any]]()
+        var meditationData = [WWMColorScorePrePostData]()
         if indexPath.row == 0 {
-            meditationData = (color_score?["pre"] as? [[String:Any]])!
+            meditationData = color_score.pre
             cell.btnMeditationType.setTitle("Pre Medtiation", for: .normal)
         }else {
-            meditationData = (color_score?["post"] as? [[String:Any]])!
+            meditationData = color_score.post
             cell.btnMeditationType.setTitle("Post Medtiation", for: .normal)
         }
         
@@ -269,21 +397,21 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         cell.lblPercentage3.text = "0%"
         cell.lblPercentage4.text = "0%"
         for dic in meditationData {
-            if dic["quad_number"] as! Int == 1 {
+            if dic.quad_number == 1 {
 //                cell.viewCircle1.animateRate(1.0, newValue:(dic["mood"] as! CGFloat)/10) { (Bool) in
 //                    
 //                }
-                cell.viewCircle1.rate = (dic["mood"] as! CGFloat)/10
-                cell.lblPercentage1.text = "\(dic["mood"] as! CGFloat)%"
-            }else if dic["quad_number"] as! Int == 2 {
-                cell.viewCircle2.rate = (dic["mood"] as! CGFloat)/10
-                cell.lblPercentage2.text = "\(dic["mood"] as! CGFloat)%"
-            }else if dic["quad_number"] as! Int == 3 {
-                cell.viewCircle3.rate = (dic["mood"] as! CGFloat)/10
-                cell.lblPercentage3.text = "\(dic["mood"] as! CGFloat)%"
-            }else if dic["quad_number"] as! Int == 4 {
-                cell.viewCircle4.rate = (dic["mood"] as! CGFloat)/10
-                cell.lblPercentage4.text = "\(dic["mood"] as! CGFloat)%"
+                cell.viewCircle1.rate = CGFloat((Double(dic.mood))/10)//(dic.mood as! CGFloat)/10
+                cell.lblPercentage1.text = "\(dic.mood)%"
+            }else if dic.quad_number == 2 {
+                cell.viewCircle2.rate = CGFloat((Double(dic.mood))/10)
+                cell.lblPercentage2.text = "\(dic.mood)%"
+            }else if dic.quad_number == 3 {
+                cell.viewCircle3.rate = CGFloat((Double(dic.mood))/10)
+                cell.lblPercentage3.text = "\(dic.mood)%"
+            }else if dic.quad_number == 4 {
+                cell.viewCircle4.rate = CGFloat((Double(dic.mood))/10)
+                cell.lblPercentage4.text = "\(dic.mood)%"
             }
         }
         return cell
@@ -313,7 +441,11 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let statsData = result["result"] as? [String:Any] {
-                    self.moodProgressData = statsData
+                    
+                    
+                    print(statsData)
+                    
+                    self.moodProgressData = WWMMoodProgressData.init(json: statsData)
                     self.tblMoodProgress.reloadData()
                     
                 }
@@ -328,3 +460,10 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 
 
 }
+
+//extension WWMMyProgressMoodVC: IAxisValueFormatter {
+//
+//    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+//        return months[Int(value)]
+//    }
+//}

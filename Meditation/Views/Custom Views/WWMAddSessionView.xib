@@ -38,7 +38,7 @@
                     </state>
                 </button>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WS5-fi-8cM">
-                    <rect key="frame" x="47" y="412" width="281" height="40"/>
+                    <rect key="frame" x="75" y="412" width="225" height="40"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="wTV-iB-G2t"/>
@@ -77,44 +77,6 @@
                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="18"/>
                     </variation>
                 </textField>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4bt-Tz-jnD">
-                    <rect key="frame" x="65.5" y="222" width="244" height="40"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgF-9p-Onn">
-                            <rect key="frame" x="0.0" y="0.0" width="117" height="40"/>
-                            <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
-                            <state key="normal" title="Time 1">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
-                                    <integer key="value" value="20"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3pt-KU-CZ5">
-                            <rect key="frame" x="127" y="0.0" width="117" height="40"/>
-                            <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
-                            <state key="normal" title="Time 2">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
-                                    <integer key="value" value="20"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="gY8-ao-DpE"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
-                            <integer key="value" value="20"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38q-mx-y4K">
                     <rect key="frame" x="37.5" y="312" width="300" height="50"/>
                     <subviews>
@@ -174,23 +136,60 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2E-6o-Jvj">
+                    <rect key="frame" x="65.5" y="222" width="244" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LgF-9p-Onn">
+                            <rect key="frame" x="1" y="0.0" width="122" height="40"/>
+                            <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
+                            <state key="normal" title="Time 1">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3pt-KU-CZ5">
+                            <rect key="frame" x="121" y="0.0" width="122" height="40"/>
+                            <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
+                            <state key="normal" title="Time 2">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="LgF-9p-Onn" firstAttribute="width" secondItem="Q2E-6o-Jvj" secondAttribute="width" multiplier="0.5" id="7QK-mN-vuc"/>
+                        <constraint firstItem="LgF-9p-Onn" firstAttribute="top" secondItem="Q2E-6o-Jvj" secondAttribute="top" id="Euq-6V-QeT"/>
+                        <constraint firstItem="3pt-KU-CZ5" firstAttribute="top" secondItem="Q2E-6o-Jvj" secondAttribute="top" id="Pzb-bJ-SPm"/>
+                        <constraint firstAttribute="width" constant="244" id="TzB-G6-d82"/>
+                        <constraint firstAttribute="height" constant="40" id="bEi-z3-RKl"/>
+                        <constraint firstAttribute="bottom" secondItem="LgF-9p-Onn" secondAttribute="bottom" id="cRO-VX-Clf"/>
+                        <constraint firstAttribute="trailing" secondItem="3pt-KU-CZ5" secondAttribute="trailing" constant="1" id="eqi-dL-6mC"/>
+                        <constraint firstItem="LgF-9p-Onn" firstAttribute="leading" secondItem="Q2E-6o-Jvj" secondAttribute="leading" constant="1" id="f9o-8e-kOp"/>
+                        <constraint firstAttribute="bottom" secondItem="3pt-KU-CZ5" secondAttribute="bottom" id="yJr-Gy-fKS"/>
+                        <constraint firstItem="3pt-KU-CZ5" firstAttribute="width" secondItem="Q2E-6o-Jvj" secondAttribute="width" multiplier="0.5" id="zU3-gZ-7f1"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Pmo-9M-gKq" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="4YY-tT-WwK"/>
-                <constraint firstItem="WS5-fi-8cM" firstAttribute="width" secondItem="tXk-e5-N5w" secondAttribute="width" multiplier="0.75" id="6Ew-4d-iKs"/>
+                <constraint firstItem="WS5-fi-8cM" firstAttribute="width" secondItem="tXk-e5-N5w" secondAttribute="width" multiplier="0.6" id="6Ew-4d-iKs"/>
                 <constraint firstItem="WS5-fi-8cM" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="A3E-AH-1Pp"/>
-                <constraint firstItem="4bt-Tz-jnD" firstAttribute="top" secondItem="qht-MW-YEO" secondAttribute="bottom" constant="40" id="BqB-IO-hkc"/>
                 <constraint firstItem="qht-MW-YEO" firstAttribute="centerX" secondItem="0hQ-ur-AvK" secondAttribute="centerX" id="Cws-Zf-F6z"/>
-                <constraint firstItem="38q-mx-y4K" firstAttribute="top" secondItem="4bt-Tz-jnD" secondAttribute="bottom" constant="50" id="GsU-C6-LWe"/>
-                <constraint firstItem="4bt-Tz-jnD" firstAttribute="width" secondItem="tXk-e5-N5w" secondAttribute="width" multiplier="0.65" id="JZX-Ma-b0Y"/>
+                <constraint firstItem="Q2E-6o-Jvj" firstAttribute="top" secondItem="qht-MW-YEO" secondAttribute="bottom" constant="40" id="Fex-Jy-fqB"/>
                 <constraint firstItem="0hQ-ur-AvK" firstAttribute="top" secondItem="Pmo-9M-gKq" secondAttribute="bottom" constant="50" id="Kh0-0R-Dd3"/>
                 <constraint firstItem="qht-MW-YEO" firstAttribute="top" secondItem="0hQ-ur-AvK" secondAttribute="bottom" constant="10" id="Kqw-KI-3q2"/>
                 <constraint firstItem="Pmo-9M-gKq" firstAttribute="centerY" secondItem="9MZ-0W-AI5" secondAttribute="centerY" id="MyJ-yH-WcB"/>
                 <constraint firstItem="38q-mx-y4K" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="PTG-8I-4l0"/>
                 <constraint firstItem="0hQ-ur-AvK" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="XIt-Kh-aWy"/>
+                <constraint firstItem="Q2E-6o-Jvj" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="Y60-VH-No6"/>
+                <constraint firstItem="38q-mx-y4K" firstAttribute="top" secondItem="Q2E-6o-Jvj" secondAttribute="bottom" constant="50" id="a4h-ww-xDg"/>
                 <constraint firstItem="9MZ-0W-AI5" firstAttribute="top" secondItem="AMB-Ph-f9s" secondAttribute="top" id="c6m-cU-Fvn"/>
-                <constraint firstItem="4bt-Tz-jnD" firstAttribute="centerX" secondItem="tXk-e5-N5w" secondAttribute="centerX" id="hrN-Hh-lwd"/>
                 <constraint firstItem="38q-mx-y4K" firstAttribute="width" secondItem="tXk-e5-N5w" secondAttribute="width" multiplier="0.8" id="nhJ-ob-HG3"/>
                 <constraint firstItem="AMB-Ph-f9s" firstAttribute="trailing" secondItem="9MZ-0W-AI5" secondAttribute="trailing" constant="20" id="rLs-cY-tNa"/>
                 <constraint firstItem="WS5-fi-8cM" firstAttribute="top" secondItem="38q-mx-y4K" secondAttribute="bottom" constant="50" id="wcE-0k-hTP"/>
@@ -208,7 +207,7 @@
                 <outlet property="lblSec" destination="HuY-pL-gXD" id="Sgg-ZS-tgu"/>
                 <outlet property="txtViewDate" destination="qht-MW-YEO" id="kYG-CP-hJ4"/>
                 <outlet property="txtViewTime" destination="Qii-ff-FXi" id="7GR-eD-2mR"/>
-                <outlet property="viewTime" destination="4bt-Tz-jnD" id="SQa-6v-m10"/>
+                <outlet property="viewTime" destination="Q2E-6o-Jvj" id="CAI-PL-FCF"/>
             </connections>
             <point key="canvasLocation" x="55.200000000000003" y="68.815592203898049"/>
         </view>
