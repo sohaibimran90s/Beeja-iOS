@@ -27,19 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
     let appPreference = WWMAppPreference()
     let center = UNUserNotificationCenter.current()
-
+    
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
-       // GIDSignIn.sharedInstance().delegate = self
+        // GIDSignIn.sharedInstance().delegate = self
         
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -51,44 +51,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             application.registerForRemoteNotifications()
         }
         
-//        // Analytics
-//
-//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-//            AnalyticsParameterItemID: "id-Beeja-App-Started",
-//            AnalyticsParameterItemName: "Roshan Login in Beeja app",
-//            AnalyticsParameterContentType: "App Login"
-//            ])
+        //        // Analytics
+        //
+        //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+        //            AnalyticsParameterItemID: "id-Beeja-App-Started",
+        //            AnalyticsParameterItemName: "Roshan Login in Beeja app",
+        //            AnalyticsParameterContentType: "App Login"
+        //            ])
         self.requestAuthorization()
         self.setLocalPush()
         
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         WWMSpotifyManager.sharedManager.connect();
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
-
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         let parameters = appRemote.authorizationParameters(from: url);
         if url.absoluteString.contains("fb") {
@@ -100,13 +100,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
             
         }else {
-        return GIDSignIn.sharedInstance().handle(url,
-                                                 sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-                                                 annotation: [:])
+            return GIDSignIn.sharedInstance().handle(url,
+                                                     sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: [:])
         }
         return true
     }
-
+    
     var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
         didSet {
             let defaults = UserDefaults.standard
@@ -166,7 +166,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func setLocalPush(){
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
-          let settingData = data[0]
+            let settingData = data[0]
             if settingData.isMorningReminder {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
@@ -178,7 +178,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let date = dateFormate.date(from: strDate)
                 print(date!)
                 
-               // let timeStemp = Int(date!.timeIntervalSince1970)
+                // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
                 content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
@@ -187,18 +187,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 //print(Int(Date().timeIntervalSince1970))
                 //print(timeStemp)
                 //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-               // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
-               // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
+                // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
+                // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
                 var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
                 toDateComponents.second = 0
                 let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                    //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
+                //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
                 let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
-                    center.add(request){ (error) in
-                        if error == nil {
-                            print("schedule push succeed")
-                        }
+                center.add(request){ (error) in
+                    if error == nil {
+                        print("schedule push succeed")
                     }
+                }
                 
                 
             }else {
@@ -215,27 +215,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let date = dateFormate.date(from: strDate)
                 print(date!)
                 
-               // let timeStemp = Int(date!.timeIntervalSince1970)
+                // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
                 content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-AfterNoonReminder"
-               // print(Int(Date().timeIntervalSince1970))
-               // print(timeStemp)
+                // print(Int(Date().timeIntervalSince1970))
+                // print(timeStemp)
                 //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-                   // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: false)
-                    var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
-                    toDateComponents.second = 0
-                    let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                    let request = UNNotificationRequest(identifier: "AfternoonTimer", content: content, trigger: notificationTrigger)
-                    //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
-                    
-                    center.add(request){ (error) in
-                        if error == nil {
-                            print("schedule push succeed")
-                        }
+                // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: false)
+                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
+                toDateComponents.second = 0
+                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                let request = UNNotificationRequest(identifier: "AfternoonTimer", content: content, trigger: notificationTrigger)
+                //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+                
+                center.add(request){ (error) in
+                    if error == nil {
+                        print("schedule push succeed")
                     }
+                }
                 
                 
             }

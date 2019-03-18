@@ -97,7 +97,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             self.settingAPI()
             self.tblViewSetting.reloadData()
         }
-        
+
     }
     
     // MARK:- UIPickerView Delegate Methods

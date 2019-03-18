@@ -151,6 +151,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setUserToken(value: userProfile["token"] as! String)
                         self.appPreference.setUserName(value: userProfile["name"] as! String)
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserData(value: [:])
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc

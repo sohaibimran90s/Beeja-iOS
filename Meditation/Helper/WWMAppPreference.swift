@@ -90,7 +90,7 @@ class WWMAppPreference: NSObject {
     }
     
     func isLogout() -> Bool {
-        if UserDefaults.standard.dictionary(forKey: "UserData") != nil{
+        if UserDefaults.standard.dictionary(forKey: "UserData")?.count ?? 0 > 0{
             return true
         }
         return false
