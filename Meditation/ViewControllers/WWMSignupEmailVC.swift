@@ -135,7 +135,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             "deviceToken" : appPreference.getDeviceToken(),
             "DeviceType": kDeviceType,
             "loginType": kLoginTypeFacebook,
-            "profileImage":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
+            "profile_image":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
             "socialId":"\(fbData["id"] ?? -1)",
             "name":"\(fbData["name"] ?? "")",
             "model": UIDevice.current.model,

@@ -8,6 +8,9 @@ PODS:
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
   - FBSDKCoreKit (4.39.1):
     - Bolts (~> 1.9)
   - FBSDKLoginKit (4.39.1):
@@ -93,6 +96,8 @@ PODS:
 
 DEPENDENCIES:
   - Charts
+  - Crashlytics
+  - Fabric
   - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Core
@@ -107,6 +112,8 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - Charts
+    - Crashlytics
+    - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -130,6 +137,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FBSDKCoreKit: f442aa96179cc9b382bb4abeb7e340a47cca8f91
   FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
@@ -150,6 +159,6 @@ SPEC CHECKSUMS:
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 730d68ed5c393efad58dbcafb303fc218d9e357f
+PODFILE CHECKSUM: 5701762dd581ec2f3878f32c6fb6aa14989bfce8
 
 COCOAPODS: 1.5.3

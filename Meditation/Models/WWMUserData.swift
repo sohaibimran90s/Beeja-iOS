@@ -69,7 +69,7 @@ class WWMUserData: NSObject {
         email = json["email"] as? String ?? ""
         profileImage = json["profile_image"] as? String ?? ""
         social_id = json["social_id"] as? String ?? ""
-        loginType = json["loginType"] as? String ?? ""
+        loginType = json["login_type"] as? String ?? ""
         
         latitude = json["latitude"] as? String ?? ""
         longitude = json["longitude"] as? String ?? ""

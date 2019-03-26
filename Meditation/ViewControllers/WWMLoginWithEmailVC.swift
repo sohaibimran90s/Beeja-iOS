@@ -129,7 +129,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             "deviceToken" : appPreference.getDeviceToken(),
             "DeviceType": kDeviceType,
             "loginType": kLoginTypeEmail,
-            "profileImage":"",
+            "profile_image":"",
             "socialId":"",
             "name":"",
             "model": UIDevice.current.model,

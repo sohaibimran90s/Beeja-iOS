@@ -17,7 +17,8 @@ target 'Meditation' do
 	pod 'Charts'
 	pod 'SDWebImage'
 	pod 'SVProgressHUD'
-	pod '
+	pod 'Fabric'
+	pod 'Crashlytics'
 
   target 'MeditationTests' do
     inherit! :search_paths
