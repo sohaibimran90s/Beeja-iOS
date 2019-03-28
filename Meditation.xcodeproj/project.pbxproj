@@ -169,6 +169,15 @@
 		2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */; };
 		57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
+		61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442938224B4BC200C6682C /* WWMPromptMsg.swift */; };
+		6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */; };
+		6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293C224B72D400C6682C /* WWMAlertPopUp.xib */; };
+		6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6144293E224B764600C6682C /* WWMAlertPopUp.swift */; };
+		61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61442940224B82D300C6682C /* WWMJouranlPopUp.xib */; };
+		61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442942224B831200C6682C /* WWMJouranlPopUp.swift */; };
+		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
+		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
+		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
 		61F335B5223A727B00023F32 /* BarChartFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F335B4223A727B00023F32 /* BarChartFormatter.swift */; };
 		6B31C886239092ED89F368E5 /* Pods_MeditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */; };
 		78ADD3E70FD1AE1E83FE7C8E /* Pods_MeditationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3CFC2BF646A938192DD625 /* Pods_MeditationUITests.framework */; };
@@ -368,6 +377,15 @@
 		2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBJournalList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
+		61442938224B4BC200C6682C /* WWMPromptMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPromptMsg.swift; sourceTree = "<group>"; };
+		6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMPromptMsg.xib; sourceTree = "<group>"; };
+		6144293C224B72D400C6682C /* WWMAlertPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertPopUp.xib; sourceTree = "<group>"; };
+		6144293E224B764600C6682C /* WWMAlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertPopUp.swift; sourceTree = "<group>"; };
+		61442940224B82D300C6682C /* WWMJouranlPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMJouranlPopUp.xib; sourceTree = "<group>"; };
+		61442942224B831200C6682C /* WWMJouranlPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJouranlPopUp.swift; sourceTree = "<group>"; };
+		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
+		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
+		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
 		61F335B4223A727B00023F32 /* BarChartFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartFormatter.swift; sourceTree = "<group>"; };
 		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDCE084A12C87DE5C17EE29 /* Pods-MeditationUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -563,6 +581,7 @@
 				2E93D2D621F1B90E00163E57 /* Start Timer */,
 				2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */,
 				2EC81C5221E745EA003B0EEE /* Mood Meter */,
+				61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */,
 			);
 			path = "Timer Screen";
 			sourceTree = "<group>";
@@ -623,6 +642,14 @@
 				2E316FD92228082500018538 /* WWMAddSessionView.xib */,
 				2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */,
 				2E25CDC822269BE6002BDE15 /* WWMAddJournalView.xib */,
+				61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */,
+				61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */,
+				61442938224B4BC200C6682C /* WWMPromptMsg.swift */,
+				6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */,
+				6144293C224B72D400C6682C /* WWMAlertPopUp.xib */,
+				6144293E224B764600C6682C /* WWMAlertPopUp.swift */,
+				61442940224B82D300C6682C /* WWMJouranlPopUp.xib */,
+				61442942224B831200C6682C /* WWMJouranlPopUp.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -1131,6 +1158,7 @@
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
+				61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */,
 				2E326ECB222EB4B700A0F1A1 /* Burn.mp4 in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
@@ -1146,11 +1174,14 @@
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
+				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
+				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
+				6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */,
 				2EC9585D220AC1BA009D5144 /* MaaxRounded-Bold.ttf in Resources */,
 				2E4A473B220DB22B00DF0C68 /* WAVES ONLY.mp3 in Resources */,
 				2E4371C822004D9A00EF5D62 /* MOON KOSHI.mp3 in Resources */,
@@ -1397,6 +1428,7 @@
 				2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */,
 				2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */,
 				2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */,
+				61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */,
 				2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */,
 				2EAE29B52231447C008E4361 /* CircularSlider.swift in Sources */,
 				2EE247AA21E4CF9500857C25 /* WWMSideMenuVC.swift in Sources */,
@@ -1414,6 +1446,7 @@
 				2EB9072A21B65C88009891E8 /* WWMLoginVC.swift in Sources */,
 				2E5EA5C821EDDBEB0076328A /* WWMCustomButton.swift in Sources */,
 				2EE247B021E5D9FA00857C25 /* WWMMyProgressJournalVC.swift in Sources */,
+				61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */,
 				2EC81C5E21E7781A003B0EEE /* WWMWebViewVC.swift in Sources */,
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
@@ -1436,10 +1469,13 @@
 				2EAE29B722326452008E4361 /* WWMMoodProgressCVC.swift in Sources */,
 				2E4A4730220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift in Sources */,
 				2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */,
+				61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */,
+				6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */,
 				2E4966172218089D00BC6219 /* WWMCommunityCollectionViewCell.swift in Sources */,
 				2EEF9AE2221AEC900016A77C /* DBContactUs+CoreDataClass.swift in Sources */,
 				2EEF9AE5221AEC900016A77C /* DBSettings+CoreDataProperties.swift in Sources */,
 				2E316FD82228080F00018538 /* WWMAddSessionView.swift in Sources */,
+				61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */,
 				2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */,
 				2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */,
 				2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */,

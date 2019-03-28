@@ -11,16 +11,15 @@ import SDWebImage
 
 class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    
-
     var moodData = WWMMoodMeterData()
     var arrImages = [String]()
-    var isselected = false
     var selectedIndex = 0
     let arrStaticImages = ["AppIcon","AppIcon","AppIcon"]
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var btnShare: UIButton!
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var btnSkip: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,11 +28,34 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     
     func setUpUI() {
+        
+        let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let attributeString = NSMutableAttributedString(string: "Skip",
+                                                        attributes: attributes)
+        btnSkip.setAttributedTitle(attributeString, for: .normal)
+        
         self.btnShare.layer.borderWidth = 2.0
         self.btnShare.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.getVibesAPI()
     }
 
+    
+    @IBAction func btnSkipAction(_ sender: Any) {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 3
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 3 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
     
     // MARK:- UICollectionView Delegate Methods
     
@@ -57,12 +79,9 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 
                 imgView.sd_setImage(with: URL.init(string: data), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
             }
-            
-        
         }
         
         return cell
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -73,30 +92,18 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize.init(width: self.imageCollectionView.frame.size.width, height: 300)
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
     
     // MARK:- Button Action
     
     @IBAction func btnSendToFriendAction(_ sender: Any) {
         
-        if !isselected {
-            // image to share
-            self.btnShare.setTitle("Done", for: .normal)
-            isselected = true
             if self.arrImages.count == 0 {
                 let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
                 let imageToShare = [image!] as [Any]
@@ -108,23 +115,9 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 let url = URL.init(string: self.arrImages[self.selectedIndex])
                 self.downloaded(url: url!)
             }
-            
-        }else {
-            self.navigationController?.isNavigationBarHidden = false
-            
-            if let tabController = self.tabBarController as? WWMTabBarVC {
-                tabController.selectedIndex = 3
-                for index in 0..<tabController.tabBar.items!.count {
-                    let item = tabController.tabBar.items![index]
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                    if index == 3 {
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                    }
-                }
-            }
-            self.navigationController?.popToRootViewController(animated: false)
-        }
     }
+    
+    
     func downloaded(url: URL) {
         WWMHelperClass.showSVHud()
         URLSession.shared.dataTask(with: url) { data, response, error in

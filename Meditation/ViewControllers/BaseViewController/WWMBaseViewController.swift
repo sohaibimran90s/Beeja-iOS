@@ -12,6 +12,9 @@ class WWMBaseViewController: UIViewController {
 
     let appPreference = WWMAppPreference()
     var userData = WWMUserData.sharedInstance
+    var alertPopupView = WWMAlertController()
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,10 +84,25 @@ class WWMBaseViewController: UIViewController {
     }
     
     func showPopUp(title:String, message:String) {
-        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
-        let btnOk = UIAlertAction.init(title: "Ok", style: .cancel, handler: nil)
-        alert.addAction(btnOk)
-        self.present(alert, animated: true, completion: nil)
+
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = title
+        alertPopupView.lblSubtitle.text = message
+        alertPopupView.btnClose.isHidden = true
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
+        
+        
+//        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+//        let btnOk = UIAlertAction.init(title: "Ok", style: .cancel, handler: nil)
+//        alert.addAction(btnOk)
+//        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: Button Action

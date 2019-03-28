@@ -15,6 +15,9 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     @IBOutlet weak var lblTitle: UILabel!
     var strType = ""
     var strUrl = ""
+    
+    //var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,21 +26,45 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         webView.navigationDelegate = self
         let reachable = Reachability()
         if !reachable.isConnectedToNetwork(){
-            let alert = UIAlertController(title: "Alert",
-                                          message: "The Internet connection appears to be offline.",
-                                          preferredStyle: UIAlertController.Style.alert)
             
             
-            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-                self.navigationController?.popViewController(animated: true)
-            }
-            alert.addAction(OKAction)
-            self.present(alert, animated: true,completion: nil)
+            let alertPopupView: WWMAlertController = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+            let window = UIApplication.shared.keyWindow!
+            
+            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+            alertPopupView.btnOK.layer.borderWidth = 2.0
+            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            
+            alertPopupView.lblTitle.text = "Alert"
+            alertPopupView.lblSubtitle.text = "The Internet connection appears to be offline."
+            alertPopupView.btnClose.isHidden = true
+            
+            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+            window.rootViewController?.view.addSubview(alertPopupView)
+            
+            
+//            let alert = UIAlertController(title: "Alert",
+//                                          message: "The Internet connection appears to be offline.",
+//                                          preferredStyle: UIAlertController.Style.alert)
+//            
+//            
+//            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//            alert.addAction(OKAction)
+//            self.present(alert, animated: true,completion: nil)
         }else {
             self.loadWebView()
         }
         
     }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
          self.webView.stopLoading()
     }

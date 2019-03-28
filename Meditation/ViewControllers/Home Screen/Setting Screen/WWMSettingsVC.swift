@@ -29,6 +29,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var tblViewSetting: UITableView!
     @IBOutlet weak var containerView: UIView!
     
+    //var alertPopupView = WWMAlertController()
+    
     var pickerStartChimes = UIPickerView()
     var player = AVAudioPlayer()
     
@@ -428,20 +430,50 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             settingData.afterNoonReminderTime = dateFormatter.string(from: sender.date)
         }
     }
+    
     func logout() {
-        let alert = UIAlertController(title: "Alert",
-                                      message: "Are you sure you want to logout?",
-                                      preferredStyle: UIAlertController.Style.alert)
         
+        self.xibCall()
         
-        let cancelAction = UIAlertAction.init(title: "Cancel", style: .default, handler: nil)
-        let okAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-            self.logoutAPI()
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
+//        let alert = UIAlertController(title: "Alert",
+//                                      message: "Are you sure you want to logout?",
+//                                      preferredStyle: UIAlertController.Style.alert)
+//
+//
+//        let cancelAction = UIAlertAction.init(title: "Cancel", style: .default, handler: nil)
+//        let okAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
+//            self.logoutAPI()
+//        }
+//        alert.addAction(cancelAction)
+//        alert.addAction(okAction)
+//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         
+    }
+    
+    
+    func xibCall(){
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = "Alert"
+        alertPopupView.lblSubtitle.text = "Are you sure you want to logout?"
+        alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        self.alertPopupView.removeFromSuperview()
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.logoutAPI()
+        self.alertPopupView.removeFromSuperview()
     }
     
     func moveToEditMeditationTimeScreen() {

@@ -12,7 +12,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
     @IBOutlet weak var txtViewLog: UITextView!
     @IBOutlet weak var btnSubmit: UIButton!
-    
+    @IBOutlet weak var btnSkip: UIButton!
+
     
     var type = ""   // Pre | Post
     var prepTime = 0
@@ -30,6 +31,12 @@ class WWMMoodJournalVC: WWMBaseViewController {
     }
     
     func setUpUI() {
+        
+        let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let attributeString = NSMutableAttributedString(string: "Skip",
+                                                        attributes: attributes)
+        btnSkip.setAttributedTitle(attributeString, for: .normal)
         
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor

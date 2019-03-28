@@ -13,6 +13,9 @@ class WWMAddJournalVC: WWMBaseViewController {
     @IBOutlet weak var btnSubmit: UIButton!
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var txtViewJournal: UITextView!
+    
+   //var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,7 +39,6 @@ class WWMAddJournalVC: WWMBaseViewController {
         }else {
             self.addJournalAPI()
         }
-        
     }
     
     @IBAction func btnEditTextAction(_ sender: Any) {
@@ -68,16 +70,31 @@ class WWMAddJournalVC: WWMBaseViewController {
     }
 
     func showPopUpOnPresentView(title: String, message: String) {
-        let alert = UIAlertController(title: title as String,
-                                      message: message as String,
-                                      preferredStyle: UIAlertController.Style.alert)
+        
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = title
+        alertPopupView.lblSubtitle.text = message
+        alertPopupView.btnClose.isHidden = true
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
         
         
-        let OKAction = UIAlertAction(title: "OK",
-                                     style: .default, handler: nil)
         
-        alert.addAction(OKAction)
-        self.presentedViewController?.navigationController?.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: title as String,
+//                                      message: message as String,
+//                                      preferredStyle: UIAlertController.Style.alert)
+//
+//
+//        let OKAction = UIAlertAction(title: "OK",
+//                                     style: .default, handler: nil)
+//
+//        alert.addAction(OKAction)
+//        self.presentedViewController?.navigationController?.present(alert, animated: true, completion: nil)
     }
-    
 }

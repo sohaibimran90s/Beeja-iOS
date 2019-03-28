@@ -14,6 +14,9 @@ import SVProgressHUD
 
 class WWMHelperClass {
     
+    static var alertPopupView = WWMAlertController()
+
+    
     class func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
@@ -24,18 +27,39 @@ class WWMHelperClass {
     
     class func showPopupAlertController(sender : Any, message : String, title : String) -> Void{
         
-        let alert = UIAlertController(title: title as String,
-                                      message: message as String,
-                                      preferredStyle: UIAlertController.Style.alert)
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
         
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        let OKAction = UIAlertAction(title: "OK",
-                                     style: .default, handler: nil)
+        alertPopupView.lblTitle.text = title
+        alertPopupView.lblSubtitle.text = message
+        alertPopupView.btnClose.isHidden = true
         
-        alert.addAction(OKAction)
-        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
+        window.rootViewController?.view.addSubview(alertPopupView)
+        
+//        let alert = UIAlertController(title: title as String,
+//                                      message: message as String,
+//                                      preferredStyle: UIAlertController.Style.alert)
+//
+//
+//        let OKAction = UIAlertAction(title: "OK",
+//                                     style: .default, handler: nil)
+//
+//        alert.addAction(OKAction)
+//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         
     }
+    
+    
+  
+    
+    
+//    @objc func btnDoneAction() {
+//        WWMHelperClass.alertPopupView.removeFromSuperview()
+//    }
     
     class func showLoader(on view: UIView) {
         DispatchQueue.main.async(execute: {() -> Void in

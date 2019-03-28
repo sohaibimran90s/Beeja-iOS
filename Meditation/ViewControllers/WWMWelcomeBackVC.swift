@@ -27,7 +27,54 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
         self.btnUseAnother.layer.borderWidth = 2.0
         self.btnUseAnother.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.lblUserName.text = self.userData.name
-        self.lblUserLoginType.text = self.userData.email
+        //self.lblUserLoginType.text = self.userData.email
+        
+            let userLoginTypeArray = self.userData.email.components(separatedBy: "@")
+            if userLoginTypeArray.count > 1 {
+            if userLoginTypeArray[0].count > 3{
+                var myString: String = String(userLoginTypeArray[0].prefix(3))
+                print(myString)
+                
+                let abc = myString.count
+                let pqr = userLoginTypeArray[0].count
+                let mno = pqr - abc
+                
+                for _ in 0..<mno{
+                    myString.append(contentsOf: "*")
+                }
+                
+                myString.append(contentsOf: "@")
+                myString.append(contentsOf: userLoginTypeArray[1])
+                print(myString)
+                
+                self.lblUserLoginType.text = myString
+                
+            }else if userLoginTypeArray[0].count > 1{
+                var myString: String = String(userLoginTypeArray[0].prefix(1))
+                print(myString)
+                
+                let abc = myString.count
+                let pqr = userLoginTypeArray[0].count
+                let mno = pqr - abc
+                
+                for _ in 0..<mno{
+                    myString.append(contentsOf: "*")
+                }
+                
+                myString.append(contentsOf: "@")
+                myString.append(contentsOf: userLoginTypeArray[1])
+                print(myString)
+                
+                self.lblUserLoginType.text = myString
+            }else{
+                
+                self.lblUserLoginType.text = self.userData.email
+            }
+            print(userLoginTypeArray[0])
+            print(userLoginTypeArray[1])
+            }else{
+                self.lblUserLoginType.text = self.userData.email
+        }
         
         self.imageViewProfile.sd_setImage(with: URL.init(string: self.userData.profileImage), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         

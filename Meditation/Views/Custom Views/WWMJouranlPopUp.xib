@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Maax-Bold.ttf">
+            <string>Maax-Bold</string>
+        </array>
+        <array key="Maax-Regular.ttf">
+            <string>Maax-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Xke-EG-7Z4" customClass="WWMJouranlPopUp" customModule="Meditation" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7PD-h0-IbC" customClass="WWMAlertController" customModule="Meditation" customModuleProvider="target">
+                    <rect key="frame" x="37.5" y="246.5" width="300" height="174.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gzZ-VZ-ped">
+                            <rect key="frame" x="15" y="60" width="270" height="54.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Journal has been recorded." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ak8-NA-D5G">
+                                    <rect key="frame" x="0.0" y="0.0" width="270" height="20"/>
+                                    <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Thank you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MfO-tO-1C1">
+                                    <rect key="frame" x="0.0" y="35" width="270" height="19.5"/>
+                                    <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="gzZ-VZ-ped" firstAttribute="width" secondItem="7PD-h0-IbC" secondAttribute="width" multiplier="0.9" id="3IV-z6-Jtk"/>
+                        <constraint firstItem="gzZ-VZ-ped" firstAttribute="top" secondItem="7PD-h0-IbC" secondAttribute="top" constant="60" id="MRs-7C-taI"/>
+                        <constraint firstAttribute="bottom" secondItem="gzZ-VZ-ped" secondAttribute="bottom" constant="60" id="UN5-13-Mbw"/>
+                        <constraint firstItem="gzZ-VZ-ped" firstAttribute="centerX" secondItem="7PD-h0-IbC" secondAttribute="centerX" id="el4-nP-mjR"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="7PD-h0-IbC" firstAttribute="width" secondItem="Xke-EG-7Z4" secondAttribute="width" multiplier="0.8" id="1tH-WG-eQd"/>
+                <constraint firstItem="7PD-h0-IbC" firstAttribute="centerX" secondItem="Xke-EG-7Z4" secondAttribute="centerX" id="31y-BC-NXa"/>
+                <constraint firstItem="7PD-h0-IbC" firstAttribute="centerY" secondItem="Xke-EG-7Z4" secondAttribute="centerY" id="bLE-2o-oNS"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Y95-FH-oGI"/>
+            <connections>
+                <outlet property="backView" destination="7PD-h0-IbC" id="aZ8-XK-U8m"/>
+                <outlet property="lblSubtitle" destination="MfO-tO-1C1" id="9Z3-DJ-Fzg"/>
+                <outlet property="lblTitle" destination="ak8-NA-D5G" id="1cd-qc-YUP"/>
+            </connections>
+            <point key="canvasLocation" x="157.59999999999999" y="139.880059970015"/>
+        </view>
+    </objects>
+</document>

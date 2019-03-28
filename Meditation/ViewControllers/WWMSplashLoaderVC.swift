@@ -88,18 +88,41 @@ class WWMSplashLoaderVC: WWMBaseViewController {
             print(moodData[0])
             self.getMeditationDataAPI()
         }else {
-            let alert = UIAlertController(title: "Alert",
-                                          message: "The Internet connection appears to be offline.",
-                                          preferredStyle: UIAlertController.Style.alert)
             
             
-            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-                self.getMoodMeterDataAPI()
-            }
-            alert.addAction(OKAction)
-            UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
+            
+            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+            let window = UIApplication.shared.keyWindow!
+            
+            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+            alertPopupView.btnOK.layer.borderWidth = 2.0
+            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            
+            alertPopupView.lblTitle.text = "Alert"
+            alertPopupView.lblSubtitle.text = "The Internet connection appears to be offline."
+            alertPopupView.btnClose.isHidden = true
+            
+            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+            window.rootViewController?.view.addSubview(alertPopupView)
+            
+            
+//            let alert = UIAlertController(title: "Alert",
+//                                          message: "The Internet connection appears to be offline.",
+//                                          preferredStyle: UIAlertController.Style.alert)
+//            
+//            
+//            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
+//                self.getMoodMeterDataAPI()
+//            }
+//            alert.addAction(OKAction)
+//            UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         }
     }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.getMoodMeterDataAPI()
+    }
+    
     func saveMeditationDataToDB(data:[String:Any]) {
         var dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         if dbData.count > 0 {
