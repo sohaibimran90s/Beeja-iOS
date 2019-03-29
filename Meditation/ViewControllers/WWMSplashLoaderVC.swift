@@ -124,9 +124,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
     func saveMeditationDataToDB(data:[String:Any]) {
-        var dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        var dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
-             WWMHelperClass.deletefromDb(dbName: "DBMeditationData")
+             WWMHelperClass.deletefromDb(dbName: "DBAllMeditationData")
         }
      
         var arrMeditationData = [WWMMeditationData]()
@@ -138,7 +138,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         }
             for  index in 0..<arrMeditationData.count {
                 let dataM = arrMeditationData[index]
-                let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
+                let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBAllMeditationData") as! DBAllMeditationData
                 meditationDB.meditationId = Int32(dataM.meditationId)
                 meditationDB.meditationName = dataM.meditationName
                 meditationDB.isMeditationSelected = false
@@ -162,7 +162,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 WWMHelperClass.saveDb()
             }
         
-        dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                     self.loadSplashScreenafterDelay()
@@ -170,7 +170,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
     func getMeditationDataFromDB() {
-        let dbData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
             print(dbData)
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {

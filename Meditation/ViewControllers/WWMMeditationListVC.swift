@@ -10,7 +10,7 @@ import UIKit
 
 class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
 
-    var arrMeditationDataList = [DBMeditationData]()
+    var arrMeditationDataList = [DBAllMeditationData]()
     @IBOutlet weak var tblMeditationList: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
         self.setNavigationBar(isShow: false, title: "")
         
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
+        let data = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if data.count > 0 {
             arrMeditationDataList = data
         }
@@ -66,14 +66,12 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSetMyOwnVC") as! WWMSetMyOwnVC
             self.navigationController?.pushViewController(vc, animated: true)
         }else {
-        for index in 0..<arrMeditationDataList.count {
-            if index == indexPath.row {
-                arrMeditationDataList[index].isMeditationSelected = true
-            }else {
-                arrMeditationDataList[index].isMeditationSelected = false
-            }
-        }
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
+            vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"
+            if let levels = arrMeditationDataList[indexPath.row].levels?.array as? [DBLevelData] {
+                vc.arrMeditationLevels = levels
+            }
+            
             self.navigationController?.pushViewController(vc, animated: true)
         }
         

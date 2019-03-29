@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G4015" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DBAllMeditationData" representedClassName="DBAllMeditationData" syncable="YES">
+        <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="meditationName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData" syncable="YES"/>
+    </entity>
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -65,5 +72,6 @@
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="255"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
+        <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="120"/>
     </elements>
 </model>
