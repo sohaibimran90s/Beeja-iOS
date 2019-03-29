@@ -19,7 +19,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     
     let arrFirstTimeUserSplashtxt = ["be more aware","be more human","be a better friend","partner","lover"]
     let arrFirstTimeUserImage = ["Background_Splash1","Background_Splash1","Background_Splash2","Background_Splash3","Background_Splash4","Background_Splash5"]
-    let arrSecondTimeUserSplashTxt = ["we meet again 🙂","ready for a boost?","let's do this..."]
+    let arrSecondTimeUserSplashTxt = ["Nice to see you","To see you nice","lets get to it","and inject some spice"]
     
     let arrOccasionUserSplash = ["Great to see you back!","Elevate your life / experience","keep the good vibes going","There's extraordinary in all of us","Live life in high definition"]
     
@@ -40,13 +40,13 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         let days = Calendar.current.dateComponents([.day], from: self.appPreference.lastLoginDate(), to: Date()).day ?? 0
         if !self.appPreference.isFirstTimeSplash() {
             self.appPreference.setIsFirstTimeSplash(value: true)
-            self.arrViewSplashTxt = self.arrFirstTimeUserSplashtxt
+            self.arrViewSplashTxt = self.getFirstTimeUserSplashTxt()
             
         }else if !self.appPreference.isSecondTimeSplash() {
             self.appPreference.setIsSecondTimeSplash(value: true)
             self.arrViewSplashTxt = self.arrSecondTimeUserSplashTxt
         }else if days > 2{
-            self.arrViewSplashTxt = self.arrOccasionUserSplash
+            self.arrViewSplashTxt = self.getOccassionalUserSplashTxt()
         }else {
             self.arrViewSplashTxt = self.getDailyUserSplashTxt()
         }
@@ -173,18 +173,60 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func getDailyUserSplashTxt() -> [String] {
-        let randomInt = Int.random(in: 0..<4)
+        let randomInt = Int.random(in: 0..<5)
         var arrDailyUser = [String]()
         switch randomInt {
         case 0:
-            arrDailyUser = ["Hola!","On Your marks","Get Set","Go!"]
+            arrDailyUser = ["Buongiorno!","Loving your dedication","Let the good times roll"]
         case 1:
-            arrDailyUser = ["Howdy!","Hope you're feeling tip top 🙂","Let's keep up the good work"]
+            arrDailyUser = ["Hola!","Hope you're feeling tip top 🙂","Keep up the good work"]
         case 2:
-            arrDailyUser = ["Buongiorno!","It's time for another blast","Let's get ready to rumble","Let's dive in"]
+            arrDailyUser = ["Get ready!","Get steady!","Let's get ready to rumble","Let's dive in"]
             //"Let's get ready to rumble"(UK only)
         case 3:
-            arrDailyUser = ["Buongiorno!","It's time for another blast","Let's continue the good vibes","Let's dive in"]
+            arrDailyUser = ["Beeja up baby!","Let's continue the good vibes"]
+        case 4:
+            arrDailyUser = ["It's Beeja time","Sit back","Relax","This is for you"]
+        default:
+            arrDailyUser = [""]
+        }
+        return arrDailyUser
+    }
+    
+    func getFirstTimeUserSplashTxt() -> [String] {
+        let randomInt = Int.random(in: 0..<5)
+        var arrDailyUser = [String]()
+        switch randomInt {
+        case 0:
+            arrDailyUser = ["Young of heart","Wise of mind","All of these treasures","You will find"]
+        case 1:
+            arrDailyUser = ["Hey, you found us!","Get ready...","to discover","YOUR BEST YOU"]
+        case 2:
+            arrDailyUser = ["Don't worry","Be happy ","Just add Beeja!"]
+        case 3:
+            arrDailyUser = ["This","Could","Change","EVERYTHING"]
+        case 4:
+            arrDailyUser = ["Inside your mind","You've got everything","You need to become","Your own super-hero"]
+        default:
+            arrDailyUser = [""]
+        }
+        return arrDailyUser
+    }
+    
+    func getOccassionalUserSplashTxt() -> [String] {
+        let randomInt = Int.random(in: 0..<5)
+        var arrDailyUser = [String]()
+        switch randomInt {
+        case 0:
+            arrDailyUser = ["Great to see you!","Keep the good vibes going","Never forget","There's extraordinary in all of us"]
+        case 1:
+            arrDailyUser = ["Feel the rhythm","Feel the rhyme","Get on up","IT'S BEEJA TIME!"]
+        case 2:
+            arrDailyUser = ["Let's beeja baby!","Don't stop","'til you get enough","KEEP ON!"]
+        case 3:
+            arrDailyUser = ["Howdy","We're so glad you're back","It's never too late","To live your life in high definition"]
+        case 4:
+            arrDailyUser = ["Phew!","We thought you'd forgotten us","Theres always time","To reboot and recharge"]
         default:
             arrDailyUser = [""]
         }
