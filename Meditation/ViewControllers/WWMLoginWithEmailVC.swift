@@ -38,6 +38,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     func setupView(){
         
         if isFromWelcomeBack {
+            
+            self.btnLogin.setTitle("Next", for: .normal)
             viewContinueAsEmail.isHidden = false
             self.lblUserName.text = self.userData.name
             //self.lblUserEmail.text = self.userData.email

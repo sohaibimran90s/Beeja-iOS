@@ -21,22 +21,21 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_Splash" translatesAutoresizingMaskIntoConstraints="NO" id="qvQ-9X-ZqR">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Login" translatesAutoresizingMaskIntoConstraints="NO" id="Gfv-kJ-rea">
-                                <rect key="frame" x="75" y="280" width="225" height="107"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Login" translatesAutoresizingMaskIntoConstraints="NO" id="pUU-Ug-FTD">
+                                <rect key="frame" x="75" y="286" width="225" height="95"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Gfv-kJ-rea" secondAttribute="height" multiplier="227:108" id="TJY-OO-qcc"/>
+                                    <constraint firstAttribute="width" secondItem="pUU-Ug-FTD" secondAttribute="height" multiplier="257:108" id="1rJ-Fn-VJL"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Gfv-kJ-rea" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6Eh-YO-Yt7"/>
                             <constraint firstItem="qvQ-9X-ZqR" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="86q-D6-WNN"/>
-                            <constraint firstItem="Gfv-kJ-rea" firstAttribute="width" secondItem="qvQ-9X-ZqR" secondAttribute="width" multiplier="0.6" id="D6Z-4W-TI9"/>
+                            <constraint firstItem="pUU-Ug-FTD" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="FO3-nr-Jjx"/>
                             <constraint firstItem="qvQ-9X-ZqR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PRg-wp-c02"/>
                             <constraint firstAttribute="bottom" secondItem="qvQ-9X-ZqR" secondAttribute="bottom" id="cpW-n5-HI7"/>
-                            <constraint firstItem="Gfv-kJ-rea" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="js3-8u-bg0"/>
+                            <constraint firstItem="pUU-Ug-FTD" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fVx-AV-HJd"/>
+                            <constraint firstItem="pUU-Ug-FTD" firstAttribute="width" secondItem="qvQ-9X-ZqR" secondAttribute="width" multiplier="0.6" id="iBb-U9-GL4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qvQ-9X-ZqR" secondAttribute="trailing" id="pBl-JD-cnH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -48,7 +47,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Background_Splash" width="540" height="960"/>
-        <image name="Logo_Login" width="227" height="108"/>
+        <image name="Background_Splash" width="270" height="480"/>
+        <image name="Logo_Login" width="257" height="108"/>
     </resources>
 </document>
