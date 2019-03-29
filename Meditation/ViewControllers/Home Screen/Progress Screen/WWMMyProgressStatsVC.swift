@@ -116,7 +116,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         dateFormatter.dateFormat = "yyyy"
         let year = dateFormatter.string(from: date)
         
-        dateFormatter.dateFormat = "MMM, yyyy"
+        dateFormatter.dateFormat = "MMM yyyy"
         self.lblMonthYear.text = dateFormatter.string(from: date)
         
         dateFormatter.dateFormat = "yyyyMM"

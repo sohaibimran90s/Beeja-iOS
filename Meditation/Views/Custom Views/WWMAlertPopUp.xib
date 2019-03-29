@@ -22,10 +22,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRa-tk-1V2">
-                    <rect key="frame" x="41.333333333333343" y="280.33333333333331" width="331.33333333333326" height="175.33333333333331"/>
+                    <rect key="frame" x="41.333333333333343" y="279.66666666666669" width="331.33333333333326" height="176.66666666666669"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your meditation experience has been logged." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejd-Fq-Obw">
-                            <rect key="frame" x="37.999999999999986" y="69" width="255.33333333333331" height="37.333333333333343"/>
+                            <rect key="frame" x="37.999999999999986" y="69" width="255.33333333333331" height="38.666666666666657"/>
                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.070588235294117646" blue="0.32156862745098036" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.070588235294117646" blue="0.32156862745098036" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="nRa-tk-1V2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="1d6-Fd-jdm"/>
                 <constraint firstItem="nRa-tk-1V2" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="R9b-iG-OiB"/>

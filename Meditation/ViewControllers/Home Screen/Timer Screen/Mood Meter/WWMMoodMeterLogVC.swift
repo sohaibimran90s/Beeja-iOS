@@ -48,7 +48,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         self.btnBurnMood.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnLogExperience.layer.borderWidth = 2.0
         self.btnLogExperience.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.lblExpressMood.text = moodData.name
+        if moodData.name != ""{
+            self.lblExpressMood.text = "\(moodData.name)."
+        }else{
+            self.lblExpressMood.text = ""
+        }
         if !moodData.show_burn {
             btnBurnMood.isHidden = true
         }
@@ -56,9 +60,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
         }
         
-        self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
-        self.txtViewLog.layer.borderWidth = 1.0
-        self.txtViewLog.layer.cornerRadius = 2.0
+        //self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
+        //self.txtViewLog.layer.borderWidth = 1.0
+        self.txtViewLog.layer.cornerRadius = 5.0
     }
     
     // MARK:- Button Action

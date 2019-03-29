@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-MS-iFE">
-                    <rect key="frame" x="315" y="20" width="40" height="40"/>
+                    <rect key="frame" x="319" y="21" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="lba-SB-yBw"/>
                         <constraint firstAttribute="width" constant="40" id="rhA-je-c9J"/>
@@ -97,13 +97,13 @@
                     </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="9ye-Y7-9y9" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="4Kr-tz-s1y"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="width" secondItem="MEf-sw-5WN" secondAttribute="width" multiplier="0.7" id="Djr-VD-e6f"/>
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="width" secondItem="nuE-3E-GBX" secondAttribute="width" multiplier="0.75" id="HWg-g3-p3x"/>
-                <constraint firstItem="aTo-MS-iFE" firstAttribute="top" secondItem="UuL-aR-CjX" secondAttribute="top" id="Kp1-UG-Iuw"/>
-                <constraint firstItem="UuL-aR-CjX" firstAttribute="trailing" secondItem="aTo-MS-iFE" secondAttribute="trailing" constant="20" id="MKR-0P-czT"/>
+                <constraint firstItem="aTo-MS-iFE" firstAttribute="top" secondItem="UuL-aR-CjX" secondAttribute="top" constant="1" id="Kp1-UG-Iuw"/>
+                <constraint firstItem="UuL-aR-CjX" firstAttribute="trailing" secondItem="aTo-MS-iFE" secondAttribute="trailing" constant="16" id="MKR-0P-czT"/>
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="U8f-Th-nXQ"/>
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="top" secondItem="nuE-3E-GBX" secondAttribute="bottom" constant="30" id="anm-ef-4LL"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="qZA-ya-UTF"/>

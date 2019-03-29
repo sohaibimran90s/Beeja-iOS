@@ -16,7 +16,7 @@ import UserNotifications
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,SPTAppRemoteDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,SPTAppRemoteDelegate, SPTSessionManagerDelegate {
     
     
     fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
@@ -33,6 +33,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     
+    
+    //MARK:- Spotify Delegate
+    func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
+        print("success", session)
+    }
+    func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
+        print("fail", error)
+    }
+    func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
+        print("renewed", session)
+    }
+    
+    
+    
+    //MARK: Appdelegate Methods
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
