@@ -15,7 +15,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     var journalView = WWMAddJournalView()
     var journalData = [WWMJournalProgressData]()
     
-    
+    var alertJournalPopup = WWMJouranlPopUp()
+   // var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -148,6 +150,23 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         journalView.txtViewJournal.becomeFirstResponder()
     }
     
+    
+    func xibJournalPopupCall(){
+        alertJournalPopup = UINib(nibName: "WWMJouranlPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMJouranlPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertJournalPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertJournalPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertJournalPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.alertJournalPopup.removeFromSuperview()
+                self.getJournalList()
+            }
+        }
+    }
+    
+    
     func addJournalAPI() {
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
@@ -162,7 +181,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.journalView.removeFromSuperview()
-                self.getJournalList()
+                
+                self.xibJournalPopupCall()
+                
+                //self.getJournalList()
             }else {
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
@@ -173,16 +195,34 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
 
     func showPopUpOnPresentView(title: String, message: String) {
-        let alert = UIAlertController(title: title as String,
-                                      message: message as String,
-                                      preferredStyle: UIAlertController.Style.alert)
         
         
-        let OKAction = UIAlertAction(title: "OK",
-                                     style: .default, handler: nil)
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
         
-        alert.addAction(OKAction)
-        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = title
+        alertPopupView.lblSubtitle.text = message
+        alertPopupView.btnClose.isHidden = true
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
+        
+        
+        
+        
+//        let alert = UIAlertController(title: title as String,
+//                                      message: message as String,
+//                                      preferredStyle: UIAlertController.Style.alert)
+//        
+//        
+//        let OKAction = UIAlertAction(title: "OK",
+//                                     style: .default, handler: nil)
+//        
+//        alert.addAction(OKAction)
+//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         
     }
     

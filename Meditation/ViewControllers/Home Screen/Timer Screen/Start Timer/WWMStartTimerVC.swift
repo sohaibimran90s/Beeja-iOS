@@ -31,6 +31,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
     
+    //var alertPopupView = WWMAlertController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -304,11 +306,70 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.playerAmbient.play()
             self.spinnerImage.rotate360Degrees()
         }, completion: nil)
-        
     }
+    
+    @IBAction func btnCancelAction(_ sender: Any) {
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
+            self.viewPause.isHidden = true
+            self.isStop = false
+            self.runTimer()
+            self.playerAmbient.play()
+            self.spinnerImage.rotate360Degrees()
+        }, completion: nil)
+    }
+    
+    
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
         self.spinnerImage.layer.removeAllAnimations()
+    }
+    
+    
+    func xibCall(){
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        
+        alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        
+        self.isStop = false
+        self.runTimer()
+        self.playerAmbient.play()
+        self.spinnerImage.rotate360Degrees()
+        alertPopupView.removeFromSuperview()
+    }
+    
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+         alertPopupView.removeFromSuperview()
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+        vc.type = "Post"
+        if self.timerType == "Prep"{
+            vc.prepTime = self.prepTime - self.seconds
+            vc.meditationTime = 0
+            vc.restTime = 0
+        }else if self.timerType == "Meditation"{
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime - self.seconds
+            vc.restTime = 0
+        }else if self.timerType == "Rest"{
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime
+            vc.restTime = self.restTime - self.seconds
+        }
+        vc.meditationID = self.meditationID
+        vc.levelID = self.levelID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnPauseAction(_ sender: Any) {
@@ -318,40 +379,49 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.playerAmbient.stop()
             self.spinnerImage.layer.removeAllAnimations()
         }
-        let alert = UIAlertController.init(title: "End your Meditation Session", message: "Is this really the end?", preferredStyle: .alert)
-        //let btnCancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
-        let btnCancel = UIAlertAction.init(title: "Cancel", style: .default) { (UIAlertAction) in
-            self.isStop = false
-            self.runTimer()
-            self.playerAmbient.play()
-            self.spinnerImage.rotate360Degrees()
-        }
-        let btnOk = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-            vc.type = "Post"
-            if self.timerType == "Prep"{
-                vc.prepTime = self.prepTime - self.seconds
-                vc.meditationTime = 0
-                vc.restTime = 0
-            }else if self.timerType == "Meditation"{
-                vc.prepTime = self.prepTime
-                vc.meditationTime = self.meditationTime - self.seconds
-                vc.restTime = 0
-            }else if self.timerType == "Rest"{
-                vc.prepTime = self.prepTime
-                vc.meditationTime = self.meditationTime
-                vc.restTime = self.restTime - self.seconds
-            }
-            vc.meditationID = self.meditationID
-            vc.levelID = self.levelID
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-        }
-        alert.addAction(btnCancel)
-        alert.addAction(btnOk)
-        self.present(alert, animated: true, completion: nil)
+        
+        
+        
+        self.xibCall()
+        
+        
+        
+        
+        
+//        let alert = UIAlertController.init(title: "End your Meditation Session", message: "Is this really the end?", preferredStyle: .alert)
+//        ///let btnCancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
+//        let btnCancel = UIAlertAction.init(title: "Cancel", style: .default) { (UIAlertAction) in
+//            self.isStop = false
+//            self.runTimer()
+//            self.playerAmbient.play()
+//            self.spinnerImage.rotate360Degrees()
+//        }
+//        let btnOk = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+//            vc.type = "Post"
+//            if self.timerType == "Prep"{
+//                vc.prepTime = self.prepTime - self.seconds
+//                vc.meditationTime = 0
+//                vc.restTime = 0
+//            }else if self.timerType == "Meditation"{
+//                vc.prepTime = self.prepTime
+//                vc.meditationTime = self.meditationTime - self.seconds
+//                vc.restTime = 0
+//            }else if self.timerType == "Rest"{
+//                vc.prepTime = self.prepTime
+//                vc.meditationTime = self.meditationTime
+//                vc.restTime = self.restTime - self.seconds
+//            }
+//            vc.meditationID = self.meditationID
+//            vc.levelID = self.levelID
+//            self.navigationController?.pushViewController(vc, animated: true)
+//
+//        }
+//        alert.addAction(btnCancel)
+//        alert.addAction(btnOk)
+//        self.present(alert, animated: true, completion: nil)
     }
-    
+//
     
     
     

@@ -22,6 +22,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var productsArray = [SKProduct]()
     var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub"]
     
+    //var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,23 +69,47 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             return
         }
         
-        let actionSheetController = UIAlertController(title: kAlertTitle, message: "What do you want to do?", preferredStyle: UIAlertController.Style.actionSheet)
         
-        let buyAction = UIAlertAction(title: "Buy", style: UIAlertAction.Style.default) { (action) -> Void in
-            let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
-            SKPaymentQueue.default().add(payment)
-            self.transactionInProgress = true
-            WWMHelperClass.showSVHud()
-        }
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
-            
-        }
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        actionSheetController.addAction(buyAction)
-        actionSheetController.addAction(cancelAction)
+        alertPopupView.lblTitle.text = kAlertTitle
+        alertPopupView.lblSubtitle.text = "What do you want to do?"
+        alertPopupView.btnOK.setTitle("Buy", for: .normal)
         
-        present(actionSheetController, animated: true, completion: nil)
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+        
+        
+        
+        //let actionSheetController = UIAlertController(title: kAlertTitle, message: "What do you want to do?", preferredStyle: UIAlertController.Style.actionSheet)
+        
+//        let buyAction = UIAlertAction(title: "Buy", style: UIAlertAction.Style.default) { (action) -> Void in
+//            let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
+//            SKPaymentQueue.default().add(payment)
+//            self.transactionInProgress = true
+//            WWMHelperClass.showSVHud()
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
+//
+//        }
+//
+//        actionSheetController.addAction(buyAction)
+//        actionSheetController.addAction(cancelAction)
+//
+//        present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
+        SKPaymentQueue.default().add(payment)
+        self.transactionInProgress = true
+        WWMHelperClass.showSVHud()
     }
     
     // MARK:- UIButton Action

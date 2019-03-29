@@ -30,7 +30,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func setupView(){
         
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok \(self.appPreference.getUserName())"
+        self.userName.text = "Ok \(self.appPreference.getUserName()),"
         let meditationData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
         for  data in meditationData{
             if data.isMeditationSelected {

@@ -39,6 +39,8 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         self.setUpNavigationBarForDashboard(title: "Settings")
         self.btnSaveSettings.layer.borderWidth = 2.0
         self.btnSaveSettings.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.btnCancel.layer.borderWidth = 2.0
+        self.btnCancel.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         print(self.userData.name)
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {

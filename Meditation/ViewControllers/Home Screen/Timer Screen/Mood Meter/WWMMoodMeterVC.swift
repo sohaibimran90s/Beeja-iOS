@@ -10,6 +10,7 @@ import UIKit
 
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
+    @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var lblMoodselect: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
     @IBOutlet weak var moodView: UIView?
@@ -27,8 +28,18 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     var settingData = DBSettings()
     
+    var alertPrompt = WWMPromptMsg()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.xibCall()
+        
+        let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let attributeString = NSMutableAttributedString(string: "Skip",
+                                                        attributes: attributes)
+        btnSkip.setAttributedTitle(attributeString, for: .normal)
 
         self.btnConfirm.layer.borderWidth = 2.0
         self.btnConfirm.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
@@ -45,8 +56,21 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         self.moodView?.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
-
-
+    
+    func xibCall(){
+        alertPrompt = UINib(nibName: "WWMPromptMsg", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMPromptMsg
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPrompt.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertPrompt, duration: 1.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertPrompt)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.alertPrompt.removeFromSuperview()
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.createMoodScroller()

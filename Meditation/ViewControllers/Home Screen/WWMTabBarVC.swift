@@ -21,6 +21,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var long = ""
     let appPreffrence = WWMAppPreference()
     let reachable = Reachability()
+    
+    var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -242,13 +245,18 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if result["success"] as! Bool {
-                    var userData = WWMUserData.sharedInstance
-                    userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                    print(userData)
-                    self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                if let success = result["success"] as? Bool {
+                    if success {
+                        var userData = WWMUserData.sharedInstance
+                        userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
+                        print(userData)
+                        self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                        
+                        self.setDataToDb(json: result["settings"] as! [String:Any])
+                    }else {
+                        self.getDataFromDatabase()
+                    }
                     
-                    self.setDataToDb(json: result["settings"] as! [String:Any])
                 }else {
                     self.getDataFromDatabase()
                 }
@@ -279,17 +287,42 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func connectionLost(){
-        let alert = UIAlertController(title: kAlertTitle,
-                                      message: "Your connection may lost, please try again!",
-                                      preferredStyle: UIAlertController.Style.alert)
         
         
-        let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
-            WWMHelperClass.showSVHud()
-            self.getUserProfileData()
-        }
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
         
-        alert.addAction(okAction)
-        self.navigationController!.present(alert, animated: true,completion: nil)
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = kAlertTitle
+        alertPopupView.lblSubtitle.text = "Your connection may lost, please try again!"
+        alertPopupView.btnOK.setTitle("Retry", for: .normal)
+        alertPopupView.btnClose.isHidden = true
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+        
+        
+        
+        
+//        let alert = UIAlertController(title: kAlertTitle,
+//                                      message: "Your connection may lost, please try again!",
+//                                      preferredStyle: UIAlertController.Style.alert)
+//        
+//        
+//        let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
+//            WWMHelperClass.showSVHud()
+//            self.getUserProfileData()
+//        }
+//        
+//        alert.addAction(okAction)
+//        self.navigationController!.present(alert, animated: true,completion: nil)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        WWMHelperClass.showSVHud()
+        self.getUserProfileData()
     }
 }

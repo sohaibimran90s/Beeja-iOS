@@ -26,9 +26,7 @@ class WWMFinishTimerVC: UIViewController {
         super.viewDidLoad()
 
         self.setUpUI()
-        // Do any additional setup after loading the view.
     }
-    
     
     func setUpUI() {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
@@ -43,9 +41,9 @@ class WWMFinishTimerVC: UIViewController {
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
     }
-
     
     @IBAction func btnDoneAction(_ sender: Any) {
+        
         if self.settingData.moodMeterEnable {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
             vc.type = "Post"

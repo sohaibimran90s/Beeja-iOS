@@ -12,6 +12,7 @@ import AVFoundation
 class WWMMoodMeterLogVC: WWMBaseViewController {
 
     var moodData = WWMMoodMeterData()
+    @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var lblExpressMood: UILabel!
     @IBOutlet weak var btnBurnMood: UIButton!
     @IBOutlet weak var btnLogExperience: UIButton!
@@ -25,6 +26,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var levelID = ""
     var backgroundvedioView = WWMBackgroundVedioView()
      var player: AVPlayer?
+    
+    var alertPopup = WWMAlertPopUp()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpUI()
@@ -33,11 +37,22 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 
     func setUpUI() {
         self.navigationController?.isNavigationBarHidden = true
+        
+        let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let attributeString = NSMutableAttributedString(string: "Skip",
+                                                        attributes: attributes)
+        btnSkip.setAttributedTitle(attributeString, for: .normal)
+        
         self.btnBurnMood.layer.borderWidth = 2.0
         self.btnBurnMood.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnLogExperience.layer.borderWidth = 2.0
         self.btnLogExperience.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.lblExpressMood.text = moodData.name
+        if moodData.name != ""{
+            self.lblExpressMood.text = "\(moodData.name)."
+        }else{
+            self.lblExpressMood.text = ""
+        }
         if !moodData.show_burn {
             btnBurnMood.isHidden = true
         }
@@ -45,9 +60,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
         }
         
-        self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
-        self.txtViewLog.layer.borderWidth = 1.0
-        self.txtViewLog.layer.cornerRadius = 2.0
+        //self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
+        //self.txtViewLog.layer.borderWidth = 1.0
+        self.txtViewLog.layer.cornerRadius = 5.0
     }
     
     // MARK:- Button Action
@@ -68,11 +83,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.navigationController?.popToRootViewController(animated: false)
         }else {
             self.createBackground(name: "Burn", type: "mp4")
-            
-
         }
-       
     }
+    
     func createBackground(name: String, type: String) {
         guard let path = Bundle.main.path(forResource: name, ofType: type) else { return }
         
@@ -88,6 +101,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         NotificationCenter.default.addObserver(self, selector:#selector(playerDidFinishPlaying(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         player?.play()
     }
+    
     @objc func playerDidFinishPlaying(note: NSNotification) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
         vc.type = self.type
@@ -99,6 +113,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         vc.moodData = self.moodData
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     @IBAction func btnLogExperienceAction(_ sender: Any) {
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
@@ -106,6 +121,23 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.completeMeditationAPI()
         }
     }
+    
+    func xibCall(){
+        alertPopup = UINib(nibName: "WWMAlertPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        
+        alertPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.alertPopup.removeFromSuperview()
+                self.navigateToDashboard()
+            }
+        }
+    }
+    
     
 //    "meditation_type":"Post",
 //    "date_time":1551179906846,
@@ -158,21 +190,21 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         self.logExperience()
     }
     
-    
-    
-    
-    
     func logExperience() {
         
         if self.txtViewLog.text != "" {
-            let alert = UIAlertController.init(title: "Your Meditation experienced has been logged", message: nil, preferredStyle: .alert)
             
-            self.present(alert, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.dismiss(animated: true, completion: {
-                    self.navigateToDashboard()
-                })
-            }
+            self.xibCall()
+            
+            
+//            let alert = UIAlertController.init(title: "Your Meditation experienced has been logged", message: nil, preferredStyle: .alert)
+//
+//            self.present(alert, animated: true, completion: nil)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                self.dismiss(animated: true, completion: {
+//                    self.navigateToDashboard()
+//                })
+//            }
         }else {
             self.navigateToDashboard()
         }

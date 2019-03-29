@@ -28,6 +28,9 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var selectedMeditationData  = DBMeditationData()
     var selectedLevelData  = DBLevelData()
     var settingData = DBSettings()
+    
+    //var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpView()
@@ -99,20 +102,44 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         if !self.userData.is_subscribed {
-            let alert = UIAlertController(title: kAlertTitle,
-                                          message: "Your subscription plan is expired to continue please upgrade.",
-                                          preferredStyle: UIAlertController.Style.alert)
             
             
-            let okAction = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
+            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+            let window = UIApplication.shared.keyWindow!
             
-            alert.addAction(okAction)
-            self.navigationController!.present(alert, animated: true,completion: nil)
+            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+            alertPopupView.btnOK.layer.borderWidth = 2.0
+            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            
+            alertPopupView.lblTitle.text = kAlertTitle
+            alertPopupView.lblSubtitle.text = "Your subscription plan is expired to continue please upgrade."
+            alertPopupView.btnClose.isHidden = true
+            
+            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+            window.rootViewController?.view.addSubview(alertPopupView)
+            
+            
+            
+            
+//            let alert = UIAlertController(title: kAlertTitle,
+//                                          message: "Your subscription plan is expired to continue please upgrade.",
+//                                          preferredStyle: UIAlertController.Style.alert)
+//            
+//            
+//            let okAction = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
+//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            }
+//            
+//            alert.addAction(okAction)
+//            self.navigationController!.present(alert, animated: true,completion: nil)
             
         }
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     
@@ -173,22 +200,31 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     @IBAction func btnPresetLevelAction(_ sender: Any) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        for index in 0..<selectedMeditationData.levels!.count+1 {
-            if index == selectedMeditationData.levels!.count {
-                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-            }else {
-                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                alert.addAction(UIAlertAction.init(title: levels![index].levelName, style: .default, handler: { (UIAlertAction) in
-                self.ActionSheetAction(index: index)
-            }))
-            }
-        }
+//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        for index in 0..<selectedMeditationData.levels!.count+1 {
+//            if index == selectedMeditationData.levels!.count {
+//                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+//            }else {
+//                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+//                alert.addAction(UIAlertAction.init(title: levels![index].levelName, style: .default, handler: { (UIAlertAction) in
+//                self.ActionSheetAction(index: index)
+//            }))
+//            }
+//        }
+//
+//        alert.view.tintColor = UIColor.black
+//        self.present(alert, animated: true, completion: {
+//            print("completion block")
+//        })
         
-        alert.view.tintColor = UIColor.black
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerPresetVC") as! WWMTimerPresetVC
+        if let levels = self.selectedMeditationData.levels?.array as? [DBLevelData] {
+            vc.LevelData = levels
+        }
+        vc.delegate = self
+        
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     func ActionSheetAction(index:Int) {
@@ -203,7 +239,18 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.setUpSliderTimesAccordingToLevels()
                 
     }
-    
-    
+}
 
+extension WWMTimerHomeVC: WWMTimerPresetVCDelegate{
+    func choosePresetName(index: Int) {
+        let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+        for indexLevel in 0..<levels!.count {
+            let level = levels![indexLevel]
+            if index == indexLevel {
+                selectedLevelData = level
+                self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+            }
+        }
+        self.setUpSliderTimesAccordingToLevels()
+    }
 }

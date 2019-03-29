@@ -15,6 +15,8 @@ class WWMSupportVC: WWMBaseViewController {
     @IBOutlet weak var txtViewQuery: UITextView!
     @IBOutlet weak var btnSubmit: UIButton!
     
+    //var alertPopupView = WWMAlertController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,8 +63,10 @@ class WWMSupportVC: WWMBaseViewController {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.navigationController?.popViewController(animated: true)
-                WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)
+                //self.navigationController?.popViewController(animated: true)
+                //WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)
+                
+                self.xibCall()
             }else {
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message:error?.localizedDescription ?? "" , title: kAlertTitle)
@@ -70,7 +74,27 @@ class WWMSupportVC: WWMBaseViewController {
             }
             WWMHelperClass.dismissSVHud()
         }
+    }
+    
+    func xibCall(){
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
         
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = "Thank You!"
+        alertPopupView.lblSubtitle.text = "Your query has been submitted. Our team will contact you soon."
+        alertPopupView.btnClose.isHidden = true
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+        self.alertPopupView.removeFromSuperview()
     }
 
 }

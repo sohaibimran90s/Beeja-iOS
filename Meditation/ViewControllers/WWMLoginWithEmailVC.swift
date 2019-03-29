@@ -40,8 +40,55 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
         if isFromWelcomeBack {
             viewContinueAsEmail.isHidden = false
             self.lblUserName.text = self.userData.name
-            self.lblUserEmail.text = self.userData.email
+            //self.lblUserEmail.text = self.userData.email
             viewEmail.isHidden = true
+            
+            let userLoginTypeArray = self.userData.email.components(separatedBy: "@")
+            if userLoginTypeArray.count > 1 {
+                if userLoginTypeArray[0].count > 3{
+                    var myString: String = String(userLoginTypeArray[0].prefix(3))
+                    print(myString)
+                    
+                    let abc = myString.count
+                    let pqr = userLoginTypeArray[0].count
+                    let mno = pqr - abc
+                    
+                    for _ in 0..<mno{
+                        myString.append(contentsOf: "*")
+                    }
+                    
+                    myString.append(contentsOf: "@")
+                    myString.append(contentsOf: userLoginTypeArray[1])
+                    print(myString)
+                    
+                    self.lblUserEmail.text = myString
+                    
+                }else if userLoginTypeArray[0].count > 1{
+                    var myString: String = String(userLoginTypeArray[0].prefix(1))
+                    print(myString)
+                    
+                    let abc = myString.count
+                    let pqr = userLoginTypeArray[0].count
+                    let mno = pqr - abc
+                    
+                    for _ in 0..<mno{
+                        myString.append(contentsOf: "*")
+                    }
+                    
+                    myString.append(contentsOf: "@")
+                    myString.append(contentsOf: userLoginTypeArray[1])
+                    print(myString)
+                    
+                    self.lblUserEmail.text = myString
+                }else{
+                    
+                    self.lblUserEmail.text = self.userData.email
+                }
+                print(userLoginTypeArray[0])
+                print(userLoginTypeArray[1])
+            }else{
+                self.lblUserEmail.text = self.userData.email
+            }
         }else {
             viewContinueAsEmail.isHidden = true
             viewEmail.isHidden = false
