@@ -13,6 +13,7 @@ class WWMAddJournalVC: WWMBaseViewController {
     @IBOutlet weak var btnSubmit: UIButton!
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var txtViewJournal: UITextView!
+    @IBOutlet weak var lblTextCount: UILabel!
     
    //var alertPopupView = WWMAlertController()
 
@@ -24,6 +25,7 @@ class WWMAddJournalVC: WWMBaseViewController {
     }
 
     func setupView(){
+        self.txtViewJournal.delegate = self
         self.setNavigationBar(isShow: false, title: "")
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
@@ -98,3 +100,16 @@ class WWMAddJournalVC: WWMBaseViewController {
 //        self.presentedViewController?.navigationController?.present(alert, animated: true, completion: nil)
     }
 }
+
+extension WWMAddJournalVC: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        self.lblTextCount.text = "\(self.txtViewJournal.text.count)/1500"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (txtViewJournal.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 1500
+    }
+}
+

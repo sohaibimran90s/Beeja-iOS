@@ -30,6 +30,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     var alertPrompt = WWMPromptMsg()
     
+    var label = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,11 +90,14 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let height = self.moodView!.bounds.size.height
         
         for mood in self.arrMoodData {
-            let label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
+            label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
             label.backgroundColor = .clear
+            
+            
             label.textColor = .white
             label.font = UIFont.boldSystemFont(ofSize: 16)
             label.text = mood.name
+            
             label.textAlignment = .center
             scrollView.addSubview(label)
             x = x + width
@@ -127,13 +132,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         let mood = self.arrMoodData[moodIndex]
+        
         print("selected mood = \(mood.name)")
         self.btnConfirm.isHidden = false
         self.lblMoodselect.text = "Move dot to select your current feeling"
         // show your button here
     }
-
-
+    
 
     // MARK:- Button Action
 

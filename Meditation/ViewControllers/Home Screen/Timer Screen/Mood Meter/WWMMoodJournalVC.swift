@@ -13,7 +13,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
     @IBOutlet weak var txtViewLog: UITextView!
     @IBOutlet weak var btnSubmit: UIButton!
     @IBOutlet weak var btnSkip: UIButton!
-
+    @IBOutlet weak var lblTextCount: UILabel!
+    
     
     var type = ""   // Pre | Post
     var prepTime = 0
@@ -31,6 +32,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
     }
     
     func setUpUI() {
+        
+        self.txtViewLog.delegate = self
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
@@ -136,3 +139,16 @@ class WWMMoodJournalVC: WWMBaseViewController {
     */
 
 }
+
+extension WWMMoodJournalVC: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (txtViewLog.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 1500
+    }
+}
+

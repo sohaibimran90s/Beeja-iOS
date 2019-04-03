@@ -17,7 +17,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     @IBOutlet weak var btnBurnMood: UIButton!
     @IBOutlet weak var btnLogExperience: UIButton!
     @IBOutlet weak var txtViewLog: UITextView!
-    
+    @IBOutlet weak var lblTextCount: UILabel!
+
     var type = ""   // Pre | Post
     var prepTime = 0
     var meditationTime = 0
@@ -48,6 +49,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         self.btnBurnMood.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnLogExperience.layer.borderWidth = 2.0
         self.btnLogExperience.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        self.txtViewLog.delegate = self
+        
         if moodData.name != ""{
             self.lblExpressMood.text = "\(moodData.name)."
         }else{
@@ -58,6 +62,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
+            self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }
         
         //self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
@@ -251,4 +256,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     */
 
+}
+
+extension WWMMoodMeterLogVC: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (txtViewLog.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 1500
+    }
 }
