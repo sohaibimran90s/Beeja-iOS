@@ -14,6 +14,8 @@ class WWMAddJournalView: UIView {
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var txtViewJournal: UITextView!
     @IBOutlet weak var btnEditText: UIButton!
+    @IBOutlet weak var lblTextCount: UILabel!
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

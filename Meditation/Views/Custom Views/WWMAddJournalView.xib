@@ -13,6 +13,9 @@
         <array key="Maax-Bold.ttf">
             <string>Maax-Bold</string>
         </array>
+        <array key="Maax-Medium.otf">
+            <string>Maax-Medium</string>
+        </array>
         <array key="Maax-Regular.ttf">
             <string>Maax-Regular</string>
         </array>
@@ -46,7 +49,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nuE-3E-GBX">
                     <rect key="frame" x="56.5" y="233.5" width="262.5" height="200"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd1-AU-mxE">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cd1-AU-mxE">
                             <rect key="frame" x="20" y="20" width="222.5" height="160"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" red="0.16078431369999999" green="0.12941176469999999" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -81,7 +84,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoo-uj-PLE">
-                    <rect key="frame" x="89" y="463.5" width="197" height="40"/>
+                    <rect key="frame" x="89" y="475.5" width="197" height="40"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="IRB-qb-pkc"/>
@@ -96,16 +99,24 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/1500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2O-ke-YYp">
+                    <rect key="frame" x="276" y="443.5" width="43" height="12"/>
+                    <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="hoo-uj-PLE" firstAttribute="top" secondItem="v2O-ke-YYp" secondAttribute="bottom" constant="20" id="43k-CB-1uV"/>
                 <constraint firstItem="9ye-Y7-9y9" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="4Kr-tz-s1y"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="width" secondItem="MEf-sw-5WN" secondAttribute="width" multiplier="0.7" id="Djr-VD-e6f"/>
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="width" secondItem="nuE-3E-GBX" secondAttribute="width" multiplier="0.75" id="HWg-g3-p3x"/>
                 <constraint firstItem="aTo-MS-iFE" firstAttribute="top" secondItem="UuL-aR-CjX" secondAttribute="top" constant="1" id="Kp1-UG-Iuw"/>
                 <constraint firstItem="UuL-aR-CjX" firstAttribute="trailing" secondItem="aTo-MS-iFE" secondAttribute="trailing" constant="16" id="MKR-0P-czT"/>
+                <constraint firstItem="v2O-ke-YYp" firstAttribute="top" secondItem="nuE-3E-GBX" secondAttribute="bottom" constant="10" id="PSW-80-mOj"/>
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="U8f-Th-nXQ"/>
-                <constraint firstItem="hoo-uj-PLE" firstAttribute="top" secondItem="nuE-3E-GBX" secondAttribute="bottom" constant="30" id="anm-ef-4LL"/>
+                <constraint firstItem="v2O-ke-YYp" firstAttribute="trailing" secondItem="nuE-3E-GBX" secondAttribute="trailing" id="gfO-9r-G2f"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="qZA-ya-UTF"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="top" secondItem="9ye-Y7-9y9" secondAttribute="bottom" constant="30" id="vLu-Um-PKE"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="centerY" secondItem="MEf-sw-5WN" secondAttribute="centerY" id="vOr-Vr-r1i"/>
@@ -115,12 +126,13 @@
                 <outlet property="btnClose" destination="aTo-MS-iFE" id="wzw-o3-EQm"/>
                 <outlet property="btnEditText" destination="vBY-uR-6AG" id="Fgf-eb-Le5"/>
                 <outlet property="btnSubmit" destination="hoo-uj-PLE" id="pSi-sY-Dl7"/>
+                <outlet property="lblTextCount" destination="v2O-ke-YYp" id="9Xl-sD-OPO"/>
                 <outlet property="txtViewJournal" destination="Cd1-AU-mxE" id="JlT-DW-svS"/>
             </connections>
         </view>
     </objects>
     <resources>
         <image name="Close_Icon" width="40" height="40"/>
-        <image name="editBtn_Icon" width="50" height="51"/>
+        <image name="editBtn_Icon" width="50" height="50"/>
     </resources>
 </document>

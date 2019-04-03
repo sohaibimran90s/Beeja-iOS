@@ -109,7 +109,7 @@ extension WWMAddJournalVC: UITextViewDelegate{
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (txtViewJournal.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
-        return numberOfChars < 1500
+        return numberOfChars < 1501
     }
 }
 

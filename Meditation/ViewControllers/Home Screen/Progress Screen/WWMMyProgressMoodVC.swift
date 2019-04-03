@@ -14,10 +14,12 @@ import Charts
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
 
+    @IBOutlet weak var btnChangeDuration: UIButton!
     var moodProgressDurationView = WWMMoodProgressDurationView()
     var moodProgressData = WWMMoodProgressData()
     
     var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    var type: String = "weekly"
     
     @IBOutlet weak var tblMoodProgress: UITableView!
     
@@ -40,31 +42,74 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         let window = UIApplication.shared.keyWindow!
         
         moodProgressDurationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        moodProgressDurationView.btnYear.layer.borderWidth = 2.0
-        moodProgressDurationView.btnYear.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        moodProgressDurationView.btnMonth.layer.borderWidth = 2.0
-        moodProgressDurationView.btnMonth.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         moodProgressDurationView.btnDays.addTarget(self, action: #selector(btnWeeKAction(_:)), for: .touchUpInside)
         moodProgressDurationView.btnMonth.addTarget(self, action: #selector(btnMonthAction(_:)), for: .touchUpInside)
         moodProgressDurationView.btnYear.addTarget(self, action: #selector(btnYearAction(_:)), for: .touchUpInside)
         
         moodProgressDurationView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
+        self.setMooProgressDurationUI(type: self.type)
         
         window.rootViewController?.view.addSubview(moodProgressDurationView)
     }
     
+    
+    func setMooProgressDurationUI(type:String) {
+        
+        
+        moodProgressDurationView.btnYear.layer.borderWidth = 2.0
+        moodProgressDurationView.btnYear.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnMonth.layer.borderWidth = 2.0
+        moodProgressDurationView.btnMonth.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnDays.layer.borderWidth = 2.0
+        moodProgressDurationView.btnDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        moodProgressDurationView.btnDays.backgroundColor = UIColor.clear
+            moodProgressDurationView.btnYear.backgroundColor = UIColor.clear
+        moodProgressDurationView.btnMonth.backgroundColor = UIColor.clear
+        
+        moodProgressDurationView.btnMonth.setTitleColor(UIColor.white, for: .normal)
+        moodProgressDurationView.btnDays.setTitleColor(UIColor.white, for: .normal)
+        moodProgressDurationView.btnYear.setTitleColor(UIColor.white, for: .normal)
+        
+        
+        switch type {
+        case "weekly":
+            moodProgressDurationView.btnDays.backgroundColor = UIColor.init(hexString: "#00eba9")
+            moodProgressDurationView.btnDays.setTitleColor(UIColor.black, for: .normal)
+            break
+            
+        case "monthly":
+            moodProgressDurationView.btnMonth.backgroundColor = UIColor.init(hexString: "#00eba9")
+            moodProgressDurationView.btnMonth.setTitleColor(UIColor.black, for: .normal)
+            break
+            
+        case "yearly":
+            moodProgressDurationView.btnYear.backgroundColor = UIColor.init(hexString: "#00eba9")
+            moodProgressDurationView.btnYear.setTitleColor(UIColor.black, for: .normal)
+            
+            break
+            
+        default:
+            moodProgressDurationView.btnDays.backgroundColor = UIColor.init(hexString: "#00eba9")
+            moodProgressDurationView.btnDays.setTitleColor(UIColor.black, for: .normal)
+        }
+    }
     @IBAction func btnWeeKAction(_ sender: Any) {
+        self.type = "weekly"
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
     
     @IBAction func btnMonthAction(_ sender: Any) {
+        
+        self.type = "monthly"
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
     
     @IBAction func btnYearAction(_ sender: Any) {
+        
+        self.type = "yearly"
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
@@ -432,19 +477,31 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     }
 
     
-    
-    
     func getMoodProgress() {
         WWMHelperClass.showSVHud()
-        let param = ["user_id":self.appPreference.getUserID(),
-                     ]
+        
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let xData = dateFormatter.string(from: currentDate)
+        print(xData)
+        
+        let param = ["user_id":self.appPreference.getUserID(), "date": xData, "type": self.type]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+                
+                
+                
                 if let statsData = result["result"] as? [String:Any] {
                     
-                    
-                    print(statsData)
-                    
+                    if self.type == "weekly"{
+                        self.btnChangeDuration.setTitle("Last 7 Days", for: .normal)
+                    }else if self.type == "monthly"{
+                        self.btnChangeDuration.setTitle("Last month", for: .normal)
+                    }else{
+                        self.btnChangeDuration.setTitle("Year", for: .normal)
+                    }
                     self.moodProgressData = WWMMoodProgressData.init(json: statsData)
                     self.tblMoodProgress.reloadData()
                     

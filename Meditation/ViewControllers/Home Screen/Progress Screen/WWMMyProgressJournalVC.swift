@@ -125,6 +125,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         journalView.btnSubmit.layer.borderWidth = 2.0
         journalView.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        journalView.txtViewJournal.delegate = self
         journalView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         journalView.btnSubmit.addTarget(self, action: #selector(btnSubmitJournalAction(_:)), for: .touchUpInside)
         journalView.btnEditText.addTarget(self, action: #selector(btnEditTextAction(_:)), for: .touchUpInside)
@@ -225,6 +226,17 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
 //        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         
     }
+}
+
+
+extension WWMMyProgressJournalVC: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        journalView.lblTextCount.text = "\(journalView.txtViewJournal.text.count)/1500"
+    }
     
-    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (journalView.txtViewJournal.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 1501
+    }
 }
