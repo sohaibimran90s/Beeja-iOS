@@ -13,7 +13,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     @IBOutlet weak var lblSplashTxt: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     
-    
+    var isNext =  false
     
 //    let arrSplashtxt = ["be more aware","be more radical","be a better friend","partner","lover"]
     
@@ -118,57 +118,60 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func moveToInitialVC() -> Void {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        if !isNext {
+            isNext = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.lblSplashTxt.alpha = 0.0
-            
-            if self.appPreference.isLogin() {
-                if !self.appPreference.isProfileComplete() {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                    self.navigationController?.pushViewController(vc, animated: true)
+                
+                if self.appPreference.isLogin() {
+                    if !self.appPreference.isProfileComplete() {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if self.appPreference.isLogout() {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }else {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                        self.navigationController?.pushViewController(vc, animated: false)
+                    }
                 }else if self.appPreference.isLogout() {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                    self.navigationController?.pushViewController(vc, animated: false)
                 }else {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                     self.navigationController?.pushViewController(vc, animated: false)
                 }
-            }else if self.appPreference.isLogout() {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                self.navigationController?.pushViewController(vc, animated: false)
-            }else {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                self.navigationController?.pushViewController(vc, animated: false)
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                //                if self.appPreference.isLogin() {
+                //                    if self.appPreference.isLogout() {
+                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                //                        UIApplication.shared.keyWindow?.rootViewController = vc
+                //
+                //                    }else {
+                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                //                        self.navigationController?.pushViewController(vc, animated: true)
+                //                    }
+                //
+                //                }else if self.appPreference.isLogout() {
+                //                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                //                            self.navigationController?.pushViewController(vc, animated: false)
+                //
+                //                }else {
+                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                //                        self.navigationController?.pushViewController(vc, animated: false)
+                //                }
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-//                if self.appPreference.isLogin() {
-//                    if self.appPreference.isLogout() {
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-//                        UIApplication.shared.keyWindow?.rootViewController = vc
-//
-//                    }else {
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-//                        self.navigationController?.pushViewController(vc, animated: true)
-//                    }
-//
-//                }else if self.appPreference.isLogout() {
-//                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-//                            self.navigationController?.pushViewController(vc, animated: false)
-//
-//                }else {
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-//                        self.navigationController?.pushViewController(vc, animated: false)
-//                }
         }
+        
         
     }
     

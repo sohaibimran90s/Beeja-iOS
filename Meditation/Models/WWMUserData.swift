@@ -79,10 +79,10 @@ class WWMUserData: NSObject {
         updated_at = json["updated_at"] as? String ?? ""
         deleted_at = json["deleted_at"] as? String ?? ""
         
-        meditation_id = json["meditation_id"] as? Int ?? -1
-        level_id = json["level_id"] as? Int ?? -1
+        meditation_id = json["meditation_id"] as? Int ?? 1
+        level_id = json["level_id"] as? Int ?? 1
         
-        is_active = json["is_active"] as? Bool ?? false
-        is_subscribed = json["is_subscribed"] as? Bool ?? false
+        is_active = json["is_active"] as? Bool ?? true
+        is_subscribed = json["is_subscribed"] as? Bool ?? true
     }
 }

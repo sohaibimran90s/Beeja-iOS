@@ -83,9 +83,9 @@ class WWMSetMyOwnVC: WWMBaseViewController {
     
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
-            return "\(second) secs"
+            return "\(second) sec"
         }else {
-            return String.init(format: "%d:%d mins", second/60,second%60)
+            return String.init(format: "%d:%02d min", second/60,second%60)
         }
         
     }

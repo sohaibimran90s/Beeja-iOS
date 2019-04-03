@@ -19,8 +19,13 @@ class WWMSideMenuVC: WWMBaseViewController {
         super.viewDidLoad()
 
         self.btnTimer.setTitleColor(UIColor.init(hexString: "#00eba9")!, for: .normal)
-        self.lblName.text = self.userData.name
-        self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
+        self.lblName.text = self.appPreference.getUserName()
+        if self.userData.city != ""  && self.userData.country != "" {
+            self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
+        }else {
+            self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
+        }
+        
         
         // Do any additional setup after loading the view.
     }
