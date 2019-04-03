@@ -175,5 +175,60 @@ class WWMWebServices {
     }
     
     
+   // RSA Encryption
+    
+    class func requestAPIRSAEncryption(param:String, urlString:String, headerType:String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
+        
+        
+        
+        var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
+        
+       // let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+       // let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        print("Request URL: \(urlString)")
+        print("Data: \(param)")
+//        if param.count>0 {
+//            request.httpBody = jsonData
+//        }
+        request.httpMethod = headerType
+        let headers = [
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+        ]
+        request.allHTTPHeaderFields = headers
+        request.addValue(param, forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = 45
+        var postDataTask = URLSessionDataTask()
+        postDataTask.priority = URLSessionDataTask.highPriority
+        
+        
+        postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in
+            if data != nil && response != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    let results = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
+                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    print("Result: \(myString ?? "")")
+                    
+                    completionHandler(json  as! Dictionary<String, Any>, nil, true)
+                    return
+                }catch {
+                    print(error.localizedDescription)
+                    completionHandler([:], error, false)
+                    return;
+                }
+                
+            }else if error != nil {
+                completionHandler([:], error, false)
+            }else {
+                completionHandler([:], nil, false)
+            }
+        })
+        postDataTask.resume()
+    }
+    
 }
 

@@ -93,6 +93,9 @@ PODS:
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
   - SVProgressHUD (2.2.5)
+  - SwiftyRSA (1.5.0):
+    - SwiftyRSA/ObjC (= 1.5.0)
+  - SwiftyRSA/ObjC (1.5.0)
 
 DEPENDENCIES:
   - Charts
@@ -107,6 +110,7 @@ DEPENDENCIES:
   - lottie-ios
   - SDWebImage
   - SVProgressHUD
+  - SwiftyRSA
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -133,6 +137,7 @@ SPEC REPOS:
     - nanopb
     - SDWebImage
     - SVProgressHUD
+    - SwiftyRSA
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -158,7 +163,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
 
-PODFILE CHECKSUM: 5701762dd581ec2f3878f32c6fb6aa14989bfce8
+PODFILE CHECKSUM: 229d0f824fce30e6622624abb020977a2068e0a5
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

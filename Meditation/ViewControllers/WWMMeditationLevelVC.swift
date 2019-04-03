@@ -31,16 +31,16 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         
         self.setNavigationBar(isShow: false, title: "")
         self.userName.text = "Ok \(self.appPreference.getUserName()),"
-        let meditationData = WWMHelperClass.fetchDB(dbName: "DBMeditationData") as! [DBMeditationData]
-        for  data in meditationData{
-            if data.isMeditationSelected {
-                self.selectedMeditation_Id = "\(data.meditationId)"
-                if let levels = data.levels?.array as? [DBLevelData] {
-                    arrMeditationLevels = levels
-                }
-                
-            }
-        }
+//        let meditationData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
+//        for  data in meditationData{
+//            if data.isMeditationSelected {
+//                self.selectedMeditation_Id = "\(data.meditationId)"
+//                if let levels = data.levels?.array as? [DBLevelData] {
+//                    arrMeditationLevels = levels
+//                }
+//
+//            }
+//        }
         
         self.tblMeditationLevels.reloadData()
         
@@ -79,15 +79,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         self.navigationController?.isNavigationBarHidden = true
-        for index in 0..<arrMeditationLevels.count {
-            if index == indexPath.row {
-                arrMeditationLevels[index].isLevelSelected = true
-                self.selectedLevel_Id = "\(arrMeditationLevels[index].levelId)"
-            }else {
-                arrMeditationLevels[index].isLevelSelected = false
-            }
-        }
-        
+        self.selectedLevel_Id = "\(arrMeditationLevels[indexPath.row].levelId)"
         self.meditationApi()
     }
     

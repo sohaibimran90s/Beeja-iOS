@@ -192,10 +192,12 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         }
                     }
                 }else {
+                    GIDSignIn.sharedInstance()?.signOut()
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
                 }
                 
             }else {
+                GIDSignIn.sharedInstance()?.signOut()
                 if error != nil {
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                 }
