@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CommonCrypto
+import SwiftyRSA
 
 class WWMSplashLoaderVC: WWMBaseViewController {
 
@@ -15,40 +15,74 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let plainText = "Hello World"
-        let key = "password"
-        
-        let cryptLib = CryptLib()
-        
-        let cipherText = cryptLib.encryptPlainTextRandomIV(withPlainText: plainText, key: key)
-        print("cipherText \(cipherText! as String)")
-        
-        let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: "b96BKmGNsXnEyf4DR3KRMYfI6AIsl6UcD4nwLgDT+vQ=", key: key)
-        print("decryptedString \(decryptedString! as String)")
-        
-        print(UIDevice.current.localizedModel)
-        print(UIDevice.current.model)
         
         
-//        do {
-//            let sourceData = "Hello World".data(using: .utf8)!
-//            let password = "password"
-//            let salt = AES256Crypter.randomSalt()
-//            let iv = AES256Crypter.randomIv()
-//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-//            let aes = try AES256Crypter(key: key, iv: iv)
-//            let encryptedData = try aes.encrypt(sourceData)
-//            let decryptedData = try aes.decrypt(encryptedData)
+        do {
+            let password = "password"
+            let salt = AES256Crypter.randomSalt()
+            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
+            let keyStr = String.init(bytes: key, encoding: .utf8)
+            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(key.base64EncodedString())"
+            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+            }
+            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey.init(pemEncoded: keyString)
+            let clear = try ClearMessage(string: plainText, using: .utf8)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let base64String = encrypted.base64String
+            print(base64String)
+            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
+            }
+            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
+            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
+            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
+            let string = try clear1.string(encoding: .utf8)
+            print(string)
+            let param = "Hello:" + base64String
+            self.getEncryptesKey(param: param, key: key.base64EncodedString())
+            
+            
+            
+        } catch {
+            print("Failed")
+            print(error)
+        }
+        
+//        let plainText = "Hello World"
+//        let key = "password"
 //
-//            let str = String.init(bytes: decryptedData, encoding: .utf8)!
-//            //let strEncr = String.init(bytes: encryptedData, encoding: .utf8)!
-//            print("Encrypted hex string: \(encryptedData.base64EncodedString())")
-//            print("Decrypted hex string: \(str)")
-//        } catch {
-//            print("Failed")
-//            print(error)
-//        }
-        
+//        let cryptLib = CryptLib()
+//
+//        let cipherText = cryptLib.encryptPlainTextRandomIV(withPlainText: plainText, key: key)
+//        print("cipherText \(cipherText! as String)")
+//
+//        let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: "b96BKmGNsXnEyf4DR3KRMYfI6AIsl6UcD4nwLgDT+vQ=", key: key)
+//        print("decryptedString \(decryptedString! as String)")
+//
+//        print(UIDevice.current.localizedModel)
+//        print(UIDevice.current.model)
+//
+//
+        do {
+            let sourceData = "Hello World".data(using: .utf8)!
+            let password = "password"
+            let salt = AES256Crypter.randomSalt()
+            let iv = AES256Crypter.randomIv()
+            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
+            let aes = try AES256Crypter(key: key, iv: iv)
+            let encryptedData = try aes.encrypt(sourceData)
+            let decryptedData = try aes.decrypt(encryptedData)
+
+            let str = String.init(bytes: decryptedData, encoding: .utf8)!
+            //let strEncr = String.init(bytes: encryptedData, encoding: .utf8)!
+            print("Encrypted hex string: \(encryptedData.base64EncodedString())")
+            
+            print("Decrypted hex string: \(str)")
+        } catch {
+            print("Failed")
+            print(error)
+        }
+//
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")
         //self.saveMeditationDataToDB(data: ["":""])
@@ -60,6 +94,53 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
 
+    func getEncryptesKey(param:String, key:String) {
+        
+        
+        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader) { (result, error, success) in
+            if success {
+                if let encryptedStr = result["_hsk"] as? String {
+                    
+                    do {
+                        
+                        let cryptLib = CryptLib()
+                        let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: encryptedStr, key: key)
+
+                        let data = Data.init(base64Encoded: encryptedStr)
+                        let keyData = Data.init(base64Encoded: key)
+                        //let data = encryptedStr.data(using: .utf8)
+                        let iv = AES256Crypter.randomIv()
+
+                        let aes = try AES256Crypter(key: keyData!, iv: iv)
+                        let decryptedData = try aes.decrypt(data!)
+
+                        let str = String.init(bytes: decryptedData, encoding: .utf8)
+                       // print("Decrypted hex string: \(str)")
+                    } catch {
+                        print("Failed")
+                        print(error)
+                    }
+                }
+                
+                
+                print(result["_hsk"])
+            }else {
+                if error != nil {
+                    print(error?.localizedDescription)
+                }
+            }
+        }
+        
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_HANDSHAKE, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                self.saveMoodMeterDataToDB(data: result)
+            }else {
+                self.getMoodMeterDataFromDB()
+            }
+        }
+    }
+    
     func loadSplashScreenafterDelay() {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSplashAnimationVC") as! WWMSplashAnimationVC
         self.navigationController?.pushViewController(vc, animated: false)

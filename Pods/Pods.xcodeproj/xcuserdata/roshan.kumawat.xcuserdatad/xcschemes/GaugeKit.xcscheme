@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3B6E7CC479953145218AD40D9673AE73"
+               BlueprintIdentifier = "F9203FDD744A994124066ABB9B41DADF"
+               BuildableName = "GaugeKit.framework"
                BlueprintName = "GaugeKit"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "GaugeKit.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

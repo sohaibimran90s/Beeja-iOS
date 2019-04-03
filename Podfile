@@ -19,6 +19,7 @@ target 'Meditation' do
 	pod 'SVProgressHUD'
 	pod 'Fabric'
 	pod 'Crashlytics'
+	pod 'SwiftyRSA'
 
   target 'MeditationTests' do
     inherit! :search_paths

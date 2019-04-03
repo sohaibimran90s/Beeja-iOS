@@ -96,6 +96,8 @@
 		2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */; };
 		2EA6DB0C21C3C5A6006A8E1D /* WWMTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */; };
 		2EA6DB0E21C3E2C6006A8E1D /* WWMNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0D21C3E2C6006A8E1D /* WWMNavigationVC.swift */; };
+		2EACF985225375E700171688 /* private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2EACF983225375E600171688 /* private.pem */; };
+		2EACF986225375E700171688 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2EACF984225375E700171688 /* public.pem */; };
 		2EAE29B1223002C9008E4361 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EAE29B0223002C9008E4361 /* SpotifyiOS.framework */; };
 		2EAE29B3223007B2008E4361 /* WWMSpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAE29B2223007B2008E4361 /* WWMSpotifyManager.swift */; };
 		2EAE29B52231447C008E4361 /* CircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAE29B42231447C008E4361 /* CircularSlider.swift */; };
@@ -306,6 +308,8 @@
 		2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationLevelVC.swift; sourceTree = "<group>"; };
 		2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTabBarVC.swift; sourceTree = "<group>"; };
 		2EA6DB0D21C3E2C6006A8E1D /* WWMNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMNavigationVC.swift; sourceTree = "<group>"; };
+		2EACF983225375E600171688 /* private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = private.pem; sourceTree = "<group>"; };
+		2EACF984225375E700171688 /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public.pem; sourceTree = "<group>"; };
 		2EAE29B0223002C9008E4361 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		2EAE29B2223007B2008E4361 /* WWMSpotifyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMSpotifyManager.swift; sourceTree = "<group>"; };
 		2EAE29B42231447C008E4361 /* CircularSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSlider.swift; sourceTree = "<group>"; };
@@ -744,6 +748,8 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2EACF983225375E600171688 /* private.pem */,
+				2EACF984225375E700171688 /* public.pem */,
 				2E4CE29E2209A03400059396 /* dataClock.json */,
 				2E4CE28D22087A0F00059396 /* doubleLineLeft.png */,
 				2E4CE28F22087A1000059396 /* doubleLineRight.png */,
@@ -1179,6 +1185,8 @@
 				2EC95861220AC1BA009D5144 /* MaaxRounded.ttf in Resources */,
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
+				2EACF986225375E700171688 /* public.pem in Resources */,
+				2EACF985225375E700171688 /* private.pem in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
@@ -1307,7 +1315,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -1318,7 +1326,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A0CDC6E7BF0C2346CB7F2AE1 /* [CP] Embed Pods Frameworks */ = {
@@ -1329,7 +1337,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -1341,6 +1349,7 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1359,12 +1368,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

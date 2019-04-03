@@ -73,22 +73,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Meditation/ViewControllers/Home Screen/WWMTabBarVC.swift"
-            timestampString = "574263259.8385611"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "locationManager(_:didFailWithError:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Meditation/ViewControllers/Home Screen/Setting Screen/WWMSettingsVC.swift"
             timestampString = "574581270.532632"
             startingColumnNumber = "9223372036854775807"
@@ -97,38 +81,6 @@
             endingLineNumber = "448"
             landmarkName = "moveToEditMeditationTimeScreen()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Meditation.WWMSettingsVC.moveToEditMeditationTimeScreen() -&gt; ()"
-                  moduleName = "Meditation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/ViewControllers/Home%20Screen/Setting%20Screen/WWMSettingsVC.swift"
-                  timestampString = "575207041.157768"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448"
-                  offsetFromSymbolStart = "28">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Meditation.WWMSettingsVC.moveToEditMeditationTimeScreen() -&gt; ()"
-                  moduleName = "Meditation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/roshan.kumawat/Documents/Beeja-Meditation/Meditation/ViewControllers/Home%20Screen/Setting%20Screen/WWMSettingsVC.swift"
-                  timestampString = "575207041.160313"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448"
-                  offsetFromSymbolStart = "520">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -209,6 +161,38 @@
             endingLineNumber = "246"
             landmarkName = "getUserProfileData()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Meditation.WWMTabBarVC.getUserProfileData() -&gt; ()"
+                  moduleName = "Meditation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roshan.kumawat/Documents/Projects/Beeja-Meditation/beeja-meditation-ios/Meditation/ViewControllers/Home%20Screen/WWMTabBarVC.swift"
+                  timestampString = "575967414.677927"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "664">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;, Swift.Optional&lt;Swift.Error&gt;, Swift.Bool) -&gt; () in Meditation.WWMTabBarVC.getUserProfileData() -&gt; ()"
+                  moduleName = "Meditation"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/roshan.kumawat/Documents/Projects/Beeja-Meditation/beeja-meditation-ios/Meditation/ViewControllers/Home%20Screen/WWMTabBarVC.swift"
+                  timestampString = "575967414.680488"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "247"
+                  endingLineNumber = "247"
+                  offsetFromSymbolStart = "236">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
