@@ -29,6 +29,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var selectedLevelData  = DBLevelData()
     var settingData = DBSettings()
     
+    let gradientLayer = CAGradientLayer()
+
     //var alertPopupView = WWMAlertController()
 
     override func viewDidLoad() {
@@ -41,8 +43,18 @@ class WWMTimerHomeVC: WWMBaseViewController {
             object: nil)
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.getSettingData()
+    }
+    
+    private func updateGradientLayer() {
+        gradientLayer.locations = [ 0.0, 1.2 ]
+        gradientLayer.startPoint = .zero
+        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        gradientLayer.colors = [
+            UIColor.green.cgColor,
+            UIColor.yellow.cgColor ]
     }
     
     @objc func getSettingData() {
@@ -149,8 +161,15 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.layoutSliderMeditationTimeWidth.constant = (self.sliderMeditationTime.superview?.frame.size.height)!-10
         self.lblExpressMood.transform = CGAffineTransform(rotationAngle:CGFloat(+Double.pi/2))
         self.layoutMoodWidth.constant = 90
-        //self.sliderPrepTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-       // self.sliderPrepTime.setMaximumTrackImage(UIImage.init(named: "maxSlider_Icon"), for: .normal)
+        
+        gradientLayer.frame = view.bounds
+        
+       //self.sliderPrepTime.minimumTrackImage(for: <#T##UIControl.State#>)
+        self.sliderPrepTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
+        self.sliderRestTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
+        self.sliderMeditationTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
+
+        //self.sliderPrepTime.setMaximumTrackImage(UIImage.init(named: "maxSlider_Icon"), for: .normal)
         
     }
     
@@ -169,6 +188,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
+        
         self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
     }
     @IBAction func sliderMeditationTimeValueChangedAction(_ sender: Any) {

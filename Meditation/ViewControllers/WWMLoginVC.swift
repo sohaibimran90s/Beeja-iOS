@@ -33,7 +33,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         self.viewStartBeeja.backgroundColor = UIColor.white
         viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
         self.lblSignup.textColor = UIColor.black
-        self.imgSignup.image = UIImage.init(named: "Logo_Icon")
+        self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")
     }
     
     func setupView(){
