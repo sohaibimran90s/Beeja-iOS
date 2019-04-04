@@ -199,7 +199,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                             UIApplication.shared.keyWindow?.rootViewController = vc
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc
+                            self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }
                 }else {

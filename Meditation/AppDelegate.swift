@@ -204,9 +204,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 //let time =  timeStemp - Int(Date().timeIntervalSince1970)
                 // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
                 // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
-                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date!)
-                toDateComponents.second = 0
+                let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
                 let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                
                 //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
                 let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
                 center.add(request){ (error) in
@@ -253,9 +253,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
                 
                 
+            }else {
+                center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
             }
-        }else {
-            center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
         }
         
     }
