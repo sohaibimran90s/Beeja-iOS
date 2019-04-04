@@ -18,13 +18,37 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     var moodProgressDurationView = WWMMoodProgressDurationView()
     var moodProgressData = WWMMoodProgressData()
     
-    var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     var type: String = "weekly"
     
     @IBOutlet weak var tblMoodProgress: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+//        let cal = Calendar.current
+//        var date = cal.startOfDay(for: Date())
+//        var days = [Int]()
+//        var months = [Int]()
+//        for _ in 1 ... 7 {
+//            let day = cal.component(.day, from: date)
+//            let month = cal.component(.month, from: date)
+//            days.append(day)
+//            months.append(month)
+//            date = cal.date(byAdding: .day, value: -1, to: date)!
+//        }
+//
+//        var days1 = [Int]()
+//        var months1 = [Int]()
+//        for i in stride(from: days.count-1, through: 0, by: -1){
+//            days1.append(days[i])
+//            months1.append(months[i])
+//        }
+//        print(days)
+//        print(months)
+//
+//        print(days1)
+//        print(months1)
 
         self.getMoodProgress()
         
@@ -94,6 +118,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             moodProgressDurationView.btnDays.setTitleColor(UIColor.black, for: .normal)
         }
     }
+    
     @IBAction func btnWeeKAction(_ sender: Any) {
         self.type = "weekly"
         moodProgressDurationView.removeFromSuperview()
@@ -206,7 +231,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             leftAxis.removeAllLimitLines()
            // leftAxis.addLimitLine(ll1)
            // leftAxis.addLimitLine(ll2)
-            leftAxis.axisMaximum = 30.0
+            leftAxis.axisMaximum = 72.0
             leftAxis.axisMinimum = 0.0
             
             //leftAxis.gridLineDashLengths = [5, 5]
@@ -219,35 +244,24 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             let xAxix = chartView.xAxis
             xAxix.removeAllLimitLines()
             
+            let formato:LineChartFormatter = LineChartFormatter()
+            //let xaxis:XAxis = XAxis()
             
-            
-//            let arr = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"]
-//            for index in 0..<arr.count {
-//                let limit = ChartLimitLine.init(limit: Double(index), label: arr[index])
-//
-//                xAxix.addLimitLine(limit)
-//
-//            }
-            
-//
-//            let chartFormmater=BarChartFormatter()
-//
-//            for i in 0..<11{
-//                chartFormmater.stringForValue(Double(i), axis: xAxis)
-//            }
-//
-//            xAxix.valueFormatter=chartFormmater
-//            chartView.xAxis.valueFormatter=xAxis.valueFormatter
-            
-            
-            //xAxix.valueFormatter = self
-            
-             xAxix.axisMaximum = 30
-             xAxix.axisMinimum = 1
-            
+            let arr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            xAxix.labelCount = arr.count - 1
+            xAxix.axisMaximum = Double(arr.count - 1)
+            xAxix.axisMinimum = 0
             xAxix.labelTextColor = UIColor.white
+            for index in 0..<arr.count {
+                
+                formato.stringForValue(Double(index), axis: xAxix)
+                xAxix.valueFormatter = formato
+                chartView.xAxis.valueFormatter = xAxix.valueFormatter
+                
+            }
             
             
+    
             
 //            let marker = BalloonMarker(color: UIColor(white: 180/255, alpha: 1),
 //                                       font: .systemFont(ofSize: 12),
@@ -382,22 +396,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             chartView.data = data
             
             
-            
-            
-//            let formato:BarChartFormatter = BarChartFormatter()
-//            var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-//
-//
-//            let xaxis:XAxis = XAxis()
-//            for i in 0..<months.count{
-//                formato.stringForValue(Double(i), axis: xaxis)
-//                xaxis.valueFormatter = formato
-//                chartView.xAxis.valueFormatter = xaxis.valueFormatter
-            
-            
-
-            
-            
             return cell
         }
         
@@ -495,6 +493,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                 
                 if let statsData = result["result"] as? [String:Any] {
                     
+                    print(statsData)
+                    
                     if self.type == "weekly"{
                         self.btnChangeDuration.setTitle("Last 7 Days", for: .normal)
                     }else if self.type == "monthly"{
@@ -503,6 +503,9 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                         self.btnChangeDuration.setTitle("Year", for: .normal)
                     }
                     self.moodProgressData = WWMMoodProgressData.init(json: statsData)
+                    
+                    
+                    print(print(self.moodProgressData.color_score.pre))
                     self.tblMoodProgress.reloadData()
                     
                 }

@@ -180,7 +180,7 @@
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
-		61F335B5223A727B00023F32 /* BarChartFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F335B4223A727B00023F32 /* BarChartFormatter.swift */; };
+		61F335B5223A727B00023F32 /* LineChartFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F335B4223A727B00023F32 /* LineChartFormatter.swift */; };
 		6B31C886239092ED89F368E5 /* Pods_MeditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */; };
 		6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */; };
 		6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */; };
@@ -392,7 +392,7 @@
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
-		61F335B4223A727B00023F32 /* BarChartFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartFormatter.swift; sourceTree = "<group>"; };
+		61F335B4223A727B00023F32 /* LineChartFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartFormatter.swift; sourceTree = "<group>"; };
 		6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1002,7 +1002,7 @@
 		61F335B3223A71F500023F32 /* BarChartFormatter */ = {
 			isa = PBXGroup;
 			children = (
-				61F335B4223A727B00023F32 /* BarChartFormatter.swift */,
+				61F335B4223A727B00023F32 /* LineChartFormatter.swift */,
 			);
 			path = BarChartFormatter;
 			sourceTree = "<group>";
@@ -1430,7 +1430,7 @@
 				2E5D1A6221EF4ED600AEB3BC /* CryptLib.m in Sources */,
 				2E93D2DD21F20C7100163E57 /* WWMMoodShareVC.swift in Sources */,
 				2EEF9AE9221AEC900016A77C /* DBJournalList+CoreDataProperties.swift in Sources */,
-				61F335B5223A727B00023F32 /* BarChartFormatter.swift in Sources */,
+				61F335B5223A727B00023F32 /* LineChartFormatter.swift in Sources */,
 				2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */,
 				2EA6DB0C21C3C5A6006A8E1D /* WWMTabBarVC.swift in Sources */,
 				2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */,
