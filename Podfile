@@ -20,6 +20,7 @@ target 'Meditation' do
 	pod 'Fabric'
 	pod 'Crashlytics'
 	pod 'SwiftyRSA'
+	pod 'ReachabilitySwift'
 
   target 'MeditationTests' do
     inherit! :search_paths

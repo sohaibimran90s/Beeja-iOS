@@ -216,7 +216,7 @@ class WWMHelperClass {
     }
 }
 
-public class Reachability {
+public class Reachabilities {
      func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)

@@ -13,6 +13,7 @@ import GoogleSignIn
 import FBSDKCoreKit
 import CoreData
 import UserNotifications
+import Reachability
 
 
 @UIApplicationMain
@@ -27,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var window: UIWindow?
     let appPreference = WWMAppPreference()
     let center = UNUserNotificationCenter.current()
+    let reachability = Reachability()
     
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -66,6 +68,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             application.registerForRemoteNotifications()
         }
         
+        
+      //  NotificationCenter.default.addObserver(self, selector:Selector(("checkForReachability:")), name: Notification.Name.reachabilityChanged, object: nil)
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        do{
+            try reachability!.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
+        
         //        // Analytics
         //
         //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
@@ -78,6 +91,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         return true
     }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        
+        let reachability = note.object as! Reachability
+        
+        switch reachability.connection {
+        case .wifi:
+            self.syncDataWithServer()
+            print("Reachable via WiFi")
+        case .cellular:
+            self.syncDataWithServer()
+            print("Reachable via Cellular")
+        case .none:
+            print("Network not reachable")
+        }
+    }
+
+    
+    func syncDataWithServer() {
+        if self.appPreference.isLogout() {
+            let data = WWMHelperClass.fetchDB(dbName: "DBMeditationComplete") as! [DBMeditationComplete]
+            if data.count > 1 {
+                print(data.count)
+            }
+        }
+    }
+    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

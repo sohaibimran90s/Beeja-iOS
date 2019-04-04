@@ -21,7 +21,6 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationComplete") as! [DBMeditationComplete]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,23 +98,64 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
+                    let moodData = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
+                    if moodData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+                    }
+                    
+                    
                     self.journalData.removeAll()
                     var journal = WWMJournalProgressData()
                     for dict in arrJournal {
                         journal = WWMJournalProgressData.init(json: dict)
                         self.journalData.append(journal)
+                        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalData") as! DBJournalData
+                        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                        dbJournal.journalData = myString
+                        WWMHelperClass.saveDb()
                     }
+                    self.tableViewJournal.reloadData()
+                }else {
+                    self.fetchDataFromDB()
                 }
-                self.tableViewJournal.reloadData()
+                
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+                self.fetchDataFromDB()
             }
             WWMHelperClass.dismissSVHud()
         }
     }
+    
+    func fetchDataFromDB() {
+        let journalDataDB = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
+        if journalDataDB.count > 0 {
+            self.journalData.removeAll()
+            var journal = WWMJournalProgressData()
+            
+            for dict in journalDataDB {
+                if let jsonResult = self.convertToDictionary(text: dict.journalData ?? "") {
+                        journal = WWMJournalProgressData.init(json: jsonResult)
+                }
+                if self.journalData.count < 10 {
+                    self.journalData.append(journal)
+                }
+            }
+            self.tableViewJournal.reloadData()
+        }
+    }
 
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
     @IBAction func btnAddJournalAction(_ sender: Any) {
         
         journalView = UINib(nibName: "WWMAddJournalView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAddJournalView

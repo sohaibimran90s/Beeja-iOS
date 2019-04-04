@@ -20,7 +20,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var lat = ""
     var long = ""
     let appPreffrence = WWMAppPreference()
-    let reachable = Reachability()
+    let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
 

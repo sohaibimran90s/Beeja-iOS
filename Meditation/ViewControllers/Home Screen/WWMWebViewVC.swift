@@ -24,7 +24,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         self.setNavigationBar(isShow: false, title: strType)
         self.lblTitle.text = self.strType
         webView.navigationDelegate = self
-        let reachable = Reachability()
+        let reachable = Reachabilities()
         if !reachable.isConnectedToNetwork(){
             
             
