@@ -13,13 +13,13 @@ import Charts
 @objc(BarChartFormatter)
 public class LineChartFormatter: NSObject, IAxisValueFormatter{
     
-    var months: [String]! = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    var days: [String] = []
     
     
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         
         let round = Int(value)
         //print(round)
-        return months[round]
+        return days[round]
     }
 }

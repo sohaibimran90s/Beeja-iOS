@@ -10,7 +10,6 @@ import UIKit
 import GaugeKit
 import Charts
 
-
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
 
@@ -20,35 +19,36 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     var type: String = "weekly"
     
+    var days1 = [Int]()
+    var daysStringArray: [String] = []
+    var months1 = [Int]()
+    
+    
     @IBOutlet weak var tblMoodProgress: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-//        let cal = Calendar.current
-//        var date = cal.startOfDay(for: Date())
-//        var days = [Int]()
-//        var months = [Int]()
-//        for _ in 1 ... 7 {
-//            let day = cal.component(.day, from: date)
-//            let month = cal.component(.month, from: date)
-//            days.append(day)
-//            months.append(month)
-//            date = cal.date(byAdding: .day, value: -1, to: date)!
-//        }
-//
-//        var days1 = [Int]()
-//        var months1 = [Int]()
-//        for i in stride(from: days.count-1, through: 0, by: -1){
-//            days1.append(days[i])
-//            months1.append(months[i])
-//        }
-//        print(days)
-//        print(months)
-//
-//        print(days1)
-//        print(months1)
+        let cal = Calendar.current
+        var date = cal.startOfDay(for: Date())
+        var days = [Int]()
+        var months = [Int]()
+        for _ in 1 ... 7 {
+            let day = cal.component(.day, from: date)
+            let month = cal.component(.month, from: date)
+            days.append(day)
+            months.append(month)
+            date = cal.date(byAdding: .day, value: -1, to: date)!
+        }
+
+        for i in stride(from: days.count-1, through: 0, by: -1){
+            days1.append(days[i])
+            months1.append(months[i])
+        }
+        daysStringArray = days1.map { String($0) }
+        print(days1)
+        print(months1)
 
         self.getMoodProgress()
         
@@ -186,8 +186,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
            // chartView.data?.highlightEnabled = false
             
             
-            chartView.scaleXEnabled = true
-            chartView.scaleYEnabled = true
             
             chartView.viewPortHandler.setMaximumScaleX(4)
             chartView.viewPortHandler.setMaximumScaleY(4)
@@ -232,8 +230,14 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
            // leftAxis.addLimitLine(ll1)
            // leftAxis.addLimitLine(ll2)
             leftAxis.axisMaximum = 72.0
-            leftAxis.axisMinimum = 0.0
-            
+            leftAxis.axisMinimum = 1.0
+            leftAxis.granularity = 8.0
+            leftAxis.granularityEnabled = true
+
+            leftAxis.axisLineColor = UIColor.white
+            leftAxis.axisLineWidth = 10.0
+            //leftAxis.axisLineDashPhase = 2.0
+            leftAxis.axisLineDashLengths = [1.0]
             //leftAxis.gridLineDashLengths = [5, 5]
             //leftAxis.drawLimitLinesBehindDataEnabled = true
             leftAxis.labelTextColor = UIColor.white
@@ -245,14 +249,25 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             xAxix.removeAllLimitLines()
             
             let formato:LineChartFormatter = LineChartFormatter()
-            //let xaxis:XAxis = XAxis()
-            
-            let arr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-            xAxix.labelCount = arr.count - 1
-            xAxix.axisMaximum = Double(arr.count - 1)
+            formato.days = daysStringArray
+            print(daysStringArray)
+
+            xAxix.labelCount = daysStringArray.count - 1
+            xAxix.axisMaximum = Double(daysStringArray.count - 1)
             xAxix.axisMinimum = 0
+            xAxix.granularity = 1.0
+            xAxix.granularityEnabled = true
+            
+            
+            if daysStringArray.count < 9{
+                chartView.scaleXEnabled = false
+            }else{
+                chartView.scaleXEnabled = true
+            }
+            chartView.scaleYEnabled = true
+            
             xAxix.labelTextColor = UIColor.white
-            for index in 0..<arr.count {
+            for index in 0..<daysStringArray.count {
                 
                 formato.stringForValue(Double(index), axis: xAxix)
                 xAxix.valueFormatter = formato
@@ -345,12 +360,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
            // set1.formLineWidth = 1
            // set1.formSize = 15
             
-            //
-            //111962
-            //64FFD4
-            
-            //001252
-            //284DD0
             let gradientColors = [ChartColorTemplates.colorFromString("#11196200").cgColor,
                                   ChartColorTemplates.colorFromString("#64FFD400").cgColor]
             //let gradientColors = [UIColor.init(hexString: "#111962")!.cgColor,
