@@ -196,6 +196,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="AMB-Ph-f9s"/>
             <connections>
+                <outlet property="backViewTimer" destination="38q-mx-y4K" id="mM1-A8-H7d"/>
                 <outlet property="btnClose" destination="9MZ-0W-AI5" id="wA8-Bm-7im"/>
                 <outlet property="btnDate" destination="0hQ-ur-AvK" id="BPN-xH-wsC"/>
                 <outlet property="btnDone" destination="WS5-fi-8cM" id="pA5-CN-8f8"/>

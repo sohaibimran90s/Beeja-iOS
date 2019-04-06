@@ -377,8 +377,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                 }
             }else if indexPath.row == 7 {
-                let url = URL.init(string: "http://itunes.com/apps/Beeja Meditation")
-                let imageToShare = [url!] as [Any]
+                let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                let textToShare = "Be more connected with the Beeja app: \(String(describing: url))"
+                let imageToShare = [textToShare] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.view
                 self.present(activityViewController, animated: true, completion: nil)

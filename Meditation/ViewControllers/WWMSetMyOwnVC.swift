@@ -140,21 +140,24 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     self.selectedLevel_Id = result1["level_id"] as! Int
                     if self.isFromSetting {
                         self.saveDataToSetting()
+                         WWMHelperClass.dismissSVHud()
                     }else {
                        self.meditationApi()
                     }
                     
                 }else {
                      WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
+                     WWMHelperClass.dismissSVHud()
                 }
 
             }else {
                 if error != nil {
                      WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                 }
+                 WWMHelperClass.dismissSVHud()
                
             }
-            WWMHelperClass.dismissSVHud()
+           
         }
     }
     

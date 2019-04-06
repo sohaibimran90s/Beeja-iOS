@@ -110,6 +110,7 @@ let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 let Validation_EmailMessage:String!                    = "Please write your email address, this will help you keep score of all your progress"
 let Validation_NameMessage:String!                    = "Please write your name"
 
+let Validation_MinimumCharacter:String!               = "Minimum characters should be three"
 let Validation_QueryMessage:String!                    = "Please write your query"
 
 
@@ -118,10 +119,11 @@ let Validation_passwordMessage:String!                  = "Please enter your pas
 
 let Validation_JournalMessage:String!                  = "Please enter your meditation experience."
 
-let Validation_OldPasswordMessage:String!                  = "Please enter old password"
-let Validation_NewPasswordMessage:String!                  = "Please enter new password"
-let Validation_ConfirmPasswordMessage:String!                  = "Please enter confirm password"
-let Validation_PasswordMatchMessage:String!                  = "New password and Confirm password does not match"
+let Validation_OldPasswordMessage:String!                  = "Oops, please enter your current password"
+let Validation_NewPasswordMessage:String!                  = "Oops, please enter your new password"
+let Validation_ConfirmPasswordMessage:String!                  = "Oops, please confirm new password"
+let Validation_PasswordMatchMessage:String!                  = "Oops, those passwords don't match. Please try again"
+let Validation_OldNewSamePassword:String!                  = "Oops, new password should not be same"
 /**/
 
 

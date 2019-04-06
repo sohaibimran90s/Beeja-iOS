@@ -178,6 +178,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 addSessionView.lblHrs.text = "\(hour2) hrs"
             }
             
+            self.viewHighlighted()
         case 1:
             if pickerView.tag == 1 {
                 minutes1 = row
@@ -187,6 +188,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 addSessionView.lblMin.text = "\(minutes2) min"
             }
             
+            self.viewHighlighted()
         case 2:
             if pickerView.tag == 1 {
                 seconds1 = row
@@ -195,16 +197,50 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 seconds2 = row
                 addSessionView.lblSec.text = "\(seconds2) sec"
             }
+            
+            self.viewHighlighted()
         default:
             break;
         }
     }
 
 
+    func viewHighlighted(){
+        
+        if (addSessionView.lblSec.text == "0 sec" && addSessionView.lblMin.text == "0 min" && addSessionView.lblHrs.text == "0 hrs"){
+            addSessionView.backViewTimer.layer.borderColor = UIColor.clear.cgColor
+            addSessionView.backViewTimer.layer.borderWidth = 0.0
+        }
+        
+        if (hour1 == 0 && minutes1 == 0 && seconds1 == 0 && hour2 == 0 && minutes2 == 0 && seconds2 == 0){
+            addSessionView.btnDone.setTitleColor(UIColor(red: 64.0/255.0, green: 69.0/255.0, blue: 119.0/255.0, alpha: 1.0), for: .normal)
+            addSessionView.btnDone.layer.borderWidth = 2.0
+            addSessionView.btnDone.layer.borderColor = UIColor(red: 23.0/255.0, green: 66.0/255.0, blue: 92.0/255.0, alpha: 1.0).cgColor
+        }else{
+            addSessionView.btnDone.setTitleColor(UIColor.white, for: .normal)
+            addSessionView.btnDone.layer.borderWidth = 2.0
+            addSessionView.btnDone.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        }
+        
+        
+        
+        if addSessionView.lblSec.text != "0 sec"{
+            addSessionView.backViewTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            addSessionView.backViewTimer.layer.borderWidth = 2.0
+        }
+        
+        if addSessionView.lblMin.text != "0 min"{
+            addSessionView.backViewTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            addSessionView.backViewTimer.layer.borderWidth = 2.0
+        }
+        
+        if addSessionView.lblHrs.text != "0 hrs"{
+            addSessionView.backViewTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            addSessionView.backViewTimer.layer.borderWidth = 2.0
+        }
+    }
     
-    
-    
-    
+
     // MARK:- Button Action
     
     @IBAction func btnAddSessionAction(_ sender: Any) {
@@ -264,10 +300,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.lblMin.text = "\(minutes1) min"
         addSessionView.lblHrs.text = "\(hour1) hrs"
         
+        self.viewHighlighted()
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
-       // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.locale = NSLocale.current
         addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         let strDate = dateFormatter.string(from: Date())
         let date = dateFormatter.date(from: strDate)
         strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
@@ -293,8 +332,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBAction func btnDateAction(_ sender: Any) {
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
+        datePickerView.locale = NSLocale.current
         datePickerView.maximumDate = Date()
-        datePickerView.timeZone = TimeZone(abbreviation: "UTC")
         addSessionView.txtViewDate.isUserInteractionEnabled = true
         addSessionView.txtViewDate.inputView = datePickerView
         addSessionView.txtViewDate.becomeFirstResponder()
@@ -324,6 +363,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.lblSec.text = "\(seconds1) sec"
         addSessionView.lblMin.text = "\(minutes1) min"
         addSessionView.lblHrs.text = "\(hour1) hrs"
+        
+        self.viewHighlighted()
     }
     
     @IBAction func btnTime2Action(_ sender: Any) {
@@ -335,6 +376,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.lblSec.text = "\(seconds2) sec"
         addSessionView.lblMin.text = "\(minutes2) min"
         addSessionView.lblHrs.text = "\(hour2) hrs"
+        
+        self.viewHighlighted()
     }
     
     

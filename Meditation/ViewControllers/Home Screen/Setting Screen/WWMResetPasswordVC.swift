@@ -34,6 +34,8 @@ class WWMResetPasswordVC: WWMBaseViewController {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_OldPasswordMessage, title: kAlertTitle)
         }else if txtViewNewPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_NewPasswordMessage, title: kAlertTitle)
+        }else if txtViewNewPassword.text == txtViewOldPassword.text {
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_OldNewSamePassword, title: kAlertTitle)
         }else if txtViewConfirmPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_ConfirmPasswordMessage, title: kAlertTitle)
         }else if txtViewNewPassword.text != txtViewConfirmPassword.text {
@@ -62,8 +64,4 @@ class WWMResetPasswordVC: WWMBaseViewController {
             WWMHelperClass.dismissSVHud()
         }
     }
-    
-    
-    
-
 }

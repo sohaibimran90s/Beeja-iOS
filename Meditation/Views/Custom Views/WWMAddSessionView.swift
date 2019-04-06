@@ -10,6 +10,8 @@ import UIKit
 
 class WWMAddSessionView: UIView {
 
+    @IBOutlet weak var backViewTimer: UIView!
+    @IBOutlet weak var btnDonebackView: UIView!
     @IBOutlet weak var btnDone: UIButton!
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var btnTime1: UIButton!

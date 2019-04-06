@@ -26,11 +26,17 @@ class WWMSupportVC: WWMBaseViewController {
     
     func setupView(){
         
-        
+        self.txtViewQuery.delegate = self
         self.setNavigationBar(isShow: false, title: "")
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.txtViewName.text = self.userData.name
+        
+        if self.userData.name == "You"{
+            self.txtViewName.text = ""
+        }else{
+            self.txtViewName.text = self.userData.name
+        }
+        
         self.txtViewEmail.text = self.userData.email
     }
     // MARK: Button Action
@@ -41,17 +47,21 @@ class WWMSupportVC: WWMBaseViewController {
     }
     
     @IBAction func btnSubmitAction(_ sender: UIButton) {
+        
         if  txtViewName.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_NameMessage, title: kAlertTitle)
-        }else if  txtViewEmail.text == "" {
+        }else if (txtViewName.text?.count)! < 3 {
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_MinimumCharacter, title: kAlertTitle)
+        }else if txtViewEmail.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailMessage, title: kAlertTitle)
-        }else if  txtViewQuery.text == "" {
+        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
+        }else if txtViewQuery.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_QueryMessage, title: kAlertTitle)
-        }else {
+        }else{
             self.submitQueryAPI()
         }
     }
-
     
     func submitQueryAPI() {
         WWMHelperClass.showSVHud()
@@ -105,5 +115,13 @@ class WWMSupportVC: WWMBaseViewController {
         self.navigationController?.popViewController(animated: true)
         self.alertPopupView.removeFromSuperview()
     }
+}
 
+extension WWMSupportVC: UITextViewDelegate{
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (txtViewQuery.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 1501
+    }
 }
