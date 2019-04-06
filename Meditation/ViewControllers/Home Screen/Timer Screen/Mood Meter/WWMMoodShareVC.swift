@@ -20,6 +20,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var btnSkip: UIButton!
     
+    var alertJournalPopup = WWMJouranlPopUp()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,9 +41,31 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         self.btnShare.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.getVibesAPI()
     }
+    
+    func xibJournalPopupCall(){
+        alertJournalPopup = UINib(nibName: "WWMJouranlPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMJouranlPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertJournalPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertJournalPopup.lblTitle.text = "Nice one!"
+        alertJournalPopup.lblSubtitle.text = "Your Message has been shared."
+        UIView.transition(with: alertJournalPopup, duration: 2.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertJournalPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.alertJournalPopup.removeFromSuperview()
+                self.movetoDashboard()
+                //self.getJournalList()
+            }
+        }
+    }
 
     
     @IBAction func btnSkipAction(_ sender: Any) {
+        self.movetoDashboard()
+    }
+    
+    func movetoDashboard() {
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {
@@ -56,7 +80,6 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         }
         self.navigationController?.popToRootViewController(animated: false)
     }
-    
     // MARK:- UICollectionView Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -108,6 +131,15 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
                 let imageToShare = [image!] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+                    print(success ? "SUCCESS!" : "FAILURE")
+                    
+                    if success{
+                        self.xibJournalPopupCall()
+                    }
+                }
+                
+                
                 activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                 
                 self.present(activityViewController, animated: true, completion: nil)
@@ -126,6 +158,13 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 if let image = UIImage(data: data) {
                     let imageToShare = [image] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    
+                    activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+                        print(success ? "SUCCESS!" : "FAILURE")
+                        if success{
+                            self.xibJournalPopupCall()
+                        }
+                    }
                     activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                     
                     self.present(activityViewController, animated: true, completion: nil)
@@ -133,6 +172,13 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                     let image = UIImage.init(named: "AppIcon")
                     let imageToShare = [image!] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    
+                    activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+                        print(success ? "SUCCESS!" : "FAILURE")
+                        if success{
+                            self.xibJournalPopupCall()
+                        }
+                    }
                     activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                     
                     self.present(activityViewController, animated: true, completion: nil)
