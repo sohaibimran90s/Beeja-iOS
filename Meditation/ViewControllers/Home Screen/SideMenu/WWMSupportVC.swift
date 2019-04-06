@@ -68,9 +68,7 @@ class WWMSupportVC: WWMBaseViewController {
                 
                 self.xibCall()
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message:error?.localizedDescription ?? "" , title: kAlertTitle)
-                }
+                self.saveToDB(param: param)
             }
             WWMHelperClass.dismissSVHud()
         }
@@ -91,6 +89,17 @@ class WWMSupportVC: WWMBaseViewController {
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView)
     }
+    
+    
+    func saveToDB(param:[String:Any]) {
+        let dbContact = WWMHelperClass.fetchEntity(dbName: "DBContactUs") as! DBContactUs
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbContact.data = myString
+        WWMHelperClass.saveDb()
+        self.xibCall()
+    }
+    
     
     @IBAction func btnDoneAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)

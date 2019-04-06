@@ -83,12 +83,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     @IBAction func btnBurnMoodAction(_ sender: Any) {
-        if self.type == "Pre" {
-            self.navigationController?.isNavigationBarHidden = false
-            self.navigationController?.popToRootViewController(animated: false)
-        }else {
-            self.createBackground(name: "Burn", type: "mp4")
-        }
+        self.createBackground(name: "Burn", type: "mp4")
     }
     
     func createBackground(name: String, type: String) {
@@ -108,15 +103,21 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     @objc func playerDidFinishPlaying(note: NSNotification) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
-        vc.type = self.type
-        vc.prepTime = self.prepTime
-        vc.meditationTime = self.meditationTime
-        vc.restTime = self.restTime
-        vc.meditationID = self.meditationID
-        vc.levelID = self.levelID
-        vc.moodData = self.moodData
-        self.navigationController?.pushViewController(vc, animated: true)
+        if self.type == "Pre" {
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.popToRootViewController(animated: false)
+        }else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
+            vc.type = self.type
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime
+            vc.restTime = self.restTime
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            vc.moodData = self.moodData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
     
     @IBAction func btnLogExperienceAction(_ sender: Any) {

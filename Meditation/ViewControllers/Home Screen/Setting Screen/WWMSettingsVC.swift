@@ -611,6 +611,15 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setUserID(value: "")
                 self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
+                
+                
+                // Delete the Database :
+                WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+                WWMHelperClass.deletefromDb(dbName: "DBContactUs")
+                WWMHelperClass.deletefromDb(dbName: "DBJournalList")
+                WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
+                WWMHelperClass.deletefromDb(dbName: "DBSettings")
+                
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
                 loginManager.logOut()

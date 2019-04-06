@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G4015" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DBAllMeditationData" representedClassName="DBAllMeditationData" syncable="YES">
         <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -9,6 +9,9 @@
     </entity>
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DBJournalData" representedClassName="DBJournalData" syncable="YES">
+        <attribute name="journalData" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="DBJournalList" representedClassName="DBJournalList" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String" syncable="YES"/>
@@ -64,6 +67,7 @@
         <attribute name="restTime" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="120"/>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="60"/>
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
@@ -72,6 +76,6 @@
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="255"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
-        <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="120"/>
+        <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
     </elements>
 </model>
