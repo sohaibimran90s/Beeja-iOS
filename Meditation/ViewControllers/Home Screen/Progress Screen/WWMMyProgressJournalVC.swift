@@ -141,6 +141,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                     self.journalData.append(journal)
                 }
             }
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
             self.tableViewJournal.reloadData()
         }
     }
@@ -227,14 +228,21 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                 
                 //self.getJournalList()
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+                self.journalView.removeFromSuperview()
+                self.saveJournalDatatoDB(param: param)
             }
             WWMHelperClass.dismissSVHud()
         }
     }
 
+    func saveJournalDatatoDB(param:[String:Any]) {
+        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalData") as! DBJournalData
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbJournal.journalData = myString
+        WWMHelperClass.saveDb()
+        self.xibJournalPopupCall()
+    }
     func showPopUpOnPresentView(title: String, message: String) {
         
         

@@ -122,6 +122,20 @@ let Validation_OldPasswordMessage:String!                  = "Please enter old p
 let Validation_NewPasswordMessage:String!                  = "Please enter new password"
 let Validation_ConfirmPasswordMessage:String!                  = "Please enter confirm password"
 let Validation_PasswordMatchMessage:String!                  = "New password and Confirm password does not match"
+
+
+
+// My Progress Journal
+
+let  Validatation_JournalOfflineMsg  =
+"Any new entries posted during no-Internet connection will be listed once it gets synced with server and device gets online."
+
+
+
+
+
+
+
 /**/
 
 
@@ -146,6 +160,7 @@ let URL_Insta   = "https://www.instagram.com/beejameditation/"
 let URL_Twitter   = "https://twitter.com/beejameditation"
 let URL_LinkedIn   = "http://www.linkedin.com/pub/will-williams/64/56/b"
 let URL_YouTube = "https://www.youtube.com/channel/UCysJyoHtICcn2vdNeyLhV_A/feed"
+
 
 
 
