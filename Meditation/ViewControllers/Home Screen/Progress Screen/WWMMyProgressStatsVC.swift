@@ -526,7 +526,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             if let meditationData = self.settingData.meditationData?.array as?  [DBMeditationData] {
                 for data in meditationData {
                     if data.isMeditationSelected {
-                        if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendential" {
+                        if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
                             self.viewBottom.isHidden = true
                         }
                     }
