@@ -36,7 +36,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
             alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             
             alertPopupView.lblTitle.text = "Alert"
-            alertPopupView.lblSubtitle.text = "The Internet connection appears to be offline."
+            alertPopupView.lblSubtitle.text = "Oh no, we've lost you! Please check your internet connection."
             alertPopupView.btnClose.isHidden = true
             
             alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -44,7 +44,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
             
             
 //            let alert = UIAlertController(title: "Alert",
-//                                          message: "The Internet connection appears to be offline.",
+//                                          message: "Oh no, we've lost you! Please check your internet connection.",
 //                                          preferredStyle: UIAlertController.Style.alert)
 //            
 //            

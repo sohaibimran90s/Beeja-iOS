@@ -37,6 +37,8 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func setUp() {
+        
+        self.arrViewSplashTxt = []
         let days = Calendar.current.dateComponents([.day], from: self.appPreference.lastLoginDate(), to: Date()).day ?? 0
         if !self.appPreference.isFirstTimeSplash() {
             self.appPreference.setIsFirstTimeSplash(value: true)
@@ -176,6 +178,9 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func getDailyUserSplashTxt() -> [String] {
+        
+        self.arrViewSplashTxt = []
+       
         let randomInt = Int.random(in: 0..<5)
         var arrDailyUser = [String]()
         switch randomInt {

@@ -49,11 +49,11 @@ class WWMSupportVC: WWMBaseViewController {
     @IBAction func btnSubmitAction(_ sender: UIButton) {
         
         if  txtViewName.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_NameMessage, title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
         }else if (txtViewName.text?.count)! < 3 {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_MinimumCharacter, title: kAlertTitle)
         }else if txtViewEmail.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailMessage, title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else if txtViewQuery.text == "" {
@@ -92,8 +92,8 @@ class WWMSupportVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView.lblTitle.text = "Thank You!"
-        alertPopupView.lblSubtitle.text = "Your query has been submitted. Our team will contact you soon."
+        alertPopupView.lblTitle.text = ""
+        alertPopupView.lblSubtitle.text = "Thanks for your message! The team will be in touch soon."
         alertPopupView.btnClose.isHidden = true
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
