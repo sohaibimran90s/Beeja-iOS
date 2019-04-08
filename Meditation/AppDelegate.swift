@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncMeditationCompleteData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBMeditationComplete") as! [DBMeditationComplete]
-        if data.count > 1 {
+        if data.count > 0 {
             var arrData = [[String:Any]]()
             for dict in data {
                 if let jsonResult = self.convertToDictionary(text: dict.meditationData ?? "") {
@@ -139,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncAddJournalData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
-        if data.count > 1 {
+        if data.count > 0 {
             var arrData = [[String:Any]]()
             for dict in data {
                 if let jsonResult = self.convertToDictionary(text: dict.journalData ?? "") {
@@ -161,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncContactUsData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBContactUs") as! [DBContactUs]
-        if data.count > 1 {
+        if data.count > 0 {
             WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     WWMHelperClass.deletefromDb(dbName: "DBContactUs")

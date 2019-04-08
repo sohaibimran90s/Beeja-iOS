@@ -98,9 +98,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
-                    let moodData = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
+                    let moodData = WWMHelperClass.fetchDB(dbName: "DBJournalList") as! [DBJournalList]
                     if moodData.count > 0 {
-                        WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+                        WWMHelperClass.deletefromDb(dbName: "DBJournalList")
                     }
                     
                     
@@ -109,10 +109,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                     for dict in arrJournal {
                         journal = WWMJournalProgressData.init(json: dict)
                         self.journalData.append(journal)
-                        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalData") as! DBJournalData
+                        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalList") as! DBJournalList
                         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
                         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                        dbJournal.journalData = myString
+                        dbJournal.data = myString
                         WWMHelperClass.saveDb()
                     }
                     self.tableViewJournal.reloadData()
@@ -128,22 +128,22 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
     
     func fetchDataFromDB() {
-        let journalDataDB = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
+        let journalDataDB = WWMHelperClass.fetchDB(dbName: "DBJournalList") as! [DBJournalList]
         if journalDataDB.count > 0 {
             self.journalData.removeAll()
             var journal = WWMJournalProgressData()
             
             for dict in journalDataDB {
-                if let jsonResult = self.convertToDictionary(text: dict.journalData ?? "") {
+                if let jsonResult = self.convertToDictionary(text: dict.data ?? "") {
                         journal = WWMJournalProgressData.init(json: jsonResult)
                 }
                 if self.journalData.count < 10 {
                     self.journalData.append(journal)
                 }
             }
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
-            self.tableViewJournal.reloadData()
         }
+        WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
+        self.tableViewJournal.reloadData()
     }
 
     func convertToDictionary(text: String) -> [String: Any]? {
