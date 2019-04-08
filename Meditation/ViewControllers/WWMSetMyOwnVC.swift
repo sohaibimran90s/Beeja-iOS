@@ -46,7 +46,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             }
         }
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok \(self.appPreference.getUserName())"
+        self.userName.text = "Ok \(self.appPreference.getUserName()),"
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.setUpSliderTimesAccordingToLevels()
