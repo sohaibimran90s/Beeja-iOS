@@ -24,6 +24,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     var playerAmbient = AVAudioPlayer()
     var settingData = DBSettings()
  
+    var isAmbientSoundPlay = false
     var notificationCenter = NotificationCenter.default
     
     @IBOutlet weak var viewPause: UIView!
@@ -67,6 +68,17 @@ class WWMStartTimerVC: WWMBaseViewController {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+        }
+        
+        if let arrMeditationData = settingData.meditationData?.array as?  [DBMeditationData] {
+            for data in arrMeditationData {
+                if data.isMeditationSelected {
+                    if !(data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental") {
+                        isAmbientSoundPlay = true
+                    }
+                    
+                }
+            }
         }
         
         if self.prepTime > 0 {
@@ -158,9 +170,10 @@ class WWMStartTimerVC: WWMBaseViewController {
             /* iOS 10 and earlier require the following line:
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
             
-            
-            playerAmbient.play()
-            playerAmbient.numberOfLoops = -1
+            if isAmbientSoundPlay {
+                playerAmbient.play()
+                playerAmbient.numberOfLoops = -1
+            }
             
         } catch let error {
             print(error.localizedDescription)
@@ -224,7 +237,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                 }
             }else{
                 if self.seconds == self.meditationTime/2+1 {
-                    self.playAudioFile(fileName: settingData.intervalChime!)
+                    if isAmbientSoundPlay {
+                        self.playAudioFile(fileName: settingData.intervalChime!)
+                    }
                 }
                 
             }
@@ -303,7 +318,10 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.viewPause.isHidden = true
             self.isStop = false
             self.runTimer()
-            self.playerAmbient.play()
+            if self.isAmbientSoundPlay {
+                self.playerAmbient.play()
+            }
+            
             self.spinnerImage.rotate360Degrees()
         }, completion: nil)
     }
@@ -313,7 +331,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.viewPause.isHidden = true
             self.isStop = false
             self.runTimer()
-            self.playerAmbient.play()
+            if self.isAmbientSoundPlay {
+                self.playerAmbient.play()
+            }
             self.spinnerImage.rotate360Degrees()
         }, completion: nil)
     }
@@ -344,7 +364,9 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         self.isStop = false
         self.runTimer()
-        self.playerAmbient.play()
+        if self.isAmbientSoundPlay {
+            self.playerAmbient.play()
+        }
         self.spinnerImage.rotate360Degrees()
         alertPopupView.removeFromSuperview()
     }

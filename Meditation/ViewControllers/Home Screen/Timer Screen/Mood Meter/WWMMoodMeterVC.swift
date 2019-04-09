@@ -29,6 +29,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var settingData = DBSettings()
     
     var alertPrompt = WWMPromptMsg()
+    var arrLabel = [UILabel]()
     
     var label = UILabel()
     
@@ -88,19 +89,20 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let y = CGFloat(0)
         let width = self.moodView!.bounds.size.width / 2
         let height = self.moodView!.bounds.size.height
-        
+        self.arrLabel.removeAll()
         for mood in self.arrMoodData {
             label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
             label.backgroundColor = .clear
             
             
             label.textColor = .white
-            label.font = UIFont.boldSystemFont(ofSize: 16)
+            label.font = UIFont.boldSystemFont(ofSize: 13)
             label.text = mood.name
             
             label.textAlignment = .center
             scrollView.addSubview(label)
             x = x + width
+            self.arrLabel.append(label)
         }
         self.moodView!.addSubview(scrollView)
         self.moodScroller = scrollView
@@ -132,6 +134,18 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         let mood = self.arrMoodData[moodIndex]
+        
+        for index in 0..<arrLabel.count {
+            let label = self.arrLabel[index]
+            if index == moodIndex {
+                label.font = UIFont.boldSystemFont(ofSize: 16)
+                label.textColor = UIColor.white
+            }else {
+                label.font = UIFont.systemFont(ofSize: 13)
+                label.textColor = UIColor.lightGray
+            }
+            
+        }
         
         print("selected mood = \(mood.name)")
         self.btnConfirm.isHidden = false

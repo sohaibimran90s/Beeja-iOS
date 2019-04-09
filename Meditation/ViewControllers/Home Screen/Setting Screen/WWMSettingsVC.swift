@@ -187,12 +187,19 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
 
     // MARK:- UITableView Delegate methods
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
+            for data in self.arrMeditationData {
+                if data.isMeditationSelected {
+                    if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
+                        return arrTimeChimes.count-1
+                    }
+                    
+                }
+            }
             return arrTimeChimes.count+1
         }else if section == 1 {
             for data in self.arrMeditationData {

@@ -504,13 +504,23 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 self.addSessionView.removeFromSuperview()
                 self.getStatsData()
             }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                }
+                self.saveSessionDatatoDB(param: param)
             }
             WWMHelperClass.dismissSVHud()
         }
     }
+    
+    
+    func saveSessionDatatoDB(param:[String:Any]) {
+        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBAddSession") as! DBAddSession
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbJournal.addSession = myString
+        WWMHelperClass.saveDb()
+    }
+    
+    
+    
     
     func setData() {
         if isLeft {

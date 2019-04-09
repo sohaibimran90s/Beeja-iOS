@@ -17,7 +17,7 @@ import Reachability
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,SPTAppRemoteDelegate, SPTSessionManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
     
     
     fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
@@ -29,29 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     let appPreference = WWMAppPreference()
     let center = UNUserNotificationCenter.current()
     let reachability = Reachability()
+     var auth = SPTAuth()
     
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
     
-    
-    //MARK:- Spotify Delegate
-    func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
-        print("success", session)
-    }
-    func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
-        print("fail", error)
-    }
-    func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
-        print("renewed", session)
-    }
-    
-    
-    
     //MARK: Appdelegate Methods
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        auth.redirectURL = URL(string: "Beeja-App://GetPlayList")
+        auth.sessionUserDefaultsKey = "current session"
+        
+        
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
@@ -91,6 +83,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         return true
     }
+    
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//
+//        // called when user signs into spotify. Session data saved into user defaults, then notification posted to call updateAfterFirstLogin in ViewController.swift. Modeled off recommneded auth flow suggested by Spotify documentation
+//
+//        if auth.canHandle(auth.redirectURL) {
+//            auth.handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, session) in
+//
+//                if error != nil {
+//                    print(error?.localizedDescription)
+//                    return
+//                }
+//                let userDefaults = UserDefaults.standard
+//                let sessionData = NSKeyedArchiver.archivedData(withRootObject: session)
+//                print(sessionData)
+//                userDefaults.set(sessionData, forKey: "SpotifySession")
+//                userDefaults.synchronize()
+//                NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
+//            })
+//            return true
+//        }
+//
+//        return false
+//
+//    }
+//
+    
     
     @objc func reachabilityChanged(note: Notification) {
         
@@ -136,6 +155,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             syncAddJournalData()
         }
     }
+    
+    func syncAddSessionData() {
+        let data = WWMHelperClass.fetchDB(dbName: "DBAddSession") as! [DBAddSession]
+        if data.count > 0 {
+            var arrData = [[String:Any]]()
+            for dict in data {
+                if let jsonResult = self.convertToDictionary(text: dict.addSession ?? "") {
+                    arrData.append(jsonResult)
+                }
+            }
+            let param = ["offline_data":arrData]
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+                    self.syncAddJournalData()
+                }
+            }
+            
+        }else {
+            self.syncAddJournalData()
+        }
+    }
+    
+    
+    
     
     func syncAddJournalData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
@@ -199,7 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        WWMSpotifyManager.sharedManager.connect();
+       
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -209,64 +253,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        let parameters = appRemote.authorizationParameters(from: url);
+       
         if url.absoluteString.contains("fb") {
             return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-        }else if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
-            appRemote.connectionParameters.accessToken = access_token
-            self.accessToken = access_token
+        }else if url.absoluteString.contains("beeja-app://getplaylist/"){
             
-        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
-            
+            if auth.canHandle(auth.redirectURL) {
+                auth.handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, session) in
+                    
+                    if error != nil {
+                        print(error?.localizedDescription ?? "error")
+                        return
+                    }
+                    if (session != nil) {
+                        let userDefaults = UserDefaults.standard
+                        let sessionData = NSKeyedArchiver.archivedData(withRootObject: session as Any)
+                        print(sessionData)
+                        userDefaults.set(sessionData, forKey: "SpotifySession")
+                        userDefaults.synchronize()
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
+                    }
+                    
+                })
+                return true
+            }
         }else {
             return GIDSignIn.sharedInstance().handle(url,
                                                      sourceApplication:options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
                                                      annotation: [:])
         }
         return true
-    }
-    
-    var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
-        didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(accessToken, forKey: AppDelegate.kAccessTokenKey)
-            defaults.synchronize()
-        }
-    }
-    
-    lazy var appRemote: SPTAppRemote = {
-        let configuration = SPTConfiguration(clientID: self.clientIdentifier, redirectURL: self.redirectUri)
-        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
-        appRemote.connectionParameters.accessToken = self.accessToken
-        appRemote.delegate = self
-        return appRemote
-    }()
-    
-    func setupSpotify(url: URL!) {
-        let parameters = appRemote.authorizationParameters(from: url);
-        // SPTPlaylistReadPrivateScope
-        if let access_token = parameters?[SPTAppRemoteAccessTokenKey] {
-            appRemote.connectionParameters.accessToken = access_token
-            self.accessToken = access_token
-        } else if let error_description = parameters?[SPTAppRemoteErrorDescriptionKey] {
-            
-        }
-        
-    }
-    
-    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
-        self.appRemote = appRemote
-        //  playerViewController.appRemoteConnected()
-    }
-    
-    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
-        print("didFailConnectionAttemptWithError")
-        //  playerViewController.appRemoteDisconnect()
-    }
-    
-    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
-        print("didDisconnectWithError")
-        //    playerViewController.appRemoteDisconnect()
     }
     
     // MARK:- Local Notification

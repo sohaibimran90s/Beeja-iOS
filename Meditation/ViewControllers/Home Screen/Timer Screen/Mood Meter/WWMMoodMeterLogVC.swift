@@ -168,7 +168,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             "rest_time":restTime,
             "meditation_id": self.meditationID,
             "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "" : self.moodData.id,
+            "mood_id":self.moodData.id == -1 ? "1" : self.moodData.id,
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
