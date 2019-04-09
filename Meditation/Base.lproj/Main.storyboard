@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,7 +34,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                    " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="tEh-1R-mSX">
-                                <rect key="frame" x="20" y="307.5" width="335" height="52"/>
+                                <rect key="frame" x="20" y="309" width="335" height="49"/>
                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="42"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -393,7 +393,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Alv-ao-l51">
-                                <rect key="frame" x="178.5" y="120" width="18" height="16"/>
+                                <rect key="frame" x="151.5" y="120" width="72" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Alv-ao-l51" secondAttribute="height" multiplier="72:65" id="3du-R3-n5E"/>
                                 </constraints>
@@ -432,7 +432,7 @@
                                     <constraint firstItem="qNT-Ca-cx8" firstAttribute="centerX" secondItem="CpD-ME-VWP" secondAttribute="centerX" id="eSF-h4-ghd"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDD-KB-r6a">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDD-KB-r6a">
                                 <rect key="frame" x="129" y="587" width="117" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -611,7 +611,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyj-rm-dwT">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyj-rm-dwT">
                                 <rect key="frame" x="82.5" y="479" width="210" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -711,7 +711,7 @@
                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                                     </variation>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNz-45-H8w">
+                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNz-45-H8w">
                                                     <rect key="frame" x="248" y="19.5" width="97" height="26"/>
                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                                     <state key="normal" title="View in Spotify">
@@ -748,7 +748,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="177" height="178.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" ambiguous="YES" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="7NQ-Es-6ZG">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="7NQ-Es-6ZG">
                                                                         <rect key="frame" x="0.0" y="0.0" width="177" height="141.5"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
@@ -756,7 +756,7 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Oriental Escape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gy7-gu-ZoH">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gy7-gu-ZoH">
                                                                         <rect key="frame" x="10" y="151.5" width="157" height="17"/>
                                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -827,7 +827,7 @@
                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                                     </variation>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIj-BC-m7e">
+                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIj-BC-m7e">
                                                     <rect key="frame" x="254" y="19.5" width="91" height="26"/>
                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                                     <state key="normal" title="See All Events">
@@ -873,7 +873,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="World Meditation Day" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="27C-lV-Atp">
-                                                                        <rect key="frame" x="20" y="54" width="137" height="74"/>
+                                                                        <rect key="frame" x="20" y="67.5" width="137" height="47"/>
                                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -931,7 +931,7 @@
                                         <rect key="frame" x="0.0" y="556" width="365" height="264"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bmi-KM-eky" id="Kcs-UQ-vGN">
-                                            <rect key="frame" x="0.0" y="0.0" width="365" height="263.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="365" height="264"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#meditationanywhere" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRZ-7s-pXG">
@@ -1002,8 +1002,9 @@
                                                         <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                     </variation>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ae8-Qy-biK">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ae8-Qy-biK">
                                                     <rect key="frame" x="76.5" y="213.5" width="212.5" height="30"/>
+                                                    <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1083,7 +1084,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gl-N3-MAA">
-                                                            <rect key="frame" x="30" y="22" width="40.5" height="16"/>
+                                                            <rect key="frame" x="30" y="20.5" width="39.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1092,7 +1093,7 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="fbt-1q-WsB">
-                                                            <rect key="frame" x="325.5" y="23" width="29.5" height="14.5"/>
+                                                            <rect key="frame" x="325.5" y="23" width="29.5" height="14"/>
                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1180,7 +1181,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccF-U0-7bg">
-                                                            <rect key="frame" x="30" y="22" width="40.5" height="16"/>
+                                                            <rect key="frame" x="30" y="20.5" width="39.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1189,7 +1190,7 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="73A-qD-BU3">
-                                                            <rect key="frame" x="325.5" y="23" width="29.5" height="14.5"/>
+                                                            <rect key="frame" x="325.5" y="23" width="29.5" height="14"/>
                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1247,7 +1248,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3w-sc-Tjh">
-                                                            <rect key="frame" x="30" y="22" width="40.5" height="16"/>
+                                                            <rect key="frame" x="30" y="20.5" width="39.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1298,7 +1299,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ty0-vA-pvl">
-                                                            <rect key="frame" x="30" y="22" width="40.5" height="16"/>
+                                                            <rect key="frame" x="30" y="20.5" width="39.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1307,7 +1308,7 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="vL7-rW-gwO">
-                                                            <rect key="frame" x="301.5" y="23" width="29.5" height="14"/>
+                                                            <rect key="frame" x="306.5" y="23" width="29.5" height="14"/>
                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1316,7 +1317,7 @@
                                                             </variation>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Sh6-Dg-LNq">
-                                                            <rect key="frame" x="339" y="22" width="16" height="16"/>
+                                                            <rect key="frame" x="344" y="27" width="11" height="6"/>
                                                         </imageView>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q8e-LU-HW5">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -1391,7 +1392,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yw9-Ad-wic">
-                                                            <rect key="frame" x="10" y="15" width="51" height="20"/>
+                                                            <rect key="frame" x="10" y="13.5" width="49" height="23.5"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="20"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1400,10 +1401,10 @@
                                                             </variation>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow_Color_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="BJt-0H-KZb">
-                                                            <rect key="frame" x="339" y="17" width="16" height="16"/>
+                                                            <rect key="frame" x="338" y="20.5" width="17" height="9"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="3nd-fO-4b2">
-                                                            <rect key="frame" x="280" y="12.5" width="51" height="25"/>
+                                                            <rect key="frame" x="281" y="13.5" width="49" height="23.5"/>
                                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                             <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1483,7 +1484,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpa-QF-lSx">
-                                                            <rect key="frame" x="30" y="22" width="40.5" height="16"/>
+                                                            <rect key="frame" x="30" y="20.5" width="39.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1599,7 +1600,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dQs-9D-Tcj">
                                 <rect key="frame" x="75" y="53" width="225" height="464"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-u5-i5P">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EK0-u5-i5P">
                                         <rect key="frame" x="0.0" y="0.0" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Learn ">
@@ -1612,7 +1613,7 @@
                                             <action selector="btnLearnAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="ene-yM-Yrh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8F-HB-xVs">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8F-HB-xVs">
                                         <rect key="frame" x="0.0" y="58" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Guided">
@@ -1625,7 +1626,7 @@
                                             <action selector="btnGuidedAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="pwv-vN-pjd"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kol-2i-CDy">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kol-2i-CDy">
                                         <rect key="frame" x="0.0" y="116" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Timer">
@@ -1638,7 +1639,7 @@
                                             <action selector="btnTimerAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="2ac-K8-Chp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9I7-r7-Sm8">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9I7-r7-Sm8">
                                         <rect key="frame" x="0.0" y="174" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Our story">
@@ -1651,7 +1652,7 @@
                                             <action selector="btnOurStoryAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="J53-KH-NTf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tgq-rF-7km">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tgq-rF-7km">
                                         <rect key="frame" x="0.0" y="232" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Find a course">
@@ -1664,7 +1665,7 @@
                                             <action selector="btnFindCourseAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="nMw-bJ-bQC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqc-8f-hSo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqc-8f-hSo">
                                         <rect key="frame" x="0.0" y="290" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Upgrade beeja">
@@ -1677,7 +1678,7 @@
                                             <action selector="btnUpgradeBeejaAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="Iu7-mE-vY6"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tit-D3-p5W">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tit-D3-p5W">
                                         <rect key="frame" x="0.0" y="348" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="FAQs">
@@ -1690,7 +1691,7 @@
                                             <action selector="btnFAQAction:" destination="50d-6k-y7o" eventType="touchUpInside" id="6E9-j3-HmR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s60-my-uIN">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s60-my-uIN">
                                         <rect key="frame" x="0.0" y="406" width="225" height="58"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                         <state key="normal" title="Contact Us">
@@ -1954,7 +1955,7 @@
                                     <constraint firstItem="gt2-Pe-OdA" firstAttribute="leading" secondItem="NZy-yx-HUi" secondAttribute="leading" id="yTj-pf-76z"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LA9-uY-lM9">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LA9-uY-lM9">
                                 <rect key="frame" x="75" y="458.5" width="225" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1994,7 +1995,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="eEn-WR-cso">
-                                <rect key="frame" x="178.5" y="193" width="18" height="16"/>
+                                <rect key="frame" x="151.5" y="144" width="72" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eEn-WR-cso" secondAttribute="height" multiplier="72:65" id="bzS-UG-nMp"/>
                                 </constraints>
@@ -2078,7 +2079,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caJ-Ne-8Aw">
                                         <rect key="frame" x="0.0" y="162" width="375" height="161.5"/>
                                         <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdU-VE-Y5x">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdU-VE-Y5x">
                                                 <rect key="frame" x="47" y="44.5" width="281" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -2122,7 +2123,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4S-lg-ryI">
                                         <rect key="frame" x="0.0" y="323.5" width="375" height="162"/>
                                         <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyn-nL-jja">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyn-nL-jja">
                                                 <rect key="frame" x="47" y="61" width="281" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -2155,7 +2156,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKH-ki-9Ji">
                                         <rect key="frame" x="0.0" y="485.5" width="375" height="161.5"/>
                                         <subviews>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0R-GC-hBu">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0R-GC-hBu">
                                                 <rect key="frame" x="47" y="60.5" width="281" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -2239,7 +2240,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which do you do?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCE-9l-RCP">
-                                        <rect key="frame" x="120.5" y="15" width="134.5" height="20"/>
+                                        <rect key="frame" x="122.5" y="15.5" width="130.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -2281,7 +2282,7 @@
                                                 <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WbM-nl-OXY">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                                     <subviews>
-                                                        <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3og-QJ-Owo">
+                                                        <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3og-QJ-Owo">
                                                             <rect key="frame" x="47" y="20" width="281" height="40"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -2644,7 +2645,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bo-oT-J7P">
                                 <rect key="frame" x="0.0" y="458" width="375" height="160"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqp-G7-1De">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqp-G7-1De">
                                         <rect key="frame" x="75" y="30" width="225" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -2667,7 +2668,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-pG-gFE">
-                                        <rect key="frame" x="89" y="100" width="197" height="30"/>
+                                        <rect key="frame" x="88.5" y="100" width="198" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Preset  - " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-TM-OiW">
                                                 <rect key="frame" x="0.0" y="0.0" width="111" height="30"/>
@@ -2679,7 +2680,7 @@
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrT-y8-WeN">
-                                                <rect key="frame" x="115" y="0.0" width="82" height="30"/>
+                                                <rect key="frame" x="115" y="0.0" width="83" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="1TU-Cu-ppj"/>
                                                 </constraints>
@@ -2854,10 +2855,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-kJ-D16">
-                                <rect key="frame" x="141.5" y="545" width="92" height="42"/>
+                                <rect key="frame" x="111.5" y="521" width="152" height="66"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fde-4E-F9S">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="66"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" image="pause_Icon">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2867,7 +2868,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbN-TR-ctR">
-                                        <rect key="frame" x="46" y="0.0" width="46" height="42"/>
+                                        <rect key="frame" x="76" y="0.0" width="76" height="66"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" image="stop_Icon">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2922,7 +2923,7 @@
                                             <constraint firstAttribute="height" constant="40" id="lNC-u7-oFU"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="weI-fB-6OX">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="weI-fB-6OX">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <viewLayoutGuide key="safeArea" id="4To-T3-QwD"/>
                                         <connections>
@@ -3147,7 +3148,14 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OWc-iv-IGL">
                                         <rect key="frame" x="0.0" y="0.0" width="105" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7l-4w-GPt">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OBg-jY-yGm">
+                                                <rect key="frame" x="0.0" y="47" width="105" height="3"/>
+                                                <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="3" id="pu6-fc-zxZ"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7l-4w-GPt">
                                                 <rect key="frame" x="0.0" y="0.0" width="105" height="47"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
@@ -3166,13 +3174,6 @@
                                                     <action selector="btnStatsAction:" destination="RVi-pH-0Di" eventType="touchUpInside" id="xqr-oY-SJv"/>
                                                 </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OBg-jY-yGm">
-                                                <rect key="frame" x="0.0" y="47" width="105" height="3"/>
-                                                <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="pu6-fc-zxZ"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -3188,7 +3189,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FWf-n5-WjY">
                                         <rect key="frame" x="110" y="0.0" width="105" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-P4-Y1f">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhG-P4-Y1f">
                                                 <rect key="frame" x="0.0" y="0.0" width="105" height="47"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
@@ -3229,7 +3230,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qgo-af-EPo">
                                         <rect key="frame" x="220" y="0.0" width="105" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djK-nC-IOi">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djK-nC-IOi">
                                                 <rect key="frame" x="0.0" y="0.0" width="105" height="47"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
@@ -3481,13 +3482,13 @@
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="singleLineLeft.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Gr-mQ-Bw9">
-                                                                                    <rect key="frame" x="0.0" y="24" width="19.5" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="31.5" width="19.5" height="1"/>
                                                                                 </imageView>
                                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w39-FU-S4T">
                                                                                     <rect key="frame" x="19.5" y="15" width="34" height="34"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SK-Yb-27T">
-                                                                                            <rect key="frame" x="13.5" y="11" width="7" height="12"/>
+                                                                                            <rect key="frame" x="13.5" y="10" width="7" height="14"/>
                                                                                             <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="12"/>
                                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                             <nil key="highlightedColor"/>
@@ -3510,7 +3511,7 @@
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </view>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="singleLineRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="x2z-qb-h0O">
-                                                                                    <rect key="frame" x="53.5" y="24" width="19.5" height="16"/>
+                                                                                    <rect key="frame" x="53.5" y="31.5" width="19.5" height="1"/>
                                                                                 </imageView>
                                                                             </subviews>
                                                                         </view>
@@ -3562,7 +3563,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSO-w4-KIs">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSO-w4-KIs">
                                                         <rect key="frame" x="133.5" y="460" width="100" height="30"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -4057,13 +4058,13 @@
                                         <rect key="frame" x="0.0" y="149" width="281" height="40"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startBeeja_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Zd7-G0-3XX">
-                                                <rect key="frame" x="85" y="12" width="19" height="16"/>
+                                                <rect key="frame" x="83.5" y="12" width="18.5" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Zd7-G0-3XX" secondAttribute="height" multiplier="63:54" id="4CV-7z-RuC"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Beeja" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8C-dq-7QN">
-                                                <rect key="frame" x="119" y="10.5" width="79.5" height="19"/>
+                                                <rect key="frame" x="117" y="10" width="83" height="20"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -4071,6 +4072,7 @@
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="roK-xP-BqK">
                                                 <rect key="frame" x="0.0" y="0.0" width="281" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <state key="normal">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -4079,6 +4081,9 @@
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
+                                                </variation>
                                                 <connections>
                                                     <action selector="btnSignupTouchDown:" destination="QQW-HL-hXW" eventType="touchDown" id="k9w-sv-h62"/>
                                                     <action selector="btnStartBe:" destination="QQW-HL-hXW" eventType="touchUpInside" id="w3r-v8-d6f"/>
@@ -4108,7 +4113,7 @@
                                         <rect key="frame" x="0.0" y="209" width="281" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with Facebook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2A-jw-srl">
-                                                <rect key="frame" x="20" y="10.5" width="241" height="19"/>
+                                                <rect key="frame" x="20" y="10" width="241" height="20"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -4150,7 +4155,7 @@
                                         <rect key="frame" x="0.0" y="269" width="281" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with Google+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjp-1c-Wmh">
-                                                <rect key="frame" x="20" y="10.5" width="241" height="19"/>
+                                                <rect key="frame" x="20" y="10" width="241" height="20"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -4192,22 +4197,22 @@
                                         <rect key="frame" x="0.0" y="329" width="281" height="80"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IWo-xS-VCe">
-                                                <rect key="frame" x="48" y="40" width="185.5" height="40"/>
+                                                <rect key="frame" x="46" y="40" width="189" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already a Beeja User?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPG-AZ-RmQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="138.5" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="140.5" height="40"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnj-jf-QFn">
-                                                        <rect key="frame" x="143.5" y="0.0" width="42" height="40"/>
+                                                        <rect key="frame" x="145.5" y="0.0" width="43.5" height="40"/>
                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="15"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WdO-o4-sOn">
-                                                        <rect key="frame" x="143.5" y="29" width="42" height="1"/>
+                                                        <rect key="frame" x="145.5" y="29" width="43.5" height="1"/>
                                                         <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="11h-8E-f1j"/>
@@ -4230,7 +4235,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkV-FM-YDx">
-                                                <rect key="frame" x="191.5" y="40" width="42" height="40"/>
+                                                <rect key="frame" x="191.5" y="40" width="43.5" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4259,57 +4264,57 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSc-Uf-QcM">
-                                <rect key="frame" x="20" y="590.5" width="335" height="46.5"/>
+                                <rect key="frame" x="20" y="590" width="335" height="47"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By continuing you confirm that you accept our" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gds-EQ-cyA">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="16.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="17"/>
                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqh-Xu-3ge">
-                                        <rect key="frame" x="75" y="16.5" width="185.5" height="30"/>
+                                        <rect key="frame" x="71.5" y="17" width="192.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Use" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="x6W-lL-biC">
-                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="84.5" height="30"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZY-f5-JC2">
-                                                <rect key="frame" x="0.0" y="25" width="82.5" height="1"/>
+                                                <rect key="frame" x="0.0" y="25" width="84.5" height="1"/>
                                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="vze-j8-Xoe"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&amp;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXp-qL-lDg">
-                                                <rect key="frame" x="85.5" y="0.0" width="9" height="30"/>
+                                                <rect key="frame" x="87.5" y="0.0" width="10" height="30"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="PcP-zM-axw">
-                                                <rect key="frame" x="97.5" y="0.0" width="88" height="30"/>
+                                                <rect key="frame" x="100.5" y="0.0" width="92" height="30"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RYy-a5-p5e">
-                                                <rect key="frame" x="97.5" y="25" width="88" height="1"/>
+                                                <rect key="frame" x="100.5" y="25" width="92" height="1"/>
                                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="OcR-it-ACY"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSV-sK-uai">
-                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="84.5" height="30"/>
                                                 <connections>
                                                     <action selector="btnTermsOfUseAction:" destination="QQW-HL-hXW" eventType="touchUpInside" id="1FM-69-pTy"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqr-ws-UGi">
-                                                <rect key="frame" x="97.5" y="0.0" width="88" height="30"/>
+                                                <rect key="frame" x="100.5" y="0.0" width="92" height="30"/>
                                                 <connections>
                                                     <action selector="btnPrivacyPolicyAction:" destination="QQW-HL-hXW" eventType="touchUpInside" id="axE-PB-mc0"/>
                                                 </connections>
@@ -4408,10 +4413,10 @@
                                                     <rect key="frame" x="25" y="0.0" width="325" height="248"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rmD-Lz-dO3">
-                                                            <rect key="frame" x="20" y="104" width="40" height="40"/>
+                                                            <rect key="frame" x="20" y="105" width="40" height="38"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHz-go-YmA">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="19"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -4420,7 +4425,7 @@
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djr-og-wdq">
-                                                                    <rect key="frame" x="0.0" y="20" width="40" height="20"/>
+                                                                    <rect key="frame" x="0.0" y="19" width="40" height="19"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -4610,7 +4615,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XlA-kG-mbM">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XlA-kG-mbM">
                                 <rect key="frame" x="89" y="475.5" width="197" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -4683,7 +4688,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Report" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCt-YX-oNL">
-                                            <rect key="frame" x="132" y="35" width="111" height="25"/>
+                                            <rect key="frame" x="134.5" y="35" width="106.5" height="23.5"/>
                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -4692,7 +4697,7 @@
                                             </variation>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ow5-pe-hJ0">
-                                            <rect key="frame" x="107.5" y="60" width="160" height="30"/>
+                                            <rect key="frame" x="107.5" y="58.5" width="160" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="3Fr-aa-Fq8"/>
                                                 <constraint firstAttribute="width" constant="160" id="LHg-KA-8uo"/>
@@ -4749,7 +4754,7 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWO-vc-Ybn">
                                                                         <rect key="frame" x="4" y="4" width="358" height="440"/>
                                                                         <subviews>
-                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdr-ph-YDp">
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdr-ph-YDp">
                                                                                 <rect key="frame" x="248" y="20" width="90" height="20"/>
                                                                                 <color key="backgroundColor" red="0.2196078431372549" green="0.16862745098039217" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <constraints>
@@ -5105,7 +5110,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Mood Tracker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74j-SW-oje">
-                                                    <rect key="frame" x="101" y="30" width="173.5" height="25"/>
+                                                    <rect key="frame" x="103" y="30" width="169" height="23.5"/>
                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -5114,7 +5119,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Feb - 16 Feb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyq-U2-wbf">
-                                                    <rect key="frame" x="136" y="63" width="103.5" height="14"/>
+                                                    <rect key="frame" x="137.5" y="61.5" width="100" height="16.5"/>
                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                                     <color key="textColor" red="0.3921568627" green="1" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -5132,7 +5137,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="146.5" height="50"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-------  Post Meditation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yku-ah-JGe">
-                                                                            <rect key="frame" x="10" y="5" width="136.5" height="12.5"/>
+                                                                            <rect key="frame" x="10" y="5" width="136.5" height="12"/>
                                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="10"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -5141,7 +5146,7 @@
                                                                             </variation>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="-------  Pre Meditation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ji7-Mk-YGK">
-                                                                            <rect key="frame" x="10" y="22.5" width="136.5" height="22.5"/>
+                                                                            <rect key="frame" x="10" y="22" width="136.5" height="23"/>
                                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="10"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -5235,7 +5240,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2Q-4Y-Kgx">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2Q-4Y-Kgx">
                                 <rect key="frame" x="301" y="40" width="54" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -5296,7 +5301,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="neg-iT-0hg">
                                 <rect key="frame" x="82.5" y="475.5" width="210" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGb-qS-KbS">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGb-qS-KbS">
                                         <rect key="frame" x="0.0" y="0.0" width="210" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -5321,7 +5326,7 @@
                                             <action selector="btnBurnMoodAction:" destination="hcy-J1-GgS" eventType="touchUpInside" id="XqW-WV-qPB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4k-zp-jaF">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4k-zp-jaF">
                                         <rect key="frame" x="0.0" y="60" width="210" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -5422,7 +5427,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEb-yA-tmc">
-                                        <rect key="frame" x="129" y="15" width="117.5" height="20"/>
+                                        <rect key="frame" x="129.5" y="15.5" width="116.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -5668,7 +5673,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1f-tY-f0I">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1f-tY-f0I">
                                 <rect key="frame" x="82.5" y="459.5" width="210" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -5989,7 +5994,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8t0-AK-AKz">
                                 <rect key="frame" x="47" y="567" width="281" height="80"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8A-fV-5wR">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8A-fV-5wR">
                                         <rect key="frame" x="0.0" y="15" width="130.5" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -6011,7 +6016,7 @@
                                             <action selector="btnCancelAction:" destination="tdy-3z-K1x" eventType="touchUpInside" id="u8g-AI-JZC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLp-8F-q0n">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLp-8F-q0n">
                                         <rect key="frame" x="150.5" y="15" width="130.5" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -6264,7 +6269,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0e-af-lkF">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0e-af-lkF">
                                 <rect key="frame" x="82.5" y="582.5" width="210" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -6355,7 +6360,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAY-7M-86y">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAY-7M-86y">
                                 <rect key="frame" x="301" y="40" width="54" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -6407,7 +6412,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LrL-oo-YRF">
                                 <rect key="frame" x="82.5" y="451.5" width="210" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rC-bY-u8s">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rC-bY-u8s">
                                         <rect key="frame" x="0.0" y="0.0" width="210" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -6541,7 +6546,7 @@
                                     <outlet property="delegate" destination="Dbs-1g-1Bg" id="Hbu-Fi-sSL"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JuG-Z5-JRc">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JuG-Z5-JRc">
                                 <rect key="frame" x="54.5" y="578" width="266" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -6575,7 +6580,7 @@
                                 <color key="pageIndicatorTintColor" red="0.3411764706" green="0.1960784314" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="currentPageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSi-2d-exw">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSi-2d-exw">
                                 <rect key="frame" x="301" y="40" width="54" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -6635,7 +6640,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rH-DK-vmz">
-                                <rect key="frame" x="179.5" y="193" width="16" height="16"/>
+                                <rect key="frame" x="151.5" y="144" width="72" height="65"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Qp-15-fTs">
                                 <rect key="frame" x="37.5" y="259" width="300" height="149.5"/>
@@ -6695,7 +6700,7 @@
                                     <constraint firstAttribute="trailing" secondItem="cFh-SH-V2I" secondAttribute="trailing" id="yT9-QG-QVA"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oa2-5C-DUW">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oa2-5C-DUW">
                                 <rect key="frame" x="75" y="458.5" width="225" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -6793,7 +6798,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To What Level?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaI-sk-I23">
-                                        <rect key="frame" x="131.5" y="15" width="112.5" height="20"/>
+                                        <rect key="frame" x="133" y="15.5" width="109.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -6835,7 +6840,7 @@
                                                 <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3i-qZ-VX0">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                                                     <subviews>
-                                                        <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFi-Io-X9D">
+                                                        <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFi-Io-X9D">
                                                             <rect key="frame" x="47" y="20" width="281" height="40"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -6997,7 +7002,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ok Blue," textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJb-kX-2YV">
-                                        <rect key="frame" x="140" y="304" width="95" height="29.5"/>
+                                        <rect key="frame" x="141.5" y="304.5" width="92.5" height="28"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -7006,7 +7011,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lets meditate." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuT-j4-xzC">
-                                        <rect key="frame" x="108.5" y="338.5" width="158.5" height="29.5"/>
+                                        <rect key="frame" x="111" y="337.5" width="153" height="28"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -7197,7 +7202,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qrx-VM-4oY">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qrx-VM-4oY">
                                 <rect key="frame" x="82.5" y="407" width="210" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -7359,7 +7364,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VD8-GY-Q8u">
                                                 <rect key="frame" x="0.0" y="360" width="300" height="140"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKf-qs-hnX">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKf-qs-hnX">
                                                         <rect key="frame" x="30" y="20" width="240" height="40"/>
                                                         <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -7381,7 +7386,7 @@
                                                             <action selector="btnContinueAction:" destination="zXI-e6-Hbv" eventType="touchUpInside" id="3jL-7o-MZG"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yba-xG-52a">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yba-xG-52a">
                                                         <rect key="frame" x="30" y="80" width="240" height="40"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -8102,7 +8107,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5f-06-d1e">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5f-06-d1e">
                                 <rect key="frame" x="56.5" y="577" width="262.5" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -8504,7 +8509,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Fm8-q6-Y43">
                                 <rect key="frame" x="75" y="587" width="225" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwP-GA-GbH">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwP-GA-GbH">
                                         <rect key="frame" x="0.0" y="5" width="225" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -8714,7 +8719,7 @@
                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="28"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPH-E0-h26">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPH-E0-h26">
                                 <rect key="frame" x="56.5" y="567" width="262.5" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -8875,7 +8880,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_TimerDashboard" translatesAutoresizingMaskIntoConstraints="NO" id="z71-nw-hwJ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nef-Cz-ETu">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nef-Cz-ETu">
                                 <rect key="frame" x="301" y="40" width="54" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -8925,7 +8930,7 @@
                                     <constraint firstAttribute="height" constant="50" id="jE4-zf-YoR"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idn-Qh-3bH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idn-Qh-3bH">
                                 <rect key="frame" x="108.5" y="591" width="158" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -8939,7 +8944,7 @@
                                     <action selector="btnAskMeAgainAction:" destination="uug-wm-VJM" eventType="touchUpInside" id="Oga-ds-hwB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bi0-mJ-UDi">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bi0-mJ-UDi">
                                 <rect key="frame" x="75.5" y="509.5" width="224" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -9011,7 +9016,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_TimerDashboard" translatesAutoresizingMaskIntoConstraints="NO" id="m4a-I6-MlI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apD-O1-T8Z">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apD-O1-T8Z">
                                 <rect key="frame" x="301" y="40" width="54" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -9063,7 +9068,7 @@
                                     <constraint firstAttribute="height" constant="50" id="Wzx-bd-xUY"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYB-Bd-nyG">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYB-Bd-nyG">
                                 <rect key="frame" x="108.5" y="591" width="158" height="36"/>
                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -9083,6 +9088,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Bv1-i1-twX"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                 <state key="normal" title="Confirm">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -9145,35 +9151,35 @@
     <resources>
         <image name="AddJournal_Icon" width="50" height="50"/>
         <image name="Back_Arrow_Icon" width="8" height="14"/>
-        <image name="Background_LetsStart" width="270" height="480"/>
-        <image name="Background_LevelType" width="270" height="480"/>
-        <image name="Background_Login" width="270" height="480"/>
+        <image name="Background_LetsStart" width="540" height="960"/>
+        <image name="Background_LevelType" width="540" height="960"/>
+        <image name="Background_Login" width="540" height="960"/>
         <image name="Background_LoginBack" width="375" height="667"/>
-        <image name="Background_LoginEmail" width="270" height="480"/>
+        <image name="Background_LoginEmail" width="540" height="960"/>
         <image name="Background_OKBlue" width="375" height="667"/>
         <image name="Background_Setting" width="375" height="667"/>
-        <image name="Background_Splash" width="270" height="480"/>
-        <image name="Background_Splash1" width="270" height="480"/>
-        <image name="Background_TimerDashboard" width="270" height="480"/>
+        <image name="Background_Splash" width="540" height="960"/>
+        <image name="Background_Splash1" width="540" height="960"/>
+        <image name="Background_TimerDashboard" width="540" height="960"/>
         <image name="Background_TimerFinish" width="375" height="667"/>
         <image name="Close_Icon" width="40" height="40"/>
-        <image name="ColorTick_Icon" width="24" height="22"/>
+        <image name="ColorTick_Icon" width="48" height="44"/>
         <image name="FB_Icon" width="11" height="21"/>
         <image name="Insta_Icon" width="22" height="21"/>
         <image name="LinkedIn_Icon" width="21" height="21"/>
-        <image name="Logo_Icon" width="36" height="32.5"/>
+        <image name="Logo_Icon" width="72" height="65"/>
         <image name="Logo_Login" width="257" height="108"/>
-        <image name="Slider_DashLine" width="12" height="219"/>
+        <image name="Slider_DashLine" width="24" height="438"/>
         <image name="Twitter_Icon" width="23" height="20"/>
         <image name="Youtube_Icon" width="22" height="16"/>
         <image name="circularstripe" width="323" height="324"/>
         <image name="community_Icon" width="28" height="28"/>
-        <image name="downArrow_Color_Icon" width="8.5" height="4.5"/>
+        <image name="downArrow_Color_Icon" width="17" height="9"/>
         <image name="downArrow_Icon" width="11" height="6"/>
         <image name="editBtn_Icon" width="50" height="50"/>
         <image name="leftArrow_Icon" width="8" height="14"/>
-        <image name="logoHeader" width="240" height="76.5"/>
-        <image name="moreOption_Icon" width="28.5" height="24"/>
+        <image name="logoHeader" width="480" height="153"/>
+        <image name="moreOption_Icon" width="57" height="48"/>
         <image name="pause_Icon" width="46" height="46"/>
         <image name="play_Icon" width="46" height="46"/>
         <image name="progress_Icon" width="28" height="28"/>
@@ -9185,11 +9191,11 @@
         <image name="setting_Icon" width="25" height="28"/>
         <image name="singleLineLeft.png" width="14" height="1"/>
         <image name="singleLineRight.png" width="14" height="1"/>
-        <image name="startBeeja_Icon" width="31.5" height="27"/>
+        <image name="startBeeja_Icon" width="63" height="54"/>
         <image name="stop_Icon" width="46" height="46"/>
         <image name="timer_Background_Icon" width="278" height="263"/>
         <image name="timer_Icon" width="28" height="28"/>
         <image name="vibe_images.jpg" width="254" height="198"/>
-        <image name="wave" width="78" height="76.5"/>
+        <image name="wave" width="156" height="153"/>
     </resources>
 </document>
