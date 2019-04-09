@@ -378,7 +378,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }else if indexPath.row == 7 {
                 let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                let textToShare = "Be more connected with the Beeja app: \(String(describing: url))"
+                let textToShare = "Be more connected with the Beeja app... \(String(describing: url?.absoluteString))"
                 let imageToShare = [textToShare] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.view
@@ -461,7 +461,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = "Alert"
-        alertPopupView.lblSubtitle.text = "Are you sure you want to logout?"
+        alertPopupView.lblSubtitle.text = "Do you really want to say goodbye?"
+        alertPopupView.btnOK.setTitle("Yes, I'm off", for: .normal)
+        alertPopupView.btnClose.setTitle("No, I'll stay", for: .normal)
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)

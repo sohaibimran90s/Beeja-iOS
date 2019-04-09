@@ -300,7 +300,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Good morning! It's time for Beeja.", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-MorningReminder"
                 //print(Int(Date().timeIntervalSince1970))
@@ -337,7 +337,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey: "Wake Up Min", arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "Its time for joy", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "Good afternoon / evening! It's time for Beeja.", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-AfterNoonReminder"
                 // print(Int(Date().timeIntervalSince1970))

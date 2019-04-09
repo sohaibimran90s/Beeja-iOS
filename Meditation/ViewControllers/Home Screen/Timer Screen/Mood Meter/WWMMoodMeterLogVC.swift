@@ -26,7 +26,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var meditationID = ""
     var levelID = ""
     var backgroundvedioView = WWMBackgroundVedioView()
-     var player: AVPlayer?
+    var player: AVPlayer?
+    var popupTitle: String = ""
     
     var alertPopup = WWMAlertPopUp()
 
@@ -132,7 +133,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         alertPopup = UINib(nibName: "WWMAlertPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertPopUp
         let window = UIApplication.shared.keyWindow!
         
-        
+        //2. If user has not selected mood and skipped but has entered journal inputs. E.g., Thanks, your journal entry has been recorded
+        alertPopup.lblTitle.text = self.popupTitle
         alertPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         UIView.transition(with: alertPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
             window.rootViewController?.view.addSubview(self.alertPopup)
@@ -200,6 +202,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         if self.txtViewLog.text != "" {
             
+            self.popupTitle = "Great job! Your journal has been updated."
             self.xibCall()
             
             
@@ -212,7 +215,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //                })
 //            }
         }else {
-            self.navigateToDashboard()
+            self.popupTitle = "Thanks! Your mood tracker has been updated."
+            self.xibCall()
+            //self.navigateToDashboard()
         }
         
     }

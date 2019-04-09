@@ -72,7 +72,7 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
     
     @IBAction func btnEmailMagicLinkAction(_ sender: UIButton) {
         if txtViewEmail.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailMessage, title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Oops, don't forget to enter your email", title: kAlertTitle)
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
@@ -92,6 +92,8 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
                 self.navigationController?.popViewController(animated: true)
                 WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
                 
+                //"Success Message: We've sent you a magic link to reset your password. Please check your inbox.
+               // Error Message: Oops, this email isn't registered with the Beeja App / Oops, looks like this email has been registered using Facebook or Google. Try logging in again via one of them."""
                 
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)

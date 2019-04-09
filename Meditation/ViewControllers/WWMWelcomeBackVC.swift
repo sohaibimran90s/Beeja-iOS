@@ -20,9 +20,12 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
         super.viewDidLoad()
         self.setupView()
     }
+    
+    //1. If user has selected mood meter but not has entered journal input. E.g. Thanks, your mood expression has been recorded.
     override func viewWillAppear(_ animated: Bool) {
         self.setNavigationBar(isShow: false, title: "")
     }
+    
     func setupView(){
         self.btnUseAnother.layer.borderWidth = 2.0
         self.btnUseAnother.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor

@@ -63,7 +63,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     @IBAction func btnSubmitAction(_ sender: Any) {
         if  txtViewLog.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Time to update your journal", title: kAlertTitle)
         }else {
             self.completeMeditationAPI()
         }

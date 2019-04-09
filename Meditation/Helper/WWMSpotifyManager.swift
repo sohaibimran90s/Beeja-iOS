@@ -160,7 +160,7 @@ class WWMSpotifyManager: NSObject, SPTAppRemoteDelegate, SPTAppRemotePlayerState
                 alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
                 
                 alertPopupView.lblTitle.text = kAlertTitle
-                alertPopupView.lblSubtitle.text = "Spotify App not installed.\nDownload from App Store?"
+                alertPopupView.lblSubtitle.text = "Oops. You need to install the Spotify app."
                // alertPopupView.btnClose.isHidden = true
                 
                 alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
