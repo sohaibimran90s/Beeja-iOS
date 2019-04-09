@@ -74,6 +74,7 @@ class WWMWebServices {
                 }
                 
             }else if error != nil {
+                
                 completionHandler([:], error, false)
             }else {
                 completionHandler([:], nil, false)

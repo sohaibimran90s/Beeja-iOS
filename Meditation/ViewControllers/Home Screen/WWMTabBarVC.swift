@@ -297,7 +297,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = kAlertTitle
-        alertPopupView.lblSubtitle.text = "Your connection may lost, please try again!"
+        alertPopupView.lblSubtitle.text = "Oh no, we've lost you! Please check your internet connection."
         alertPopupView.btnOK.setTitle("Retry", for: .normal)
         alertPopupView.btnClose.isHidden = true
         

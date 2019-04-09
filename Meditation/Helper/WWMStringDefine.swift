@@ -115,15 +115,15 @@ let Validation_QueryMessage:String!                    = "Oops. You need to ente
 
 
 let Validation_invalidEmailMessage:String!              = "Uh oh, that e-mail address isn't valid."
-let Validation_passwordMessage:String!                  = "Please enter your password (‘open sesame’ not allowed!)"
+let Validation_passwordMessage:String!                  = "Oops - don't forget to enter your password..."
 
 let Validation_JournalMessage:String!                  = "Please enter your meditation experience."
 
-let Validation_OldPasswordMessage:String!                  = "Oops, please enter your current password"
-let Validation_NewPasswordMessage:String!                  = "Oops, please enter your new password"
-let Validation_ConfirmPasswordMessage:String!                  = "Oops, please confirm new password"
-let Validation_PasswordMatchMessage:String!                  = "Oops, those passwords don't match. Please try again"
-let Validation_OldNewSamePassword:String!                  = "Oops, new password should not be same"
+let Validation_OldPasswordMessage:String!                  = "Oops. Please enter your current password."
+let Validation_NewPasswordMessage:String!                  = "Oops. Please enter your new password."
+let Validation_ConfirmPasswordMessage:String!                  = "Oops. Please confirm your new password"
+let Validation_PasswordMatchMessage:String!                  = "Uh oh, those passwords don't match. Please try again."
+let Validation_OldNewSamePassword:String!                  = "Oops. New password should not be same"
 let Validation_EmailName: String!                    = "Oops, please enter your name and email address."
 
 

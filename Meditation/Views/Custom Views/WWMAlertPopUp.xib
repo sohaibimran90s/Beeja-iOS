@@ -24,7 +24,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRa-tk-1V2">
                     <rect key="frame" x="41.333333333333343" y="279.66666666666669" width="331.33333333333326" height="176.66666666666669"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your meditation experience has been logged." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejd-Fq-Obw">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great stuff! Your meditation experience has been logged." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejd-Fq-Obw">
                             <rect key="frame" x="37.999999999999986" y="69" width="255.33333333333331" height="38.666666666666657"/>
                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                             <nil key="textColor"/>

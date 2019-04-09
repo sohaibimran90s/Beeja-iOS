@@ -148,7 +148,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     @IBAction func btnLoginAction(_ sender: UIButton) {
         if !isFromWelcomeBack {
             if txtViewEmail.text == "" {
-                WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailMessage, title: kAlertTitle)
+                WWMHelperClass.showPopupAlertController(sender: self, message: "Oops, don't forget to enter your email.", title: kAlertTitle)
                 return
             }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
                 WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
@@ -205,7 +205,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                 }else {
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
                 }
-                
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
 
@@ -213,6 +212,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             WWMHelperClass.dismissSVHud()
         }
     }
-    
+    //1. If user has selected mood meter but not has entered journal input. E.g. Thanks, your mood expression has been recorded.
+    //2. If user has not selected mood and skipped but has entered journal inputs. E.g., Thanks, your journal entry has been recorded
 }
 
