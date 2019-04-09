@@ -137,6 +137,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
+    func syncAddSessionData() {
+        let data = WWMHelperClass.fetchDB(dbName: "DBAddSession") as! [DBAddSession]
+        if data.count > 0 {
+            var arrData = [[String:Any]]()
+            for dict in data {
+                if let jsonResult = self.convertToDictionary(text: dict.addSession ?? "") {
+                    arrData.append(jsonResult)
+                }
+            }
+            let param = ["offline_data":arrData]
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+                    self.syncAddJournalData()
+                }
+            }
+            
+        }else {
+            self.syncAddJournalData()
+        }
+    }
+    
+    
+    
+    
     func syncAddJournalData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
         if data.count > 0 {

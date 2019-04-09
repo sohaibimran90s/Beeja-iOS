@@ -91,6 +91,8 @@
 		2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAEC21E38860009F0909 /* WWMLoginWithEmailVC.swift */; };
 		2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAEE21E47B58009F0909 /* WWMForgotPasswordVC.swift */; };
 		2E99BAF121E48605009F0909 /* WWMWelcomeBackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E99BAF021E48605009F0909 /* WWMWelcomeBackVC.swift */; };
+		2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9CCCB3225C67C5001465AD /* DBAddSession+CoreDataClass.swift */; };
+		2E9CCCB6225C67C5001465AD /* DBAddSession+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9CCCB4225C67C5001465AD /* DBAddSession+CoreDataProperties.swift */; };
 		2E9E879F223906D80096DD90 /* WWMImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */; };
 		2EA6DB0621C38A9D006A8E1D /* WWMMeditationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0521C38A9D006A8E1D /* WWMMeditationListVC.swift */; };
 		2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */; };
@@ -303,6 +305,8 @@
 		2E99BAEC21E38860009F0909 /* WWMLoginWithEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLoginWithEmailVC.swift; sourceTree = "<group>"; };
 		2E99BAEE21E47B58009F0909 /* WWMForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMForgotPasswordVC.swift; sourceTree = "<group>"; };
 		2E99BAF021E48605009F0909 /* WWMWelcomeBackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWelcomeBackVC.swift; sourceTree = "<group>"; };
+		2E9CCCB3225C67C5001465AD /* DBAddSession+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAddSession+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2E9CCCB4225C67C5001465AD /* DBAddSession+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAddSession+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMImagePickerManager.swift; sourceTree = "<group>"; };
 		2EA6DB0521C38A9D006A8E1D /* WWMMeditationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationListVC.swift; sourceTree = "<group>"; };
 		2EA6DB0721C3B287006A8E1D /* WWMMeditationLevelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationLevelVC.swift; sourceTree = "<group>"; };
@@ -442,6 +446,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				2E9CCCB3225C67C5001465AD /* DBAddSession+CoreDataClass.swift */,
+				2E9CCCB4225C67C5001465AD /* DBAddSession+CoreDataProperties.swift */,
 				2EA9E81C225614BA00E2D73D /* DBJournalData+CoreDataClass.swift */,
 				2EA9E81D225614BA00E2D73D /* DBJournalData+CoreDataProperties.swift */,
 				6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */,
@@ -1435,6 +1441,7 @@
 				2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */,
 				2EA6DB0C21C3C5A6006A8E1D /* WWMTabBarVC.swift in Sources */,
 				2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */,
+				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
@@ -1453,6 +1460,7 @@
 				2EE247E321E6315400857C25 /* CGSize.swift in Sources */,
 				2EB9072B21B65C88009891E8 /* WWMInitialVC.swift in Sources */,
 				2EEF9AE0221AEC900016A77C /* DBMeditationComplete+CoreDataProperties.swift in Sources */,
+				2E9CCCB6225C67C5001465AD /* DBAddSession+CoreDataProperties.swift in Sources */,
 				2E5CCE9021C79EA80085224B /* WWMMyProgressVC.swift in Sources */,
 				2EA6DB0621C38A9D006A8E1D /* WWMMeditationListVC.swift in Sources */,
 				2E8EFD9E22363D8E00B19950 /* WWMFinishTimerVC.swift in Sources */,
