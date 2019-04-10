@@ -119,7 +119,12 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 
                 
             }else {
-                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                if error?.localizedDescription == "The Internet connection appears to be offline."{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }else{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
+                
             }
             WWMHelperClass.dismissSVHud()
         }
@@ -162,7 +167,11 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     }
                 }
             }else {
-                WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                if error?.localizedDescription == "The Internet connection appears to be offline."{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }else{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
                 
             }
             WWMHelperClass.dismissSVHud()

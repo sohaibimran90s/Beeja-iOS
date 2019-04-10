@@ -126,7 +126,7 @@ let Validation_PasswordMatchMessage:String!                  = "Uh oh, those pas
 let Validation_OldNewSamePassword:String!                  = "Oops. New password should not be same"
 let Validation_EmailName: String!                    = "Oops, please enter your name and email address."
 
-
+let internetConnectionLostMsg: String!              = "Oh no, we've lost you! Please check your internet connection."
 
 // My Progress Journal
 
