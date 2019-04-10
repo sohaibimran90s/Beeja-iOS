@@ -627,11 +627,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBJournalList")
                 WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
                 WWMHelperClass.deletefromDb(dbName: "DBSettings")
+                WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+                
                 
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
                 loginManager.logOut()
                 GIDSignIn.sharedInstance()?.signOut()
+                GIDSignIn.sharedInstance()?.disconnect()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc

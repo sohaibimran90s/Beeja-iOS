@@ -192,7 +192,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 print(transaction.transactionIdentifier as Any)
                 let param = [
                     "plan_id" : transaction.payment.productIdentifier,
-                    "user_id" : "",
+                    "user_id" : self.appPreference.getUserID(),
                     "subscription_plan" : "monthly",
                     "date_time" : transaction.transactionDate as Any,
                     "transaction_id" : transaction.transactionIdentifier as Any,
