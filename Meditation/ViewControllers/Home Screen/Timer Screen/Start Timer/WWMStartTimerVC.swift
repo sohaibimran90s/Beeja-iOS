@@ -326,19 +326,6 @@ class WWMStartTimerVC: WWMBaseViewController {
         }, completion: nil)
     }
     
-    @IBAction func btnCancelAction(_ sender: Any) {
-        UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
-            self.viewPause.isHidden = true
-            self.isStop = false
-            self.runTimer()
-            if self.isAmbientSoundPlay {
-                self.playerAmbient.play()
-            }
-            self.spinnerImage.rotate360Degrees()
-        }, completion: nil)
-    }
-    
-    
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
         self.spinnerImage.layer.removeAllAnimations()
