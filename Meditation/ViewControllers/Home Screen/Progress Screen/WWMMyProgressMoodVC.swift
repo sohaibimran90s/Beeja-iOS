@@ -153,8 +153,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         self.getMoodProgress()
     }
     
-    
-    
     func setDateFromTooTo(){
         if self.type == "weekly"{
             dateFormatter.locale = NSLocale.current
@@ -178,11 +176,9 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             dateFormatter.dateFormat = "MMM yyyy"
             
             var date1 = Date()
-            
             self.currentDate = dateFormatter.string(from: date1)
-            print(currentDate)
-            
-            date1 = cal.date(byAdding: .day, value: -337, to: date1)!
+            date1 = cal.date(byAdding: .year, value: -1, to: date1)!
+            date1 = cal.date(byAdding: .month, value: -1, to: date1)!
             
             self.previousDate = dateFormatter.string(from: date1)
         }
