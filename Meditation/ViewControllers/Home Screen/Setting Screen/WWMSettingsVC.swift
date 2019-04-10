@@ -37,6 +37,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var settingData = DBSettings()
     var arrMeditationData = [DBMeditationData]()
     var selectedMeditationData  = DBMeditationData()
+    var isPlayerPlay = false
     
     var isSetMyOwn = false
     override func viewDidLoad() {
@@ -76,6 +77,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
             player.play()
+            isPlayerPlay = true
             
         } catch let error {
             print(error.localizedDescription)
@@ -85,9 +87,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     // MARK:- UITextField Delegate Methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        if self.player.currentTime > 0 {
-//           self.player.stop()
-//        }
+        if self.isPlayerPlay {
+           self.player.stop()
+            self.isPlayerPlay = false
+        }
         if isSetMyOwn {
             self.isSetMyOwn = false
             self.tblViewSetting.reloadData()
