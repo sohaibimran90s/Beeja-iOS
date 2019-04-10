@@ -22,7 +22,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var playerAV = AVAudioPlayer()
     var isChangingProgress: Bool = false
     var playListURIToBePlay: String!
-    var isPlaying = false
+    var rowTemp: Int = -2
     
     var communityData = WWMCommunityData()
     var observers = [NSKeyValueObservation]()
@@ -105,7 +105,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 //put your code here
                 
                 print(self.accessToken)
-                self.isPlaying = true
                 self.tblViewCommunity.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
             }
             
@@ -312,21 +311,34 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
                 
                 playListURIToBePlay = playlist["uri"] as? String
-                print(isPlaying)
-                if (isPlaying == true)
+                
+                let a = [indexPath.row]
+                print(a)
+                var row: Int = indexPath.row
+                
+                print(rowTemp)
+                print(row)
+                if(row != rowTemp)
                 {
-                    isPlaying = false
-                    self.handleNewSession()
+                    if (rowTemp == -2)
+                    {
+                        self.handleNewSession()
+                    }
+                    else{
+                        if(rowTemp == -1)
+                        {
+                            self.handleNewSession()
+                        }
+                        else{
+                            SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
+                            self.handleNewSession()
+                        }
+                    }
+                    rowTemp = row
                 }
                 else{
-                    isPlaying = true
-                    
+                    rowTemp = -1
                     SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
-                    
-                    //self.closeSession()
-                    
-                    
-                    
                 }
             }else if collectionView.tag == 1 {
                 if indexPath.row == 5 {
@@ -344,21 +356,34 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
                 
                 playListURIToBePlay = playlist["uri"] as? String
-                print(isPlaying)
-                if (isPlaying == true)
+                
+                let a = [indexPath.row]
+                print(a)
+                var row: Int = indexPath.row
+                
+                print(rowTemp)
+                print(row)
+                if(row != rowTemp)
                 {
-                    isPlaying = false
-                    self.handleNewSession()
+                    if (rowTemp == -2)
+                    {
+                        self.handleNewSession()
+                    }
+                    else{
+                        if(rowTemp == -1)
+                        {
+                            self.handleNewSession()
+                        }
+                        else{
+                            SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
+                            self.handleNewSession()
+                        }
+                    }
+                    rowTemp = row
                 }
                 else{
-                    isPlaying = true
-                    
+                    rowTemp = -1
                     SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
-                    
-                    //self.closeSession()
-                    
-                    
-                    
                 }
             }else if collectionView.tag == 1 {
                 let data = self.communityData.events[indexPath.row]
@@ -599,3 +624,4 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     
 }
+
