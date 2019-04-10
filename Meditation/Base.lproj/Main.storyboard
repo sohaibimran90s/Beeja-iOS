@@ -749,7 +749,7 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="7NQ-Es-6ZG">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="141.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="177" height="138.5"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                                                                 <integer key="value" value="5"/>
@@ -757,7 +757,10 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="gy7-gu-ZoH">
-                                                                        <rect key="frame" x="10" y="151.5" width="157" height="17"/>
+                                                                        <rect key="frame" x="10" y="148.5" width="157" height="20"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="20" id="Jrx-Nq-Zhi"/>
+                                                                        </constraints>
                                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -788,11 +791,31 @@
                                                         <outlet property="delegate" destination="XuZ-0t-Fyv" id="MbI-wR-Zy9"/>
                                                     </connections>
                                                 </collectionView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3h-Uy-ymC">
+                                                    <rect key="frame" x="73" y="130" width="219" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="0IX-63-uc3"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
+                                                    <state key="normal" title="Connect with Spotify">
+                                                        <color key="titleColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
+                                                    </variation>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="iNz-45-H8w" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HPA-uB-ISi" secondAttribute="trailing" constant="8" symbolic="YES" id="9v1-1u-oBQ"/>
+                                                <constraint firstItem="G3h-Uy-ymC" firstAttribute="centerX" secondItem="ESF-UT-9dT" secondAttribute="centerX" id="DFh-Sj-S6Y"/>
                                                 <constraint firstAttribute="trailing" secondItem="ESF-UT-9dT" secondAttribute="trailing" id="LEg-EW-tYg"/>
                                                 <constraint firstItem="HF8-Uw-xlI" firstAttribute="top" secondItem="iNz-45-H8w" secondAttribute="bottom" constant="-5" id="QOp-Ak-Tl3"/>
+                                                <constraint firstItem="G3h-Uy-ymC" firstAttribute="centerY" secondItem="ESF-UT-9dT" secondAttribute="centerY" id="RQj-f8-XkW"/>
                                                 <constraint firstItem="HPA-uB-ISi" firstAttribute="leading" secondItem="aPp-Ae-0dd" secondAttribute="leading" constant="25" id="V95-35-Id2"/>
                                                 <constraint firstAttribute="bottom" secondItem="ESF-UT-9dT" secondAttribute="bottom" constant="20" id="cSQ-0c-eOb"/>
                                                 <constraint firstItem="iNz-45-H8w" firstAttribute="centerY" secondItem="HPA-uB-ISi" secondAttribute="centerY" id="gOF-dn-BUo"/>
@@ -805,10 +828,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="G3h-Uy-ymC" firstAttribute="width" secondItem="bA1-qV-KcC" secondAttribute="width" multiplier="0.6" id="HkS-IJ-jhV"/>
+                                        </constraints>
                                         <connections>
+                                            <outlet property="btnConnectSpotify" destination="G3h-Uy-ymC" id="e2A-qN-H80"/>
                                             <outlet property="btnSpotifyPlayList" destination="iNz-45-H8w" id="kaG-GZ-57l"/>
                                             <outlet property="collectionViewCommunity" destination="ESF-UT-9dT" id="nrh-WL-4IU"/>
                                             <outlet property="layoutCollectionviewHeight" destination="iAh-gZ-WPU" id="UAZ-zc-6g4"/>
+                                            <outlet property="viewUnderLine" destination="HF8-Uw-xlI" id="2M1-cm-dgL"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellSecond" rowHeight="264" id="rdg-IC-nTD" customClass="WWMCommunityTableViewCell" customModule="Meditation" customModuleProvider="target">
@@ -997,7 +1025,7 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PlN-MZ-pXv">
                                                                         <rect key="frame" x="0.0" y="0.0" width="177" height="159.5"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Load more.." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gU4-VV-6xS">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gU4-VV-6xS">
                                                                                 <rect key="frame" x="10" y="70" width="157" height="20"/>
                                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -9366,8 +9394,8 @@
                                             <action selector="btnBackAction:" destination="2XL-c7-s8m" eventType="touchUpInside" id="yYi-ef-f04"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HashTag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rP-pJ-zlb">
-                                        <rect key="frame" x="156" y="15" width="63" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#hashtag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rP-pJ-zlb">
+                                        <rect key="frame" x="151.5" y="15" width="72" height="20"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

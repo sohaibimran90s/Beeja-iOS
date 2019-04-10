@@ -27,6 +27,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var communityData = WWMCommunityData()
     var observers = [NSKeyValueObservation]()
     
+    var boolConnectSpotify: Bool = false
+    
     @IBOutlet weak var tblViewCommunity: UITableView!
     var strMonthYear = ""
     override func viewDidLoad() {
@@ -35,7 +37,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
-        self.getCommunityAPI()
+        //self.getCommunityAPI()
         self.setUpNavigationBarForDashboard(title: "Community")
         // Do any additional setup after loading the view.
         
@@ -116,13 +118,17 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         
         let userDefaults = UserDefaults.standard
         if let sessionObj:AnyObject = userDefaults.object(forKey: "SpotifySession") as AnyObject? {
-            
+            boolConnectSpotify = true
             let sessionDataObj = sessionObj as! Data
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             
             self.session = firstTimeSession
             initializaPlayer(authSession: session)
+        }else {
+            boolConnectSpotify = false
         }
+        
+        self.getCommunityAPI()
         
     }
     
@@ -143,6 +149,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 {
                     self.currentPlaylist = jsonDict["items"] as! [Dictionary<String, Any>]
                     print(String(data: try! JSONSerialization.data(withJSONObject: jsonDict, options: .prettyPrinted), encoding: .utf8 )!)
+                    self.boolConnectSpotify = true
+                    self.tblViewCommunity.reloadData()
                     
                 } else {
                     print("bad json")
@@ -169,6 +177,25 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
+                
+                cell.btnConnectSpotify.layer.borderWidth = 2.0
+                cell.btnConnectSpotify.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+                //235 169
+                cell.btnConnectSpotify.addTarget(self, action: #selector(btnCheckSpotifyAction(_:)), for: .touchUpInside)
+                cell.btnConnectSpotify.isHidden = true
+                cell.btnSpotifyPlayList.isHidden = false
+                cell.viewUnderLine.isHidden = false
+                
+                if !boolConnectSpotify{
+                    cell.btnConnectSpotify.isHidden = false
+                    cell.btnSpotifyPlayList.isHidden = true
+                    cell.viewUnderLine.isHidden = true
+                }else{
+                    cell.btnConnectSpotify.isHidden = true
+                    cell.btnSpotifyPlayList.isHidden = false
+                    cell.viewUnderLine.isHidden = false
+                }
+                //**********
                 
             }else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellThird") as! WWMCommunityTableViewCell
@@ -427,6 +454,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         }else {
             
         }
+    }
+    
+    @IBAction func btnCheckSpotifyAction(_ sender: Any){
+        self.CallingFuncs()
     }
     
     @IBAction func btnViewAllEventsAction(_ sender: Any) {

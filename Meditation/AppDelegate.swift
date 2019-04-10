@@ -263,7 +263,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     
                     if error != nil {
                         print(error?.localizedDescription ?? "error")
-                        return
+                        //return
                     }
                     if (session != nil) {
                         let userDefaults = UserDefaults.standard
@@ -271,11 +271,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         print(sessionData)
                         userDefaults.set(sessionData, forKey: "SpotifySession")
                         userDefaults.synchronize()
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
+                        
                     }
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
                     
                 })
                 return true
+            }else {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
             }
         }else {
             return GIDSignIn.sharedInstance().handle(url,

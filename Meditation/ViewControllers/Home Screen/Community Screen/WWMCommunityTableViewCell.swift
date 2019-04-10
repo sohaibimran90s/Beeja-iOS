@@ -13,6 +13,9 @@ class WWMCommunityTableViewCell: UITableViewCell {
     @IBOutlet weak var layoutCollectionviewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewCommunity: UICollectionView!
     @IBOutlet weak var btnSpotifyPlayList: UIButton!
+    @IBOutlet weak var btnConnectSpotify: UIButton!
+    @IBOutlet weak var viewUnderLine: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
