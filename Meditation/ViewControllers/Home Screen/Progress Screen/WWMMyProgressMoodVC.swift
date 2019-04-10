@@ -17,23 +17,31 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     var moodProgressDurationView = WWMMoodProgressDurationView()
     var moodProgressData = WWMMoodProgressData()
     
+    //weekly
     var type: String = "weekly"
     
     var days1 = [Int]()
     var daysStringArray: [String] = []
     var months1 = [Int]()
     
+    var dateFormatter = DateFormatter()
+    let cal = Calendar.current
+
+    var currentDate: String = ""
+    var previousDate: String = ""
     
     @IBOutlet weak var tblMoodProgress: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        self.setDateFromTooTo()
         
-        
-        let cal = Calendar.current
         var date = cal.startOfDay(for: Date())
         var days = [Int]()
         var months = [Int]()
+        
+        
         for _ in 1 ... 7 {
             let day = cal.component(.day, from: date)
             let month = cal.component(.month, from: date)
@@ -47,8 +55,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             months1.append(months[i])
         }
         daysStringArray = days1.map { String($0) }
-        print(days1)
-        print(months1)
+        //print(days1)
+        //print(months1)
 
         self.getMoodProgress()
         
@@ -121,6 +129,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     @IBAction func btnWeeKAction(_ sender: Any) {
         self.type = "weekly"
+        
+        self.setDateFromTooTo()
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
@@ -128,6 +138,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     @IBAction func btnMonthAction(_ sender: Any) {
         
         self.type = "monthly"
+        
+        self.setDateFromTooTo()
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
@@ -135,9 +147,50 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     @IBAction func btnYearAction(_ sender: Any) {
         
         self.type = "yearly"
+        
+        self.setDateFromTooTo()
         moodProgressDurationView.removeFromSuperview()
         self.getMoodProgress()
     }
+    
+    
+    
+    func setDateFromTooTo(){
+        if self.type == "weekly"{
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "dd MMM"
+            
+            var date1 = Date()
+            self.currentDate = dateFormatter.string(from: date1)
+            date1 = cal.date(byAdding: .day, value: -6, to: date1)!
+            self.previousDate = dateFormatter.string(from: date1)
+        }else if self.type == "monthly"{
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "dd MMM"
+            
+            var date1 = Date()
+            self.currentDate = dateFormatter.string(from: date1)
+            let date2 = cal.date(byAdding: .month, value: -1, to: date1)!
+            date1  = cal.date(byAdding: .day, value: -1, to: date2)!
+            self.previousDate = dateFormatter.string(from: date1)
+        }else{
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "MMM yyyy"
+            
+            var date1 = Date()
+            
+            self.currentDate = dateFormatter.string(from: date1)
+            print(currentDate)
+            
+            date1 = cal.date(byAdding: .day, value: -337, to: date1)!
+            
+            self.previousDate = dateFormatter.string(from: date1)
+        }
+        
+        print("\(self.currentDate).... \(self.previousDate)")
+    }
+    
+    
 
     // MARK:- UITable View Delegates Methods
     
@@ -155,7 +208,9 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellGraphChart") as! WWMProgressMoodPieTVC
             
             let chartView = cell.viewWithTag(201) as! LineChartView
+            let lblMoodTrackerDate = cell.viewWithTag(207) as! UILabel
             
+            lblMoodTrackerDate.text = "\(self.previousDate) - \(self.currentDate)"
             //chartView.delegate = self as! ChartViewDelegate
             
             chartView.chartDescription?.enabled = false
@@ -191,19 +246,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             chartView.viewPortHandler.setMaximumScaleY(4)
             
             //chartView.dragDecelerationEnabled = false
-            
-            
-            
-            
-           
-            
-            
-            
-            
-            
-            
-            
-            
             
             
           //  chartView.xAxis.gridLineDashLengths = [10, 10]

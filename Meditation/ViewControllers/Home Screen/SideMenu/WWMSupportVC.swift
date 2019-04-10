@@ -48,8 +48,10 @@ class WWMSupportVC: WWMBaseViewController {
     
     @IBAction func btnSubmitAction(_ sender: UIButton) {
         
-        if  txtViewName.text == "" {
+        if txtViewName.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
+        }else if txtViewName.text == "You" || txtViewName.text == "you"{
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Oops. Please write your valid name", title: kAlertTitle)
         }else if (txtViewName.text?.count)! < 3 {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_MinimumCharacter, title: kAlertTitle)
         }else if txtViewEmail.text == "" {
