@@ -209,6 +209,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.communityData.events.count == 0 {
             if collectionView.tag == 1 {
+                if self.communityData.hashtags.count > 6 {
+                    return 6
+                }
                 return self.communityData.hashtags.count
             }else {
                 print(self.currentPlaylist?.count ?? 0)
@@ -221,6 +224,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }
                 return self.communityData.events.count
             }else if collectionView.tag == 2 {
+                if self.communityData.hashtags.count > 6 {
+                    return 6
+                }
                 return self.communityData.hashtags.count
             }else {
                 return self.currentPlaylist?.count ?? 0
@@ -254,6 +260,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     
                 }
             }else if collectionView.tag == 1 {
+                if indexPath.row == 5 {
+                    cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellMore", for: indexPath) as! WWMCommunityCollectionViewCell
+                    return cell
+                }
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "#TagCell", for: indexPath) as! WWMCommunityCollectionViewCell
                 let data = self.communityData.hashtags[indexPath.row]
                 cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
@@ -280,6 +290,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 cell.lblTitle.text = data.eventTitle
                 
             }else if collectionView.tag == 2 {
+                if indexPath.row == 5 {
+                    cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellMore", for: indexPath) as! WWMCommunityCollectionViewCell
+                    return cell
+                }
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "#TagCell", for: indexPath) as! WWMCommunityCollectionViewCell
                 let data = self.communityData.hashtags[indexPath.row]
                 cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
@@ -290,30 +304,81 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView.tag == 0 {
-            let playlist = self.currentPlaylist![indexPath.row]
-            print("\(playlist)")
-            
-            print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
-            
-            playListURIToBePlay = playlist["uri"] as? String
-            print(isPlaying)
-            if (isPlaying == true)
-            {
-                isPlaying = false
-                self.handleNewSession()
+        if self.communityData.events.count == 0 {
+            if collectionView.tag == 0 {
+                let playlist = self.currentPlaylist![indexPath.row]
+                print("\(playlist)")
+                
+                print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
+                
+                playListURIToBePlay = playlist["uri"] as? String
+                print(isPlaying)
+                if (isPlaying == true)
+                {
+                    isPlaying = false
+                    self.handleNewSession()
+                }
+                else{
+                    isPlaying = true
+                    
+                    SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
+                    
+                    //self.closeSession()
+                    
+                    
+                    
+                }
+            }else if collectionView.tag == 1 {
+                if indexPath.row == 5 {
+                    let data = self.communityData.hashtags
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllHashTagsVC") as! WWMCommunityAllHashTagsVC
+                    vc.arrAllHashTag = data
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
-            else{
-                isPlaying = true
+        }else {
+            if collectionView.tag == 0 {
+                let playlist = self.currentPlaylist![indexPath.row]
+                print("\(playlist)")
                 
-                SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
+                print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
                 
-                //self.closeSession()
+                playListURIToBePlay = playlist["uri"] as? String
+                print(isPlaying)
+                if (isPlaying == true)
+                {
+                    isPlaying = false
+                    self.handleNewSession()
+                }
+                else{
+                    isPlaying = true
+                    
+                    SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
+                    
+                    //self.closeSession()
+                    
+                    
+                    
+                }
+            }else if collectionView.tag == 1 {
+                let data = self.communityData.events[indexPath.row]
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
                 
+                vc.strUrl = data.url
+                vc.strType = data.eventTitle
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if collectionView.tag == 2 {
                 
+                if indexPath.row == 5 {
+                    let data = self.communityData.hashtags
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllHashTagsVC") as! WWMCommunityAllHashTagsVC
+                    vc.arrAllHashTag = data
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
                 
             }
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -340,7 +405,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     }
     
     @IBAction func btnViewAllEventsAction(_ sender: Any) {
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllEventsVC") as! WWMCommunityAllEventsVC
+        vc.arrAllEvent = self.communityData.events
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     var imageData = Data()
     @IBAction func btnUploadHashTagsAction(_ sender: Any) {
