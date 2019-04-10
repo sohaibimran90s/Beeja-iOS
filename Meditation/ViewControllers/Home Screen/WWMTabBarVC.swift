@@ -165,6 +165,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         settingDB.finishChime = json["finishChime"] as? String ?? ""
         settingDB.intervalChime = json["intervalChime"] as? String ?? ""
         settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
+        settingDB.isMilestoneAndRewards = json["IsMilestoneAndRewards"] as? Bool ?? false
         settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
         settingDB.moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
         settingDB.morningReminderTime = json["MorningReminderTime"] as? String ?? ""

@@ -23,6 +23,7 @@ extension DBSettings {
     @NSManaged public var finishChime: String?
     @NSManaged public var intervalChime: String?
     @NSManaged public var isAfterNoonReminder: Bool
+    @NSManaged public var isMilestoneAndRewards: Bool
     @NSManaged public var isMorningReminder: Bool
     @NSManaged public var meditationTime: String?
     @NSManaged public var moodMeterEnable: Bool
