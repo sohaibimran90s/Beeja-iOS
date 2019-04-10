@@ -64,7 +64,12 @@ class WWMAddJournalVC: WWMBaseViewController {
                 self.dismiss(animated: true, completion: nil)
             }else {
                 if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
                 }
             }
             WWMHelperClass.dismissSVHud()
