@@ -28,7 +28,10 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         super.viewDidLoad()
         self.delegate = self
         setupView()
-        WWMHelperClass.showSVHud()
+        DispatchQueue.main.async {
+            WWMHelperClass.showSVHud()
+        }
+        
         //self.getUserProfileData()
         
         if !reachable.isConnectedToNetwork() {
