@@ -176,6 +176,8 @@
 		2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */; };
 		57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
+		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
+		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
 		61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442938224B4BC200C6682C /* WWMPromptMsg.swift */; };
 		6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */; };
 		6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293C224B72D400C6682C /* WWMAlertPopUp.xib */; };
@@ -393,6 +395,8 @@
 		2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBJournalList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
+		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
+		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
 		61442938224B4BC200C6682C /* WWMPromptMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPromptMsg.swift; sourceTree = "<group>"; };
 		6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMPromptMsg.xib; sourceTree = "<group>"; };
 		6144293C224B72D400C6682C /* WWMAlertPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertPopUp.xib; sourceTree = "<group>"; };
@@ -655,6 +659,8 @@
 				2E9E879E223906D70096DD90 /* WWMImagePickerManager.swift */,
 				2E4966162218089D00BC6219 /* WWMCommunityCollectionViewCell.swift */,
 				2E496618221808CD00BC6219 /* WWMCommunityTableViewCell.swift */,
+				613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */,
+				613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */,
 			);
 			path = "Community Screen";
 			sourceTree = "<group>";
@@ -1414,6 +1420,7 @@
 				2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */,
 				2EC81C5421E7460F003B0EEE /* WWMMoodMeterVC.swift in Sources */,
 				2EEF9AE4221AEC900016A77C /* DBMoodMeter+CoreDataProperties.swift in Sources */,
+				613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */,
 				2EE247DD21E6315400857C25 /* PieSliceDelegate.swift in Sources */,
 				2EE247E121E6315400857C25 /* PieChart.swift in Sources */,
 				2E25CDC522267DAF002BDE15 /* WWMJournalProgressData.swift in Sources */,
@@ -1508,6 +1515,7 @@
 				2E9E879F223906D80096DD90 /* WWMImagePickerManager.swift in Sources */,
 				2EAE29B722326452008E4361 /* WWMMoodProgressCVC.swift in Sources */,
 				2E4A4730220D84E600DF0C68 /* WWMProgressMoodPieTVC.swift in Sources */,
+				613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */,
 				2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */,
 				61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */,
 				6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */,

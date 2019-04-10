@@ -42,9 +42,9 @@ class WWMCommunityEventsData: NSObject {
     
     
     init(json:[String:Any]) {
-        eventTitle = json["eventTitle"] as? String ?? ""
-        url = json["URL"] as? String ?? ""
-        imageUrl = json["imageUrl"] as? String ?? ""
+        eventTitle = json["event_title"] as? String ?? ""
+        url = json["url"] as? String ?? ""
+        imageUrl = json["image_url"] as? String ?? ""
     }
     
 }
