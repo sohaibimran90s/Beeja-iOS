@@ -53,6 +53,7 @@
         <attribute name="finishChime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="intervalChime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isAfterNoonReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isMilestoneAndRewards" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMorningReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="meditationTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="moodMeterEnable" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
@@ -70,6 +71,7 @@
         <attribute name="restTime" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DBAddSession" positionX="-18" positionY="135" width="128" height="60"/>
         <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="120"/>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
@@ -78,8 +80,7 @@
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
         <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="120"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
-        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="255"/>
+        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="270"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
-        <element name="DBAddSession" positionX="-18" positionY="135" width="128" height="60"/>
     </elements>
 </model>

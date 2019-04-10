@@ -140,7 +140,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     self.selectedLevel_Id = result1["level_id"] as! Int
                     if self.isFromSetting {
                         self.saveDataToSetting()
-                         WWMHelperClass.dismissSVHud()
+                         //WWMHelperClass.dismissSVHud()
                     }else {
                        self.meditationApi()
                     }

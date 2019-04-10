@@ -55,7 +55,7 @@ class WWMBaseViewController: UIViewController {
         
         let leftTitle = UIButton.init()
         if title == "Timer" {
-            leftTitle.setTitle("  Enable Flight Mode", for: .normal)
+            leftTitle.setTitle("  Toggle Flight Mode", for: .normal)
             leftTitle.setTitleColor(UIColor.init(displayP3Red: 0/255, green: 18/255, blue: 82/255, alpha: 0.45), for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax", size: 14)
             leftTitle.setImage(UIImage.init(named: "FlightMode_Icon"), for: .normal)

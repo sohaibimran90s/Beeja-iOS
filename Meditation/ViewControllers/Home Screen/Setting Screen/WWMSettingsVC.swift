@@ -24,7 +24,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-    let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
+    let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
     @IBOutlet weak var tblViewSetting: UITableView!
     @IBOutlet weak var containerView: UIView!
@@ -37,6 +37,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var settingData = DBSettings()
     var arrMeditationData = [DBMeditationData]()
     var selectedMeditationData  = DBMeditationData()
+    var isPlayerPlay = false
     
     var isSetMyOwn = false
     override func viewDidLoad() {
@@ -76,6 +77,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
             player.play()
+            isPlayerPlay = true
             
         } catch let error {
             print(error.localizedDescription)
@@ -85,9 +87,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     // MARK:- UITextField Delegate Methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        if self.player.currentTime > 0 {
-//           self.player.stop()
-//        }
+        if self.isPlayerPlay {
+           self.player.stop()
+            self.isPlayerPlay = false
+        }
         if isSetMyOwn {
             self.isSetMyOwn = false
             self.tblViewSetting.reloadData()
@@ -290,7 +293,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 cell.lblTitle.text = "Reminders"
                 cell.lblDropDown.isHidden = true
                 cell.imgViewDropDown.isHidden = true
-            }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5{
+            }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
                 
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
                 cell.lblTitle.text = self.arrSettings[indexPath.row-1]
@@ -302,6 +305,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     cell.btnSwitch.isOn = settingData.isAfterNoonReminder
                 }else if indexPath.row == 5 {
                     cell.btnSwitch.isOn = settingData.moodMeterEnable
+                }else if indexPath.row == 6 {
+                    cell.btnSwitch.isOn = settingData.isMilestoneAndRewards
                 }
                 
             }else if indexPath.row == 2 || indexPath.row == 4  {
@@ -375,28 +380,28 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             
         }else if indexPath.section == 2 {
-            if indexPath.row == 6 {
-                let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=id1185954064"
+            if indexPath.row == 7 {
+                let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                 
                 let url = URL.init(string: iOSAppStoreURLFormat)
                 
                 if UIApplication.shared.canOpenURL(url!){
                     UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                 }
-            }else if indexPath.row == 7 {
+            }else if indexPath.row == 8 {
                 let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                let textToShare = "Be more connected with the Beeja app... \(String(describing: url?.absoluteString))"
+                let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
                 let imageToShare = [textToShare] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.view
                 self.present(activityViewController, animated: true, completion: nil)
-            }else if indexPath.row == 8 {
+            }else if indexPath.row == 9 {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
                 self.navigationController?.pushViewController(vc, animated: true)
-            }else if indexPath.row == 9 || indexPath.row == 10 || indexPath.row == 11 {
+            }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
                 self.openWebView(index: indexPath.row)
                 
-            }else if indexPath.row == 12{
+            }else if indexPath.row == 13{
                 self.logout()
             }
         }
@@ -494,13 +499,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func openWebView(index:Int) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         switch index {
-        case 10:
+        case 11:
             vc.strUrl = URL_PrivacyPolicy
             vc.strType = "Privacy Policy"
-        case 11:
+        case 12:
             vc.strUrl = URL_TermsnCondition
             vc.strType = "Terms & Conditions"
-        case 9:
+        case 10:
             vc.strUrl = URL_Help
             vc.strType = "Help"
         default:
@@ -531,6 +536,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             callPushNotification()
         }else if btn.tag == 5 {
             settingData.moodMeterEnable = btn.isOn
+        }else if btn.tag == 6 {
+            settingData.isMilestoneAndRewards = btn.isOn
         }
         self.settingAPI()
         self.tblViewSetting.reloadData()
@@ -573,7 +580,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         "levels":levelDic] as [String : Any]
             meditation_data.append(data)
         }
-        
+        //"IsMilestoneAndRewards"
         let group = [
             "startChime": self.settingData.startChime!,
             "endChime": self.settingData.endChime!,
@@ -582,6 +589,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             "ambientSound": self.settingData.ambientChime!,
             "moodMeterEnable": self.settingData.moodMeterEnable,
             "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,

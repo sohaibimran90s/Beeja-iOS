@@ -156,6 +156,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             let data = ["meditation_id":dic.meditationId,
                         "meditation_name":dic.meditationName!,
                         "isSelected":dic.isMeditationSelected,
+                        "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]
             meditation_data.append(data)
         }
@@ -168,6 +169,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "ambientSound": self.settingData.ambientChime!,
             "moodMeterEnable": self.settingData.moodMeterEnable,
             "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
