@@ -60,7 +60,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var isLeft = false
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
@@ -77,13 +81,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 }
             }
         }
-        
-
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         self.setUpUI()
     }
     

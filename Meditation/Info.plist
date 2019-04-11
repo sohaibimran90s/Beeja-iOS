@@ -77,8 +77,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Current location is required in app to fetch the correct content</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Current location is required in app to fetch the correct content</string>
 	<key>UILaunchStoryboardName</key>
