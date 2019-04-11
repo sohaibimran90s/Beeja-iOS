@@ -29,8 +29,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     var boolConnectSpotify: Bool = false
     
+    //var flagFirst = false
     @IBOutlet weak var tblViewCommunity: UITableView!
     var strMonthYear = ""
+    
+    var notificationCenter = NotificationCenter.default
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let dateFormatter = DateFormatter()
@@ -62,6 +67,18 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
          }
          
          ]*/
+        
+        notificationCenter.addObserver(self, selector: #selector(appMovedFromBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        notificationCenter.removeObserver(self)
+    }
+    
+    
+    @objc func appMovedFromBackground() {
+        print("App moved from background!")
+        self.getCommunityAPI()
         
     }
     

@@ -16,18 +16,22 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBOutlet weak var viewAnnually: UIView!
     @IBOutlet weak var viewMonthly: UIView!
     
-
+    @IBOutlet weak var lblBilledText: UILabel!
     var selectedProductIndex = 1
     var transactionInProgress = false
     var productsArray = [SKProduct]()
     var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub"]
+    
+    let reachable = Reachabilities()
+    var subscriptionAmount: String = "41.99"
+    var subscriptionPlan: String = "Annually"
     
     //var alertPopupView = WWMAlertController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        WWMHelperClass.showSVHud()
+       // WWMHelperClass.showSVHud()
         self.setNavigationBar(isShow: false, title: "")
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
@@ -106,16 +110,24 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
-        SKPaymentQueue.default().add(payment)
-        self.transactionInProgress = true
-        WWMHelperClass.showSVHud()
+        if  self.productsArray.count > 0 {
+            let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
+            SKPaymentQueue.default().add(payment)
+            self.transactionInProgress = true
+            WWMHelperClass.showSVHud()
+        }else {
+            self.requestProductInfo()
+        }
+        
     }
     
     // MARK:- UIButton Action
     
     
     @IBAction func btnMonthlyAction(sender: AnyObject) {
+        self.subscriptionPlan = "Monthly"
+        self.subscriptionAmount = "5.99"
+        self.lblBilledText.text = ""
         self.viewAnnually.isHidden = true
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = false
@@ -130,6 +142,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnAnnuallyAction(sender: AnyObject) {
+        self.subscriptionPlan = "Annually"
+        self.subscriptionAmount = "41.99"
+        self.lblBilledText.text = "*Billed as one payment of £41.99"
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = true
@@ -143,6 +158,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnLifeTimeAction(sender: AnyObject) {
+        self.subscriptionPlan = "Lifetime"
+        self.subscriptionAmount = "108"
+        self.lblBilledText.text = ""
         self.viewAnnually.isHidden = true
         self.viewLifeTime.isHidden = false
         self.viewMonthly.isHidden = true
@@ -157,8 +175,12 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnContinuePaymentAction(sender: AnyObject) {
+         if reachable.isConnectedToNetwork() {
+            self.showActions()
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
         
-        self.showActions()
     }
     
     
@@ -179,7 +201,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         if response.invalidProductIdentifiers.count != 0 {
             print(response.invalidProductIdentifiers.description)
         }
-        WWMHelperClass.dismissSVHud()
+       // WWMHelperClass.dismissSVHud()
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
@@ -193,10 +215,10 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 let param = [
                     "plan_id" : transaction.payment.productIdentifier,
                     "user_id" : self.appPreference.getUserID(),
-                    "subscription_plan" : "monthly",
+                    "subscription_plan" : self.subscriptionPlan,
                     "date_time" : transaction.transactionDate as Any,
                     "transaction_id" : transaction.transactionIdentifier as Any,
-                    "amount" : ""
+                    "amount" : self.subscriptionAmount
                     ] as [String : Any]
                 
                 self.subscriptionSucessAPI(param: param)

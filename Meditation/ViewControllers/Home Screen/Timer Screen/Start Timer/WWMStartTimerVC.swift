@@ -130,7 +130,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         gradient.drawsAsynchronously = true
         
         
-        animateGradient()
+        animateGradient(animate: true)
         self.spinnerImage.rotate360Degrees()
         //self.spinnerImage.layer.removeAllAnimations()
         //self.rotationImage()
@@ -309,6 +309,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = true
             self.playerAmbient.stop()
             self.spinnerImage.layer.removeAllAnimations()
+            self.animateGradient(animate: false)
         }, completion: nil)
     }
     // MARK:- Button Action
@@ -323,6 +324,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             }
             
             self.spinnerImage.rotate360Degrees()
+            self.animateGradient(animate: true)
         }, completion: nil)
     }
     
@@ -348,7 +350,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        
+        animateGradient(animate: true)
         self.isStop = false
         self.runTimer()
         if self.isAmbientSoundPlay {
@@ -389,7 +391,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.spinnerImage.layer.removeAllAnimations()
         }
         
-        
+        animateGradient(animate: false)
         
         self.xibCall()
         
@@ -486,7 +488,7 @@ class WWMStartTimerVC: WWMBaseViewController {
 //
 //    }
     
-    func animateGradient() {
+    func animateGradient(animate: Bool) {
         if currentGradient < gradientSet.count - 1 {
             currentGradient += 1
         } else {
@@ -499,8 +501,15 @@ class WWMStartTimerVC: WWMBaseViewController {
         gradientChangeAnimation.toValue = gradientSet[currentGradient]
         gradientChangeAnimation.fillMode = CAMediaTimingFillMode.both
         gradientChangeAnimation.isRemovedOnCompletion = false
-        gradient.add(gradientChangeAnimation, forKey: "colorChange")
-        self.view.layer.insertSublayer(gradient, at: 0)
+        gradientChangeAnimation.delegate = self
+        if animate{
+            gradient.add(gradientChangeAnimation, forKey: "colorChange")
+            self.view.layer.insertSublayer(gradient, at: 0)
+        }else{
+            gradient.removeFromSuperlayer()
+        }
+        
+        
     }
     
 }
@@ -511,9 +520,14 @@ class WWMStartTimerVC: WWMBaseViewController {
 
 extension WWMStartTimerVC: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            gradient.colors = gradientSet[currentGradient]
-            animateGradient()
+        print(flag)
+        if flag == true {
+            //gradient.colors = gradientSet[currentGradient]
+            animateGradient(animate: true)
+        }else{
+            
+            //gradient.colors = gradientSet[currentGradient]
+            animateGradient(animate: false)
         }
     }
 }
