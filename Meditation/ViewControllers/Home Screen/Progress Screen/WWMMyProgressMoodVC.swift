@@ -168,8 +168,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             
             var date1 = Date()
             self.currentDate = dateFormatter.string(from: date1)
-            let date2 = cal.date(byAdding: .month, value: 1, to: date1)!
-            date1  = cal.date(byAdding: .day, value: -1, to: date2)!
+            let date2 = cal.date(byAdding: .month, value: -1, to: date1)!
+            date1  = cal.date(byAdding: .day, value: 1, to: date2)!
             self.previousDate = dateFormatter.string(from: date1)
         }else{
             dateFormatter.locale = NSLocale.current
