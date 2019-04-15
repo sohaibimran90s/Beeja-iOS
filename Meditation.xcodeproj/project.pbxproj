@@ -63,6 +63,8 @@
 		2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE28E22087A0F00059396 /* singleLineLeft.png */; };
 		2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE28F22087A1000059396 /* doubleLineRight.png */; };
 		2E4CE29F2209A03400059396 /* dataClock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE29E2209A03400059396 /* dataClock.json */; };
+		2E59340A2264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */; };
+		2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */; };
 		2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */; };
 		2E5CCE8E21C79E840085224B /* WWMSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */; };
 		2E5CCE9021C79EA80085224B /* WWMMyProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */; };
@@ -278,6 +280,8 @@
 		2E4CE28E22087A0F00059396 /* singleLineLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = singleLineLeft.png; sourceTree = "<group>"; };
 		2E4CE28F22087A1000059396 /* doubleLineRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doubleLineRight.png; sourceTree = "<group>"; };
 		2E4CE29E2209A03400059396 /* dataClock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dataClock.json; sourceTree = "<group>"; };
+		2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomDashboardVC.swift; sourceTree = "<group>"; };
+		2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomNavVC.swift; sourceTree = "<group>"; };
 		2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerHomeVC.swift; sourceTree = "<group>"; };
 		2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingsVC.swift; sourceTree = "<group>"; };
 		2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressVC.swift; sourceTree = "<group>"; };
@@ -646,6 +650,8 @@
 			isa = PBXGroup;
 			children = (
 				2E5CCE9121C79EBE0085224B /* WWMWisdomVC.swift */,
+				2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */,
+				2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */,
 			);
 			path = "Wisdom screen";
 			sourceTree = "<group>";
@@ -1374,6 +1380,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1394,6 +1401,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1461,6 +1469,7 @@
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
+				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,
 				2E2F8A3221BE6FB700516AFF /* WWMBaseViewController.swift in Sources */,
@@ -1525,6 +1534,7 @@
 				61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */,
 				2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */,
 				2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */,
+				2E59340A2264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift in Sources */,
 				2EA9E81F225614BB00E2D73D /* DBJournalData+CoreDataProperties.swift in Sources */,
 				2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */,
 				2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */,

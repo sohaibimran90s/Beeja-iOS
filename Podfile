@@ -21,6 +21,7 @@ target 'Meditation' do
 	pod 'Crashlytics'
 	pod 'SwiftyRSA'
 	pod 'ReachabilitySwift'
+	pod 'XLPagerTabStrip'
 
 
   target 'MeditationTests' do
