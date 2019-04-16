@@ -12,6 +12,7 @@ import XLPagerTabStrip
 class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var tabBarView: ButtonBarView!
+    var arrWisdomList = [WWMWisdomData]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,15 +55,11 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
-        for index in 0..<3 {
+        
+        for data in self.arrWisdomList {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomVC") as! WWMWisdomVC
-            vc.itemInfo = "All"
-            if index == 1 {
-                vc.itemInfo = "Practical"
-            }else if index == 2 {
-                vc.itemInfo = "Spiritual"
-            }
-            
+            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+            vc.wisdomData = data
             arrVC.add(vc)
         }
         return arrVC as! [UIViewController]

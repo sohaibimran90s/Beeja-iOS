@@ -8,13 +8,14 @@
 
 import UIKit
 import XLPagerTabStrip
+import AVKit
 
 class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var itemInfo: IndicatorInfo = "View"
+    var wisdomData = WWMWisdomData()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
     }
     
@@ -30,24 +31,32 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return self.wisdomData.cat_VideoList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = WWMCommunityCollectionViewCell()
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
-        //let data = self.arrAllEvent[indexPath.row]
+        let data = self.wisdomData.cat_VideoList[indexPath.row]
         
-       // cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-       // cell.lblTitle.text = data.eventTitle
+        cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        cell.lblTitle.text = data.video_Name
         
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       // let data = self.arrAllEvent[indexPath.row]
+       let data = self.wisdomData.cat_VideoList[indexPath.row]
+        
+        let videoURL = URL(string: data.video_Url)
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -55,5 +64,4 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         return CGSize.init(width: width, height: width)
     }
     
-
 }

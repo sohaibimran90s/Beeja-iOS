@@ -73,6 +73,7 @@
 		2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */; };
 		2E5D1A5E21EF461C00AEB3BC /* DataCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D1A5D21EF461C00AEB3BC /* DataCrypto.swift */; };
 		2E5D1A6221EF4ED600AEB3BC /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D1A6121EF4ED600AEB3BC /* CryptLib.m */; };
+		2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */; };
 		2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */; };
 		2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */; };
 		2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */; };
@@ -292,6 +293,7 @@
 		2E5D1A5F21EF4ED500AEB3BC /* Meditation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Meditation-Bridging-Header.h"; sourceTree = "<group>"; };
 		2E5D1A6021EF4ED600AEB3BC /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
 		2E5D1A6121EF4ED600AEB3BC /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
+		2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomData.swift; sourceTree = "<group>"; };
 		2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMResetPasswordVC.swift; sourceTree = "<group>"; };
 		2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSupportVC.swift; sourceTree = "<group>"; };
 		2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 			isa = PBXGroup;
 			children = (
 				2E49661A221815E400BC6219 /* WWMCommunityData.swift */,
+				2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */,
 				2EC81C5521E746A3003B0EEE /* WWMMoodMeterData.swift */,
 				2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */,
 				2E4CE28A2208599900059396 /* WWMSatsProgressData.swift */,
@@ -1503,6 +1506,7 @@
 				6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */,
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
+				2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */,
 				2E4B1B9E21B5044B002F8A25 /* AppDelegate.swift in Sources */,
 				2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */,
 				2EEF9AE7221AEC900016A77C /* DBMeditationComplete+CoreDataClass.swift in Sources */,

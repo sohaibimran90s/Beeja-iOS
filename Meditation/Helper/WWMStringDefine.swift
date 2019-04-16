@@ -101,6 +101,8 @@ let URL_SETTINGS                  = URL_BASE + "settings"//
 
 let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
+let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
+
 
 
 

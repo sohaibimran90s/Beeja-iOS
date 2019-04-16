@@ -11,18 +11,53 @@ import UIKit
 class WWMWisdomNavVC: WWMBaseViewController {
 
     @IBOutlet weak var containerView: UIView!
+    
+    var arrWisdomList = [WWMWisdomData]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setUpNavigationBarForDashboard(title: "Wisdom")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomDashboardVC") as! WWMWisdomDashboardVC
-        self.addChild(vc)
-        vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-        self.containerView.addSubview((vc.view)!)
-        vc.didMove(toParent: self)
+        self.getWisdomAPI()
     }
     
 
+    // MARK : API Calling
+    
+    func getWisdomAPI() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETWISDOM, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    if let wisdomList = result["result"] as? [[String:Any]] {
+                        for data in wisdomList {
+                            let wisdomData = WWMWisdomData.init(json: data)
+                            self.arrWisdomList.append(wisdomData)
+                        }
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomDashboardVC") as! WWMWisdomDashboardVC
+                        vc.arrWisdomList = self.arrWisdomList
+                        self.addChild(vc)
+                        vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+                        self.containerView.addSubview((vc.view)!)
+                        vc.didMove(toParent: self)
+                    }
+                    
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                }
+                
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
