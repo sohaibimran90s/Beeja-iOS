@@ -23,6 +23,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
+    var isGetProfileCall = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -240,6 +241,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getUserProfileData() {
         //WWMHelperClass.showSVHud()
+        if !isGetProfileCall {
+            isGetProfileCall = true
         let param = [
             "user_id":self.appPreffrence.getUserID(),
             "lat": lat,
@@ -270,7 +273,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
             WWMHelperClass.dismissSVHud()
         }
+       }
     }
+    
     
     
     func getDataFromDatabase() {

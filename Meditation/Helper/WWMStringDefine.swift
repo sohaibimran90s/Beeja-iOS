@@ -101,6 +101,8 @@ let URL_SETTINGS                  = URL_BASE + "settings"//
 
 let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
+let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
+
 
 
 
@@ -156,8 +158,8 @@ let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
 let URL_Facebook   = "https://www.facebook.com/BeejaMeditation/"
 let URL_Insta   = "https://www.instagram.com/beejameditation/"
 let URL_Twitter   = "https://twitter.com/beejameditation"
-let URL_LinkedIn   = "http://www.linkedin.com/pub/will-williams/64/56/b"
-let URL_YouTube = "https://www.youtube.com/channel/UCysJyoHtICcn2vdNeyLhV_A/feed"
+let URL_LinkedIn   = "https://www.linkedin.com/company/10193966/admin/"
+let URL_YouTube = "https://www.youtube.com/channel/UCysJyoHtICcn2vdNeyLhV_A"
 
 
 

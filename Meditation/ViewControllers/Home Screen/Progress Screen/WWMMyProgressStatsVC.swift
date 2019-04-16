@@ -303,6 +303,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
         addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
+        dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         let strDate = dateFormatter.string(from: Date())
         let date = dateFormatter.date(from: strDate)
@@ -316,8 +317,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         print(sender.date)
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
-        
         addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
+        
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         let strDate = dateFormatter.string(from: sender.date)
         let date = dateFormatter.date(from: strDate)
@@ -498,8 +499,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.addSessionView.removeFromSuperview()
-                self.getStatsData()
+                if let success = result["success"] as? Bool {
+                    if success {
+                        self.addSessionView.removeFromSuperview()
+                        self.getStatsData()
+                    }else {
+                        WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+                    }
+                }
             }else {
                 self.saveSessionDatatoDB(param: param)
             }
