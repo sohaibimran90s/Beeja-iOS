@@ -97,6 +97,7 @@ PODS:
   - SwiftyRSA (1.5.0):
     - SwiftyRSA/ObjC (= 1.5.0)
   - SwiftyRSA/ObjC (1.5.0)
+  - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
   - Charts
@@ -113,6 +114,7 @@ DEPENDENCIES:
   - SDWebImage
   - SVProgressHUD
   - SwiftyRSA
+  - XLPagerTabStrip
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -141,6 +143,7 @@ SPEC REPOS:
     - SDWebImage
     - SVProgressHUD
     - SwiftyRSA
+    - XLPagerTabStrip
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -168,7 +171,8 @@ SPEC CHECKSUMS:
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
+  XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: 1ecdbf11f8f67ffd28c20f9788c51f0102990e9b
+PODFILE CHECKSUM: 859873c5b71092f2dcc836e1f8624959fc751b08
 
 COCOAPODS: 1.6.1

@@ -23,6 +23,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
+    var isGetProfileCall = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         }else {
             locManager.delegate = self
             locManager.desiredAccuracy = kCLLocationAccuracyBest
-            locManager.requestAlwaysAuthorization()
+            locManager.requestWhenInUseAuthorization()
             locManager.startUpdatingLocation()
         }
         
@@ -240,6 +241,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getUserProfileData() {
         //WWMHelperClass.showSVHud()
+        if !isGetProfileCall {
+            isGetProfileCall = true
         let param = [
             "user_id":self.appPreffrence.getUserID(),
             "lat": lat,
@@ -270,7 +273,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
             WWMHelperClass.dismissSVHud()
         }
+       }
     }
+    
     
     
     func getDataFromDatabase() {
@@ -307,22 +312,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView)
-        
-        
-        
-        
-//        let alert = UIAlertController(title: kAlertTitle,
-//                                      message: "Your connection may lost, please try again!",
-//                                      preferredStyle: UIAlertController.Style.alert)
-//        
-//        
-//        let okAction = UIAlertAction.init(title: "Retry", style: .default) { (UIAlertAction) in
-//            WWMHelperClass.showSVHud()
-//            self.getUserProfileData()
-//        }
-//        
-//        alert.addAction(okAction)
-//        self.navigationController!.present(alert, animated: true,completion: nil)
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {

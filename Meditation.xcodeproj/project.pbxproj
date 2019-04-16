@@ -63,6 +63,8 @@
 		2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE28E22087A0F00059396 /* singleLineLeft.png */; };
 		2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE28F22087A1000059396 /* doubleLineRight.png */; };
 		2E4CE29F2209A03400059396 /* dataClock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE29E2209A03400059396 /* dataClock.json */; };
+		2E59340A2264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */; };
+		2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */; };
 		2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */; };
 		2E5CCE8E21C79E840085224B /* WWMSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */; };
 		2E5CCE9021C79EA80085224B /* WWMMyProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */; };
@@ -71,6 +73,7 @@
 		2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */; };
 		2E5D1A5E21EF461C00AEB3BC /* DataCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D1A5D21EF461C00AEB3BC /* DataCrypto.swift */; };
 		2E5D1A6221EF4ED600AEB3BC /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D1A6121EF4ED600AEB3BC /* CryptLib.m */; };
+		2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */; };
 		2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */; };
 		2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */; };
 		2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */; };
@@ -278,6 +281,8 @@
 		2E4CE28E22087A0F00059396 /* singleLineLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = singleLineLeft.png; sourceTree = "<group>"; };
 		2E4CE28F22087A1000059396 /* doubleLineRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doubleLineRight.png; sourceTree = "<group>"; };
 		2E4CE29E2209A03400059396 /* dataClock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dataClock.json; sourceTree = "<group>"; };
+		2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomDashboardVC.swift; sourceTree = "<group>"; };
+		2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomNavVC.swift; sourceTree = "<group>"; };
 		2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerHomeVC.swift; sourceTree = "<group>"; };
 		2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingsVC.swift; sourceTree = "<group>"; };
 		2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressVC.swift; sourceTree = "<group>"; };
@@ -288,6 +293,7 @@
 		2E5D1A5F21EF4ED500AEB3BC /* Meditation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Meditation-Bridging-Header.h"; sourceTree = "<group>"; };
 		2E5D1A6021EF4ED600AEB3BC /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
 		2E5D1A6121EF4ED600AEB3BC /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
+		2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomData.swift; sourceTree = "<group>"; };
 		2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMResetPasswordVC.swift; sourceTree = "<group>"; };
 		2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSupportVC.swift; sourceTree = "<group>"; };
 		2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -646,6 +652,8 @@
 			isa = PBXGroup;
 			children = (
 				2E5CCE9121C79EBE0085224B /* WWMWisdomVC.swift */,
+				2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */,
+				2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */,
 			);
 			path = "Wisdom screen";
 			sourceTree = "<group>";
@@ -794,6 +802,7 @@
 			isa = PBXGroup;
 			children = (
 				2E49661A221815E400BC6219 /* WWMCommunityData.swift */,
+				2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */,
 				2EC81C5521E746A3003B0EEE /* WWMMoodMeterData.swift */,
 				2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */,
 				2E4CE28A2208599900059396 /* WWMSatsProgressData.swift */,
@@ -1374,6 +1383,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1394,6 +1404,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1461,6 +1472,7 @@
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
+				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,
 				2E2F8A3221BE6FB700516AFF /* WWMBaseViewController.swift in Sources */,
@@ -1494,6 +1506,7 @@
 				6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */,
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
+				2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */,
 				2E4B1B9E21B5044B002F8A25 /* AppDelegate.swift in Sources */,
 				2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */,
 				2EEF9AE7221AEC900016A77C /* DBMeditationComplete+CoreDataClass.swift in Sources */,
@@ -1525,6 +1538,7 @@
 				61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */,
 				2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */,
 				2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */,
+				2E59340A2264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift in Sources */,
 				2EA9E81F225614BB00E2D73D /* DBJournalData+CoreDataProperties.swift in Sources */,
 				2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */,
 				2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */,
@@ -1639,7 +1653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1697,7 +1711,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1728,7 +1742,7 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1751,7 +1765,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1762,14 +1776,14 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = beeja_Development_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.2;
