@@ -1,17 +1,16 @@
 //
-//  WWMWisdomVC.swift
+//  WWMGuidedEmotionVC.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 17/12/18.
-//  Copyright © 2018 Cedita. All rights reserved.
+//  Created by Roshan Kumawat on 18/04/2019.
+//  Copyright © 2019 Cedita. All rights reserved.
 //
 
 import UIKit
 import XLPagerTabStrip
-import AVKit
 
-class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-
+class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
     var itemInfo: IndicatorInfo = "View"
     var wisdomData = WWMWisdomData()
     override func viewDidLoad() {
@@ -19,7 +18,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         // Do any additional setup after loading the view.
     }
     
-
+    
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -48,15 +47,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       let data = self.wisdomData.cat_VideoList[indexPath.row]
         
-        let videoURL = URL(string: data.video_Url)
-        let player = AVPlayer(url: videoURL!)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,8 +64,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         }
         let footerView =
             collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath)
-
+        
         return footerView
         
     }
+
 }
