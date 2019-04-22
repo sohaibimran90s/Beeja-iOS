@@ -14,9 +14,12 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
     var itemInfo: IndicatorInfo = "View"
     var wisdomData = WWMWisdomData()
+    let playerViewController = AVPlayerViewController()
+    var video_id: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
     
 
@@ -48,14 +51,43 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       let data = self.wisdomData.cat_VideoList[indexPath.row]
+        let data = self.wisdomData.cat_VideoList[indexPath.row]
+        self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
         
         let videoURL = URL(string: data.video_Url)
         let player = AVPlayer(url: videoURL!)
-        let playerViewController = AVPlayerViewController()
+        
         playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
+        self.present(playerViewController, animated: false) {
+            self.playerViewController.player!.play()
+            
+            self.playerViewController.player = player
+            self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
+        }
+    }
+    
+    
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?){
+        
+        if self.playerViewController.view.frame.origin.y > 0.0  {
+            self.playerViewController.removeObserver(self, forKeyPath: #keyPath(UIViewController.view.frame))
+            
+            print(self.playerViewController.player?.currentTime().seconds ?? 0)
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
+            
+            vc.completionTimeVideo = self.playerViewController.player?.currentTime().seconds ?? 0
+            vc.cat_id = String(self.wisdomData.cat_Id)
+            vc.video_id = self.video_id
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            //Double(String(format: "%.2f", self.playerViewController.player?.currentTime().seconds ?? 0.0)) ?? 0.0
+        }else {
+            print("Prachi")
         }
     }
     

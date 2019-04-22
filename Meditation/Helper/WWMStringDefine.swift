@@ -103,6 +103,8 @@ let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
 let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
 
+let URL_WISHDOMFEEDBACK            = URL_BASE + "wisdomFeedback"
+
 
 
 

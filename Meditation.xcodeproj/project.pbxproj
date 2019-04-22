@@ -183,6 +183,7 @@
 		2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */; };
 		57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
+		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
 		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
 		61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442938224B4BC200C6682C /* WWMPromptMsg.swift */; };
@@ -409,6 +410,7 @@
 		2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBJournalList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
+		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
 		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
 		61442938224B4BC200C6682C /* WWMPromptMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPromptMsg.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 				2E5CCE9121C79EBE0085224B /* WWMWisdomVC.swift */,
 				2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */,
 				2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */,
+				61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */,
 			);
 			path = "Wisdom screen";
 			sourceTree = "<group>";
@@ -1487,6 +1490,7 @@
 				2E5D1A6221EF4ED600AEB3BC /* CryptLib.m in Sources */,
 				2E93D2DD21F20C7100163E57 /* WWMMoodShareVC.swift in Sources */,
 				2EEF9AE9221AEC900016A77C /* DBJournalList+CoreDataProperties.swift in Sources */,
+				61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */,
 				61F335B5223A727B00023F32 /* LineChartFormatter.swift in Sources */,
 				2E5DF5782268876900CF2935 /* WWMGuidedNavVC.swift in Sources */,
 				2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */,
