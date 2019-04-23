@@ -103,6 +103,9 @@ let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
 let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
 
+let URL_GETGUIDEDDATA                 = URL_BASE + "guidedData"//
+
+let URL_GETGUIDEDAudio                = URL_BASE + "guidedAudio"//
 
 
 

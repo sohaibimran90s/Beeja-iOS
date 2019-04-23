@@ -12,7 +12,8 @@ import XLPagerTabStrip
 class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     
     @IBOutlet weak var tabBarView: ButtonBarView!
-    var arrWisdomList = [WWMWisdomData]()
+    var arrGuidedList = [WWMGuidedData]()
+    var type = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,10 +57,11 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
         
-        for data in self.arrWisdomList {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomVC") as! WWMWisdomVC
+        for data in self.arrGuidedList {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
             vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-            vc.wisdomData = data
+            vc.guidedData = data
+            vc.type = self.type
             arrVC.add(vc)
         }
         return arrVC as! [UIViewController]

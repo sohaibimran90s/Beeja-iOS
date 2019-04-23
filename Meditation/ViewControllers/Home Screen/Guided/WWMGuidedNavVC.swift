@@ -12,34 +12,45 @@ class WWMGuidedNavVC: WWMBaseViewController {
 
     @IBOutlet weak var containerView: UIView!
     
-    var arrWisdomList = [WWMWisdomData]()
+    var arrGuidedList = [WWMGuidedData]()
+    var type = "practical"
+    var typeTitle = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setUpNavigationBarForDashboard(title: "Practical Guidance")
-        self.getWisdomAPI()
+        if type == "practical" {
+            self.typeTitle = "Practical Guidance"
+            self.setUpNavigationBarForDashboard(title: "Practical Guidance")
+        }else {
+            self.typeTitle = "Spiritual Guidance"
+            self.setUpNavigationBarForDashboard(title: "Spiritual Guidance")
+        }
+        
+        self.getGuidedListAPI()
         // Do any additional setup after loading the view.
     }
     
     
     // MARK : API Calling
     
-    func getWisdomAPI() {
+    func getGuidedListAPI() {
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETWISDOM, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        let param = ["guided_type":"practical"]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
                     if let wisdomList = result["result"] as? [[String:Any]] {
                         for data in wisdomList {
-                            let wisdomData = WWMWisdomData.init(json: data)
-                            self.arrWisdomList.append(wisdomData)
+                            let wisdomData = WWMGuidedData.init(json: data)
+                            self.arrGuidedList.append(wisdomData)
                         }
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomDashboardVC") as! WWMWisdomDashboardVC
-                        vc.arrWisdomList = self.arrWisdomList
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
+                        vc.arrGuidedList = self.arrGuidedList
+                        vc.type = self.typeTitle
                         self.addChild(vc)
                         vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
                         self.containerView.addSubview((vc.view)!)
