@@ -10,28 +10,35 @@ import UIKit
 
 class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    var wisdomData = WWMWisdomData()
+    @IBOutlet weak var lblEmotionTitle: UILabel!
+    var emotionData = WWMGuidedEmotionData()
+    var type = ""
+    @IBOutlet weak var audioCollectionView: UICollectionView!
+    var arrAudioList = [WWMGuidedAudioData]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpNavigationBarForAudioGuided(title: self.type)
+        self.lblEmotionTitle.text = emotionData.emotion_Name
+        self.getAudioListAPI()
         // Do any additional setup after loading the view.
     }
     
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.wisdomData.cat_VideoList.count
+        return self.arrAudioList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = WWMCommunityCollectionViewCell()
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
-        let data = self.wisdomData.cat_VideoList[indexPath.row]
-        
-        cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-        cell.lblTitle.text = data.video_Name
-        
-        
+        let data = self.arrAudioList[indexPath.row]
+
+        cell.imgView.sd_setImage(with: URL.init(string: data.audio_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        cell.lblTitle.text = data.audio_Name
+        cell.lblDuration.text = "(\(self.secondsToMinutesSeconds(second: data.audio_Duration)))"
+        cell.lblAuthorName.text = data.author_name
         return cell
     }
     
@@ -56,5 +63,46 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         return footerView
         
+    }
+    
+    func secondsToMinutesSeconds (second : Int) -> String {
+        if second<60 {
+            return "\(second) sec"
+        }else {
+            return String.init(format: "%d:%02d min", second/60,second%60)
+        }
+        
+    }
+    
+    // MARK : API Calling
+    
+    func getAudioListAPI() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        
+        let param = ["emotion_id":emotionData.emotion_Id]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDAudio, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    if let audioList = result["result"] as? [[String:Any]] {
+                        for data in audioList {
+                            let audioData = WWMGuidedAudioData.init(json: data)
+                            self.arrAudioList.append(audioData)
+                        }
+                        self.audioCollectionView.reloadData()
+                    }
+                    
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                }
+                
+            }else {
+                if error != nil {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
 }

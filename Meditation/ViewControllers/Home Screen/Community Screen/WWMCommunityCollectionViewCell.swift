@@ -12,5 +12,7 @@ class WWMCommunityCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblAuthorName: UILabel!
+    @IBOutlet weak var lblDuration: UILabel!
     
 }

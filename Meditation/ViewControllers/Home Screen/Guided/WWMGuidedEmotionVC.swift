@@ -1,9 +1,9 @@
 //
-//  WWMGuidedEmotionVC.swift
+//  WWMWisdomVC.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 18/04/2019.
-//  Copyright © 2019 Cedita. All rights reserved.
+//  Created by Roshan Kumawat on 17/12/18.
+//  Copyright © 2018 Cedita. All rights reserved.
 //
 
 import UIKit
@@ -12,9 +12,11 @@ import XLPagerTabStrip
 class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     var itemInfo: IndicatorInfo = "View"
-    var wisdomData = WWMWisdomData()
+    var guidedData = WWMGuidedData()
+    var type = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(guidedData.cat_EmotionList.count)
         // Do any additional setup after loading the view.
     }
     
@@ -30,24 +32,28 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.wisdomData.cat_VideoList.count
+        return self.guidedData.cat_EmotionList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = WWMCommunityCollectionViewCell()
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
-        let data = self.wisdomData.cat_VideoList[indexPath.row]
+        let data = self.guidedData.cat_EmotionList[indexPath.row]
         
-        cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-        cell.lblTitle.text = data.video_Name
+        cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        cell.lblTitle.text = data.emotion_Name
         
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let data = self.guidedData.cat_EmotionList[indexPath.row]
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedAudioListVC") as! WWMGuidedAudioListVC
+        vc.emotionData = data
+        vc.type = self.type
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -68,5 +74,4 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         return footerView
         
     }
-
 }

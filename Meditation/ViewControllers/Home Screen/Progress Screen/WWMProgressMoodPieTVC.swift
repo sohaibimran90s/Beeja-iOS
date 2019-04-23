@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import WebKit
 
 
 class WWMProgressMoodPieTVC: UITableViewCell {
 
     //CellCiruclarGraph
     
+    @IBOutlet weak var graphWebView: WKWebView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {

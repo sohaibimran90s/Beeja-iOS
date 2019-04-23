@@ -76,6 +76,31 @@ class WWMBaseViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
+    
+    func setUpNavigationBarForAudioGuided(title:String) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.title = title
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        sideMenuBtn.setImage(UIImage.init(named: "sideMenu_Icon"), for: .normal)
+        sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
+        sideMenuBtn.contentMode = .scaleAspectFit
+        
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        backButton.setImage(UIImage.init(named: "Back_Arrow_Icon"), for: .normal)
+        backButton.addTarget(self, action: #selector(btnBackAction(_:)), for: .touchUpInside)
+        backButton.contentMode = .scaleAspectFit
+        
+        let leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
+        let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    
+    
+    
+    
     func isValidEmail(strEmail:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         
