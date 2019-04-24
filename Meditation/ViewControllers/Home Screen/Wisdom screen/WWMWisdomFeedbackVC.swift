@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol WWMWisdomFeedbackDelegate{
+    func videoURl(url: String)
+}
+
 class WWMWisdomFeedbackVC: WWMBaseViewController {
 
-    @IBOutlet weak var btnLikeDislike: UIButton!
-    @IBOutlet weak var btnDone: UIButton!
+    @IBOutlet weak var viewTimer: UIView!
+    @IBOutlet weak var viewRefresh: UIView!
+    @IBOutlet weak var btnYes: UIButton!
+    @IBOutlet weak var btnNo: UIButton!
     @IBOutlet weak var lblRemainingTime: UILabel!
-    @IBOutlet weak var lblMinCompletion: UILabel!
+    @IBOutlet weak var lblSession: UILabel!
     
     var completionTimeVideo: Double = 0.0
     var isLiked: Bool = false
@@ -21,6 +27,12 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     var video_id: String = ""
     var rating = "0"
     
+    var videoURL: String = ""
+    
+    var delegate: WWMWisdomFeedbackDelegate?
+    
+    let gradient = CAGradientLayer()
+    let gradient1 = CAGradientLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,17 +40,25 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     }
     
     func setUpView(){
-        self.btnLikeDislike.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-        self.btnLikeDislike.layer.borderWidth = 1.0
         
+        self.setNavigationBar(isShow: false, title: "")
+        lblSession.text = "Did you like the\nsession?"
         
-        self.lblRemainingTime.text = "Completion Time: \(self.secondsToMinutesSeconds(second: Int(self.completionTimeVideo)))"
+        self.btnYes.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        self.btnYes.layer.borderWidth = 1.0
         
-        if self.completionTimeVideo < 1.0{
-            self.lblMinCompletion.text = "YES"
-        }else{
-            self.lblMinCompletion.text = "NO"
-        }
+        self.btnNo.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        self.btnNo.layer.borderWidth = 1.0
+        
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).cgColor, UIColor(red: 87.0/255.0, green: 50.0/255.0, blue: 163.0/255.0, alpha: 1.0).cgColor]
+        self.view.layer.insertSublayer(gradient, at: 0)
+        
+//        gradient1.frame = view.bounds
+//        gradient1.colors = [UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).cgColor, UIColor(red: 87.0/255.0, green: 50.0/255.0, blue: 163.0/255.0, alpha: 1.0).cgColor]
+//        self.view.layer.insertSublayer(gradient1, at: 0)
+        
+        self.lblRemainingTime.text = "\(self.secondsToMinutesSeconds(second: Int(self.completionTimeVideo)))"
     }
 
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -46,24 +66,7 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         return String.init(format: "%d:%02d min", second/60,second%60)
     }
     
-    func likeDislike(){
-        if isLiked{
-            self.rating = "0"
-            self.btnLikeDislike.backgroundColor = UIColor.white
-            self.btnLikeDislike.setTitle("Dislike", for: .normal)
-            self.isLiked = false
-        }else{
-            self.rating = "1"
-            self.btnLikeDislike.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
-            self.btnLikeDislike.setTitle("Like", for: .normal)
-            self.isLiked = true
-        }
-    }
-    
-    @IBAction func btnLikeAction(_ sender: Any) {
-        self.likeDislike()
-    }
-    
+
     func wisdomFeedback(param: [String: Any]) {
         
         WWMHelperClass.showSVHud()
@@ -84,7 +87,10 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         }
     }
     
-    @IBAction func btnDoneAction(_ sender: Any) {
+    
+    @IBAction func btnYesAction(_ sender: Any) {
+        self.rating = "1"
+        
         let param = [
             "user_id": self.appPreference.getUserID(),
             "category_id": self.cat_id,
@@ -95,5 +101,39 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         
         print(param)
         self.wisdomFeedback(param: param as Dictionary<String, Any>)
+    }
+    
+    @IBAction func btnNoAction(_ sender: Any) {
+        self.rating = "-1"
+        let param = [
+            "user_id": self.appPreference.getUserID(),
+            "category_id": self.cat_id,
+            "video_id": self.video_id,
+            "watched_duration": Int(self.completionTimeVideo),
+            "rating" : self.rating
+            ] as [String : Any]
+        
+        print(param)
+        self.wisdomFeedback(param: param as Dictionary<String, Any>)
+    }
+    
+    @IBAction func btnSkipAction(_ sender: Any) {
+        self.rating = "0"
+        
+        let param = [
+            "user_id": self.appPreference.getUserID(),
+            "category_id": self.cat_id,
+            "video_id": self.video_id,
+            "watched_duration": Int(self.completionTimeVideo),
+            "rating" : self.rating
+            ] as [String : Any]
+        
+        print(param)
+        self.wisdomFeedback(param: param as Dictionary<String, Any>)
+    }
+    
+    @IBAction func btnRefreshAction(_ sender: Any) {
+        delegate?.videoURl(url: self.videoURL)
+        self.navigationController?.popViewController(animated: true)
     }
 }

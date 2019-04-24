@@ -16,6 +16,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     var wisdomData = WWMWisdomData()
     let playerViewController = AVPlayerViewController()
     var video_id: String = ""
+    var videoURL: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = self.wisdomData.cat_VideoList[indexPath.row]
         self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
+        self.videoURL = self.wisdomData.cat_VideoList[indexPath.row].video_Url
         
         let videoURL = URL(string: data.video_Url)
         let player = AVPlayer(url: videoURL!)
@@ -82,7 +84,8 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             vc.completionTimeVideo = self.playerViewController.player?.currentTime().seconds ?? 0
             vc.cat_id = String(self.wisdomData.cat_Id)
             vc.video_id = self.video_id
-            
+            vc.videoURL = self.videoURL
+            vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
             
             //Double(String(format: "%.2f", self.playerViewController.player?.currentTime().seconds ?? 0.0)) ?? 0.0
@@ -108,5 +111,21 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
         return footerView
         
+    }
+}
+
+extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
+    func videoURl(url: String) {
+        print(url)
+        let videoURL = URL(string: url)
+        let player = AVPlayer(url: videoURL!)
+        
+        playerViewController.player = player
+        self.present(playerViewController, animated: false) {
+            self.playerViewController.player!.play()
+            
+            self.playerViewController.player = player
+            self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
+        }
     }
 }

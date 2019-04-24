@@ -14,7 +14,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     var moodData = WWMMoodMeterData()
     var arrImages = [String]()
     var selectedIndex = 0
-    let arrStaticImages = ["AppIcon","AppIcon","AppIcon"]
+    let arrStaticImages = ["atease","tranquil","upbeat"]
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var btnShare: UIButton!
     @IBOutlet weak var imageCollectionView: UICollectionView!
