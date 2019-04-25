@@ -11,7 +11,6 @@ import UIKit
 class WWMGuidedData: NSObject {
 
     var cat_Id = Int()
-    var cat_Tiletype = Int()
     var cat_Name = String()
     
     var cat_EmotionList   = [WWMGuidedEmotionData]()
@@ -21,7 +20,6 @@ class WWMGuidedData: NSObject {
     }
     init(json:[String:Any]) {
         cat_Id = json["id"] as? Int ?? 1
-        cat_Tiletype = json["tile_type"] as? Int ?? 1
         cat_Name = json["name"] as? String ?? ""
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
@@ -37,7 +35,7 @@ class WWMGuidedEmotionData: NSObject {
     var emotion_Id = Int()
     var emotion_Name = String()
     var emotion_Image = String()
-    
+    var tile_type = String()
     override init() {
         
     }
@@ -45,6 +43,7 @@ class WWMGuidedEmotionData: NSObject {
         emotion_Id = json["emotion_id"] as? Int ?? 1
         emotion_Name = json["emotion_name"] as? String ?? ""
         emotion_Image = json["emotion_image"] as? String ?? ""
+        tile_type = json["tile_type"] as? String ?? ""
         
     }
 }

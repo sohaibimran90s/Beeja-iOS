@@ -17,11 +17,15 @@ class WWMWisdomNavVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
         self.setUpNavigationBarForDashboard(title: "Wisdom")
         self.getWisdomAPI()
     }
     
-
     // MARK : API Calling
     
     func getWisdomAPI() {
@@ -33,6 +37,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
                 if let success = result["success"] as? Bool {
                     print(success)
                     if let wisdomList = result["result"] as? [[String:Any]] {
+                        self.arrWisdomList.removeAll()
                         for data in wisdomList {
                             let wisdomData = WWMWisdomData.init(json: data)
                             self.arrWisdomList.append(wisdomData)

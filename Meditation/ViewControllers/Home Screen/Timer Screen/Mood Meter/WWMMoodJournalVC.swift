@@ -23,6 +23,11 @@ class WWMMoodJournalVC: WWMBaseViewController {
     var meditationID = ""
     var levelID = ""
     var moodData = WWMMoodMeterData()
+    var category_Id = "0"
+    var emotion_Id = "0"
+    var audio_Id = "0"
+    var watched_duration = "0"
+    var rating = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +78,13 @@ class WWMMoodJournalVC: WWMBaseViewController {
     func completeMeditationAPI() {
         WWMHelperClass.showSVHud()
         let param = [
+            "type":self.userData.type,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.userData.guided_type,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
             "user_id":self.appPreference.getUserID(),
             "meditation_type":type,
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",

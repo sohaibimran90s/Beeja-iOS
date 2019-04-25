@@ -80,6 +80,8 @@
 		2E5DF57E226887BA00CF2935 /* WWMGuidedAudioListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF57D226887BA00CF2935 /* WWMGuidedAudioListVC.swift */; };
 		2E5DF5A7226DC76F00CF2935 /* WWMGuidedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF5A6226DC76F00CF2935 /* WWMGuidedData.swift */; };
 		2E5DF5AF226EFC3200CF2935 /* WWMGuidedMeditationTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF5AE226EFC3200CF2935 /* WWMGuidedMeditationTimerVC.swift */; };
+		2E5DF5B32271B89200CF2935 /* WWMGuidedStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5DF5B12271B89200CF2935 /* WWMGuidedStart.swift */; };
+		2E5DF5B42271B89200CF2935 /* WWMGuidedStart.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E5DF5B22271B89200CF2935 /* WWMGuidedStart.xib */; };
 		2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */; };
 		2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */; };
 		2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */; };
@@ -307,6 +309,8 @@
 		2E5DF57D226887BA00CF2935 /* WWMGuidedAudioListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedAudioListVC.swift; sourceTree = "<group>"; };
 		2E5DF5A6226DC76F00CF2935 /* WWMGuidedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedData.swift; sourceTree = "<group>"; };
 		2E5DF5AE226EFC3200CF2935 /* WWMGuidedMeditationTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedMeditationTimerVC.swift; sourceTree = "<group>"; };
+		2E5DF5B12271B89200CF2935 /* WWMGuidedStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMGuidedStart.swift; sourceTree = "<group>"; };
+		2E5DF5B22271B89200CF2935 /* WWMGuidedStart.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WWMGuidedStart.xib; sourceTree = "<group>"; };
 		2E5EA5C121EC7B4F0076328A /* WWMResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMResetPasswordVC.swift; sourceTree = "<group>"; };
 		2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSupportVC.swift; sourceTree = "<group>"; };
 		2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -691,6 +695,7 @@
 		2E5CCE9521C7A9F80085224B /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				2E5DF5B02271B86D00CF2935 /* Guided */,
 				2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */,
 				2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */,
 				2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */,
@@ -731,6 +736,15 @@
 				2E5DF57B226887A200CF2935 /* WWMGuidedEmotionVC.swift */,
 				2E5DF57D226887BA00CF2935 /* WWMGuidedAudioListVC.swift */,
 				2E5DF5AE226EFC3200CF2935 /* WWMGuidedMeditationTimerVC.swift */,
+			);
+			path = Guided;
+			sourceTree = "<group>";
+		};
+		2E5DF5B02271B86D00CF2935 /* Guided */ = {
+			isa = PBXGroup;
+			children = (
+				2E5DF5B12271B89200CF2935 /* WWMGuidedStart.swift */,
+				2E5DF5B22271B89200CF2935 /* WWMGuidedStart.xib */,
 			);
 			path = Guided;
 			sourceTree = "<group>";
@@ -1220,6 +1234,7 @@
 				2E4A473A220DB22B00DF0C68 /* WAVES & CHIMES.mp3 in Resources */,
 				2E4A473D220DB22B00DF0C68 /* CHIMES ONLY.mp3 in Resources */,
 				2EC95862220AC1BA009D5144 /* Maax-BoldItalic.ttf in Resources */,
+				2E5DF5B42271B89200CF2935 /* WWMGuidedStart.xib in Resources */,
 				2EC95866220C5838009D5144 /* GoogleService-Info.plist in Resources */,
 				2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */,
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
@@ -1483,6 +1498,7 @@
 				2E5DF57E226887BA00CF2935 /* WWMGuidedAudioListVC.swift in Sources */,
 				2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */,
 				2EE247E721E6315400857C25 /* CGRect.swift in Sources */,
+				2E5DF5B32271B89200CF2935 /* WWMGuidedStart.swift in Sources */,
 				2EE247F021E6315400857C25 /* PieChartLayer.swift in Sources */,
 				2E25CDC722269BB9002BDE15 /* WWMAddJournalView.swift in Sources */,
 				2EE247E621E6315400857C25 /* CGPoint.swift in Sources */,

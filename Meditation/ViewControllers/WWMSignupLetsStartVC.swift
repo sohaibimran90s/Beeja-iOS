@@ -14,8 +14,13 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     @IBOutlet weak var btnKnowMeditation: UIButton!
     @IBOutlet weak var btnGuide: UIButton!
     @IBOutlet weak var btnLearn: UIButton!
+    @IBOutlet weak var welcomeView: UIView!
+    @IBOutlet weak var userName: UILabel!
     
-    override func viewDidLoad() {
+    var guideStart = WWMGuidedStart()
+    
+    var guided_type = ""
+     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setupView()
@@ -25,7 +30,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     func setupView(){
         
         self.setNavigationBar(isShow: false, title: "")
-        
+        self.userName.text = "Ok \(self.appPreference.getUserName()),"
         self.btnGuide.layer.borderWidth = 2.0
         self.btnGuide.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnLearn.layer.borderWidth = 2.0
@@ -36,28 +41,92 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
 
     @IBAction func btnKnowMeditationAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationListVC") as! WWMMeditationListVC
+        vc.type = "timer"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnGuideAction(_ sender: UIButton) {
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+//        vc.strUrl = URL_GUIDED
+//        vc.strType = "Guided"
+//        self.navigationController?.pushViewController(vc, animated: true)
+        guideStart = UINib(nibName: "WWMGuidedStart", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMGuidedStart
+        let window = UIApplication.shared.keyWindow!
+        
+        guideStart.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        guideStart.btnClose.addTarget(self, action: #selector(btnGuideCloseAction(_:)), for: .touchUpInside)
+        guideStart.btnMoreInformation.addTarget(self, action: #selector(btnMoreInformationActions(_:)), for: .touchUpInside)
+        guideStart.btnSpritual.addTarget(self, action: #selector(btnSpritualAction(_:)), for: .touchUpInside)
+        guideStart.btnPractical.addTarget(self, action: #selector(btnPracticalAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(guideStart)
+    }
+    
+    
+    @IBAction func btnGuideCloseAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+    }
+    
+    @IBAction func btnMoreInformationActions(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_GUIDED
-        vc.strType = "Guided"
+        vc.strUrl = URL_OurStory
+        vc.strType = "More Information"
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func btnPracticalAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+        guided_type = "practical"
+        self.meditationApi()
+        
+    }
+    @IBAction func btnSpritualAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+        guided_type = "spiritual"
+        self.meditationApi()
+    }
+    
     @IBAction func btnLearnAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         vc.strUrl = URL_LEARN
         vc.strType = "Learn"
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+  // Calling API
+    
+    func meditationApi() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        let param = [
+            "meditation_id" : 1,
+            "level_id"         : 1,
+            "user_id"       : self.appPreference.getUserID(),
+            "type" : "guided",
+            "guided_type" : guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setIsProfileCompleted(value: true)
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideType(value: "guided_type")
+                UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    self.welcomeView.isHidden = false
+                }) { (Bool) in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
+                }
+            }else {
+                if error?.localizedDescription == "The Internet connection appears to be offline."{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }else{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
-    */
 
 }

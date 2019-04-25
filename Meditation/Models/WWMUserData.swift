@@ -49,6 +49,7 @@ class WWMUserData: NSObject {
     var deleted_at = String()
     var loginType = String()
     var type = String()
+    var guided_type = String()
     
     var meditation_id = Int()
     var level_id = Int()
@@ -79,7 +80,8 @@ class WWMUserData: NSObject {
         created_at = json["created_at"] as? String ?? ""
         updated_at = json["updated_at"] as? String ?? ""
         deleted_at = json["deleted_at"] as? String ?? ""
-        type = json["type"] as? String ?? "Timer" //Timer/Guided/Learn
+        type = json["type"] as? String ?? "timer" //timer/guided/learn
+        guided_type = json["guided_type"] as? String ?? "practical" //practical/spiritual
         
         meditation_id = json["meditation_id"] as? Int ?? 1
         level_id = json["level_id"] as? Int ?? 1

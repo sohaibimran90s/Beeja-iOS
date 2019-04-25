@@ -137,7 +137,15 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func setupView() {
         
-       self.viewControllers?.remove(at: 2)
+        if self.appPreffrence.getType() == "timer"{
+            self.viewControllers?.remove(at: 3)
+        }else if self.appPreffrence.getType() == "guided"{
+            self.viewControllers?.remove(at: 2)
+        }else {
+         self.viewControllers?.remove(at: 3)
+        }
+        
+       
         
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]

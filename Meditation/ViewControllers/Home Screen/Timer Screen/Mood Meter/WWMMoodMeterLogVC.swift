@@ -29,6 +29,13 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var player: AVPlayer?
     var popupTitle: String = ""
     
+    var category_Id = "0"
+    var emotion_Id = "0"
+    var audio_Id = "0"
+    var watched_duration = "0"
+    var rating = "0"
+    
+    
     var alertPopup = WWMAlertPopUp()
 
     override func viewDidLoad() {
@@ -116,6 +123,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             vc.meditationID = self.meditationID
             vc.levelID = self.levelID
             vc.moodData = self.moodData
+            vc.category_Id = self.category_Id
+            vc.emotion_Id = self.emotion_Id
+            vc.audio_Id = self.audio_Id
+            vc.rating = self.rating
+            vc.watched_duration = self.watched_duration
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
@@ -161,6 +173,13 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func completeMeditationAPI() {
         WWMHelperClass.showSVHud()
         let param = [
+            "type":self.userData.type,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.userData.guided_type,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
             "user_id":self.appPreference.getUserID(),
             "meditation_type":type,
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
@@ -170,7 +189,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             "rest_time":restTime,
             "meditation_id": self.meditationID,
             "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "1" : self.moodData.id,
+            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

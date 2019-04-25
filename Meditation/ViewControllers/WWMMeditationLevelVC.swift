@@ -13,7 +13,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var welcomeView: UIView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var tblMeditationLevels: UITableView!
-    
+    var type = ""
     //let arrMeditationLevel = ["Beginner","Intermediate 1","Intermediate 2","Advanced"]
     var arrMeditationLevels = [DBLevelData]()
     
@@ -98,11 +98,15 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         let param = [
             "meditation_id" : self.selectedMeditation_Id,
             "level_id"         : self.selectedLevel_Id,
-            "user_id"       : self.appPreference.getUserID()
+            "user_id"       : self.appPreference.getUserID(),
+            "type" : "timer",
+            "guided_type" : ""
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
+                self.appPreference.setGuideType(value: "")
+                self.appPreference.setType(value: "timer")
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false
                 }) { (Bool) in

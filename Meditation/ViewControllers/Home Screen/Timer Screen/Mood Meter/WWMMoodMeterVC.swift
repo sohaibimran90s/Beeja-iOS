@@ -25,6 +25,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var type = ""   // Pre | Post
     var meditationID = ""
     var levelID = ""
+    var category_Id = "0"
+    var emotion_Id = "0"
+    var audio_Id = "0"
+    var watched_duration = "0"
+    var rating = "0"
     
     var settingData = DBSettings()
     
@@ -164,6 +169,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         vc.restTime = self.restTime
         vc.meditationID = self.meditationID
         vc.levelID = self.levelID
+        vc.category_Id = self.category_Id
+        vc.emotion_Id = self.emotion_Id
+        vc.audio_Id = self.audio_Id
+        vc.rating = self.rating
+        vc.watched_duration = self.watched_duration
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -177,6 +187,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             vc.restTime = self.restTime
             vc.meditationID = self.meditationID
             vc.levelID = self.levelID
+            vc.category_Id = self.category_Id
+            vc.emotion_Id = self.emotion_Id
+            vc.audio_Id = self.audio_Id
+            vc.rating = self.rating
+            vc.watched_duration = self.watched_duration
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -193,63 +208,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         vc.restTime = self.restTime
         vc.meditationID = self.meditationID
         vc.levelID = self.levelID
+        vc.category_Id = self.category_Id
+        vc.emotion_Id = self.emotion_Id
+        vc.audio_Id = self.audio_Id
+        vc.rating = self.rating
+        vc.watched_duration = self.watched_duration
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
-//    // MARK:- UICollectionView Delegate Methods
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return arrMoodData.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-//
-//        if  let view = cell.viewWithTag(101) {
-//            let data = arrMoodData[indexPath.row]
-//            view.backgroundColor = UIColor.init(hexString: data.color)
-//        }
-//
-//        return cell
-//
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        selectedIndex = indexPath.row
-//        if  let cell = collectionView.cellForItem(at: indexPath) {
-//            if let zoomView = cell.viewWithTag(101){
-//                self.lblExpressMood.text = arrMoodData[indexPath.row].name
-//                UIView.animate(withDuration: 0.5, animations: {
-//                    zoomView.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
-//                    self.lblExpressMood.transform = CGAffineTransform.init(scaleX: 1.5, y: 1.5)
-//                }, completion: { (isComplete) in
-//                    if isComplete {
-//                        UIView.animate(withDuration: 0.5) {
-//                            zoomView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-//                            self.lblExpressMood.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-//                        }
-//                    }
-//                })
-//
-//            }
-//        }
-//    }
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = (self.view.frame.size.width-40)/10
-//        return CGSize.init(width: width, height: width)
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

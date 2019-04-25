@@ -11,6 +11,7 @@ import UIKit
 class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
 
     var arrMeditationDataList = [DBAllMeditationData]()
+    var type = ""
     @IBOutlet weak var tblMeditationList: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,10 +65,12 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
         print("You tapped cell number \(indexPath.row).")
         if indexPath.row == self.arrMeditationDataList.count {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSetMyOwnVC") as! WWMSetMyOwnVC
+            vc.type = "timer"
             self.navigationController?.pushViewController(vc, animated: true)
         }else {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
             vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"
+            vc.type = "timer"
             if let levels = arrMeditationDataList[indexPath.row].levels?.array as? [DBLevelData] {
                 vc.arrMeditationLevels = levels
             }

@@ -191,7 +191,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
     // MARK:- UITableView Delegate methods
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.userData.type == "Timer" {
+        if self.userData.type == "timer" {
             return 3
         }else {
             return 1
@@ -199,7 +199,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.userData.type == "Timer" {
+        if self.userData.type == "timer" {
             if section == 0 {
                 for data in self.arrMeditationData {
                     if data.isMeditationSelected {
@@ -229,7 +229,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = WWMSettingTableViewCell()
-        if self.userData.type == "Timer" {
+        if self.userData.type == "timer" {
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
@@ -426,7 +426,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.userData.type == "Timer" {
+        if self.userData.type == "timer" {
             if indexPath.section == 0 {
                 if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5{
                     self.moveToEditMeditationTimeScreen()
@@ -517,7 +517,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBAction func btnPickerAction(_ sender: WWMCustomButton) {
         if let cell = tblViewSetting.cellForRow(at: sender.indexPath) as? WWMSettingTableViewCell {
-            if self.userData.type == "Timer" {
+            if self.userData.type == "timer" {
                 if sender.indexPath.section == 0{
                     if sender.indexPath.row == 8{
                         self.arrPickerSound = self.arrAmbientSound

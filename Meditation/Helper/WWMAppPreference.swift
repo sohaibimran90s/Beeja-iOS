@@ -36,9 +36,27 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    
+    
     func setUserID(value:String) {
         defaults.set(value, forKey: "User_Id")
         defaults.synchronize()
+    }
+    
+    func setType(value:String) {
+        defaults.set(value, forKey: "type")
+        defaults.synchronize()
+    }
+    func setGuideType(value:String) {
+        defaults.set(value, forKey: "guided_type")
+        defaults.synchronize()
+    }
+    
+    func getType() -> String {
+        return UserDefaults.standard.string(forKey: "type") ?? ""
+    }
+    func getGuideType() -> String {
+        return UserDefaults.standard.string(forKey: "guided_type") ?? ""
     }
     
     func setUserToken(value:String) {

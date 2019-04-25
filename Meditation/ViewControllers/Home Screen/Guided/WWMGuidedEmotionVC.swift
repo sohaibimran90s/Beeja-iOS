@@ -37,11 +37,14 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = WWMCommunityCollectionViewCell()
-        
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         
-        cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        if data.tile_type == "1" {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
+            cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        }else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell2", for: indexPath) as! WWMCommunityCollectionViewCell
+        }
         cell.lblTitle.text = data.emotion_Name
         
         
@@ -57,8 +60,16 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let data = self.guidedData.cat_EmotionList[indexPath.row]
+        
+        if data.tile_type == "1" {
+            
         let width = (self.view.frame.size.width-19)/2
         return CGSize.init(width: width, height: width)
+        }else {
+            let width = (self.view.frame.size.width-16)
+            return CGSize.init(width: width, height: 160)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

@@ -25,7 +25,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
     
     @IBOutlet weak var welcomeView: UIView!
     @IBOutlet weak var userName: UILabel!
-    
+    var type = ""
     var selectedMeditation_Id = -1
     var selectedLevel_Id = -1
     var isFromSetting = false
@@ -171,13 +171,17 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         let param = [
             "meditation_id" : self.selectedMeditation_Id,
             "level_id"         : self.selectedLevel_Id,
-            "user_id"       : self.appPreference.getUserID()
+            "user_id"       : self.appPreference.getUserID(),
+            "type" : "timer",
+            "guided_type" : ""
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let sucessAPI = result["success"] as? Bool {
                     if sucessAPI {
                         self.appPreference.setIsProfileCompleted(value: true)
+                        self.appPreference.setGuideType(value: "")
+                        self.appPreference.setType(value: "timer")
                         UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                             self.welcomeView.isHidden = false
                         }) { (Bool) in

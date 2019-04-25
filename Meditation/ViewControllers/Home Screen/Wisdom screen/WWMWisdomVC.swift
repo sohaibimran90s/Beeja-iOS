@@ -17,10 +17,12 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     let playerViewController = AVPlayerViewController()
     var video_id: String = ""
     var videoURL: String = ""
-    
+    let gradient = CAGradientLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(red: 87.0/255.0, green: 50.0/255.0, blue: 163.0/255.0, alpha: 1.0).cgColor, UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).cgColor]
+        self.view.layer.insertSublayer(gradient, at: 0)
     }
     
 
