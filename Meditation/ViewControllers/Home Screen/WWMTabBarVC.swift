@@ -140,11 +140,10 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
        self.viewControllers?.remove(at: 2)
         
         
-        
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
        self.tabBar.layer.insertSublayer(layerGradient, at: 0)
-        for index in 0..<4 {
+        for index in 0..<5 {
             let item = self.tabBar.items?[index]
             item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
             if index == 2 {

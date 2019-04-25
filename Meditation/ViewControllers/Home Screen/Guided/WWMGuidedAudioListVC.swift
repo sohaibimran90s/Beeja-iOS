@@ -43,6 +43,9 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+        vc.audioData = self.arrAudioList[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     

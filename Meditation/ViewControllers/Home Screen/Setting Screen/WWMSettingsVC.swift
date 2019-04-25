@@ -191,220 +191,325 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
     // MARK:- UITableView Delegate methods
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if self.userData.type == "Timer" {
+            return 3
+        }else {
+            return 1
+        }
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            for data in self.arrMeditationData {
-                if data.isMeditationSelected {
-                    if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
-                        return arrTimeChimes.count-1
-                    }
-                    
-                }
-            }
-            return arrTimeChimes.count+1
-        }else if section == 1 {
-            for data in self.arrMeditationData {
-                if data.isMeditationSelected {
-                    selectedMeditationData = data
-                    return ((data.levels?.count)!+1)
-                }
-            }
-            return 0
-        }else {
-            return arrSettings.count+1
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = WWMSettingTableViewCell()
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                cell.lblTitle.text = "Times & Chimes"
-                cell.lblDropDown.isHidden = true
-                cell.imgViewDropDown.isHidden = true
-            }else {
-                if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
-                    cell.checkImage.isHidden = true
-                    cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
-                    cell.lblTime.isHidden = false
-                    if indexPath.row == 1 {
-                        cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime!)!)
-                    }else if indexPath.row == 3 {
-                        cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.meditationTime!)!)
-                    }else if indexPath.row == 5 {
-                        cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.restTime!)!)
-                    }
-                    
-                }else {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "CellDropDown") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
-                    
-                    cell.txtView.inputView = pickerStartChimes
-                    cell.btnPicker.indexPath = indexPath
-                    cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
-                    if indexPath.row == 2 {
-                        cell.lblDropDown.text = settingData.startChime
-                    }else if indexPath.row == 4 {
-                        cell.lblDropDown.text = settingData.endChime
-                    }else if indexPath.row == 6 {
-                        cell.lblDropDown.text = settingData.finishChime
-                    }else if indexPath.row == 7 {
-                        cell.lblDropDown.text = settingData.intervalChime
-                    }else if indexPath.row == 8 {
-                        cell.lblDropDown.text = settingData.ambientChime
-                    }
-                }
-                
-            }
-        }else if indexPath.section == 1 {
-            if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                cell.lblTitle.text = "Preset"
-                cell.lblDropDown.text = selectedMeditationData.meditationName
-                cell.txtView.inputView = pickerStartChimes
-                cell.txtView.isUserInteractionEnabled = true
-                cell.btnPicker.isUserInteractionEnabled = true
-                cell.btnPicker.indexPath = indexPath
-                cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
-            }else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
-                cell.lblTime.isHidden = false
-                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                var level = DBLevelData()
-                if (levels?.count)! > 0 {
-                    level = levels![indexPath.row-1]
-                    cell.lblTitle.text = level.levelName
-                    cell.lblTime.text = "\(self.secondsToMinutesSeconds(second: Int(level.prepTime))) | \(self.secondsToMinutesSeconds(second: Int(level.meditationTime))) | \(self.secondsToMinutesSeconds(second: Int(level.restTime)))"
-                    cell.checkImage.isHidden = true
-                    if level.isLevelSelected {
-                        cell.checkImage.isHidden = false
-                    }
-                    
-                }
-                
-            }
-        }else if indexPath.section == 2{
-            if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                cell.lblTitle.text = "Reminders"
-                cell.lblDropDown.isHidden = true
-                cell.imgViewDropDown.isHidden = true
-            }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
-                
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
-                cell.lblTitle.text = self.arrSettings[indexPath.row-1]
-                cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
-                cell.btnSwitch.tag = indexPath.row
-                if indexPath.row == 1 {
-                    cell.btnSwitch.isOn = settingData.isMorningReminder
-                }else if indexPath.row == 3 {
-                    cell.btnSwitch.isOn = settingData.isAfterNoonReminder
-                }else if indexPath.row == 5 {
-                    cell.btnSwitch.isOn = settingData.moodMeterEnable
-                }else if indexPath.row == 6 {
-                    cell.btnSwitch.isOn = settingData.isMilestoneAndRewards
-                }
-                
-            }else if indexPath.row == 2 || indexPath.row == 4  {
-                
-                cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
-                cell.lblTitle.text = self.arrSettings[indexPath.row-1]
-                cell.lblTime.isHidden = false
-                cell.checkImage.isHidden = true
-                if indexPath.row == 2 {
-                    cell.lblTime.text = settingData.morningReminderTime
-                    
-                    if !settingData.isMorningReminder {
-                        cell.lblTime.isHidden = true
-                        cell.btnPicker.isUserInteractionEnabled = false
-                        cell.txtView.isUserInteractionEnabled = false
-                        
-                    }else {
-                        cell.btnPicker.isUserInteractionEnabled = true
-                        cell.txtView.isUserInteractionEnabled = true
-                        cell.btnPicker.indexPath = indexPath
-                        cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
-                    }
-                }else if indexPath.row == 4 {
-                    cell.lblTime.text = settingData.afterNoonReminderTime
-                    if !settingData.isAfterNoonReminder {
-                        cell.lblTime.isHidden = true
-                        cell.btnPicker.isUserInteractionEnabled = false
-                        cell.txtView.isUserInteractionEnabled = false
-                    }else {
-                        cell.btnPicker.isUserInteractionEnabled = true
-                        cell.txtView.isUserInteractionEnabled = true
-                        cell.btnPicker.indexPath = indexPath
-                        cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
-                    }
-                }
-            }else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
-                cell.lblTitle.text = self.arrSettings[indexPath.row-1]
-            }
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-                if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5{
-                    self.moveToEditMeditationTimeScreen()
-                }
-        }else if indexPath.section == 1 {
-            if indexPath.row != 0 {
-                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                let level = levels![indexPath.row-1]
-                settingData.prepTime = "\(level.prepTime)"
-                settingData.meditationTime = "\(level.meditationTime)"
-                settingData.restTime = "\(level.restTime)"
+        if self.userData.type == "Timer" {
+            if section == 0 {
                 for data in self.arrMeditationData {
                     if data.isMeditationSelected {
-                        for index in 0..<(data.levels?.count)! {
-                            let level1 = data.levels?.array as? [DBLevelData]
-                            if index == indexPath.row-1 {
-                                level1![index].isLevelSelected =  true
-                            }else {
-                                level1![index].isLevelSelected =  false
-                            }
+                        if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
+                            return arrTimeChimes.count-1
                         }
                         
                     }
                 }
-                self.settingAPI()
-                self.tblViewSetting.reloadData()
-            }
-            
-        }else if indexPath.section == 2 {
-            if indexPath.row == 7 {
-                let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
-                
-                let url = URL.init(string: iOSAppStoreURLFormat)
-                
-                if UIApplication.shared.canOpenURL(url!){
-                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                return arrTimeChimes.count+1
+            }else if section == 1 {
+                for data in self.arrMeditationData {
+                    if data.isMeditationSelected {
+                        selectedMeditationData = data
+                        return ((data.levels?.count)!+1)
+                    }
                 }
-            }else if indexPath.row == 8 {
-                let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
-                let imageToShare = [textToShare] as [Any]
-                let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                activityViewController.popoverPresentationController?.sourceView = self.view
-                self.present(activityViewController, animated: true, completion: nil)
-            }else if indexPath.row == 9 {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
-                self.navigationController?.pushViewController(vc, animated: true)
-            }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
-                self.openWebView(index: indexPath.row)
-                
-            }else if indexPath.row == 13{
-                self.logout()
+                return 0
+            }else {
+                return arrSettings.count+1
+            }
+        }else {
+            return arrSettings.count+1
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = WWMSettingTableViewCell()
+        if self.userData.type == "Timer" {
+            if indexPath.section == 0 {
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Times & Chimes"
+                    cell.lblDropDown.isHidden = true
+                    cell.imgViewDropDown.isHidden = true
+                }else {
+                    if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.checkImage.isHidden = true
+                        cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        if indexPath.row == 1 {
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime!)!)
+                        }else if indexPath.row == 3 {
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.meditationTime!)!)
+                        }else if indexPath.row == 5 {
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.restTime!)!)
+                        }
+                        
+                    }else {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellDropDown") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
+                        
+                        cell.txtView.inputView = pickerStartChimes
+                        cell.btnPicker.indexPath = indexPath
+                        cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        if indexPath.row == 2 {
+                            cell.lblDropDown.text = settingData.startChime
+                        }else if indexPath.row == 4 {
+                            cell.lblDropDown.text = settingData.endChime
+                        }else if indexPath.row == 6 {
+                            cell.lblDropDown.text = settingData.finishChime
+                        }else if indexPath.row == 7 {
+                            cell.lblDropDown.text = settingData.intervalChime
+                        }else if indexPath.row == 8 {
+                            cell.lblDropDown.text = settingData.ambientChime
+                        }
+                    }
+                    
+                }
+            }else if indexPath.section == 1 {
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Preset"
+                    cell.lblDropDown.text = selectedMeditationData.meditationName
+                    cell.txtView.inputView = pickerStartChimes
+                    cell.txtView.isUserInteractionEnabled = true
+                    cell.btnPicker.isUserInteractionEnabled = true
+                    cell.btnPicker.indexPath = indexPath
+                    cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                }else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                    cell.lblTime.isHidden = false
+                    let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+                    var level = DBLevelData()
+                    if (levels?.count)! > 0 {
+                        level = levels![indexPath.row-1]
+                        cell.lblTitle.text = level.levelName
+                        cell.lblTime.text = "\(self.secondsToMinutesSeconds(second: Int(level.prepTime))) | \(self.secondsToMinutesSeconds(second: Int(level.meditationTime))) | \(self.secondsToMinutesSeconds(second: Int(level.restTime)))"
+                        cell.checkImage.isHidden = true
+                        if level.isLevelSelected {
+                            cell.checkImage.isHidden = false
+                        }
+                        
+                    }
+                    
+                }
+            }else if indexPath.section == 2{
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Reminders"
+                    cell.lblDropDown.isHidden = true
+                    cell.imgViewDropDown.isHidden = true
+                }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                    cell.btnSwitch.tag = indexPath.row
+                    if indexPath.row == 1 {
+                        cell.btnSwitch.isOn = settingData.isMorningReminder
+                    }else if indexPath.row == 3 {
+                        cell.btnSwitch.isOn = settingData.isAfterNoonReminder
+                    }else if indexPath.row == 5 {
+                        cell.btnSwitch.isOn = settingData.moodMeterEnable
+                    }else if indexPath.row == 6 {
+                        cell.btnSwitch.isOn = settingData.isMilestoneAndRewards
+                    }
+                    
+                }else if indexPath.row == 2 || indexPath.row == 4  {
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.lblTime.isHidden = false
+                    cell.checkImage.isHidden = true
+                    if indexPath.row == 2 {
+                        cell.lblTime.text = settingData.morningReminderTime
+                        
+                        if !settingData.isMorningReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                            
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }else if indexPath.row == 4 {
+                        cell.lblTime.text = settingData.afterNoonReminderTime
+                        if !settingData.isAfterNoonReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }
+                }else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                }
+            }
+        }else {
+            if indexPath.section == 0{
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Reminders"
+                    cell.lblDropDown.isHidden = true
+                    cell.imgViewDropDown.isHidden = true
+                }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                    cell.btnSwitch.tag = indexPath.row
+                    if indexPath.row == 1 {
+                        cell.btnSwitch.isOn = settingData.isMorningReminder
+                    }else if indexPath.row == 3 {
+                        cell.btnSwitch.isOn = settingData.isAfterNoonReminder
+                    }else if indexPath.row == 5 {
+                        cell.btnSwitch.isOn = settingData.moodMeterEnable
+                    }else if indexPath.row == 6 {
+                        cell.btnSwitch.isOn = settingData.isMilestoneAndRewards
+                    }
+                    
+                }else if indexPath.row == 2 || indexPath.row == 4  {
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.lblTime.isHidden = false
+                    cell.checkImage.isHidden = true
+                    if indexPath.row == 2 {
+                        cell.lblTime.text = settingData.morningReminderTime
+                        
+                        if !settingData.isMorningReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                            
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }else if indexPath.row == 4 {
+                        cell.lblTime.text = settingData.afterNoonReminderTime
+                        if !settingData.isAfterNoonReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }
+                }else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                }
             }
         }
+        
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.userData.type == "Timer" {
+            if indexPath.section == 0 {
+                if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5{
+                    self.moveToEditMeditationTimeScreen()
+                }
+            }else if indexPath.section == 1 {
+                if indexPath.row != 0 {
+                    let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
+                    let level = levels![indexPath.row-1]
+                    settingData.prepTime = "\(level.prepTime)"
+                    settingData.meditationTime = "\(level.meditationTime)"
+                    settingData.restTime = "\(level.restTime)"
+                    for data in self.arrMeditationData {
+                        if data.isMeditationSelected {
+                            for index in 0..<(data.levels?.count)! {
+                                let level1 = data.levels?.array as? [DBLevelData]
+                                if index == indexPath.row-1 {
+                                    level1![index].isLevelSelected =  true
+                                }else {
+                                    level1![index].isLevelSelected =  false
+                                }
+                            }
+                            
+                        }
+                    }
+                    self.settingAPI()
+                    self.tblViewSetting.reloadData()
+                }
+                
+            }else if indexPath.section == 2 {
+                if indexPath.row == 7 {
+                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let url = URL.init(string: iOSAppStoreURLFormat)
+                    
+                    if UIApplication.shared.canOpenURL(url!){
+                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    }
+                }else if indexPath.row == 8 {
+                    let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let imageToShare = [textToShare] as [Any]
+                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.popoverPresentationController?.sourceView = self.view
+                    self.present(activityViewController, animated: true, completion: nil)
+                }else if indexPath.row == 9 {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
+                    self.openWebView(index: indexPath.row)
+                    
+                }else if indexPath.row == 13{
+                    self.logout()
+                }
+            }
+        }else {
+            if indexPath.section == 0 {
+                if indexPath.row == 7 {
+                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let url = URL.init(string: iOSAppStoreURLFormat)
+                    
+                    if UIApplication.shared.canOpenURL(url!){
+                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    }
+                }else if indexPath.row == 8 {
+                    let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let imageToShare = [textToShare] as [Any]
+                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.popoverPresentationController?.sourceView = self.view
+                    self.present(activityViewController, animated: true, completion: nil)
+                }else if indexPath.row == 9 {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
+                    self.openWebView(index: indexPath.row)
+                    
+                }else if indexPath.row == 13{
+                    self.logout()
+                }
+            }
+        }
+        
         
     }
     
@@ -412,6 +517,34 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBAction func btnPickerAction(_ sender: WWMCustomButton) {
         if let cell = tblViewSetting.cellForRow(at: sender.indexPath) as? WWMSettingTableViewCell {
+            if self.userData.type == "Timer" {
+                if sender.indexPath.section == 0{
+                    if sender.indexPath.row == 8{
+                        self.arrPickerSound = self.arrAmbientSound
+                    }else {
+                        self.arrPickerSound = self.arrChimes
+                    }
+                    self.pickerStartChimes.tag = sender.indexPath.row
+                    self.pickerStartChimes.reloadAllComponents()
+                }else if sender.indexPath.section == 1{
+                    self.pickerStartChimes.tag = 10
+                    self.pickerStartChimes.reloadAllComponents()
+                }else if sender.indexPath.section == 2 {
+                    let datePickerView = UIDatePicker()
+                    datePickerView.datePickerMode = .time
+                    cell.txtView.inputView = datePickerView
+                    datePickerView.tag = sender.indexPath.row
+                    datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+                }
+            }else {
+                if sender.indexPath.section == 0{
+                    let datePickerView = UIDatePicker()
+                    datePickerView.datePickerMode = .time
+                    cell.txtView.inputView = datePickerView
+                    datePickerView.tag = sender.indexPath.row
+                    datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+                }
+            }
             if sender.indexPath.section == 0{
                 if sender.indexPath.row == 8{
                     self.arrPickerSound = self.arrAmbientSound

@@ -500,6 +500,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         gradientChangeAnimation.repeatCount = .infinity
         gradientChangeAnimation.toValue = gradientSet[currentGradient]
         gradientChangeAnimation.fillMode = CAMediaTimingFillMode.both
+        gradientChangeAnimation.autoreverses = true
         gradientChangeAnimation.isRemovedOnCompletion = false
         gradientChangeAnimation.delegate = self
         if animate{
