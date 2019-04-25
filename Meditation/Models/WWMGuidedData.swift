@@ -57,7 +57,9 @@ class WWMGuidedAudioData: NSObject {
     var audio_Image = String()
     var audio_Url = String()
     var author_name = String()
-    
+    override init() {
+        
+    }
     
     init(json:[String:Any]) {
         audio_Id = json["id"] as? Int ?? 1

@@ -469,7 +469,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         if  application.canOpenURL(url!) {
             application.open(url!, options: [:], completionHandler: nil)
         }else {
-            
+            let spotifyUrl = URL.init(string: "https://itunes.apple.com/us/app/spotify-music-and-podcasts/id324684580?mt=8")
+             application.open(spotifyUrl!, options: [:], completionHandler: nil)
         }
     }
     
