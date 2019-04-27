@@ -55,6 +55,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedAudioListVC") as! WWMGuidedAudioListVC
         vc.emotionData = data
+        vc.cat_Id = "\(self.guidedData.cat_Id)"
         vc.type = self.type
         self.navigationController?.pushViewController(vc, animated: true)
     }

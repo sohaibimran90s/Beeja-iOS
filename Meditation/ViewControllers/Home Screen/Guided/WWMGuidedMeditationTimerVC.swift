@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import MediaPlayer
 
 class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 
@@ -20,7 +19,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var audioData = WWMGuidedAudioData()
     var notificationCenter = NotificationCenter.default
     var isPlayer = false
-    
+    var cat_id = "0"
+    var emotion_Id = "0"
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblTimerType: UILabel!
@@ -72,6 +72,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         notificationCenter.removeObserver(self)
        // self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
+        self.timer.invalidate()
+        self.spinnerImage.layer.removeAllAnimations()
+        self.animateGradient(animate: false)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,7 +95,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         
         animateGradient(animate: true)
-        
+        self.spinnerImage.rotate360Degrees()
         //self.spinnerImage.layer.removeAllAnimations()
         //self.rotationImage()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
@@ -116,7 +120,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
-        //self.pauseAction()
+        self.pauseAction()
         
     }
 
@@ -124,13 +128,13 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
+            //try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+           // try AVAudioSession.sharedInstance().setActive(true)
             player = try AVAudioPlayer.init(contentsOf: fileName)
             player.prepareToPlay()
             player.play()
             self.isPlayer = true
-            self.spinnerImage.rotate360Degrees()
+            
         } catch let error {
             print(error.localizedDescription)
         }
@@ -141,13 +145,34 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             let remainingTime = self.seconds - Int(self.player.currentTime)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
-            if Int(self.player.currentTime) == 0 {
-                print("I am Done")
+            print(remainingTime)
+            if remainingTime == 1 {
+                self.moveToFeedBack()
             }
         }
         
     }
 
+    var ismove = false
+    func moveToFeedBack() {
+        if !ismove {
+            ismove = true
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
+            if Int(self.player.currentTime) == 1 {
+                vc.completionTimeVideo = Double(self.seconds)
+            }else {
+                vc.completionTimeVideo = self.player.currentTime
+            }
+            
+            vc.cat_id = "\(self.cat_id)"
+            vc.audio_Id = "\(audioData.audio_Id)"
+            vc.isGuided = true
+            vc.emotion_Id = "\(self.emotion_Id)"
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
     }
@@ -155,10 +180,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     func pauseAction() {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
-            self.timer.invalidate()
             self.isStop = true
             self.spinnerImage.layer.removeAllAnimations()
             self.animateGradient(animate: false)
+            self.player.stop()
         }, completion: nil)
     }
     // MARK:- Button Action
@@ -175,7 +200,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
-        self.spinnerImage.layer.removeAllAnimations()
     }
     
     
@@ -204,14 +228,15 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     
     @IBAction func btnDoneAction(_ sender: Any) {
+        self.moveToFeedBack()
         alertPopupView.removeFromSuperview()
     }
     
     @IBAction func btnPauseAction(_ sender: Any) {
         if !isStop {
-            timer.invalidate()
             self.isStop = true
             self.spinnerImage.layer.removeAllAnimations()
+            self.player.stop()
         }
         
         animateGradient(animate: false)
@@ -264,6 +289,19 @@ extension WWMGuidedMeditationTimerVC: CAAnimationDelegate {
     }
 }
 
+extension WWMGuidedMeditationTimerVC: WWMWisdomFeedbackDelegate{
+    func videoURl(url: String) {
+        
+    }
+    
+    func refreshView() {
+        self.isStop = false
+         self.ismove = false
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
+       self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
+    }
+}
 
     
 

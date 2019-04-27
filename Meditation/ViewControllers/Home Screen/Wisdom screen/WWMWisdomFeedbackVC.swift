@@ -10,6 +10,7 @@ import UIKit
 
 protocol WWMWisdomFeedbackDelegate{
     func videoURl(url: String)
+    func refreshView()
 }
 
 class WWMWisdomFeedbackVC: WWMBaseViewController {
@@ -23,10 +24,12 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     
     var completionTimeVideo: Double = 0.0
     var isLiked: Bool = false
-    var cat_id: String = ""
-    var video_id: String = ""
+    var cat_id: String = "0"
+    var video_id: String = "0"
     var rating = "0"
-    
+    var emotion_Id = "0"
+    var audio_Id = "0"
+    var isGuided = false
     var videoURL: String = ""
     
     var delegate: WWMWisdomFeedbackDelegate?
@@ -68,23 +71,36 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     
 
     func wisdomFeedback(param: [String: Any]) {
-        
-        WWMHelperClass.showSVHud()
-        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    self.navigationController?.popToRootViewController(animated: true)
-                }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+        if isGuided {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
+            vc.type = "Post"
+            vc.meditationID = "0"
+            vc.levelID = "0"
+            vc.category_Id = self.cat_id
+            vc.emotion_Id = self.emotion_Id
+            vc.audio_Id = self.audio_Id
+            vc.rating = self.rating
+            vc.watched_duration = "\(Int(self.completionTimeVideo))"
+            self.navigationController?.pushViewController(vc, animated: false)
+        }else {
+            WWMHelperClass.showSVHud()
+            WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        print(success)
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }else {
+                        WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+                    }
+                }else{
+                    if error != nil {
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
                 }
-            }else{
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                }
+                WWMHelperClass.dismissSVHud()
             }
-            WWMHelperClass.dismissSVHud()
         }
+        
     }
     
     
@@ -133,7 +149,12 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     }
     
     @IBAction func btnRefreshAction(_ sender: Any) {
+        if isGuided {
+            delegate?.refreshView()
+        }else {
         delegate?.videoURl(url: self.videoURL)
+        }
+        
         self.navigationController?.popViewController(animated: true)
     }
 }

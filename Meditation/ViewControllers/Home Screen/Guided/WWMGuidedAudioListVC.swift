@@ -12,6 +12,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var lblEmotionTitle: UILabel!
     var emotionData = WWMGuidedEmotionData()
+    var cat_Id = "0"
     var type = ""
     @IBOutlet weak var audioCollectionView: UICollectionView!
     var arrAudioList = [WWMGuidedAudioData]()
@@ -45,6 +46,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
         vc.audioData = self.arrAudioList[indexPath.row]
+        vc.cat_id = self.cat_Id
+        vc.emotion_Id = "\(self.emotionData.emotion_Id)"
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

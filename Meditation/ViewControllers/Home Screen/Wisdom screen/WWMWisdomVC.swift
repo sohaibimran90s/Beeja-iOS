@@ -117,6 +117,10 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 }
 
 extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
+    func refreshView() {
+        print("")
+    }
+    
     func videoURl(url: String) {
         print(url)
         let videoURL = URL(string: url)
