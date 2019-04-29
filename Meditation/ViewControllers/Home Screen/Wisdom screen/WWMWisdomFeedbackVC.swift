@@ -15,6 +15,8 @@ protocol WWMWisdomFeedbackDelegate{
 
 class WWMWisdomFeedbackVC: WWMBaseViewController {
 
+    @IBOutlet weak var lblFlowType: UILabel!
+    @IBOutlet weak var lblMeditationType: UILabel!
     @IBOutlet weak var viewTimer: UIView!
     @IBOutlet weak var viewRefresh: UIView!
     @IBOutlet weak var btnYes: UIButton!
@@ -31,7 +33,8 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     var audio_Id = "0"
     var isGuided = false
     var videoURL: String = ""
-    
+    var meditationType = ""
+    var flowType = ""
     var delegate: WWMWisdomFeedbackDelegate?
     
     let gradient = CAGradientLayer()
@@ -46,7 +49,8 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         
         self.setNavigationBar(isShow: false, title: "")
         lblSession.text = "Did you like the\nsession?"
-        
+        self.lblFlowType.text = self.flowType
+        self.lblMeditationType.text = self.meditationType
         self.btnYes.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnYes.layer.borderWidth = 1.0
         
@@ -56,10 +60,6 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         gradient.frame = view.bounds
         gradient.colors = [UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).cgColor, UIColor(red: 87.0/255.0, green: 50.0/255.0, blue: 163.0/255.0, alpha: 1.0).cgColor]
         self.view.layer.insertSublayer(gradient, at: 0)
-        
-//        gradient1.frame = view.bounds
-//        gradient1.colors = [UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).cgColor, UIColor(red: 87.0/255.0, green: 50.0/255.0, blue: 163.0/255.0, alpha: 1.0).cgColor]
-//        self.view.layer.insertSublayer(gradient1, at: 0)
         
         self.lblRemainingTime.text = "\(self.secondsToMinutesSeconds(second: Int(self.completionTimeVideo)))"
     }

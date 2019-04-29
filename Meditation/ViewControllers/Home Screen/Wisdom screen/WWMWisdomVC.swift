@@ -17,6 +17,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     let playerViewController = AVPlayerViewController()
     var video_id: String = ""
     var videoURL: String = ""
+    var videoTitle: String = ""
     let gradient = CAGradientLayer()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         let data = self.wisdomData.cat_VideoList[indexPath.row]
         self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
         self.videoURL = self.wisdomData.cat_VideoList[indexPath.row].video_Url
-        
+        self.videoTitle = self.wisdomData.cat_VideoList[indexPath.row].video_Name
         let videoURL = URL(string: data.video_Url)
         let player = AVPlayer(url: videoURL!)
         
@@ -88,6 +89,8 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             vc.video_id = self.video_id
             vc.videoURL = self.videoURL
             vc.delegate = self
+            vc.flowType = "\(self.wisdomData.cat_Name) ~ \(self.videoTitle)"
+            vc.meditationType = "Wisdom Meditation"
             self.navigationController?.pushViewController(vc, animated: true)
             
             //Double(String(format: "%.2f", self.playerViewController.player?.currentTime().seconds ?? 0.0)) ?? 0.0
