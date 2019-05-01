@@ -37,7 +37,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 //            let string = try clear1.string(encoding: .utf8)
 //            print(string)
             let param = "Hello:" + base64String
-            self.getEncryptesKey(param: param, key: password)
+            self.getFirstEncryptesKey(param: param, key: password)
 
 
 
@@ -46,108 +46,68 @@ class WWMSplashLoaderVC: WWMBaseViewController {
             print(error)
         }
 
-        
-//
-//        print(UIDevice.current.localizedModel)
-//        print(UIDevice.current.model)
-//
-//
-//        do {
-//            let sourceData = "Hello World".data(using: .utf8)!
-//            let password = "password"
-//            let salt = AES256Crypter.randomSalt()
-//            let iv = AES256Crypter.randomIv()
-//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-//            print(key.base64EncodedString())
-//            print(iv.base64EncodedString())
-//            let aes = try AES256Crypter(key: key, iv: iv)
-//            let encryptedData = try aes.encrypt(sourceData)
-//            print(encryptedData.base64EncodedString())
-//            let decryptedData = try aes.decrypt(encryptedData)
-//
-//            let str = String.init(bytes: decryptedData, encoding: .utf8)!
-//            //let strEncr = String.init(bytes: encryptedData, encoding: .utf8)!
-//            print("Encrypted hex string: \(encryptedData.base64EncodedString())")
-//
-//            print("Decrypted hex string: \(str)")
-//        } catch {
-//            print("Failed")
-//            print(error)
-//        }
-
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")
         //self.saveMeditationDataToDB(data: ["":""])
         
         
-      //  self.getMoodMeterDataAPI()
+        self.getMoodMeterDataAPI()
     }
     
 
-    func getEncryptesKey(param:String, key:String) {
+    func getFirstEncryptesKey(param:String, key:String) {
         
         
         WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader) { (result, error, success) in
             if success {
                 if let encryptedStr = result["_hsk"] as? String {
                     
-                    do {
-                     
-                        let str = String.init(data: Data.init(base64Encoded: encryptedStr)!, encoding: .utf8)
-                        let plainText = "Hello World"
+                   let plainText = "Hello World"
                         let key1 = "your key"
                         
                         let cryptLib = CryptLib()
                         
                         let cipherText = cryptLib.encryptPlainTextRandomIV(withPlainText: plainText, key: key1)
                         print("cipherText \(cipherText! as String)")
-                        
-                        let d = cryptLib.decryptCipherTextRandomIV(withCipherText: "h0PMUJhigwVnJZD43i9q98b/AG7GUg8T2BdsQ4Yun2dQHPqSE5QF0RSiHUW0wguc", key: key1)
+                        print(encryptedStr)
+                        let d = cryptLib.decryptCipherTextRandomIV(withCipherText: "A/llYYk0+iXtFPykOnqMgcVr/Be0hHvqv611uRhoURQ=", key: "ass")
                         
                         let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: encryptedStr, key: key)
-                        print("decryptedString \(decryptedString! as String)")
-
+                    if decryptedString != nil {
+                        let randomStr = String.init(data: cryptLib.generateRandomIV(16), encoding: .utf8)
                         
-//                        let data = Data.init(base64Encoded: encryptedStr)
-//                        print(data)
-//                       // let keyData = Data.init(base64Encoded: key)
-//                        //let data = encryptedStr.data(using: .utf8)
-//                        let iv = AES256Crypter.randomIv()
-//print(iv.base64EncodedString())
-//                                                let iv1 = Data.init(base64Encoded: "1kGNDY9+QYT06jQSgAsh9A==")
-//                        let password = "123456"
-//                        let aes = try AES256Crypter(key: key, iv:iv1!)
-//                        let decryptedData = try aes.decrypt(data!)
-//
-//                        let str = String.init(bytes: decryptedData, encoding: .utf8)
-//
-//                        let str2 = String.init(data: decryptedData, encoding: .utf8)
-//
-//
-//                        print("Decrypted hex string: \(str)")
-                    } catch {
-                        print("Failed")
-                        print(error)
+                        let encryted = cryptLib.encryptPlainTextRandomIV(withPlainText: randomStr, key: decryptedString)
+                        
+                        let paramSecond = "\(encryted!)"
+                        
+                        self.getSecondEncryptesKey(param: paramSecond, key: decryptedString!)
                     }
+                    
+                    
+
                 }
-                
-                
-                print(result["_hsk"])
             }else {
                 if error != nil {
-                    print(error?.localizedDescription)
+                    print(error?.localizedDescription ?? "")
+                }
+            }
+        }
+    }
+    
+    func getSecondEncryptesKey(param:String, key:String) {
+        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader) { (result, error, success) in
+            if success {
+                if let encryptedStr = result["_hsk"] as? String {
+                    
+                }
+                
+            }else {
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
                 }
             }
         }
         
-        
-//        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_HANDSHAKE, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
-//            if sucess {
-//                self.saveMoodMeterDataToDB(data: result)
-//            }else {
-//                self.getMoodMeterDataFromDB()
-//            }
-//        }
     }
     
     func loadSplashScreenafterDelay() {
