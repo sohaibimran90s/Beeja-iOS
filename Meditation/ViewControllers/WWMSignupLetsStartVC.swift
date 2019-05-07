@@ -109,7 +109,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setType(value: "guided")
-                self.appPreference.setGuideType(value: "guided_type")
+                self.appPreference.setGuideType(value: self.guided_type)
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false
                 }) { (Bool) in
@@ -119,10 +119,13 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
                     }
                 }
             }else {
-                if error?.localizedDescription == "The Internet connection appears to be offline."{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
                 }
             }
             WWMHelperClass.dismissSVHud()

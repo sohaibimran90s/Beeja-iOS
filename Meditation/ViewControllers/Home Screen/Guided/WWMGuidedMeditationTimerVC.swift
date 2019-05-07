@@ -46,6 +46,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
+        self.lblTimerType.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
         self.seconds = self.audioData.audio_Duration
         // Do any additional setup after loading the view.
     }
@@ -145,7 +146,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             let remainingTime = self.seconds - Int(self.player.currentTime)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
-            print(remainingTime)
             if remainingTime == 1 {
                 self.moveToFeedBack()
             }

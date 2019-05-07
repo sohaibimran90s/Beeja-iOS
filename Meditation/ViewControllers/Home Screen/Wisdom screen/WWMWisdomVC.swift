@@ -63,10 +63,10 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         let player = AVPlayer(url: videoURL!)
         
         playerViewController.player = player
-        self.present(playerViewController, animated: false) {
+        self.present(playerViewController, animated: true) {
             self.playerViewController.player!.play()
             
-            self.playerViewController.player = player
+            self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
             self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
         }
     }

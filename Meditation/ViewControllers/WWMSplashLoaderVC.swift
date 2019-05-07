@@ -15,36 +15,36 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        do {
-            let password = "password"
-            let salt = AES256Crypter.randomSalt()
-            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-            let keyStr = String.init(bytes: key, encoding: .utf8)
-            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
-            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
-            }
-            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-            let publicKey = try PublicKey.init(pemEncoded: keyString)
-            let clear = try ClearMessage(string: plainText, using: .utf8)
-            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-            let base64String = encrypted.base64String
-//            print(base64String)
-//            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
+//        do {
+//            let password = "password"
+//            let salt = AES256Crypter.randomSalt()
+//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
+//            let keyStr = String.init(bytes: key, encoding: .utf8)
+//            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
+//            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
 //            }
-//            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
-//            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
-//            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
-//            let string = try clear1.string(encoding: .utf8)
-//            print(string)
-            let param = "Hello:" + base64String
-            self.getFirstEncryptesKey(param: param, key: password)
-
-
-
-        } catch {
-            print("Failed")
-            print(error)
-        }
+//            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+//            let publicKey = try PublicKey.init(pemEncoded: keyString)
+//            let clear = try ClearMessage(string: plainText, using: .utf8)
+//            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+//            let base64String = encrypted.base64String
+////            print(base64String)
+////            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
+////            }
+////            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
+////            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
+////            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
+////            let string = try clear1.string(encoding: .utf8)
+////            print(string)
+//            let param = "Hello:" + base64String
+//            self.getFirstEncryptesKey(param: param, key: password)
+//
+//
+//
+//        } catch {
+//            print("Failed")
+//            print(error)
+//        }
 
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")
