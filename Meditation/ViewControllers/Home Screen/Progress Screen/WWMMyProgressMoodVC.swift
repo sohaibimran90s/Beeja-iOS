@@ -534,7 +534,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         let xData = dateFormatter.string(from: currentDate)
         print(xData)
         
-        let param = ["user_id":self.appPreference.getUserID(), "date": xData, "type": self.type]
+        let param = ["user_id":self.appPreference.getUserID(),"med_type" : self.appPreference.getType(), "date": xData, "type": self.type]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 

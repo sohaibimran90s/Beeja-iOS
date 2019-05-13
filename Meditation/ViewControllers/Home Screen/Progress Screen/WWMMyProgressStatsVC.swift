@@ -565,6 +565,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func getStatsData() {
         WWMHelperClass.showSVHud()
         let param = ["user_id":self.appPreference.getUserID(),
+                     "type" : self.appPreference.getType(),
                      "month":self.strMonthYear]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

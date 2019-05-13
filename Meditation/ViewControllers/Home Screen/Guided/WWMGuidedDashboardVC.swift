@@ -62,6 +62,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
             vc.guidedData = data
             vc.type = self.type
+        
             arrVC.add(vc)
         }
         return arrVC as! [UIViewController]

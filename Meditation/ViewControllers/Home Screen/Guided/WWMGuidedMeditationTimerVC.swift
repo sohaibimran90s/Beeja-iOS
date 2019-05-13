@@ -20,11 +20,18 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var notificationCenter = NotificationCenter.default
     var isPlayer = false
     var cat_id = "0"
+    var cat_Name = ""
     var emotion_Id = "0"
+    var emotion_Name = ""
+    var isFavourite = false
+    var rating = -1
+    
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
-    @IBOutlet weak var lblTimerType: UILabel!
+    @IBOutlet weak var lblGuidedFlowType: UILabel!
+    @IBOutlet weak var lblGuidedName: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
+    @IBOutlet weak var btnFavourite: UIButton!
     
     
     
@@ -46,7 +53,13 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
-        self.lblTimerType.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
+        self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
+        if self.appPreference.getGuideType() == "pratical" {
+            self.lblGuidedFlowType.text = "Practical ~ \(self.cat_Name) ~ \(self.emotion_Name)"
+        }else {
+            self.lblGuidedFlowType.text = "Spiritual ~ \(self.cat_Name) ~ \(self.emotion_Name)"
+        }
+        
         self.seconds = self.audioData.audio_Duration
         // Do any additional setup after loading the view.
     }
@@ -157,19 +170,21 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     func moveToFeedBack() {
         if !ismove {
             ismove = true
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
-            if Int(self.player.currentTime) == 1 {
-                vc.completionTimeVideo = Double(self.seconds)
-            }else {
-                vc.completionTimeVideo = self.player.currentTime
-            }
             
-            vc.cat_id = "\(self.cat_id)"
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
+            vc.type = "Post"
+            vc.meditationID = "0"
+            vc.levelID = "0"
+            vc.category_Id = self.cat_id
+            vc.emotion_Id = self.emotion_Id
             vc.audio_Id = "\(audioData.audio_Id)"
-            vc.isGuided = true
-            vc.emotion_Id = "\(self.emotion_Id)"
-            vc.delegate = self
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.rating = "\(self.rating)"
+            if Int(self.player.currentTime) == 1 {
+                vc.watched_duration = "\(Double(self.seconds))"
+            }else {
+                vc.watched_duration = "\(self.player.currentTime)"
+            }
+            self.navigationController?.pushViewController(vc, animated: false)
         }
         
     }
@@ -200,6 +215,18 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
+    }
+    
+    @IBAction func btnFavouriteAction(_ sender: Any) {
+        if !isFavourite {
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+            self.isFavourite = true
+            self.rating = 1
+        }else {
+            isFavourite = false
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+            self.rating = 0
+        }
     }
     
     
@@ -289,19 +316,19 @@ extension WWMGuidedMeditationTimerVC: CAAnimationDelegate {
     }
 }
 
-extension WWMGuidedMeditationTimerVC: WWMWisdomFeedbackDelegate{
-    func videoURl(url: String) {
-        
-    }
-    
-    func refreshView() {
-        self.isStop = false
-         self.ismove = false
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
-       self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
-    }
-}
+//extension WWMGuidedMeditationTimerVC: WWMWisdomFeedbackDelegate{
+//    func videoURl(url: String) {
+//
+//    }
+//
+//    func refreshView() {
+//        self.isStop = false
+//         self.ismove = false
+//        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+//        self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
+//       self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
+//    }
+//}
 
     
 

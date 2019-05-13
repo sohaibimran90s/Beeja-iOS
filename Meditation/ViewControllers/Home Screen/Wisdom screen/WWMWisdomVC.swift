@@ -63,6 +63,13 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         let player = AVPlayer(url: videoURL!)
         
         playerViewController.player = player
+//        let btn = UIButton(type: .system)
+//        btn.setTitle("LIKE", for: .normal)
+//        btn.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
+        
+    
+    
+    
         self.present(playerViewController, animated: true) {
             self.playerViewController.player!.play()
             
@@ -71,7 +78,10 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         }
     }
     
-    
+    @objc func buttonTapped() {
+        print("button was tapped")
+        // replay/comment logic here
+    }
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
                                change: [NSKeyValueChangeKey : Any]?,
@@ -130,7 +140,7 @@ extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
         let player = AVPlayer(url: videoURL!)
         
         playerViewController.player = player
-        self.present(playerViewController, animated: false) {
+        self.present(playerViewController, animated: true) {
             self.playerViewController.player!.play()
             
             self.playerViewController.player = player

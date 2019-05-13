@@ -94,7 +94,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     func getJournalList() {
         WWMHelperClass.showSVHud()
-        let param = ["user_id":self.appPreference.getUserID()]
+        let param = ["user_id":self.appPreference.getUserID(),
+        "type" : self.appPreference.getType()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
@@ -218,7 +219,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             "tell_us_why":journalView.txtViewJournal.text!,
             "user_id":self.appPreference.getUserID(),
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "mood_id":""
+            "mood_id":"",
+            "med_type" : self.appPreference.getType()
         ]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

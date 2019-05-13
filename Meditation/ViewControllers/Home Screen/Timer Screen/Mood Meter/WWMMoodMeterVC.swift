@@ -11,6 +11,7 @@ import UIKit
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBOutlet weak var btnSkip: UIButton!
+    @IBOutlet weak var btnAskMeAgain: UIButton!
     @IBOutlet weak var lblMoodselect: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
     @IBOutlet weak var moodView: UIView?
@@ -40,6 +41,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if type == "Pre" {
+            self.btnAskMeAgain.isHidden = true
+        }
+        
         
         self.xibCall()
         
