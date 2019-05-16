@@ -34,7 +34,6 @@ class WWMTimerPresetVC: UIViewController {
     }
     
     @IBAction func crossBtnClicked(_ sender: UIButton) {
-        
         self.dismiss(animated: true, completion: nil)
     }
 }

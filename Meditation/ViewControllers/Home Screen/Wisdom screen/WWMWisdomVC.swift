@@ -19,6 +19,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     var videoURL: String = ""
     var videoTitle: String = ""
     let gradient = CAGradientLayer()
+    var btnFavourite = UIButton()
+    var isFavourite = false
+    var rating = -1
     override func viewDidLoad() {
         super.viewDidLoad()
         gradient.frame = view.bounds
@@ -63,24 +66,56 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         let player = AVPlayer(url: videoURL!)
         
         playerViewController.player = player
-//        let btn = UIButton(type: .system)
-//        btn.setTitle("LIKE", for: .normal)
-//        btn.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
+
+         btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))
+        btnFavourite.layer.cornerRadius = 10
+        btnFavourite.clipsToBounds = true
+        btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.25)
+        btnFavourite.contentMode = .scaleAspectFit
+        btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+        btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+        btnFavourite.isUserInteractionEnabled = true
+        btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
         
+        playerViewController.view.addSubview(btnFavourite)
     
-    
-    
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1;
+        tapGestureRecognizer.delegate = self
+        playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        self.playerViewController.videoGravity = .resizeAspectFill
         self.present(playerViewController, animated: true) {
             self.playerViewController.player!.play()
-            
+        
             self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
             self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
         }
     }
     
     @objc func buttonTapped() {
-        print("button was tapped")
-        // replay/comment logic here
+        if !isFavourite {
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+            self.isFavourite = true
+            self.rating = 1
+        }else {
+            isFavourite = false
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+            self.rating = 0
+        }
+    }
+    @objc func onCustomTap(sender: UITapGestureRecognizer) {
+        
+        if btnFavourite.alpha > 0{
+            UIView.animate(withDuration: 0.25, animations: {
+                self.btnFavourite.alpha = 0;
+            })
+            
+        } else {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.btnFavourite.alpha = 1;
+            })
+        }
     }
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
@@ -92,16 +127,16 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             
             print(self.playerViewController.player?.currentTime().seconds ?? 0)
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
-            
-            vc.completionTimeVideo = self.playerViewController.player?.currentTime().seconds ?? 0
-            vc.cat_id = String(self.wisdomData.cat_Id)
-            vc.video_id = self.video_id
-            vc.videoURL = self.videoURL
-            vc.delegate = self
-            vc.flowType = "\(self.wisdomData.cat_Name) ~ \(self.videoTitle)"
-            vc.meditationType = "Wisdom Meditation"
-            self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
+//
+//            vc.completionTimeVideo = self.playerViewController.player?.currentTime().seconds ?? 0
+//            vc.cat_id = String(self.wisdomData.cat_Id)
+//            vc.video_id = self.video_id
+//            vc.videoURL = self.videoURL
+//            vc.delegate = self
+//            vc.flowType = "\(self.wisdomData.cat_Name) ~ \(self.videoTitle)"
+//            vc.meditationType = "Wisdom Meditation"
+//            self.navigationController?.pushViewController(vc, animated: true)
             
             //Double(String(format: "%.2f", self.playerViewController.player?.currentTime().seconds ?? 0.0)) ?? 0.0
         }else {
@@ -146,5 +181,29 @@ extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
             self.playerViewController.player = player
             self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
         }
+    }
+}
+
+
+extension WWMWisdomVC: UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        
+        if let _touchView = touch.view {
+            
+            let screenRect:CGRect = UIScreen.main.bounds
+            let screenWidth :CGFloat = screenRect.size.width;
+            let screenHeight:CGFloat  = screenRect.size.height;
+            
+            if _touchView.bounds.height == screenHeight && _touchView.bounds.width == screenWidth{
+                return true
+            }
+            
+        }
+        return false
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

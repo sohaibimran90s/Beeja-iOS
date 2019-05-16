@@ -14,7 +14,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var seconds = 0
     var timer = Timer()
     var isStop = false
-    var player = AVAudioPlayer()
+   // var player = AVAudioPlayer()
+    var player = AVPlayer()
     var settingData = DBSettings()
     var audioData = WWMGuidedAudioData()
     var notificationCenter = NotificationCenter.default
@@ -50,8 +51,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.setUpView()
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
+      //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
+        self.play(url: URL.init(string: self.audioData.audio_Url)!)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
         if self.appPreference.getGuideType() == "pratical" {
@@ -63,25 +65,33 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.seconds = self.audioData.audio_Duration
         // Do any additional setup after loading the view.
     }
-    func downloadFileFromURL(url:URL){
-       // WWMHelperClass.showSVHud()
-        var downloadTask:URLSessionDownloadTask
-        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (resultUrl, response, error) in
-//            DispatchQueue.main.async {
-//                WWMHelperClass.dismissSVHud()
-//            }
-            if let playUrl = resultUrl {
-                self.playAudioFile(fileName: playUrl)
-            }
-            
-        })
-//        downloadTask = URLSession.sharedSession.downloadTaskWithURL(url, completionHandler: { [weak self](URL, response, error) -> Void in
-//            self?.play(URL)
-//        })
-        
-        downloadTask.resume()
-        
+    func play(url:URL) {
+        print("playing \(url)")
+            let playerItem = AVPlayerItem(url: url)
+            self.player = AVPlayer(playerItem:playerItem)
+            player.volume = 1.0
+            player.play()
+            self.isPlayer = true
     }
+//    func downloadFileFromURL(url:URL){
+//       // WWMHelperClass.showSVHud()
+//        var downloadTask:URLSessionDownloadTask
+//        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (resultUrl, response, error) in
+////            DispatchQueue.main.async {
+////                WWMHelperClass.dismissSVHud()
+////            }
+//            if let playUrl = resultUrl {
+//                self.playAudioFile(fileName: playUrl)
+//            }
+//
+//        })
+////        downloadTask = URLSession.sharedSession.downloadTaskWithURL(url, completionHandler: { [weak self](URL, response, error) -> Void in
+////            self?.play(URL)
+////        })
+//
+//        downloadTask.resume()
+//
+//    }
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
        // self.playerAmbient.stop()
@@ -138,28 +148,28 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
     }
 
-    func playAudioFile(fileName:URL) {
-        
-        
-        do {
-            //try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-           // try AVAudioSession.sharedInstance().setActive(true)
-            player = try AVAudioPlayer.init(contentsOf: fileName)
-            player.prepareToPlay()
-            player.play()
-            self.isPlayer = true
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
+//    func playAudioFile(fileName:URL) {
+//
+//
+//        do {
+//            //try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+//           // try AVAudioSession.sharedInstance().setActive(true)
+//            player = try AVAudioPlayer.init(contentsOf: fileName)
+//            player.prepareToPlay()
+//            player.play()
+//            self.isPlayer = true
+//
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
+//    }
     
     @objc func updateTimer() {
         if isPlayer {
             
-            let remainingTime = self.seconds - Int(self.player.currentTime)
+            let remainingTime = self.seconds - Int(self.player.currentTime().seconds)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
-            if remainingTime == 1 {
+            if remainingTime == 0 {
                 self.moveToFeedBack()
             }
         }
@@ -179,11 +189,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             vc.emotion_Id = self.emotion_Id
             vc.audio_Id = "\(audioData.audio_Id)"
             vc.rating = "\(self.rating)"
-            if Int(self.player.currentTime) == 1 {
-                vc.watched_duration = "\(Double(self.seconds))"
-            }else {
-                vc.watched_duration = "\(self.player.currentTime)"
-            }
+            vc.watched_duration = "\(self.player.currentTime().seconds)"
             self.navigationController?.pushViewController(vc, animated: false)
         }
         
@@ -198,7 +204,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.isStop = true
             self.spinnerImage.layer.removeAllAnimations()
             self.animateGradient(animate: false)
-            self.player.stop()
+            self.player.pause()
         }, completion: nil)
     }
     // MARK:- Button Action
@@ -263,7 +269,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         if !isStop {
             self.isStop = true
             self.spinnerImage.layer.removeAllAnimations()
-            self.player.stop()
+            self.player.pause()
         }
         
         animateGradient(animate: false)

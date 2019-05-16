@@ -14,6 +14,8 @@ import FBSDKCoreKit
 import CoreData
 import UserNotifications
 import Reachability
+import Crashlytics
+import Fabric
 
 
 @UIApplicationMain
@@ -46,6 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
+        Fabric.with([Crashlytics.self])
+        Fabric.sharedSDK().debug = true
+        
+        
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
         // GIDSignIn.sharedInstance().delegate = self
@@ -60,8 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             application.registerForRemoteNotifications()
         }
         
-        
-      //  NotificationCenter.default.addObserver(self, selector:Selector(("checkForReachability:")), name: Notification.Name.reachabilityChanged, object: nil)
+        // To check the internet reachability
     
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do{
@@ -314,11 +319,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
                 print(settingData.morningReminderTime!)
                 let date = dateFormate.date(from: strDate)
-                print(date!)
-                
+                let arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
+                var str = "Good Morning!"
+                if arrTemp?.count == 2 {
+                    let hours = Int(arrTemp?[0] ?? "0") ?? 0
+                    let minutes = Int(arrTemp?[1] ?? "0") ?? 0
+                    let seconds = hours*60 + minutes
+                    if seconds < 720 {
+                        str = "Good Morning!"
+                    }else if 720 <= seconds && seconds < 1080 {
+                        str = "Good Afternoon!"
+                    }else {
+                        str = "Good Evening!"
+                    }
+                    
+                }
+ 
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
-                content.title = NSString.localizedUserNotificationString(forKey: "Good morning!", arguments: nil)
+                content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
                 content.body = NSString.localizedUserNotificationString(forKey: "It's time for Beeja.", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-MorningReminder"
@@ -352,10 +371,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 print(settingData.afterNoonReminderTime!)
                 let date = dateFormate.date(from: strDate)
                 print(date!)
-                
+                let arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
+                var str = "Good Morning!"
+                if arrTemp?.count == 2 {
+                    let hours = Int(arrTemp?[0] ?? "0") ?? 0
+                    let minutes = Int(arrTemp?[1] ?? "0") ?? 0
+                    let seconds = hours*60 + minutes
+                    if seconds < 720 {
+                        str = "Good Morning!"
+                    }else if 720 <= seconds && seconds < 1080 {
+                        str = "Good Afternoon!"
+                    }else {
+                        str = "Good Evening!"
+                    }
+                    
+                }
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
-                content.title = NSString.localizedUserNotificationString(forKey: "Good afternoon!", arguments: nil)
+                content.title = NSString.localizedUserNotificationString(forKey: str, arguments: nil)
                 content.body = NSString.localizedUserNotificationString(forKey: "It's time for Beeja.", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-AfterNoonReminder"

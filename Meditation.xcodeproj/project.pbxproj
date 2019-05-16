@@ -120,6 +120,8 @@
 		2EB0865C22817069008BF6E4 /* WWMGuidedDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB0865722817068008BF6E4 /* WWMGuidedDashboardVC.swift */; };
 		2EB0865D22817069008BF6E4 /* WWMGuidedAudioListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB0865822817068008BF6E4 /* WWMGuidedAudioListVC.swift */; };
 		2EB0865E22817069008BF6E4 /* WWMGuidedMeditationTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB0865922817068008BF6E4 /* WWMGuidedMeditationTimerVC.swift */; };
+		2EB08666228ABA92008BF6E4 /* WWMVedioPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB08665228ABA92008BF6E4 /* WWMVedioPlayerVC.swift */; };
+		2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */ = {isa = PBXBuildFile; fileRef = 2EB08667228AE46F008BF6E4 /* dataTimer.json */; };
 		2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */; };
 		2EB1F11021DF601200F98EC2 /* SplashLoader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */; };
 		2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */; };
@@ -351,6 +353,8 @@
 		2EB0865722817068008BF6E4 /* WWMGuidedDashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMGuidedDashboardVC.swift; sourceTree = "<group>"; };
 		2EB0865822817068008BF6E4 /* WWMGuidedAudioListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMGuidedAudioListVC.swift; sourceTree = "<group>"; };
 		2EB0865922817068008BF6E4 /* WWMGuidedMeditationTimerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMGuidedMeditationTimerVC.swift; sourceTree = "<group>"; };
+		2EB08665228ABA92008BF6E4 /* WWMVedioPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMVedioPlayerVC.swift; sourceTree = "<group>"; };
+		2EB08667228AE46F008BF6E4 /* dataTimer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dataTimer.json; sourceTree = "<group>"; };
 		2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMExtension.swift; sourceTree = "<group>"; };
 		2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SplashLoader.gif; sourceTree = "<group>"; };
 		2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSplashLoaderVC.swift; sourceTree = "<group>"; };
@@ -673,6 +677,7 @@
 				2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */,
 				2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */,
 				61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */,
+				2EB08665228ABA92008BF6E4 /* WWMVedioPlayerVC.swift */,
 			);
 			path = "Wisdom screen";
 			sourceTree = "<group>";
@@ -824,6 +829,7 @@
 			children = (
 				2EACF983225375E600171688 /* private.pem */,
 				2EACF984225375E700171688 /* public.pem */,
+				2EB08667228AE46F008BF6E4 /* dataTimer.json */,
 				2E4CE29E2209A03400059396 /* dataClock.json */,
 				2E4CE28D22087A0F00059396 /* doubleLineLeft.png */,
 				2E4CE28F22087A1000059396 /* doubleLineRight.png */,
@@ -1265,6 +1271,7 @@
 				2EACF985225375E700171688 /* private.pem in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
+				2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
 				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
@@ -1346,7 +1353,7 @@
 		};
 		2E567A0E2248D65F00CAC1DE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -1358,7 +1365,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
 		};
@@ -1495,6 +1502,7 @@
 				2E316FD52227C6D000018538 /* DBSettings+CoreDataClass.swift in Sources */,
 				2E4CE28722083A0000059396 /* WWMStatsCalCollectionViewCell.swift in Sources */,
 				2E5CCE9421C79ED10085224B /* WWMCommunityVC.swift in Sources */,
+				2EB08666228ABA92008BF6E4 /* WWMVedioPlayerVC.swift in Sources */,
 				2EC81C5A21E76F67003B0EEE /* WWMMoodMeterLogVC.swift in Sources */,
 				2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */,
 				2E5EA5C221EC7B4F0076328A /* WWMResetPasswordVC.swift in Sources */,

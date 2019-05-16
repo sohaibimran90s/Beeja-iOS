@@ -26,6 +26,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var isGetProfileCall = false
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.delegate = self
         setupView()

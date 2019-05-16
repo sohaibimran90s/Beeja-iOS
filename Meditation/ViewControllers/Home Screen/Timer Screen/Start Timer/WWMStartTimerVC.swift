@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Lottie
 
 class WWMStartTimerVC: WWMBaseViewController {
 
@@ -37,6 +38,15 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let animationView = AnimationView(name: "dataTimer")
+            animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+            animationView.center = self.view.center
+            animationView.contentMode = .scaleAspectFill
+            animationView.loopMode = .loop
+            view.addSubview(animationView)
+            
+            animationView.play()
+        spinnerImage.isHidden = true
         self.setUpView()
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)

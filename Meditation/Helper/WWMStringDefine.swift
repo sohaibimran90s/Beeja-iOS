@@ -66,10 +66,11 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 let kChimes_JaiGuruDev                          = "JAY GURUDEV"
 
 #if DEVELOPMENT
-let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+
+let URL_BASE  = "https://service.launchpad-stage.in/api/v1/"//"https://staging.beejameditation.com/api/v1/"
 
 #else
-let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+let URL_BASE  = "https://service.launchpad-stage.in/api/v1/"//"https://staging.beejameditation.com/api/v1/"
 
 #endif
 

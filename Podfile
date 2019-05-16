@@ -12,7 +12,7 @@ target 'Meditation' do
 	pod 'Firebase/Auth'
 	pod 'GoogleSignIn'
 	pod 'FBSDKLoginKit'
-	pod 'lottie-ios'
+	pod 'lottie-ios', '~> 3.0.4'
 	pod "GaugeKit"
 	pod 'Charts'
 	pod 'SDWebImage'

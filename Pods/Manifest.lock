@@ -83,7 +83,7 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
   - IQKeyboardManagerSwift (6.2.0)
-  - lottie-ios (2.5.2)
+  - lottie-ios (3.0.4)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -109,7 +109,7 @@ DEPENDENCIES:
   - GaugeKit
   - GoogleSignIn
   - IQKeyboardManagerSwift
-  - lottie-ios
+  - lottie-ios (~> 3.0.4)
   - ReachabilitySwift
   - SDWebImage
   - SVProgressHUD
@@ -165,7 +165,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
-  lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
+  lottie-ios: 55a2de40418f8de2b155efaba4d4d1a025a5c570
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
@@ -173,6 +173,6 @@ SPEC CHECKSUMS:
   SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: 859873c5b71092f2dcc836e1f8624959fc751b08
+PODFILE CHECKSUM: 152a7b91479f0ee966f879686cd8643f3f294c96
 
 COCOAPODS: 1.6.1
