@@ -89,7 +89,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
         
-        let param = ["emotion_id":emotionData.emotion_Id]
+        let param = ["emotion_id":emotionData.emotion_Id,
+                     "user_id":self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDAudio, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {

@@ -18,14 +18,14 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var player = AVPlayer()
     var settingData = DBSettings()
     var audioData = WWMGuidedAudioData()
-    var notificationCenter = NotificationCenter.default
+  //  var notificationCenter = NotificationCenter.default
     var isPlayer = false
     var cat_id = "0"
     var cat_Name = ""
     var emotion_Id = "0"
     var emotion_Name = ""
     var isFavourite = false
-    var rating = -1
+    var rating = 0
     
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
@@ -50,7 +50,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 
         self.setUpView()
         
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+       // notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
       //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
@@ -60,6 +60,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.lblGuidedFlowType.text = "Practical ~ \(self.cat_Name) ~ \(self.emotion_Name)"
         }else {
             self.lblGuidedFlowType.text = "Spiritual ~ \(self.cat_Name) ~ \(self.emotion_Name)"
+        }
+        if self.audioData.vote {
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+            self.isFavourite = true
+            self.rating = 1
         }
         
         self.seconds = self.audioData.audio_Duration
@@ -93,7 +98,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 //
 //    }
     override func viewWillDisappear(_ animated: Bool) {
-        notificationCenter.removeObserver(self)
+       // notificationCenter.removeObserver(self)
        // self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
         self.timer.invalidate()
@@ -142,11 +147,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
     }
     
-    @objc func appMovedToBackground() {
-        print("App moved to background!")
-        self.pauseAction()
-        
-    }
+//    @objc func appMovedToBackground() {
+//        print("App moved to background!")
+//        self.pauseAction()
+//        
+//    }
 
 //    func playAudioFile(fileName:URL) {
 //

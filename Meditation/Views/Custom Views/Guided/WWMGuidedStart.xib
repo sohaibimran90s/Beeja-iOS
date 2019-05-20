@@ -124,7 +124,7 @@ to be guided?</string>
                     <rect key="frame" x="25" y="610" width="155" height="32"/>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="F9O-QF-KqA" firstAttribute="top" secondItem="ADU-Ia-4LU" secondAttribute="top" id="1yw-8G-r5O"/>
                 <constraint firstItem="OGg-Mb-FxT" firstAttribute="leading" secondItem="Rlu-Qj-WU1" secondAttribute="leading" id="74e-TO-efE"/>

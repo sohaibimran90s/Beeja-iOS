@@ -26,7 +26,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     var settingData = DBSettings()
  
     var isAmbientSoundPlay = false
-    var notificationCenter = NotificationCenter.default
+   // var notificationCenter = NotificationCenter.default
     
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
@@ -34,11 +34,11 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var spinnerImage: UIImageView!
     
     //var alertPopupView = WWMAlertController()
-    
+    var animationView = AnimationView()
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let animationView = AnimationView(name: "dataTimer")
+            animationView = AnimationView(name: "final")
             animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
             animationView.center = self.view.center
             animationView.contentMode = .scaleAspectFill
@@ -49,30 +49,30 @@ class WWMStartTimerVC: WWMBaseViewController {
         spinnerImage.isHidden = true
         self.setUpView()
         
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+      //  notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        notificationCenter.removeObserver(self)
+       // notificationCenter.removeObserver(self)
         self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    func rotationImage() {
-        
-        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
-            
-            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
-        }) { (finished) in
-            self.rotationImage()
-        }
-    }
+//    func rotationImage() {
+//
+//        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
+//
+//            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
+//        }) { (finished) in
+//            self.rotationImage()
+//        }
+//    }
     
-    @objc func appMovedToBackground() {
-        print("App moved to background!")
-        self.pauseAction()
-        
-    }
+//    @objc func appMovedToBackground() {
+//        print("App moved to background!")
+//        self.pauseAction()
+//
+//    }
     
     func setUpView() {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
@@ -141,7 +141,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         
         animateGradient(animate: true)
-        self.spinnerImage.rotate360Degrees()
+       // self.spinnerImage.rotate360Degrees()
         //self.spinnerImage.layer.removeAllAnimations()
         //self.rotationImage()
     }
@@ -313,34 +313,35 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     func pauseAction() {
-        UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
+        UIView.animate(withDuration: 1.0, delay: 0.1, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
-            self.spinnerImage.layer.removeAllAnimations()
+            self.animationView.pause()
+           // self.spinnerImage.layer.removeAllAnimations()
             self.animateGradient(animate: false)
         }, completion: nil)
     }
     // MARK:- Button Action
     
     @IBAction func btnResumeAction(_ sender: Any) {
-        UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.1, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = true
             self.isStop = false
             self.runTimer()
             if self.isAmbientSoundPlay {
                 self.playerAmbient.play()
             }
-            
-            self.spinnerImage.rotate360Degrees()
+            self.animationView.play()
+           // self.spinnerImage.rotate360Degrees()
             self.animateGradient(animate: true)
         }, completion: nil)
     }
     
     @IBAction func btnPlayAction(_ sender: Any) {
         self.pauseAction()
-        self.spinnerImage.layer.removeAllAnimations()
+       // self.spinnerImage.layer.removeAllAnimations()
     }
     
     
@@ -366,7 +367,8 @@ class WWMStartTimerVC: WWMBaseViewController {
         if self.isAmbientSoundPlay {
             self.playerAmbient.play()
         }
-        self.spinnerImage.rotate360Degrees()
+        self.animationView.play()
+       // self.spinnerImage.rotate360Degrees()
         alertPopupView.removeFromSuperview()
     }
     
@@ -398,7 +400,8 @@ class WWMStartTimerVC: WWMBaseViewController {
             timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
-            self.spinnerImage.layer.removeAllAnimations()
+            self.animationView.pause()
+           // self.spinnerImage.layer.removeAllAnimations()
         }
         
         animateGradient(animate: false)

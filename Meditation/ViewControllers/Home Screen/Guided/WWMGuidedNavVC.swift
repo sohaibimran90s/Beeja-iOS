@@ -68,7 +68,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
     
     func getGuidedListAPI() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        
+        if arrGuidedList.count > 0 {
+            WWMHelperClass.showSVHud()
+        }
+        
         
         let param = ["guided_type":self.type]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in

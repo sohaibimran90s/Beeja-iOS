@@ -30,9 +30,12 @@ class WWMWisdomNavVC: WWMBaseViewController {
     
     func getWisdomAPI() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        if arrWisdomList.count == 0 {
+            WWMHelperClass.showSVHud()
+        }
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETWISDOM, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        let param = ["user_id":self.appPreference.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETWISDOM, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

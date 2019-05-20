@@ -51,30 +51,30 @@ class WWMSatsProgressData: NSObject {
         }
     }
     
-    func getStatsProgressData() -> WWMSatsProgressData {
-        var statsData = WWMSatsProgressData()
-        if let path = Bundle.main.url(forResource: "CalendarData", withExtension: "geojson")
-        {
-            do {
-                let data = try Data.init(contentsOf: path )
-                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-                print(jsonResult)
-                if let jsonResult = jsonResult as? Dictionary<String, AnyObject>, let result = jsonResult["Result"] as? [String:Any] {
-                    
-                        
-                             //statsData = WWMSatsProgressData.init(json: result)
-                            
-                        
-                    }
-                
-                
-            } catch {
-                // handle error
-            }
-        }
-        
-        return statsData
-    }
+//    func getStatsProgressData() -> WWMSatsProgressData {
+//        let statsData = WWMSatsProgressData()
+//        if let path = Bundle.main.url(forResource: "CalendarData", withExtension: "geojson")
+//        {
+//            do {
+//                let data = try Data.init(contentsOf: path )
+//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+//                print(jsonResult)
+//                if let jsonResult = jsonResult as? Dictionary<String, AnyObject>, let result = jsonResult["Result"] as? [String:Any] {
+//
+//
+//                             //statsData = WWMSatsProgressData.init(json: result)
+//
+//
+//                    }
+//
+//
+//            } catch {
+//                // handle error
+//            }
+//        }
+//
+//        return statsData
+//    }
 }
 
 class WWMConsecutiveDaysData: NSObject {

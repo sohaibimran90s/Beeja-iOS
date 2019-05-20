@@ -21,7 +21,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     let gradient = CAGradientLayer()
     var btnFavourite = UIButton()
     var isFavourite = false
-    var rating = -1
+    var rating = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         gradient.frame = view.bounds
@@ -74,6 +74,11 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         btnFavourite.contentMode = .scaleAspectFit
         btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
         btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+        if data.vote {
+            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+            self.isFavourite = true
+            self.rating = 1
+        }
         btnFavourite.isUserInteractionEnabled = true
         btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
         
@@ -126,19 +131,17 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             self.playerViewController.removeObserver(self, forKeyPath: #keyPath(UIViewController.view.frame))
             
             print(self.playerViewController.player?.currentTime().seconds ?? 0)
+            let watchDuration = self.playerViewController.player?.currentTime().seconds ?? 0
+            let param = [
+                "user_id": self.appPreference.getUserID(),
+                "category_id": "\(self.wisdomData.cat_Id)",
+                "video_id": self.video_id,
+                "watched_duration": Int(watchDuration),
+                "rating" : self.rating
+                ] as [String : Any]
             
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomFeedbackVC") as! WWMWisdomFeedbackVC
-//
-//            vc.completionTimeVideo = self.playerViewController.player?.currentTime().seconds ?? 0
-//            vc.cat_id = String(self.wisdomData.cat_Id)
-//            vc.video_id = self.video_id
-//            vc.videoURL = self.videoURL
-//            vc.delegate = self
-//            vc.flowType = "\(self.wisdomData.cat_Name) ~ \(self.videoTitle)"
-//            vc.meditationType = "Wisdom Meditation"
-//            self.navigationController?.pushViewController(vc, animated: true)
-            
-            //Double(String(format: "%.2f", self.playerViewController.player?.currentTime().seconds ?? 0.0)) ?? 0.0
+            print(param)
+            self.wisdomFeedback(param: param as Dictionary<String, Any>)
         }else {
             print("Prachi")
         }
@@ -161,6 +164,30 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
         return footerView
         
+    }
+    
+    func wisdomFeedback(param: [String: Any]) {
+        WWMHelperClass.showSVHud()
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    self.navigationController?.popToRootViewController(animated: true)
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+                }
+            }else{
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
     }
 }
 
@@ -206,4 +233,5 @@ extension WWMWisdomVC: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+
 }
