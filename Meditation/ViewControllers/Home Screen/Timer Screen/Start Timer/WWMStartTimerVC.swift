@@ -38,7 +38,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-            animationView = AnimationView(name: "final")
+            animationView = AnimationView(name: "final1")
             animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
             animationView.center = self.view.center
             animationView.contentMode = .scaleAspectFill

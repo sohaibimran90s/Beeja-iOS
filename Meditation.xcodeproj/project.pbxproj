@@ -26,6 +26,7 @@
 		2E326ECD222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */; };
 		2E34A906228ED653005B4091 /* data17.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E34A905228ED653005B4091 /* data17.json */; };
 		2E34A90822929526005B4091 /* final.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E34A90722929526005B4091 /* final.json */; };
+		2E34A90A2292D926005B4091 /* final1.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E34A9092292D926005B4091 /* final1.json */; };
 		2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */; };
 		2E4371C122004D9A00EF5D62 /* THRUSH.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371B622004D9900EF5D62 /* THRUSH.mp3 */; };
 		2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E4371B722004D9900EF5D62 /* HARP.mp3 */; };
@@ -251,6 +252,7 @@
 		2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMBackgroundVedioView.swift; sourceTree = "<group>"; };
 		2E34A905228ED653005B4091 /* data17.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data17.json; sourceTree = "<group>"; };
 		2E34A90722929526005B4091 /* final.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = final.json; sourceTree = "<group>"; };
+		2E34A9092292D926005B4091 /* final1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = final1.json; sourceTree = "<group>"; };
 		2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vibe_images.jpg; sourceTree = "<group>"; };
 		2E4371B622004D9900EF5D62 /* THRUSH.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = THRUSH.mp3; sourceTree = "<group>"; };
 		2E4371B722004D9900EF5D62 /* HARP.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HARP.mp3; sourceTree = "<group>"; };
@@ -835,6 +837,7 @@
 				2EACF983225375E600171688 /* private.pem */,
 				2EACF984225375E700171688 /* public.pem */,
 				2E34A90722929526005B4091 /* final.json */,
+				2E34A9092292D926005B4091 /* final1.json */,
 				2E34A905228ED653005B4091 /* data17.json */,
 				2EB08667228AE46F008BF6E4 /* dataTimer.json */,
 				2E4CE29E2209A03400059396 /* dataClock.json */,
@@ -1267,6 +1270,7 @@
 				2EC81C5821E75BCF003B0EEE /* MoodMeterData.geojson in Resources */,
 				2EC95860220AC1BA009D5144 /* Maax-MediumItalic.otf in Resources */,
 				2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */,
+				2E34A90A2292D926005B4091 /* final1.json in Resources */,
 				2EC9585F220AC1BA009D5144 /* Maax.ttf in Resources */,
 				2EC95863220AC1BA009D5144 /* Maax-Bold.ttf in Resources */,
 				2E4371CA22004D9A00EF5D62 /* CRYSTAL BOWL.mp3 in Resources */,

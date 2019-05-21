@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Lottie
 
 class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 
@@ -45,9 +46,22 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
     
     
+     var animationView = AnimationView()
+    @IBOutlet weak var viewLottieAnimation: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+       animationView = AnimationView(name: "final1")
+        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        //animationView.center = self.viewLottieAnimation.center
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        viewLottieAnimation.addSubview(animationView)
+        
+        animationView.play()
+        spinnerImage.isHidden = true
+        
         self.setUpView()
         
        // notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
@@ -102,7 +116,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
        // self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
         self.timer.invalidate()
-        self.spinnerImage.layer.removeAllAnimations()
+        self.animationView.pause()
+       // self.spinnerImage.layer.removeAllAnimations()
         self.animateGradient(animate: false)
         
     }
@@ -124,7 +139,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         
         animateGradient(animate: true)
-        self.spinnerImage.rotate360Degrees()
+      //  self.spinnerImage.rotate360Degrees()
         //self.spinnerImage.layer.removeAllAnimations()
         //self.rotationImage()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
@@ -137,15 +152,15 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         //self.playAmbientSoundAudioFile(fileName: settingData.ambientChime!)
     }
-    func rotationImage() {
-        
-        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
-            
-            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
-        }) { (finished) in
-            self.rotationImage()
-        }
-    }
+//    func rotationImage() {
+//
+//        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
+//
+//            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
+//        }) { (finished) in
+//            self.rotationImage()
+//        }
+//    }
     
 //    @objc func appMovedToBackground() {
 //        print("App moved to background!")
@@ -207,7 +222,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.isStop = true
-            self.spinnerImage.layer.removeAllAnimations()
+           // self.spinnerImage.layer.removeAllAnimations()
+            self.animationView.pause()
             self.animateGradient(animate: false)
             self.player.pause()
         }, completion: nil)
@@ -219,7 +235,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.viewPause.isHidden = true
             self.isStop = false
             self.player.play()
-            self.spinnerImage.rotate360Degrees()
+            self.animationView.play()
+           // self.spinnerImage.rotate360Degrees()
             self.animateGradient(animate: true)
         }, completion: nil)
     }
@@ -260,7 +277,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         animateGradient(animate: true)
         self.isStop = false
         self.player.play()
-        self.spinnerImage.rotate360Degrees()
+        self.animationView.play()
+       // self.spinnerImage.rotate360Degrees()
         alertPopupView.removeFromSuperview()
     }
     
@@ -273,7 +291,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @IBAction func btnPauseAction(_ sender: Any) {
         if !isStop {
             self.isStop = true
-            self.spinnerImage.layer.removeAllAnimations()
+           // self.spinnerImage.layer.removeAllAnimations()
+            self.animationView.pause()
             self.player.pause()
         }
         
