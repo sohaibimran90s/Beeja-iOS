@@ -70,7 +70,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
-        if self.appPreference.getGuideType() == "pratical" {
+        print(self.appPreference.getGuideType())
+        if self.appPreference.getGuideType() == "practical" {
             self.lblGuidedFlowType.text = "Practical ~ \(self.cat_Name) ~ \(self.emotion_Name)"
         }else {
             self.lblGuidedFlowType.text = "Spiritual ~ \(self.cat_Name) ~ \(self.emotion_Name)"
@@ -86,11 +87,20 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     func play(url:URL) {
         print("playing \(url)")
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
             let playerItem = AVPlayerItem(url: url)
             self.player = AVPlayer(playerItem:playerItem)
             player.volume = 1.0
             player.play()
             self.isPlayer = true
+           
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
     }
 //    func downloadFileFromURL(url:URL){
 //       // WWMHelperClass.showSVHud()
@@ -115,10 +125,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
        // notificationCenter.removeObserver(self)
        // self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
-        self.timer.invalidate()
-        self.animationView.pause()
+       // self.timer.invalidate()
+       // self.animationView.pause()
        // self.spinnerImage.layer.removeAllAnimations()
-        self.animateGradient(animate: false)
+      //  self.animateGradient(animate: false)
         
     }
     
@@ -200,7 +210,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     func moveToFeedBack() {
         if !ismove {
             ismove = true
-            
+            self.timer.invalidate()
+            self.animationView.stop()
+            self.animateGradient(animate: false)
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
             vc.type = "Post"
             vc.meditationID = "0"

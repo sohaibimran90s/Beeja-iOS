@@ -293,6 +293,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         return true
     }
     
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        
+      if let tabcontroller = self.window?.rootViewController as? UITabBarController {
+        if let nav = tabcontroller.selectedViewController as? UINavigationController {
+            
+            if (nav.visibleViewController?.isKind(of: WWMVedioPlayerVC.classForCoder()))! {
+                    return .allButUpsideDown
+                }
+            }
+
+        }
+
+        return .portrait
+    }
+    
+    
     // MARK:- Local Notification
     //Local Notification Request Authorization.
     func requestAuthorization(){

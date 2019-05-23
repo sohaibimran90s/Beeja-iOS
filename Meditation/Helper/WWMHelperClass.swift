@@ -166,6 +166,17 @@ class WWMHelperClass {
         return length
     }
     
+    // MARK : Build Version
+    
+    class func getVersion() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString")
+        let buildNo = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String)
+        print(buildNo ?? "")
+        return "v\(version ?? "")"
+    }
+    
+    
+    
     //MARK:- Database Methods
     
     class func fetchDB(dbName:String) -> [Any] {

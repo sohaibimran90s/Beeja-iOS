@@ -14,6 +14,7 @@ class WWMSideMenuVC: WWMBaseViewController {
     @IBOutlet weak var btnGuided: UIButton!
     @IBOutlet weak var btnTimer: UIButton!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblVersion: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     
     var guideStart = WWMGuidedStart()
@@ -36,7 +37,8 @@ class WWMSideMenuVC: WWMBaseViewController {
         }else {
             self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
         }
-        
+        print(WWMHelperClass.getVersion())
+        self.lblVersion.text = WWMHelperClass.getVersion()
         
         // Do any additional setup after loading the view.
     }

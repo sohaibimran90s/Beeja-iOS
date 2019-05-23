@@ -14,7 +14,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
     var itemInfo: IndicatorInfo = "View"
     var wisdomData = WWMWisdomData()
-    let playerViewController = AVPlayerViewController()
+    var playerViewController = WWMVedioPlayerVC()
     var video_id: String = ""
     var videoURL: String = ""
     var videoTitle: String = ""
@@ -64,13 +64,16 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         self.videoTitle = self.wisdomData.cat_VideoList[indexPath.row].video_Name
         let videoURL = URL(string: data.video_Url)
         let player = AVPlayer(url: videoURL!)
-        
+        playerViewController = self.storyboard?.instantiateViewController(withIdentifier: "WWMVedioPlayerVC") as! WWMVedioPlayerVC
+        playerViewController.vote = data.vote
+        playerViewController.video_id = self.video_id
+        playerViewController.cat_Id = "\(self.wisdomData.cat_Id)"
         playerViewController.player = player
 
          btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))
         btnFavourite.layer.cornerRadius = 10
         btnFavourite.clipsToBounds = true
-        btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.25)
+        btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.50)
         btnFavourite.contentMode = .scaleAspectFit
         btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
         btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
@@ -82,20 +85,26 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         btnFavourite.isUserInteractionEnabled = true
         btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
         
-        playerViewController.view.addSubview(btnFavourite)
-    
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
-        tapGestureRecognizer.numberOfTapsRequired = 1;
-        tapGestureRecognizer.delegate = self
-        playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
+      //  playerViewController.contentOverlayView?.insertSubview(btnFavourite, aboveSubview: playerViewController.view)
         
+        playerViewController.showsPlaybackControls = true
+        //playerViewController.contentOverlayView?.bringSubviewToFront(btnFavourite)
+       // print(playerViewController.contentOverlayView?.subviews)
+       // let subviews = playerViewController.contentOverlayView?.subviews
+        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
+       // tapGestureRecognizer.numberOfTapsRequired = 1;
+       // tapGestureRecognizer.delegate = self
+       // playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
+       // playerViewController.allowsPictureInPicturePlayback = true
         self.playerViewController.videoGravity = .resizeAspectFill
-        self.present(playerViewController, animated: true) {
-            self.playerViewController.player!.play()
+//        self.present(playerViewController, animated: true) {
+//
+//        }
+        self.playerViewController.player!.play()
         
-            self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
-            self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
-        }
+        self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
+       // self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
+        self.navigationController?.pushViewController(playerViewController, animated: true)
     }
     
     @objc func buttonTapped() {
@@ -113,12 +122,14 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         
         if btnFavourite.alpha > 0{
             UIView.animate(withDuration: 0.25, animations: {
-                self.btnFavourite.alpha = 0;
+               // self.btnFavourite.alpha = 0;
+               //  self.playerViewController.showsPlaybackControls = false
             })
             
         } else {
             UIView.animate(withDuration: 0.25, animations: {
-                self.btnFavourite.alpha = 1;
+              //  self.btnFavourite.alpha = 1;
+              //  self.playerViewController.showsPlaybackControls = true
             })
         }
     }
