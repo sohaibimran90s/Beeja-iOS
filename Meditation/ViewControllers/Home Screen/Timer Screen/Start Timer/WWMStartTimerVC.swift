@@ -43,7 +43,8 @@ class WWMStartTimerVC: WWMBaseViewController {
             animationView.center = self.view.center
             animationView.contentMode = .scaleAspectFill
             animationView.loopMode = .loop
-            view.addSubview(animationView)
+        view.insertSubview(animationView, belowSubview: viewPause)
+           // view.addSubview(animationView)
             
             animationView.play()
         spinnerImage.isHidden = true
