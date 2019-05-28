@@ -19,40 +19,74 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     var video_id: String = ""
     var cat_Id: String = ""
     var timer = Timer()
-    
+    var timerInterval = 10
+    var notificationCenter = NotificationCenter.default
+    var playerStatus: String = "Playing"
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setUpNavigationBarForWisdomVideo(title: "")
-//        btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))
-//        btnFavourite.layer.cornerRadius = 10
-//        btnFavourite.clipsToBounds = true
-//        btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.25)
-//        btnFavourite.contentMode = .scaleAspectFit
-//        btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
-//        btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
-//
-//        btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
-//        let controller = AVPlayerViewController()
-//        controller.player = self.player
-//        let yourView = controller.view
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
-//        tapGestureRecognizer.numberOfTapsRequired = 1;
-//        tapGestureRecognizer.delegate = self
-//        yourView?.addGestureRecognizer(tapGestureRecognizer)
-//
-//        controller.view.addSubview(btnFavourite)
-//        parent?.modalPresentationStyle = .fullScreen
-//        self.parent?.present(controller, animated: false, completion: nil)
-//       // parentViewController.presentViewController(controller, animated: false, completion: nil)
+        
+        self.player?.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions(rawValue: NSKeyValueObservingOptions.new.rawValue | NSKeyValueObservingOptions.old.rawValue), context: nil)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
+         tapGestureRecognizer.numberOfTapsRequired = 1;
+         tapGestureRecognizer.delegate = self
+         self.view.addGestureRecognizer(tapGestureRecognizer)
+        
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-       // timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+        self.timerNavigation()
     }
+    
+    @objc func automaticHiddenNavigation(){
+        print("automaticHiddenNavigation.........")
+        if self.playerStatus == "Playing"{
+            self.navigationController?.navigationBar.isHidden = true
+        }else{
+            self.navigationController?.navigationBar.isHidden = false
+        }
+    }
+    
+    func timerNavigation(){
+        
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(self.timerInterval), target: self, selector: #selector(automaticHiddenNavigation), userInfo: nil, repeats: false)
+    }
+    
+    @objc func onCustomTap(sender: UITapGestureRecognizer) {
+    
+        print("onCustomTap.........\(self.playerStatus)")
+
+        if self.playerStatus == "Playing"{
+            self.navigationController?.navigationBar.isHidden = false
+            self.timerInterval = Int(5)
+            self.timerNavigation()
+        }else{
+            self.navigationController?.navigationBar.isHidden = false
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "rate" {
+            if self.player?.rate == 1  {
+                print("Playing")
+                self.playerStatus = "Playing"
+                self.navigationController?.navigationBar.isHidden = false
+                self.timerInterval = Int(4.6)
+                self.timerNavigation()
+            }else{
+                print("Stop")
+                self.playerStatus = "Stop"
+                self.navigationController?.navigationBar.isHidden = false
+            }
+        }
+    }
+    
     @objc func appMovedToBackground() {
         self.finishVideo()
         
     }
-    var notificationCenter = NotificationCenter.default
+
     @objc func updateTimer() {
         
         if self.isReadyForDisplay {
@@ -61,7 +95,6 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
                 self.finishVideo()
             }
         }
-        
     }
     
     func setUpNavigationBarForWisdomVideo(title:String) {
@@ -71,17 +104,17 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.barTintColor = UIColor.clear
          btnFavourite = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
-        btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+        btnFavourite.setImage(UIImage.init(named: "fav_small_off"), for: .normal)
         btnFavourite.addTarget(self, action: #selector(btnFavouriteAction(_:)), for: .touchUpInside)
         btnFavourite.contentMode = .scaleAspectFit
         if vote {
-            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+            self.btnFavourite.setImage(UIImage.init(named: "fav_small_on"), for: .normal)
             self.isFavourite = true
             self.rating = 1
         }
 
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
-        backButton.setImage(UIImage.init(named: "Close_Icon"), for: .normal)
+        backButton.setImage(UIImage.init(named: "close_small"), for: .normal)
         backButton.addTarget(self, action: #selector(btnBackAction(_:)), for: .touchUpInside)
         backButton.contentMode = .scaleAspectFit
 
@@ -146,21 +179,28 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
             self.rating = 0
         }
     }
-    @objc func onCustomTap(sender: UITapGestureRecognizer) {
+}
+
+extension WWMVedioPlayerVC: UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
-        if btnFavourite.alpha > 0{
-            UIView.animate(withDuration: 0.5, animations: {
-                self.btnFavourite.alpha = 0;
-            })
+        if let _touchView = touch.view {
             
-        } else {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.btnFavourite.alpha = 1;
-            })
+            let screenRect:CGRect = UIScreen.main.bounds
+            let screenWidth :CGFloat = screenRect.size.width;
+            let screenHeight:CGFloat  = screenRect.size.height;
+            
+            if _touchView.bounds.height == screenHeight && _touchView.bounds.width == screenWidth{
+                return true
+            }
+            
         }
+        return false
     }
     
-    
-    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
 

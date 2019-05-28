@@ -26,7 +26,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     var settingData = DBSettings()
  
     var isAmbientSoundPlay = false
-   // var notificationCenter = NotificationCenter.default
+    var notificationCenter = NotificationCenter.default
     
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
@@ -50,11 +50,12 @@ class WWMStartTimerVC: WWMBaseViewController {
         spinnerImage.isHidden = true
         self.setUpView()
         
-      //  notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-       // notificationCenter.removeObserver(self)
+        notificationCenter.removeObserver(self)
         self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
@@ -69,11 +70,16 @@ class WWMStartTimerVC: WWMBaseViewController {
 //        }
 //    }
     
-//    @objc func appMovedToBackground() {
-//        print("App moved to background!")
-//        self.pauseAction()
-//
-//    }
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+         self.animationView.pause()
+
+    }
+    @objc func appMovedToForeground() {
+        print("App moved to background!")
+        self.animationView.play()
+        
+    }
     
     func setUpView() {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]

@@ -22,6 +22,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     var btnFavourite = UIButton()
     var isFavourite = false
     var rating = 0
+
+    
+    //MARK:- Viewcontroller Delegate
     override func viewDidLoad() {
         super.viewDidLoad()
         gradient.frame = view.bounds
@@ -29,6 +32,12 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         self.view.layer.insertSublayer(gradient, at: 0)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
 
     // MARK: - IndicatorInfoProvider
     
@@ -223,26 +232,4 @@ extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
 }
 
 
-extension WWMWisdomVC: UIGestureRecognizerDelegate {
-    
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        
-        if let _touchView = touch.view {
-            
-            let screenRect:CGRect = UIScreen.main.bounds
-            let screenWidth :CGFloat = screenRect.size.width;
-            let screenHeight:CGFloat  = screenRect.size.height;
-            
-            if _touchView.bounds.height == screenHeight && _touchView.bounds.width == screenWidth{
-                return true
-            }
-            
-        }
-        return false
-    }
-    
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
 
-}

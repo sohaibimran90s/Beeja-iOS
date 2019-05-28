@@ -21,7 +21,7 @@ import Fabric
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
     
-    
+
     fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
     fileprivate let clientIdentifier = "2fd82c511bd74915b2b16ff1903eeb2b"
     fileprivate let name = "spotify"
@@ -300,6 +300,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if let nav = tabcontroller.selectedViewController as? UINavigationController {
             
             if (nav.visibleViewController?.isKind(of: WWMVedioPlayerVC.classForCoder()))! {
+                
                     return .allButUpsideDown
                 }
             }

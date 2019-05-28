@@ -19,7 +19,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var player = AVPlayer()
     var settingData = DBSettings()
     var audioData = WWMGuidedAudioData()
-  //  var notificationCenter = NotificationCenter.default
+    var notificationCenter = NotificationCenter.default
     var isPlayer = false
     var cat_id = "0"
     var cat_Name = ""
@@ -64,7 +64,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         self.setUpView()
         
-       // notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
       //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
@@ -122,7 +123,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 //
 //    }
     override func viewWillDisappear(_ animated: Bool) {
-       // notificationCenter.removeObserver(self)
+        notificationCenter.removeObserver(self)
        // self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
        // self.timer.invalidate()
@@ -172,11 +173,17 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 //        }
 //    }
     
-//    @objc func appMovedToBackground() {
-//        print("App moved to background!")
-//        self.pauseAction()
-//        
-//    }
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+        self.animationView.pause()
+        
+    }
+    
+    @objc func appMovedToForeground() {
+        print("App moved to foreground!")
+        self.animationView.play()
+        
+    }
 
 //    func playAudioFile(fileName:URL) {
 //
