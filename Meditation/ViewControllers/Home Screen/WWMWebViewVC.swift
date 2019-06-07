@@ -63,7 +63,10 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
+    @IBAction func btnWebViewBackAction(_ sender: UIButton) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
          self.webView.stopLoading()

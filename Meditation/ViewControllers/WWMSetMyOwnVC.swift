@@ -54,6 +54,11 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        
+    }
+    
 //    override func viewWillDisappear(_ animated: Bool) {
 //        self.navigationController?.setNavigationBarHidden(false, animated: false)
 //    }
@@ -115,6 +120,13 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         }
     }
 
+    
+    @IBAction func btnSetMyOwnBackAction(_ sender: UIButton) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
     func setMyOwnAPI() {
         self.view.endEditing(true)
         WWMHelperClass.showSVHud()
@@ -326,5 +338,4 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             WWMHelperClass.dismissSVHud()
         }
     }
-
 }

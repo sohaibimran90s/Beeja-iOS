@@ -2,39 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>46067628020-ivi4t01urefdlj9hld1e0ebf9bp2moko.apps.googleusercontent.com</string>
+	<string>67011826526-9k01vqtvtnk6c59kn8qmmdu9f8glrpb2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.46067628020-ivi4t01urefdlj9hld1e0ebf9bp2moko</string>
+	<string>com.googleusercontent.apps.67011826526-9k01vqtvtnk6c59kn8qmmdu9f8glrpb2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>67011826526-om18iilukblghsbsu6fov6vg2a19vei6.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBd-a48SiuAgOAxjg_4uLcvkiZ61IAouko</string>
+	<string>AIzaSyDnDbctRZ3MZ__MXaN_tlqHCcgXgIFd8PI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>46067628020</string>
+	<string>67011826526</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.beejameditation.beeja</string>
 	<key>PROJECT_ID</key>
-	<string>beeja-meditation</string>
+	<string>beejameditation</string>
 	<key>STORAGE_BUCKET</key>
-	<string>beeja-meditation.appspot.com</string>
+	<string>beejameditation.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<true/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:46067628020:ios:9eeef6ad2bd19489</string>
+	<string>1:67011826526:ios:9eeef6ad2bd19489</string>
 	<key>DATABASE_URL</key>
-	<string>https://beeja-meditation.firebaseio.com</string>
+	<string>https://beejameditation.firebaseio.com</string>
 </dict>
 </plist>

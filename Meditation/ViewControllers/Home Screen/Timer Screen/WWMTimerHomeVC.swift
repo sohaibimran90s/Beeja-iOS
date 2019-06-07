@@ -187,8 +187,14 @@ class WWMTimerHomeVC: WWMBaseViewController {
     // MARK: - UIButton Action
     
     
+    
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
         
+        
+        let abc = Int(self.sliderPrepTime.value) * 15
+        print(self.secondsToMinutesSeconds(second: abc))
+        
+        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
         self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
     }
     @IBAction func sliderMeditationTimeValueChangedAction(_ sender: Any) {

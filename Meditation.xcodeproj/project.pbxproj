@@ -87,7 +87,7 @@
 		2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		2E6C8406222427180070E799 /* WWMUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C8405222427180070E799 /* WWMUserData.swift */; };
 		2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */; };
-		2E85F1612204660B008073A2 /* JAY GURUDEV.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */; };
+		2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */; };
 		2E8EFD9E22363D8E00B19950 /* WWMFinishTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8EFD9D22363D8E00B19950 /* WWMFinishTimerVC.swift */; };
 		2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93D2D721F1B92B00163E57 /* WWMStartTimerVC.swift */; };
 		2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93D2D921F1F1F100163E57 /* WWMMoodJournalVC.swift */; };
@@ -146,7 +146,6 @@
 		2EC95862220AC1BA009D5144 /* Maax-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC95859220AC1B9009D5144 /* Maax-BoldItalic.ttf */; };
 		2EC95863220AC1BA009D5144 /* Maax-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC9585A220AC1BA009D5144 /* Maax-Bold.ttf */; };
 		2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EC9585B220AC1BA009D5144 /* Maax-Black.ttf */; };
-		2EC95866220C5838009D5144 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EC95865220C5837009D5144 /* GoogleService-Info.plist */; };
 		2EE247AA21E4CF9500857C25 /* WWMSideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE247A921E4CF9500857C25 /* WWMSideMenuVC.swift */; };
 		2EE247AC21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE247AB21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift */; };
 		2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE247AD21E5D9D200857C25 /* WWMMyProgressMoodVC.swift */; };
@@ -191,6 +190,7 @@
 		2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */; };
 		2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */; };
 		57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */; };
+		6130DE1322A9220600271F67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6130DE1222A9220500271F67 /* GoogleService-Info.plist */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
@@ -323,7 +323,7 @@
 		2E6C840722256DFC0070E799 /* Meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meditation.entitlements; sourceTree = "<group>"; };
 		2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalVC.swift; sourceTree = "<group>"; };
-		2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JAY GURUDEV.mp3"; sourceTree = "<group>"; };
+		2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JAI GURU DEVA.mp3"; sourceTree = "<group>"; };
 		2E8EFD9D22363D8E00B19950 /* WWMFinishTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerVC.swift; sourceTree = "<group>"; };
 		2E93D2D721F1B92B00163E57 /* WWMStartTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMStartTimerVC.swift; sourceTree = "<group>"; };
 		2E93D2D921F1F1F100163E57 /* WWMMoodJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodJournalVC.swift; sourceTree = "<group>"; };
@@ -382,7 +382,6 @@
 		2EC95859220AC1B9009D5144 /* Maax-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maax-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2EC9585A220AC1BA009D5144 /* Maax-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maax-Bold.ttf"; sourceTree = "<group>"; };
 		2EC9585B220AC1BA009D5144 /* Maax-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maax-Black.ttf"; sourceTree = "<group>"; };
-		2EC95865220C5837009D5144 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2EE247A921E4CF9500857C25 /* WWMSideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSideMenuVC.swift; sourceTree = "<group>"; };
 		2EE247AB21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressStatsVC.swift; sourceTree = "<group>"; };
 		2EE247AD21E5D9D200857C25 /* WWMMyProgressMoodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressMoodVC.swift; sourceTree = "<group>"; };
@@ -427,6 +426,7 @@
 		2EEF9ADD221AEC900016A77C /* DBTimerData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBTimerData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBJournalList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6130DE1222A9220500271F67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
@@ -591,7 +591,7 @@
 				2E4B1BA121B5044B002F8A25 /* Main.storyboard */,
 				2E4B1BA621B5044D002F8A25 /* LaunchScreen.storyboard */,
 				2E4B1BA921B5044D002F8A25 /* Info.plist */,
-				2EC95865220C5837009D5144 /* GoogleService-Info.plist */,
+				6130DE1222A9220500271F67 /* GoogleService-Info.plist */,
 				2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */,
 			);
 			path = Meditation;
@@ -846,7 +846,7 @@
 				2E4CE28E22087A0F00059396 /* singleLineLeft.png */,
 				2E4CE28C22087A0E00059396 /* singleLineRight.png */,
 				2E4CE2812205A4EB00059396 /* Font */,
-				2E85F1602204660B008073A2 /* JAY GURUDEV.mp3 */,
+				2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */,
 				2E4371B522004D9900EF5D62 /* Chimes */,
 				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
@@ -1255,7 +1255,6 @@
 				2E4A473D220DB22B00DF0C68 /* CHIMES ONLY.mp3 in Resources */,
 				2EC95862220AC1BA009D5144 /* Maax-BoldItalic.ttf in Resources */,
 				2E5DF5B42271B89200CF2935 /* WWMGuidedStart.xib in Resources */,
-				2EC95866220C5838009D5144 /* GoogleService-Info.plist in Resources */,
 				2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */,
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
@@ -1279,6 +1278,7 @@
 				2E4371CA22004D9A00EF5D62 /* CRYSTAL BOWL.mp3 in Resources */,
 				2EB1F11021DF601200F98EC2 /* SplashLoader.gif in Resources */,
 				2EC81C5C21E777A7003B0EEE /* adobe.svg in Resources */,
+				6130DE1322A9220600271F67 /* GoogleService-Info.plist in Resources */,
 				2EC95861220AC1BA009D5144 /* MaaxRounded.ttf in Resources */,
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
@@ -1300,7 +1300,7 @@
 				2E4371C822004D9A00EF5D62 /* MOON KOSHI.mp3 in Resources */,
 				2E4A473F220DB22B00DF0C68 /* BIRDSONG 1.mp3 in Resources */,
 				2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */,
-				2E85F1612204660B008073A2 /* JAY GURUDEV.mp3 in Resources */,
+				2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
 			);
@@ -1375,7 +1375,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputFileListPaths = (
 			);

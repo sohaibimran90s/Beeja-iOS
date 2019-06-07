@@ -14,7 +14,6 @@ class WWMBaseViewController: UIViewController {
     var userData = WWMUserData.sharedInstance
     var alertPopupView = WWMAlertController()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +27,8 @@ class WWMBaseViewController: UIViewController {
             userData = WWMUserData.init(json: self.appPreference.getUserData())
         }
     }
+    
+    
     
 
     func setNavigationBar(isShow:Bool,title:String){
@@ -54,28 +55,67 @@ class WWMBaseViewController: UIViewController {
         sideMenuBtn.contentMode = .scaleAspectFit
         
         let leftTitle = UIButton.init()
+        let barButtonPracticalSpiritual = UIButton.init()
+        let barButtonPracticalSpiritualImage = UIButton.init()
+        
         if title == "Timer" {
             leftTitle.setTitle("  Toggle Flight Mode", for: .normal)
             leftTitle.setTitleColor(UIColor.init(displayP3Red: 0/255, green: 18/255, blue: 82/255, alpha: 0.45), for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax", size: 14)
             leftTitle.setImage(UIImage.init(named: "FlightMode_Icon"), for: .normal)
             leftTitle.addTarget(self, action: #selector(btnFlightModeAction(_:)), for: .touchUpInside)
-        }else {
+        }else if title == "Practical Guidance" {
+
+            barButtonPracticalSpiritual.setTitle(title, for: .normal)
+            barButtonPracticalSpiritual.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+            
+            barButtonPracticalSpiritualImage.setImage(UIImage(named: "dropDown"), for: .normal)
+            barButtonPracticalSpiritualImage.contentMode = .scaleAspectFit
+            barButtonPracticalSpiritualImage.clipsToBounds = true
+            
+            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonPracticalSpiritual)
+            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonPracticalSpiritualImage)
+            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, leftBarButtonItem1]
+            
+        }else if title == "Spiritual Guidance" {
+            
+            barButtonPracticalSpiritual.setTitle(title, for: .normal)
+            barButtonPracticalSpiritual.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+            
+            
+            barButtonPracticalSpiritualImage.setImage(UIImage(named: "dropDown"), for: .normal)
+            barButtonPracticalSpiritualImage.contentMode = .scaleAspectFit
+            barButtonPracticalSpiritualImage.clipsToBounds = true
+            
+            
+            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonPracticalSpiritual)
+            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonPracticalSpiritualImage)
+            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, leftBarButtonItem1]
+            
+        }else{
             leftTitle.setTitle(title, for: .normal)
             leftTitle.setTitleColor(UIColor.white, for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+            
+            let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
+            self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }
         
+        barButtonPracticalSpiritual.addTarget(self, action: #selector(dropDownClicked), for: .touchUpInside)
+        barButtonPracticalSpiritualImage.addTarget(self, action: #selector(dropDownClicked1), for: .touchUpInside)
         
-        
-        
-        
-        let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
         let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
+    @objc func dropDownClicked(){
+        KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
+    }
+    
+    @objc func dropDownClicked1(){
+        
+         KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
+    }
     
     func setUpNavigationBarForAudioGuided(title:String) {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)

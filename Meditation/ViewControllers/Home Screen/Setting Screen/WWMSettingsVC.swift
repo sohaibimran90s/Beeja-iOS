@@ -42,7 +42,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var isSetMyOwn = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setUpNavigationBarForDashboard(title: "Settings")
+        
         pickerStartChimes.delegate = self
         pickerStartChimes.dataSource = self
         
@@ -50,6 +50,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.setUpNavigationBarForDashboard(title: "Settings")
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]

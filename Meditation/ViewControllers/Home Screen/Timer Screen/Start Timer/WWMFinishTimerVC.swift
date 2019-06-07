@@ -21,6 +21,7 @@ class WWMFinishTimerVC: UIViewController {
     var meditationID = ""
     var levelID = ""
     var settingData = DBSettings()
+    var alertPrompt = WWMPromptMsg()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +39,32 @@ class WWMFinishTimerVC: UIViewController {
         self.lblRest.text = self.secondsToMinutesSeconds(second: restTime)
         
     }
+    
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
+    }
+    
+    func xibCall(){
+        alertPrompt = UINib(nibName: "WWMPromptMsg", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMPromptMsg
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPrompt.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertPrompt, duration: 0.8, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertPrompt)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                self.alertPrompt.removeFromSuperview()
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+                vc.type = "Post"
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime
+                vc.restTime = self.restTime
+                vc.meditationID = self.meditationID
+                vc.levelID = self.levelID
+                vc.hidShowMoodMeter = "Hide"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
+        }
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -55,25 +80,7 @@ class WWMFinishTimerVC: UIViewController {
             vc.levelID = self.levelID
             self.navigationController?.pushViewController(vc, animated: false)
         }else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-            vc.type = "Post"
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime
-            vc.restTime = self.restTime
-            vc.meditationID = self.meditationID
-            vc.levelID = self.levelID
-            self.navigationController?.pushViewController(vc, animated: false)
+            self.xibCall()
         }
-    
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

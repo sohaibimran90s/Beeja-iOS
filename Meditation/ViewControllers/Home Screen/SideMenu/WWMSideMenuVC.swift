@@ -122,12 +122,6 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     
-    
-    
-    
-    
-    
-    
     @IBAction func btnTimerAction(_ sender: Any) {
         self.type = "timer"
         self.guided_type = ""

@@ -11,6 +11,7 @@ import UIKit
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBOutlet weak var btnSkip: UIButton!
+    @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var btnAskMeAgain: UIButton!
     @IBOutlet weak var lblMoodselect: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
@@ -19,6 +20,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var moodScroller: UIScrollView?
     
     var arrMoodData = [WWMMoodMeterData]()
+    var moodData = WWMMoodMeterData()
     var selectedIndex = -1
     var prepTime = 0
     var meditationTime = 0
@@ -44,8 +46,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         if type == "Pre" {
             self.btnAskMeAgain.isHidden = true
+            self.btnSkip.isHidden = true
+        }else{
+            self.btnBack.isHidden = true
         }
-        
         
         self.xibCall()
         
@@ -76,10 +80,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let window = UIApplication.shared.keyWindow!
         
         alertPrompt.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        UIView.transition(with: alertPrompt, duration: 1.0, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: alertPrompt, duration: 0.8, options: .transitionCrossDissolve, animations: {
             window.rootViewController?.view.addSubview(self.alertPrompt)
         }) { (Bool) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 self.alertPrompt.removeFromSuperview()
             }
         }
@@ -93,7 +97,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func createMoodScroller() {
         
         let scrollView = UIScrollView(frame: self.moodView!.bounds)
-        scrollView.isScrollEnabled = false
+        scrollView.isScrollEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentSize = CGSize(width: self.moodView!.bounds.size.width * CGFloat(self.arrMoodData.count / 2) + self.moodView!.bounds.size.width / 2, height: self.moodView!.bounds.size.height)
         var x = self.moodView!.bounds.size.width / 4
@@ -168,19 +172,79 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     // MARK:- Button Action
 
     @IBAction func btnSkipAction(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-        vc.type = self.type
-        vc.prepTime = self.prepTime
-        vc.meditationTime = self.meditationTime
-        vc.restTime = self.restTime
-        vc.meditationID = self.meditationID
-        vc.levelID = self.levelID
-        vc.category_Id = self.category_Id
-        vc.emotion_Id = self.emotion_Id
-        vc.audio_Id = self.audio_Id
-        vc.rating = self.rating
-        vc.watched_duration = self.watched_duration
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+//        vc.type = self.type
+//        vc.prepTime = self.prepTime
+//        vc.meditationTime = self.meditationTime
+//        vc.restTime = self.restTime
+//        vc.meditationID = self.meditationID
+//        vc.levelID = self.levelID
+//        vc.category_Id = self.category_Id
+//        vc.emotion_Id = self.emotion_Id
+//        vc.audio_Id = self.audio_Id
+//        vc.rating = self.rating
+//        vc.watched_duration = self.watched_duration
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+        WWMHelperClass.showSVHud()
+        let param = [
+            "type":self.type,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.userData.guided_type,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":self.type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":"",
+            "prep_time":self.prepTime,
+            "meditation_time":self.meditationTime,
+            "rest_time":self.restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    self.navigateToDashboard()
+                }else {
+                    self.saveToDB(param: param)
+                }
+                
+            }else {
+                self.saveToDB(param: param)
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
+    func saveToDB(param:[String:Any]) {
+        let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        meditationDB.meditationData = myString
+        WWMHelperClass.saveDb()
+        self.navigateToDashboard()
+    }
+    
+    func navigateToDashboard() {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 4
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 4 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     @IBAction func btnNextAction(_ sender: Any) {

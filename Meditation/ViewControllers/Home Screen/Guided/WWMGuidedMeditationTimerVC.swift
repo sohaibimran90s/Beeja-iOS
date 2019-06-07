@@ -66,6 +66,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
       //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
@@ -103,6 +104,20 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         
     }
+    
+    @objc func methodOfCallEndedIdentifier(notification: Notification) {
+        
+        print("call ended notification..........")
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
+            self.viewPause.isHidden = false
+            self.isStop = true
+            // self.spinnerImage.layer.removeAllAnimations()
+            self.animationView.pause()
+            self.animateGradient(animate: false)
+            self.player.pause()
+        }, completion: nil)
+    }
+    
 //    func downloadFileFromURL(url:URL){
 //       // WWMHelperClass.showSVHud()
 //        var downloadTask:URLSessionDownloadTask
@@ -180,8 +195,13 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     @objc func appMovedToForeground() {
-        print("App moved to foreground!")
-        self.animationView.play()
+        print("App moved to background!")
+        if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
+            self.animationView.pause()
+        }else{
+            self.animationView.play()
+        }
+        KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
         
     }
 
@@ -216,22 +236,39 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var ismove = false
     func moveToFeedBack() {
         if !ismove {
+            
             ismove = true
             self.timer.invalidate()
             self.animationView.stop()
             self.animateGradient(animate: false)
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-            vc.type = "Post"
-            vc.meditationID = "0"
-            vc.levelID = "0"
-            vc.category_Id = self.cat_id
-            vc.emotion_Id = self.emotion_Id
-            vc.audio_Id = "\(audioData.audio_Id)"
-            vc.rating = "\(self.rating)"
-            vc.watched_duration = "\(self.player.currentTime().seconds)"
-            self.navigationController?.pushViewController(vc, animated: false)
+            
+            if self.settingData.moodMeterEnable {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
+                vc.type = "Post"
+                vc.meditationID = "0"
+                vc.levelID = "0"
+                vc.category_Id = self.cat_id
+                vc.emotion_Id = self.emotion_Id
+                vc.audio_Id = "\(audioData.audio_Id)"
+                vc.rating = "\(self.rating)"
+                vc.watched_duration = "\(self.player.currentTime().seconds)"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }else{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+                vc.type = "Post"
+                vc.prepTime = 0
+                vc.meditationTime = 0
+                vc.restTime = 0
+                vc.meditationID = "0"
+                vc.levelID = "0"
+                vc.category_Id = self.cat_id
+                vc.emotion_Id = self.emotion_Id
+                vc.audio_Id = "\(audioData.audio_Id)"
+                vc.rating = "\(self.rating)"
+                vc.watched_duration = "\(self.player.currentTime().seconds)"
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
-        
     }
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)

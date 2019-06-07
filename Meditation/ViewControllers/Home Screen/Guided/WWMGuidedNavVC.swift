@@ -15,27 +15,58 @@ class WWMGuidedNavVC: WWMBaseViewController {
     @IBOutlet weak var lblExpressMood: UILabel!
     @IBOutlet weak var containerView: UIView!
     
+    //MARK:- Dropdown Outlets
+    @IBOutlet weak var dropDownView: UIView!
+    @IBOutlet weak var lblPractical: UILabel!
+    @IBOutlet weak var lblSpritual: UILabel!
+    @IBOutlet weak var imgPractical: UIImageView!
+    @IBOutlet weak var imgSpritual: UIImageView!
+    
     var arrGuidedList = [WWMGuidedData]()
     var type = "practical"
     var typeTitle = ""
+    var guided_type = ""
+    
+    var containertapGesture = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.dropDownView.isHidden = true
+        
+        containertapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDropDownTap(_:)))
+        containertapGesture.delegate = self as? UIGestureRecognizerDelegate
+        
+        KNOTIFICATIONCENTER.addObserver(self, selector: #selector(self.methodOfGuidedDropDown(notification:)), name: Notification.Name("guidedDropDownClicked"), object: nil)
 
         if self.appPreference.getGuideType() == "practical"{
             self.typeTitle = "Practical Guidance"
             self.setUpNavigationBarForDashboard(title: "Practical Guidance")
             self.type = "practical"
+            
+            self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
+            self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
+            self.imgSpritual.isHidden = true
+            self.imgPractical.isHidden = false
         }else {
             self.typeTitle = "Spiritual Guidance"
             self.setUpNavigationBarForDashboard(title: "Spiritual Guidance")
             self.type = "spiritual"
+            
+            self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
+            self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
+            self.imgSpritual.isHidden = false
+            self.imgPractical.isHidden = true
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
         }
-        // Do any additional setup after loading the view.
+    }
+    
+    @objc func handleDropDownTap(_ sender: UITapGestureRecognizer) {
+        self.dropDownView.isHidden = true
+        containerView.removeGestureRecognizer(containertapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +77,81 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.lblExpressMood.transform = CGAffineTransform(rotationAngle:CGFloat(+Double.pi/2))
         self.layoutMoodWidth.constant = 90
     }
+    
+    @objc func methodOfGuidedDropDown(notification: Notification){
+        containerView.addGestureRecognizer(containertapGesture)
+        self.dropDownView.isHidden = false
+        if self.appPreference.getGuideType() == "practical"{
+            self.type = "guided"
+            guided_type = "practical"
+            self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
+            self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
+            self.imgSpritual.isHidden = true
+            self.imgPractical.isHidden = false
+        }else{
+            self.type = "guided"
+            guided_type = "spiritual"
+            self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
+            self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
+            self.imgSpritual.isHidden = false
+            self.imgPractical.isHidden = true
+        }
+    }
+    
+    @IBAction func btnPracticalClicked(_ sender: UIButton) {
+        guided_type = "practical"
+        self.type = "guided"
+        self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
+        self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
+        self.imgSpritual.isHidden = true
+        self.imgPractical.isHidden = false
+        
+        self.meditationApi()
+    }
+    
+    @IBAction func btnSpritualClicked(_ sender: UIButton) {
+        guided_type = "spiritual"
+        self.type = "guided"
+        self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
+        self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
+        self.imgSpritual.isHidden = false
+        self.imgPractical.isHidden = true
+        
+        self.meditationApi()
+    }
+    
+    func meditationApi() {
+        self.view.endEditing(true)
+        WWMHelperClass.showSVHud()
+        let param = [
+            "meditation_id" : self.userData.meditation_id,
+            "level_id"         : self.userData.level_id,
+            "user_id"       : self.appPreference.getUserID(),
+            "type" : type,
+            "guided_type" : guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setIsProfileCompleted(value: true)
+                self.appPreference.setType(value: self.type)
+                self.appPreference.setGuideType(value: self.guided_type)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+            }
+            WWMHelperClass.dismissSVHud()
+        }
+    }
+    
     
     func setAnimationForExpressMood() {
         
@@ -67,6 +173,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
     // MARK : API Calling
     
     func getGuidedListAPI() {
+        
+        self.dropDownView.isHidden = true
         self.view.endEditing(true)
         
         if arrGuidedList.count > 0 {

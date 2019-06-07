@@ -14,8 +14,9 @@ import UIKit
 ///////**********************////////
 let kDeviceToken:String!                    = "DeviceToken"
 let kUserData:String!                       = "LoginKey"
-let kUserToken:String!                       = "token"
-
+let kUserToken:String!                      = "token"
+let KUSERDEFAULTS                           = UserDefaults.standard
+let KNOTIFICATIONCENTER                     = NotificationCenter.default
 
 
 
@@ -63,14 +64,15 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 
 // MARK:- Jai Guru Dev Mantra
 
-let kChimes_JaiGuruDev                          = "JAY GURUDEV"
+let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
 
-let URL_BASE  = "https://service.launchpad-stage.in/api/v1/"//"https://staging.beejameditation.com/api/v1/"
-
+let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+//"https://service.launchpad-stage.in/api/v1/"//
 #else
-let URL_BASE  = "https://service.launchpad-stage.in/api/v1/"//"https://staging.beejameditation.com/api/v1/"
+let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+//"https://service.launchpad-stage.in/api/v1/"//
 
 #endif
 
@@ -151,12 +153,12 @@ let  Validatation_JournalOfflineMsg  =
 
 let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy"
 let URL_TermsnCondition   = "https://staging.beejameditation.com/terms-and-condition"
-let URL_Help   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
+let URL_Help   = "https://www.beejameditation.com/contact-us/"
 let URL_FAQ   = "https://staging.beejameditation.com/faq"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
-let URL_FINDCOURSE   = "https://www.willwilliamsmeditation.co.uk/"
+let URL_FINDCOURSE   = "https://www.beejameditation.com/courses/beginners/"
 let URL_OurStory   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
-let URL_LEARN   = "https://www.willwilliamsmeditation.co.uk/love-to-learn"
+let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
 let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
 
 

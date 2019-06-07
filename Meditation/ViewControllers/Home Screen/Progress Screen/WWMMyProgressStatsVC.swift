@@ -10,16 +10,17 @@ import UIKit
 
 class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource {
     
-    
-    
-    
     @IBOutlet weak var lblMonthYear: UILabel!
     @IBOutlet weak var btnPreviousMonth: UIButton!
     @IBOutlet weak var btnNextMonth: UIButton!
     
-    
     @IBOutlet weak var btnLeft: UIButton!
     @IBOutlet weak var btnRight: UIButton!
+    @IBOutlet weak var btnAddSession: UIButton!
+    @IBOutlet weak var viewAddSession: UIView!
+    
+    @IBOutlet weak var btnAddSessionHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnAddSessionTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UIView!
@@ -36,6 +37,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewAvMinutes: UIView!
     @IBOutlet weak var viewDays: UIView!
     @IBOutlet weak var viewSomeGoals: UIView!
+    
+    let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
     var dayAdded = 0
     var monthValue = 0
@@ -60,11 +63,29 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var isLeft = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if self.appPreffrence.getType() == "timer"{
+            self.btnAddSession.setTitle("Add a Session", for: .normal)
+            self.btnAddSessionTopConstraint.constant = 20
+            self.btnAddSessionHeightConstraint.constant = 30
+            self.viewAddSession.isHidden = false
+        }else if self.appPreffrence.getType() == "guided"{
+            self.btnAddSession.setTitle("", for: .normal)
+            self.btnAddSessionTopConstraint.constant = 0
+            self.btnAddSessionHeightConstraint.constant = 0
+            self.viewAddSession.isHidden = true
+        }else {
+           self.btnAddSession.setTitle("Add a Session", for: .normal)
+            self.btnAddSessionTopConstraint.constant = 20
+            self.btnAddSessionHeightConstraint.constant = 30
+            self.viewAddSession.isHidden = false
+        }
+        
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
@@ -96,7 +117,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.viewHourMeditate.layer.borderWidth = 2.0
             self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         }
-        
     }
     
     func updateDate(date : Date) {
@@ -118,7 +138,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: date)
-        let firstDate = self.makeDate(year: Int(year)!, month: Int(month)!, day: 1, hr: 8, min: 30, sec: 30)
+        let firstDate = self.makeDate(year: Int(year)!, month: Int(month)!, day: 1, hr: 0, min: 0, sec: 1)
         let weekDay = Calendar.current.ordinality(of: .day, in: .weekOfMonth, for: firstDate)
         dayAdded = weekDay!-2
         if dayAdded < 0 {
@@ -129,8 +149,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     func makeDate(year: Int, month: Int, day: Int, hr: Int, min: Int, sec: Int) -> Date {
-        let calendar = Calendar(identifier: .gregorian)
-        // calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        var calendar = Calendar(identifier: .gregorian)
+         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
         let components = DateComponents(year: year, month: month, day: day, hour: hr, minute: min, second: sec)
         return calendar.date(from: components)!
     }
@@ -314,17 +334,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @objc func handleDatePicker(sender: UIDatePicker) {
         //addSessionView.txtViewDate.isUserInteractionEnabled = false
         let dateFormatter = DateFormatter()
-        print(sender.date)
+        
+        print("pickerView.date.convertedDate..... \(sender.date.convertedDate)")
+        print("sender.date.... \(sender.date)")
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
-        addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date)
+        addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date.convertedDate)
         
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        let strDate = dateFormatter.string(from: sender.date)
+        let strDate = dateFormatter.string(from: sender.date.convertedDate)
         let date = dateFormatter.date(from: strDate)
         self.strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
-        
-        
     }
     
     @IBAction func btnDateAction(_ sender: Any) {
@@ -521,6 +541,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         dbJournal.addSession = myString
         WWMHelperClass.saveDb()
+        self.addSessionView.removeFromSuperview()
+        WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
     }
     
     
@@ -546,7 +568,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     }
                 }
             }
-            
         }else {
             self.btnLeft.isHidden = true
             self.btnRight.isHidden = false
@@ -558,8 +579,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.lblValueSession.text = "\(self.statsData.total_Session ?? "")"
             self.lblValueDays.text = "\(self.statsData.cons_days ?? "")"
         }
-        
-        
     }
     
     func getStatsData() {
@@ -589,6 +608,25 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             WWMHelperClass.dismissSVHud()
         }
     }
+}
 
 
+extension Date {
+    
+    var convertedDate: Date {
+        
+        let dateFormatter = DateFormatter();
+        
+        let dateFormat = "dd MMM yyyy";
+        dateFormatter.dateFormat = dateFormat;
+        let formattedDate = dateFormatter.string(from: self);
+        
+        dateFormatter.locale = NSLocale.current;
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00");
+        
+        dateFormatter.dateFormat = dateFormat as String;
+        let sourceDate = dateFormatter.date(from: formattedDate as String);
+        
+        return sourceDate!
+    }
 }

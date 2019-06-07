@@ -44,6 +44,12 @@ class WWMResetPasswordVC: WWMBaseViewController {
             self.resetPassword()
         }
     }
+    
+    
+    @IBAction func btnResetBackAction(_ sender: UIButton) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
 
     func resetPassword() {
         WWMHelperClass.showSVHud()

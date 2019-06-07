@@ -16,10 +16,11 @@ import UserNotifications
 import Reachability
 import Crashlytics
 import Fabric
+import CallKit
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate, CXCallObserverDelegate {
     
 
     fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
@@ -37,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    var callObserver = CXCallObserver()
     
     //MARK: Appdelegate Methods
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -76,17 +78,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         
-        //        // Analytics
-        //
-        //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-        //            AnalyticsParameterItemID: "id-Beeja-App-Started",
-        //            AnalyticsParameterItemName: "Roshan Login in Beeja app",
-        //            AnalyticsParameterContentType: "App Login"
-        //            ])
+                // Analytics
+        
+                Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                    AnalyticsParameterItemID: "id-Beeja-App-Started",
+                    AnalyticsParameterItemName: "Roshan Login in Beeja app",
+                    AnalyticsParameterContentType: "App Login"
+                    ])
         self.requestAuthorization()
         self.setLocalPush()
         
+        callObserver.setDelegate(self, queue: nil)
+        
+       // Crashlytics.sharedInstance().crash()
+        
         return true
+    }
+    
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        if call.hasConnected {
+            print("Call Connect -> ")
+        }
+        
+        if call.isOutgoing {
+            print("Call outGoing ")
+        }
+        
+        if call.hasEnded {
+            print("Call hasEnded ")
+            
+            KUSERDEFAULTS.set("true", forKey: "CallEndedIdentifier")
+            NotificationCenter.default.post(name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
+
+        }
+        
+        if call.isOnHold {
+            print("Call onHold ")
+        }
     }
     
 //    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -235,6 +263,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        print("willResignActive.........")
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {

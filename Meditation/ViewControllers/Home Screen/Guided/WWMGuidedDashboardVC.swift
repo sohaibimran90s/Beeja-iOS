@@ -14,12 +14,11 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrGuidedList = [WWMGuidedData]()
     var type = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpUI()
-        
-        // Do any additional setup after loading the view.
     }
     
     func setUpUI() {

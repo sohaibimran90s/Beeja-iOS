@@ -141,6 +141,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
             ] as [String : Any]
         
         print(param)
+        self.navigationController?.navigationBar.isHidden = false
         self.wisdomFeedback(param: param as Dictionary<String, Any>)
         self.navigationController?.popViewController(animated: true)
     }

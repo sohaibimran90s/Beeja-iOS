@@ -28,13 +28,13 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var backgroundvedioView = WWMBackgroundVedioView()
     var player: AVPlayer?
     var popupTitle: String = ""
+    var hidShowMoodMeter = "Show"
     
     var category_Id = "0"
     var emotion_Id = "0"
     var audio_Id = "0"
     var watched_duration = "0"
     var rating = "0"
-    
     
     var alertPopup = WWMAlertPopUp()
 
@@ -130,7 +130,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             vc.watched_duration = self.watched_duration
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
     
     @IBAction func btnLogExperienceAction(_ sender: Any) {
@@ -234,11 +233,14 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //                })
 //            }
         }else {
-            self.popupTitle = "Thanks! Your mood tracker has been updated."
-            self.xibCall()
-            //self.navigateToDashboard()
+            
+           if self.hidShowMoodMeter == "Show"{
+                self.popupTitle = "Thanks! Your mood tracker has been updated."
+                self.xibCall()
+            }else{
+                self.navigateToDashboard()
+            }
         }
-        
     }
 
     func navigateToDashboard() {
@@ -266,10 +268,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 }
                 self.navigationController?.popToRootViewController(animated: false)
             }
-            
-            
         }
-
     }
     /*
     // MARK: - Navigation

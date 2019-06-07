@@ -13,7 +13,10 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     @IBOutlet weak var lblSplashTxt: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     
+    var splashtapGesture = UITapGestureRecognizer()
     var isNext =  false
+    var imageTag = 0
+    var i = 0
     
 //    let arrSplashtxt = ["be more aware","be more radical","be a better friend","partner","lover"]
     
@@ -24,16 +27,58 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     let arrOccasionUserSplash = ["Great to see you back!","Elevate your life / experience","keep the good vibes going","There's extraordinary in all of us","Live life in high definition"]
     
     var arrViewSplashTxt = [String]()
-    
     var currentIndex = 0
+    var arrData1:[String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        splashtapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnSplash(_:)))
+        splashtapGesture.delegate = self as? UIGestureRecognizerDelegate
+        self.imgView.isUserInteractionEnabled = true
+        self.imgView.tag = currentIndex
+        self.imgView.addGestureRecognizer(splashtapGesture)
+        
         self.setNavigationBar(isShow: false, title: "")
         self.setUp()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    
+    @objc func handleTapOnSplash(_ sender: AnyObject){
+        print("splash current index.... \(sender.view.tag)")
         
+        self.arrData1 = self.arrViewSplashTxt
+        imageTag = sender.view.tag
+        if sender.view.tag == arrData1.count - 1 {
+            self.moveToInitialVC()
+            return
+        }
+        
+        UIView.animate(withDuration: 0.0, delay: 0.0, options: .transitionCrossDissolve, animations: {
+            
+            if sender.view.tag == self.arrData1.count - 1 {
+                self.moveToInitialVC()
+                return
+            }
+            self.lblSplashTxt.alpha = 1.0
+            self.imageTag += 1
+            self.i = 1
+            
+        }) { (_) in
+            
+            self.lblSplashTxt.text = self.arrData1[self.imageTag]
+            self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.imageTag+1])
+            self.imgView.tag = self.imageTag
+            
+            UIView.animate(withDuration: 0.0, animations: {
+                self.lblSplashTxt.alpha = 1.0
+            }, completion: { (_) in
+                if sender.view.tag == self.arrData1.count - 1 {
+                    self.moveToInitialVC()
+                }else{
+                    self.showSplashAnimatedWord(arrData: self.arrData1)
+                }
+            })
+        }
     }
     
     func setUp() {
@@ -56,6 +101,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         self.appPreference.setLastLoginDate(value: Date())
         
         if self.arrViewSplashTxt.count > 0 {
+            self.imgView.tag = currentIndex
             self.lblSplashTxt.text = self.arrViewSplashTxt.first
             self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[currentIndex])
         }
@@ -65,6 +111,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func showSplashAnimatedWord(arrData:[String]) {
+        self.arrData1 = arrData
         if currentIndex == arrData.count - 1 {
             self.moveToInitialVC()
             return
@@ -72,11 +119,19 @@ class WWMSplashAnimationVC: WWMBaseViewController {
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: .transitionCrossDissolve, animations: {
             self.lblSplashTxt.alpha = 0.0
-            self.currentIndex += 1
+            
+            if self.i == 0{
+                self.currentIndex += 1
+            }else{
+                self.currentIndex = self.imageTag
+            }
+            self.i = 0
+            
            /* self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.currentIndex])*/
         }) { (_) in
             self.lblSplashTxt.text = arrData[self.currentIndex]
             self.imgView.image = UIImage.init(named: self.arrFirstTimeUserImage[self.currentIndex+1])
+            self.imgView.tag = self.currentIndex
             
             UIView.animate(withDuration: 0.5, animations: {
                 self.lblSplashTxt.alpha = 1.0
@@ -120,9 +175,10 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     func moveToInitialVC() -> Void {
+        
         if !isNext {
             isNext = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.lblSplashTxt.alpha = 0.0
                 
                 if self.appPreference.isLogin() {

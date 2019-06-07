@@ -46,12 +46,13 @@ class WWMStartTimerVC: WWMBaseViewController {
         view.insertSubview(animationView, belowSubview: viewPause)
            // view.addSubview(animationView)
             
-            animationView.play()
+        animationView.play()
         spinnerImage.isHidden = true
         self.setUpView()
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
          notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,9 +77,14 @@ class WWMStartTimerVC: WWMBaseViewController {
 
     }
     @objc func appMovedToForeground() {
-        print("App moved to background!")
-        self.animationView.play()
         
+        print("App moved to background!")
+        if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
+            self.animationView.pause()
+        }else{
+            self.animationView.play()
+        }
+        KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
     }
     
     func setUpView() {
@@ -133,6 +139,8 @@ class WWMStartTimerVC: WWMBaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+
+        
         UIApplication.shared.isIdleTimerDisabled = true
         gradientSet.append([gradientOne, gradientTwo])
         gradientSet.append([gradientTwo, gradientThree])
@@ -151,6 +159,20 @@ class WWMStartTimerVC: WWMBaseViewController {
        // self.spinnerImage.rotate360Degrees()
         //self.spinnerImage.layer.removeAllAnimations()
         //self.rotationImage()
+    }
+    
+    @objc func methodOfCallEndedIdentifier(notification: Notification) {
+        
+        print("call ended notification..........")
+        UIView.animate(withDuration: 1.0, delay: 0.1, options: .transitionCrossDissolve, animations: {
+            self.viewPause.isHidden = false
+            self.timer.invalidate()
+            self.isStop = true
+            self.playerAmbient.stop()
+            self.animationView.pause()
+            // self.spinnerImage.layer.removeAllAnimations()
+            self.animateGradient(animate: false)
+        }, completion: nil)
     }
     
     func playAudioFile(fileName:String) {

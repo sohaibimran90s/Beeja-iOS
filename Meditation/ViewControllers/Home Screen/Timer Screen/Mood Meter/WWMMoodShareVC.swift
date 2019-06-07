@@ -129,7 +129,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         
             if self.arrImages.count == 0 {
                 let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
-                let text = "Feeling Cheerful with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
+                let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                 let imageToShare = [text,image!] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
@@ -157,7 +157,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         
                 if  let data = data, error == nil{
                 if let image = UIImage(data: data) {
-                    let text = "Feeling Cheerful with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
+                    let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                     let imageToShare = [text,image] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                     
@@ -172,7 +172,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                     self.present(activityViewController, animated: true, completion: nil)
                 }else {
                     let image = UIImage.init(named: "AppIcon")
-                    let text = "Feeling Cheerful with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
+                    let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                     let imageToShare = [text,image!] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                     
