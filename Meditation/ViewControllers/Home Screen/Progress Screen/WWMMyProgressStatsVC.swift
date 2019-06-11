@@ -126,33 +126,27 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.btnNextMonth.isHidden = false
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        
-        dateFormatter.dateFormat = "MM"
-        let month = dateFormatter.string(from: date)
-        dateFormatter.dateFormat = "yyyy"
-        let year = dateFormatter.string(from: date)
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         
         dateFormatter.dateFormat = "MMM yyyy"
         self.lblMonthYear.text = dateFormatter.string(from: date)
         
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: date)
-        let firstDate = self.makeDate(year: Int(year)!, month: Int(month)!, day: 1, hr: 0, min: 0, sec: 1)
-        let weekDay = Calendar.current.ordinality(of: .day, in: .weekOfMonth, for: firstDate)
-        dayAdded = weekDay!-2
+        dateFormatter.dateFormat = "MMM yyyy hh:mm:ss"
+        
+        let str = "01 \(dateFormatter.string(from: date))"
+        dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss"
+        let firstDate1 = dateFormatter.date(from: str)
+        
+        dateFormatter.dateFormat = "ee"
+        let week = Int(dateFormatter.string(from: firstDate1!))!
+        dayAdded = week-2
         if dayAdded < 0 {
             dayAdded = 6
         }
         
         self.getStatsData()
-    }
-    
-    func makeDate(year: Int, month: Int, day: Int, hr: Int, min: Int, sec: Int) -> Date {
-        var calendar = Calendar(identifier: .gregorian)
-         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        let components = DateComponents(year: year, month: month, day: day, hour: hr, minute: min, second: sec)
-        return calendar.date(from: components)!
     }
     
     
@@ -584,7 +578,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func getStatsData() {
         WWMHelperClass.showSVHud()
         let param = ["user_id":self.appPreference.getUserID(),
-                     "type" : self.appPreference.getType(),
+                     "med_type" : self.appPreference.getType(),
                      "month":self.strMonthYear]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

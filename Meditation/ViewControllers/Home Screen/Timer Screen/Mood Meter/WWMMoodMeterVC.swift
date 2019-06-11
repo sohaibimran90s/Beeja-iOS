@@ -35,11 +35,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var rating = "0"
     
     var settingData = DBSettings()
-    
     var alertPrompt = WWMPromptMsg()
-    var arrLabel = [UILabel]()
     
-    var label = UILabel()
+    var button = UIButton()
+    var arrButton = [UIButton]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,28 +103,56 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let y = CGFloat(0)
         let width = self.moodView!.bounds.size.width / 2
         let height = self.moodView!.bounds.size.height
-        self.arrLabel.removeAll()
+
+        self.arrButton.removeAll()
+        var tags: Int = 0
         for mood in self.arrMoodData {
-            label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
-            label.backgroundColor = .clear
             
+            //buttons....
+            button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
+            button.backgroundColor = .clear
             
-            label.textColor = .white
-            label.font = UIFont.boldSystemFont(ofSize: 13)
-            label.text = mood.name
+            button.setTitle(mood.name, for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.font = UIFont(name: "Maax-Bold", size: 13)
+            button.titleLabel?.textAlignment = .center
+            button.tag = tags
             
-            label.textAlignment = .center
-            scrollView.addSubview(label)
+            button.addTarget(self, action: #selector(selectedMoodAction), for: .touchUpInside)
+            scrollView.addSubview(button)
             x = x + width
-            self.arrLabel.append(label)
+            self.arrButton.append(button)
+            tags += 1
         }
+        
         self.moodView!.addSubview(scrollView)
         self.moodScroller = scrollView
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
+    
+    @objc func selectedMoodAction(sender: UIButton){
+        print("sender selected button label with tag.....\(sender.tag) selectedName...\(self.arrMoodData[sender.tag].name) buttonName.... \(arrButton[sender.tag].titleLabel?.text ?? "") selected index button... \(sender.tag)")
+        
+        selectedIndex = sender.tag
 
-
+        for index in 0..<arrButton.count {
+            let button = arrButton[index]
+            if index == sender.tag {
+                button.titleLabel?.font = UIFont(name: "Maax-Bold", size: 16)
+                button.setTitleColor(UIColor.white, for: .normal)
+            }else {
+                button.titleLabel?.font = UIFont(name: "Maax-Medium", size: 13)
+                button.setTitleColor(UIColor.lightGray, for: .normal)
+            }
+        }
+        
+        let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
+        self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+    }
+    
     func translatedAngle(angle: Double) -> Double {
+        print("angle..... \(angle)")
+        //450
         var angle = Double(450) -  angle
         if angle > 360 {
             angle = angle - 360
@@ -150,22 +177,22 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         selectedIndex = moodIndex
         let mood = self.arrMoodData[moodIndex]
         
-        for index in 0..<arrLabel.count {
-            let label = self.arrLabel[index]
+        print("selected index slider... \(selectedIndex)")
+        
+        for index in 0..<arrButton.count {
+            let button = arrButton[index]
             if index == moodIndex {
-                label.font = UIFont.boldSystemFont(ofSize: 16)
-                label.textColor = UIColor.white
+                button.titleLabel?.font = UIFont(name: "Maax-Bold", size: 16)
+                button.setTitleColor(UIColor.white, for: .normal)
             }else {
-                label.font = UIFont.systemFont(ofSize: 13)
-                label.textColor = UIColor.lightGray
+                button.titleLabel?.font = UIFont(name: "Maax-Medium", size: 13)
+                button.setTitleColor(UIColor.lightGray, for: .normal)
             }
-            
         }
         
         print("selected mood = \(mood.name)")
         self.btnConfirm.isHidden = false
         self.lblMoodselect.text = "Move dot to select your current feeling"
-        // show your button here
     }
     
 

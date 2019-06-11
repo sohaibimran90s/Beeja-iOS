@@ -30,6 +30,11 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var settingData = DBSettings()
     
     let gradientLayer = CAGradientLayer()
+    
+    var prepTime = 0
+    var meditationTime = 0
+    var restTime = 0
+    var min = 0
 
     //var alertPopupView = WWMAlertController()
 
@@ -41,7 +46,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
             selector: #selector(self.getSettingData),
             name: NSNotification.Name(rawValue: "GETSettingData"),
             object: nil)
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,16 +107,19 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderPrepTime.maximumValue = Float(selectedLevelData.maxPrep)
         self.sliderPrepTime.value = Float(selectedLevelData.prepTime)
         self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
+        self.prepTime = Int(self.sliderPrepTime.value)
         
         self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
         self.sliderMeditationTime.maximumValue = Float(selectedLevelData.maxMeditation)
         self.sliderMeditationTime.value = Float(selectedLevelData.meditationTime)
         self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
+        self.meditationTime = Int(self.sliderMeditationTime.value)
         
         self.sliderRestTime.minimumValue = Float(selectedLevelData.minRest)
         self.sliderRestTime.maximumValue = Float(selectedLevelData.maxRest)
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+        self.restTime = Int(self.sliderRestTime.value)
         if !self.userData.is_subscribed {
             
             
@@ -175,40 +182,83 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
-            return "\(second) sec"
+            return String.init(format: "%d:%02d", second/60,second%60)
         }else {
-            return String.init(format: "%d:%02d min", second/60,second%60)
+            if self.min == 1{
+                return String.init(format: "%d:%02d", second/60,second%60)
+            }else{
+                return String.init(format: "%d mins", second/60)
+            }
         }
-        
+    }
+    
+    func secondsToMinutesSeconds1 (second : Int) -> String {
+        if second<60 {
+            return String.init(format: "%d:%02d", second/60,second%60)
+        }else {
+            if self.min >= 2{
+                return String.init(format: "%d mins", second/60,second%60)
+            }else{
+                return String.init(format: "%d min", second/60)
+            }
+        }
     }
     
     
     
     // MARK: - UIButton Action
     
-    
-    
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
-        
-        
-        let abc = Int(self.sliderPrepTime.value) * 15
-        print(self.secondsToMinutesSeconds(second: abc))
-        
+    
         print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
-        self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
+        
+        self.min = Int(self.sliderPrepTime.value)/60
+        
+        if (self.min != 0){
+            if self.min < 2{
+                self.prepTime = Int(self.sliderPrepTime.value/15) * 15
+            }else{
+                self.prepTime = Int(self.sliderPrepTime.value/60) * 60
+            }
+        }else{
+            self.prepTime = Int(self.sliderPrepTime.value/15) * 15
+        }
+        
+        self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.prepTime))
     }
     @IBAction func sliderMeditationTimeValueChangedAction(_ sender: Any) {
-        self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
+        self.min = Int(self.sliderMeditationTime.value)/60
+        
+        if (self.min != 0){
+            self.meditationTime = Int(self.sliderMeditationTime.value/60) * 60
+        }else{
+            self.meditationTime = Int(self.sliderMeditationTime.value/60) * 60
+        }
+        
+        self.lblMeditationTime.text = self.secondsToMinutesSeconds1(second: Int(self.meditationTime))
     }
     @IBAction func sliderRestTimeValueChangedAction(_ sender: Any) {
-        self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+        
+        self.min = Int(self.sliderRestTime.value)/60
+        
+        if (self.min != 0){
+            if self.min < 2{
+                self.restTime = Int(self.sliderRestTime.value/15) * 15
+            }else{
+                self.restTime = Int(self.sliderRestTime.value/60) * 60
+            }
+        }else{
+            self.restTime = Int(self.sliderRestTime.value/15) * 15
+        }
+            
+        self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.restTime))
     }
     
     @IBAction func btnStartTimerAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
-        vc.prepTime = Int(self.sliderPrepTime.value)
-        vc.meditationTime = Int(self.sliderMeditationTime.value)
-        vc.restTime = Int(self.sliderRestTime.value)
+        vc.prepTime = self.prepTime
+        vc.meditationTime = self.meditationTime
+        vc.restTime = self.restTime
         vc.meditationID = "\(self.selectedMeditationData.meditationId)"
         vc.levelID = "\(self.selectedLevelData.levelId)"
         self.navigationController?.pushViewController(vc, animated: true)

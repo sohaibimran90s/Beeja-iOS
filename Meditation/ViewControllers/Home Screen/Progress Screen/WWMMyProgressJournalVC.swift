@@ -95,7 +95,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     func getJournalList() {
         WWMHelperClass.showSVHud()
         let param = ["user_id":self.appPreference.getUserID(),
-        "type" : self.appPreference.getType()]
+        "med_type" : self.appPreference.getType()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
