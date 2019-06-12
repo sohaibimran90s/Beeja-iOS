@@ -31,7 +31,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         self.delegate = self
         setupView()
         DispatchQueue.main.async {
-            WWMHelperClass.showSVHud()
+           // WWMHelperClass.showSVHud()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
         }
         
         //self.getUserProfileData()
@@ -283,7 +284,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }else {
                 self.getDataFromDatabase()
             }
-            WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+           // WWMHelperClass.dismissSVHud()
         }
        }
     }
@@ -327,7 +329,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         self.getUserProfileData()
     }
 }

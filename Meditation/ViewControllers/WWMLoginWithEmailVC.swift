@@ -170,7 +170,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     }
     
     func loginWithEmail() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "email": isFromWelcomeBack ? self.userData.email: txtViewEmail.text!,
             "password":txtViewPassword.text!,
@@ -216,7 +217,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                 
 
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     //1. If user has selected mood meter but not has entered journal input. E.g. Thanks, your mood expression has been recorded.

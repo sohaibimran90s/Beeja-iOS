@@ -525,7 +525,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 
     
     func getMoodProgress() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let currentDate = Date()
         let dateFormatter = DateFormatter()
@@ -568,7 +569,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 

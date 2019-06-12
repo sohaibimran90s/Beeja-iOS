@@ -66,7 +66,8 @@ class WWMSupportVC: WWMBaseViewController {
     }
     
     func submitQueryAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
                       "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
@@ -82,7 +83,8 @@ class WWMSupportVC: WWMBaseViewController {
             }else {
                 self.saveToDB(param: param)
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

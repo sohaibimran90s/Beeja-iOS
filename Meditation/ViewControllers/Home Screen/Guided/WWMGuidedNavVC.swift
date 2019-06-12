@@ -122,7 +122,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
     
     func meditationApi() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : self.userData.meditation_id,
             "level_id"         : self.userData.level_id,
@@ -148,7 +149,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -178,7 +180,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.view.endEditing(true)
         
         if arrGuidedList.count > 0 {
-            WWMHelperClass.showSVHud()
+            //WWMHelperClass.showSVHud()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
         }
         
         
@@ -216,7 +219,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

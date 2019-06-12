@@ -46,7 +46,14 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             }
         }
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        
+        if self.appPreference.getUserName().contains(" "){
+            let userNameArr = self.appPreference.getUserName().components(separatedBy: " ")
+            self.userName.text = "Ok \(userNameArr[0]),"
+        }else{
+            self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        }
+        
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.setUpSliderTimesAccordingToLevels()
@@ -129,7 +136,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
     
     func setMyOwnAPI() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_id":self.appPreference.getUserID(),
             "meditation_name":txtViewMeditationName.text ?? "",
@@ -159,7 +167,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     
                 }else {
                      WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
-                     WWMHelperClass.dismissSVHud()
+                     //WWMHelperClass.dismissSVHud()
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
                 }
 
             }else {
@@ -170,8 +179,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
                 }
-                 WWMHelperClass.dismissSVHud()
-               
+                 //WWMHelperClass.dismissSVHud()
+                  WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
            
         }
@@ -216,7 +225,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     }
                  
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 
@@ -335,7 +345,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     }
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

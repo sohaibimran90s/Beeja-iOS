@@ -91,7 +91,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     }
     func signUpApi() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "email": txtViewEmail.text!,
             "deviceToken" : appPreference.getDeviceToken(),
@@ -128,13 +129,15 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 }
                 
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
     func loginWithSocial() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "email": txtViewEmail.text ?? "",
             "password":"",
@@ -178,7 +181,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 }
                 
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

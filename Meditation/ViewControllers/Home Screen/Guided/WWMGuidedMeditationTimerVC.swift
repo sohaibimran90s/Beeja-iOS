@@ -46,7 +46,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
     
     
-     var animationView = AnimationView()
+    var animationView = AnimationView()
     @IBOutlet weak var viewLottieAnimation: UIView!
     
     override func viewDidLoad() {

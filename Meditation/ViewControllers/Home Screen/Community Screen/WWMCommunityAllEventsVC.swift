@@ -15,10 +15,13 @@ class WWMCommunityAllEventsVC: WWMBaseViewController,UICollectionViewDelegate,UI
         super.viewDidLoad()
 
         self.setNavigationBar(isShow: false, title: "")
-        // Do any additional setup after loading the view.
     }
     
-
+    
+    @IBAction func btnBackClicked(_ sender: UIButton) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     // MARK:- UICollection View Delegate Methods

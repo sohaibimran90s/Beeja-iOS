@@ -76,7 +76,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
     
     func completeMeditationAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "type":self.userData.type,
             "category_id" : self.category_Id,
@@ -108,7 +109,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
             }else {
                 self.saveToDB(param: param)
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

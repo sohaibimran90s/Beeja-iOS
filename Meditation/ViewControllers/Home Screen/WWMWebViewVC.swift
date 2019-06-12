@@ -74,18 +74,21 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     func loadWebView() {
         let url = URL.init(string: strUrl)
         let request = URLRequest.init(url: url!)
-        WWMHelperClass.showActivity(on: self.view, with: UIColor.init(hexString: "#00eba9")!)
+        //WWMHelperClass.showActivity(on: self.view, with: UIColor.init(hexString: "#00eba9")!)
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         self.webView.load(request)
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        WWMHelperClass.hideActivity(fromView: self.view)
+        //WWMHelperClass.hideActivity(fromView: self.view)
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
         print("Finished navigating to url \(String(describing: webView.url))");
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print(error.localizedDescription)
-        WWMHelperClass.hideActivity(fromView: self.view)
+        //WWMHelperClass.hideActivity(fromView: self.view)
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
         
     }
     

@@ -42,16 +42,16 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
-        //self.getCommunityAPI()
+        self.getCommunityAPI()
         self.setUpNavigationBarForDashboard(title: "Community")
         // Do any additional setup after loading the view.
         
         
         
         accessToken = "Not Assigned"
-        setup()
+        //setup()
         NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-        CallingFuncs()
+       // CallingFuncs()
         
         
         /*
@@ -82,9 +82,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
     
     func CallingFuncs()
     {
@@ -192,6 +189,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         if self.communityData.events.count == 0 {
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
+                //cell actual size with spotify 264
+                
+                tableView.rowHeight = 0
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
                 
@@ -215,6 +215,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 //**********
                 
             }else {
+                tableView.rowHeight = UITableView.automaticDimension
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellThird") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnUploadHashTagsAction(_:)), for: .touchUpInside)
@@ -224,11 +225,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             return cell
         }else {
             if indexPath.row == 0 {
+                tableView.rowHeight = 0
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
                 
             }else if indexPath.row == 1 {
+                tableView.rowHeight = UITableView.automaticDimension
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellSecond") as! WWMCommunityTableViewCell
                 if self.communityData.events.count < 3 {
                     cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)/2
@@ -236,6 +239,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewAllEventsAction(_:)), for: .touchUpInside)
             }else {
+                tableView.rowHeight = UITableView.automaticDimension
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellThird") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnUploadHashTagsAction(_:)), for: .touchUpInside)
@@ -358,7 +362,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 let a = [indexPath.row]
                 print(a)
-                var row: Int = indexPath.row
+                let row: Int = indexPath.row
                 
                 print(rowTemp)
                 print(row)
@@ -403,7 +407,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 let a = [indexPath.row]
                 print(a)
-                var row: Int = indexPath.row
+                let row: Int = indexPath.row
                 
                 print(rowTemp)
                 print(row)
@@ -500,7 +504,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     
     func uploadHashtagAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_Id":self.appPreference.getUserID(),
             "type" : "Image",
@@ -521,14 +526,16 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
         
     }
     
     
     func getCommunityAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_Id":self.appPreference.getUserID(),
             "month":self.strMonthYear
@@ -542,7 +549,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

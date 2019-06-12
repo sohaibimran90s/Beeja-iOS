@@ -229,7 +229,8 @@ class WWMSideMenuVC: WWMBaseViewController {
     
     func meditationApi() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : self.userData.meditation_id,
             "level_id"         : self.userData.level_id,
@@ -256,7 +257,8 @@ class WWMSideMenuVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

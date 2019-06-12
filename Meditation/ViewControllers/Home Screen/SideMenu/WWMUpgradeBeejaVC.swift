@@ -114,7 +114,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
             self.transactionInProgress = true
-            WWMHelperClass.showSVHud()
+            //WWMHelperClass.showSVHud()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
         }else {
             self.requestProductInfo()
         }
@@ -227,7 +228,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
-                WWMHelperClass.dismissSVHud()
+                //WWMHelperClass.dismissSVHud()
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
             default:
                 print(transaction.transactionState.rawValue)
@@ -251,7 +253,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
         
     }

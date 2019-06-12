@@ -17,6 +17,12 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         self.setNavigationBar(isShow: false, title: "")
     }
     
+    @IBAction func btnBackClicked(_ sender: UIButton) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

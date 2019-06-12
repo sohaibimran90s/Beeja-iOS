@@ -11,11 +11,14 @@ import UIKit
 import CoreData
 import SystemConfiguration
 import SVProgressHUD
+import Lottie
 
 class WWMHelperClass {
     
     static var alertPopupView = WWMAlertController()
-
+    static var view1 = UIView()
+    static var animationView = AnimationView()
+    //static var imageView = UIImageView()
     
     class func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
@@ -91,9 +94,42 @@ class WWMHelperClass {
         })
     }
     
+  
+    
+    
     class func dismissSVHud() {
         DispatchQueue.main.async(execute: {() -> Void in
             SVProgressHUD.dismiss()
+        })
+    }
+    
+    class func showLoaderAnimate(on view: UIView) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            
+            //imageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+            //imageView.image = UIImage(named: "Background_Splash")
+            animationView = AnimationView(name: "loader")
+            //view1.isHidden = false
+            view1 = UIView.init(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+            view1.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            animationView.frame = CGRect(x: view.frame.size.width/2 - 200, y: view.frame.size.height/2 - 200, width: 400, height: 400)
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
+           
+            //view.addSubview(imageView)
+            view1.addSubview(animationView)
+            view.addSubview(view1)
+            
+        })
+    }
+    
+    class func hideLoaderAnimate(on view: UIView) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            
+            animationView.stop()
+            view1.removeFromSuperview()
+            //self.imageView.isHidden = true
         })
     }
     

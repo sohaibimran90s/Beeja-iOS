@@ -30,7 +30,13 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func setupView(){
         
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        if self.appPreference.getUserName().contains(" "){
+            let userNameArr = self.appPreference.getUserName().components(separatedBy: " ")
+            self.userName.text = "Ok \(userNameArr[0]),"
+        }else{
+             self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        }
+       
 //        let meditationData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
 //        for  data in meditationData{
 //            if data.isMeditationSelected {
@@ -94,7 +100,8 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     
     func meditationApi() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : self.selectedMeditation_Id,
             "level_id"         : self.selectedLevel_Id,
@@ -125,7 +132,8 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

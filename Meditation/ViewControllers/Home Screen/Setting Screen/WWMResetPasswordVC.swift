@@ -52,7 +52,8 @@ class WWMResetPasswordVC: WWMBaseViewController {
     }
 
     func resetPassword() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_id" : self.appPreference.getUserID(),
             "oldPassword" : txtViewOldPassword.text ?? "",
@@ -72,7 +73,8 @@ class WWMResetPasswordVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

@@ -82,7 +82,8 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
     
     
     func forgotPasswordAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "email": txtViewEmail.text!
         ]
@@ -104,7 +105,8 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
                 
                 
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     /*

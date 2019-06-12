@@ -29,8 +29,16 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     
     func setupView(){
         
+        let userName: String = self.appPreference.getUserName()
+        if userName.contains(" "){
+            let userNameArr = userName.components(separatedBy: " ")
+            self.userName.text = "Ok \(userNameArr[0]),"
+        }else{
+            self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        }
+        
         self.setNavigationBar(isShow: false, title: "")
-        self.userName.text = "Ok \(self.appPreference.getUserName()),"
+        
         self.btnGuide.layer.borderWidth = 2.0
         self.btnGuide.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnLearn.layer.borderWidth = 2.0
@@ -97,7 +105,8 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     
     func meditationApi() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : 1,
             "level_id"         : 1,
@@ -128,7 +137,8 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 

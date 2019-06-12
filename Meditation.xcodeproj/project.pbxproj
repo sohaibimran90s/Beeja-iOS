@@ -195,6 +195,7 @@
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
 		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
+		6142C52622B0D7B8009300BB /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 6142C52522B0D7B8009300BB /* loader.json */; };
 		61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442938224B4BC200C6682C /* WWMPromptMsg.swift */; };
 		6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */; };
 		6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6144293C224B72D400C6682C /* WWMAlertPopUp.xib */; };
@@ -431,6 +432,7 @@
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
 		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
+		6142C52522B0D7B8009300BB /* loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		61442938224B4BC200C6682C /* WWMPromptMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPromptMsg.swift; sourceTree = "<group>"; };
 		6144293A224B4BCF00C6682C /* WWMPromptMsg.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMPromptMsg.xib; sourceTree = "<group>"; };
 		6144293C224B72D400C6682C /* WWMAlertPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertPopUp.xib; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6142C52522B0D7B8009300BB /* loader.json */,
 				2EACF983225375E600171688 /* private.pem */,
 				2EACF984225375E700171688 /* public.pem */,
 				2E34A90722929526005B4091 /* final.json */,
@@ -1261,6 +1264,7 @@
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
+				6142C52622B0D7B8009300BB /* loader.json in Resources */,
 				2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */,
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,

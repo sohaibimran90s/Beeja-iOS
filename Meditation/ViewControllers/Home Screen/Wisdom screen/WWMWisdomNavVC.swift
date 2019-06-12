@@ -31,7 +31,8 @@ class WWMWisdomNavVC: WWMBaseViewController {
     func getWisdomAPI() {
         self.view.endEditing(true)
         if arrWisdomList.count == 0 {
-            WWMHelperClass.showSVHud()
+            //WWMHelperClass.showSVHud()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
         }
         
         let param = ["user_id":self.appPreference.getUserID()]
@@ -67,7 +68,8 @@ class WWMWisdomNavVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

@@ -50,7 +50,8 @@ class WWMAddJournalVC: WWMBaseViewController {
     
     func addJournalAPI() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "mood_color":"",
             "mood_text":"",
@@ -72,7 +73,8 @@ class WWMAddJournalVC: WWMBaseViewController {
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 

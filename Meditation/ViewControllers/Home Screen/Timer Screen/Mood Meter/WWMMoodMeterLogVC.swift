@@ -170,7 +170,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //    "mood_id":18
     
     func completeMeditationAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "type":self.userData.type,
             "category_id" : self.category_Id,
@@ -202,7 +203,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             }else {
                 self.saveToDB(param: param)
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

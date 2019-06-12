@@ -152,7 +152,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     
     
     func downloaded(url: URL) {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         URLSession.shared.dataTask(with: url) { data, response, error in
         
                 if  let data = data, error == nil{
@@ -188,12 +189,14 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                     }
             
             } else { return }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
             }.resume()
     }
     
     func getVibesAPI() {
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
                 "mood_id":self.moodData.id
             ] as [String : Any]
@@ -209,7 +212,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
             }else {
                self.imageCollectionView.reloadData()
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 

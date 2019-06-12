@@ -83,7 +83,8 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
             vc.watched_duration = "\(Int(self.completionTimeVideo))"
             self.navigationController?.pushViewController(vc, animated: false)
         }else {
-            WWMHelperClass.showSVHud()
+            //WWMHelperClass.showSVHud()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
             WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
                 if sucess {
                     if let success = result["success"] as? Bool {
@@ -102,7 +103,8 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
                         
                     }
                 }
-                WWMHelperClass.dismissSVHud()
+                //WWMHelperClass.dismissSVHud()
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
         }
         

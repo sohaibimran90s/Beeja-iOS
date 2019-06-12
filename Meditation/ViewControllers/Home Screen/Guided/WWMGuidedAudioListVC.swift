@@ -87,7 +87,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func getAudioListAPI() {
         self.view.endEditing(true)
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let param = ["emotion_id":emotionData.emotion_Id,
                      "user_id":self.appPreference.getUserID()] as [String : Any]
@@ -117,7 +118,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     
                 }
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

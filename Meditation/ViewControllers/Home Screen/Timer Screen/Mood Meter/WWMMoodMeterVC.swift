@@ -146,8 +146,15 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }
         }
         
+        
+        let diff = Double(360) / Double(self.arrMoodData.count)
+        let angle = Double(selectedIndex) * diff
+        self.circularSlider(circularSlider!, angleDidChanged: angle)
+        
+        
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+
     }
     
     func translatedAngle(angle: Double) -> Double {
@@ -176,7 +183,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         let mood = self.arrMoodData[moodIndex]
-        
+
         print("selected index slider... \(selectedIndex)")
         
         for index in 0..<arrButton.count {
@@ -213,7 +220,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 //        vc.watched_duration = self.watched_duration
 //        self.navigationController?.pushViewController(vc, animated: true)
         
-        WWMHelperClass.showSVHud()
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "type":self.type,
             "category_id" : self.category_Id,
@@ -245,7 +253,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }else {
                 self.saveToDB(param: param)
             }
-            WWMHelperClass.dismissSVHud()
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

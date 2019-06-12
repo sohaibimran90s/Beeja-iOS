@@ -8,10 +8,13 @@
 
 import UIKit
 import SwiftyRSA
+import Lottie
 
 class WWMSplashLoaderVC: WWMBaseViewController {
 
     @IBOutlet weak var imageViewLoader: UIImageView!
+    var animationView = AnimationView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +49,17 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 //            print(error)
 //        }
 
+        self.imageViewLoader.isHidden = true
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")
         //self.saveMeditationDataToDB(data: ["":""])
         
-        
+        animationView = AnimationView(name: "loader")
+        animationView.frame = CGRect(x: view.frame.size.width/2 - 200, y: view.frame.size.height/2 - 200, width: 400, height: 400)
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        self.view.addSubview(animationView)
+        animationView.play()
         self.getMoodMeterDataAPI()
     }
     
@@ -215,6 +224,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    self.animationView.stop()
                     self.loadSplashScreenafterDelay()
                 }
     }
@@ -224,6 +234,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         if dbData.count > 0 {
             print(dbData)
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.animationView.stop()
                 self.loadSplashScreenafterDelay()
             }
         }else {
