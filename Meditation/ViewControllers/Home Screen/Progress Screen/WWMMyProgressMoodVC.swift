@@ -490,19 +490,23 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         cell.lblPercentage4.text = "0%"
         for dic in meditationData {
             if dic.quad_number == 1 {
-//                cell.viewCircle1.animateRate(1.0, newValue:(dic["mood"] as! CGFloat)/10) { (Bool) in
-//                    
-//                }
-                cell.viewCircle4.rate = CGFloat((Double(dic.mood))/10)//(dic.mood as! CGFloat)/10
+                
+                //cell.viewCircle4.rate = CGFloat((Double(dic.mood))/10)//(dic.mood as! CGFloat)/10
                 cell.lblPercentage1.text = "\(dic.mood)%"
+                cell.viewCircle4.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
             }else if dic.quad_number == 2 {
-                cell.viewCircle3.rate = CGFloat((Double(dic.mood))/10)
+                //cell.viewCircle3.rate = CGFloat((Double(dic.mood))/10)
+                cell.viewCircle3.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
                 cell.lblPercentage2.text = "\(dic.mood)%"
             }else if dic.quad_number == 4 {
-                cell.viewCircle2.rate = CGFloat((Double(dic.mood))/10)
+                //cell.viewCircle2.rate = CGFloat((Double(dic.mood))/10)
+                cell.viewCircle2.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
                 cell.lblPercentage3.text = "\(dic.mood)%"
             }else if dic.quad_number == 3 {
-                cell.viewCircle1.rate = CGFloat((Double(dic.mood))/10)
+               // cell.viewCircle1.rate = CGFloat((Double(dic.mood))/10)
+                cell.viewCircle1.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in
+                    
+                }
                 cell.lblPercentage4.text = "\(dic.mood)%"
             }
         }

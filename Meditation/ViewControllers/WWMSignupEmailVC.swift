@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
 
@@ -19,6 +20,10 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     var tap = UITapGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        self.txtViewEmail.addDoneOnKeyboardWithTarget(self, action: #selector(txtViewNextEmailBtnClicked))
+
         self.setupView()
         // Do any additional setup after loading the view.
     }
@@ -33,7 +38,23 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     }
     
     @objc func KeyPadTap() -> Void {
-        self.view .endEditing(true)
+        self.view.endEditing(true)
+    }
+    
+    @objc func txtViewNextEmailBtnClicked(){
+        self.view.endEditing(true)
+        print("next email")
+        if txtViewEmail.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
+        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
+        }else {
+            if isFromFb {
+                self.loginWithSocial()
+            }else {
+                self.signUpApi()
+            }
+        }
     }
     
     //MARK:- UITextField Delegate Methods
@@ -42,10 +63,12 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         tap = UITapGestureRecognizer(target: self, action: #selector(self.KeyPadTap))
         view.addGestureRecognizer(tap)
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view .removeGestureRecognizer(tap)
         if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
@@ -64,13 +87,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 self.btnNext.setTitleColor(UIColor.black, for: .normal)
                 self.btnNext.backgroundColor = UIColor.init(hexString: "#00eba9")!
         }
-        
         return true
-        
     }
-    
-    
-    
     
     // MARK: - UIButton Action
     
@@ -87,8 +105,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             }
             
         }
-        
     }
+    
     func signUpApi() {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()

@@ -223,8 +223,10 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         
         dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    self.animationView.stop()
+                self.animationView.stop()
+                self.animationView.isHidden = true
+                self.imageViewLoader.isHidden = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     self.loadSplashScreenafterDelay()
                 }
     }
@@ -233,8 +235,11 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
             print(dbData)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                self.animationView.stop()
+            self.animationView.stop()
+            self.imageViewLoader.isHidden = false
+            self.animationView.isHidden = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                //self.animationView.stop()
                 self.loadSplashScreenafterDelay()
             }
         }else {

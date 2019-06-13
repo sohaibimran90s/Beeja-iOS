@@ -71,6 +71,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     override func viewWillDisappear(_ animated: Bool) {
          self.webView.stopLoading()
     }
+    
     func loadWebView() {
         let url = URL.init(string: strUrl)
         let request = URLRequest.init(url: url!)
@@ -91,7 +92,4 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         WWMHelperClass.hideLoaderAnimate(on: self.view)
         
     }
-    
-    
-
 }

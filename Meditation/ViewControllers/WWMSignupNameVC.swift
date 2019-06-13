@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
 
@@ -17,8 +18,10 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        self.txtViewName.addDoneOnKeyboardWithTarget(self, action: #selector(txtViewNextBtnClicked))
         self.setupView()
-        // Do any additional setup after loading the view.
     }
     
 
@@ -30,6 +33,19 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
     
     @objc func KeyPadTap() -> Void {
         self.view .endEditing(true)
+    }
+    
+    @objc func txtViewNextBtnClicked(){
+        self.view.endEditing(true)
+        print("next")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+        if self.txtViewName.text == "" {
+            vc.name = "You"
+        }else {
+            vc.name = self.txtViewName.text!
+        }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     //MARK:- UITextField Delegate Methods

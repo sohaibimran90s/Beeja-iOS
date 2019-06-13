@@ -157,7 +157,7 @@ let URL_Help   = "https://www.beejameditation.com/contact-us/"
 let URL_FAQ   = "https://www.beejameditation.com/faqs/"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
 let URL_FINDCOURSE   = "https://www.beejameditation.com/courses/beginners/"
-let URL_OurStory   = "https://www.willwilliamsmeditation.co.uk/privacy-policy/"
+let URL_OurStory   = "https://www.beejameditation.com/about-us/"
 let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
 let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
 

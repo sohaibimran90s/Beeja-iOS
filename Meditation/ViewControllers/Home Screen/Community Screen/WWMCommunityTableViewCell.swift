@@ -7,24 +7,26 @@
 //
 
 import UIKit
+import WebKit
 
-class WWMCommunityTableViewCell: UITableViewCell {
+class WWMCommunityTableViewCell: UITableViewCell, WKNavigationDelegate {
 
     @IBOutlet weak var layoutCollectionviewHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewCommunity: UICollectionView!
     @IBOutlet weak var btnSpotifyPlayList: UIButton!
     @IBOutlet weak var btnConnectSpotify: UIButton!
     @IBOutlet weak var viewUnderLine: UIView!
-    
+    @IBOutlet weak var webView: WKWebView!
+        
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
-
 }
+
+

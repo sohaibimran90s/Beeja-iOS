@@ -49,6 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         
         IQKeyboardManager.shared.enable = true
+        //IQKeyboardManager.shared.enableAutoToolbar = false
+        //IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
+
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
         Fabric.sharedSDK().debug = true

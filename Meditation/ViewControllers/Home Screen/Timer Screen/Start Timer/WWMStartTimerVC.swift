@@ -33,6 +33,15 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
     
+    let gradient = CAGradientLayer()
+    var gradientSet = [[CGColor]]()
+    var currentGradient: Int = 0
+    
+    let gradientOne = UIColor.init(hexString: "#00EBA9")!.cgColor
+    let gradientTwo = UIColor.init(hexString: "#49298A")!.cgColor
+    let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
+
+    
     //var alertPopupView = WWMAlertController()
     var animationView = AnimationView()
     override func viewDidLoad() {
@@ -502,13 +511,6 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     
     
-    let gradient = CAGradientLayer()
-    var gradientSet = [[CGColor]]()
-    var currentGradient: Int = 0
-    
-    let gradientOne = UIColor.init(hexString: "#00EBA9")!.cgColor
-    let gradientTwo = UIColor.init(hexString: "#49298A")!.cgColor
-    let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        super.viewDidAppear(animated)

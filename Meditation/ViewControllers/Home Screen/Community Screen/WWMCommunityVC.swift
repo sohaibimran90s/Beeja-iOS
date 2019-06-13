@@ -8,11 +8,12 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
 import SafariServices
 @_exported import AVFoundation
 
-class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SPTAudioStreamingPlaybackDelegate,SPTAudioStreamingDelegate {
+class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SPTAudioStreamingPlaybackDelegate,SPTAudioStreamingDelegate,WKNavigationDelegate {
     var auth = SPTAuth.defaultInstance()!
     var session: SPTSession!
     var player: SPTAudioStreamingController?
@@ -178,9 +179,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     // MARK:- UITable View Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.communityData.events.count == 0 {
-            return 2
-        }
+//        if self.communityData.events.count == 0 {
+//            return 2
+//        }
         return 3
     }
     
@@ -192,27 +193,35 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 //cell actual size with spotify 264
                 
                 tableView.rowHeight = 0
-                cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
-                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
+//                cell.collectionViewCommunity.isHidden = true
+//                cell.btnSpotifyPlayList.isHidden = true
+//                cell.btnConnectSpotify.isHidden = true
+//                cell.viewUnderLine.isHidden = true
                 
-                cell.btnConnectSpotify.layer.borderWidth = 2.0
-                cell.btnConnectSpotify.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-                //235 169
-                cell.btnConnectSpotify.addTarget(self, action: #selector(btnCheckSpotifyAction(_:)), for: .touchUpInside)
-                cell.btnConnectSpotify.isHidden = true
-                cell.btnSpotifyPlayList.isHidden = false
-                cell.viewUnderLine.isHidden = false
+//                cell.webView.navigationDelegate = self
+//                let url = URL.init(string: "https://embed.spotify.com/?uri=spotify:user:0lxudwzk336zlvnfgkuwo2uxy:playlist:7JX1OZ3T1fTZg86rGbNKuw")
+//                let request = URLRequest.init(url: url!)
+//                cell.webView.load(request)
                 
-                if !boolConnectSpotify{
-                    cell.btnConnectSpotify.isHidden = false
-                    cell.btnSpotifyPlayList.isHidden = true
-                    cell.viewUnderLine.isHidden = true
-                }else{
-                    cell.btnConnectSpotify.isHidden = true
-                    cell.btnSpotifyPlayList.isHidden = false
-                    cell.viewUnderLine.isHidden = false
-                }
-                //**********
+                //cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
+//                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
+//
+//                cell.btnConnectSpotify.layer.borderWidth = 2.0
+//                cell.btnConnectSpotify.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+//                cell.btnConnectSpotify.addTarget(self, action: #selector(btnCheckSpotifyAction(_:)), for: .touchUpInside)
+//                cell.btnConnectSpotify.isHidden = true
+//                cell.btnSpotifyPlayList.isHidden = false
+//                cell.viewUnderLine.isHidden = false
+//
+//                if !boolConnectSpotify{
+//                    cell.btnConnectSpotify.isHidden = false
+//                    cell.btnSpotifyPlayList.isHidden = true
+//                    cell.viewUnderLine.isHidden = true
+//                }else{
+//                    cell.btnConnectSpotify.isHidden = true
+//                    cell.btnSpotifyPlayList.isHidden = false
+//                    cell.viewUnderLine.isHidden = false
+//                }
                 
             }else {
                 tableView.rowHeight = UITableView.automaticDimension
@@ -227,8 +236,14 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             if indexPath.row == 0 {
                 tableView.rowHeight = 0
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
-                cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
-                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
+//                cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
+//                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
+                
+                
+                cell.webView.navigationDelegate = self
+                let url = URL.init(string: "https://embed.spotify.com/?uri=spotify:user:0lxudwzk336zlvnfgkuwo2uxy:playlist:7JX1OZ3T1fTZg86rGbNKuw")
+                let request = URLRequest.init(url: url!)
+                cell.webView.load(request)
                 
             }else if indexPath.row == 1 {
                 tableView.rowHeight = UITableView.automaticDimension
@@ -467,16 +482,16 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     }
     
     
-    @IBAction func btnViewSpotifyAction(_ sender: Any) {
-        let url = URL.init(string: "spotify:")
-        let application = UIApplication.shared
-        if  application.canOpenURL(url!) {
-            application.open(url!, options: [:], completionHandler: nil)
-        }else {
-            let spotifyUrl = URL.init(string: "https://itunes.apple.com/us/app/spotify-music-and-podcasts/id324684580?mt=8")
-             application.open(spotifyUrl!, options: [:], completionHandler: nil)
-        }
-    }
+//    @IBAction func btnViewSpotifyAction(_ sender: Any) {
+//        let url = URL.init(string: "spotify:")
+//        let application = UIApplication.shared
+//        if  application.canOpenURL(url!) {
+//            application.open(url!, options: [:], completionHandler: nil)
+//        }else {
+//            let spotifyUrl = URL.init(string: "https://itunes.apple.com/us/app/spotify-music-and-podcasts/id324684580?mt=8")
+//             application.open(spotifyUrl!, options: [:], completionHandler: nil)
+//        }
+//    }
     
     @IBAction func btnCheckSpotifyAction(_ sender: Any){
         self.CallingFuncs()
@@ -684,7 +699,20 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     
+}
+
+extension WWMCommunityVC {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        //WWMHelperClass.hideActivity(fromView: self.view)
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
+        print("Finished navigating to url \(String(describing: webView.url))");
+    }
     
-    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print(error.localizedDescription)
+        //WWMHelperClass.hideActivity(fromView: self.view)
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
+        
+    }
 }
 
