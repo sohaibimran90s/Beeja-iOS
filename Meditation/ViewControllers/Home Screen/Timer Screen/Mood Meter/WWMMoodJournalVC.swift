@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class WWMMoodJournalVC: WWMBaseViewController {
 
@@ -29,11 +30,25 @@ class WWMMoodJournalVC: WWMBaseViewController {
     var watched_duration = "0"
     var rating = "0"
     
+    var tap = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
+        self.view.addGestureRecognizer(gesture)
+
         self.setUpUI()
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        self.txtViewLog.resignFirstResponder()
+    }
+    
+    @objc func KeyPadTap() -> Void {
+        self.view.endEditing(true)
     }
     
     func setUpUI() {
@@ -163,6 +178,15 @@ extension WWMMoodJournalVC: UITextViewDelegate{
         let newText = (txtViewLog.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        //self.view.removeGestureRecognizer(tap)
+        if  txtViewLog.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Time to update your journal", title: kAlertTitle)
+        }else {
+            self.completeMeditationAPI()
+        }
     }
 }
 

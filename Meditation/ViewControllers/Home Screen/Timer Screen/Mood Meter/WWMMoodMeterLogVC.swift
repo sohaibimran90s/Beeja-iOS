@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import IQKeyboardManagerSwift
 
 class WWMMoodMeterLogVC: WWMBaseViewController {
 
@@ -37,11 +38,26 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var rating = "0"
     
     var alertPopup = WWMAlertPopUp()
+    
+    var tap = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
+        self.view.addGestureRecognizer(gesture)
+
         self.setUpUI()
-        // Do any additional setup after loading the view.
+    }
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        self.txtViewLog.resignFirstResponder()
+    }
+    
+    @objc func KeyPadTap() -> Void {
+        self.view.endEditing(true)
     }
 
     func setUpUI() {
@@ -293,5 +309,15 @@ extension WWMMoodMeterLogVC: UITextViewDelegate{
         let newText = (txtViewLog.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
+    }
+    
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        //self.view.removeGestureRecognizer(tap)
+        if  txtViewLog.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
+        }else {
+            self.completeMeditationAPI()
+        }
     }
 }

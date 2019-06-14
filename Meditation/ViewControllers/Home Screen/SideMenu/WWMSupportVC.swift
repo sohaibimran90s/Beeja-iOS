@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class WWMSupportVC: WWMBaseViewController {
 
@@ -20,6 +21,7 @@ class WWMSupportVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Done"
         self.setupView()
         // Do any additional setup after loading the view.
     }

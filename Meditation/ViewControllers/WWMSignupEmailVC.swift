@@ -22,10 +22,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         super.viewDidLoad()
         
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
-        self.txtViewEmail.addDoneOnKeyboardWithTarget(self, action: #selector(txtViewNextEmailBtnClicked))
-
         self.setupView()
-        // Do any additional setup after loading the view.
     }
     
     
@@ -39,22 +36,6 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     
     @objc func KeyPadTap() -> Void {
         self.view.endEditing(true)
-    }
-    
-    @objc func txtViewNextEmailBtnClicked(){
-        self.view.endEditing(true)
-        print("next email")
-        if txtViewEmail.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
-        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
-        }else {
-            if isFromFb {
-                self.loginWithSocial()
-            }else {
-                self.signUpApi()
-            }
-        }
     }
     
     //MARK:- UITextField Delegate Methods
@@ -75,6 +56,19 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             self.viewEmail.layer.borderColor = UIColor.clear.cgColor
             self.btnNext.setTitleColor(UIColor.white, for: .normal)
             self.btnNext.backgroundColor = UIColor.clear
+        }
+        
+        if txtViewEmail.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
+        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
+        }else {
+            if isFromFb {
+                self.loginWithSocial()
+            }else {
+                self.signUpApi()
+            }
+            
         }
     }
     
@@ -103,7 +97,6 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             }else {
                 self.signUpApi()
             }
-            
         }
     }
     

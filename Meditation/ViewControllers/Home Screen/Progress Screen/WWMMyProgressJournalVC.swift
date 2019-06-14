@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -17,10 +18,22 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     var alertJournalPopup = WWMJouranlPopUp()
    // var alertPopupView = WWMAlertController()
+    var tap = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
+        
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+    }
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        journalView.txtViewJournal.resignFirstResponder()
+    }
+    
+    @objc func KeyPadTap() -> Void {
+        self.view.endEditing(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,6 +179,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         let window = UIApplication.shared.keyWindow!
         
         journalView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        journalView.addGestureRecognizer(self.tap)
         journalView.btnSubmit.layer.borderWidth = 2.0
         journalView.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
@@ -187,7 +201,6 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         }else {
             self.addJournalAPI()
         }
-        
     }
     
     @IBAction func btnEditTextAction(_ sender: Any) {
@@ -292,5 +305,14 @@ extension WWMMyProgressJournalVC: UITextViewDelegate{
         let newText = (journalView.txtViewJournal.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        //self.view.removeGestureRecognizer(tap)
+        if journalView.txtViewJournal.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter your journal.", title: kAlertTitle)
+        }else {
+            self.addJournalAPI()
+        }
     }
 }

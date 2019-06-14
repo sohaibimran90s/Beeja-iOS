@@ -47,10 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         auth.redirectURL = URL(string: "Beeja-App://GetPlayList")
         auth.sessionUserDefaultsKey = "current session"
         
-        
         IQKeyboardManager.shared.enable = true
-        //IQKeyboardManager.shared.enableAutoToolbar = false
-        //IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
+      //  IQKeyboardManager.shared.enableDebugging = true
+        //IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
 
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])

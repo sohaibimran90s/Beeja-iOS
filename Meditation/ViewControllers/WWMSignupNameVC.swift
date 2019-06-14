@@ -15,15 +15,13 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
     @IBOutlet weak var viewName: UIView!
     @IBOutlet weak var txtViewName: UITextField!
     var tap = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
-        IQKeyboardManager.shared.enableAutoToolbar = false
-        self.txtViewName.addDoneOnKeyboardWithTarget(self, action: #selector(txtViewNextBtnClicked))
         self.setupView()
     }
-    
 
     func setupView(){
         self.setNavigationBar(isShow: false, title: "")
@@ -35,18 +33,6 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         self.view .endEditing(true)
     }
     
-    @objc func txtViewNextBtnClicked(){
-        self.view.endEditing(true)
-        print("next")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
-        if self.txtViewName.text == "" {
-            vc.name = "You"
-        }else {
-            vc.name = self.txtViewName.text!
-        }
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
     
     //MARK:- UITextField Delegate Methods
     
@@ -65,6 +51,14 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
             self.btnNext.setTitleColor(UIColor.white, for: .normal)
             self.btnNext.backgroundColor = UIColor.clear
         }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+        if self.txtViewName.text == "" {
+            vc.name = "You"
+        }else {
+            vc.name = self.txtViewName.text!
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

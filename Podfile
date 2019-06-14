@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '11.0'
 
 target 'Meditation' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -7,13 +7,12 @@ target 'Meditation' do
 
   # Pods for Meditation
 
-	pod 'IQKeyboardManagerSwift'
 	pod 'Firebase/Core'
 	pod 'Firebase/Auth'
 	pod 'GoogleSignIn'
 	pod 'FBSDKLoginKit'
 	pod 'lottie-ios', '~> 3.0.4'
-	pod "GaugeKit"
+	pod 'GaugeKit'
 	pod 'Charts'
 	pod 'SDWebImage'
 	pod 'SVProgressHUD'
@@ -22,6 +21,7 @@ target 'Meditation' do
 	pod 'SwiftyRSA'
 	pod 'ReachabilitySwift'
 	pod 'XLPagerTabStrip'
+  pod 'IQKeyboardManagerSwift'
 
 
   target 'MeditationTests' do
