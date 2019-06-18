@@ -17,6 +17,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var type = ""
     @IBOutlet weak var audioCollectionView: UICollectionView!
     var arrAudioList = [WWMGuidedAudioData]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpNavigationBarForAudioGuided(title: self.type)

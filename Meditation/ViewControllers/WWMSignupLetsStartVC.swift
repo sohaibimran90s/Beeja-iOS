@@ -77,7 +77,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     @IBAction func btnMoreInformationActions(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_OurStory
+        vc.strUrl = URL_MOREINFO
         vc.strType = "More Information"
         self.navigationController?.pushViewController(vc, animated: true)
     }

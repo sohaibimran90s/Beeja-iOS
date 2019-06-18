@@ -22,7 +22,7 @@ target 'Meditation' do
 	pod 'ReachabilitySwift'
 	pod 'XLPagerTabStrip'
   pod 'IQKeyboardManagerSwift'
-
+  pod 'UICircularProgressRing'
 
   target 'MeditationTests' do
     inherit! :search_paths

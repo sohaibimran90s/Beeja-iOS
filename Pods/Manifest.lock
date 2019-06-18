@@ -97,6 +97,7 @@ PODS:
   - SwiftyRSA (1.5.0):
     - SwiftyRSA/ObjC (= 1.5.0)
   - SwiftyRSA/ObjC (1.5.0)
+  - UICircularProgressRing (6.1.0)
   - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
@@ -114,6 +115,7 @@ DEPENDENCIES:
   - SDWebImage
   - SVProgressHUD
   - SwiftyRSA
+  - UICircularProgressRing
   - XLPagerTabStrip
 
 SPEC REPOS:
@@ -143,6 +145,7 @@ SPEC REPOS:
     - SDWebImage
     - SVProgressHUD
     - SwiftyRSA
+    - UICircularProgressRing
     - XLPagerTabStrip
 
 SPEC CHECKSUMS:
@@ -171,8 +174,9 @@ SPEC CHECKSUMS:
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
+  UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: d8538452aa3fcb4fee998ec55fe50331befcd5c7
+PODFILE CHECKSUM: 8e8272bf7cadb020aa4d8d53307c97447d066096
 
 COCOAPODS: 1.6.1

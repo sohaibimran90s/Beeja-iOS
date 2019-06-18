@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UICircularProgressRing
 
 class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource {
     
@@ -23,7 +24,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var btnAddSessionTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionViewCal: UICollectionView!
-    @IBOutlet weak var viewHourMeditate: UIView!
+    @IBOutlet weak var viewHourMeditate: UICircularProgressRing!
     @IBOutlet weak var lblMeditate: UILabel!
     @IBOutlet weak var lblNameMeditate: UILabel!
     
@@ -34,9 +35,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var lblValueSession: UILabel!
     @IBOutlet weak var lblValueDays: UILabel!
     @IBOutlet weak var lblLongestSession: UILabel!
-    @IBOutlet weak var viewAvMinutes: UIView!
-    @IBOutlet weak var viewDays: UIView!
+    @IBOutlet weak var viewAvMinutes: UICircularProgressRing!
+    @IBOutlet weak var viewDays: UICircularProgressRing!
     @IBOutlet weak var viewSomeGoals: UIView!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
@@ -108,14 +112,18 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func setUpUI() {
         self.updateDate(date: Date())
         DispatchQueue.main.async {
-            self.viewDays.layer.borderWidth = 2.0
-            self.viewDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            self.viewAvMinutes.layer.borderWidth = 2.0
-            self.viewAvMinutes.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            //self.viewDays.layer.borderWidth = 2.0
+            //self.viewDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            //self.viewAvMinutes.layer.borderWidth = 2.0
+            //self.viewAvMinutes.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             self.viewSomeGoals.layer.borderWidth = 2.0
             self.viewSomeGoals.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            self.viewHourMeditate.layer.borderWidth = 2.0
-            self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            //self.viewHourMeditate.layer.borderWidth = 2.0
+            //self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            
+            self.viewHourMeditate.maxValue = 100
+            self.viewAvMinutes.maxValue = 100
+            self.viewDays.maxValue = 100
         }
     }
     
@@ -126,21 +134,22 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.btnNextMonth.isHidden = false
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        //dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         
         dateFormatter.dateFormat = "MMM yyyy"
         self.lblMonthYear.text = dateFormatter.string(from: date)
         
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: date)
-        dateFormatter.dateFormat = "MMM yyyy hh:mm:ss"
+        dateFormatter.dateFormat = "MMM yyyy"
         
         let str = "01 \(dateFormatter.string(from: date))"
-        dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss"
+        dateFormatter.dateFormat = "dd MMM yyyy"
         let firstDate1 = dateFormatter.date(from: str)
         
         dateFormatter.dateFormat = "ee"
         let week = Int(dateFormatter.string(from: firstDate1!))!
+        
         dayAdded = week-2
         if dayAdded < 0 {
             dayAdded = 6
@@ -626,5 +635,18 @@ extension Date {
         let sourceDate = dateFormatter.date(from: formattedDate as String);
         
         return sourceDate!
+    }
+}
+
+extension WWMMyProgressStatsVC{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scrollview.... \(scrollView.contentOffset.y)")
+        if scrollView.contentOffset.y > 395{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.viewHourMeditate.startProgress(to: 100, duration: 1.0)
+                self.viewAvMinutes.startProgress(to: 100, duration: 1.0)
+                self.viewDays.startProgress(to: 100, duration: 1.0)
+            }
+        }
     }
 }

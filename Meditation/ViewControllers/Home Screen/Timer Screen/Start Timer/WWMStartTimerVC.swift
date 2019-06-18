@@ -33,28 +33,24 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
     
-    let gradient = CAGradientLayer()
-    var gradientSet = [[CGColor]]()
-    var currentGradient: Int = 0
+    var gradientLayer: CAGradientLayer!
+    var colorSets = [[CGColor]]()
+    var currentColorSet: Int!
+    var timer1 = Timer()
+    var animateBool: Int = 0
     
-    let gradientOne = UIColor.init(hexString: "#00EBA9")!.cgColor
-    let gradientTwo = UIColor.init(hexString: "#49298A")!.cgColor
-    let gradientThree = UIColor.init(hexString: "#001252")!.cgColor
-
-    
-    //var alertPopupView = WWMAlertController()
     var animationView = AnimationView()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
-            animationView = AnimationView(name: "final1")
-            animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
-            animationView.center = self.view.center
-            animationView.contentMode = .scaleAspectFill
-            animationView.loopMode = .loop
+        animationView = AnimationView(name: "final1")
+        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        animationView.center = self.view.center
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .loop
         view.insertSubview(animationView, belowSubview: viewPause)
-           // view.addSubview(animationView)
-            
+        
         animationView.play()
         spinnerImage.isHidden = true
         self.setUpView()
@@ -64,21 +60,83 @@ class WWMStartTimerVC: WWMBaseViewController {
         notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        self.createColorSets()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
         self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-//    func rotationImage() {
-//
-//        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveLinear, animations: {
-//
-//            self.spinnerImage.transform = CGAffineTransform.init(rotationAngle: CGFloat(Double.pi / 2))
-//        }) { (finished) in
-//            self.rotationImage()
-//        }
-//    }
+    
+    //MARK: animated View
+    
+    func createColorSets() {
+        colorSets.append([hexStringToUIColor(hex: "FF3A49").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FFC02F").cgColor])
+        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FF3A49").cgColor])
+        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
+        
+        currentColorSet = 0
+        createGradientLayer()
+    }
+    
+    
+    func createGradientLayer() {
+        gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = colorSets[currentColorSet]
+        gradientLayer.type = .radial
+        //0 0 1 1
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 2.0, y: 1.0)
+        gradientLayer.drawsAsynchronously = true
+        self.view.layer.addSublayer(gradientLayer)
+        
+        self.animateBool = 0
+        self.timerAction(value: self.animateBool)
+        timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    }
+    
+    @objc func timerAction(value: Int) {
+        
+        print("animateBool.... \(animateBool)")
+        
+        if currentColorSet < colorSets.count - 1 {
+            currentColorSet! += 1
+        }
+        else {
+            currentColorSet = 0
+        }
+        
+        let colorChangeAnimation = CABasicAnimation(keyPath: "colors")
+        colorChangeAnimation.delegate = self
+        colorChangeAnimation.duration = 4.0
+        colorChangeAnimation.toValue = colorSets[currentColorSet]
+        colorChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
+        colorChangeAnimation.isRemovedOnCompletion = false
+        gradientLayer.add(colorChangeAnimation, forKey: "colorChange")
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func pauseAnimation() {
+        let pausedTime = gradientLayer.convertTime(CACurrentMediaTime(), from: nil)
+        gradientLayer.speed = 0
+        gradientLayer.timeOffset = pausedTime
+    }
+    
+    func resumeAnimation() {
+        let pausedTime = gradientLayer.timeOffset
+        gradientLayer.speed = 1
+        gradientLayer.timeOffset = 0
+        gradientLayer.beginTime = 0
+        let timeSincePause = gradientLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        gradientLayer.beginTime = timeSincePause
+    }
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
@@ -141,34 +199,11 @@ class WWMStartTimerVC: WWMBaseViewController {
             vc.levelID = self.levelID
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
         self.playAmbientSoundAudioFile(fileName: settingData.ambientChime!)
         runTimer()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
-
-        
-        UIApplication.shared.isIdleTimerDisabled = true
-        gradientSet.append([gradientOne, gradientTwo])
-        gradientSet.append([gradientTwo, gradientThree])
-        gradientSet.append([gradientThree, gradientOne])
-        
-        
-        gradient.frame = self.view.bounds
-        gradient.colors = gradientSet[currentGradient]
-        gradient.type = .radial
-        gradient.startPoint = CGPoint(x:0, y:0)
-        gradient.endPoint = CGPoint(x:1, y:1)
-        gradient.drawsAsynchronously = true
-        
-        
-        animateGradient(animate: true)
-       // self.spinnerImage.rotate360Degrees()
-        //self.spinnerImage.layer.removeAllAnimations()
-        //self.rotationImage()
-    }
+    
     
     @objc func methodOfCallEndedIdentifier(notification: Notification) {
         
@@ -179,8 +214,12 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = true
             self.playerAmbient.stop()
             self.animationView.pause()
-            // self.spinnerImage.layer.removeAllAnimations()
-            self.animateGradient(animate: false)
+            
+            
+            self.animateBool = 1
+            self.pauseAnimation()
+            self.timer1.invalidate()
+            
         }, completion: nil)
     }
     
@@ -227,9 +266,13 @@ class WWMStartTimerVC: WWMBaseViewController {
             print(error.localizedDescription)
         }
     }
+    
+    
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
+    
+    
     //#selector(self.updateTimer)
     @objc func updateTimer() {
         if timerType == "Prep"{
@@ -257,7 +300,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                     vc.levelID = self.levelID
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-                
             }
                 seconds = seconds-1
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
@@ -289,7 +331,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                         self.playAudioFile(fileName: settingData.intervalChime!)
                     }
                 }
-                
             }
             seconds = seconds-1
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
@@ -307,43 +348,10 @@ class WWMStartTimerVC: WWMBaseViewController {
                 vc.meditationID = self.meditationID
                 vc.levelID = self.levelID
                 self.navigationController?.pushViewController(vc, animated: true)
-//                DispatchQueue.main.asyncAfter(deadline: .now() + self.player.duration) {
-                    //}
             }
                 seconds = seconds-1
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
-            
-            
         }
-        
-        
-        
-//        if seconds < 1 {
-//            if timerType == "Prep"{
-//                self.lblTimerType.text = "Meditation"
-//                self.timerType = "Meditation"
-//                self.seconds = self.meditationTime
-//                self.playAudioFile(fileName: "CONCH")
-//            }else if timerType == "Meditation"{
-//                self.lblTimerType.text = "Rest"
-//                self.timerType = "Rest"
-//                self.seconds = self.restTime
-//                self.playAudioFile(fileName: "SITAR")
-//            }else if timerType == "Rest"{
-//                self.timer.invalidate()
-//                self.player.stop()
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-//                vc.type = "Post"
-//                vc.prepTime = 0
-//                vc.meditationTime = 0
-//                vc.restTime = self.seconds
-//                self.navigationController?.pushViewController(vc, animated: false)
-//            }
-//        }else {
-//            seconds = seconds-1
-//            self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
-//        }
-        
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -357,8 +365,11 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = true
             self.playerAmbient.stop()
             self.animationView.pause()
-           // self.spinnerImage.layer.removeAllAnimations()
-            self.animateGradient(animate: false)
+            
+            self.animateBool = 1
+            self.pauseAnimation()
+            self.timer1.invalidate()
+            
         }, completion: nil)
     }
     // MARK:- Button Action
@@ -372,8 +383,13 @@ class WWMStartTimerVC: WWMBaseViewController {
                 self.playerAmbient.play()
             }
             self.animationView.play()
-           // self.spinnerImage.rotate360Degrees()
-            self.animateGradient(animate: true)
+            
+            if self.animateBool == 1{
+                self.resumeAnimation()
+                self.animateBool = 0
+                self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+            }
+            
         }, completion: nil)
     }
     
@@ -399,14 +415,19 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        animateGradient(animate: true)
+        
+        if animateBool == 1{
+            self.resumeAnimation()
+            self.animateBool = 0
+            self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        }
+        
         self.isStop = false
         self.runTimer()
         if self.isAmbientSoundPlay {
             self.playerAmbient.play()
         }
         self.animationView.play()
-       // self.spinnerImage.rotate360Degrees()
         alertPopupView.removeFromSuperview()
     }
     
@@ -439,143 +460,29 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = true
             self.playerAmbient.stop()
             self.animationView.pause()
-           // self.spinnerImage.layer.removeAllAnimations()
         }
         
-        animateGradient(animate: false)
+        self.animateBool = 1
+        self.pauseAnimation()
+        self.timer1.invalidate()
         
         self.xibCall()
-        
-        
-        
-        
-        
-//        let alert = UIAlertController.init(title: "End your Meditation Session", message: "Is this really the end?", preferredStyle: .alert)
-//        ///let btnCancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
-//        let btnCancel = UIAlertAction.init(title: "Cancel", style: .default) { (UIAlertAction) in
-//            self.isStop = false
-//            self.runTimer()
-//            self.playerAmbient.play()
-//            self.spinnerImage.rotate360Degrees()
-//        }
-//        let btnOk = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-//            vc.type = "Post"
-//            if self.timerType == "Prep"{
-//                vc.prepTime = self.prepTime - self.seconds
-//                vc.meditationTime = 0
-//                vc.restTime = 0
-//            }else if self.timerType == "Meditation"{
-//                vc.prepTime = self.prepTime
-//                vc.meditationTime = self.meditationTime - self.seconds
-//                vc.restTime = 0
-//            }else if self.timerType == "Rest"{
-//                vc.prepTime = self.prepTime
-//                vc.meditationTime = self.meditationTime
-//                vc.restTime = self.restTime - self.seconds
-//            }
-//            vc.meditationID = self.meditationID
-//            vc.levelID = self.levelID
-//            self.navigationController?.pushViewController(vc, animated: true)
-//
-//        }
-//        alert.addAction(btnCancel)
-//        alert.addAction(btnOk)
-//        self.present(alert, animated: true, completion: nil)
     }
+}
+
+//extension WWMStartTimerVC: CAAnimationDelegate {
+//    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+//        print(flag)
+//        if flag == true {
+//            //gradient.colors = gradientSet[currentGradient]
+//            animateGradient(animate: true)
+//        }else{
 //
-    
-    
-    
-//    <color name="gradient1">#00EBA9</color>
-//    <color name="gradient2">#49298A</color>
-//    <color name="gradient3">#001252</color>
-//
-//    <color name="gradient4">#FFC02F</color>
-//    <color name="gradient5">#49298A</color>
-//    <color name="gradient6">#FF3A49</color>
-//
-//    <!--*  Yellow purple    ///  gradient colors
-//    FFC02F
-//    49298A
-//    FF3A49
-//    *  Red Purple
-//    001252
-//    49298A
-//    FF3A49
-//
-//    *  Blue Green
-//    00EBA9
-//    49298A
-//    001252-->
-    
-    
-    
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        gradientSet.append([gradientOne, gradientTwo])
-//        gradientSet.append([gradientTwo, gradientThree])
-//        gradientSet.append([gradientThree, gradientOne])
-//
-//
-//        gradient.frame = self.view.bounds
-//        gradient.colors = gradientSet[currentGradient]
-//        gradient.type = .radial
-//        gradient.startPoint = CGPoint(x:0, y:0)
-//        gradient.endPoint = CGPoint(x:1, y:1)
-//        gradient.drawsAsynchronously = true
-//
-//
-//        animateGradient()
-//
+//            //gradient.colors = gradientSet[currentGradient]
+//            animateGradient(animate: false)
+//        }
 //    }
-    
-    func animateGradient(animate: Bool) {
-        if currentGradient < gradientSet.count - 1 {
-            currentGradient += 1
-        } else {
-            currentGradient = 0
-        }
-        
-        let gradientChangeAnimation = CABasicAnimation(keyPath: "colors")
-        gradientChangeAnimation.duration = 10.0
-        gradientChangeAnimation.repeatCount = .infinity
-        gradientChangeAnimation.toValue = gradientSet[currentGradient]
-        gradientChangeAnimation.fillMode = CAMediaTimingFillMode.both
-        gradientChangeAnimation.autoreverses = true
-        gradientChangeAnimation.isRemovedOnCompletion = false
-        gradientChangeAnimation.delegate = self
-        if animate{
-            gradient.add(gradientChangeAnimation, forKey: "colorChange")
-            self.view.layer.insertSublayer(gradient, at: 0)
-        }else{
-            gradient.removeFromSuperlayer()
-        }
-        
-        
-    }
-    
-}
-
-
-
-
-
-extension WWMStartTimerVC: CAAnimationDelegate {
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        print(flag)
-        if flag == true {
-            //gradient.colors = gradientSet[currentGradient]
-            animateGradient(animate: true)
-        }else{
-            
-            //gradient.colors = gradientSet[currentGradient]
-            animateGradient(animate: false)
-        }
-    }
-}
+//}
 
 extension UIView {
     func rotate360Degrees(duration: CFTimeInterval = 8) {
@@ -587,4 +494,35 @@ extension UIView {
         rotateAnimation.repeatCount=Float.infinity
         self.layer.add(rotateAnimation, forKey: nil)
     }
+}
+
+extension WWMStartTimerVC: CAAnimationDelegate{
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            gradientLayer.colors = colorSets[currentColorSet]
+            self.resumeAnimation()
+        }
+    }
+}
+
+func hexStringToUIColor (hex:String) -> UIColor {
+    var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+    
+    if (cString.hasPrefix("#")) {
+        cString.remove(at: cString.startIndex)
+    }
+    
+    if ((cString.count) != 6) {
+        return UIColor.gray
+    }
+    
+    var rgbValue:UInt32 = 0
+    Scanner(string: cString).scanHexInt32(&rgbValue)
+    
+    return UIColor(
+        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+        alpha: CGFloat(1.0)
+    )
 }

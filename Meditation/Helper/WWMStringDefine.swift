@@ -68,10 +68,10 @@ let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
 
-let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+let URL_BASE  = "https://beta.beejameditation.com/api/v1/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
-let URL_BASE  = "https://staging.beejameditation.com/api/v1/"
+let URL_BASE  = "https://beta.beejameditation.com/api/v1/"
 //"https://service.launchpad-stage.in/api/v1/"//
 
 #endif
@@ -151,8 +151,8 @@ let  Validatation_JournalOfflineMsg  =
 /************************************/
 //Static Urls
 
-let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy"
-let URL_TermsnCondition   = "https://staging.beejameditation.com/terms-and-condition"
+let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy"
+let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition"
 let URL_Help   = "https://www.beejameditation.com/contact-us/"
 let URL_FAQ   = "https://www.beejameditation.com/faqs/"
 let URL_WebSite   = "https://www.willwilliamsmeditation.co.uk/"
@@ -160,6 +160,7 @@ let URL_FINDCOURSE   = "https://www.beejameditation.com/courses/beginners/"
 let URL_OurStory   = "https://www.beejameditation.com/about-us/"
 let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
 let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
+let URL_MOREINFO   = "https://beta.beejameditation.com/more-info"
 
 
 // Social Links **************************

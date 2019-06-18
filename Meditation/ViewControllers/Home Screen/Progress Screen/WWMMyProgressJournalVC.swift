@@ -180,6 +180,12 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         journalView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         journalView.addGestureRecognizer(self.tap)
+        
+        journalView.btnSubmit.alpha = 0
+        journalView.viewJournal.alpha = 0
+        journalView.lblEntryText.alpha = 0
+        journalView.lblTextCount.alpha = 0
+        
         journalView.btnSubmit.layer.borderWidth = 2.0
         journalView.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
@@ -189,6 +195,35 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         journalView.btnEditText.addTarget(self, action: #selector(btnEditTextAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(journalView)
 
+        self.animatedLblEntryText()
+    }
+    
+    func animatedLblEntryText(){
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            self.journalView.lblEntryText.alpha = 1
+            self.journalView.lblEntryText.center.y = self.journalView.lblEntryText.center.y - 70
+        }, completion: { _ in
+            self.animatedViewJournal()
+        })
+    }
+    
+    func animatedViewJournal(){
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            self.journalView.viewJournal.alpha = 1
+            self.journalView.viewJournal.center.y = self.journalView.viewJournal.center.y - 50
+            self.journalView.lblTextCount.alpha = 1
+            self.journalView.lblTextCount.center.y = self.journalView.lblTextCount.center.y - 50
+        }, completion: { _ in
+            self.animatedBtnSubmit()
+        })
+        
+    }
+    
+    func animatedBtnSubmit(){
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            self.journalView.btnSubmit.alpha = 1
+            self.journalView.btnSubmit.center.y = self.journalView.btnSubmit.center.y - 50
+        }, completion: nil)
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {

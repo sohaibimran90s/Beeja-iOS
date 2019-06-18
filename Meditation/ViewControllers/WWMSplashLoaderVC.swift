@@ -14,8 +14,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 
     @IBOutlet weak var imageViewLoader: UIImageView!
     var animationView = AnimationView()
+    var executionTime: Double = 0.0
+    let startDate = Date()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        do {
@@ -116,7 +117,6 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 }
             }
         }
-        
     }
     
     func loadSplashScreenafterDelay() {
@@ -221,26 +221,51 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 WWMHelperClass.saveDb()
             }
         
-        dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
+                dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         
-                self.animationView.stop()
-                self.animationView.isHidden = true
-                self.imageViewLoader.isHidden = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.loadSplashScreenafterDelay()
-                }
-    }
+                print("excution..... \(self.executionTime)")
+                if self.executionTime < 3.0{
+                    print("less....")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                        self.animationView.stop()
+                        self.animationView.isHidden = true
+                        self.imageViewLoader.isHidden = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            
+                            self.loadSplashScreenafterDelay()
+                        }
+                    }
+                }else{
+                    print("more....")
+    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        self.loadSplashScreenafterDelay()
+                    }
+                }//end else
+            }
     
     func getMeditationDataFromDB() {
         let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
-            print(dbData)
-            self.animationView.stop()
-            self.imageViewLoader.isHidden = false
-            self.animationView.isHidden = true
-          DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                //self.animationView.stop()
-                self.loadSplashScreenafterDelay()
+            print("dbData... \(dbData) excution..... \(self.executionTime)")
+            
+            if self.executionTime < 3.0{
+                print("less....")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                    self.animationView.stop()
+                    self.animationView.isHidden = true
+                    self.imageViewLoader.isHidden = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        
+                        self.loadSplashScreenafterDelay()
+                    }
+                }
+            }else{
+                print("more....")
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.loadSplashScreenafterDelay()
+                }
             }
         }else {
             let alert = UIAlertController(title: "Alert",
@@ -260,6 +285,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     func getMoodMeterDataAPI() {
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            
+            self.executionTime = Date().timeIntervalSince(self.startDate)
+
             if sucess {
                 self.saveMoodMeterDataToDB(data: result)
             }else {
@@ -271,6 +299,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     
     func getMeditationDataAPI() {
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMEDITATIONDATA, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            
+            self.executionTime = Date().timeIntervalSince(self.startDate)
+            
             if sucess {
                 self.saveMeditationDataToDB(data: result)
             }else {

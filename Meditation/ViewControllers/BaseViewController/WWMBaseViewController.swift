@@ -46,6 +46,7 @@ class WWMBaseViewController: UIViewController {
         }
     }
     
+    
     func setUpNavigationBarForDashboard(title:String) {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -64,6 +65,9 @@ class WWMBaseViewController: UIViewController {
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax", size: 14)
             leftTitle.setImage(UIImage.init(named: "FlightMode_Icon"), for: .normal)
             leftTitle.addTarget(self, action: #selector(btnFlightModeAction(_:)), for: .touchUpInside)
+            
+            let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
+            self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }else if title == "Practical Guidance" {
 
             barButtonPracticalSpiritual.setTitle(title, for: .normal)

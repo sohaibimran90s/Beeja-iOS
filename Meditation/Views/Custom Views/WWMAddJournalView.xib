@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +38,7 @@
                     </state>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add an entry." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ye-Y7-9y9">
-                    <rect key="frame" x="113" y="174" width="149.5" height="29.5"/>
+                    <rect key="frame" x="116.5" y="125.5" width="142.5" height="28"/>
                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoo-uj-PLE">
-                    <rect key="frame" x="89" y="475.5" width="197" height="40"/>
+                    <rect key="frame" x="89" y="477.5" width="197" height="40"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="IRB-qb-pkc"/>
@@ -100,7 +100,7 @@
                     </userDefinedRuntimeAttributes>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/1500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2O-ke-YYp">
-                    <rect key="frame" x="276" y="443.5" width="43" height="12"/>
+                    <rect key="frame" x="281.5" y="443.5" width="37.5" height="14"/>
                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="12"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -118,7 +118,7 @@
                 <constraint firstItem="hoo-uj-PLE" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="U8f-Th-nXQ"/>
                 <constraint firstItem="v2O-ke-YYp" firstAttribute="trailing" secondItem="nuE-3E-GBX" secondAttribute="trailing" id="gfO-9r-G2f"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="centerX" secondItem="MEf-sw-5WN" secondAttribute="centerX" id="qZA-ya-UTF"/>
-                <constraint firstItem="nuE-3E-GBX" firstAttribute="top" secondItem="9ye-Y7-9y9" secondAttribute="bottom" constant="30" id="vLu-Um-PKE"/>
+                <constraint firstItem="nuE-3E-GBX" firstAttribute="top" secondItem="9ye-Y7-9y9" secondAttribute="bottom" constant="80" id="vLu-Um-PKE"/>
                 <constraint firstItem="nuE-3E-GBX" firstAttribute="centerY" secondItem="MEf-sw-5WN" secondAttribute="centerY" id="vOr-Vr-r1i"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="UuL-aR-CjX"/>
@@ -126,8 +126,10 @@
                 <outlet property="btnClose" destination="aTo-MS-iFE" id="wzw-o3-EQm"/>
                 <outlet property="btnEditText" destination="vBY-uR-6AG" id="Fgf-eb-Le5"/>
                 <outlet property="btnSubmit" destination="hoo-uj-PLE" id="pSi-sY-Dl7"/>
+                <outlet property="lblEntryText" destination="9ye-Y7-9y9" id="3k5-zB-gER"/>
                 <outlet property="lblTextCount" destination="v2O-ke-YYp" id="9Xl-sD-OPO"/>
                 <outlet property="txtViewJournal" destination="Cd1-AU-mxE" id="JlT-DW-svS"/>
+                <outlet property="viewJournal" destination="nuE-3E-GBX" id="4Fk-ZQ-pUI"/>
             </connections>
         </view>
     </objects>
