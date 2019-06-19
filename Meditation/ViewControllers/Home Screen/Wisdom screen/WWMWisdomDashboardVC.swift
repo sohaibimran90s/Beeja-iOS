@@ -21,8 +21,10 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     
     func setUpUI() {
         
+        print("frame width.... \(self.view.frame.size.width/2)")
+        buttonBarView.frame.origin.y = -18
         if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = 100
+            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 47
         }
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
@@ -60,9 +62,8 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         }
     }
 
-    
+
     // MARK: - PagerTabStripDataSource
-    
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
@@ -76,16 +77,4 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         return arrVC as! [UIViewController]
        // return [UIViewController]
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

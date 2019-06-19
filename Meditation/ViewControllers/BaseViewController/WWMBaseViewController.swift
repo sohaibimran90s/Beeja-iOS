@@ -55,7 +55,7 @@ class WWMBaseViewController: UIViewController {
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
         sideMenuBtn.contentMode = .scaleAspectFit
         
-        let leftTitle = UIButton.init()
+        var leftTitle = UIButton.init()
         let barButtonPracticalSpiritual = UIButton.init()
         let barButtonPracticalSpiritualImage = UIButton.init()
         
@@ -97,13 +97,16 @@ class WWMBaseViewController: UIViewController {
             self.navigationItem.leftBarButtonItems = [leftBarButtonItem, leftBarButtonItem1]
             
         }else{
+            
             leftTitle.setTitle(title, for: .normal)
             leftTitle.setTitleColor(UIColor.white, for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
-            
+           
             let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
             self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }
+        
+        
         
         barButtonPracticalSpiritual.addTarget(self, action: #selector(dropDownClicked), for: .touchUpInside)
         barButtonPracticalSpiritualImage.addTarget(self, action: #selector(dropDownClicked1), for: .touchUpInside)
@@ -123,13 +126,22 @@ class WWMBaseViewController: UIViewController {
     
     func setUpNavigationBarForAudioGuided(title:String) {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        
         self.title = title
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.barTintColor = UIColor.clear
-        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        
+        
+        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 10, width: 20, height: 20))
         sideMenuBtn.setImage(UIImage.init(named: "sideMenu_Icon"), for: .normal)
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
         sideMenuBtn.contentMode = .scaleAspectFit
+        sideMenuBtn.transform = CGAffineTransform(translationX: 0, y: 10)
+        
+        // add the button to a container, otherwise the transform will be ignored
+        let suggestRightButtonContainer = UIView(frame: sideMenuBtn.frame)
+        suggestRightButtonContainer.addSubview(sideMenuBtn)
+        
         
         let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
         backButton.setImage(UIImage.init(named: "Back_Arrow_Icon"), for: .normal)
@@ -137,13 +149,10 @@ class WWMBaseViewController: UIViewController {
         backButton.contentMode = .scaleAspectFit
         
         let leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
-        let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
+        let rightBarButtonItem = UIBarButtonItem.init(customView: suggestRightButtonContainer)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
-    
-    
-    
     
     
     func isValidEmail(strEmail:String) -> Bool {
