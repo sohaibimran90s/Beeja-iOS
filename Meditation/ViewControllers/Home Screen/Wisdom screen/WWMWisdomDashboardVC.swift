@@ -20,8 +20,14 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     }
     
     func setUpUI() {
+        
+        if arrWisdomList.count == 1{
+            buttonBarView.frame.origin.x = 100
+        }
+        
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
+        
         
         // change selected bar color
         settings.style.buttonBarBackgroundColor = .clear
@@ -33,15 +39,19 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
             //settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
         }
        
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 24)!
+        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 24)
+        
+            //UIFont.init(name: "Maax-Bold", size: 24)!
         //settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 14)!
         settings.style.selectedBarHeight = 1.0
-        settings.style.buttonBarMinimumLineSpacing = 15
+        settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
-       // settings.style.buttonBarItemsShouldFillAvailiableWidth = true
-        settings.style.buttonBarLeftContentInset = 15
-        settings.style.buttonBarRightContentInset = 15
+        settings.style.buttonBarItemsShouldFillAvailiableWidth = false
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
         settings.style.buttonBarMinimumInteritemSpacing = 0.0
+        settings.style.buttonBarItemLeftRightMargin = 0
+        
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
