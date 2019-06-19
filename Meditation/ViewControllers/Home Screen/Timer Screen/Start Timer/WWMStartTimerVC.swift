@@ -73,7 +73,6 @@ class WWMStartTimerVC: WWMBaseViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    
     //MARK: animated View
     
     func createColorSets() {
@@ -100,6 +99,8 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.animateBool = 0
         self.timerAction(value: self.animateBool)
         timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        
+        self.updateTimer()
     }
     
     @objc func timerAction(value: Int) {

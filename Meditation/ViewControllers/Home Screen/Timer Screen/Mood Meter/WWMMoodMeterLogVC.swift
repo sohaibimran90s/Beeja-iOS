@@ -44,7 +44,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        //IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         self.view.addGestureRecognizer(gesture)
@@ -314,10 +314,10 @@ extension WWMMoodMeterLogVC: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         //self.view.removeGestureRecognizer(tap)
-        if  txtViewLog.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
-        }else {
-            self.completeMeditationAPI()
-        }
+//        if  txtViewLog.text == "" {
+//            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
+//        }else {
+//            self.completeMeditationAPI()
+//        }
     }
 }

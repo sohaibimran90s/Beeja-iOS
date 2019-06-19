@@ -188,6 +188,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         journalView.btnSubmit.layer.borderWidth = 2.0
         journalView.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        journalView.btnSubmit.isUserInteractionEnabled = true
         
         journalView.txtViewJournal.delegate = self
         journalView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
@@ -344,9 +345,12 @@ extension WWMMyProgressJournalVC: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         //self.view.removeGestureRecognizer(tap)
+        journalView.btnSubmit.isUserInteractionEnabled = false
         if journalView.txtViewJournal.text == "" {
+            journalView.btnSubmit.isUserInteractionEnabled = true
             WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter your journal.", title: kAlertTitle)
         }else {
+            journalView.btnSubmit.isUserInteractionEnabled = false
             self.addJournalAPI()
         }
     }
