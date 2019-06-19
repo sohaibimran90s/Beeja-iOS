@@ -73,6 +73,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        self.setUpNavigationBarForDashboard(title: "My Progress")
+        
         if self.appPreffrence.getType() == "timer"{
             self.btnAddSession.setTitle("Add a Session", for: .normal)
             self.btnAddSessionTopConstraint.constant = 20
@@ -519,7 +521,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func addSessionAPI(param:[String:Any]) {
         //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+        //WWMHelperClass.showLoaderAnimate(on: self.view)
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

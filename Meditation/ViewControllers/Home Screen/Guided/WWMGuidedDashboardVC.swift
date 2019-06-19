@@ -22,6 +22,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     }
     
     func setUpUI() {
+        
+        buttonBarView.frame.origin.y = -18
+        
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
         
