@@ -30,11 +30,15 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     func setupView(){
         
         let userName: String = self.appPreference.getUserName()
-        if userName.contains(" "){
-            let userNameArr = userName.components(separatedBy: " ")
-            self.userName.text = "Ok \(userNameArr[0]),"
+        if userName != ""{
+            if userName.contains(" "){
+                let userNameArr = userName.components(separatedBy: " ")
+                self.userName.text = "Ok \(userNameArr[0]),"
+            }else{
+                self.userName.text = "Ok \(self.appPreference.getUserName()),"
+            }
         }else{
-            self.userName.text = "Ok \(self.appPreference.getUserName()),"
+            self.userName.text = "Ok You,"
         }
         
         self.setNavigationBar(isShow: false, title: "")
