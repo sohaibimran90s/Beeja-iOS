@@ -74,6 +74,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         print(result!)
                         if let fbData = result as? [String:Any] {
                             if let fbEmail = fbData["email"] as? String {
+                                
                                 let param = [
                                     "email": fbEmail,
                                     "password":"",
@@ -87,6 +88,9 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                     "model": UIDevice.current.model,
                                     "version": UIDevice.current.systemVersion
                                 ]
+                                
+                                print("param facebook... \(param)")
+                                
                                 self.loginWithSocial(param: param as Dictionary<String, Any>)
                             }else {
                                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
@@ -95,18 +99,13 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                 self.navigationController?.pushViewController(vc, animated: true)
                             }
                         }
-                        
-                       
                     }else {
                         print(error?.localizedDescription ?? "")
                     }
                 })
                 }
             }
-            
         }
-            
-        
     }
  
     
@@ -177,6 +176,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
+                print("result.... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)

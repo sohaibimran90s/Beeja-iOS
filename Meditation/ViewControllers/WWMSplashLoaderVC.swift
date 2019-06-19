@@ -237,7 +237,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                     }
                 }else{
                     print("more....")
-    
+                    self.animationView.stop()
+                    self.animationView.isHidden = true
+                    self.imageViewLoader.isHidden = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         self.loadSplashScreenafterDelay()
                     }

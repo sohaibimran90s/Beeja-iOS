@@ -149,6 +149,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        
         let param = [
             "email": txtViewEmail.text ?? "",
             "password":"",
@@ -162,19 +164,24 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             "model": UIDevice.current.model,
             "version": UIDevice.current.systemVersion
             ] as [String : Any]
+        
+        print("param2... \(param)")
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
-                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
-                        self.appPreference.setUserName(value: userProfile["name"] as! String)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
+                        self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
                         self.appPreference.setUserData(value: [:])
+                        
+                        print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
+                        
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
