@@ -149,12 +149,34 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         dateFormatter.dateFormat = "dd MMM yyyy"
         let firstDate1 = dateFormatter.date(from: str)
         
-        dateFormatter.dateFormat = "ee"
-        let week = Int(dateFormatter.string(from: firstDate1!))!
-        
-        dayAdded = week-2
-        if dayAdded < 0 {
+        dateFormatter.dateFormat = "EEE"
+        let weedday = dateFormatter.string(from: firstDate1!)
+        switch weedday {
+            
+        case "Mon":
+            dayAdded = 0
+            break
+        case "Tue":
+            dayAdded = 1
+            break
+        case "Wed":
+            dayAdded = 2
+            break
+        case "Thu":
+            dayAdded = 3
+            break
+        case "Fri":
+            dayAdded = 4
+            break
+        case "Sat":
+            dayAdded = 5
+            break
+        case "Sun":
             dayAdded = 6
+            break
+        default:
+            dayAdded = 0
+            break
         }
         
         self.getStatsData()
