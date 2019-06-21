@@ -16,17 +16,17 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     var strType = ""
     var strUrl = ""
     
-    //var alertPopupView = WWMAlertController()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setNavigationBar(isShow: false, title: strType)
+        
         self.lblTitle.text = self.strType
         webView.navigationDelegate = self
+        
         let reachable = Reachabilities()
+        
         if !reachable.isConnectedToNetwork(){
-            
             
             let alertPopupView: WWMAlertController = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
             let window = UIApplication.shared.keyWindow!
@@ -41,22 +41,9 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
             
             alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
             window.rootViewController?.view.addSubview(alertPopupView)
-            
-            
-//            let alert = UIAlertController(title: "Alert",
-//                                          message: "Oh no, we've lost you! Please check your internet connection.",
-//                                          preferredStyle: UIAlertController.Style.alert)
-//            
-//            
-//            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//            alert.addAction(OKAction)
-//            self.present(alert, animated: true,completion: nil)
         }else {
             self.loadWebView()
         }
-        
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -69,7 +56,8 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-         self.webView.stopLoading()
+        self.webView.stopLoading()
+        UIApplication.shared.isStatusBarHidden = false
     }
     
     func loadWebView() {

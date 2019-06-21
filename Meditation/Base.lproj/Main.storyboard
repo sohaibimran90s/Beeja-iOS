@@ -2079,7 +2079,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mh1-PY-T4b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-74.400000000000006" y="1074.5127436281859"/>
+            <point key="canvasLocation" x="-75" y="1074"/>
         </scene>
         <!--Tab BarVC-->
         <scene sceneID="cxf-Xq-g10">
@@ -9939,7 +9939,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Before Completing 1 min of Time:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgv-AC-sLc">
-                                <rect key="frame" x="16" y="106" width="240.5" height="54"/>
+                                <rect key="frame" x="16" y="106" width="248.5" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="gzj-wH-5XY"/>
                                 </constraints>
@@ -9948,7 +9948,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YES/NO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ly-Zh-rzN">
-                                <rect key="frame" x="272.5" y="123.5" width="60" height="19"/>
+                                <rect key="frame" x="280.5" y="123" width="64.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

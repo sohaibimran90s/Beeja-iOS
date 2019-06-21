@@ -15,14 +15,6 @@ class WWMAlertController: UIView {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblSubtitle: UILabel!
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     @IBAction func btnOK(_ sender: UIButton) {
         self.removeFromSuperview()
     }

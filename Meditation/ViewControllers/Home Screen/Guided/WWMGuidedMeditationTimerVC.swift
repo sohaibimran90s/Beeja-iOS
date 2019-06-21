@@ -35,8 +35,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @IBOutlet weak var spinnerImage: UIImageView!
     @IBOutlet weak var btnFavourite: UIButton!
     
-    
-    
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()
     var currentColorSet: Int!
@@ -83,7 +81,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         
         self.seconds = self.audioData.audio_Duration
-        // Do any additional setup after loading the view.
     }
     
     

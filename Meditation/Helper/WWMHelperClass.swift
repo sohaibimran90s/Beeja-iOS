@@ -42,27 +42,7 @@ class WWMHelperClass {
         alertPopupView.btnClose.isHidden = true
         
         window.rootViewController?.view.addSubview(alertPopupView)
-        
-//        let alert = UIAlertController(title: title as String,
-//                                      message: message as String,
-//                                      preferredStyle: UIAlertController.Style.alert)
-//
-//
-//        let OKAction = UIAlertAction(title: "OK",
-//                                     style: .default, handler: nil)
-//
-//        alert.addAction(OKAction)
-//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
-        
     }
-    
-    
-  
-    
-    
-//    @objc func btnDoneAction() {
-//        WWMHelperClass.alertPopupView.removeFromSuperview()
-//    }
     
     class func showLoader(on view: UIView) {
         DispatchQueue.main.async(execute: {() -> Void in

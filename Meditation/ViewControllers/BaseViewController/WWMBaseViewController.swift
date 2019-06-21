@@ -186,6 +186,24 @@ class WWMBaseViewController: UIViewController {
     }
     
     @IBAction func btnFlightModeAction(_ sender: UIButton) {
+        xibCall1()
+    }
+    
+    func xibCall1(){
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.lblTitle.text = "Toggle Airplane mode"
+        alertPopupView.lblSubtitle.text = "Go to Settings app main page and toggle the airplane mode."
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction1(_:)), for: .touchUpInside)
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnDoneAction1(_ sender: Any) {
         if let url = URL(string:UIApplication.openSettingsURLString) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
