@@ -1,0 +1,277 @@
+{
+  
+  "success": true,
+  
+  "code": 200,
+  
+  "message": "success",
+  
+  "result": {
+    
+    "graph_score": [
+      
+      {
+        
+        "date": "01/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 1,
+          
+          "mood_color": "#62FED2",
+          
+          "mood_text": "Sleepy"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 2,
+          
+          "mood_color": "#5AFDCF",
+          
+          "mood_text": "Mellow"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "02/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 4,
+          
+          "mood_color": "#48F9C8",
+          
+          "mood_text": "Calm"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 5,
+          
+          "mood_color": "#3DF7C3",
+          
+          "mood_text": "Chilled"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "03/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 6,
+          
+          "mood_color": "#29F3BA",
+          
+          "mood_text": "Dreamy"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 7,
+          
+          "mood_color": "#22F2B7",
+          
+          "mood_text": "Thoughtful"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "04/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 8,
+          
+          "mood_color": "#12EFB1",
+          
+          "mood_text": "Curious"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 9,
+          
+          "mood_color": "#17EFB3",
+          
+          "mood_text": "Content"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "05/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 10,
+          
+          "mood_color": "#04E2A8",
+          
+          "mood_text": "Grateful"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 26,
+          
+          "mood_color": "#FFB668",
+          
+          "mood_text": "Cheerful"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "06/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 18,
+          
+          "mood_color": "#2A7C97",
+          
+          "mood_text": "Blissful"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 25,
+          
+          "mood_color": "#FFBD6B",
+          
+          "mood_text": "Energised"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "07/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 26,
+          
+          "mood_color": "#FFB668",
+          
+          "mood_text": "Cheerful"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 27,
+          
+          "mood_color": "#FFA965",
+          
+          "mood_text": "Playful"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "08/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 32,
+          
+          "mood_color": "#FF865C",
+          
+          "mood_text": "Excited"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 16,
+          
+          "mood_color": "#1E9C9D",
+          
+          "mood_text": "Fulfiled"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "09/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 38,
+          
+          "mood_color": "#F55E6E",
+          
+          "mood_text": "Uneasy"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 51,
+          
+          "mood_color": "#6E3285",
+          
+          "mood_text": "Angry"
+          
+        }
+        
+      },
+      
+      {
+        
+        "date": "10/05/2019",
+        
+        "pre": {
+          
+          "mood_id": 52,
+          
+          "mood_color": "#672F85",
+          
+          "mood_text": "Livid"
+          
+        },
+        
+        "post": {
+          
+          "mood_id": 26,
+          
+          "mood_color": "#FFB668",
+          
+          "mood_text": "Cheerful"
+          
+        }
+        
+      }
+      
+    ]
+    
+  }
+  
+}

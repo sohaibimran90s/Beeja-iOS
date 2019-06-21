@@ -8,7 +8,6 @@
 
 import UIKit
 import GaugeKit
-import Charts
 import WebKit
 
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -202,16 +201,13 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             cell.collectionView.tag = indexPath.row
             cell.collectionView.reloadData()
             return cell
-//        }else {
+        //}
+//        else {
 //            let cell = tableView.dequeueReusableCell(withIdentifier: "CellGraphChart") as! WWMProgressMoodPieTVC
-//            let urlRequest = URLRequest.init(url: URL.init(string: "https://staging.beejameditation.com/web-views/graph/index.html")!)
-//            cell.graphWebView.load(urlRequest)
 //
 //            return cell
 //        }
     }
-    
-
     
     
     // MARK:- UICollectionView Delegate Methods

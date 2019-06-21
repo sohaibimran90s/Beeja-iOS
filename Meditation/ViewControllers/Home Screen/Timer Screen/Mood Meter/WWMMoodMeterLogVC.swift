@@ -44,7 +44,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Done"
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         self.view.addGestureRecognizer(gesture)

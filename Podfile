@@ -13,7 +13,6 @@ target 'Meditation' do
 	pod 'FBSDKLoginKit'
 	pod 'lottie-ios', '~> 3.0.4'
 	pod 'GaugeKit'
-	pod 'Charts'
 	pod 'SDWebImage'
 	pod 'SVProgressHUD'
 	pod 'Fabric'

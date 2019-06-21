@@ -580,22 +580,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func logout() {
-        
         self.xibCall()
-        
-//        let alert = UIAlertController(title: "Alert",
-//                                      message: "Are you sure you want to logout?",
-//                                      preferredStyle: UIAlertController.Style.alert)
-//
-//
-//        let cancelAction = UIAlertAction.init(title: "Cancel", style: .default, handler: nil)
-//        let okAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-//            self.logoutAPI()
-//        }
-//        alert.addAction(cancelAction)
-//        alert.addAction(okAction)
-//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
-        
     }
     
     
@@ -768,7 +753,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
                 
-                
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
                 WWMHelperClass.deletefromDb(dbName: "DBContactUs")
@@ -776,7 +760,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
                 WWMHelperClass.deletefromDb(dbName: "DBSettings")
                 WWMHelperClass.deletefromDb(dbName: "DBAddSession")
-                
                 
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
