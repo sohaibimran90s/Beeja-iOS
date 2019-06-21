@@ -20,6 +20,8 @@ class WWMProgressMoodPieTVC: UITableViewCell {
     @IBOutlet weak var overView: UIView!
     @IBOutlet weak var chartView: CustomChart!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var shuffleBtn: UIButton!
+    @IBOutlet weak var overViewBtn: UIButton!
     @IBOutlet weak var preLabel: UILabel!
     @IBOutlet weak var postLabel: UILabel!
     @IBOutlet weak var month: UILabel!

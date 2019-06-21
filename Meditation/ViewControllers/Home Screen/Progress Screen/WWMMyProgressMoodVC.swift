@@ -32,6 +32,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     @IBOutlet weak var tblMoodProgress: UITableView!
     
+    var data: [MoodData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -55,12 +57,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             months1.append(months[i])
         }
         daysStringArray = days1.map { String($0) }
-        //print(days1)
-        //print(months1)
 
         self.getMoodProgress()
-        
-        // Do any additional setup after loading the view.
     }
     
     // MARK:- UIButton Action
@@ -186,28 +184,20 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         print("\(self.currentDate).... \(self.previousDate)")
     }
     
-    
-
     // MARK:- UITable View Delegates Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-       //return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellPieChart") as! WWMProgressMoodPieTVC
             cell.collectionView.tag = indexPath.row
             cell.collectionView.reloadData()
             return cell
-        //}
-//        else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "CellGraphChart") as! WWMProgressMoodPieTVC
-//
-//            return cell
-//        }
-    }
+}
+    
+    
     
     
     // MARK:- UICollectionView Delegate Methods
@@ -270,9 +260,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -333,13 +321,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-
-
 }
 
-//extension WWMMyProgressMoodVC: IAxisValueFormatter {
-//
-//    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-//        return months[Int(value)]
-//    }
-//}
+
