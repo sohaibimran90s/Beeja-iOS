@@ -14,7 +14,6 @@ target 'Meditation' do
 	pod 'lottie-ios', '~> 3.0.4'
 	pod 'GaugeKit'
 	pod 'SDWebImage'
-	pod 'SVProgressHUD'
 	pod 'Fabric'
 	pod 'Crashlytics'
 	pod 'SwiftyRSA'
@@ -22,6 +21,7 @@ target 'Meditation' do
 	pod 'XLPagerTabStrip'
   pod 'IQKeyboardManagerSwift'
   pod 'UICircularProgressRing'
+  pod 'EFCountingLabel'
 
   target 'MeditationTests' do
     inherit! :search_paths

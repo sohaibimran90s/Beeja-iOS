@@ -9,13 +9,13 @@
 import UIKit
 
 class WWMSatsProgressData: NSObject {
-    var hours_of_meditate:Any?
+    var hours_of_meditate:Int?
     var avg_min_daily:Any?
-    var avg_session:Any?
-    var cons_days:Any?
-    var total_Session :Any?
-    var weekly_session:Any?
-    var longest_session :Any?
+    var avg_session:Int?
+    var cons_days:Int?
+    var total_Session :Int?
+    var weekly_session:Int?
+    var longest_session :Int?
     var consecutive_days = [WWMConsecutiveDaysData]()
     
     override init() {
@@ -30,14 +30,14 @@ class WWMSatsProgressData: NSObject {
     init(json:[String:Any], dayAdded:Int) {
         
         
-        cons_days = json["cons_days"]
-        total_Session = json["total_Session"]
-        weekly_session = json["weekly_session"]
-        hours_of_meditate = json["hours_of_meditate"]
+        cons_days = json["cons_days"] as? Int ?? 0
+        total_Session = json["total_Session"] as? Int ?? 0
+        weekly_session = json["weekly_session"] as? Int ?? 0
+        hours_of_meditate = json["hours_of_meditate"] as? Int ?? 0
         avg_min_daily = json["avg_min_daily"]
         //avg_session = json["avg_session"] as? Double ?? 0
-        avg_session = json["avg_session"]
-        longest_session = json["longest_session"]
+        avg_session = json["avg_session"] as? Int ?? 0
+        longest_session = json["longest_session"] as? Int ?? 0
         for index in 0..<dayAdded {
             print(index)
             let levelData = WWMConsecutiveDaysData.init()

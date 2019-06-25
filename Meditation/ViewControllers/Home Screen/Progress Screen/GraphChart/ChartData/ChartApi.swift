@@ -1,6 +1,8 @@
 import Foundation
 
 class ChartApi{
+    
+  static var graphScore: [[String: Any]] = []
   static func getChartData( completion : @escaping ([MoodData]?, Error?)-> Void){
     let headers = [
       "Content-Type": "application/json"
@@ -11,7 +13,7 @@ class ChartApi{
       "med_type": "timer"
       ] as [String : Any]
     
-    let data = Response<MoodResponse>.getMoodData()
+    let data = Response<MoodResponse>.getMoodData(graphScore: graphScore)
     completion(data, nil)
     return
     

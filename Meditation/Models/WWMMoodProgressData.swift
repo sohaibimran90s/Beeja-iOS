@@ -14,8 +14,8 @@ class WWMMoodProgressData: NSObject{
     var color_score   = WWMColorScoreData()
     
     override init() {
-        
     }
+    
     init(json:[String:Any]) {
         if let dict = json["color_score"] as? [String:Any]{
             color_score = WWMColorScoreData.init(json: dict)

@@ -13,6 +13,10 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var welcomeView: UIView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var tblMeditationLevels: UITableView!
+    @IBOutlet weak var lblNameTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lblLetsMeditateTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lblLetsMeditate: UILabel!
+    
     var type = ""
     //let arrMeditationLevel = ["Beginner","Intermediate 1","Intermediate 2","Advanced"]
     var arrMeditationLevels = [DBLevelData]()
@@ -24,7 +28,6 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         super.viewDidLoad()
         
         self.setupView()
-        // Do any additional setup after loading the view.
     }
     
     func setupView(){
@@ -36,20 +39,8 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         }else{
              self.userName.text = "Ok \(self.appPreference.getUserName()),"
         }
-       
-//        let meditationData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
-//        for  data in meditationData{
-//            if data.isMeditationSelected {
-//                self.selectedMeditation_Id = "\(data.meditationId)"
-//                if let levels = data.levels?.array as? [DBLevelData] {
-//                    arrMeditationLevels = levels
-//                }
-//
-//            }
-//        }
         
         self.tblMeditationLevels.reloadData()
-        
     }
     
     // MARK: UITableView Delegate Methods
@@ -95,7 +86,6 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         }else {
             return String.init(format: "%d:%02d min", second/60,second%60)
         }
-        
     }
     
     func meditationApi() {
@@ -112,12 +102,31 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
+                
                 self.appPreference.setGuideType(value: "")
                 self.appPreference.setType(value: "timer")
+                
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+                    
                     self.welcomeView.isHidden = false
+                    self.userName.alpha = 0
+                    self.lblLetsMeditate.alpha = 0
+                    
+                    UIView.animate(withDuration: 0.8, delay: 0.0, options: .curveEaseInOut, animations: {
+                        self.lblNameTopConstraint.constant = self.lblNameTopConstraint.constant - 15
+                        self.userName.alpha = 1.0
+                        self.view.layoutIfNeeded()
+                        
+                        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseInOut, animations: {
+                            self.lblLetsMeditateTopConstraint.constant = self.lblLetsMeditateTopConstraint.constant - 15
+                            self.lblLetsMeditate.alpha = 1.0
+                            
+                            self.view.layoutIfNeeded()
+                        }, completion: nil)
+                        
+                    }, completion: nil)
                 }) { (Bool) in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                         UIApplication.shared.keyWindow?.rootViewController = vc
                     }

@@ -206,41 +206,30 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     // MARK:- Button Action
 
     @IBAction func btnSkipAction(_ sender: Any) {
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-//        vc.type = self.type
-//        vc.prepTime = self.prepTime
-//        vc.meditationTime = self.meditationTime
-//        vc.restTime = self.restTime
-//        vc.meditationID = self.meditationID
-//        vc.levelID = self.levelID
-//        vc.category_Id = self.category_Id
-//        vc.emotion_Id = self.emotion_Id
-//        vc.audio_Id = self.audio_Id
-//        vc.rating = self.rating
-//        vc.watched_duration = self.watched_duration
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
-        //WWMHelperClass.showSVHud()
+
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "type":self.type,
-            "category_id" : self.category_Id,
-            "emotion_id" : self.emotion_Id,
-            "audio_id" : self.audio_Id,
-            "guided_type" : self.userData.guided_type,
-            "watched_duration" : self.watched_duration,
-            "rating" : self.rating,
-            "user_id":self.appPreference.getUserID(),
-            "meditation_type":self.type,
-            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":"",
-            "prep_time":self.prepTime,
-            "meditation_time":self.meditationTime,
-            "rest_time":self.restTime,
+            "type": self.userData.type,
+            "category_id": self.category_Id,
+            "emotion_id": self.emotion_Id,
+            "audio_id": self.audio_Id,
+            "guided_type": self.userData.guided_type,
+            "watched_duration": self.watched_duration,
+            "rating": self.rating,
+            "user_id": self.appPreference.getUserID(),
+            "meditation_type": self.type,
+            "date_time": "\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why": "",
+            "prep_time": self.prepTime,
+            "meditation_time": self.meditationTime,
+            "rest_time": self.restTime,
             "meditation_id": self.meditationID,
-            "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+            "level_id": self.levelID,
+            "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
             ] as [String : Any]
+        
+        print("param.... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {

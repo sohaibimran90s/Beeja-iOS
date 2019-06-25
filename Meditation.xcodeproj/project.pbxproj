@@ -347,6 +347,7 @@
 		6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6144293E224B764600C6682C /* WWMAlertPopUp.swift */; };
 		61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61442940224B82D300C6682C /* WWMJouranlPopUp.xib */; };
 		61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442942224B831200C6682C /* WWMJouranlPopUp.swift */; };
+		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
@@ -729,6 +730,7 @@
 		6144293E224B764600C6682C /* WWMAlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertPopUp.swift; sourceTree = "<group>"; };
 		61442940224B82D300C6682C /* WWMJouranlPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMJouranlPopUp.xib; sourceTree = "<group>"; };
 		61442942224B831200C6682C /* WWMJouranlPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJouranlPopUp.swift; sourceTree = "<group>"; };
+		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
@@ -1065,6 +1067,7 @@
 			children = (
 				2E93D2D721F1B92B00163E57 /* WWMStartTimerVC.swift */,
 				2E8EFD9D22363D8E00B19950 /* WWMFinishTimerVC.swift */,
+				616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */,
 			);
 			path = "Start Timer";
 			sourceTree = "<group>";
@@ -2014,6 +2017,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/EFCountingLabel/EFCountingLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -2023,7 +2027,6 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
@@ -2035,6 +2038,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EFCountingLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -2044,7 +2048,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
@@ -2126,6 +2129,7 @@
 				61416F1322BBB4C800C9339E /* CombinedChartData.swift in Sources */,
 				61416E6022BBB31400C9339E /* PieChartRenderer.swift in Sources */,
 				2EE247EF21E6315400857C25 /* PieCustomViewsLayer.swift in Sources */,
+				616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */,
 				2E316FD52227C6D000018538 /* DBSettings+CoreDataClass.swift in Sources */,
 				2E4CE28722083A0000059396 /* WWMStatsCalCollectionViewCell.swift in Sources */,
 				2E5CCE9421C79ED10085224B /* WWMCommunityVC.swift in Sources */,

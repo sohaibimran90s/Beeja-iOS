@@ -14,6 +14,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 
 
     @IBOutlet weak var btnChangeDuration: UIButton!
+    
     var moodProgressDurationView = WWMMoodProgressDurationView()
     var moodProgressData = WWMMoodProgressData()
     
@@ -30,9 +31,21 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     var currentDate: String = ""
     var previousDate: String = ""
     
+    //Graph outlets
+    @IBOutlet weak var overView: UIView!
+    @IBOutlet weak var chartView: CustomChart!
+    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var preLabel: UILabel!
+    @IBOutlet weak var postLabel: UILabel!
+    @IBOutlet weak var month: UILabel!
+    
+    @IBOutlet weak var overviewLeading: NSLayoutConstraint!
+    @IBOutlet weak var leadingMonth: NSLayoutConstraint!
+    
     @IBOutlet weak var tblMoodProgress: UITableView!
     
     var data: [MoodData] = []
+    var currentChartStatus: ChartStatus = .both
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,9 +208,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             cell.collectionView.tag = indexPath.row
             cell.collectionView.reloadData()
             return cell
-}
-    
-    
+    }
     
     
     // MARK:- UICollectionView Delegate Methods
@@ -287,11 +298,9 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                
-                
                 if let statsData = result["result"] as? [String:Any] {
                     
-                    print(statsData)
+                    print("statsData.... \(statsData)")
                     
                     if self.type == "weekly"{
                         self.btnChangeDuration.setTitle("Last 7 Days", for: .normal)
@@ -304,8 +313,22 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     
                     
                     print(print(self.moodProgressData.color_score.pre))
-                    self.tblMoodProgress.reloadData()
                     
+                    self.chartView.customDelegate = self
+                    ChartApi.getChartData {[weak self] (data, error) in
+                        if error != nil{
+                            self?.showError()
+                        }else if let data = data{
+                            DispatchQueue.main.async {
+                                self?.data = data
+                                self?.addBoth()
+                                self?.month.text = self?.data.first?.date.monthName
+                            }
+                        }
+                    }
+                    
+                    
+                    self.tblMoodProgress.reloadData()
                 }
             }else {
                 if error != nil {
@@ -318,9 +341,166 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                 }
             }
             //WWMHelperClass.dismissSVHud()
+            self.graphChartApiCall()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
+    
+    //MARK: Graph Chart
+    
+    func graphChartApiCall(){
+        
+        self.chartView.customDelegate = self
+        
+        ChartApi.getChartData {[weak self] (data, error) in
+            if error != nil{
+                self?.showError()
+            }else if let data = data{
+                DispatchQueue.main.async {
+                    self?.data = data
+                    self?.addBoth()
+                    self?.month.text = self?.data.first?.date.monthName
+                }
+            }
+        }
+    }
+    
+    func showError(){
+        let alert  = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func shuffleClicked(sender: UIButton){
+        RippleEffect().addRippleEffect(to: sender, completion: {})
+        
+        self.chartView.clearData()
+        
+        switch self.currentChartStatus {
+        case .both:
+            self.currentChartStatus  = .pre
+            addPreMood()
+            
+            self.updateLabels(pre: true, post: false)
+            
+        case .pre:
+            self.currentChartStatus = .post
+            addPostMood()
+            
+            self.updateLabels(pre: false, post: true)
+        case .post:
+            self.currentChartStatus = .both
+            self.addBoth()
+            
+            self.updateLabels(pre: true, post: true)
+            
+        default:
+            break
+        }
+        
+        self.chartView.refresh()
+        pageControl.currentPage = self.currentChartStatus.rawValue
+    }
+    
+    func addPreMood(){
+        //add pre data
+        let preData = self.data.map({$0.pre})
+        let data = chartView.getPreMood(dataPoints: preData.compactMap({$0.id.moodType.getChartId()}), value: self.data.compactMap({$0.date.day}))
+        data.drawCircleHoleEnabled = true
+        let colors = preData.compactMap({$0.id.moodType.getChartId()}).compactMap({LineChartFormatter().getStrip(for: Double($0))})
+        data.circleColors = colors
+        data.circleHoleRadius = data.circleRadius - 1
+        data.circleHoleColor = UIColor.white
+        data.invertColors = true
+        self.chartView.update(pre: data)
+        
+        
+    }
+    
+    func addPostMood(){
+        //add post data
+        let postData = self.data.map({$0.post})
+        let posdata = chartView.getPostMood(dataPoints: postData.compactMap({$0.id.moodType.getChartId()}), value: self.data.compactMap({$0.date.day}))
+        
+        posdata.drawCircleHoleEnabled = true
+        let colors = postData.compactMap({$0.id.moodType.getChartId()}).compactMap({LineChartFormatter().getStrip(for: Double($0))})
+        posdata.circleColors = colors
+        posdata.circleHoleRadius = posdata.circleRadius - 1
+        posdata.circleHoleColor = UIColor.white
+        posdata.invertColors = false
+        self.chartView.update(post: posdata)
+    }
+    
+    func updateLabels(pre: Bool, post: Bool){
+        
+        switch (pre,post) {
+        case (true, true):
+            UIView.animate(withDuration: 1.0) {
+                self.preLabel.superview?.isHidden = false
+            }
+        case (true, false):
+            
+            UIView.animate(withDuration: 1.0) {
+                self.postLabel.superview?.isHidden = true
+            }
+            
+        case (false, true):
+            UIView.animate(withDuration: 0.5) {
+                self.postLabel.superview?.isHidden = false
+            }
+            
+            UIView.animate(withDuration: 0.5, delay: 0.2, options: [.allowAnimatedContent], animations: {
+                self.preLabel.superview?.isHidden = true
+            }, completion: nil)
+        default:
+            break
+        }
+    }
+    
+    func addBoth(){
+        
+        let postData = self.data.map({$0.post})
+        let posdata = chartView.getPostMood(dataPoints: postData.compactMap({$0.id.moodType.getChartId()}), value: self.data.compactMap({$0.date.day}))
+        
+        
+        let preData = self.data.map({$0.pre})
+        let prdata = chartView.getPreMood(dataPoints: preData.compactMap({$0.id.moodType.getChartId()}), value: self.data.compactMap({$0.date.day}))
+        
+        self.chartView.update(pre: prdata, post: posdata)
+    }
+    
+    @IBAction func overviewClicked(_ sender: UIButton) {
+        
+        if self.overView.isHidden {
+            //no ripple effect required.
+            return
+        }
+        
+        RippleEffect().addRippleEffect(to: sender, completion: {
+            self.overView.isHidden = true
+        })
+        self.chartView.resetView()
+    }
+    
+    
+    enum ChartStatus: Int{
+        case both, pre, post
+    }
 }
 
+
+extension WWMMyProgressMoodVC: CustomChartViewDelegate{
+    func yAxis(movedTo x: CGFloat) {
+        self.leadingMonth.constant = x
+        self.overviewLeading.constant = x - 10
+    }
+    
+    func selected(index: Int, dataSet: Int) {
+        //show overview
+        self.overView.isHidden = false
+    }
+}
 

@@ -7,6 +7,7 @@ PODS:
   - Bolts/Tasks (1.9.0)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
+  - EFCountingLabel (5.0.0)
   - Fabric (1.9.0)
   - FBSDKCoreKit (4.39.1):
     - Bolts (~> 1.9)
@@ -90,7 +91,6 @@ PODS:
   - SDWebImage (4.4.3):
     - SDWebImage/Core (= 4.4.3)
   - SDWebImage/Core (4.4.3)
-  - SVProgressHUD (2.2.5)
   - SwiftyRSA (1.5.0):
     - SwiftyRSA/ObjC (= 1.5.0)
   - SwiftyRSA/ObjC (1.5.0)
@@ -99,6 +99,7 @@ PODS:
 
 DEPENDENCIES:
   - Crashlytics
+  - EFCountingLabel
   - Fabric
   - FBSDKLoginKit
   - Firebase/Auth
@@ -109,7 +110,6 @@ DEPENDENCIES:
   - lottie-ios (~> 3.0.4)
   - ReachabilitySwift
   - SDWebImage
-  - SVProgressHUD
   - SwiftyRSA
   - UICircularProgressRing
   - XLPagerTabStrip
@@ -118,6 +118,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - Crashlytics
+    - EFCountingLabel
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -138,7 +139,6 @@ SPEC REPOS:
     - nanopb
     - ReachabilitySwift
     - SDWebImage
-    - SVProgressHUD
     - SwiftyRSA
     - UICircularProgressRing
     - XLPagerTabStrip
@@ -146,6 +146,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  EFCountingLabel: c25faa62a975f8ef9b2cb0928e8675520e8e2739
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FBSDKCoreKit: f442aa96179cc9b382bb4abeb7e340a47cca8f91
   FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
@@ -166,11 +167,10 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
-  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
   UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: f7903d7fa3d20f591a8802292c77cf834ce5fb8f
+PODFILE CHECKSUM: 88a2de16ec1ba43c79a82eb0635ec8e68eb05496
 
 COCOAPODS: 1.6.1

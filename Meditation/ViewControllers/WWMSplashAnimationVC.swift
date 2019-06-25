@@ -33,6 +33,8 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         splashtapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnSplash(_:)))
         splashtapGesture.delegate = self as? UIGestureRecognizerDelegate
         self.imgView.isUserInteractionEnabled = true

@@ -8,7 +8,6 @@
 
 import UIKit
 import StoreKit
-import SVProgressHUD
 
 class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPaymentTransactionObserver {
     

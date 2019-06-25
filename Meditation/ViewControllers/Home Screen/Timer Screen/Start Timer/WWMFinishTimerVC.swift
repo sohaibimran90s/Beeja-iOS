@@ -10,9 +10,21 @@ import UIKit
 
 class WWMFinishTimerVC: UIViewController {
 
-    @IBOutlet weak var lblPrep: UILabel!
-    @IBOutlet weak var lblMeditation: UILabel!
-    @IBOutlet weak var lblRest: UILabel!
+//    @IBOutlet weak var lblPrep: UILabel!
+//    @IBOutlet weak var lblMeditation: UILabel!
+//    @IBOutlet weak var lblRest: UILabel!
+    
+    private var finishedLoadingInitialTableCells = false
+    
+    @IBOutlet weak var lblTodaysSession: UILabel!
+    @IBOutlet weak var tablView: UITableView!
+    @IBOutlet weak var btnDoneOutlet: UIButton!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var lblTodaySessionTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnTopConstraint: NSLayoutConstraint!
+    
+    var rowHeight: CGFloat = 0
     
     var prepTime = 0
     var meditationTime = 0
@@ -25,8 +37,11 @@ class WWMFinishTimerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.setUpUI()
+        
+        self.btnDoneOutlet.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.setUpUI()
+        }
     }
     
     func setUpUI() {
@@ -34,10 +49,43 @@ class WWMFinishTimerVC: UIViewController {
         if data.count > 0 {
             settingData = data[0]
         }
-        self.lblPrep.text = self.secondsToMinutesSeconds(second: prepTime)
-        self.lblMeditation.text = self.secondsToMinutesSeconds(second: meditationTime)
-        self.lblRest.text = self.secondsToMinutesSeconds(second: restTime)
         
+        self.lblTodaysSession.text = "Today’s session"
+        self.btnDoneOutlet.isHidden = false
+        
+        self.tablView.delegate = self
+        self.tablView.dataSource = self
+        
+        self.btnDoneOutlet.alpha = 0.0
+        self.lblTodaysSession.alpha = 0.0
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 1136:
+                print("iPhone 5 or 5S or 5C")
+                rowHeight = 110
+            case 1334:
+                print("iPhone 6/6S/7/8")
+                rowHeight = 130
+            case 2208:
+                print("iPhone 6+/6S+/7+/8+")
+                rowHeight = 150
+            case 2436:
+                print("iPhone X, XS")
+                rowHeight = 180
+            case 2688:
+                print("iPhone XS Max")
+                rowHeight = 200
+            case 1792:
+                print("iPhone XR")
+                rowHeight = 180
+            default:
+                print("unknown")
+                rowHeight = 150
+            }
+        }
+        
+        self.tableViewHeightConstraint.constant = 3 * rowHeight
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -84,3 +132,74 @@ class WWMFinishTimerVC: UIViewController {
         }
     }
 }
+
+extension WWMFinishTimerVC: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tablView.dequeueReusableCell(withIdentifier: "WWMFinishTimerTVC") as! WWMFinishTimerTVC
+        
+        if indexPath.row == 0{
+            cell.lblPrepMedRestPrep.text = "Prep"
+            cell.lblPrepMedRestText.text = self.secondsToMinutesSeconds(second: prepTime)
+        }else if indexPath.row == 1{
+            cell.lblPrepMedRestPrep.text = "Meditation"
+            cell.lblPrepMedRestText.text = self.secondsToMinutesSeconds(second: meditationTime)
+        }else{
+            cell.lblPrepMedRestPrep.text = "Rest"
+            cell.lblPrepMedRestText.text = self.secondsToMinutesSeconds(second: restTime)
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return rowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        var lastInitialDisplayableCell = false
+        
+        //change flag as soon as last displayable cell is being loaded (which will mean table has initially loaded)
+        if 3 > 0 && !finishedLoadingInitialTableCells {
+            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows,
+                let lastIndexPath = indexPathsForVisibleRows.last, lastIndexPath.row == indexPath.row {
+                lastInitialDisplayableCell = true
+            }
+        }
+        
+        if !finishedLoadingInitialTableCells {
+            
+            if lastInitialDisplayableCell {
+                finishedLoadingInitialTableCells = true
+            }
+            
+            //animates the cell as it is being displayed for the first time
+            cell.transform = CGAffineTransform(translationX: 0, y: rowHeight/2)
+            cell.alpha = 0
+            
+            // UIView.animate(withDuration: 0.5, delay: 0.05*Double(indexPath.row), options: [.curveEaseInOut], animations:
+            
+            UIView.animate(withDuration: 0.7, delay: 0.0, options: .curveEaseInOut, animations: {
+                self.lblTodaysSession.alpha = 1.0
+                self.lblTodaySessionTopConstraint.constant = self.lblTodaySessionTopConstraint.constant - 14
+                self.view.layoutIfNeeded()
+                
+            }, completion: nil)
+            
+            UIView.animate(withDuration: 0.7, delay: 0.1*Double(indexPath.row), options: [.curveEaseInOut], animations: {
+                cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.alpha = 1
+            }, completion: {_ in
+                UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseInOut, animations: {
+                    self.btnDoneOutlet.alpha = 1.0
+                    self.btnTopConstraint.constant = self.btnTopConstraint.constant - 20
+                }, completion: nil)
+            })
+            
+            
+        }
+    }
+}
+

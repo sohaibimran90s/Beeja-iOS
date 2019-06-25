@@ -8,6 +8,7 @@
 
 import UIKit
 import UICircularProgressRing
+import EFCountingLabel
 
 class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource {
     
@@ -25,15 +26,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UICircularProgressRing!
-    @IBOutlet weak var lblMeditate: UILabel!
+    @IBOutlet weak var lblMeditate: EFCountingLabel!
     @IBOutlet weak var lblNameMeditate: UILabel!
     
     @IBOutlet weak var viewBottom: UIStackView!
-    @IBOutlet weak var lblAvMinutes: UILabel!
-    @IBOutlet weak var lblDailyfrequency: UILabel!
     @IBOutlet weak var lblAvSession: UILabel!
-    @IBOutlet weak var lblValueSession: UILabel!
-    @IBOutlet weak var lblValueDays: UILabel!
+    @IBOutlet weak var lblValueSession: EFCountingLabel!
+    @IBOutlet weak var lblValueDays: EFCountingLabel!
     @IBOutlet weak var lblLongestSession: UILabel!
     @IBOutlet weak var viewAvMinutes: UICircularProgressRing!
     @IBOutlet weak var viewDays: UICircularProgressRing!
@@ -65,6 +64,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var selectedMeditationId = -1
     var selectedLevelId = -1
     var isLeft = false
+    var circle = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -72,6 +73,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        self.viewHourMeditate.value = 0
+        self.viewAvMinutes.value = 0
+        self.viewDays.value = 0
+        
+        self.viewHourMeditate.maxValue = 100
+        self.viewAvMinutes.maxValue = 100
+        self.viewDays.maxValue = 100
         
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
@@ -118,14 +127,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             //self.viewDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             //self.viewAvMinutes.layer.borderWidth = 2.0
             //self.viewAvMinutes.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            self.viewSomeGoals.layer.borderWidth = 2.0
-            self.viewSomeGoals.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             //self.viewHourMeditate.layer.borderWidth = 2.0
             //self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+
+            self.viewSomeGoals.layer.borderWidth = 2.0
+            self.viewSomeGoals.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             
-            self.viewHourMeditate.maxValue = 100
-            self.viewAvMinutes.maxValue = 100
-            self.viewDays.maxValue = 100
+            
         }
     }
     
@@ -266,8 +274,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             addSessionView.btnDone.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         }
         
-        
-        
         if addSessionView.lblSec.text != "0 sec"{
             addSessionView.backViewTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             addSessionView.backViewTimer.layer.borderWidth = 2.0
@@ -283,7 +289,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             addSessionView.backViewTimer.layer.borderWidth = 2.0
         }
     }
-    
 
     // MARK:- Button Action
     
@@ -294,10 +299,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         addSessionView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         addSessionView.btnDone.layer.borderWidth = 2.0
         addSessionView.btnDone.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
-       // addSessionView.btnTime1.layer.borderWidth = 2.0
-       // addSessionView.btnTime1.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
+
         addSessionView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         addSessionView.btnDate.addTarget(self, action: #selector(btnDateAction(_:)), for: .touchUpInside)
@@ -308,25 +310,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
          addSessionView.btnDone.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         
-        
-        
         addSessionView.viewTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         addSessionView.viewTime.layer.borderWidth = 2.0
         
         self.roundCorners(view: addSessionView.btnTime1, corners: [.bottomLeft, .topLeft], radius: 20.0)
         self.roundCorners(view: addSessionView.btnTime2, corners: [.bottomRight, .topRight], radius: 20.0)
         
-        // 0 235 169
-      //  addSessionView.btnTime1.layer.borderColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-       // addSessionView.btnTime1.layer.borderWidth = 1.0
-        
-      //  addSessionView.btnTime2.layer.borderColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-     //   addSessionView.btnTime2.layer.borderWidth = 1.0
-        
-        
-        
-        //addSessionView.btnTime2.layer.borderWidth = 2.0
-        //addSessionView.btnTime2.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         addSessionView.btnTime2.setTitleColor(UIColor.white, for: .normal)
         addSessionView.btnTime2.backgroundColor = UIColor.clear
         addSessionView.btnTime1.backgroundColor = UIColor.init(hexString: "#00eba9")!
@@ -578,12 +567,32 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     
     func setData() {
+        
         if isLeft {
             self.btnLeft.isHidden = false
             self.btnRight.isHidden = true
-            self.lblMeditate.text = "\(self.statsData.weekly_session ?? "")"
-            self.lblValueSession.text = "\(self.statsData.avg_session ?? "")"
-            self.lblValueDays.text = "\(self.statsData.longest_session ?? "")"
+            
+            //self.lblMeditate.text = "\(self.statsData.weekly_session ?? "")"
+            //self.lblValueSession.text = "\(self.statsData.avg_session ?? "")"
+            //self.lblValueDays.text = "\(self.statsData.longest_session ?? "")"
+
+            let weeklySession: Int = self.statsData.weekly_session ?? 0
+            print("weeklySession.... \(weeklySession)")
+            self.lblMeditate.format = "%d"
+            self.lblMeditate.countFrom(0, to: CGFloat(weeklySession), withDuration: 1.0)
+            
+            let avgSession: Int = self.statsData.avg_session ?? 0
+            print("avg_session.... \(avgSession)")
+            self.lblValueSession.format = "%d"
+            self.lblValueSession.countFrom(0, to: CGFloat(avgSession), withDuration: 1.0)
+            
+            
+            let longestSession: Int = self.statsData.longest_session ?? 0
+            print("longestSession.... \(longestSession)")
+            self.lblValueDays.format = "%d"
+            self.lblValueDays.countFrom(0, to: CGFloat(longestSession), withDuration: 1.0)
+            
+            
             self.lblNameMeditate.text = "Weekly Session"
             self.lblAvSession.text = "Av. Session"
             self.lblLongestSession.text = "Longest Session"
@@ -604,9 +613,26 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.lblNameMeditate.text = "Hours Meditated"
             self.lblAvSession.text = "Total Sessions"
             self.lblLongestSession.text = "Consecutive Days"
-            self.lblMeditate.text = "\(self.statsData.hours_of_meditate ?? "")"
-            self.lblValueSession.text = "\(self.statsData.total_Session ?? "")"
-            self.lblValueDays.text = "\(self.statsData.cons_days ?? "")"
+            
+            //self.lblMeditate.text = "\(self.statsData.hours_of_meditate ?? 0)"
+            //self.lblValueSession.text = "\(self.statsData.total_Session ?? 0)"
+            //self.lblValueDays.text = "\(self.statsData.cons_days ?? 0)"
+            
+            let hoursOfMeditateSession: Int = self.statsData.hours_of_meditate ?? 0
+            print("hoursOfMeditateSession.... \(hoursOfMeditateSession)")
+            self.lblMeditate.format = "%d"
+            self.lblMeditate.countFrom(0, to: CGFloat(hoursOfMeditateSession), withDuration: 1.0)
+            
+            let totalSession: Int = self.statsData.total_Session ?? 0
+            print("totalSession.... \(totalSession)")
+            self.lblValueSession.format = "%d"
+            self.lblValueSession.countFrom(0, to: CGFloat(totalSession), withDuration: 1.0)
+            
+            
+            let consdaysSession: Int = self.statsData.cons_days ?? 0
+            print("consdaysSession.... \(consdaysSession)")
+            self.lblValueDays.format = "%d"
+            self.lblValueDays.countFrom(0, to: CGFloat(consdaysSession), withDuration: 1.0)
         }
     }
     
@@ -665,8 +691,16 @@ extension Date {
 extension WWMMyProgressStatsVC{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print("scrollview.... \(scrollView.contentOffset.y)")
+        
         if scrollView.contentOffset.y > 395{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                if self.circle{
+                    self.setData()
+                    self.circle = false
+                }
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.viewHourMeditate.startProgress(to: 100, duration: 1.0)
                 self.viewAvMinutes.startProgress(to: 100, duration: 1.0)
                 self.viewDays.startProgress(to: 100, duration: 1.0)
