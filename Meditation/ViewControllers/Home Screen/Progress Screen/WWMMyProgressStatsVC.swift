@@ -68,7 +68,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -572,26 +571,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.btnLeft.isHidden = false
             self.btnRight.isHidden = true
             
-            //self.lblMeditate.text = "\(self.statsData.weekly_session ?? "")"
-            //self.lblValueSession.text = "\(self.statsData.avg_session ?? "")"
-            //self.lblValueDays.text = "\(self.statsData.longest_session ?? "")"
+            if !self.circle{
+                self.lblMeditate.text = "\(self.statsData.weekly_session ?? 0)"
+                self.lblValueSession.text = "\(self.statsData.avg_session ?? 0)"
+                self.lblValueDays.text = "\(self.statsData.longest_session ?? 0)"
+            }
 
-            let weeklySession: Int = self.statsData.weekly_session ?? 0
-            print("weeklySession.... \(weeklySession)")
-            self.lblMeditate.format = "%d"
-            self.lblMeditate.countFrom(0, to: CGFloat(weeklySession), withDuration: 1.0)
-            
-            let avgSession: Int = self.statsData.avg_session ?? 0
-            print("avg_session.... \(avgSession)")
-            self.lblValueSession.format = "%d"
-            self.lblValueSession.countFrom(0, to: CGFloat(avgSession), withDuration: 1.0)
-            
-            
-            let longestSession: Int = self.statsData.longest_session ?? 0
-            print("longestSession.... \(longestSession)")
-            self.lblValueDays.format = "%d"
-            self.lblValueDays.countFrom(0, to: CGFloat(longestSession), withDuration: 1.0)
-            
             
             self.lblNameMeditate.text = "Weekly Session"
             self.lblAvSession.text = "Av. Session"
@@ -614,25 +599,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.lblAvSession.text = "Total Sessions"
             self.lblLongestSession.text = "Consecutive Days"
             
-            //self.lblMeditate.text = "\(self.statsData.hours_of_meditate ?? 0)"
-            //self.lblValueSession.text = "\(self.statsData.total_Session ?? 0)"
-            //self.lblValueDays.text = "\(self.statsData.cons_days ?? 0)"
-            
-            let hoursOfMeditateSession: Int = self.statsData.hours_of_meditate ?? 0
-            print("hoursOfMeditateSession.... \(hoursOfMeditateSession)")
-            self.lblMeditate.format = "%d"
-            self.lblMeditate.countFrom(0, to: CGFloat(hoursOfMeditateSession), withDuration: 1.0)
-            
-            let totalSession: Int = self.statsData.total_Session ?? 0
-            print("totalSession.... \(totalSession)")
-            self.lblValueSession.format = "%d"
-            self.lblValueSession.countFrom(0, to: CGFloat(totalSession), withDuration: 1.0)
-            
-            
-            let consdaysSession: Int = self.statsData.cons_days ?? 0
-            print("consdaysSession.... \(consdaysSession)")
-            self.lblValueDays.format = "%d"
-            self.lblValueDays.countFrom(0, to: CGFloat(consdaysSession), withDuration: 1.0)
+            if !self.circle{
+                self.lblMeditate.text = "\(self.statsData.hours_of_meditate ?? 0)"
+                self.lblValueSession.text = "\(self.statsData.total_Session ?? 0)"
+                self.lblValueDays.text = "\(self.statsData.cons_days ?? 0)"
+            }
         }
     }
     
@@ -692,10 +663,71 @@ extension WWMMyProgressStatsVC{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print("scrollview.... \(scrollView.contentOffset.y)")
         
-        if scrollView.contentOffset.y > 395{
+        var yaxis: CGFloat = 395
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 1136:
+                print("iPhone 5 or 5S or 5C")
+                yaxis = 400
+            case 1334:
+                print("iPhone 6/6S/7/8")
+                yaxis = 395
+            case 2208:
+                print("iPhone 6+/6S+/7+/8+")
+                yaxis = 370
+            case 2436:
+                print("iPhone X, XS")
+                yaxis = 340
+            case 2688:
+                print("iPhone XS Max")
+                yaxis = 300
+            case 1792:
+                print("iPhone XR")
+                yaxis = 370
+            default:
+                print("unknown")
+                yaxis = 395
+            }
+        }
+        
+        if scrollView.contentOffset.y > yaxis{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
                 if self.circle{
-                    self.setData()
+                    
+                    if self.isLeft{
+                        let weeklySession: Int = self.statsData.weekly_session ?? 0
+                        print("weeklySession.... \(weeklySession)")
+                        self.lblMeditate.format = "%d"
+                        self.lblMeditate.countFrom(0, to: CGFloat(weeklySession), withDuration: 1.0)
+                        
+                        let avgSession: Int = self.statsData.avg_session ?? 0
+                        print("avg_session.... \(avgSession)")
+                        self.lblValueSession.format = "%d"
+                        self.lblValueSession.countFrom(0, to: CGFloat(avgSession), withDuration: 1.0)
+                        
+                        
+                        let longestSession: Int = self.statsData.longest_session ?? 0
+                        print("longestSession.... \(longestSession)")
+                        self.lblValueDays.format = "%d"
+                        self.lblValueDays.countFrom(0, to: CGFloat(longestSession), withDuration: 1.0)
+                    }else{
+                        let hoursOfMeditateSession: Int = self.statsData.hours_of_meditate ?? 0
+                        print("hoursOfMeditateSession.... \(hoursOfMeditateSession)")
+                        self.lblMeditate.format = "%d"
+                        self.lblMeditate.countFrom(0, to: CGFloat(hoursOfMeditateSession), withDuration: 1.0)
+                        
+                        let totalSession: Int = self.statsData.total_Session ?? 0
+                        print("totalSession.... \(totalSession)")
+                        self.lblValueSession.format = "%d"
+                        self.lblValueSession.countFrom(0, to: CGFloat(totalSession), withDuration: 1.0)
+                        
+                        
+                        let consdaysSession: Int = self.statsData.cons_days ?? 0
+                        print("consdaysSession.... \(consdaysSession)")
+                        self.lblValueDays.format = "%d"
+                        self.lblValueDays.countFrom(0, to: CGFloat(consdaysSession), withDuration: 1.0)
+                    }
+                    
                     self.circle = false
                 }
             }

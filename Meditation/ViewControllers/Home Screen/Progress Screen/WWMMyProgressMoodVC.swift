@@ -295,6 +295,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         print(xData)
         
         let param = ["user_id":self.appPreference.getUserID(),"med_type" : self.appPreference.getType(), "date": xData, "type": self.type]
+        
+        print("mood para... \(param)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
@@ -314,18 +316,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     
                     print(print(self.moodProgressData.color_score.pre))
                     
-                    self.chartView.customDelegate = self
-                    ChartApi.getChartData {[weak self] (data, error) in
-                        if error != nil{
-                            self?.showError()
-                        }else if let data = data{
-                            DispatchQueue.main.async {
-                                self?.data = data
-                                self?.addBoth()
-                                self?.month.text = self?.data.first?.date.monthName
-                            }
-                        }
-                    }
+                    self.graphChartApiCall()
                     
                     
                     self.tblMoodProgress.reloadData()
