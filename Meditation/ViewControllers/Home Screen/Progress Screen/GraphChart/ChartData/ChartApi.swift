@@ -1,42 +1,61 @@
 import Foundation
 
 class ChartApi{
+    
+  static var type: String = ""
   static func getChartData( completion : @escaping ([MoodData]?, Error?)-> Void){
+    
+    
+//    let data = Response<MoodResponse>.getMoodData()
+//    completion(data, nil)
+//    return
+    
+    
+    let appPreference = WWMAppPreference()
+    let currentDate = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = NSLocale.current
+    dateFormatter.dateFormat = "yyyyMMdd"
+    let xData = dateFormatter.string(from: currentDate)
+    print(xData)
+    
+    let params = ["user_id": appPreference.getUserID(),"med_type" : appPreference.getType(), "date": xData, "type": type]
+    
+    print("graph params... \(params)")
+    
     let headers = [
-      "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "cache-control": "no-cache"
     ]
-    let parameters = [
-      "user_id": 239,
-      "type": "yearly",
-      "med_type": "timer"
-      ] as [String : Any]
     
-    let data = Response<MoodResponse>.getMoodData()
-    completion(data, nil)
-    return
-    
-    let postData = try! JSONSerialization.data(withJSONObject: parameters, options: [])
-    
-    let request = NSMutableURLRequest(url: NSURL(string: "https://service.launchpad-stage.in/api/v1/graphApi")! as URL,
-                                      cachePolicy: .useProtocolCachePolicy,
-                                      timeoutInterval: 10.0)
+    var request = URLRequest(url: URL(string: URL_MOODPROGRESS)!)
     request.httpMethod = "POST"
+    request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
     request.allHTTPHeaderFields = headers
-    request.httpBody = postData as Data
     
     let session = URLSession.shared
-    let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-      if (error != nil) {
-        print(error)
-        completion(nil, error)
-      } else if let data = data{
-        if let model = try? JSONDecoder().decode(Response<Response<MoodResponse>>.self, from: data), let moodData = model.result?.result?.graph_score{
-          completion(moodData, nil)
+    let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+        print(response!)
+        do {
+            let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
+            print("json++++++.. \(json)")
+            if let data = data{
+                
+                let response = try! JSONDecoder().decode(Response<MoodResponse>.self, from: data)
+                print("response.result!.graph_score... \(response.result!.graph_score)")
+                
+                var model1: [MoodData] = []
+                model1 = response.result!.graph_score
+                
+                completion(model1, nil)
+            }
+            
+        } catch {
+            print("error")
         }
-        
-      }
     })
     
-    dataTask.resume()
-  }
+    task.resume()
+    }
 }

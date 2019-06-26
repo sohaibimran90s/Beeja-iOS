@@ -68,14 +68,16 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.viewHourMeditate.value = 0
+        self.viewAvMinutes.value = 0
+        self.viewDays.value = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.viewHourMeditate.value = 0
-        self.viewAvMinutes.value = 0
-        self.viewDays.value = 0
+        
         
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100

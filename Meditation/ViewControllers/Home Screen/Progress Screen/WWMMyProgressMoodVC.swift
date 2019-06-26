@@ -340,11 +340,16 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
         self.chartView.customDelegate = self
         
+        ChartApi.type = self.type
         ChartApi.getChartData {[weak self] (data, error) in
             if error != nil{
                 self?.showError()
             }else if let data = data{
                 DispatchQueue.main.async {
+                    
+                    print("data....+++++ \(data)")
+                    
+                    
                     self?.data = data
                     self?.addBoth()
                     self?.month.text = self?.data.first?.date.monthName
