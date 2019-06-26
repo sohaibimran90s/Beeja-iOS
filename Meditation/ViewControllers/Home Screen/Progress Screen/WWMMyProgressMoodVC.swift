@@ -317,8 +317,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     print(print(self.moodProgressData.color_score.pre))
                     
                     self.graphChartApiCall()
-                    
-                    
                     self.tblMoodProgress.reloadData()
                 }
             }else {
@@ -328,7 +326,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     }else{
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
-                    
                 }
             }
             //WWMHelperClass.dismissSVHud()

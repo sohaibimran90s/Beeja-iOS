@@ -8,6 +8,7 @@ target 'Meditation' do
   # Pods for Meditation
 
 	pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 	pod 'Firebase/Auth'
 	pod 'GoogleSignIn'
 	pod 'FBSDKLoginKit'

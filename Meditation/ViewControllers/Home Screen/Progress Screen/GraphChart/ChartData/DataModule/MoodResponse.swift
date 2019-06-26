@@ -15,7 +15,7 @@ struct Response<T: Decodable>: Decodable {
   let message: String?
   let result: T?
   
-    static func getMoodData(graphScore: [[String: Any]])-> [MoodData]{
+    static func getMoodData()-> [MoodData]{
     guard let path = Bundle.main.path(forResource: "moodData", ofType: "json")else {return []}
     
     guard let jsonData = NSData.init(contentsOfFile: path) else {return []}
