@@ -82,7 +82,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires access to the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Current location is required in app to fetch the correct content</string>
+	<string> We use your location to improve your Beeja app experience and to let you know about events taking place near you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>UIBackgroundModes</key>

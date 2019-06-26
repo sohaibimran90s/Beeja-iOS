@@ -144,7 +144,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBAction func btnAnnuallyAction(sender: AnyObject) {
         self.subscriptionPlan = "Annually"
         self.subscriptionAmount = "41.99"
-        self.lblBilledText.text = "*Billed as one payment of £41.99"
+        self.lblBilledText.text = "*that's just £3.50 a month"
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = true

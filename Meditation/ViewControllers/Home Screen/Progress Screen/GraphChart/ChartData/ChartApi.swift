@@ -39,7 +39,7 @@ class ChartApi{
         print(response!)
         do {
             let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
-            print("json++++++.. \(json)")
+            //print("json++++++.. \(json)")
             if let data = data{
                 
                 let response = try! JSONDecoder().decode(Response<MoodResponse>.self, from: data)
