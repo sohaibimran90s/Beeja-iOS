@@ -25,6 +25,7 @@ class WWMImagePickerManager: NSObject,UIImagePickerControllerDelegate, UINavigat
         
         let cameraAction = UIAlertAction(title: "Camera", style: .default){
             UIAlertAction in
+            WWMHelperClass.galleryValue = true
             self.openCamera()
         }
         let gallaryAction = UIAlertAction(title: "Gallery", style: .default){

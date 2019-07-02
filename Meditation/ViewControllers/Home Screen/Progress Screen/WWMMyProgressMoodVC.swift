@@ -14,6 +14,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 
 
     @IBOutlet weak var btnChangeDuration: UIButton!
+    @IBOutlet weak var baseViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var graphBaseView: UIView!
     
     var moodProgressDurationView = WWMMoodProgressDurationView()
     var moodProgressData = WWMMoodProgressData()
@@ -50,6 +52,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        self.baseViewHeightConstraint.constant = 550
+        self.graphBaseView.isHidden = true
         self.setDateFromTooTo()
         
         var date = cal.startOfDay(for: Date())
@@ -284,7 +288,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
 
     
     func getMoodProgress() {
-        //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let currentDate = Date()
@@ -316,7 +319,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     
                     print(print(self.moodProgressData.color_score.pre))
                     
-                    self.graphChartApiCall()
+                    //self.graphChartApiCall()
                     self.tblMoodProgress.reloadData()
                 }
             }else {
@@ -328,8 +331,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     }
                 }
             }
-            //WWMHelperClass.dismissSVHud()
-            self.graphChartApiCall()
+            //self.graphChartApiCall()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }

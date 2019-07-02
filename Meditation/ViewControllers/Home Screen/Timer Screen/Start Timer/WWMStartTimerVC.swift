@@ -103,8 +103,6 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.animateBool = 0
         self.timerAction(value: self.animateBool)
         timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-        
-        self.updateTimer()
     }
     
     @objc func timerAction(value: Int) {
@@ -145,9 +143,10 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
-         self.animationView.pause()
-
+        self.animationView.pause()
+        self.updateTimer()
     }
+    
     @objc func appMovedToForeground() {
         
         print("App moved to background!")

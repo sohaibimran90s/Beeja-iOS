@@ -94,8 +94,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
        // Crashlytics.sharedInstance().crash()
         
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+        
         return true
     }
+    
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        
+        print("mmdkdfkdfkdfkdj")
+        if let vc = window?.rootViewController as? WWMStartTimerVC{
+            vc.updateTimer()
+        }
+    }
+    
     
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call.hasConnected {
@@ -326,16 +339,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+
+        
         
       if let tabcontroller = self.window?.rootViewController as? UITabBarController {
         if let nav = tabcontroller.selectedViewController as? UINavigationController {
-            
-            if (nav.visibleViewController?.isKind(of: WWMVedioPlayerVC.classForCoder()))! {
-                
-                    return .allButUpsideDown
+
+            if WWMHelperClass.galleryValue{
+                WWMHelperClass.galleryValue = false
+                return .portrait
+            }else{
+                if (nav.visibleViewController?.isKind(of: WWMVedioPlayerVC.classForCoder()))! {
+
+                        return .allButUpsideDown
+                    }
                 }
             }
-
         }
 
         return .portrait

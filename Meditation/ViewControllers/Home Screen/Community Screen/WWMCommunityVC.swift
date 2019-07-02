@@ -76,6 +76,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         notificationCenter.removeObserver(self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     
     @objc func appMovedFromBackground() {
         print("App moved from background!")
@@ -502,7 +505,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         vc.arrAllEvent = self.communityData.events
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     var imageData = Data()
+    
     @IBAction func btnUploadHashTagsAction(_ sender: Any) {
         
         print("btnUploadHashTagsAction detect")
@@ -512,13 +517,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             
             print("%@",self.imageData)
-            self.uploadHashtagAPI()
+            self.uploadHashtagAPI(image: image)
             print("Get Image Data")
         }
     }
     
     
-    func uploadHashtagAPI() {
+    func uploadHashtagAPI(image: UIImage) {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
@@ -527,26 +532,26 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             "tagname":"#meditationanywhere"
             ] as [String : Any]
         
-        WWMWebServices.formRequestApiWithBody(param: param, urlString: URL_UPLOADHASHTAG, imgData: self.imageData, isHeader: true) { (result, error, success) in
+        WWMWebServices.request(params: param, urlString: URL_UPLOADHASHTAG, imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
+
             if success {
-                print(result)
+                print("success... \(result)")
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                self.getCommunityAPI()
             }else {
                 if error != nil {
-                    
+                
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                     }else{
                         WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                     }
-                    
+                
                 }
             }
-            //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
-        
-    }
-    
+     }
     
     func getCommunityAPI() {
         //WWMHelperClass.showSVHud()

@@ -168,6 +168,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     func circularSlider(_ circularSlider: CircularSlider, angleDidChanged newAngle: Double) -> Void {
+        
+        print("newAngle.... \(newAngle)")
         let angle = self.translatedAngle(angle: newAngle)
         self.moodView?.isHidden = false
         let diff = Double(360) / Double(self.arrMoodData.count)

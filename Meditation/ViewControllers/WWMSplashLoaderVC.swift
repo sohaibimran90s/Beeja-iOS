@@ -19,6 +19,8 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        KUSERDEFAULTS.set("0", forKey: "restore")
 //        do {
 //            let password = "password"
 //            let salt = AES256Crypter.randomSalt()

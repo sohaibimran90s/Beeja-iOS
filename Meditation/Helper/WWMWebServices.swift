@@ -84,95 +84,81 @@ class WWMWebServices {
     }
     
     
-    class func formRequestApiWithBody( param : [String:Any], urlString : String, imgData : Data?, isHeader : Bool , completionHandler : @escaping ASCompletionBlockAsDictionary) -> Void {
-
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
+    
+    
+    class func request(params : [String:Any], urlString : String, imgData : Data?, image: UIImage?, isHeader : Bool , completionHandler: @escaping ASCompletionBlockAsDictionary) -> Void {
         
-        var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
+        let stringUrl = urlString
         
-        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
-        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-        print("Request URL: \(urlString)")
-        print("Data: \(myString!)")
-        if param.count>0 {
-            request.httpBody = jsonData
-        }
+        // generate boundary string using a unique per-app string
+        let boundary = UUID().uuidString
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
+        guard let url = URL(string: stringUrl) else { return }
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let headers = [
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-            "cache-control": "no-cache"
-        ]
-        request.allHTTPHeaderFields = headers
         
+
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
-        if isHeader {
-            let appPreference = WWMAppPreference()
-            request.setValue(appPreference.getToken(), forHTTPHeaderField: "header")
+        var data = Data()
+        
+            for(key, value) in params{
+                // Add the reqtype field and its value to the raw http request data
+                data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+                data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                data.append("\(value)".data(using: .utf8)!)
+            }
+        
+        let fileName: String = "file"
+        if image != nil {
+            // Add the image data to the raw http request data
+            data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"file[]\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+            data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+            data.append(image!.pngData()!)
         }
-
-        var body = Data()
-        let boundary: String = "0xKhTmLbOuNdArY"
-        let kNewLine: String = "\r\n"
-        let contentType: String = "multipart/form-data; boundary=\(boundary)"
-        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-
-        // Add the parameters from the dictionary to the request body
-        let arrKeys = param.keys
-        for name: String in arrKeys {
-            let value: Data? = "\( param[name] as! String)".data(using: String.Encoding.utf8)
-            body.append("--\(boundary)\(kNewLine)".data(using: String.Encoding.utf8)!)
-            body.append("Content-Disposition: form-data; name=\"\("file[]")\"".data(using: String.Encoding.utf8)!)
-            // For simple data types, such as text or numbers, there's no need to set the content type
-            body.append("\(kNewLine)\(kNewLine)".data(using: String.Encoding.utf8)!)
-            body.append(value!)
-            body.append(kNewLine.data(using: String.Encoding.utf8)!)
-        }
-
-        // Add the image to the request body
-        if imgData != nil {
-            body.append("--\(boundary)\(kNewLine)".data(using: String.Encoding.utf8)!)
-            body.append("Content-Disposition: form-data; name=\"file[]\"; filename=\"uploadPhoto.jpeg\"\("image")".data(using: String.Encoding.utf8)!)
-            body.append("Content-Type: image/jpeg".data(using: String.Encoding.utf8)!)
-            body.append("\(kNewLine)\(kNewLine)".data(using: String.Encoding.utf8)!)
-            body.append(imgData ?? Data())
-            print(imgData ?? Data())
-            body.append(kNewLine.data(using: String.Encoding.utf8)!)
-        }
-        // Add the terminating boundary marker to signal that we're at the end of the request body
-        body.append("--\(boundary)--".data(using: String.Encoding.utf8)!)
-
-        request.httpBody = body;
-        var postDataTask = URLSessionDataTask()
-        postDataTask.priority = URLSessionTask.highPriority
-
-        postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in
-            //            var json : (Any);
-            if data != nil && response != nil {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    let results = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
-                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                    print("Result: \(myString ?? "")")
-
+        
+        // End the raw http request data, note that there is 2 extra dash ("-") at the end, this is to indicate the end of the data
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        // Send a POST request to the URL, with the data we created earlier
+        session.uploadTask(with: request, from: data, completionHandler: { data, response, error in
+            
+            if let checkResponse = response as? HTTPURLResponse{
+                if checkResponse.statusCode == 200{
+                    guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments]) else {
+                        completionHandler([:], nil, false)
+                        return
+                    }
+                    let jsonString = String(data: data, encoding: .utf8)!
+                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    print(json)
                     completionHandler(json as! [String:Any], nil, true)
-                    return
-                }catch {
-                    print(error.localizedDescription)
-                    completionHandler([:], error, false)
-                    return;
+                    
+                }else{
+                    guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                        completionHandler([:], nil, false)
+                        return
+                    }
+                    let jsonString = String(data: data, encoding: .utf8)!
+                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    print(json)
+                    completionHandler(json as! [String:Any], nil, true)
                 }
-
-            }else if error != nil {
-                completionHandler([:], error, false)
-            }else {
+            }else{
+                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                    completionHandler([:], nil, false)
+                    return
+                }
                 completionHandler([:], nil, false)
             }
-        })
-        postDataTask.resume()
-
+            
+        }).resume()
+        
     }
     
     

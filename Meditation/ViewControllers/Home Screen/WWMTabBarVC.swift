@@ -24,10 +24,21 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     var alertPopupView = WWMAlertController()
     var isGetProfileCall = false
+    
+    var alertPopup = WWMAlertPopUp()
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
+            print("restore.... \(restoreValue)")
+            if restoreValue == "1"{
+                self.showToast(message: "Your subscription has been restored.")
+                KUSERDEFAULTS.set("0", forKey: "restore")
+            }
+        }
+        
         self.delegate = self
         setupView()
         DispatchQueue.main.async {
@@ -56,9 +67,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             locManager.requestWhenInUseAuthorization()
             locManager.startUpdatingLocation()
         }
-        
-        
-        
     }
     
     
@@ -311,7 +319,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func connectionLost(){
         
-        
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
         let window = UIApplication.shared.keyWindow!
         
@@ -332,5 +339,24 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         self.getUserProfileData()
+    }
+    
+    
+    func showToast(message : String) {
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 160, y: self.view.frame.size.height/2, width: self.view.frame.size.width - 60, height: 100))
+        toastLabel.backgroundColor = UIColor.white
+        toastLabel.textColor = UIColor.black
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 8)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 8;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
     }
 }

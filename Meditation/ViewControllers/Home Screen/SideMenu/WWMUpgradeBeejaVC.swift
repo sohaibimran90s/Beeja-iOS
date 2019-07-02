@@ -23,9 +23,15 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     
     let reachable = Reachabilities()
     var subscriptionAmount: String = "41.99"
-    var subscriptionPlan: String = "Annually"
+    var subscriptionPlan: String = "annual"
+    
+    var responseArray: [[String: Any]] = []
+    var buttonIndex = 1
     
     //var alertPopupView = WWMAlertController()
+    var alertPopup = WWMAlertPopUp()
+    var popupTitle: String = ""
+    var continueRestoreValue: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +52,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         
         self.requestProductInfo()
         SKPaymentQueue.default().add(self)
-        // Do any additional setup after loading the view.
+        
+        self.getSubscriptionPlanId()
     }
-
-    
-    
     
     
     // MARK:- Get Product Data from Itunes
@@ -86,27 +90,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView)
-        
-        
-        
-        //let actionSheetController = UIAlertController(title: kAlertTitle, message: "What do you want to do?", preferredStyle: UIAlertController.Style.actionSheet)
-        
-//        let buyAction = UIAlertAction(title: "Buy", style: UIAlertAction.Style.default) { (action) -> Void in
-//            let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
-//            SKPaymentQueue.default().add(payment)
-//            self.transactionInProgress = true
-//            WWMHelperClass.showSVHud()
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
-//
-//        }
-//
-//        actionSheetController.addAction(buyAction)
-//        actionSheetController.addAction(cancelAction)
-//
-//        present(actionSheetController, animated: true, completion: nil)
-    }
+        }
     
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
@@ -118,13 +102,13 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         }else {
             self.requestProductInfo()
         }
-        
     }
     
     // MARK:- UIButton Action
     
     
     @IBAction func btnMonthlyAction(sender: AnyObject) {
+        self.buttonIndex = 0
         self.subscriptionPlan = "Monthly"
         self.subscriptionAmount = "5.99"
         self.lblBilledText.text = ""
@@ -142,7 +126,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnAnnuallyAction(sender: AnyObject) {
-        self.subscriptionPlan = "Annually"
+        self.buttonIndex = 1
+        self.subscriptionPlan = "annual"
         self.subscriptionAmount = "41.99"
         self.lblBilledText.text = "*that's just £3.50 a month"
         self.viewAnnually.isHidden = false
@@ -158,6 +143,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnLifeTimeAction(sender: AnyObject) {
+        self.buttonIndex = 2
         self.subscriptionPlan = "Lifetime"
         self.subscriptionAmount = "108"
         self.lblBilledText.text = ""
@@ -175,12 +161,19 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnContinuePaymentAction(sender: AnyObject) {
+         self.continueRestoreValue = "0"
          if reachable.isConnectedToNetwork() {
             self.showActions()
          }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
-        
+    }
+    
+    @IBAction func btnRestoreAction(_ sender: UIButton) {
+        self.continueRestoreValue = "1"
+        if (SKPaymentQueue.canMakePayments()){
+            SKPaymentQueue.default().restoreCompletedTransactions()
+        }
     }
     
     
@@ -207,19 +200,39 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
             switch transaction.transactionState {
-            case SKPaymentTransactionState.purchased:
+            case SKPaymentTransactionState.purchased, .restored:
                 print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 print(transaction.transactionIdentifier as Any)
+                
+                var plan_id: Int = 2
+                var subscriptionPlan: String = "annual"
+                
+                print("responseArray.count..... \(responseArray.count)")
+                if responseArray.count > buttonIndex{
+                    if let dict = self.responseArray[buttonIndex] as? [String: Any]{
+                        if let id = dict["id"] as? Int{
+                            plan_id = id
+                        }
+                        if let name = dict["name"] as? String{
+                            subscriptionPlan = name
+                        }
+                    }
+                }
+                //"plan_id" : transaction.payment.productIdentifier
+                //"subscription_plan" : self.subscriptionPlan
+                
                 let param = [
-                    "plan_id" : transaction.payment.productIdentifier,
+                    "plan_id" : plan_id,
                     "user_id" : self.appPreference.getUserID(),
-                    "subscription_plan" : self.subscriptionPlan,
-                    "date_time" : transaction.transactionDate as Any,
-                    "transaction_id" : transaction.transactionIdentifier as Any,
+                    "subscription_plan" : subscriptionPlan,
+                    "date_time" : transaction.transactionDate!.timeIntervalSince1970,
+                    "transaction_id" : transaction.transactionIdentifier! as Any,
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
+                
+                print("param,,,,... \(param)")
                 
                 self.subscriptionSucessAPI(param: param)
                 
@@ -236,10 +249,15 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         }
     }
     
-    func subscriptionSucessAPI(param : [String : Any]) {
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+    
+    func getSubscriptionPlanId(){
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
-                WWMHelperClass.showPopupAlertController(sender: self, message: response["message"] as! String, title: kAlertTitle)
+                if let result = response["result"] as? [[String: Any]]{
+                    self.responseArray = result
+                   print("result.... \(result)")
+                }
             }else {
                 
                 //The Internet connection appears to be offline.
@@ -257,5 +275,42 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         }
         
     }
+    
+    func subscriptionSucessAPI(param : [String : Any]) {
+        
+        print("param.....###### \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+            if sucess {
+                if self.continueRestoreValue == "1"{
+                    KUSERDEFAULTS.set("1", forKey: "restore")
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                    UIApplication.shared.keyWindow?.rootViewController = vc
+                }
+            }else {
+                
+                //The Internet connection appears to be offline.
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        
+                        if self.continueRestoreValue == "1"{
+                            WWMHelperClass.showPopupAlertController(sender: self, message: "Please contact us if problem still persists.", title: "There was some problem restoring your subscription. Please try after some time.")
+                        }else{
+                            WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                        }
+                    }
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
     
 }

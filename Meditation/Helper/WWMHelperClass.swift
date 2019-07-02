@@ -17,6 +17,8 @@ class WWMHelperClass {
     static var alertPopupView = WWMAlertController()
     static var view1 = UIView()
     static var animationView = AnimationView()
+    static var galleryValue = false
+    
     //static var imageView = UIImageView()
     
     class func isValidEmail(testStr:String) -> Bool {
