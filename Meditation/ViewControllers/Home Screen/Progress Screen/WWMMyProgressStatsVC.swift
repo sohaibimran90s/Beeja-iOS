@@ -479,6 +479,18 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
         //cell.viewDateCircle.layer.cornerRadius = cell.viewDateCircle.frame.size.width/2
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let monthDate = dateFormatter.date(from:data.date)!
+        dateFormatter.dateFormat = "d"
+        cell.lblDate.text = dateFormatter.string(from: monthDate)
+        
+        cell.viewDateCircle.alpha = 0.0
+        cell.imgViewLeft.alpha = 0.0
+        cell.imgViewRight.alpha = 0.0
+        
         cell.imgViewLeft.isHidden = true
         cell.imgViewRight.isHidden = true
         cell.viewDateCircle.backgroundColor = UIColor.clear
@@ -486,7 +498,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         cell.lblDate.textColor = UIColor.white
         if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
             cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-            cell.lblDate.textColor = UIColor.black
+            cell.lblDate.textColor = UIColor.white
         }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
             cell.viewDateCircle.backgroundColor = UIColor.clear
             cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
@@ -494,6 +506,21 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             cell.viewDateCircle.layer.borderWidth = 2.0
             cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         }
+        
+        UIView.animate(withDuration: 0.2, delay: 0.1*Double(indexPath.item), options: [.curveEaseInOut], animations: {
+            cell.viewDateCircle.transform = CGAffineTransform(translationX: 0, y: 0)
+            cell.viewDateCircle.alpha = 1
+            cell.imgViewLeft.transform = CGAffineTransform(translationX: 0, y: 0)
+            cell.imgViewLeft.alpha = 1
+            cell.imgViewRight.transform = CGAffineTransform(translationX: 0, y: 0)
+            cell.imgViewRight.alpha = 1
+            
+        }, completion: {
+            _ in
+            if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
+                cell.lblDate.textColor = UIColor.black
+            }
+        })
         
         
         if indexPath.row == dayAdded {
@@ -514,12 +541,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
 
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let monthDate = dateFormatter.date(from:data.date)!
-        dateFormatter.dateFormat = "d"
-        cell.lblDate.text = dateFormatter.string(from: monthDate)
+        
         return cell
     }
     

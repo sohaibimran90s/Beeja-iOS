@@ -90,9 +90,7 @@ extension WWMTimerPresetVC: UITableViewDelegate, UITableViewDataSource{
             //animates the cell as it is being displayed for the first time
             cell.transform = CGAffineTransform(translationX: 0, y: 70/2)
             cell.alpha = 0
-            
-            // UIView.animate(withDuration: 0.5, delay: 0.05*Double(indexPath.row), options: [.curveEaseInOut], animations:
-            
+                        
             UIView.animate(withDuration: 0.5, delay: 0.2*Double(indexPath.row), options: [.curveEaseInOut], animations: {
                 cell.transform = CGAffineTransform(translationX: 0, y: 0)
                 cell.alpha = 1

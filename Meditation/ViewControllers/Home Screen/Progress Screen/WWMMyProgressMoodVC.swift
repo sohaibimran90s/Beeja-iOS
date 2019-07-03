@@ -9,6 +9,7 @@
 import UIKit
 import GaugeKit
 import WebKit
+import EFCountingLabel
 
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
@@ -245,30 +246,40 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         cell.viewCircle3.rate = 0
         cell.viewCircle4.rate = 0
         
-        cell.lblPercentage1.text = "0%"
-        cell.lblPercentage2.text = "0%"
-        cell.lblPercentage3.text = "0%"
-        cell.lblPercentage4.text = "0%"
+        cell.lblPercentage1.text = "0"
+        cell.lblPercentage2.text = "0"
+        cell.lblPercentage3.text = "0"
+        cell.lblPercentage4.text = "0"
         for dic in meditationData {
             if dic.quad_number == 1 {
                 
                 //cell.viewCircle4.rate = CGFloat((Double(dic.mood))/10)//(dic.mood as! CGFloat)/10
-                cell.lblPercentage1.text = "\(dic.mood)%"
+                //cell.lblPercentage1.text = "\(dic.mood)%"
+                cell.lblPercentage1.format = "%.1f"
+                cell.lblPercentage1.countFrom(0.0, to: CGFloat(dic.mood), withDuration: 1.0)
+                
+                
                 cell.viewCircle4.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
             }else if dic.quad_number == 2 {
                 //cell.viewCircle3.rate = CGFloat((Double(dic.mood))/10)
                 cell.viewCircle3.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
-                cell.lblPercentage2.text = "\(dic.mood)%"
+                //cell.lblPercentage2.text = "\(dic.mood)%"
+                cell.lblPercentage2.format = "%.1f"
+                cell.lblPercentage2.countFrom(0.0, to: CGFloat(dic.mood), withDuration: 1.0)
             }else if dic.quad_number == 4 {
                 //cell.viewCircle2.rate = CGFloat((Double(dic.mood))/10)
                 cell.viewCircle2.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in}
-                cell.lblPercentage3.text = "\(dic.mood)%"
+                //cell.lblPercentage3.text = "\(dic.mood)%"
+                cell.lblPercentage3.format = "%.1f"
+                cell.lblPercentage3.countFrom(0.0, to: CGFloat(dic.mood), withDuration: 1.0)
             }else if dic.quad_number == 3 {
                // cell.viewCircle1.rate = CGFloat((Double(dic.mood))/10)
                 cell.viewCircle1.animateRate(1, newValue: CGFloat((Double(dic.mood))/10)) { (Bool) in
                     
                 }
-                cell.lblPercentage4.text = "\(dic.mood)%"
+                //cell.lblPercentage4.text = "\(dic.mood)%"
+                cell.lblPercentage4.format = "%.1f"
+                cell.lblPercentage4.countFrom(0.0, to: CGFloat(dic.mood), withDuration: 1.0)
             }
         }
         return cell

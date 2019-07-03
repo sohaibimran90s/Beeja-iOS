@@ -8,12 +8,13 @@
 
 import UIKit
 import GaugeKit
+import EFCountingLabel
 
 class WWMMoodProgressCVC: UICollectionViewCell {
-    @IBOutlet weak var lblPercentage1: UILabel!
-    @IBOutlet weak var lblPercentage2: UILabel!
-    @IBOutlet weak var lblPercentage3: UILabel!
-    @IBOutlet weak var lblPercentage4: UILabel!
+    @IBOutlet weak var lblPercentage1: EFCountingLabel!
+    @IBOutlet weak var lblPercentage2: EFCountingLabel!
+    @IBOutlet weak var lblPercentage3: EFCountingLabel!
+    @IBOutlet weak var lblPercentage4: EFCountingLabel!
     
     @IBOutlet weak var viewCircle1: Gauge!
     @IBOutlet weak var viewCircle2: Gauge!
