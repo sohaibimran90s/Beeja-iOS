@@ -4357,28 +4357,13 @@
             </objects>
             <point key="canvasLocation" x="4032.8000000000002" y="6695.8020989505249"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Rda-ha-G1S">
-            <objects>
-                <viewController id="EXx-mx-DXR" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="to9-zP-SY9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="t4Q-nx-MbC"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bfz-rR-hal" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4789" y="6695"/>
-        </scene>
         <!--AV Player View Controller-->
         <scene sceneID="BSv-G3-d61">
             <objects>
                 <avPlayerViewController storyboardIdentifier="WWMVedioPlayerVC" hidesBottomBarWhenPushed="YES" videoGravity="AVLayerVideoGravityResizeAspect" id="mte-Gb-NTO" customClass="WWMVedioPlayerVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LeZ-do-R7m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5505" y="6695"/>
+            <point key="canvasLocation" x="4817" y="6681"/>
         </scene>
         <!--My Progress StatsVC-->
         <scene sceneID="Ojr-17-WnV">

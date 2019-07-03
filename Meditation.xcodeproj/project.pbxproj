@@ -347,6 +347,8 @@
 		6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6144293E224B764600C6682C /* WWMAlertPopUp.swift */; };
 		61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61442940224B82D300C6682C /* WWMJouranlPopUp.xib */; };
 		61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442942224B831200C6682C /* WWMJouranlPopUp.swift */; };
+		6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */; };
+		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
@@ -730,6 +732,8 @@
 		6144293E224B764600C6682C /* WWMAlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertPopUp.swift; sourceTree = "<group>"; };
 		61442940224B82D300C6682C /* WWMJouranlPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMJouranlPopUp.xib; sourceTree = "<group>"; };
 		61442942224B831200C6682C /* WWMJouranlPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJouranlPopUp.swift; sourceTree = "<group>"; };
+		6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMilestonePopUp.xib; sourceTree = "<group>"; };
+		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
@@ -1018,6 +1022,8 @@
 				6144293E224B764600C6682C /* WWMAlertPopUp.swift */,
 				61442940224B82D300C6682C /* WWMJouranlPopUp.xib */,
 				61442942224B831200C6682C /* WWMJouranlPopUp.swift */,
+				6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */,
+				6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -1872,6 +1878,7 @@
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
+				6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */,
 				6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */,
 				2EC9585D220AC1BA009D5144 /* MaaxRounded-Bold.ttf in Resources */,
 				2E4A473B220DB22B00DF0C68 /* WAVES ONLY.mp3 in Resources */,
@@ -2257,6 +2264,7 @@
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
 				2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */,
+				6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */,
 				2E4B1B9E21B5044B002F8A25 /* AppDelegate.swift in Sources */,
 				2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */,
 				61416F3E22BBB56900C9339E /* BubbleChartDataProvider.swift in Sources */,
