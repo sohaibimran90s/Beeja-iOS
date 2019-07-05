@@ -42,7 +42,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return itemInfo
+        //pract
+        //itemInfo
+        return IndicatorInfo(title: "P r a c t i c a l")
     }
     
     
