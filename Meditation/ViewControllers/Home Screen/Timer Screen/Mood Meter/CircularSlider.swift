@@ -47,7 +47,7 @@ protocol CircularSliderDelegate: AnyObject {
         frame.size.width = frame.size.width / 2.5
         let touchIndicator = UIImageView(frame: frame)
         self.addSubview(touchIndicator)
-        touchIndicator.image = UIImage(named: "hand")
+        //touchIndicator.image = UIImage(named: "hand")
         touchIndicator.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
         self.touchIndicator = touchIndicator
         

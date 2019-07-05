@@ -9,6 +9,7 @@
 import UIKit
 import GoogleSignIn
 import FBSDKLoginKit
+import Lottie
 
 class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
 
@@ -17,28 +18,58 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     @IBOutlet weak var viewStartBeeja: UIView!
     @IBOutlet weak var lblSignup: UILabel!
     @IBOutlet weak var imgSignup: UIImageView!
+    @IBOutlet weak var viewLottieAnimation: UIView!
+    
+    var animationView = AnimationView()
+    var timer = Timer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       
-        //self.setupView()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.imgSignup.isHidden = true
+        self.viewLottieAnimation.isHidden = false
         setupView()
-        
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        self.imgSignup.isHidden = true
+        self.viewLottieAnimation.isHidden = false
+        animationView.play()
+    }
+    
     @IBAction func btnSignupTouchDown(_ sender: Any) {
+        
+        animationView.stop()
+        self.viewLottieAnimation.isHidden = true
+        self.imgSignup.isHidden = false
         self.viewStartBeeja.backgroundColor = UIColor.white
         viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
         self.lblSignup.textColor = UIColor.black
         self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")
+        
+//        self.viewStartBeeja.backgroundColor = UIColor.white
+//        viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
+//        self.lblSignup.textColor = UIColor.black
+//        self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")
     }
     
     func setupView(){
         
         self.setNavigationBar(isShow: false, title: "")
+        
+        //self.timer = Timer.scheduledTimer(timeInterval: 1.3, target: self, selector: #selector(animateView), userInfo: nil, repeats: false)
+        
+        animationView = AnimationView(name: "login_register")
+        animationView.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .playOnce
+        viewLottieAnimation.addSubview(animationView)
+        view.addSubview(viewLottieAnimation)
+        animationView.play()
+        
         self.lblSignup.textColor = UIColor.white
         self.imgSignup.image = UIImage.init(named: "startBeeja_Icon")
         self.viewStartBeeja.backgroundColor = UIColor.clear
@@ -50,6 +81,12 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
 //            viewStartBeeja.isHidden = true
 //        }
     }
+    
+    //MARK: Animate View
+    @objc func animateView(){
+        animationView.stop()
+    }
+    
     // MARK: Button Action
     
     @IBAction func btnLoginWithEmailAction(_ sender: UIButton) {
@@ -110,8 +147,11 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
  
     
     @IBAction func btnStartBe(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
     }
     
     @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {

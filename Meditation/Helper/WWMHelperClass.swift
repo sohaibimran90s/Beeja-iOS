@@ -18,6 +18,7 @@ class WWMHelperClass {
     static var view1 = UIView()
     static var animationView = AnimationView()
     static var galleryValue = false
+    static var loader_register = false
     
     //static var imageView = UIImageView()
     
