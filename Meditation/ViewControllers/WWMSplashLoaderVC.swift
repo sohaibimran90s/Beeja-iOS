@@ -48,7 +48,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 //
 //
 //        } catch {
-//            print("Failed")
+//            print("Failed")w
 //            print(error)
 //        }
 

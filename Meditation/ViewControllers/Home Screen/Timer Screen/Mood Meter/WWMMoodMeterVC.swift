@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
@@ -16,6 +17,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @IBOutlet weak var lblMoodselect: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
     @IBOutlet weak var moodView: UIView?
+    @IBOutlet weak var viewLottieAnimation: UIView?
     @IBOutlet weak var circularSlider: CircularSlider?
     var moodScroller: UIScrollView?
     
@@ -39,6 +41,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     var button = UIButton()
     var arrButton = [UIButton]()
+    
+    var animationView = AnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +75,21 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         self.moodView?.isHidden = true
         self.moodView?.layer.cornerRadius = 20
         self.moodView?.clipsToBounds = true
-        // Do any additional setup after loading the view.
+        
+        
+        animationView = AnimationView(name: "hand")
+        animationView.frame = CGRect(x: 0, y: 0, width: 106, height: 106)
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .playOnce
+        viewLottieAnimation!.addSubview(animationView)
+        view.addSubview(viewLottieAnimation!)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: {
+            self.animationView.play()
+        })
     }
+    
+    
     
     func xibCall(){
         alertPrompt = UINib(nibName: "WWMPromptMsg", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMPromptMsg
@@ -154,6 +171,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+        
 
     }
     
@@ -169,6 +187,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func circularSlider(_ circularSlider: CircularSlider, angleDidChanged newAngle: Double) -> Void {
         
+        self.animationView.stop()
+        self.viewLottieAnimation?.isHidden = true
         print("newAngle.... \(newAngle)")
         let angle = self.translatedAngle(angle: newAngle)
         self.moodView?.isHidden = false

@@ -8,17 +8,23 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Lottie
 
 class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
 
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var viewName: UIView!
+    @IBOutlet weak var imgViewLogo: UIImageView!
     @IBOutlet weak var txtViewName: UITextField!
+    @IBOutlet weak var viewLottieAnimation: UIView!
     var tap = UITapGestureRecognizer()
+    
+    var animationView = AnimationView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.imgViewLogo.isHidden = true
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
         self.setupView()
     }
@@ -27,6 +33,16 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         self.setNavigationBar(isShow: false, title: "")
         self.btnNext.layer.borderWidth = 2.0
         self.btnNext.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        animationView = AnimationView(name: "register")
+        animationView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        viewLottieAnimation.addSubview(animationView)
+        view.addSubview(viewLottieAnimation)
+        
+        
+        animationView.play()
     }
     
     @objc func KeyPadTap() -> Void {

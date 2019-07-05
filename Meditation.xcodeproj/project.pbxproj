@@ -195,6 +195,9 @@
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
 		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
+		613F080F22CF1CA20042515C /* login_register.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F080E22CF1CA20042515C /* login_register.json */; };
+		613F081122CF324F0042515C /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081022CF324F0042515C /* register.json */; };
+		613F081322CF356E0042515C /* hand.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081222CF356E0042515C /* hand.json */; };
 		61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */; };
 		61416E1C22BBB1C600C9339E /* DataApproximator+N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1A22BBB1C600C9339E /* DataApproximator+N.swift */; };
 		61416E1D22BBB1C600C9339E /* DataApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1B22BBB1C600C9339E /* DataApproximator.swift */; };
@@ -579,6 +582,9 @@
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
 		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
+		613F080E22CF1CA20042515C /* login_register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login_register.json; sourceTree = "<group>"; };
+		613F081022CF324F0042515C /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
+		613F081222CF356E0042515C /* hand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hand.json; sourceTree = "<group>"; };
 		61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineScatterCandleRadarRenderer.swift; sourceTree = "<group>"; };
 		61416E1A22BBB1C600C9339E /* DataApproximator+N.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataApproximator+N.swift"; sourceTree = "<group>"; };
 		61416E1B22BBB1C600C9339E /* DataApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataApproximator.swift; sourceTree = "<group>"; };
@@ -1134,6 +1140,9 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				613F081222CF356E0042515C /* hand.json */,
+				613F081022CF324F0042515C /* register.json */,
+				613F080E22CF1CA20042515C /* login_register.json */,
 				6142C52522B0D7B8009300BB /* loader.json */,
 				2EACF983225375E600171688 /* private.pem */,
 				2EACF984225375E700171688 /* public.pem */,
@@ -1839,6 +1848,7 @@
 				2E5DF5B42271B89200CF2935 /* WWMGuidedStart.xib in Resources */,
 				2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */,
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
+				613F081322CF356E0042515C /* hand.json in Resources */,
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
@@ -1873,8 +1883,10 @@
 				2E34A90822929526005B4091 /* final.json in Resources */,
 				2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
+				613F080F22CF1CA20042515C /* login_register.json in Resources */,
 				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
+				613F081122CF324F0042515C /* register.json in Resources */,
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
