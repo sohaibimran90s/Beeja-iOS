@@ -19,6 +19,7 @@ class WWMHelperClass {
     static var animationView = AnimationView()
     static var galleryValue = false
     static var loader_register = false
+    static var milestoneType: String = ""
     
     //static var imageView = UIImageView()
     

@@ -507,7 +507,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         // Print full message.
-        print(userInfo)
+        print("userNotificationCenter *** .. \(userInfo)")
         
         // Change this to your preferred presentation option
         completionHandler([.alert, .sound])
@@ -523,7 +523,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         // Print full message.
-        print(userInfo)
+        print("userNotificationCenter .. \(userInfo)")
+        
+        if let milestoneType = userInfo["milestoneType"] as? String{
+            if milestoneType == "hours_meditate"{
+   
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                
+                vc.milestoneType = "hours_meditate"
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+            }else if milestoneType == "consecutive_days"{
+                
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                
+                vc.milestoneType = "consecutive_days"
+                UIApplication.shared.keyWindow?.rootViewController = vc
+            }else{
+                
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                
+                vc.milestoneType = "sessions"
+                UIApplication.shared.keyWindow?.rootViewController = vc
+            }
+        }
         
         completionHandler()
     }

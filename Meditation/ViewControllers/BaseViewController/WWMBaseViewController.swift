@@ -170,12 +170,6 @@ class WWMBaseViewController: UIViewController {
         alertPopupView.btnClose.isHidden = true
         
         window.rootViewController?.view.addSubview(alertPopupView)
-        
-        
-//        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
-//        let btnOk = UIAlertAction.init(title: "Ok", style: .cancel, handler: nil)
-//        alert.addAction(btnOk)
-//        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: Button Action

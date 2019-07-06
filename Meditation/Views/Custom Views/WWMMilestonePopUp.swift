@@ -10,12 +10,13 @@ import UIKit
 
 class WWMMilestonePopUp: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    @IBOutlet weak var lblMilestone: UILabel!
+    @IBOutlet weak var imgViewLogo: UIImageView!
+    @IBOutlet weak var imgViewLogo1: UIImageView!
+    @IBOutlet weak var lblCongrats: UILabel!
+    @IBOutlet weak var lblHourMeditated: UILabel!
+    @IBOutlet weak var lblHourDescript: UILabel!
+    @IBOutlet weak var lblNextMileText: UILabel!
+    @IBOutlet weak var btnDismiss: UIButton!
+    
 }

@@ -26,6 +26,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var isGetProfileCall = false
     
     var alertPopup = WWMAlertPopUp()
+    
+    var milestoneType: String = ""
 
     override func viewDidLoad() {
         
@@ -41,10 +43,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         
         self.delegate = self
         setupView()
-        DispatchQueue.main.async {
-           // WWMHelperClass.showSVHud()
-            WWMHelperClass.showLoaderAnimate(on: self.view)
-        }
+        
         
         //self.getUserProfileData()
         
@@ -155,8 +154,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
          self.viewControllers?.remove(at: 3)
         }
         
-       
-        
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
@@ -169,10 +166,23 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
             }
         }
-        self.selectedIndex = 2
+        
+        if self.milestoneType == "hours_meditate"{
+            WWMHelperClass.milestoneType = "hours_meditate"
+            self.selectedIndex = 4
+        }else if self.milestoneType == "consecutive_days"{
+            WWMHelperClass.milestoneType = "consecutive_days"
+            self.selectedIndex = 4
+        }else if self.milestoneType == "sessions"{
+            WWMHelperClass.milestoneType = "sessions"
+            self.selectedIndex = 4
+        }else{
+            DispatchQueue.main.async {
+                WWMHelperClass.showLoaderAnimate(on: self.view)
+            }
+            self.selectedIndex = 2
+        }
     }
-    
-
     
     func setDataToDb(json:[String:Any]) {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]

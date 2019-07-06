@@ -57,6 +57,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     var strDateTime = ""
     var addSessionView = WWMAddSessionView()
+    var alertNotificationView = WWMMilestonePopUp()
     
     var pickerView = UIPickerView()
     var settingData = DBSettings()
@@ -72,12 +73,33 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewHourMeditate.value = 0
         self.viewAvMinutes.value = 0
         self.viewDays.value = 0
+        
+        if WWMHelperClass.milestoneType == "hours_meditate"{
+            self.notificationPopUp(titles: "hours_meditate")
+        }else if WWMHelperClass.milestoneType == "consecutive_days"{
+            self.notificationPopUp(titles: "consecutive_days")
+        }else if WWMHelperClass.milestoneType == "sessions"{
+            self.notificationPopUp(titles: "sessions")
+        }
+    }
+    
+    func notificationPopUp(titles: String) {
+        
+        alertNotificationView = UINib(nibName: "WWMMilestonePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMilestonePopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertNotificationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        alertNotificationView.btnDismiss.addTarget(self, action: #selector(btnDissmissPopUp), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertNotificationView)
+    }
+    
+    @objc func btnDissmissPopUp(){
+        alertNotificationView.removeFromSuperview()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        
         
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100
