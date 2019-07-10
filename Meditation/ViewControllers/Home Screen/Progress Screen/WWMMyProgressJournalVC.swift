@@ -15,6 +15,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     var journalView = WWMAddJournalView()
     var journalData = [WWMJournalProgressData]()
+    var alertPopupView1 = WWMAlertController()
     
     var alertJournalPopup = WWMJouranlPopUp()
    // var alertPopupView = WWMAlertController()
@@ -84,10 +85,6 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             
             dateFormatter.dateFormat = "MMM"
             cell.lblDateMonth.text = dateFormatter.string(from: date)
-            
-            
-            
-            
             
             return cell
         }
@@ -175,6 +172,41 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     @IBAction func btnAddJournalAction(_ sender: Any) {
         
+        if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+            let getPostJournalCount = self.appPreference.getPostJournalCount()
+            if getPostJournalCount < 1{
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Post")
+            }else{
+                xibJournalView()
+            }
+        }else{
+            xibJournalView()
+        }
+    }
+    
+    func getFreeMoodMeterAlert(freeMoodMeterCount: String, title: String, subTitle: String, type: String){
+        self.alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        self.alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        self.alertPopupView1.lblTitle.numberOfLines = 0
+        self.alertPopupView1.btnOK.layer.borderWidth = 2.0
+        self.alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        self.alertPopupView1.lblTitle.text = title
+        self.alertPopupView1.lblSubtitle.text = subTitle
+        self.alertPopupView1.btnClose.isHidden = true
+        
+        self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
+    @objc func btnAlertDoneAction(_ sender: Any){
+        self.alertPopupView1.removeFromSuperview()
+    }
+    
+    func xibJournalView(){
         journalView = UINib(nibName: "WWMAddJournalView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAddJournalView
         let window = UIApplication.shared.keyWindow!
         
@@ -195,9 +227,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         journalView.btnSubmit.addTarget(self, action: #selector(btnSubmitJournalAction(_:)), for: .touchUpInside)
         journalView.btnEditText.addTarget(self, action: #selector(btnEditTextAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(journalView)
-
+        
         self.animatedLblEntryText()
     }
+    
     
     func animatedLblEntryText(){
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
@@ -263,7 +296,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     func addJournalAPI() {
         self.view.endEditing(true)
-        //WWMHelperClass.showSVHud()
+
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "mood_color":"",
@@ -276,16 +309,18 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         ]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.journalView.removeFromSuperview()
-                
                 self.xibJournalPopupCall()
-                
-                //self.getJournalList()
+                self.journalView.removeFromSuperview()
+
             }else {
                 self.journalView.removeFromSuperview()
                 self.saveJournalDatatoDB(param: param)
             }
-            //WWMHelperClass.dismissSVHud()
+            
+            if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                self.appPreference.setPostJournalCount(value: self.appPreference.getPostJournalCount() - 1)
+            }
+            
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }

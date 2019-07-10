@@ -120,9 +120,6 @@ class WWMHelperClass {
                     (subview as AnyObject).removeFromSuperview()
                 }
             }
-            
-            
-            
         })
     }
     
@@ -177,6 +174,28 @@ class WWMHelperClass {
     }
     
     
+    class func dateComparison(expiryDate: String) -> Int{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let currentDateString = dateFormatter.string(from: Date())
+        let currentDate = dateFormatter.date(from: currentDateString)!
+       
+        let expireDate = dateFormatter.date(from: expiryDate)!
+       
+        let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+        print("day..... \(day)")
+        
+        if currentDate > expireDate{
+            KUSERDEFAULTS.set(true, forKey: "getPrePostMoodBool")
+            return 1
+        }else{
+            KUSERDEFAULTS.set(false, forKey: "getPrePostMoodBool")
+            return 0
+        }
+    }
     
     //MARK:- Database Methods
     

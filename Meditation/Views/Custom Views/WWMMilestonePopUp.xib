@@ -40,7 +40,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsC-dE-xVe">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="212"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group2" translatesAutoresizingMaskIntoConstraints="NO" id="me6-K2-UUP">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hour" translatesAutoresizingMaskIntoConstraints="NO" id="me6-K2-UUP">
                                     <rect key="frame" x="127.5" y="40" width="120" height="120"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="120" id="9Uj-7t-SmO"/>
@@ -121,7 +121,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHv-7k-NaC">
                             <rect key="frame" x="0.0" y="394" width="375" height="212"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gpP-ev-L6W">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hour1" translatesAutoresizingMaskIntoConstraints="NO" id="gpP-ev-L6W">
                                     <rect key="frame" x="169.5" y="0.0" width="36" height="32"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="ABC-Cb-TT4"/>
@@ -206,6 +206,7 @@
     </objects>
     <resources>
         <image name="Close_Icon" width="40" height="40"/>
-        <image name="group2" width="140" height="140"/>
+        <image name="hour" width="140" height="140"/>
+        <image name="hour1" width="36" height="32"/>
     </resources>
 </document>

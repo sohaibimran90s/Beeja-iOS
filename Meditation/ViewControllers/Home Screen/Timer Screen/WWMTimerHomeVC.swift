@@ -49,6 +49,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.setUpNavigationBarForDashboard(title: "Timer")
         self.getSettingData()
     }
     
@@ -86,7 +88,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     
     func setUpView() {
-        self.setUpNavigationBarForDashboard(title: "Timer")
         self.btnStartTimer.layer.borderWidth = 2.0
         self.btnStartTimer.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

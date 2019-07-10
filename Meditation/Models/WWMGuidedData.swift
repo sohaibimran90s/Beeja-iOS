@@ -57,6 +57,8 @@ class WWMGuidedAudioData: NSObject {
     var audio_Url = String()
     var author_name = String()
     var vote = Bool()
+    var paid = Bool()
+    
     override init() {
         
     }
@@ -69,6 +71,7 @@ class WWMGuidedAudioData: NSObject {
         audio_Url = json["audio_url"] as? String ?? ""
         author_name = json["author_name"] as? String ?? ""
         vote = json["vote"] as? Bool ?? false
+        paid = json["paid"] as? Bool ?? false
     }
 }
 

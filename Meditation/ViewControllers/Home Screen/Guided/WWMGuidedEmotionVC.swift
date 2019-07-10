@@ -16,18 +16,15 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     var type = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         print(guidedData.cat_EmotionList.count)
-        // Do any additional setup after loading the view.
     }
-    
     
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }
-    
-    
     
     // MARK:- UICollection View Delegate Methods
     

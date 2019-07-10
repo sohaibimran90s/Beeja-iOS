@@ -37,12 +37,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewAvMinutes: UICircularProgressRing!
     @IBOutlet weak var viewDays: UICircularProgressRing!
     @IBOutlet weak var viewSomeGoals: UIView!
-    
     @IBOutlet weak var scrollView: UIScrollView!
-    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
+    var milestoneData = WWMMilestoneData()
     var dayAdded = 0
     var monthValue = 0
     var strMonthYear = ""
@@ -66,7 +67,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var selectedLevelId = -1
     var isLeft = false
     var circle = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,21 +76,27 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewDays.value = 0
         
         if WWMHelperClass.milestoneType == "hours_meditate"{
-            self.notificationPopUp(titles: "hours_meditate")
+            self.notificationPopUp(titles: "1 Hour Meditated", titleDescript: "You have just completed a Hours Meditated Milestone", textNextMileStone: "1 more hour needed!", imgLogo: "hour", imgLogo1: "hour1", redC: 0, greenC: 255, blueC: 215)
         }else if WWMHelperClass.milestoneType == "consecutive_days"{
-            self.notificationPopUp(titles: "consecutive_days")
+            self.notificationPopUp(titles: "2 Day Streak", titleDescript: "You have just completed two days in a row", textNextMileStone: "3 Day Streak", imgLogo: "consecutive_days", imgLogo1: "consecutive_days1", redC: 255, greenC: 151, blueC: 89)
         }else if WWMHelperClass.milestoneType == "sessions"{
-            self.notificationPopUp(titles: "sessions")
+            self.notificationPopUp(titles: "Meditated Twice in 1 Day", titleDescript: "You have just meditated twice in one day", textNextMileStone: "Meditate Twice a Day for a Week", imgLogo: "session", imgLogo1: "session1", redC: 177, greenC: 56, blueC: 211)
         }
     }
     
-    func notificationPopUp(titles: String) {
+    func notificationPopUp(titles: String, titleDescript: String, textNextMileStone: String, imgLogo: String, imgLogo1: String, redC: CGFloat, greenC: CGFloat, blueC: CGFloat) {
         
         alertNotificationView = UINib(nibName: "WWMMilestonePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMilestonePopUp
         let window = UIApplication.shared.keyWindow!
         
         alertNotificationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         
+        alertNotificationView.lblHourMeditated.text = titles
+        alertNotificationView.lblHourDescript.text = titleDescript
+        alertNotificationView.lblNextMileText.text = textNextMileStone
+        alertNotificationView.lblCongrats.textColor = UIColor.init(red: redC/255.0, green: greenC/255.0, blue: blueC/255.0, alpha: 1.0)
+        alertNotificationView.imgViewLogo.image = UIImage(named: imgLogo)
+        alertNotificationView.imgViewLogo1.image = UIImage(named: imgLogo1)
         alertNotificationView.btnDismiss.addTarget(self, action: #selector(btnDissmissPopUp), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertNotificationView)
     }
@@ -597,7 +604,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
     }
     
-    
     func saveSessionDatatoDB(param:[String:Any]) {
         let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBAddSession") as! DBAddSession
         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
@@ -607,9 +613,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.addSessionView.removeFromSuperview()
         WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
     }
-    
-    
-    
     
     func setData() {
         
@@ -668,6 +671,41 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 self.isLeft = false
                 self.setData()
                 self.collectionViewCal.reloadData()
+                
+                self.getMilestoneData()
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+            }
+            
+            
+           // WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    func getMilestoneData() {
+        let param = ["user_id":self.appPreference.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MILESTONE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["result"] as? [String:Any] {
+                    self.milestoneData = WWMMilestoneData.init(json: data)
+                    
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    
+
+                    
+                    self.tableView.reloadData()
+                  print("enabledCount...\(self.milestoneData.milestoneEnabledData.count)++ disabledCount...\(self.milestoneData.milestoneDisabledData.count)")
+                }
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -683,7 +721,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
     }
 }
-
 
 extension Date {
     
@@ -784,5 +821,121 @@ extension WWMMyProgressStatsVC{
                 self.viewDays.startProgress(to: 100, duration: 1.0)
             }
         }
+    }
+}
+
+extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.milestoneData.milestoneEnabledData.count + self.milestoneData.milestoneDisabledData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        self.tableViewHeightConstraint.constant = 190 * CGFloat(self.milestoneData.milestoneEnabledData.count + self.milestoneData.milestoneDisabledData.count)
+        
+        
+         print("self.milestoneData.milestoneEnabledData.count.... \(self.milestoneData.milestoneEnabledData.count)")
+         print("self.milestoneData.milestonedisabledData.count.... \(self.milestoneData.milestoneDisabledData.count)")
+
+        if self.milestoneData.milestoneEnabledData.count > indexPath.row{
+            
+            print("**** \(indexPath.row)")
+            
+            if indexPath.row%2 == 0{
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
+                
+                if self.milestoneData.milestoneEnabledData[indexPath.row].type == "hours_meditate"{
+                    cell.imgViewTitle.image = UIImage(named: "hour")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour1")
+                    cell.lblTitle.text = "Hours\nMeditated"
+                }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "consecutive_days"{
+                    cell.imgViewTitle.image = UIImage(named: "consecutive_days")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
+                    cell.lblTitle.text = "Consecutive\nDays"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "session")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.lblTitle.text = "Sessions"
+                }
+                
+                if indexPath.row == 0{
+                    cell.imgViewBack.image = UIImage(named: "sliceTop")
+                }else{
+                   cell.imgViewBack.image = UIImage(named: "slice_back")
+                }
+                
+                cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
+                return cell
+            }else{
+
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell1") as! WWMMilestoneCell1
+                
+                if self.milestoneData.milestoneEnabledData[indexPath.row].type == "hours_meditate"{
+                    cell.imgViewTitle.image = UIImage(named: "hour")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour1")
+                    cell.lblTitle.text = "Hours\nMeditated"
+                }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "consecutive_days"{
+                    cell.imgViewTitle.image = UIImage(named: "consecutive_days")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
+                    cell.lblTitle.text = "Consecutive\nDays"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "session")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.lblTitle.text = "Sessions"
+                }
+                cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
+                cell.imgViewBack.image = UIImage(named: "slice")
+                return cell
+                
+            }
+            
+        }else{
+            print("indexpathrow....+++\(indexPath.row)")
+            let indexPathRow1 = indexPath.row - (self.milestoneData.milestoneEnabledData.count)
+            
+            if indexPath.row%2 == 0{
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
+                
+                if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "hours_meditate"{
+                    cell.imgViewTitle.image = UIImage(named: "hour")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour2")
+                    cell.lblTitle.text = "Hours\nMeditated"
+                }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "consecutive_days"{
+                    cell.imgViewTitle.image = UIImage(named: "consecutive_days")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
+                    cell.lblTitle.text = "Consecutive\nDays"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "session")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
+                    cell.lblTitle.text = "Sessions"
+                }
+                cell.imgViewBack.image = UIImage(named: "slice_back1")
+                cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPathRow1].title
+                return cell
+
+            }else{
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell1") as! WWMMilestoneCell1
+                if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "hours_meditate"{
+                    cell.imgViewTitle.image = UIImage(named: "hour")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour2")
+                    cell.lblTitle.text = "Hours\nMeditated"
+                }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "consecutive_days"{
+                    cell.imgViewTitle.image = UIImage(named: "consecutive_days")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
+                    cell.lblTitle.text = "Consecutive\nDays"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "session")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
+                    cell.lblTitle.text = "Sessions"
+                }
+                cell.imgViewBack.image = UIImage(named: "slice1")
+                cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPath.row - (self.milestoneData.milestoneEnabledData.count)].title
+                return cell
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 180
     }
 }

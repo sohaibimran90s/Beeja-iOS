@@ -40,6 +40,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var alertPopup = WWMAlertPopUp()
     
     var tap = UITapGestureRecognizer()
+    var selectedIndex = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,8 +90,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }
         
-        //self.txtViewLog.layer.borderColor = UIColor.lightGray.cgColor
-        //self.txtViewLog.layer.borderWidth = 1.0
         self.txtViewLog.layer.cornerRadius = 5.0
     }
     
@@ -152,7 +151,25 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
         }else {
+            
             self.completeMeditationAPI()
+            self.getPrePostMoodData()
+        }
+    }
+    
+    func getPrePostMoodData(){
+        if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+            if self.type == "Pre" {
+                let getPreJournalCount = self.appPreference.getPreJournalCount()
+                if getPreJournalCount < 7 && getPreJournalCount != 0{
+                    self.appPreference.setPreJournalCount(value: self.appPreference.getPreJournalCount() - 1)
+                }
+            }else{
+                let getPostJournalCount = self.appPreference.getPostJournalCount()
+                if getPostJournalCount < 7 && getPostJournalCount != 0{
+                    self.appPreference.setPostJournalCount(value: self.appPreference.getPostJournalCount() - 1)
+                }
+            }
         }
     }
     
@@ -160,7 +177,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         alertPopup = UINib(nibName: "WWMAlertPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertPopUp
         let window = UIApplication.shared.keyWindow!
         
-        //2. If user has not selected mood and skipped but has entered journal inputs. E.g., Thanks, your journal entry has been recorded
         alertPopup.lblTitle.text = self.popupTitle
         alertPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         UIView.transition(with: alertPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
@@ -173,20 +189,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }
     }
     
-    
-//    "meditation_type":"Post",
-//    "date_time":1551179906846,
-//    "tell_us_why":"I am feeling Blissful because bjkj",
-//    "prep_time":20,
-//    "meditation_time":0,
-//    "rest_time":0,
-//    "meditation_id":1,
-//    "level_id":1,
-//    "user_id":"7",
-//    "mood_id":18
-    
     func completeMeditationAPI() {
-        //WWMHelperClass.showSVHud()
+
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "type":self.userData.type,
@@ -219,7 +223,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             }else {
                 self.saveToDB(param: param)
             }
-            //WWMHelperClass.dismissSVHud()
+
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
@@ -237,26 +241,18 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func logExperience() {
         
         if self.txtViewLog.text != "" {
-            
             self.popupTitle = "Great job! Your journal has been updated."
             self.xibCall()
-            
-            
-//            let alert = UIAlertController.init(title: "Your Meditation experienced has been logged", message: nil, preferredStyle: .alert)
-//
-//            self.present(alert, animated: true, completion: nil)
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                self.dismiss(animated: true, completion: {
-//                    self.navigateToDashboard()
-//                })
-//            }
         }else {
-            
            if self.hidShowMoodMeter == "Show"{
-                self.popupTitle = "Thanks! Your mood tracker has been updated."
-                self.xibCall()
+                if self.selectedIndex != ""{
+                    self.popupTitle = "Thanks! Your mood tracker has been updated."
+                    self.xibCall()
+                }else{
+                    self.navigateToDashboard()
+                }
             }else{
-                self.navigateToDashboard()
+                    self.navigateToDashboard()
             }
         }
     }
@@ -288,16 +284,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension WWMMoodMeterLogVC: UITextViewDelegate{

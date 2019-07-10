@@ -28,9 +28,6 @@ class WWMBaseViewController: UIViewController {
         }
     }
     
-    
-    
-
     func setNavigationBar(isShow:Bool,title:String){
         self.title = title
         self.navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#292178")

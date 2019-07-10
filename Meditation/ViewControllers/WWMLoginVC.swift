@@ -62,7 +62,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         
         //self.timer = Timer.scheduledTimer(timeInterval: 1.3, target: self, selector: #selector(animateView), userInfo: nil, repeats: false)
         
-        animationView = AnimationView(name: "login_register")
+        animationView = AnimationView(name: "login11")
         animationView.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .playOnce

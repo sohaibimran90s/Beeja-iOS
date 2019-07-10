@@ -24,7 +24,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         print("frame width.... \(self.view.frame.size.width/2)")
         buttonBarView.frame.origin.y = -18
         if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 47
+            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 60
         }
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")

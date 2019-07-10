@@ -154,19 +154,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
          self.viewControllers?.remove(at: 3)
         }
         
-        
-        layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
-        layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
-       self.tabBar.layer.insertSublayer(layerGradient, at: 0)
-        for index in 0..<5 {
-            let item = self.tabBar.items?[index]
-            item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-            if index == 2 {
-                
-                item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-            }
-        }
-        
         if self.milestoneType == "hours_meditate"{
             WWMHelperClass.milestoneType = "hours_meditate"
             self.selectedIndex = 4
@@ -181,6 +168,19 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.showLoaderAnimate(on: self.view)
             }
             self.selectedIndex = 2
+        }
+        
+        
+        layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
+        layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
+        self.tabBar.layer.insertSublayer(layerGradient, at: 0)
+        for index in 0..<5 {
+            let item = self.tabBar.items?[index]
+            item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+            if index == self.selectedIndex {
+                
+                item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+            }
         }
     }
     
@@ -287,27 +287,46 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     if success {
                         var userData = WWMUserData.sharedInstance
                         userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                        print(userData)
+                        print("userData****** \(userData)")
+                        
+                        var userSubscription = WWMUserData.sharedInstance
+                        userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
+                        
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                        self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
+                        
+                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool())")
+                        let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
+
+                        if difference == 1{
+                            if !self.appPreffrence.getPrePostJournalBool(){
+                                
+                                self.appPreffrence.setPrePostJournalBool(value: true)
+                                
+                                print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
+                                
+                                
+                                self.appPreffrence.setPostMoodCount(value: 6)
+                                self.appPreffrence.setPreMoodCount(value: 6)
+                                self.appPreffrence.setPreJournalCount(value: 6)
+                                self.appPreffrence.setPostJournalCount(value: 6)
+                            }
+                        }
                         
                         self.setDataToDb(json: result["settings"] as! [String:Any])
                     }else {
                         self.getDataFromDatabase()
                     }
-                    
                 }else {
                     self.getDataFromDatabase()
                 }
-                
             }else {
                 self.getDataFromDatabase()
             }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-           // WWMHelperClass.dismissSVHud()
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+            }
         }
-       }
     }
-    
     
     
     func getDataFromDatabase() {

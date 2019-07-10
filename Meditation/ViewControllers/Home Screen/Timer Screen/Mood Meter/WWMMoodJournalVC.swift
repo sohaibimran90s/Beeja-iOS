@@ -16,7 +16,6 @@ class WWMMoodJournalVC: WWMBaseViewController {
     @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var lblTextCount: UILabel!
     
-    
     var type = ""   // Pre | Post
     var prepTime = 0
     var meditationTime = 0
@@ -40,7 +39,6 @@ class WWMMoodJournalVC: WWMBaseViewController {
         self.view.addGestureRecognizer(gesture)
 
         self.setUpUI()
-        // Do any additional setup after loading the view.
     }
     
     @objc func checkAction(sender : UITapGestureRecognizer) {
@@ -86,6 +84,20 @@ class WWMMoodJournalVC: WWMBaseViewController {
             WWMHelperClass.showPopupAlertController(sender: self, message: "Time to update your journal", title: kAlertTitle)
         }else {
             self.completeMeditationAPI()
+            
+            if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                if self.type == "Pre"{
+                    let getPreJournalCount = self.appPreference.getPreJournalCount()
+                    if getPreJournalCount < 7 && getPreJournalCount != 0{
+                        self.appPreference.setPreJournalCount(value: self.appPreference.getPreJournalCount() - 1)
+                    }
+                }else{
+                    let getPostJournalCount = self.appPreference.getPostJournalCount()
+                    if getPostJournalCount < 7 && getPostJournalCount != 0{
+                        self.appPreference.setPostJournalCount(value: self.appPreference.getPostJournalCount() - 1)
+                    }
+                }
+            }
         }
     }
 

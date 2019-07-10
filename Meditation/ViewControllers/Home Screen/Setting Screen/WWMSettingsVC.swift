@@ -40,6 +40,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var isPlayerPlay = false
     
     var isSetMyOwn = false
+    
+    let appPreffrence = WWMAppPreference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -740,7 +743,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func logoutAPI() {
-        //WWMHelperClass.showSVHud()
+
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "token" : appPreference.getToken()
@@ -780,7 +783,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 
             }
-            //WWMHelperClass.dismissSVHud()
+            
+            self.appPreffrence.setPrePostJournalBool(value: true)
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }

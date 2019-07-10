@@ -31,13 +31,41 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "lastLoginDate")
         defaults.synchronize()
     }
+    
     func setUserData(value:[String : Any]) {
         defaults.set(value, forKey: "UserData")
         defaults.synchronize()
     }
     
+    func setUserSubscription(value:[String : Any]) {
+        defaults.set(value, forKey: "UserSubscription")
+        defaults.synchronize()
+    }
+    
+    //
+    
+    func setPreMoodCount(value: Int){
+        defaults.set(value, forKey: "preMoodCount")
+    }
+    
+    func setPrePostJournalBool(value: Bool){
+        defaults.set(value, forKey: "prePostJournalBool")
+    }
+
+    func setPostMoodCount(value: Int){
+        defaults.set(value, forKey: "postMoodCount")
+    }
+    
+    func setPostJournalCount(value: Int){
+        defaults.set(value, forKey: "postJournalCount")
+    }
     
     
+    func setPreJournalCount(value: Int){
+        defaults.set(value, forKey: "preJournalCount")
+    }
+    
+
     func setUserID(value:String) {
         defaults.set(value, forKey: "User_Id")
         defaults.synchronize()
@@ -47,11 +75,44 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "type")
         defaults.synchronize()
     }
+    
     func setGuideType(value:String) {
         defaults.set(value, forKey: "guided_type")
         defaults.synchronize()
     }
     
+    func getPrePostJournalBool() -> Bool{
+        return defaults.bool(forKey: "prePostJournalBool")
+    }
+    
+    func getPreMoodCount() -> Int{
+        return defaults.integer(forKey: "preMoodCount")
+    }
+
+    func getPostMoodBool() -> Bool{
+        return defaults.bool(forKey: "postMoodBool")
+    }
+    
+    func getPostMoodCount() -> Int{
+        return defaults.integer(forKey: "postMoodCount")
+    }
+    
+    func getPostJournalBool() -> Bool{
+        return defaults.bool(forKey: "postJournalBool")
+    }
+    
+    func getPostJournalCount() -> Int{
+        return defaults.integer(forKey: "postJournalCount")
+    }
+    
+    func getPreJournalBool() -> Bool{
+        return defaults.bool(forKey: "postJournalBool")
+    }
+    
+    func getPreJournalCount() -> Int{
+        return defaults.integer(forKey: "preJournalCount")
+    }
+
     func getType() -> String {
         return UserDefaults.standard.string(forKey: "type") ?? ""
     }
@@ -96,6 +157,10 @@ class WWMAppPreference: NSObject {
     
     func getUserData() -> [String:Any] {
         return UserDefaults.standard.dictionary(forKey: "UserData")!
+    }
+    
+    func getUserSubscription() -> [String:Any] {
+        return UserDefaults.standard.dictionary(forKey: "UserSubscription")!
     }
     
     

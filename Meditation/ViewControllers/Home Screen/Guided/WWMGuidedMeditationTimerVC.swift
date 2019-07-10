@@ -66,7 +66,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
         //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
-        self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
+        //self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
+        self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
         print(self.appPreference.getGuideType())
         if self.appPreference.getGuideType() == "practical" {
@@ -80,7 +81,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.rating = 1
         }
         
-        self.seconds = self.audioData.audio_Duration
+       // self.seconds = self.audioData.audio_Duration
     }
     
     

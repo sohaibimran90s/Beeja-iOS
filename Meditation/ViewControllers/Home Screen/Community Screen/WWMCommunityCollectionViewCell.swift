@@ -14,5 +14,5 @@ class WWMCommunityCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblAuthorName: UILabel!
     @IBOutlet weak var lblDuration: UILabel!
-    
+    @IBOutlet weak var lblFreeDuration: UILabel!
 }

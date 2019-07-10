@@ -38,6 +38,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     var settingData = DBSettings()
     var alertPrompt = WWMPromptMsg()
+    var alertPopupView1 = WWMAlertController()
     
     var button = UIButton()
     var arrButton = [UIButton]()
@@ -89,8 +90,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         })
     }
     
-    
-    
     func xibCall(){
         alertPrompt = UINib(nibName: "WWMPromptMsg", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMPromptMsg
         let window = UIApplication.shared.keyWindow!
@@ -101,7 +100,186 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }) { (Bool) in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 self.alertPrompt.removeFromSuperview()
+                
+                if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                    
+                    if self.type == "Pre" {
+                        let getPreMoodCount = self.appPreference.getPreMoodCount()
+                        let getPreJournalCount = self.appPreference.getPreJournalCount()
+                        
+                        //if (getPreMoodCount < 7 && getPreMoodCount != 0) || (getPreJournalCount < 7 && getPreJournalCount != 0)
+                        if (getPreMoodCount == 0 && getPreJournalCount == 0) || (getPreMoodCount == 0 && getPreJournalCount > 0){
+                            print("getPreMoodCount... \(getPreMoodCount)")
+                            
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Pre")
+                            self.view.isUserInteractionEnabled = false
+                            
+                        }else{
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have only pre \(getPreMoodCount) mood and \(getPreJournalCount) journal enteries left.", type: "Pre")
+                            self.view.isUserInteractionEnabled = true
+                            
+                        }
+                    }else{
+                        let getPostMoodCount = self.appPreference.getPostMoodCount()
+                        let getPostJournalCount = self.appPreference.getPostJournalCount()
+                        
+                        //if (getPostMoodCount < 7 && getPostMoodCount != 0) || (getPostJournalCount < 7 && getPostJournalCount != 0)
+                        if (getPostMoodCount == 0) && (getPostJournalCount == 0){
+                            print("getPostMoodCount... \(getPostMoodCount)")
+
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Post")
+                            self.view.isUserInteractionEnabled = false
+                            
+                        }else{
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have only post \(getPostMoodCount) mood and \(getPostJournalCount) journal enteries left.", type: "Post")
+                            self.view.isUserInteractionEnabled = true
+                        }
+                    }
+                }
             }
+        }
+    }
+    
+    func getFreeMoodMeterAlert(freeMoodMeterCount: String, title: String, subTitle: String, type: String){
+        self.alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        self.alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        self.alertPopupView1.lblTitle.numberOfLines = 0
+        self.alertPopupView1.btnOK.layer.borderWidth = 2.0
+        self.alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        self.alertPopupView1.lblTitle.text = title
+        self.alertPopupView1.lblSubtitle.text = subTitle
+        self.alertPopupView1.btnClose.isHidden = true
+        
+        self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
+    @objc func btnAlertDoneAction(_ sender: Any){
+        if type == "Pre" {
+            
+            print("getPreJournalCount.... \(self.appPreference.getPreJournalCount())")
+             print("getPreMoodCount.... \(self.appPreference.getPreMoodCount())")
+            if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
+                
+                self.view.isUserInteractionEnabled = true
+                self.alertPopupView1.removeFromSuperview()
+            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() == 0){
+                
+                self.view.isUserInteractionEnabled = false
+                self.alertPopupView1.removeFromSuperview()
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popViewController(animated: true)
+            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
+                
+                self.view.isUserInteractionEnabled = false
+                self.alertPopupView1.removeFromSuperview()
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popViewController(animated: true)
+            }else if (self.appPreference.getPreMoodCount() > 0) && (self.appPreference.getPreJournalCount() == 0){
+                
+                self.alertPopupView1.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
+            }else{
+                
+                self.alertPopupView1.removeFromSuperview()
+                self.view.isUserInteractionEnabled = false
+                self.callWWMMoodMeterLogVC()
+            }
+        }else{
+            
+            print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
+            if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
+                self.view.isUserInteractionEnabled = true
+                self.alertPopupView1.removeFromSuperview()
+            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
+                self.view.isUserInteractionEnabled = false
+                self.alertPopupView1.removeFromSuperview()
+                completeMeditationAPI()
+            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
+                self.alertPopupView1.removeFromSuperview()
+                self.view.isUserInteractionEnabled = false
+                self.callWWMMoodMeterLogVC()
+            }else if (self.appPreference.getPostMoodCount() > 0) && (self.appPreference.getPostJournalCount() == 0){
+                self.alertPopupView1.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
+            }else{
+                self.alertPopupView1.removeFromSuperview()
+                self.view.isUserInteractionEnabled = false
+                self.callWWMMoodMeterLogVC()
+            }
+        }
+    }
+    
+    func callWWMMoodMeterLogVC(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+        
+        if self.type == "Pre"{
+            if self.appPreference.getPreMoodCount() > 0{
+                vc.moodData = arrMoodData[selectedIndex]
+                vc.selectedIndex = String(selectedIndex)
+            }
+        }else{
+            if self.appPreference.getPostMoodCount() > 0{
+                vc.moodData = arrMoodData[selectedIndex]
+                vc.selectedIndex = String(selectedIndex)
+            }
+        }
+        
+        vc.type = self.type
+        vc.prepTime = self.prepTime
+        vc.meditationTime = self.meditationTime
+        vc.restTime = self.restTime
+        vc.meditationID = self.meditationID
+        vc.levelID = self.levelID
+        vc.category_Id = self.category_Id
+        vc.emotion_Id = self.emotion_Id
+        vc.audio_Id = self.audio_Id
+        vc.rating = self.rating
+        vc.watched_duration = self.watched_duration
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    func completeMeditationAPI() {
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "type":self.userData.type,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.userData.guided_type,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":"",
+            "prep_time":prepTime,
+            "meditation_time":meditationTime,
+            "rest_time":restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let _ = result["success"] as? Bool {
+
+                    self.navigateToDashboard()
+                }else {
+                    self.saveToDB(param: param)
+                }
+                
+            }else {
+                self.saveToDB(param: param)
+            }
+
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -163,16 +341,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }
         }
         
-        
         let diff = Double(360) / Double(self.arrMoodData.count)
         let angle = Double(selectedIndex) * diff
         self.circularSlider(circularSlider!, angleDidChanged: angle)
         
-        
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
-        
-
     }
     
     func translatedAngle(angle: Double) -> Double {
@@ -213,7 +387,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             if index == moodIndex {
                 button.titleLabel?.font = UIFont(name: "Maax-Bold", size: 16)
                 button.setTitleColor(UIColor.white, for: .normal)
-            }else {
+            }else{
                 button.titleLabel?.font = UIFont(name: "Maax-Medium", size: 13)
                 button.setTitleColor(UIColor.lightGray, for: .normal)
             }
@@ -295,24 +469,64 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     @IBAction func btnNextAction(_ sender: Any) {
-        if selectedIndex != -1 {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-            vc.moodData = arrMoodData[selectedIndex]
-            vc.type = self.type
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime
-            vc.restTime = self.restTime
-            vc.meditationID = self.meditationID
-            vc.levelID = self.levelID
-            vc.category_Id = self.category_Id
-            vc.emotion_Id = self.emotion_Id
-            vc.audio_Id = self.audio_Id
-            vc.rating = self.rating
-            vc.watched_duration = self.watched_duration
-            
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
         
+        if selectedIndex != -1 {
+            if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                
+                if self.type == "Pre" {
+                    
+                    
+                    print("getPostJournalCount.... \(self.appPreference.getPreJournalCount())")
+                    if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() == 0){
+                        
+                        completeMeditationAPI()
+                    }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }else if (self.appPreference.getPreMoodCount() > 0) && (self.appPreference.getPreJournalCount() == 0){
+                        
+                        completeMeditationAPI()
+                    }else{
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }
+                    
+                    let getPreMoodCount = self.appPreference.getPreMoodCount()
+                    if getPreMoodCount < 7 && getPreMoodCount != 0{
+                        self.appPreference.setPreMoodCount(value: self.appPreference.getPreMoodCount() - 1)
+                    }
+                }else{
+                    
+                    let getPostMoodCount = self.appPreference.getPostMoodCount()
+                    if getPostMoodCount < 7 && getPostMoodCount != 0{
+                        self.appPreference.setPostMoodCount(value: self.appPreference.getPostMoodCount() - 1)
+                    }
+                    
+                    print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
+                    if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
+                        
+                        completeMeditationAPI()
+                    }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }else if (self.appPreference.getPostMoodCount() > 0) && (self.appPreference.getPostJournalCount() == 0){
+                        
+                        completeMeditationAPI()
+                    }else{
+                        
+                        self.callWWMMoodMeterLogVC()
+                    }
+                }
+            }else{
+                self.callWWMMoodMeterLogVC()
+            }
+        }
     }
     
     @IBAction func btnAskMeAgainAction(_ sender: Any) {
@@ -334,4 +548,9 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
 
+    @IBAction func btnPreBackAction(_ sender: UIButton) {
+        
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+    }
 }

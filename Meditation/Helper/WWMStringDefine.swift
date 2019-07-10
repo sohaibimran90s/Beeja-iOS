@@ -101,6 +101,7 @@ let URL_GETVIBESIMAGES                  = URL_BASE + "getVibesImages"//getVibesI
 let URL_ADDSESSION                  = URL_BASE + "addSession"//
 let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
 let URL_SETTINGS                  = URL_BASE + "settings"//
+let URL_MILESTONE                  = URL_BASE + "milestone"//
 
 let URL_HANDSHAKE                  = "http://10.16.64.73/api/v1/" + "handshake"//
 

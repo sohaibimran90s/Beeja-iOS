@@ -52,7 +52,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       //1152
         self.baseViewHeightConstraint.constant = 550
         self.graphBaseView.isHidden = true
         self.setDateFromTooTo()
@@ -103,7 +103,6 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     
     func setMooProgressDurationUI(type:String) {
-        
         
         moodProgressDurationView.btnYear.layer.borderWidth = 2.0
         moodProgressDurationView.btnYear.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
@@ -330,7 +329,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     
                     print(print(self.moodProgressData.color_score.pre))
                     
-                    //self.graphChartApiCall()
+                    self.graphChartApiCall()
                     self.tblMoodProgress.reloadData()
                 }
             }else {
@@ -342,7 +341,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     }
                 }
             }
-            //self.graphChartApiCall()
+            self.graphChartApiCall()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
@@ -361,11 +360,16 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                 DispatchQueue.main.async {
                     
                     print("data....+++++ \(data)")
-                    
-                    
-                    self?.data = data
-                    self?.addBoth()
-                    self?.month.text = self?.data.first?.date.monthName
+                    if data.count > 0{
+                        self?.baseViewHeightConstraint.constant = 1152
+                        self?.graphBaseView.isHidden = false
+                        self?.data = data
+                        self?.addBoth()
+                        self?.month.text = self?.data.first?.date.monthName
+                    }else{
+                        self?.baseViewHeightConstraint.constant = 550
+                        self?.graphBaseView.isHidden = true
+                    }
                 }
             }
         }

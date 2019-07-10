@@ -25,11 +25,6 @@ import UIKit
 //"updated_at": "2019-02-28 06:07:21",
 //"deleted_at": null
 class WWMUserData: NSObject {
-
-    
-    
-    
-    
     
     private static var singleTonVar:WWMUserData?
     var userId = String()
@@ -51,6 +46,12 @@ class WWMUserData: NSObject {
     var type = String()
     var guided_type = String()
     
+    var preMood: Int = 0
+    var postMood: Int = 0
+    var preJournal: Int = 0
+    var postJournal: Int = 0
+    var expiry_date: String = ""
+    
     var meditation_id = Int()
     var level_id = Int()
     
@@ -61,9 +62,10 @@ class WWMUserData: NSObject {
         }
         return unshared
     }
+    
     override init() {
-        
     }
+    
     init(json:[String:Any]) {
         userId = "\(json["id"] ?? "")"
         remember_token = json["remember_token"] as? String ?? ""
@@ -88,5 +90,29 @@ class WWMUserData: NSObject {
         
         is_active = json["is_active"] as? Bool ?? true
         is_subscribed = json["is_subscribed"] as? Bool ?? true
+    }
+    
+    init(subscriptionJson:[String:Any]){
+        if let expiry_date = subscriptionJson["expiry_date"] as? String{
+            self.expiry_date = expiry_date
+        }
+        
+        if let mood = subscriptionJson["mood"] as? [String: Any]{
+            if let preMood = mood["pre"] as? Int{
+                self.preMood = preMood
+            }
+            if let postMood = mood["post"] as? Int{
+                self.postMood = postMood
+            }
+        }
+        
+        if let journal = subscriptionJson["journal"] as? [String: Any]{
+            if let preJournal = journal["pre"] as? Int{
+                self.preJournal = preJournal
+            }
+            if let postJournal = journal["post"] as? Int{
+                self.postJournal = postJournal
+            }
+        }
     }
 }

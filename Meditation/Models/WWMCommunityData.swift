@@ -15,8 +15,8 @@ class WWMCommunityData: NSObject {
     
     
     override init() {
-        
     }
+    
     init(json:[String:Any]) {
         if let arrLevels = json["hashtags"] as? [[String:Any]]{
             for dict in arrLevels {
