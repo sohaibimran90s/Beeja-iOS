@@ -194,6 +194,7 @@
 		61083F4222D32E34001B770D /* WWMMilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */; };
 		61083F4422D354E4001B770D /* WWMMilestoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4322D354E4001B770D /* WWMMilestoneData.swift */; };
 		61083F4622D37B6F001B770D /* login11.json in Resources */ = {isa = PBXBuildFile; fileRef = 61083F4522D37B6E001B770D /* login11.json */; };
+		613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */; };
 		6130DE1322A9220600271F67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6130DE1222A9220500271F67 /* GoogleService-Info.plist */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
@@ -584,6 +585,7 @@
 		61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestoneCell2.swift; sourceTree = "<group>"; };
 		61083F4322D354E4001B770D /* WWMMilestoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestoneData.swift; sourceTree = "<group>"; };
 		61083F4522D37B6E001B770D /* login11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login11.json; sourceTree = "<group>"; };
+		613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeTabVC.swift; sourceTree = "<group>"; };
 		6130DE1222A9220500271F67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 		2EA6DB0921C3C552006A8E1D /* Home Screen */ = {
 			isa = PBXGroup;
 			children = (
+				613071EA22D721D3009CBCA1 /* Home Tab */,
 				2E5DF5762268839600CF2935 /* Guided */,
 				2EA6DB0B21C3C5A6006A8E1D /* WWMTabBarVC.swift */,
 				2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */,
@@ -1407,6 +1410,14 @@
 				2EE247DC21E6315400857C25 /* PieSliceData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		613071EA22D721D3009CBCA1 /* Home Tab */ = {
+			isa = PBXGroup;
+			children = (
+				613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */,
+			);
+			path = "Home Tab";
 			sourceTree = "<group>";
 		};
 		61416E0F22BB943C00C9339E /* GraphChart */ = {
@@ -2137,6 +2148,7 @@
 				613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */,
 				2EE247DD21E6315400857C25 /* PieSliceDelegate.swift in Sources */,
 				2EE247E121E6315400857C25 /* PieChart.swift in Sources */,
+				613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */,
 				2E25CDC522267DAF002BDE15 /* WWMJournalProgressData.swift in Sources */,
 				6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */,
 				61416EC522BBB45600C9339E /* YAxis.swift in Sources */,
