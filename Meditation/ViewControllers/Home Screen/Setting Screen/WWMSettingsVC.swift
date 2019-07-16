@@ -54,6 +54,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.navigationController?.isNavigationBarHidden = false
         self.setUpNavigationBarForDashboard(title: "Settings")
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
@@ -479,7 +480,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }else if indexPath.row == 9 {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
                     self.navigationController?.pushViewController(vc, animated: true)
-                }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
+                }else if indexPath.row == 10{
+                    print("help...")
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                    
+                    vc.value = "help"
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else if indexPath.row == 11 || indexPath.row == 12 {
                     self.openWebView(index: indexPath.row)
                     
                 }else if indexPath.row == 13{

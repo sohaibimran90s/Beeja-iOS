@@ -106,7 +106,6 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     }
     
   // Calling API
-    
     func meditationApi() {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()

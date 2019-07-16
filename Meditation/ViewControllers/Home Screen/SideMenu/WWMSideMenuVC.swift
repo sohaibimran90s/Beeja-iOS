@@ -132,6 +132,12 @@ class WWMSideMenuVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func btnSettingBeejaAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSettingsVC") as! WWMSettingsVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func btnFacebookPageAction(_ sender: Any) {
         let url = URL.init(string: URL_Facebook)
         let application = UIApplication.shared

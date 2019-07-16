@@ -45,9 +45,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         self.strMonthYear = dateFormatter.string(from: Date())
         self.getCommunityAPI()
         self.setUpNavigationBarForDashboard(title: "Community")
-        // Do any additional setup after loading the view.
-        
-        
         
         accessToken = "Not Assigned"
         //setup()

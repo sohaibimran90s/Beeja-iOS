@@ -143,8 +143,6 @@ let internetConnectionLostMsg: String!              = "Oh no, we've lost you! Pl
 
 let  Validatation_JournalOfflineMsg  =
 "Any new entries posted during no-Internet connection will be listed once it gets synced with server and device gets online."
-
-
 /**/
 
 

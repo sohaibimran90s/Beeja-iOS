@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
+class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,AVAudioPlayerDelegate  {
     
     @IBOutlet weak var welcomeView: UIView!
     @IBOutlet weak var userName: UILabel!
@@ -23,6 +23,9 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     
     var selectedMeditation_Id = ""
     var selectedLevel_Id = ""
+    
+    var player = AVAudioPlayer()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +109,13 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                 self.appPreference.setGuideType(value: "")
                 self.appPreference.setType(value: "timer")
                 
+                
+                //MM_BEEJA_LETSMEDITATE_V2
+                
+                //MARK:- play sonic sound
+                self.playSound(name: "MM_BEEJA_LETSMEDITATE_V2")
+                
+                
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     
                     self.welcomeView.isHidden = false
@@ -126,10 +136,10 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                         
                     }, completion: nil)
                 }) { (Bool) in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
-                    }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+//                        UIApplication.shared.keyWindow?.rootViewController = vc
+//                    }
                 }
             }else {
                 if error != nil {
@@ -144,5 +154,37 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
+    }
+    
+    func playSound(name: String ) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+            print("url not found")
+            return
+        }
+        
+        do {
+            /// this codes for making this app ready to takeover the device audio
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /// change fileTypeHint according to the type of your audio file (you can omit this)
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            player.delegate = self
+            
+            // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
+            player.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("finished")//It is working now! printed "finished"!
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+             UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+
     }
 }

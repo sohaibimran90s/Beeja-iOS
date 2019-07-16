@@ -14,10 +14,12 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var viewEmail: UIView!
     @IBOutlet weak var txtViewEmail: UITextField!
+    
     var name = ""
     var isFromFb = Bool()
     var fbData = [String:Any]()
     var tap = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,9 +27,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         self.setupView()
     }
     
-    
     func setupView(){
-        
         self.setNavigationBar(isShow: false, title: "")
         
         self.btnNext.layer.borderWidth = 2.0
@@ -125,7 +125,11 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+//                    self.navigationController?.pushViewController(vc, animated: true)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                    
+                    vc.value = "SignupLetsStart"
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                     WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
@@ -186,7 +190,12 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                         }else {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+//                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+//                            self.navigationController?.pushViewController(vc, animated: true)
+                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                            
+                            vc.value = "SignupLetsStart"
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }

@@ -15,7 +15,13 @@ class WWMMilestoneCell2: UITableViewCell {
     @IBOutlet weak var imgViewTitle: UIImageView!
     @IBOutlet weak var imgViewTitle1: UIImageView!
     @IBOutlet weak var imgViewBack: UIImageView!
-    
+    @IBOutlet weak var imgViewBack1: UIImageView!
+    @IBOutlet weak var view1: UIView!
+    @IBOutlet weak var view2: UIView!
+    @IBOutlet weak var lblTitle1_: UILabel!
+    @IBOutlet weak var imgViewTitle1_: UIImageView!
+
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }

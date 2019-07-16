@@ -10,7 +10,7 @@ import UIKit
 import UICircularProgressRing
 import EFCountingLabel
 
-class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource {
+class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource,AVAudioPlayerDelegate {
     
     @IBOutlet weak var lblMonthYear: UILabel!
     @IBOutlet weak var btnPreviousMonth: UIButton!
@@ -67,6 +67,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var selectedLevelId = -1
     var isLeft = false
     var circle = true
+    
+    var player = AVAudioPlayer()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +89,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func notificationPopUp(titles: String, titleDescript: String, textNextMileStone: String, imgLogo: String, imgLogo1: String, redC: CGFloat, greenC: CGFloat, blueC: CGFloat) {
         
+        
+        self.playSound(name: "MM_BEEJA_MEDITATION_COMPLETE_V1")
+        
         alertNotificationView = UINib(nibName: "WWMMilestonePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMilestonePopUp
         let window = UIApplication.shared.keyWindow!
         
@@ -102,6 +108,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @objc func btnDissmissPopUp(){
+        self.player.stop()
         alertNotificationView.removeFromSuperview()
     }
     
@@ -407,7 +414,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     @IBAction func btnTimerAction(_ sender: Any) {
         
-        
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         addSessionView.txtViewTime.inputView = pickerView
@@ -443,7 +449,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         self.viewHighlighted()
     }
-    
     
     func roundCorners(view :UIButton, corners: UIRectCorner, radius: CGFloat){
         let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
@@ -491,7 +496,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let previousMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
         self.updateDate(date: previousMonth!)
     }
-    
     
     // MARK:- UICollection View Delegate Methods
     
@@ -844,17 +848,30 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
             if indexPath.row%2 == 0{
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
                 
+                cell.imgViewBack1.isHidden = true
+                cell.imgViewBack.isHidden = false
+                
+                cell.view1.isHidden = false
+                cell.view2.isHidden = true
+                cell.lblTitle1.isHidden = false
+                cell.lblTitle1_.isHidden = true
+                cell.imgViewTitle1.isHidden = false
+                cell.imgViewTitle1_.isHidden = true
+                
                 if self.milestoneData.milestoneEnabledData[indexPath.row].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
                     cell.imgViewTitle1.image = UIImage(named: "mileHour1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileHour1")
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays1")
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
                     cell.lblTitle.text = "Sessions"
                 }
                 
@@ -865,11 +882,14 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                 }
                 
                 cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
+                cell.lblTitle1_.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
                 return cell
             }else{
 
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell1") as! WWMMilestoneCell1
                 
+                cell.imgViewBack1.isHidden = true
+                cell.imgViewBack.isHidden = false
                 if self.milestoneData.milestoneEnabledData[indexPath.row].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
                     cell.imgViewTitle1.image = UIImage(named: "mileHour1")
@@ -896,25 +916,43 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
             if indexPath.row%2 == 0{
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
                 
+                    cell.imgViewBack.isHidden = true
+                    cell.imgViewBack1.isHidden = false
+                
+                    cell.view1.isHidden = true
+                    cell.view2.isHidden = false
+                    cell.lblTitle1.isHidden = true
+                    cell.lblTitle1_.isHidden = false
+                    cell.imgViewTitle1.isHidden = true
+                    cell.imgViewTitle1_.isHidden = false
+                
                 if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
                     cell.imgViewTitle1.image = UIImage(named: "mileHour2")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileHour2")
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays2")
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession2")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileSession2")
                     cell.lblTitle.text = "Sessions"
                 }
-                cell.imgViewBack.image = UIImage(named: "slice_back1")
+                cell.imgViewBack1.image = UIImage(named: "slice_back1")
                 cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPathRow1].title
+                cell.lblTitle1_.text = self.milestoneData.milestoneDisabledData[indexPathRow1].title
                 return cell
 
             }else{
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell1") as! WWMMilestoneCell1
+                
+                cell.imgViewBack.isHidden = true
+                cell.imgViewBack1.isHidden = false
+                
                 if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
                     cell.imgViewTitle1.image = UIImage(named: "mileHour2")
@@ -928,7 +966,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgViewTitle1.image = UIImage(named: "mileSession2")
                     cell.lblTitle.text = "Sessions"
                 }
-                cell.imgViewBack.image = UIImage(named: "slice1")
+                cell.imgViewBack1.image = UIImage(named: "slice1")
                 cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPath.row - (self.milestoneData.milestoneEnabledData.count)].title
                 return cell
             }
@@ -937,5 +975,34 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
+    }
+    
+    func playSound(name: String ) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+            print("url not found")
+            return
+        }
+        
+        do {
+            /// this codes for making this app ready to takeover the device audio
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /// change fileTypeHint according to the type of your audio file (you can omit this)
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            player.delegate = self
+            
+            // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
+            player.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    
+        print("finished")//It is working now! printed "finished"!
+        self.player.stop()
     }
 }
