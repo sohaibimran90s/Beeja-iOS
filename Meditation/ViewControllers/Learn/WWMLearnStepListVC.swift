@@ -17,6 +17,59 @@ class WWMLearnStepListVC: WWMBaseViewController {
         super.viewDidLoad()
         
         self.tabBarController?.tabBar.isHidden = true
+        getLearnSetpsAPI()
+    }
+    
+    @IBAction func btnIntroClicked(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+        
+        vc.value = "learnStepList"
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    ///api/v1/setps
+    func getLearnSetpsAPI() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_STEPS, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+//                if let data = result["data"] as? [String: Any]{
+//                    if let records = data["records"] as? [[String: Any]]{
+//                        for dict in records{
+//                            let data = WWMMeditationHistoryListData(json: dict)
+//                            self.data.append(data)
+//                        }
+//                    }
+//
+//                    if self.data.count > 0{
+//                        self.medHisViewHeightConstraint.constant = 416
+//                        self.collectionView.reloadData()
+//                    }else{
+//                        self.medHisViewHeightConstraint.constant = 0
+//                    }
+//                }
+                
+                
+                print("url....setps****** \(URL_STEPS)")
+                print("result....setps****** \(result)")
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    
+    @IBAction func btnSideMenuClicked(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
+        self.navigationController?.pushViewController(vc, animated: false)
     }
 }
 

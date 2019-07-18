@@ -32,7 +32,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         setNavigationBar(isShow:false,title:"")
         NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
-        if value == "help"{
+        if (value == "help" || value == "learnStepList"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else{
@@ -68,7 +68,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     @IBAction func btnSkipCrossClicked(_ sender: UIButton) {
         self.viewVideo.stop()
-        if value == "help"{
+        if (value == "help" || value == "learnStepList"){
             self.navigationController?.popViewController(animated: true)
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
@@ -80,6 +80,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         print("abc....***** \(self.videoCompleted )")
         if self.videoCompleted == 1{
             if value == "help"{
+                self.navigationController?.popViewController(animated: true)
+            }else if value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC

@@ -32,6 +32,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     var yaxis: CGFloat = 540
     
     var inviteGiftPopUp = WWMHomeGiftPopUp()
+    var data: [WWMMeditationHistoryListData] = []
 
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
@@ -62,6 +63,8 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.alpha = 0
         self.imgGiftIcon.alpha = 0
         
+        //self.meditationHistoryListAPI()
+        self.medHisViewHeightConstraint.constant = 416
         self.animatedImg()
         self.animatedlblName()
     }
@@ -197,14 +200,28 @@ class WWMHomeTabVC: WWMBaseViewController {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let param = ["user_id": self.appPreference.getUserID()]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
-
-                    print("result.... \(result)")
-                }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        for dict in records{
+                            let data = WWMMeditationHistoryListData(json: dict)
+                            self.data.append(data)
+                        }
+                    }
+                    
+                    if self.data.count > 0{
+                        self.medHisViewHeightConstraint.constant = 416
+                        self.collectionView.reloadData()
+                    }else{
+                        self.medHisViewHeightConstraint.constant = 0
+                    }
                 }
+                
+                
+                print("param....****** \(URL_MEDITATIONHISTORY+"/page=1")")
+                print("param....****** \(param)")
+                print("result....****** \(result)")
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -228,6 +245,18 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "WWMHomeMedHistoryCVC", for: indexPath) as! WWMHomeMedHistoryCVC
         
         cell.layer.cornerRadius = 8
+        
+//        if self.data[indexPath.row].image == ""{
+//            cell.imgTitle.image = UIImage(named: "rectangle-1")
+//        }else{
+//            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
+//        }
+//
+//        cell.lblTitle.text = self.data[indexPath.row].title
+//        cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+//        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+//        cell.lblMin.text = "\(self.data[indexPath.row].duration/60)"
+        
         return cell
     }
     

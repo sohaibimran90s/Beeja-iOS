@@ -11,6 +11,7 @@ import UIKit
 class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
 
     @IBOutlet weak var btnStart: UIButton!
+    @IBOutlet weak var slider: UISlider!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +20,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     }
     
     func setupView(){
+        self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
         self.btnStart.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
     }
     
