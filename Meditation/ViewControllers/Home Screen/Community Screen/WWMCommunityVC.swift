@@ -308,7 +308,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 let images = playlist["images"] as! [Dictionary<String, Any>]
                 for imageDictionary in images {
                     
-                    let imageUrl = imageDictionary["url"] as! String
+                    let imageUrl = imageDictionary["url"] as? String ?? ""
                     print("\(imageUrl)")
                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                     
@@ -339,7 +339,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 let images = playlist["images"] as! [Dictionary<String, Any>]
                 for imageDictionary in images {
                     
-                    let imageUrl = imageDictionary["url"] as! String
+                    let imageUrl = imageDictionary["url"] as? String ?? ""
                     print("\(imageUrl)")
                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 }

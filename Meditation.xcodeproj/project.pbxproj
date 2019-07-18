@@ -222,6 +222,7 @@
 		613C6F7722DF32040012113B /* WWMLearnCongratsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */; };
 		613C6F7922DF3D640012113B /* all_discs.json in Resources */ = {isa = PBXBuildFile; fileRef = 613C6F7822DF3D630012113B /* all_discs.json */; };
 		613ED77C22E05E8F0063B10B /* WWMMeditationHistoryListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613ED77B22E05E8F0063B10B /* WWMMeditationHistoryListData.swift */; };
+		613ED77E22E0AE910063B10B /* WWMPodCastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613ED77D22E0AE910063B10B /* WWMPodCastData.swift */; };
 		613F081122CF324F0042515C /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081022CF324F0042515C /* register.json */; };
 		613F081322CF356E0042515C /* hand.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081222CF356E0042515C /* hand.json */; };
 		61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */; };
@@ -643,6 +644,7 @@
 		613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnCongratsVC.swift; sourceTree = "<group>"; };
 		613C6F7822DF3D630012113B /* all_discs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = all_discs.json; sourceTree = "<group>"; };
 		613ED77B22E05E8F0063B10B /* WWMMeditationHistoryListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMeditationHistoryListData.swift; sourceTree = "<group>"; };
+		613ED77D22E0AE910063B10B /* WWMPodCastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPodCastData.swift; sourceTree = "<group>"; };
 		613F081022CF324F0042515C /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
 		613F081222CF356E0042515C /* hand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hand.json; sourceTree = "<group>"; };
 		61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineScatterCandleRadarRenderer.swift; sourceTree = "<group>"; };
@@ -1259,6 +1261,7 @@
 				2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */,
 				61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */,
 				613ED77B22E05E8F0063B10B /* WWMMeditationHistoryListData.swift */,
+				613ED77D22E0AE910063B10B /* WWMPodCastData.swift */,
 				2EC81C5B21E777A7003B0EEE /* adobe.svg */,
 				2EC81C5721E75444003B0EEE /* MoodMeterData.geojson */,
 				2E4371D02203033300EF5D62 /* MeditationData.geojson */,
@@ -2504,6 +2507,7 @@
 				61416ECA22BBB45600C9339E /* AxisBase.swift in Sources */,
 				2EA9E81F225614BB00E2D73D /* DBJournalData+CoreDataProperties.swift in Sources */,
 				2E93D2D821F1B92B00163E57 /* WWMStartTimerVC.swift in Sources */,
+				613ED77E22E0AE910063B10B /* WWMPodCastData.swift in Sources */,
 				2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */,
 				61416E2E22BBB23B00C9339E /* XAxisRenderer.swift in Sources */,
 				61416F2722BBB53000C9339E /* ILineScatterCandleRadarChartDataSet.swift in Sources */,

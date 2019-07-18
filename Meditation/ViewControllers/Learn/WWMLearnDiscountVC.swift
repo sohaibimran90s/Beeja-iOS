@@ -22,6 +22,5 @@ class WWMLearnDiscountVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        self.tabBarController?.tabBar.isHidden = false
     }
 }

@@ -64,7 +64,7 @@ class WWMResetPasswordVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)
-                WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as! String , title: kAlertTitle)
+                WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as? String ?? "Unauthorized request" , title: kAlertTitle)
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{

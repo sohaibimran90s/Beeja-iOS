@@ -118,9 +118,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
-                    self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                    self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as! Int)")
-                    self.appPreference.setUserName(value: userProfile["name"] as! String)
+                    self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
@@ -132,7 +132,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     vc.value = "SignupLetsStart"
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
                 
                 

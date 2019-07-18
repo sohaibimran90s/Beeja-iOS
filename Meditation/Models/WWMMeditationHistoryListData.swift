@@ -34,8 +34,10 @@ class WWMMeditationHistoryListData: NSObject{
         
         if let time = json["time"] as? [String: Any]{
             self.date = time["date"] as? String ?? ""
-            self.timezone = time["timezone"] as? String ?? ""
-            self.timezone_type = time["timezone_type"] as? Int ?? 0
+            if let timezone = time["timezone"] as? [String: Any]{
+                self.timezone = timezone["timezone"] as? String ?? ""
+                self.timezone_type = timezone["timezone_type"] as? Int ?? 0
+            }
         }
     }
 }

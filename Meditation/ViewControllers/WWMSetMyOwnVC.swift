@@ -220,7 +220,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                     }
                     
                 }else {
-                     WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
+                     WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "", title: kAlertTitle)
                      //WWMHelperClass.dismissSVHud()
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                 }
@@ -266,7 +266,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                             }
                         }
                     }else {
-                        WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
+                        WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "", title: kAlertTitle)
                     }
                 
             }else {

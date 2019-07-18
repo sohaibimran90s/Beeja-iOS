@@ -16,7 +16,6 @@ class WWMLearnStepListVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBarController?.tabBar.isHidden = true
         getLearnSetpsAPI()
     }
     

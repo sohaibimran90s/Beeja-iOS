@@ -19,7 +19,6 @@ class WWMBaseViewController: UIViewController {
 
         self.setUserDataFromPreference()
         
-        // Do any additional setup after loading the view.
     }
     
     func setUserDataFromPreference() {
@@ -29,12 +28,10 @@ class WWMBaseViewController: UIViewController {
     }
     
     func setNavigationBar(isShow:Bool,title:String){
-        self.title = title
+        self.navigationItem.title = title
         self.navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#292178")
         self.navigationController?.navigationItem.backBarButtonItem?.title = ""
         self.navigationController?.navigationBar.tintColor = UIColor.white
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
 
         if isShow {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -52,7 +49,7 @@ class WWMBaseViewController: UIViewController {
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
         sideMenuBtn.contentMode = .scaleAspectFit
         
-        var leftTitle = UIButton.init()
+        let leftTitle = UIButton.init()
         let barButtonPracticalSpiritual = UIButton.init()
         let barButtonPracticalSpiritualImage = UIButton.init()
         

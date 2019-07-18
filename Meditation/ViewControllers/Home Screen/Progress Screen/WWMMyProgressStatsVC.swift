@@ -119,6 +119,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewAvMinutes.maxValue = 100
         self.viewDays.maxValue = 100
         
+        scrollView.setContentOffset(.zero, animated: true)
+        
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
         if self.appPreffrence.getType() == "timer"{

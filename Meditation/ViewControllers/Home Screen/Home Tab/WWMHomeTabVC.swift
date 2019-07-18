@@ -26,18 +26,39 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var btnBuyNow: UIButton!
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
     var yaxis: CGFloat = 540
     
+    let dateFormatter = DateFormatter()
+    var currentDateString: String = ""
+    var currentDate: Date!
+
     var inviteGiftPopUp = WWMHomeGiftPopUp()
     var data: [WWMMeditationHistoryListData] = []
+    var podData: [WWMPodCastData] = []
+    
+    var id: [Int] = [1, 1, 1, 1]
+    var duration: [Int] = [4144, 1564, 3947, 3000]
+    var podcastTitle: [String] = ["Will Williams Podcast with Howard Donald from Take That", "Will Williams Podcast with Madeleine Shaw", "", ""]
 
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.podData = []
+        self.podcastData()
+        
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        self.currentDateString = dateFormatter.string(from: Date())
+        self.currentDate = dateFormatter.date(from: currentDateString)!
+
+
         self.backViewTableView.layer.cornerRadius = 8
         self.btnBuyNow.layer.borderWidth = 2
         self.btnBuyNow.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
@@ -57,14 +78,15 @@ class WWMHomeTabVC: WWMBaseViewController {
         //self.navigationController?.isNavigationBarHidden = true
         self.setNavigationBar(isShow: false, title: "")
         
+        scrollView.setContentOffset(.zero, animated: true)
+        
         self.lblName.alpha = 0
         self.lblStartedText.alpha = 0
         self.lblIntroText.alpha = 0
         self.imgPlayIcon.alpha = 0
         self.imgGiftIcon.alpha = 0
         
-        //self.meditationHistoryListAPI()
-        self.medHisViewHeightConstraint.constant = 416
+        self.meditationHistoryListAPI()
         self.animatedImg()
         self.animatedlblName()
     }
@@ -194,6 +216,19 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.inviteGiftPopUp.removeFromSuperview()
     }
     
+    func podcastData(){
+       let podcast1 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Howard Donald from Take That", duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
+        let podcast2 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Madeleine Shaw", duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
+        let podcast3 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Sam Branson", duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
+        let podcast4 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Jasmine Hemsley", duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
+        
+        self.podData.append(podcast1)
+        self.podData.append(podcast2)
+        self.podData.append(podcast3)
+        self.podData.append(podcast4)
+        
+        self.tableView.reloadData()
+    }
     
     func meditationHistoryListAPI() {
         
@@ -234,11 +269,22 @@ class WWMHomeTabVC: WWMBaseViewController {
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
+    
+    func secondsToMinutesSeconds (second : Int) -> String {
+        return String.init(format: "%02d:%02d", second/60,second%60)
+    }
+    
+    @IBAction func btnPodcastShowAllClicked(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPodcastListVC") as! WWMPodcastListVC
+        
+        vc.podData = self.podData
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -246,16 +292,31 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         cell.layer.cornerRadius = 8
         
-//        if self.data[indexPath.row].image == ""{
-//            cell.imgTitle.image = UIImage(named: "rectangle-1")
-//        }else{
-//            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
-//        }
-//
-//        cell.lblTitle.text = self.data[indexPath.row].title
-//        cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
-//        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
-//        cell.lblMin.text = "\(self.data[indexPath.row].duration/60)"
+        if self.data[indexPath.row].image == ""{
+            cell.imgTitle.image = UIImage(named: "rectangle-1")
+        }else{
+            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
+        }
+
+        cell.lblTitle.text = self.data[indexPath.row].title
+        cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+        cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
+        
+        
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        
+        let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
+        print("expireDate***.. \(expireDate)")
+        print("currentdate***.. \(self.currentDate)")
+        print("date***.. \(self.data[indexPath.row].date)")
+        let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
+        let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
+        let min =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).minute ?? 0
+        let sec =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).second ?? 0
+        print("day..... \(day) hour..... \(hour) min..... \(min) sec..... \(sec)")
+        
         
         return cell
     }
@@ -272,11 +333,20 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
 extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.podData.count - 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
+        
+        cell.lblTitle.text = self.podData[indexPath.row].title
+        let data = self.podData[indexPath.row]
+        let duration = secondsToMinutesSeconds(second: data.duration)
+        cell.lblTime.text = "\(duration)"
+        
+        let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
+        data.player = AVPlayer.init(playerItem: playerItem)
+        
         return cell
     }
     
@@ -286,7 +356,29 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPodcastListVC") as! WWMPodcastListVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+        let data = self.podData[indexPath.row]
+        
+        if !data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "pauseAudio")
+            data.player.play()
+            data.isPlay = true
+        }else{
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+            data.player.pause()
+            data.isPlay = false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+        let data = self.podData[indexPath.row]
+        
+        if data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+            data.player.pause()
+            data.isPlay = false
+        }
     }
 }

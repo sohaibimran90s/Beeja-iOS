@@ -191,9 +191,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
-                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
-                        self.appPreference.setUserName(value: userProfile["name"] as! String)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
+                        self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
@@ -206,7 +206,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                         }
                     }
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
             }else {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
