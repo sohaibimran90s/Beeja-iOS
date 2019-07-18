@@ -9,12 +9,12 @@
 import UIKit
 
 class WWMHomeMedHistoryCVC: UICollectionViewCell {
-    @IBOutlet weak var heartImg: UIImageView!
-    @IBOutlet weak var heartLbl: UILabel!
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblSubTitle: UILabel!
-    @IBOutlet weak var lblMin: UILabel!
-    @IBOutlet weak var lblHr: UILabel!
-    @IBOutlet weak var imgTitle: UIImageView!
+//    @IBOutlet weak var heartImg: UIImageView!
+//    @IBOutlet weak var heartLbl: UILabel!
+//    @IBOutlet weak var lblTitle: UILabel!
+//    @IBOutlet weak var lblSubTitle: UILabel!
+//    @IBOutlet weak var lblMin: UILabel!
+//    @IBOutlet weak var lblHr: UILabel!
+//    @IBOutlet weak var imgTitle: UIImageView!
 
 }

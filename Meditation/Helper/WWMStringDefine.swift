@@ -113,6 +113,8 @@ let URL_GETGUIDEDDATA                 = URL_BASE + "guidedData"//
 
 let URL_GETGUIDEDAudio                = URL_BASE + "guidedAudio"//
 
+let URL_MEDITATIONHISTORY          = URL_BASE + "meditationHistory"
+
 
 
 /************************************************/

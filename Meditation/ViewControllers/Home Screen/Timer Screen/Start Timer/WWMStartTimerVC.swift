@@ -32,6 +32,15 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
+    @IBOutlet weak var backView: UIView!
+
+    
+//    animationView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+//    animationView.center = self.view.center
+//    animationView.contentMode = .scaleAspectFill
+//    animationView.loopMode = .loop
+//    backView.insertSubview(animationView, belowSubview: viewPause)
+//    animationView.play()
     
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()
@@ -39,19 +48,43 @@ class WWMStartTimerVC: WWMBaseViewController {
     var timer1 = Timer()
     var animateBool: Int = 0
     
-    var animationView = AnimationView()
-   
+    var animationViewMed = AnimationView()
+    var animationViewPrep = AnimationView()
+    var animationViewRest = AnimationView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        animationView = AnimationView(name: "final1")
-        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
-        animationView.center = self.view.center
-        animationView.contentMode = .scaleAspectFill
-        animationView.loopMode = .loop
-        view.insertSubview(animationView, belowSubview: viewPause)
+        animationViewMed = AnimationView(name: "final1")
+        animationViewMed.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        animationViewMed.center = self.view.center
+        animationViewMed.contentMode = .scaleAspectFill
+        animationViewMed.loopMode = .loop
+        view.insertSubview(animationViewMed, belowSubview: viewPause)
         
-        animationView.play()
+        
+        
+        animationViewRest = AnimationView(name: "circle_loader")
+        animationViewRest.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        animationViewRest.center = self.view.center
+        animationViewRest.contentMode = .scaleAspectFill
+        animationViewRest.loopMode = .loop
+        view.insertSubview(animationViewRest, belowSubview: viewPause)
+        
+        animationViewPrep = AnimationView(name: "all_discs")
+        animationViewPrep.frame = CGRect(x: 0, y: 0, width: self.backView.frame.size.width, height: self.view.frame.size.height)
+        animationViewPrep.center = self.view.center
+        animationViewPrep.contentMode = .scaleAspectFill
+        animationViewPrep.loopMode = .loop
+        backView.insertSubview(animationViewPrep, belowSubview: viewPause)
+        
+        
+        animationViewPrep.isHidden = false
+        animationViewMed.isHidden = true
+        animationViewRest.isHidden = true
+        
+        animationViewPrep.play()
+
         spinnerImage.isHidden = true
         self.setUpView()
         
@@ -143,7 +176,9 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
-        self.animationView.pause()
+        self.animationViewMed.pause()
+        self.animationViewPrep.pause()
+        self.animationViewRest.pause()
         self.updateTimer()
     }
     
@@ -151,9 +186,13 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         print("App moved to background!")
         if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
-            self.animationView.pause()
+            self.animationViewMed.pause()
+            self.animationViewPrep.pause()
+            self.animationViewRest.pause()
         }else{
-            self.animationView.play()
+            self.animationViewMed.play()
+            self.animationViewPrep.play()
+            self.animationViewRest.play()
         }
         KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
     }
@@ -217,8 +256,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
-            self.animationView.pause()
-            
+            self.animationViewMed.pause()
+            self.animationViewPrep.pause()
+            self.animationViewRest.pause()
             
             self.animateBool = 1
             self.pauseAnimation()
@@ -282,6 +322,12 @@ class WWMStartTimerVC: WWMBaseViewController {
         if timerType == "Prep"{
             if self.seconds < 1 {
                 if self.meditationTime > 0 {
+                    self.animationViewPrep.stop()
+                    self.animationViewPrep.isHidden = true
+                    self.animationViewMed.isHidden = false
+                    self.animationViewRest.isHidden = true
+                    self.animationViewMed.play()
+                    
                     self.lblTimerType.text = "Meditation"
                     self.timerType = "Meditation"
                     self.seconds = self.meditationTime
@@ -312,6 +358,13 @@ class WWMStartTimerVC: WWMBaseViewController {
         }else if timerType == "Meditation"{
             if self.seconds < 1 {
                 if self.restTime > 0 {
+                    self.animationViewMed.stop()
+                    self.animationViewPrep.stop()
+                    self.animationViewMed.isHidden = true
+                    self.animationViewPrep.isHidden = true
+                    self.animationViewRest.isHidden = false
+                    self.animationViewRest.play()
+                    
                     self.lblTimerType.text = "Rest"
                     self.timerType = "Rest"
                     self.seconds = self.restTime
@@ -368,7 +421,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
-            self.animationView.pause()
+            self.animationViewMed.pause()
+            self.animationViewPrep.pause()
+            self.animationViewRest.pause()
             
             self.animateBool = 1
             self.pauseAnimation()
@@ -386,7 +441,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             if self.isAmbientSoundPlay {
                 self.playerAmbient.play()
             }
-            self.animationView.play()
+            self.animationViewMed.play()
+            self.animationViewPrep.play()
+            self.animationViewRest.play()
             
             if self.animateBool == 1{
                 self.resumeAnimation()
@@ -431,7 +488,9 @@ class WWMStartTimerVC: WWMBaseViewController {
         if self.isAmbientSoundPlay {
             self.playerAmbient.play()
         }
-        self.animationView.play()
+        self.animationViewMed.play()
+        self.animationViewPrep.play()
+        self.animationViewRest.play()
         alertPopupView.removeFromSuperview()
     }
     
@@ -463,7 +522,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             timer.invalidate()
             self.isStop = true
             self.playerAmbient.stop()
-            self.animationView.pause()
+            self.animationViewMed.pause()
+            self.animationViewPrep.pause()
+            self.animationViewRest.pause()
         }
         
         self.animateBool = 1

@@ -14,4 +14,14 @@ class WWMLearnDiscountVC: WWMBaseViewController {
         super.viewDidLoad()
 
     }
+    
+    @IBAction func btnProceedClicked(_ sender: UIButton) {
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        self.tabBarController?.tabBar.isHidden = false
+    }
 }

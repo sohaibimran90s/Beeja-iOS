@@ -38,7 +38,7 @@ class WWMChooseMantraVC: WWMBaseViewController {
     
     @IBAction func btnSkipClicked(_ sender: UIButton) {
         
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMListenMantraVC") as! WWMListenMantraVC
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraListVC") as! WWMChooseMantraListVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -17,7 +17,7 @@ class WWMListenMantraVC: WWMBaseViewController {
     }
     
     @IBAction func btnPlayPauseClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraListVC") as! WWMChooseMantraListVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

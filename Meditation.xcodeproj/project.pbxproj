@@ -215,6 +215,12 @@
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
 		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
+		613C6F6D22DEF9E70012113B /* WWMChooseMantraListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F6C22DEF9E70012113B /* WWMChooseMantraListVC.swift */; };
+		613C6F6F22DEFA320012113B /* WWMChooseMantraListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F6E22DEFA320012113B /* WWMChooseMantraListTVC.swift */; };
+		613C6F7122DF0C900012113B /* WWMFAQsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F7022DF0C900012113B /* WWMFAQsVC.swift */; };
+		613C6F7322DF0CB70012113B /* WWMFAQsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F7222DF0CB70012113B /* WWMFAQsTVC.swift */; };
+		613C6F7722DF32040012113B /* WWMLearnCongratsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */; };
+		613C6F7922DF3D640012113B /* all_discs.json in Resources */ = {isa = PBXBuildFile; fileRef = 613C6F7822DF3D630012113B /* all_discs.json */; };
 		613F081122CF324F0042515C /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081022CF324F0042515C /* register.json */; };
 		613F081322CF356E0042515C /* hand.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081222CF356E0042515C /* hand.json */; };
 		61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */; };
@@ -363,12 +369,10 @@
 		61416F5322BBB5B500C9339E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F4F22BBB5B500C9339E /* ChartView.swift */; };
 		61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F5422BBB5E500C9339E /* RippleEffect.swift */; };
 		61426B1D22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */; };
-		61426B2122DC5304006FE825 /* circle loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1E22DC5303006FE825 /* circle loader.json */; };
+		61426B2122DC5304006FE825 /* circle_loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1E22DC5303006FE825 /* circle_loader.json */; };
 		61426B2222DC5304006FE825 /* loop2.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1F22DC5303006FE825 /* loop2.json */; };
 		61426B2322DC5304006FE825 /* float3.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B2022DC5304006FE825 /* float3.json */; };
 		61426B2522DC5E51006FE825 /* WWMPodcastListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B2422DC5E51006FE825 /* WWMPodcastListVC.swift */; };
-		61426B2722DC9F0D006FE825 /* WWMLearnCongratsPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B2622DC9F0D006FE825 /* WWMLearnCongratsPopUp.swift */; };
-		61426B2922DC9F1F006FE825 /* WWMLearnCongratsPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61426B2822DC9F1F006FE825 /* WWMLearnCongratsPopUp.xib */; };
 		61426B2B22DCA9E0006FE825 /* WWMChooseMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B2A22DCA9E0006FE825 /* WWMChooseMantraVC.swift */; };
 		6142C52622B0D7B8009300BB /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 6142C52522B0D7B8009300BB /* loader.json */; };
 		61442939224B4BC200C6682C /* WWMPromptMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442938224B4BC200C6682C /* WWMPromptMsg.swift */; };
@@ -380,6 +384,8 @@
 		6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */; };
 		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
+		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
+		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
@@ -629,6 +635,12 @@
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
 		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
+		613C6F6C22DEF9E70012113B /* WWMChooseMantraListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMChooseMantraListVC.swift; sourceTree = "<group>"; };
+		613C6F6E22DEFA320012113B /* WWMChooseMantraListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMChooseMantraListTVC.swift; sourceTree = "<group>"; };
+		613C6F7022DF0C900012113B /* WWMFAQsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsVC.swift; sourceTree = "<group>"; };
+		613C6F7222DF0CB70012113B /* WWMFAQsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsTVC.swift; sourceTree = "<group>"; };
+		613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnCongratsVC.swift; sourceTree = "<group>"; };
+		613C6F7822DF3D630012113B /* all_discs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = all_discs.json; sourceTree = "<group>"; };
 		613F081022CF324F0042515C /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
 		613F081222CF356E0042515C /* hand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hand.json; sourceTree = "<group>"; };
 		61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineScatterCandleRadarRenderer.swift; sourceTree = "<group>"; };
@@ -778,12 +790,10 @@
 		61416F5422BBB5E500C9339E /* RippleEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RippleEffect.swift; sourceTree = "<group>"; };
 		61416F5622BBBA1800C9339E /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnLetsMeditateVC.swift; sourceTree = "<group>"; };
-		61426B1E22DC5303006FE825 /* circle loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "circle loader.json"; sourceTree = "<group>"; };
+		61426B1E22DC5303006FE825 /* circle_loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = circle_loader.json; sourceTree = "<group>"; };
 		61426B1F22DC5303006FE825 /* loop2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loop2.json; sourceTree = "<group>"; };
 		61426B2022DC5304006FE825 /* float3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = float3.json; sourceTree = "<group>"; };
 		61426B2422DC5E51006FE825 /* WWMPodcastListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPodcastListVC.swift; sourceTree = "<group>"; };
-		61426B2622DC9F0D006FE825 /* WWMLearnCongratsPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnCongratsPopUp.swift; sourceTree = "<group>"; };
-		61426B2822DC9F1F006FE825 /* WWMLearnCongratsPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMLearnCongratsPopUp.xib; sourceTree = "<group>"; };
 		61426B2A22DCA9E0006FE825 /* WWMChooseMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMChooseMantraVC.swift; sourceTree = "<group>"; };
 		6142C52522B0D7B8009300BB /* loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
 		61442938224B4BC200C6682C /* WWMPromptMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPromptMsg.swift; sourceTree = "<group>"; };
@@ -795,6 +805,8 @@
 		6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMilestonePopUp.xib; sourceTree = "<group>"; };
 		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
+		6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListVC.swift; sourceTree = "<group>"; };
+		6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListTVC.swift; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
@@ -1086,8 +1098,6 @@
 				6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */,
 				613071F722D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib */,
 				613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */,
-				61426B2622DC9F0D006FE825 /* WWMLearnCongratsPopUp.swift */,
-				61426B2822DC9F1F006FE825 /* WWMLearnCongratsPopUp.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -1199,7 +1209,8 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				61426B1E22DC5303006FE825 /* circle loader.json */,
+				613C6F7822DF3D630012113B /* all_discs.json */,
+				61426B1E22DC5303006FE825 /* circle_loader.json */,
 				61426B2022DC5304006FE825 /* float3.json */,
 				61426B1F22DC5303006FE825 /* loop2.json */,
 				61083F4522D37B6E001B770D /* login11.json */,
@@ -1306,6 +1317,9 @@
 				2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */,
 				61083F3F22D32E23001B770D /* WWMMilestoneCell1.swift */,
 				61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */,
+				6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */,
+				613C6F6E22DEFA320012113B /* WWMChooseMantraListTVC.swift */,
+				613C6F7222DF0CB70012113B /* WWMFAQsTVC.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -1493,6 +1507,10 @@
 				612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */,
 				612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */,
 				612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */,
+				6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */,
+				613C6F6C22DEF9E70012113B /* WWMChooseMantraListVC.swift */,
+				613C6F7022DF0C900012113B /* WWMFAQsVC.swift */,
+				613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -1977,7 +1995,6 @@
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
 				2EACF986225375E700171688 /* public.pem in Resources */,
-				61426B2922DC9F1F006FE825 /* WWMLearnCongratsPopUp.xib in Resources */,
 				2EACF985225375E700171688 /* private.pem in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
@@ -1986,6 +2003,7 @@
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
 				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
+				613C6F7922DF3D640012113B /* all_discs.json in Resources */,
 				613071FC22D9EF40009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav in Resources */,
 				61426B2222DC5304006FE825 /* loop2.json in Resources */,
 				613F081122CF324F0042515C /* register.json in Resources */,
@@ -2004,7 +2022,7 @@
 				613071EE22D86FD2009CBCA1 /* walkthough.mp4 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
-				61426B2122DC5304006FE825 /* circle loader.json in Resources */,
+				61426B2122DC5304006FE825 /* circle_loader.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2222,8 @@
 				2E25CDC3222674FD002BDE15 /* WWMTabBarItem.swift in Sources */,
 				61416E8822BBB3B400C9339E /* ChartViewBase.swift in Sources */,
 				61416EB322BBB42600C9339E /* Platform.swift in Sources */,
+				613C6F7322DF0CB70012113B /* WWMFAQsTVC.swift in Sources */,
+				613C6F7722DF32040012113B /* WWMLearnCongratsVC.swift in Sources */,
 				61416E4B22BBB29500C9339E /* TriangleShapeRenderer.swift in Sources */,
 				61416F0722BBB4C800C9339E /* LineRadarChartDataSet.swift in Sources */,
 				2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */,
@@ -2237,6 +2257,7 @@
 				2EE247E121E6315400857C25 /* PieChart.swift in Sources */,
 				613071F622D9AED1009CBCA1 /* WWMWalkThoghVC.swift in Sources */,
 				613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */,
+				6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */,
 				2E25CDC522267DAF002BDE15 /* WWMJournalProgressData.swift in Sources */,
 				6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */,
 				61416EC522BBB45600C9339E /* YAxis.swift in Sources */,
@@ -2280,7 +2301,6 @@
 				61416F2922BBB53000C9339E /* IRadarChartDataSet.swift in Sources */,
 				61416E7822BBB37C00C9339E /* RadarHighlighter.swift in Sources */,
 				61416E8C22BBB3B400C9339E /* BarChartView.swift in Sources */,
-				61426B2722DC9F0D006FE825 /* WWMLearnCongratsPopUp.swift in Sources */,
 				61416EFC22BBB4C800C9339E /* BubbleChartDataEntry.swift in Sources */,
 				61416ED922BBB47A00C9339E /* AnimatedMoveViewJob.swift in Sources */,
 				61416EA422BBB40300C9339E /* IValueFormatter.swift in Sources */,
@@ -2293,6 +2313,7 @@
 				613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */,
 				2EE247E621E6315400857C25 /* CGPoint.swift in Sources */,
 				6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */,
+				6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */,
 				61416F5222BBB5B500C9339E /* ChartApi.swift in Sources */,
 				2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */,
 				2E4371D32203039E00EF5D62 /* WWMMeditationData.swift in Sources */,
@@ -2392,6 +2413,7 @@
 				2EC81C5E21E7781A003B0EEE /* WWMWebViewVC.swift in Sources */,
 				6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */,
 				61416E9122BBB3B400C9339E /* RadarChartView.swift in Sources */,
+				613C6F6D22DEF9E70012113B /* WWMChooseMantraListVC.swift in Sources */,
 				61416ECF22BBB45600C9339E /* XAxis.swift in Sources */,
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
@@ -2432,6 +2454,7 @@
 				2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */,
 				61416E6322BBB31400C9339E /* XAxisRendererRadarChart.swift in Sources */,
 				61416EA322BBB40300C9339E /* IAxisValueFormatter.swift in Sources */,
+				613C6F7122DF0C900012113B /* WWMFAQsVC.swift in Sources */,
 				61416E7122BBB37C00C9339E /* PieRadarHighlighter.swift in Sources */,
 				612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */,
 				61416ECB22BBB45600C9339E /* Legend.swift in Sources */,
@@ -2487,6 +2510,7 @@
 				61416F0D22BBB4C800C9339E /* RadarChartData.swift in Sources */,
 				61416F0C22BBB4C800C9339E /* ScatterChartData.swift in Sources */,
 				61083F4022D32E23001B770D /* WWMMilestoneCell1.swift in Sources */,
+				613C6F6F22DEFA320012113B /* WWMChooseMantraListTVC.swift in Sources */,
 				2E316FE02229346F00018538 /* WWMSetMyOwnVC.swift in Sources */,
 				61416EC622BBB45600C9339E /* LegendEntry.swift in Sources */,
 				2E93D2FF21F5FFC300163E57 /* WWMDatabase.xcdatamodeld in Sources */,

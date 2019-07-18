@@ -25,6 +25,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var btnPodcastShowAll: UIButton!
     @IBOutlet weak var btnBuyNow: UIButton!
     @IBOutlet weak var backViewTableView: UIView!
+    @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
 
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
@@ -82,25 +83,25 @@ class WWMHomeTabVC: WWMBaseViewController {
             switch UIScreen.main.nativeBounds.height {
             case 1136:
                 print("iPhone 5 or 5S or 5C")
-                yaxis = 446
+                yaxis = 476
             case 1334:
                 print("iPhone 6/6S/7/8")
-                yaxis = 540
+                yaxis = 570
             case 2208:
                 print("iPhone 6+/6S+/7+/8+")
-                yaxis = 610
+                yaxis = 640
             case 2436:
                 print("iPhone X, XS")
-                yaxis = 630
+                yaxis = 660
             case 2688:
                 print("iPhone XS Max")
-                yaxis = 710
+                yaxis = 740
             case 1792:
                 print("iPhone XR")
-                yaxis = 710
+                yaxis = 740
             default:
                 print("unknown")
-                yaxis = 540
+                yaxis = 570
             }
             
             self.viewVideoHeightConstraint.constant = yaxis
@@ -190,11 +191,37 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.inviteGiftPopUp.removeFromSuperview()
     }
     
+    
+    func meditationHistoryListAPI() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        let param = ["user_id": self.appPreference.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+
+                    print("result.... \(result)")
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                }
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
 }
 
 extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -209,7 +236,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

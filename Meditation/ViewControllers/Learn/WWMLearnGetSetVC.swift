@@ -14,4 +14,11 @@ class WWMLearnGetSetVC: WWMBaseViewController {
         super.viewDidLoad()
         
     }
+    
+    @IBAction func btnSkipClicked(_ sender: UIButton) {
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
 }
