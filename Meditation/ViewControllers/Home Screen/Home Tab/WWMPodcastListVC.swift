@@ -29,7 +29,9 @@ class WWMPodcastListVC: WWMBaseViewController {
                 data.player.pause()
             }
         }
-      self.navigationController?.popViewController(animated: true)
+        
+        self.tableView.reloadData()
+        self.navigationController?.popViewController(animated: true)
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -50,15 +52,27 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
         let duration = secondsToMinutesSeconds(second: data.duration)
         cell.lblTime.text = "\(duration)"
         
-        let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
-        data.player = AVPlayer.init(playerItem: playerItem)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
+            data.player = AVPlayer(playerItem:playerItem)
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
         
-      //  WWMHelperClass.hideLoaderAnimate(on: self.view)
+        if !data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+        }else{
+            cell.playPauseImg.image = UIImage(named: "pauseAudio")
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 90
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

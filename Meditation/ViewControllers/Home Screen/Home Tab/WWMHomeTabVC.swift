@@ -100,6 +100,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.center.y = self.imgPlayIcon.center.y + 24
         
         self.introView.isHidden = false
+        for data in self.podData {
+            if data.isPlay {
+                data.player.pause()
+                data.isPlay = false
+            }
+        }
+        self.tableView.reloadData()
     }
     
     //MARK: get screen size for setting video according to device
@@ -343,10 +350,21 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         let data = self.podData[indexPath.row]
         let duration = secondsToMinutesSeconds(second: data.duration)
         cell.lblTime.text = "\(duration)"
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
+            data.player = AVPlayer(playerItem:playerItem)
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
         
-        let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
-        data.player = AVPlayer.init(playerItem: playerItem)
-        
+        if !data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+        }else{
+            cell.playPauseImg.image = UIImage(named: "pauseAudio")
+        }
         return cell
     }
     
