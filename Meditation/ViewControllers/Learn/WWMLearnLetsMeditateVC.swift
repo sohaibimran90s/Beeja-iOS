@@ -12,6 +12,8 @@ class WWMLearnLetsMeditateVC: WWMBaseViewController {
 
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var lblLetsMeditate: UILabel!
+    
+    var settingData = DBSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +65,8 @@ class WWMLearnLetsMeditateVC: WWMBaseViewController {
             self.lblLetsMeditate.alpha = 1
             self.lblLetsMeditate.center.y = self.lblLetsMeditate.center.y - 30
         }, completion: { _ in
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnTimerVC") as! WWMLearnTimerVC
                 self.navigationController?.pushViewController(vc, animated: false)
             })
         })

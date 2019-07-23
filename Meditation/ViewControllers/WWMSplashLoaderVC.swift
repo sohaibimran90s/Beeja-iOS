@@ -52,6 +52,8 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 //            print(error)
 //        }
 
+        WWMHelperClass.selectedType = ""
+        KUSERDEFAULTS.set(false, forKey: "defaultSelection")
         self.imageViewLoader.isHidden = true
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")

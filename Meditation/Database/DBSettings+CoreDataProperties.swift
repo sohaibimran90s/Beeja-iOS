@@ -32,6 +32,9 @@ extension DBSettings {
     @NSManaged public var restTime: String?
     @NSManaged public var startChime: String?
     @NSManaged public var meditationData: NSOrderedSet?
+    @NSManaged public var mantraID: Int
+    @NSManaged public var isLearnReminder: Bool
+    @NSManaged public var learnReminderTime: String?
 
 }
 

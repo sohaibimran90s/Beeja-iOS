@@ -15,7 +15,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var seconds = 0
     var timer = Timer()
     var isStop = false
-    // var player = AVAudioPlayer()
     var player = AVPlayer()
     var settingData = DBSettings()
     var audioData = WWMGuidedAudioData()
@@ -63,12 +62,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
-        //  self.downloadFileFromURL(url: URL.init(string: self.audioData.audio_Url)!)
-        //self.playAudioFile(fileName: URL.init(string: self.audioData.audio_Url)!)
+
         self.play(url: URL.init(string: self.audioData.audio_Url)!)
-        //self.lblTimer.text = self.secondsToMinutesSeconds(second: self.audioData.audio_Duration)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
+
         print(self.appPreference.getGuideType())
         if self.appPreference.getGuideType() == "practical" {
             self.lblGuidedFlowType.text = "Practical ~ \(self.cat_Name) ~ \(self.emotion_Name)"
@@ -80,8 +78,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.isFavourite = true
             self.rating = 1
         }
-        
-       // self.seconds = self.audioData.audio_Duration
     }
     
     
@@ -231,7 +227,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         if isPlayer {
-            
             let remainingTime = self.seconds - Int(self.player.currentTime().seconds)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
             if remainingTime == 0 {

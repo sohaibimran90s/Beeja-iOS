@@ -383,6 +383,10 @@
 		6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6144293E224B764600C6682C /* WWMAlertPopUp.swift */; };
 		61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61442940224B82D300C6682C /* WWMJouranlPopUp.xib */; };
 		61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442942224B831200C6682C /* WWMJouranlPopUp.swift */; };
+		614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */; };
+		614678E522E44E8D006AA6E9 /* WWMMantraData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E422E44E8D006AA6E9 /* WWMMantraData.swift */; };
+		614678E722E4649E006AA6E9 /* WWMLearnTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E622E4649E006AA6E9 /* WWMLearnTimerVC.swift */; };
+		614678E922E4BEA8006AA6E9 /* WWMFAQsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */; };
 		6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */; };
 		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
@@ -806,6 +810,10 @@
 		6144293E224B764600C6682C /* WWMAlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertPopUp.swift; sourceTree = "<group>"; };
 		61442940224B82D300C6682C /* WWMJouranlPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMJouranlPopUp.xib; sourceTree = "<group>"; };
 		61442942224B831200C6682C /* WWMJouranlPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJouranlPopUp.swift; sourceTree = "<group>"; };
+		614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepsListData.swift; sourceTree = "<group>"; };
+		614678E422E44E8D006AA6E9 /* WWMMantraData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMantraData.swift; sourceTree = "<group>"; };
+		614678E622E4649E006AA6E9 /* WWMLearnTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnTimerVC.swift; sourceTree = "<group>"; };
+		614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsData.swift; sourceTree = "<group>"; };
 		6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMilestonePopUp.xib; sourceTree = "<group>"; };
 		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
@@ -1262,6 +1270,8 @@
 				61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */,
 				613ED77B22E05E8F0063B10B /* WWMMeditationHistoryListData.swift */,
 				613ED77D22E0AE910063B10B /* WWMPodCastData.swift */,
+				614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */,
+				614678E422E44E8D006AA6E9 /* WWMMantraData.swift */,
 				2EC81C5B21E777A7003B0EEE /* adobe.svg */,
 				2EC81C5721E75444003B0EEE /* MoodMeterData.geojson */,
 				2E4371D02203033300EF5D62 /* MeditationData.geojson */,
@@ -1505,6 +1515,7 @@
 		613071FF22D9FCA4009CBCA1 /* Learn */ = {
 			isa = PBXGroup;
 			children = (
+				614678E622E4649E006AA6E9 /* WWMLearnTimerVC.swift */,
 				6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */,
 				6130720022D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift */,
 				6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */,
@@ -1517,6 +1528,7 @@
 				613C6F6C22DEF9E70012113B /* WWMChooseMantraListVC.swift */,
 				613C6F7022DF0C900012113B /* WWMFAQsVC.swift */,
 				613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */,
+				614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -2324,6 +2336,7 @@
 				2EA6DB0821C3B287006A8E1D /* WWMMeditationLevelVC.swift in Sources */,
 				2E4371D32203039E00EF5D62 /* WWMMeditationData.swift in Sources */,
 				2E326ECD222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift in Sources */,
+				614678E922E4BEA8006AA6E9 /* WWMFAQsData.swift in Sources */,
 				2EE247AC21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift in Sources */,
 				2EE247F321E6315400857C25 /* PieSliceData.swift in Sources */,
 				2EEF9AE3221AEC900016A77C /* DBContactUs+CoreDataProperties.swift in Sources */,
@@ -2415,6 +2428,7 @@
 				61416F0B22BBB4C800C9339E /* LineScatterCandleRadarChartDataSet.swift in Sources */,
 				61416F2822BBB53000C9339E /* ILineRadarChartDataSet.swift in Sources */,
 				61416EC922BBB45600C9339E /* IMarker.swift in Sources */,
+				614678E722E4649E006AA6E9 /* WWMLearnTimerVC.swift in Sources */,
 				2EB0865E22817069008BF6E4 /* WWMGuidedMeditationTimerVC.swift in Sources */,
 				6130720122D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift in Sources */,
 				2EC81C5E21E7781A003B0EEE /* WWMWebViewVC.swift in Sources */,
@@ -2446,6 +2460,7 @@
 				2EEF9AE1221AEC900016A77C /* DBTimerData+CoreDataClass.swift in Sources */,
 				61416E4A22BBB29500C9339E /* ChevronUpShapeRenderer.swift in Sources */,
 				61416EB622BBB42600C9339E /* Fill.swift in Sources */,
+				614678E522E44E8D006AA6E9 /* WWMMantraData.swift in Sources */,
 				2EA6DB0E21C3E2C6006A8E1D /* WWMNavigationVC.swift in Sources */,
 				2E9CCCBE225C9A8C001465AD /* AuthService.swift in Sources */,
 				61416EB722BBB42600C9339E /* Platform+Accessibility.swift in Sources */,
@@ -2524,6 +2539,7 @@
 				2E93D2FF21F5FFC300163E57 /* WWMDatabase.xcdatamodeld in Sources */,
 				61416F5122BBB5B500C9339E /* ChartFormatter.swift in Sources */,
 				61416F1922BBB4FB00C9339E /* ChartBaseDataSet.swift in Sources */,
+				614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */,
 				2EEF9AED221AEC900016A77C /* DBTimerData+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

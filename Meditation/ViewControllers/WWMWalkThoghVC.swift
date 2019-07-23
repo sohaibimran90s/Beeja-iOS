@@ -16,6 +16,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     var value: String = "help"
     var videoCompleted = 0
+    var watched_duration = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +27,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        
         
         setNavigationBar(isShow:false,title:"")
         NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
@@ -70,6 +69,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.viewVideo.stop()
         if (value == "help" || value == "learnStepList"){
             self.navigationController?.popViewController(animated: true)
+        }else if value == "learnCongrats"{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+            
+            WWMHelperClass.selectedType = "learn"
+            vc.watched_duration = self.watched_duration
+            self.navigationController?.pushViewController(vc, animated: false)
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
             self.navigationController?.pushViewController(vc, animated: true)
@@ -81,8 +86,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         if self.videoCompleted == 1{
             if value == "help"{
                 self.navigationController?.popViewController(animated: true)
-            }else if value == "learnStepList"{
-                self.navigationController?.popViewController(animated: true)
+            }else if value == "learnCongrats"{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+                
+                WWMHelperClass.selectedType = "learn"
+                vc.watched_duration = self.watched_duration
+                self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                 self.navigationController?.pushViewController(vc, animated: true)

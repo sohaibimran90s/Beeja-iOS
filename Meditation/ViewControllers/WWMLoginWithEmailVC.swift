@@ -26,7 +26,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     var tap = UITapGestureRecognizer()
     
     var isFromWelcomeBack = false
-    
+    let appPreffrence = WWMAppPreference()
+    var userEmail: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +42,24 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             
             self.btnLogin.setTitle("Next", for: .normal)
             viewContinueAsEmail.isHidden = false
-            self.lblUserName.text = self.userData.name
+            
+            print("getuserdata..... \(self.appPreffrence.getUserData())")
+            //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+            let getuserdata = self.appPreffrence.getUserData()
+            
+            if let name = getuserdata["name"] as? String{
+                self.lblUserName.text = name
+            }
+            
+            //self.lblUserLoginType.text = self.userData.email
+            //self.lblUserName.text = self.userData.name
             //self.lblUserEmail.text = self.userData.email
+            
             viewEmail.isHidden = true
             
-            let userLoginTypeArray = self.userData.email.components(separatedBy: "@")
+            if let userEmail = getuserdata["email"] as? String{
+                self.userEmail = userEmail
+            let userLoginTypeArray = userEmail.components(separatedBy: "@")
             if userLoginTypeArray.count > 1 {
                 if userLoginTypeArray[0].count > 3{
                     var myString: String = String(userLoginTypeArray[0].prefix(3))
@@ -84,13 +98,14 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                     self.lblUserEmail.text = myString
                 }else{
                     
-                    self.lblUserEmail.text = self.userData.email
+                    self.lblUserEmail.text = userEmail
                 }
                 print(userLoginTypeArray[0])
                 print(userLoginTypeArray[1])
             }else{
-                self.lblUserEmail.text = self.userData.email
+                self.lblUserEmail.text = userEmail
             }
+          }
         }else {
             viewContinueAsEmail.isHidden = true
             viewEmail.isHidden = false
@@ -173,7 +188,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "email": isFromWelcomeBack ? self.userData.email: txtViewEmail.text!,
+            "email": isFromWelcomeBack ? self.userEmail: txtViewEmail.text!,
             "password":txtViewPassword.text!,
             "deviceId": kDeviceID,
             "deviceToken" : appPreference.getDeviceToken(),
@@ -185,6 +200,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             "model": UIDevice.current.model,
             "version": UIDevice.current.systemVersion
         ]
+        
+        print("backparam... \(param)")
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 

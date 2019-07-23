@@ -125,6 +125,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    
+                    
+                    
 //                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
 //                    self.navigationController?.pushViewController(vc, animated: true)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -185,6 +188,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setUserData(value: [:])
                         
                         print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
+                        
+                        KUSERDEFAULTS.set(false, forKey: "defaultSelection")
                         
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC

@@ -16,6 +16,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
     @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var lblTextCount: UILabel!
     
+    let appPreffrence = WWMAppPreference()
+    
     var type = ""   // Pre | Post
     var prepTime = 0
     var meditationTime = 0
@@ -105,29 +107,58 @@ class WWMMoodJournalVC: WWMBaseViewController {
     func completeMeditationAPI() {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "type":self.userData.type,
-            "category_id" : self.category_Id,
-            "emotion_id" : self.emotion_Id,
-            "audio_id" : self.audio_Id,
-            "guided_type" : self.userData.guided_type,
-            "watched_duration" : self.watched_duration,
-            "rating" : self.rating,
-            "user_id":self.appPreference.getUserID(),
-            "meditation_type":type,
-            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":txtViewLog.text,
-            "prep_time":prepTime,
-            "meditation_time":meditationTime,
-            "rest_time":restTime,
-            "meditation_id": self.meditationID,
-            "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "1" : self.moodData.id,
-            ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        
+        var param: [String: Any] = [:]
+        if WWMHelperClass.selectedType == "learn"{
+            param = [
+                "type":"learn",
+                "step_id": WWMHelperClass.step_id,
+                "mantra_id": WWMHelperClass.mantra_id,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "watched_duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":txtViewLog.text,
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "1" : self.moodData.id,
+                ] as [String : Any]
+
+        }else{
+            param = [
+                "type":self.userData.type,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "watched_duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":txtViewLog.text,
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "1" : self.moodData.id,
+                ] as [String : Any]
+        }
+        
+                WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    self.appPreffrence.setSessionAvailableData(value: true)
                     self.logExperience()
                 }else {
                     self.saveToDB(param: param)
@@ -153,33 +184,34 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     func logExperience() {
         
+        if WWMHelperClass.selectedType == "learn"{
+            if WWMHelperClass.step_id == 12{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                callHomeController()
+            }
+        }else{
+            callHomeController()
+        }
+    }
+    
+    func callHomeController(){
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 4
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 4 {
+        tabController.selectedIndex = 4
+        for index in 0..<tabController.tabBar.items!.count {
+            let item = tabController.tabBar.items![index]
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+            if index == 4 {
                     item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                    }
                 }
             }
+            self.navigationController?.popToRootViewController(animated: false)
         }
-        self.navigationController?.popToRootViewController(animated: false)
-        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
 
 extension WWMMoodJournalVC: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {

@@ -11,12 +11,27 @@ import UIKit
 class WWMLearnStepListVC: WWMBaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
     var selectedIndex = 0
+    var total_paid: Int = 0
+    
+    var learnStepsListData: [LearnStepsListData] = []
+    var alertPopup = WWMAlertPopUp()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setNavigationBar(isShow: false, title: "")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.navigationController?.isNavigationBarHidden = true
         getLearnSetpsAPI()
+        self.selectedIndex = 0
+        self.tableView.reloadData()
     }
     
     @IBAction func btnIntroClicked(_ sender: UIButton) {
@@ -26,32 +41,33 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
-    ///api/v1/setps
+    //MARK: API call
     func getLearnSetpsAPI() {
         
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+        self.learnStepsListData.removeAll()
+        //WWMHelperClass.showLoaderAnimate(on: self.view)
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_STEPS, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-//                if let data = result["data"] as? [String: Any]{
-//                    if let records = data["records"] as? [[String: Any]]{
-//                        for dict in records{
-//                            let data = WWMMeditationHistoryListData(json: dict)
-//                            self.data.append(data)
-//                        }
-//                    }
-//
-//                    if self.data.count > 0{
-//                        self.medHisViewHeightConstraint.constant = 416
-//                        self.collectionView.reloadData()
-//                    }else{
-//                        self.medHisViewHeightConstraint.constant = 0
-//                    }
-//                }
+                if let total_paid = result["total_paid"] as? Int{
+                    self.total_paid = total_paid
+                }
                 
+                if let data = result["data"] as? [[String: Any]]{
+                    for json in data{
+                        let learnStepsListData = LearnStepsListData.init(json: json)
+                        self.learnStepsListData.append(learnStepsListData)
+                    }
+                }
                 
-                print("url....setps****** \(URL_STEPS)")
-                print("result....setps****** \(result)")
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                
+                self.tableView.reloadData()
+                
+                print("self.total_paid......\(self.total_paid)")
+                print("self.learnStepsListData......\(self.learnStepsListData.count)")
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -65,23 +81,40 @@ class WWMLearnStepListVC: WWMBaseViewController {
         }
     }
     
-    
     @IBAction func btnSideMenuClicked(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
         self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    func xibCall(title1: String){
+        alertPopup = UINib(nibName: "WWMAlertPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopup.lblTitle.text = title1
+        alertPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.alertPopup.removeFromSuperview()
+            }
+        }
     }
 }
 
 extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.learnStepsListData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMLearnStepListTVC") as! WWMLearnStepListTVC
         
         cell.lblNoOfSteps.layer.cornerRadius = 12
-        cell.lblStepDescription.text = "In this class we quickly get you setup with a mantric sound to play with. It will enable you to get to grips with this very easy, and effective practise. We will then guide you through the first steps of learning to become a self sufficient meditator. We will start with a simple exercise to get you in the zone, we’ll get you grounded in your body, and then teach how to work with the mantra in the most effective way."
+        cell.lblStepDescription.text = self.learnStepsListData[indexPath.row].Description
+        cell.lblNoOfSteps.text = "\(self.learnStepsListData[indexPath.row].id)"
+        cell.lblSteps.text = self.learnStepsListData[indexPath.row].step_name
+        cell.lblStepsTitle.text = self.learnStepsListData[indexPath.row].title
 
         if selectedIndex == indexPath.row{
             cell.lblStepDescription.isHidden = false
@@ -110,8 +143,20 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             cell.lblUprLine.isHidden = true
         }
         
+        
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
+        
+        if self.total_paid > 42{
+            cell.imgLock.image = UIImage(named: "")
+            cell.isUserInteractionEnabled = true
+        }else{
+            if indexPath.row > 2{
+                cell.imgLock.image = UIImage(named: "lock")
+            }else{
+                cell.imgLock.image = UIImage(named: "")
+            }
+        }
         
         return cell
     }
@@ -131,7 +176,59 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     @objc func btnProceedClicked(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        WWMHelperClass.step_audio = self.learnStepsListData[sender.tag].step_audio
+        WWMHelperClass.timer_audio = self.learnStepsListData[sender.tag].timer_audio
+        WWMHelperClass.step_id = self.learnStepsListData[sender.tag].id
+        WWMHelperClass.total_paid = self.total_paid
+        
+
+        var flag = 0
+        var position = 0
+        var dateCompareLoopCount = 0
+
+        if self.total_paid > 42{
+            dateCompareLoopCount = self.learnStepsListData.count - 1
+        }else{
+            dateCompareLoopCount = 2
+            if sender.tag > 2{
+                self.xibCall(title1: "Please subscribe to Annual subscription to open this.\n" +
+                    "If you are a monthly subscriber, you will get access to further steps once you subscribe for 6 months.")
+                return
+            }
+        }
+        
+        for i in 0...dateCompareLoopCount{
+            
+            let date_completed = self.learnStepsListData[i].date_completed
+            if date_completed != ""{
+                let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                if dateCompare == 1{
+                    flag = 1
+                    break
+                }
+            }
+        }
+        
+        if flag == 1{
+            print("already played the step")
+            self.xibCall(title1: "One session per day!" + " Please come back tomorrow.")
+        }else{
+            for i in 0..<sender.tag{
+                if !self.learnStepsListData[i].completed{
+                    flag = 2
+                    position = i
+                    break
+                }
+            }
+                
+            if flag == 2{
+                print("first play the \(self.learnStepsListData[position].step_name)")
+                self.xibCall(title1: "Please check the previous step first.")
+            }else{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }

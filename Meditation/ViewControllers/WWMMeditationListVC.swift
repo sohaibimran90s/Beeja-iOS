@@ -72,7 +72,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
         }else {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
             vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"
-            vc.type = "timer"
+            vc.type = self.type
             if let levels = arrMeditationDataList[indexPath.row].levels?.array as? [DBLevelData] {
                 vc.arrMeditationLevels = levels
             }

@@ -10,9 +10,9 @@ import UIKit
 
 class WWMLearnDiscountVC: WWMBaseViewController {
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func btnProceedClicked(_ sender: UIButton) {

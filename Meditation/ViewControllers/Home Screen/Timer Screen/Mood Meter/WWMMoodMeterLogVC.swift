@@ -20,6 +20,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     @IBOutlet weak var txtViewLog: UITextView!
     @IBOutlet weak var lblTextCount: UILabel!
 
+    let appPreffrence = WWMAppPreference()
+    
     var type = ""   // Pre | Post
     var prepTime = 0
     var meditationTime = 0
@@ -131,19 +133,20 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.navigationController?.popToRootViewController(animated: false)
         }else {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodJournalVC") as! WWMMoodJournalVC
-            vc.type = self.type
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime
-            vc.restTime = self.restTime
-            vc.meditationID = self.meditationID
-            vc.levelID = self.levelID
-            vc.moodData = self.moodData
-            vc.category_Id = self.category_Id
-            vc.emotion_Id = self.emotion_Id
-            vc.audio_Id = self.audio_Id
-            vc.rating = self.rating
-            vc.watched_duration = self.watched_duration
+                vc.type = self.type
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime
+                vc.restTime = self.restTime
+                vc.meditationID = self.meditationID
+                vc.levelID = self.levelID
+                vc.moodData = self.moodData
+                vc.category_Id = self.category_Id
+                vc.emotion_Id = self.emotion_Id
+                vc.audio_Id = self.audio_Id
+                vc.rating = self.rating
+                vc.watched_duration = self.watched_duration
             self.navigationController?.pushViewController(vc, animated: true)
+            
         }
     }
     
@@ -184,7 +187,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }) { (Bool) in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.alertPopup.removeFromSuperview()
-                self.navigateToDashboard()
+                if WWMHelperClass.selectedType == "learn"{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    self.navigateToDashboard()
+                }
             }
         }
     }
@@ -192,29 +200,60 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func completeMeditationAPI() {
 
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "type":self.userData.type,
-            "category_id" : self.category_Id,
-            "emotion_id" : self.emotion_Id,
-            "audio_id" : self.audio_Id,
-            "guided_type" : self.userData.guided_type,
-            "watched_duration" : self.watched_duration,
-            "rating" : self.rating,
-            "user_id":self.appPreference.getUserID(),
-            "meditation_type":type,
-            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":txtViewLog.text,
-            "prep_time":prepTime,
-            "meditation_time":meditationTime,
-            "rest_time":restTime,
-            "meditation_id": self.meditationID,
-            "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
-            ] as [String : Any]
+        
+        var param: [String: Any] = [:]
+        
+        if WWMHelperClass.selectedType == "learn"{
+            param = [
+                "type":"learn",
+                "step_id": WWMHelperClass.step_id,
+                "mantra_id": WWMHelperClass.mantra_id,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":"",
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                ] as [String : Any]
+        }else{
+            param = [
+                "type":self.userData.type,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "watched_duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":txtViewLog.text,
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                ] as [String : Any]
+        }
+        
+        print("param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    self.appPreffrence.setSessionAvailableData(value: true)
                     self.logExperience()
                 }else {
                     self.saveToDB(param: param)
@@ -244,7 +283,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.popupTitle = "Great job! Your journal has been updated."
             self.xibCall()
         }else {
-           if self.hidShowMoodMeter == "Show"{
+            if self.hidShowMoodMeter == "Show"{
                 if self.selectedIndex != ""{
                     self.popupTitle = "Thanks! Your mood tracker has been updated."
                     self.xibCall()
@@ -252,35 +291,43 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                     self.navigateToDashboard()
                 }
             }else{
-                    self.navigateToDashboard()
+                self.navigateToDashboard()
             }
         }
     }
-
+    
+    
     func navigateToDashboard() {
-        if self.type == "Pre" {
-            self.navigationController?.isNavigationBarHidden = false
-            self.navigationController?.popToRootViewController(animated: false)
-        }else {
-            
-            if !self.moodData.show_burn && self.moodData.id != -1 {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
-                vc.moodData = self.moodData
-                self.navigationController?.pushViewController(vc, animated: true)
-            }else {
+        
+        if WWMHelperClass.selectedType == "learn"{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            if self.type == "Pre" {
                 self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popToRootViewController(animated: false)
+            }else {
                 
-                if let tabController = self.tabBarController as? WWMTabBarVC {
-                    tabController.selectedIndex = 4
-                    for index in 0..<tabController.tabBar.items!.count {
-                        let item = tabController.tabBar.items![index]
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                        if index == 4 {
-                            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+               
+                if !self.moodData.show_burn && self.moodData.id != -1 {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
+                    vc.moodData = self.moodData
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else {
+                    self.navigationController?.isNavigationBarHidden = false
+                    
+                    if let tabController = self.tabBarController as? WWMTabBarVC {
+                        tabController.selectedIndex = 4
+                        for index in 0..<tabController.tabBar.items!.count {
+                            let item = tabController.tabBar.items![index]
+                            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                            if index == 4 {
+                                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                            }
                         }
                     }
+                    self.navigationController?.popToRootViewController(animated: false)
                 }
-                self.navigationController?.popToRootViewController(animated: false)
             }
         }
     }

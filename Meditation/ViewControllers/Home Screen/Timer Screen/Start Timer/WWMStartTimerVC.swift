@@ -33,14 +33,6 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
     @IBOutlet weak var backView: UIView!
-
-    
-//    animationView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-//    animationView.center = self.view.center
-//    animationView.contentMode = .scaleAspectFill
-//    animationView.loopMode = .loop
-//    backView.insertSubview(animationView, belowSubview: viewPause)
-//    animationView.play()
     
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()

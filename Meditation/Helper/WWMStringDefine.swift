@@ -117,6 +117,12 @@ let URL_MEDITATIONHISTORY          = URL_BASE + "meditationHistory"
 
 let URL_STEPS        =  URL_BASE + "steps"
 
+let URL_MANTRAS      = URL_BASE + "mantras"
+
+let URL_COMBINEDMANTRA = URL_BASE + "combinedMantra"
+
+let URL_STEPFAQ         = URL_BASE + "stepFaq"
+
 
 /************************************************/
 

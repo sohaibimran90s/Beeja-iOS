@@ -20,6 +20,7 @@ import CallKit
 
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate, CXCallObserverDelegate {
     
 
@@ -34,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     let reachability = Reachability()
      var auth = SPTAuth()
      let gcmMessageIDKey = "gcm.message_id"
+    
+    let appPreffrence = WWMAppPreference()
     
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -203,6 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             let param = ["offline_data":arrData]
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
+                    self.appPreffrence.setSessionAvailableData(value: true)
                     WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
                     self.syncAddJournalData()
                 }

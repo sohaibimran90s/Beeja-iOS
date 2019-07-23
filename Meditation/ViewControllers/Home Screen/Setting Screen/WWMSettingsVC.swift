@@ -24,6 +24,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
+     let arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
+    
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
     @IBOutlet weak var tblViewSetting: UITableView!
@@ -49,7 +51,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         pickerStartChimes.delegate = self
         pickerStartChimes.dataSource = self
         
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +109,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             self.settingAPI()
             self.tblViewSetting.reloadData()
         }
-
     }
     
     // MARK:- UIPickerView Delegate Methods
@@ -197,8 +197,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
     // MARK:- UITableView Delegate methods
     func numberOfSections(in tableView: UITableView) -> Int {
+        print("....userdate.... \(self.userData.type)")
+        
+        
         if self.userData.type == "timer" {
             return 3
+        }else if self.userData.type == "learn" {
+            return 2
         }else {
             return 1
         }
@@ -224,6 +229,12 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }
                 return 0
+            }else {
+                return arrSettings.count+1
+            }
+        }else if self.userData.type == "learn" {
+            if section == 0 {
+                return arrLearn.count+1
             }else {
                 return arrSettings.count+1
             }
@@ -305,6 +316,103 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     
                 }
             }else if indexPath.section == 2{
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Reminders"
+                    cell.lblDropDown.isHidden = true
+                    cell.imgViewDropDown.isHidden = true
+                }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                    cell.btnSwitch.tag = indexPath.row
+                    if indexPath.row == 1 {
+                        cell.btnSwitch.isOn = settingData.isMorningReminder
+                    }else if indexPath.row == 3 {
+                        cell.btnSwitch.isOn = settingData.isAfterNoonReminder
+                    }else if indexPath.row == 5 {
+                        cell.btnSwitch.isOn = settingData.moodMeterEnable
+                    }else if indexPath.row == 6 {
+                        cell.btnSwitch.isOn = settingData.isMilestoneAndRewards
+                    }
+                    
+                }else if indexPath.row == 2 || indexPath.row == 4  {
+                    
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                    cell.lblTime.isHidden = false
+                    cell.checkImage.isHidden = true
+                    if indexPath.row == 2 {
+                        cell.lblTime.text = settingData.morningReminderTime
+                        
+                        if !settingData.isMorningReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                            
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }else if indexPath.row == 4 {
+                        cell.lblTime.text = settingData.afterNoonReminderTime
+                        if !settingData.isAfterNoonReminder {
+                            cell.lblTime.isHidden = true
+                            cell.btnPicker.isUserInteractionEnabled = false
+                            cell.txtView.isUserInteractionEnabled = false
+                        }else {
+                            cell.btnPicker.isUserInteractionEnabled = true
+                            cell.txtView.isUserInteractionEnabled = true
+                            cell.btnPicker.indexPath = indexPath
+                            cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                        }
+                    }
+                }else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrSettings[indexPath.row-1]
+                }
+            }
+        }else if self.userData.type == "learn" {
+            if indexPath.section == 0 {
+                if indexPath.row == 0 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = "Learn To Meditate"
+                    cell.lblDropDown.isHidden = true
+                    cell.imgViewDropDown.isHidden = true
+                }else if indexPath.row == 1 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                }else if indexPath.row == 2 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                    cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                    cell.btnSwitch.tag = 101
+                    cell.btnSwitch.isOn = settingData.isLearnReminder
+                }else if indexPath.row == 3 {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                    cell.lblTime.isHidden = false
+                    cell.checkImage.isHidden = true
+                    cell.lblTime.text = settingData.learnReminderTime
+                    if !settingData.isLearnReminder {
+                        cell.lblTime.isHidden = true
+                        cell.btnPicker.isUserInteractionEnabled = false
+                        cell.txtView.isUserInteractionEnabled = false
+                        
+                    }else {
+                        cell.btnPicker.isUserInteractionEnabled = true
+                        cell.txtView.isUserInteractionEnabled = false
+                        cell.btnPicker.indexPath = indexPath
+                        //cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
+                    }
+                }
+            }else if indexPath.section == 1 {
+                
+                
+                
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
                     cell.lblTitle.text = "Reminders"
@@ -493,6 +601,41 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.logout()
                 }
             }
+        }else if self.userData.type == "learn"{
+            if indexPath.section == 0{
+                if indexPath.row == 1{
+                    
+                }else if indexPath.row == 3{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+                    self.navigationController?.pushViewController(vc, animated: false)
+                    print("pagal......")
+                }
+            }else if indexPath.section == 1{
+                if indexPath.row == 7 {
+                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let url = URL.init(string: iOSAppStoreURLFormat)
+                    
+                    if UIApplication.shared.canOpenURL(url!){
+                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    }
+                }else if indexPath.row == 8 {
+                    let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let imageToShare = [textToShare] as [Any]
+                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.popoverPresentationController?.sourceView = self.view
+                    self.present(activityViewController, animated: true, completion: nil)
+                }else if indexPath.row == 9 {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else if indexPath.row == 10 || indexPath.row == 11 || indexPath.row == 12 {
+                    self.openWebView(index: indexPath.row)
+                    
+                }else if indexPath.row == 13{
+                    self.logout()
+                }
+            }
         }else {
             if indexPath.section == 0 {
                 if indexPath.row == 7 {
@@ -668,6 +811,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             settingData.moodMeterEnable = btn.isOn
         }else if btn.tag == 6 {
             settingData.isMilestoneAndRewards = btn.isOn
+        }else if btn.tag == 101 {
+            settingData.isLearnReminder = btn.isOn
+            // Enable Learn Reminder
         }
         self.settingAPI()
         self.tblViewSetting.reloadData()
@@ -776,6 +922,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 loginManager.logOut()
                 GIDSignIn.sharedInstance()?.signOut()
                 GIDSignIn.sharedInstance()?.disconnect()
+                KUSERDEFAULTS.set(false, forKey: "defaultSelection")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc

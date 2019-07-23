@@ -13,29 +13,83 @@ class WWMFAQsVC: WWMBaseViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btnGotIt: UIButton!
     var selectedIndex = 0
+    
+    var faqsData: [WWMFAQsData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.btnGotIt.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        
+        self.stepFaqAPI()
     }
     
     @IBAction func btnGotItClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if WWMHelperClass.step_id == 12{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnDiscountVC") as! WWMLearnDiscountVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            //self.navigationController?.isNavigationBarHidden = false
+            
+            if let tabController = self.tabBarController as? WWMTabBarVC {
+                tabController.selectedIndex = 4
+                for index in 0..<tabController.tabBar.items!.count {
+                    let item = tabController.tabBar.items![index]
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                    if index == 4 {
+                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                    }
+                }
+            }
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
+    
+    //MARK: API call
+    func stepFaqAPI() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        let param = ["step_id": 1] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPFAQ, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                print("faqs data..... \(result)")
+                if let data = result["data"] as? [[String: Any]]{
+                    for json in data{
+                        let faqsData = WWMFAQsData.init(json: json)
+                        self.faqsData.append(faqsData)
+                    }
+                    
+                    self.tableView.reloadData()
+                }
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
 }
 
 extension WWMFAQsVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.faqsData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMFAQsTVC") as! WWMFAQsTVC
         
-        cell.lblTitle.text = "Lorem ipsum dolor sit amet?"
-        cell.lblStepDescription.text = "In this class we quickly get you setup with a mantric sound to play with. It will enable you to get to grips with this very easy, and effective practise. We will then guide you through the first steps of learning to become a self sufficient meditator. We will start with a simple exercise to get you in the zone, we’ll get you grounded in your body, and then teach how to work with the mantra in the most effective way."
+        cell.lblTitle.text = self.faqsData[indexPath.row].question
+        cell.lblStepDescription.text = self.faqsData[indexPath.row].answers
         
         if selectedIndex == indexPath.row{
             cell.lblStepDescription.isHidden = false

@@ -10,9 +10,6 @@ import UIKit
 
 class WWMSideMenuVC: WWMBaseViewController {
 
-    @IBOutlet weak var btnLearn: UIButton!
-    @IBOutlet weak var btnGuided: UIButton!
-    @IBOutlet weak var btnTimer: UIButton!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblVersion: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
@@ -21,21 +18,25 @@ class WWMSideMenuVC: WWMBaseViewController {
     var guided_type = ""
     var type = ""
     
+    let appPreffrence = WWMAppPreference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if self.userData.type == "timer" {
-            self.btnTimer.setTitleColor(UIColor.init(hexString: "#00eba9")!, for: .normal)
-        }else if self.userData.type == "guided" {
-            self.btnGuided.setTitleColor(UIColor.init(hexString: "#00eba9")!, for: .normal)
-        }else if self.userData.type == "learn" {
-            self.btnLearn.setTitleColor(UIColor.init(hexString: "#00eba9")!, for: .normal)
+       
+        let getUserData = self.appPreffrence.getUserData()
+        
+        if let name = getUserData["name"] as? String{
+            self.lblName.text = name
         }
-        self.lblName.text = self.appPreference.getUserName()
-        if self.userData.city != ""  && self.userData.country != "" {
-            self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
+        
+        let cityName = getUserData["city"] as? String ?? ""
+        let countryName = getUserData["country"] as? String ?? ""
+        
+        if cityName != ""  && countryName != "" {
+            self.lblLocation.text = "\(cityName), \(countryName)"
         }else {
-            self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
+            self.lblLocation.text = "\(cityName) \(countryName)"
         }
         print(WWMHelperClass.getVersion())
         self.lblVersion.text = WWMHelperClass.getVersion()
@@ -75,58 +76,6 @@ class WWMSideMenuVC: WWMBaseViewController {
         self.openWebView(index: 8)
     }
     
-    @IBAction func btnLearnAction(_ sender: Any) {
-        self.openWebView(index: 9)
-    }
-    
-    @IBAction func btnGuidedAction(_ sender: Any) {
-       // self.openWebView(index: 10)
-        
-        guideStart = UINib(nibName: "WWMGuidedStart", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMGuidedStart
-        let window = UIApplication.shared.keyWindow!
-        
-        guideStart.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
-        guideStart.btnClose.addTarget(self, action: #selector(btnGuideCloseAction(_:)), for: .touchUpInside)
-        guideStart.btnMoreInformation.addTarget(self, action: #selector(btnMoreInformationActions(_:)), for: .touchUpInside)
-        guideStart.btnSpritual.addTarget(self, action: #selector(btnSpritualAction(_:)), for: .touchUpInside)
-        guideStart.btnPractical.addTarget(self, action: #selector(btnPracticalAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(guideStart)
-        
-    }
-    
-    @IBAction func btnGuideCloseAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-    }
-    
-    @IBAction func btnMoreInformationActions(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_MOREINFO
-        vc.strType = "More Information"
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func btnPracticalAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        guided_type = "practical"
-        self.type = "guided"
-        self.meditationApi()
-        
-    }
-    @IBAction func btnSpritualAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        guided_type = "spiritual"
-        self.type = "guided"
-        self.meditationApi()
-    }
-    
-    
-    @IBAction func btnTimerAction(_ sender: Any) {
-        self.type = "timer"
-        self.guided_type = ""
-        self.meditationApi()
-    }
     
     @IBAction func btnUpgradeBeejaAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
@@ -231,40 +180,4 @@ class WWMSideMenuVC: WWMBaseViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    // Calling API
-    
-    func meditationApi() {
-        self.view.endEditing(true)
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "meditation_id" : self.userData.meditation_id,
-            "level_id"         : self.userData.level_id,
-            "user_id"       : self.appPreference.getUserID(),
-            "type" : type,
-            "guided_type" : guided_type
-            ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                self.appPreference.setIsProfileCompleted(value: true)
-                self.appPreference.setType(value: self.type)
-                self.appPreference.setGuideType(value: self.guided_type)
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
-                    
-            
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                    
-                }
-            }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
 }

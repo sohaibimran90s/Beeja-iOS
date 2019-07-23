@@ -89,24 +89,23 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     @IBAction func btnPracticalAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         guided_type = "practical"
-        self.meditationApi()
+        self.meditationApi(type: "guided")
         
     }
     @IBAction func btnSpritualAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         guided_type = "spiritual"
-        self.meditationApi()
+        self.meditationApi(type: "guided")
     }
     
     @IBAction func btnLearnAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_LEARN
-        vc.strType = "Learn"
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        guided_type = ""
+        self.meditationApi(type: "learn")
     }
     
   // Calling API
-    func meditationApi() {
+    func meditationApi(type: String) {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -114,14 +113,16 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
             "meditation_id" : 1,
             "level_id"         : 1,
             "user_id"       : self.appPreference.getUserID(),
-            "type" : "guided",
+            "type" : type,
             "guided_type" : guided_type
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
-                self.appPreference.setType(value: "guided")
+                
+                self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: self.guided_type)
+                
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false
                 }) { (Bool) in

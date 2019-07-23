@@ -32,8 +32,8 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
-    func setUserData(value:[String : Any]) {
-        defaults.set(value, forKey: "UserData")
+    func setSessionAvailableData(value: Bool) {
+        defaults.set(value, forKey: "session_available")
         defaults.synchronize()
     }
     
@@ -42,7 +42,10 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
-    //
+    func setUserData(value:[String : Any]) {
+        defaults.set(value, forKey: "UserData")
+        defaults.synchronize()
+    }
     
     func setPreMoodCount(value: Int){
         defaults.set(value, forKey: "preMoodCount")
@@ -79,6 +82,10 @@ class WWMAppPreference: NSObject {
     func setGuideType(value:String) {
         defaults.set(value, forKey: "guided_type")
         defaults.synchronize()
+    }
+    
+    func getSessionAvailableData() -> Bool{
+        return defaults.bool(forKey: "session_available")
     }
     
     func getPrePostJournalBool() -> Bool{
