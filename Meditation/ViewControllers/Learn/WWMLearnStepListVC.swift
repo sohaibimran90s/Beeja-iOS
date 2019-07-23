@@ -224,7 +224,8 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 
             if flag == 2{
                 print("first play the \(self.learnStepsListData[position].step_name)")
-                self.xibCall(title1: "Please check the previous step first.")
+                
+                self.xibCall(title1: "Sequential learning is more effective! Please go through \(self.learnStepsListData[position].step_name) first")
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
                 self.navigationController?.pushViewController(vc, animated: true)

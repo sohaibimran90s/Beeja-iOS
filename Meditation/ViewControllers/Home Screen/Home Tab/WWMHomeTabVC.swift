@@ -416,7 +416,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     func meditationHistoryListAPI() {
         
       //  WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+        self.data.removeAll()
         let param = ["user_id": self.appPreference.getUserID()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -491,7 +491,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         }
 
         cell.lblTitle.text = self.data[indexPath.row].title
-        cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+        cell.lblSubTitle.text = "Meditation for dffffdfdf \(self.data[indexPath.row].type)"
         cell.heartLbl.text = "\(self.data[indexPath.row].like)"
         cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
         
@@ -500,9 +500,9 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         
         let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
-        print("expireDate***.. \(expireDate)")
-        print("currentdate***.. \(self.currentDate)")
-        print("date***.. \(self.data[indexPath.row].date)")
+        //print("expireDate***.. \(expireDate)")
+        //print("currentdate***.. \(self.currentDate)")
+        //print("date***.. \(self.data[indexPath.row].date)")
         let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
         let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
         let min =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).minute ?? 0
@@ -514,7 +514,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 281)
+        return CGSize(width: 180, height: 281)
     }
     
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
