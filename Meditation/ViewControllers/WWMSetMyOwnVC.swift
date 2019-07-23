@@ -328,8 +328,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         }
         
         self.settingAPI()
-        
-}
+    }
+    
     func settingAPI() {
        // WWMHelperClass.showSVHud()
         

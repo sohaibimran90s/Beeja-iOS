@@ -68,20 +68,22 @@ class WWMTimerHomeVC: WWMBaseViewController {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            let meditationData = settingData.meditationData!.array as? [DBMeditationData]
-            for dic in meditationData!{
+            if let meditationData = settingData.meditationData!.array as? [DBMeditationData]{
+             for dic in meditationData{
                 if dic.isMeditationSelected {
                     self.selectedMeditationData = dic
-                    let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-                    for level in levels! {
+                    if let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]{
+                    for level in levels{
                         if level.isLevelSelected {
                             selectedLevelData = level
                             self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
                             self.setUserDataFromPreference()
                             self.setUpSliderTimesAccordingToLevels()
+                                }
+                            }//end level
                         }
                     }
-                }
+                }//end meditation
             }
         }
     }

@@ -490,16 +490,40 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
         }
 
-        cell.lblTitle.text = self.data[indexPath.row].title
-        cell.lblSubTitle.text = "Meditation for dffffdfdf \(self.data[indexPath.row].type)"
-        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
-        cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
+            cell.lblTitle.text = self.data[indexPath.row].title
+            cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+            cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+            cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
         
         
-        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
+        
+            let date_completed = self.data[indexPath.row].date
+            if date_completed != ""{
+            let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                
+            print("dateCompare.... \(dateCompare)")
+            if dateCompare == 1{
+                //equal
+                let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
+                let hourText = "\(hour) h ago".replacingOccurrences(of:
+                    "-", with: "")
+                cell.lblHr.text = hourText
+            }else{
+                let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
+                let daysText = "\(day) d ago".replacingOccurrences(of:
+                    "-", with: "")
+                cell.lblHr.text = daysText
+                }
+            }
         
         
-        let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
+        
+        
+        
+        
+        
         //print("expireDate***.. \(expireDate)")
         //print("currentdate***.. \(self.currentDate)")
         //print("date***.. \(self.data[indexPath.row].date)")

@@ -374,8 +374,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                                 self.appPreffrence.setPostJournalCount(value: 6)
                             }
                         }
-                        
-                        
                         self.setDataToDb(json: result["settings"] as! [String:Any])
                     }else {
                         self.getDataFromDatabase()
