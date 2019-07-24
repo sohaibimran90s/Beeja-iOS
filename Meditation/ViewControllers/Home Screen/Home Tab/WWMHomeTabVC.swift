@@ -112,7 +112,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.alpha = 0
         self.imgGiftIcon.alpha = 0
         
-        self.animatedImg()
+        //self.animatedImg()
         self.animatedlblName()
     }
     
@@ -482,13 +482,13 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "WWMHomeMedHistoryCVC", for: indexPath) as! WWMHomeMedHistoryCVC
         
-        cell.layer.cornerRadius = 8
+            cell.layer.cornerRadius = 8
         
-        if self.data[indexPath.row].image == ""{
-            cell.imgTitle.image = UIImage(named: "rectangle-1")
-        }else{
-            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
-        }
+            if self.data[indexPath.row].image == ""{
+                cell.imgTitle.image = UIImage(named: "rectangle-1")
+            }else{
+                cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
+            }
 
             cell.lblTitle.text = self.data[indexPath.row].title
             cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
@@ -517,22 +517,6 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 cell.lblHr.text = daysText
                 }
             }
-        
-        
-        
-        
-        
-        
-        
-        //print("expireDate***.. \(expireDate)")
-        //print("currentdate***.. \(self.currentDate)")
-        //print("date***.. \(self.data[indexPath.row].date)")
-        let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
-        let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
-        let min =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).minute ?? 0
-        let sec =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).second ?? 0
-        print("day..... \(day) hour..... \(hour) min..... \(min) sec..... \(sec)")
-        
         
         return cell
     }
