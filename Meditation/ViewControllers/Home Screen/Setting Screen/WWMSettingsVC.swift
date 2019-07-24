@@ -685,12 +685,12 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     datePickerView.tag = sender.indexPath.row
                     datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
                 }
-            }else if self.userData.type == "learn"{
-                if sender.indexPath.section == 0 {
+            }else if self.userData.type == "learn" {
+                if sender.indexPath.section == 1{
                     let datePickerView = UIDatePicker()
                     datePickerView.datePickerMode = .time
                     cell.txtView.inputView = datePickerView
-                    datePickerView.tag = 101// Learn Reminder Time
+                    datePickerView.tag = sender.indexPath.row
                     datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
                 }
             }else {
@@ -731,8 +731,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
            settingData.morningReminderTime = dateFormatter.string(from: sender.date)
         }else if sender.tag == 4 {
             settingData.afterNoonReminderTime = dateFormatter.string(from: sender.date)
-        }else if sender.tag == 101 {
-            settingData.learnReminderTime = dateFormatter.string(from: sender.date)
         }
     }
     
