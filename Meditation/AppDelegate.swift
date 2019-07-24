@@ -392,6 +392,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if data.count > 0 {
             let settingData = data[0]
             if settingData.isMorningReminder {
+                if settingData.morningReminderTime == "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
@@ -438,11 +439,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 }
                 
-                
+                }
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
             }
             if settingData.isAfterNoonReminder {
+                if settingData.afterNoonReminderTime == "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
@@ -488,13 +490,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         print("schedule push succeed")
                     }
                 }
-                
+              }
                 
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
             }
             
             if settingData.isLearnReminder {
+                if settingData.learnReminderTime == "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
@@ -527,7 +530,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         print("schedule push succeed")
                     }
                 }
-                
+              }
                 
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["LearnReminder"])
