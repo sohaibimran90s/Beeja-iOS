@@ -17,13 +17,13 @@ class WWMBaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.setUserDataFromPreference()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.setUserDataFromPreference()
+        //self.setUserDataFromPreference()
     }
     
     func setUserDataFromPreference() {

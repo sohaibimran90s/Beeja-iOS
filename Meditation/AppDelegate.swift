@@ -493,6 +493,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
             }
+            
+            if settingData.isLearnReminder {
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
+                var strDate = dateFormate.string(from: Date())
+                strDate = strDate + " \(settingData.learnReminderTime!)"
+                dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                print(settingData.learnReminderTime!)
+                let date = dateFormate.date(from: strDate)
+                let arrTemp = settingData.learnReminderTime?.components(separatedBy: ":")
+                let str = "Learn to meditate"
+                
+                // let timeStemp = Int(date!.timeIntervalSince1970)
+                let content = UNMutableNotificationContent()
+                content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "It's time to learn beeja meditation", arguments: nil)
+                content.sound = UNNotificationSound.default
+                content.threadIdentifier = "local-notifications-Learn"
+                //print(Int(Date().timeIntervalSince1970))
+                //print(timeStemp)
+                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+                // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
+                // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
+                let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
+                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                
+                //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
+                let request = UNNotificationRequest(identifier: "LearnReminder", content: content, trigger: notificationTrigger)
+                center.add(request){ (error) in
+                    if error == nil {
+                        print("schedule push succeed")
+                    }
+                }
+                
+                
+            }else {
+                center.removePendingNotificationRequests(withIdentifiers: ["LearnReminder"])
+            }
         }
         
     }

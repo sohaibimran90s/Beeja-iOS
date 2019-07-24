@@ -28,6 +28,7 @@ class WWMHelperClass {
     static var total_paid: Int = 0
     static var mantra_id: Int = 1
     static var step_id: Int = 1
+    static var value: String = ""
     
     //static var imageView = UIImageView()
     

@@ -12,13 +12,15 @@ class WWMLearnReminderVC: WWMBaseViewController {
 
     @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var txtView: UITextView!
-    
+    @IBOutlet weak var btnPickerView: UIButton!
     @IBOutlet weak var hourBtn: UIButton!
     @IBOutlet weak var minBtn: UIButton!
     @IBOutlet weak var amPmBtn: UIButton!
     
     let datePicker = UIDatePicker()
     var finalTime: String = ""
+    
+    var settingData = DBSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
         self.setupView()
         
         txtView.tintColor = UIColor.clear
-        self.showDatePicker()
     }
 
     func setupView(){
@@ -37,15 +38,61 @@ class WWMLearnReminderVC: WWMBaseViewController {
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+        }
+        
     }
     
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnDiscountVC") as! WWMLearnDiscountVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        callPushNotification()
+        self.settingAPI()
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK:- UITextField Delegate Methods
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+    
+    func callPushNotification() {
+        AppDelegate.sharedDelegate().setLocalPush()
+    }
+    
+    @IBAction func btnPickerViewAction(_ sender: UIButton){
+        let datePickerView = UIDatePicker()
+        datePickerView.datePickerMode = .time
+        self.txtView.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+        self.txtView.becomeFirstResponder()
+    }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        settingData.learnReminderTime = dateFormatter.string(from: sender.date)
+        
+        dateFormatter.dateFormat = "HH:mm a"
+        print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
+        
+        let date1 = dateFormatter.string(from: sender.date)
+        let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
+        let hour = components.hour!
+        let minute = components.minute!
+        
+        if date1.contains("PM"){
+            self.amPmBtn.setTitle("pm", for: .normal)
+        }else{
+            self.amPmBtn.setTitle("am", for: .normal)
+        }
+        
+        self.hourBtn.setTitle("\(hour)", for: .normal)
+        self.minBtn.setTitle("\(minute)", for: .normal)
     }
     
     func showDatePicker(){
@@ -90,5 +137,82 @@ class WWMLearnReminderVC: WWMBaseViewController {
     
     func cancelDatePicker(){
         self.view.endEditing(true)
+    }
+    
+    // MARK:- API Calling
+    
+    func settingAPI() {
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        var meditation_data = [[String:Any]]()
+        let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
+        for dic in meditationData!{
+            let levels = dic.levels?.array as? [DBLevelData]
+            var levelDic = [[String:Any]]()
+            for level in levels! {
+                let leveldata = [
+                    "level_id": level.levelId,
+                    "isSelected": level.isLevelSelected,
+                    "name": level.levelName!,
+                    "prep_time": "\(level.prepTime)",
+                    "meditation_time": "\(level.meditationTime)",
+                    "rest_time": "\(level.restTime)",
+                    "prep_min": "\(level.minPrep)",
+                    "prep_max": "\(level.maxPrep)",
+                    "med_min": "\(level.minMeditation)",
+                    "med_max": "\(level.maxMeditation)",
+                    "rest_min": "\(level.minRest)",
+                    "rest_max": "\(level.maxRest)"
+                    ] as [String : Any]
+                levelDic.append(leveldata)
+            }
+            
+            let data = ["meditation_id":dic.meditationId,
+                        "meditation_name":dic.meditationName!,
+                        "isSelected":dic.isMeditationSelected,
+                        "setmyown" : dic.setmyown,
+                        "levels":levelDic] as [String : Any]
+            meditation_data.append(data)
+        }
+        //"IsMilestoneAndRewards"
+        let group = [
+            "startChime": self.settingData.startChime!,
+            "endChime": self.settingData.endChime!,
+            "finishChime": self.settingData.finishChime!,
+            "intervalChime": self.settingData.intervalChime!,
+            "ambientSound": self.settingData.ambientChime!,
+            "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "meditation_data" : meditation_data
+            ] as [String : Any]
+        
+        let param = [
+            "user_id": self.appPreference.getUserID(),
+            "isJson": true,
+            "group": group
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }else {
+                if error != nil {
+                    //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
     }
 }

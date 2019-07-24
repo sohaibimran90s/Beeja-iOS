@@ -11296,7 +11296,7 @@ Get Set…</string>
                                                         <rect key="frame" x="0.0" y="0.0" width="81" height="50"/>
                                                         <color key="backgroundColor" red="0.0" green="0.070588235294117646" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="24"/>
-                                                        <state key="normal" title="04">
+                                                        <state key="normal" title="00">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                     </button>
@@ -11319,15 +11319,18 @@ Get Set…</string>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.15294117647058825" green="0.22745098039215686" blue="0.78823529411764703" alpha="1" colorSpace="calibratedRGB"/>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QC5-Fa-Jdg">
-                                                <rect key="frame" x="40" y="0.0" width="245" height="50"/>
-                                            </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9gJ-xz-Ee1">
                                                 <rect key="frame" x="40" y="0.0" width="245" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QC5-Fa-Jdg">
+                                                <rect key="frame" x="40" y="0.0" width="245" height="50"/>
+                                                <connections>
+                                                    <action selector="btnPickerViewAction:" destination="rYo-mK-0fK" eventType="touchUpInside" id="XIq-EX-Ezl"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9P9-EG-9WZ">
                                                 <rect key="frame" x="40" y="0.0" width="1" height="50"/>
                                                 <color key="backgroundColor" red="0.1529411765" green="0.2274509804" blue="0.78823529410000004" alpha="0.5859375" colorSpace="calibratedRGB"/>
@@ -11528,6 +11531,7 @@ Get Set…</string>
                     </view>
                     <connections>
                         <outlet property="amPmBtn" destination="BKz-rJ-8Oa" id="y0h-R6-jnG"/>
+                        <outlet property="btnPickerView" destination="QC5-Fa-Jdg" id="7Pq-E3-JQy"/>
                         <outlet property="btnSkip" destination="iBl-2p-6vy" id="MmH-7z-t3b"/>
                         <outlet property="hourBtn" destination="xLW-QI-TjQ" id="8R0-On-eh6"/>
                         <outlet property="minBtn" destination="w9q-z1-gYm" id="han-MP-oPn"/>

@@ -392,22 +392,15 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     cell.btnSwitch.tag = 101
                     cell.btnSwitch.isOn = settingData.isLearnReminder
                 }else if indexPath.row == 3 {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "CellLabel") as! WWMSettingTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
                     cell.lblTitle.text = self.arrLearn[indexPath.row-1]
                     cell.lblTime.isHidden = false
                     cell.checkImage.isHidden = true
                     cell.lblTime.text = settingData.learnReminderTime
-                    if !settingData.isLearnReminder {
-                        cell.lblTime.isHidden = true
-                        cell.btnPicker.isUserInteractionEnabled = false
-                        cell.txtView.isUserInteractionEnabled = false
                         
-                    }else {
-                        cell.btnPicker.isUserInteractionEnabled = true
-                        cell.txtView.isUserInteractionEnabled = false
-                        cell.btnPicker.indexPath = indexPath
-                        //cell.btnPicker.addTarget(self, action: #selector(btnPickerAction(_:)), for: .touchUpInside)
-                    }
+                        if !settingData.isLearnReminder {
+                            cell.lblTime.isHidden = true
+                        }
                 }
             }else if indexPath.section == 1 {
                 
@@ -604,11 +597,12 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }else if self.userData.type == "learn"{
             if indexPath.section == 0{
                 if indexPath.row == 1{
-                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraVC") as! WWMChooseMantraVC
+                    vc.value = "mantra"
+                    self.navigationController?.pushViewController(vc, animated: false)
                 }else if indexPath.row == 3{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
                     self.navigationController?.pushViewController(vc, animated: false)
-                    print("pagal......")
                 }
             }else if indexPath.section == 1{
                 if indexPath.row == 7 {
@@ -691,6 +685,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     datePickerView.tag = sender.indexPath.row
                     datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
                 }
+            }else if self.userData.type == "learn"{
+                if sender.indexPath.section == 0 {
+                    let datePickerView = UIDatePicker()
+                    datePickerView.datePickerMode = .time
+                    cell.txtView.inputView = datePickerView
+                    datePickerView.tag = 101// Learn Reminder Time
+                    datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+                }
             }else {
                 if sender.indexPath.section == 0{
                     let datePickerView = UIDatePicker()
@@ -729,6 +731,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
            settingData.morningReminderTime = dateFormatter.string(from: sender.date)
         }else if sender.tag == 4 {
             settingData.afterNoonReminderTime = dateFormatter.string(from: sender.date)
+        }else if sender.tag == 101 {
+            settingData.learnReminderTime = dateFormatter.string(from: sender.date)
         }
     }
     
@@ -870,6 +874,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "IsLearnReminder":self.settingData.isLearnReminder,
             "meditation_data" : meditation_data
             ] as [String : Any]
         
