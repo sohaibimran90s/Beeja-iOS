@@ -109,7 +109,7 @@
     //Stateless, one-shot encrypt or decrypt operation.
     CCCryptorStatus status = CCCrypt(kCCDecrypt,/* kCCEncrypt, etc. */
                                      kCCAlgorithmAES128, /* kCCAlgorithmAES128, etc. */
-                                     kCCOptionPKCS7Padding, /* kCCOptionPKCS7Padding, etc. */
+                                     kCCModeCBC, /* kCCOptionPKCS7Padding, etc. */
                                      keyPointer, kCCKeySizeAES256,/* key and its length */
                                      ivPointer, /* initialization vector - use same IV which was used for decryption */
                                      [encryptedText bytes], [encryptedText length], //input

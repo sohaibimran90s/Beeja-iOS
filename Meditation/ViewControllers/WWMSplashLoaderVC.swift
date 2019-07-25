@@ -21,36 +21,36 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         super.viewDidLoad()
         
         KUSERDEFAULTS.set("0", forKey: "restore")
-//        do {
-//            let password = "password"
-//            let salt = AES256Crypter.randomSalt()
-//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-//            let keyStr = String.init(bytes: key, encoding: .utf8)
-//            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
-//            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+        do {
+            let password = "password"
+            let salt = AES256Crypter.randomSalt()
+            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
+            let keyStr = String.init(bytes: key, encoding: .utf8)
+            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
+            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+            }
+            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey.init(pemEncoded: keyString)
+            let clear = try ClearMessage(string: plainText, using: .utf8)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let base64String = encrypted.base64String
+//            print(base64String)
+//            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
 //            }
-//            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-//            let publicKey = try PublicKey.init(pemEncoded: keyString)
-//            let clear = try ClearMessage(string: plainText, using: .utf8)
-//            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-//            let base64String = encrypted.base64String
-////            print(base64String)
-////            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
-////            }
-////            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
-////            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
-////            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
-////            let string = try clear1.string(encoding: .utf8)
-////            print(string)
-//            let param = "Hello:" + base64String
-//            self.getFirstEncryptesKey(param: param, key: password)
-//
-//
-//
-//        } catch {
-//            print("Failed")w
-//            print(error)
-//        }
+//            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
+//            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
+//            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
+//            let string = try clear1.string(encoding: .utf8)
+//            print(string)
+            let param = "Hello:" + base64String
+            self.getFirstEncryptesKey(param: param, key: password)
+
+
+
+        } catch {
+            print("Failed")
+            print(error)
+        }
 
         self.imageViewLoader.isHidden = true
         self.setNavigationBar(isShow: false, title: "")
@@ -63,7 +63,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         animationView.loopMode = .loop
         self.view.addSubview(animationView)
         animationView.play()
-        self.getMoodMeterDataAPI()
+       // self.getMoodMeterDataAPI()
     }
     
 
@@ -74,6 +74,8 @@ class WWMSplashLoaderVC: WWMBaseViewController {
             if success {
                 if let encryptedStr = result["_hsk"] as? String {
                     
+                    
+                    
                    let plainText = "Hello World"
                         let key1 = "your key"
                         
@@ -82,9 +84,9 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                         let cipherText = cryptLib.encryptPlainTextRandomIV(withPlainText: plainText, key: key1)
                         print("cipherText \(cipherText! as String)")
                         print(encryptedStr)
-                        let d = cryptLib.decryptCipherTextRandomIV(withCipherText: "A/llYYk0+iXtFPykOnqMgcVr/Be0hHvqv611uRhoURQ=", key: "ass")
-                        
-                        let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: encryptedStr, key: key)
+                    
+                    let decryp = cryptLib.decryptCipherText("k0bf8ZtxkzmTj5upXHT7lDM84xzn1MQi1G4q3yj+u7Cjw+NzKRrj9yJAI0nWa5Lkq26ncMGqizm+BuW4Wl5FXCqUol/wg9aP//20m1Iuiw4rrjRSnoEV1Qrb8gOw9Ynp", key: "fuckingsimplekey", iv: nil)
+                    let decryptedString = cryptLib.decryptCipherTextRandomIV(withCipherText: encryptedStr, key: key)
                     if decryptedString != nil {
                         let randomStr = String.init(data: cryptLib.generateRandomIV(16), encoding: .utf8)
                         
@@ -94,9 +96,6 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                         
                         self.getSecondEncryptesKey(param: paramSecond, key: decryptedString!)
                     }
-                    
-                    
-
                 }
             }else {
                 if error != nil {

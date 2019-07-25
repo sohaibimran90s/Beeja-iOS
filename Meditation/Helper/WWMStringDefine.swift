@@ -103,7 +103,7 @@ let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
 let URL_SETTINGS                  = URL_BASE + "settings"//
 let URL_MILESTONE                  = URL_BASE + "milestone"//
 
-let URL_HANDSHAKE                  = "http://10.16.64.73/api/v1/" + "handshake"//
+let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
 let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
 
