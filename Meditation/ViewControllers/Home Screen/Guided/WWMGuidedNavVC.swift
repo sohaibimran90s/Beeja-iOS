@@ -206,7 +206,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     }
                     
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
                 
             }else {

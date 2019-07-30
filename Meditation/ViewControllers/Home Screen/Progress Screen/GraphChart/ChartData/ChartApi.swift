@@ -36,7 +36,7 @@ class ChartApi{
     
     let session = URLSession.shared
     let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-        print(response!)
+        print("response.... \(response) data.... \(data)")
         do {
             let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
             //print("json++++++.. \(json)")

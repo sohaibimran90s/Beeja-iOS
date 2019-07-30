@@ -91,7 +91,7 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 print(result)
                 self.navigationController?.popViewController(animated: true)
-                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 
                 //"Success Message: We've sent you a magic link to reset your password. Please check your inbox.
                // Error Message: Oops, this email isn't registered with the Beeja App / Oops, looks like this email has been registered using Facebook or Google. Try logging in again via one of them."""

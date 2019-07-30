@@ -21,6 +21,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @IBOutlet weak var circularSlider: CircularSlider?
     var moodScroller: UIScrollView?
     
+    let appPreffrence = WWMAppPreference()
+    
     var arrMoodData = [WWMMoodMeterData]()
     var moodData = WWMMoodMeterData()
     var selectedIndex = -1
@@ -35,6 +37,9 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var audio_Id = "0"
     var watched_duration = "0"
     var rating = "0"
+    var step_id: String = ""
+    var mantra_id: String = ""
+    var selectedType: String = ""
     
     var settingData = DBSettings()
     var alertPrompt = WWMPromptMsg()
@@ -48,11 +53,16 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         if type == "Pre" {
             self.btnAskMeAgain.isHidden = true
             self.btnSkip.isHidden = true
         }else{
             self.btnBack.isHidden = true
+        }
+        
+        if WWMHelperClass.selectedType == "learn"{
+            self.btnAskMeAgain.isHidden = true
         }
         
         self.xibCall()
@@ -247,29 +257,55 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func completeMeditationAPI() {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "type":self.userData.type,
-            "category_id" : self.category_Id,
-            "emotion_id" : self.emotion_Id,
-            "audio_id" : self.audio_Id,
-            "guided_type" : self.userData.guided_type,
-            "watched_duration" : self.watched_duration,
-            "rating" : self.rating,
-            "user_id":self.appPreference.getUserID(),
-            "meditation_type":type,
-            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":"",
-            "prep_time":prepTime,
-            "meditation_time":meditationTime,
-            "rest_time":restTime,
-            "meditation_id": self.meditationID,
-            "level_id":self.levelID,
-            "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
-            ] as [String : Any]
+        var param: [String: Any] = [:]
+        if WWMHelperClass.selectedType == "learn"{
+            param = [
+                "type":"learn",
+                "step_id": WWMHelperClass.step_id,
+                "mantra_id": WWMHelperClass.mantra_id,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":"",
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                ] as [String : Any]
+        }else{
+            param = [
+                "type":self.userData.type,
+                "category_id" : self.category_Id,
+                "emotion_id" : self.emotion_Id,
+                "audio_id" : self.audio_Id,
+                "guided_type" : self.userData.guided_type,
+                "watched_duration" : self.watched_duration,
+                "rating" : self.rating,
+                "user_id":self.appPreference.getUserID(),
+                "meditation_type":type,
+                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why":"",
+                "prep_time":prepTime,
+                "meditation_time":meditationTime,
+                "rest_time":restTime,
+                "meditation_id": self.meditationID,
+                "level_id":self.levelID,
+                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                ] as [String : Any]
+        }
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-
+                    self.appPreffrence.setSessionAvailableData(value: true)
                     self.navigateToDashboard()
                 }else {
                     self.saveToDB(param: param)
@@ -402,44 +438,62 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     // MARK:- Button Action
 
     @IBAction func btnSkipAction(_ sender: Any) {
+        
+        if WWMHelperClass.selectedType == "learn"{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+            vc.type = self.type
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime
+            vc.restTime = self.restTime
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            vc.category_Id = self.category_Id
+            vc.emotion_Id = self.emotion_Id
+            vc.audio_Id = self.audio_Id
+            vc.rating = self.rating
+            vc.watched_duration = self.watched_duration
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
 
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "type": self.userData.type,
-            "category_id": self.category_Id,
-            "emotion_id": self.emotion_Id,
-            "audio_id": self.audio_Id,
-            "guided_type": self.userData.guided_type,
-            "watched_duration": self.watched_duration,
-            "rating": self.rating,
-            "user_id": self.appPreference.getUserID(),
-            "meditation_type": self.type,
-            "date_time": "\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why": "",
-            "prep_time": self.prepTime,
-            "meditation_time": self.meditationTime,
-            "rest_time": self.restTime,
-            "meditation_id": self.meditationID,
-            "level_id": self.levelID,
-            "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
-            ] as [String : Any]
-        
-        print("param.... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    self.navigateToDashboard()
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            let param = [
+                "type": self.userData.type,
+                "category_id": self.category_Id,
+                "emotion_id": self.emotion_Id,
+                "audio_id": self.audio_Id,
+                "guided_type": self.userData.guided_type,
+                "watched_duration": self.watched_duration,
+                "rating": self.rating,
+                "user_id": self.appPreference.getUserID(),
+                "meditation_type": self.type,
+                "date_time": "\(Int(Date().timeIntervalSince1970*1000))",
+                "tell_us_why": "",
+                "prep_time": self.prepTime,
+                "meditation_time": self.meditationTime,
+                "rest_time": self.restTime,
+                "meditation_id": self.meditationID,
+                "level_id": self.levelID,
+                "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
+                ] as [String : Any]
+            
+            print("param.... \(param)")
+            
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        print(success)
+                        self.appPreffrence.setSessionAvailableData(value: true)
+                        self.navigateToDashboard()
+                    }else {
+                        self.saveToDB(param: param)
+                    }
+                    
                 }else {
                     self.saveToDB(param: param)
                 }
-                
-            }else {
-                self.saveToDB(param: param)
+                //WWMHelperClass.dismissSVHud()
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -453,28 +507,36 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     func navigateToDashboard() {
-        self.navigationController?.isNavigationBarHidden = false
         
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 4
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 4 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+        if WWMHelperClass.selectedType == "learn"{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            self.navigationController?.isNavigationBarHidden = false
+            
+            if let tabController = self.tabBarController as? WWMTabBarVC {
+                tabController.selectedIndex = 4
+                for index in 0..<tabController.tabBar.items!.count {
+                    let item = tabController.tabBar.items![index]
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                    if index == 4 {
+                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                    }
                 }
             }
+            self.navigationController?.popToRootViewController(animated: false)
         }
-        self.navigationController?.popToRootViewController(animated: false)
     }
     
     @IBAction func btnNextAction(_ sender: Any) {
-        
+        remainingLogFunc()
+    }
+    
+    func remainingLogFunc(){
         if selectedIndex != -1 {
             if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
                 
                 if self.type == "Pre" {
-                    
                     
                     print("getPostJournalCount.... \(self.appPreference.getPreJournalCount())")
                     if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){

@@ -8,27 +8,73 @@
 
 import UIKit
 
+protocol WWMChooseMantraListDelegate {
+    func chooseAudio(audio: String)
+}
+
 class WWMChooseMantraListVC: WWMBaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var selectedIndex = 0
+    var mantraData: [WWMMantraData] = []
+    var settingData = DBSettings()
+    var delegate: WWMChooseMantraListDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setNavigationBar(isShow: false, title: "")
+        getMantrasAPI()
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+        }
+        
+    }
+    
+    //MARK: API call
+    func getMantrasAPI() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [[String: Any]]{
+                    for json in data{
+                        let mantraData = WWMMantraData.init(json: json)
+                        self.mantraData.append(mantraData)
+                    }
+                    
+                    self.tableView.reloadData()
+                }
+                
+                print("mantras.... \(result)")
+                
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
     }
 }
 
 extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.mantraData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMChooseMantraListTVC") as! WWMChooseMantraListTVC
         
-        cell.lblStepDescription.text = "In this class we quickly get you setup with a mantric sound to play with. It will enable you to get to grips with this very easy, and effective practise. We will then guide you through the first steps of learning to become a self sufficient meditator. We will start with a simple exercise to get you in the zone, we’ll get you grounded in your body, and then teach how to work with the mantra in the most effective way."
+        cell.lblStepDescription.text = self.mantraData[indexPath.row].Description
+        cell.lblTitle.text = self.mantraData[indexPath.row].title
         
         if selectedIndex == indexPath.row{
             cell.lblStepDescription.isHidden = false
@@ -40,6 +86,9 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             cell.btnProceed.isHidden = true
             cell.imgArraow.image = UIImage(named: "downArrow")
         }
+        
+        cell.btnPlayMantra.addTarget(self, action: #selector(btnPlayMantraClicked), for: .touchUpInside)
+        cell.btnPlayMantra.tag = indexPath.row
         
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
@@ -61,8 +110,104 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
         self.tableView.reloadData()
     }
     
+    @objc func btnPlayMantraClicked(_ sender: UIButton){
+        delegate?.chooseAudio(audio: self.mantraData[sender.tag].mantra_audio)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc func btnProceedClicked(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnLetsMeditateVC") as! WWMLearnLetsMeditateVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if WWMHelperClass.value == "mantra"{
+            self.settingData.mantraID = self.mantraData[sender.tag].id
+            self.settingAPI()
+        }else{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnLetsMeditateVC") as! WWMLearnLetsMeditateVC
+            
+            WWMHelperClass.mantra_id = self.mantraData[sender.tag].id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    // MARK:- API Calling
+    
+    func settingAPI() {
+        //WWMHelperClass.showSVHud()
+       
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        var meditation_data = [[String:Any]]()
+        let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
+        for dic in meditationData!{
+            let levels = dic.levels?.array as? [DBLevelData]
+            var levelDic = [[String:Any]]()
+            for level in levels! {
+                let leveldata = [
+                    "level_id": level.levelId,
+                    "isSelected": level.isLevelSelected,
+                    "name": level.levelName!,
+                    "prep_time": "\(level.prepTime)",
+                    "meditation_time": "\(level.meditationTime)",
+                    "rest_time": "\(level.restTime)",
+                    "prep_min": "\(level.minPrep)",
+                    "prep_max": "\(level.maxPrep)",
+                    "med_min": "\(level.minMeditation)",
+                    "med_max": "\(level.maxMeditation)",
+                    "rest_min": "\(level.minRest)",
+                    "rest_max": "\(level.maxRest)"
+                    ] as [String : Any]
+                levelDic.append(leveldata)
+            }
+            
+            let data = ["meditation_id":dic.meditationId,
+                        "meditation_name":dic.meditationName!,
+                        "isSelected":dic.isMeditationSelected,
+                        "setmyown" : dic.setmyown,
+                        "levels":levelDic] as [String : Any]
+            meditation_data.append(data)
+        }
+        //"IsMilestoneAndRewards"
+        let group = [
+            "startChime": self.settingData.startChime!,
+            "endChime": self.settingData.endChime!,
+            "finishChime": self.settingData.finishChime!,
+            "intervalChime": self.settingData.intervalChime!,
+            "ambientSound": self.settingData.ambientChime!,
+            "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "meditation_data" : meditation_data
+            ] as [String : Any]
+        
+        let param = [
+            "user_id": self.appPreference.getUserID(),
+            "isJson": true,
+            "group": group
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    let arrVc = self.navigationController?.viewControllers
+                    for vc in arrVc! {
+                        if vc.isKind(of: WWMSettingsVC.classForCoder()){
+                            self.navigationController?.popToViewController(vc, animated: true)
+                        }
+                    }
+                }
+            }else {
+                if error != nil {
+                    //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
     }
 }

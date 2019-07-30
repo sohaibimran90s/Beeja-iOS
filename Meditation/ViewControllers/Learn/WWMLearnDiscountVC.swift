@@ -10,9 +10,9 @@ import UIKit
 
 class WWMLearnDiscountVC: WWMBaseViewController {
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func btnProceedClicked(_ sender: UIButton) {
@@ -22,6 +22,5 @@ class WWMLearnDiscountVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        self.tabBarController?.tabBar.isHidden = false
     }
 }

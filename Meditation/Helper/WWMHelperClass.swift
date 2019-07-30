@@ -20,6 +20,15 @@ class WWMHelperClass {
     static var galleryValue = false
     static var loader_register = false
     static var milestoneType: String = ""
+    static var selectedType: String = ""
+    
+    //learn
+    static var step_audio: String = ""
+    static var timer_audio: String = ""
+    static var total_paid: Int = 0
+    static var mantra_id: Int = 1
+    static var step_id: Int = 1
+    static var value: String = ""
     
     //static var imageView = UIImageView()
     
@@ -193,6 +202,37 @@ class WWMHelperClass {
             return 1
         }else{
             KUSERDEFAULTS.set(false, forKey: "getPrePostMoodBool")
+            return 0
+        }
+    }
+    
+    class func dateComparison1(expiryDate: String) -> Int{
+        
+        var date_completed: String = ""
+        if expiryDate != ""{
+           let date1 = expiryDate.components(separatedBy: " ")
+            date_completed = date1[0]
+        }
+        
+        print("date_completed... \(date_completed)")
+
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let currentDateString = dateFormatter.string(from: Date())
+        let currentDate = dateFormatter.date(from: currentDateString)!
+        
+        let expireDate = dateFormatter.date(from: date_completed) ?? currentDate
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+        print("day..... \(day)")
+        
+        if currentDate == expireDate{
+            return 1
+        }else{
             return 0
         }
     }

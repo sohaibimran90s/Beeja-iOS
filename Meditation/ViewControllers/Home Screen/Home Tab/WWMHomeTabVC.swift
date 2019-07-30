@@ -17,7 +17,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var lblIntroText: UILabel!
     @IBOutlet weak var imgGiftIcon: UIImageView!
     @IBOutlet weak var imgPlayIcon: UIImageView!
+    @IBOutlet weak var btnPlayVideo: UIButton!
     @IBOutlet weak var viewVideo: VideoView!
+    @IBOutlet weak var backImgVideo: UIImageView!
     @IBOutlet weak var viewVideoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var introView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -26,24 +28,50 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var btnBuyNow: UIButton!
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
     var yaxis: CGFloat = 540
     
-    var inviteGiftPopUp = WWMHomeGiftPopUp()
-    var data: [WWMMeditationHistoryListData] = []
+    let dateFormatter = DateFormatter()
+    var currentDateString: String = ""
+    var currentDate: Date!
 
+    var giftPopUp = WWMHomeGiftPopUp()
+    var alertJournalPopup = WWMJouranlPopUp()
+    
+    var data: [WWMMeditationHistoryListData] = []
+    var podData: [WWMPodCastData] = []
+
+    var guideStart = WWMGuidedStart()
+    var guided_type = ""
+    var type = ""
+    
+    let appPreffrence = WWMAppPreference()
+    
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.meditationHistoryListAPI()
+        
+        self.podData = []
+        self.podcastData()
+        
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        self.currentDateString = dateFormatter.string(from: Date())
+        self.currentDate = dateFormatter.date(from: currentDateString)!
+
+
         self.backViewTableView.layer.cornerRadius = 8
         self.btnBuyNow.layer.borderWidth = 2
         self.btnBuyNow.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         
-        self.viewVideoHeightConstraint.constant = yaxis
-        self.getScreenSize()
+        
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
         let attributeString = NSMutableAttributedString(string: "Show all",
@@ -54,8 +82,29 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        //self.navigationController?.isNavigationBarHidden = true
+        
         self.setNavigationBar(isShow: false, title: "")
+        scrollView.setContentOffset(.zero, animated: true)
+
+        print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
+        
+        self.lblName.text = "Welcome \(self.appPreffrence.getUserName())!"
+        
+        if self.appPreffrence.getSessionAvailableData(){
+            self.viewVideoHeightConstraint.constant = 140
+            self.lblStartedText.text = "How can we help you today?"
+            self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
+            self.lblIntroText.isHidden = true
+            self.imgGiftIcon.isHidden = true
+            self.imgPlayIcon.isHidden = true
+        }else{
+            self.lblStartedText.text = "To get started, try our 12-step learn to meditate series."
+            self.backImgVideo.image = UIImage(named: "bg1")
+            self.lblIntroText.isHidden = false
+            self.imgGiftIcon.isHidden = false
+            self.imgPlayIcon.isHidden = false
+            self.getScreenSize()
+        }
         
         self.lblName.alpha = 0
         self.lblStartedText.alpha = 0
@@ -63,9 +112,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.alpha = 0
         self.imgGiftIcon.alpha = 0
         
-        //self.meditationHistoryListAPI()
-        self.medHisViewHeightConstraint.constant = 416
-        self.animatedImg()
+        //self.animatedImg()
         self.animatedlblName()
     }
     
@@ -78,6 +125,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.center.y = self.imgPlayIcon.center.y + 24
         
         self.introView.isHidden = false
+        for data in self.podData {
+            if data.isPlay {
+                data.player.pause()
+                data.isPlay = false
+            }
+        }
+        self.tableView.reloadData()
     }
     
     //MARK: get screen size for setting video according to device
@@ -173,32 +227,196 @@ class WWMHomeTabVC: WWMBaseViewController {
         playerController.dismiss(animated: true, completion: nil)
     }
     
-    func inviteFriendsPopupAlert(){
-        self.inviteGiftPopUp = UINib(nibName: "WWMHomeGiftPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMHomeGiftPopUp
-        let window = UIApplication.shared.keyWindow!
-        
-        self.inviteGiftPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
-        self.inviteGiftPopUp.btnText.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.inviteGiftPopUp.btnEmail.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.inviteGiftPopUp.btnShare.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-        self.inviteGiftPopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(inviteGiftPopUp)
+    @IBAction func btnGiftClicked(_ sender: UIButton) {
+        self.giftPopupAlert()
     }
     
-    @IBAction func btnGiftClicked(_ sender: UIButton) {
-        self.inviteFriendsPopupAlert()
+    func giftPopupAlert(){
+        self.giftPopUp = UINib(nibName: "WWMHomeGiftPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMHomeGiftPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        self.giftPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        self.giftPopUp.btnText.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+         self.giftPopUp.btnEmail.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+         self.giftPopUp.btnShare.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        self.giftPopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
+        self.giftPopUp.btnText.addTarget(self, action: #selector(btnTextAction(_:)), for: .touchUpInside)
+        self.giftPopUp.btnEmail.addTarget(self, action: #selector(btnEmailAction(_:)), for: .touchUpInside)
+        self.giftPopUp.btnShare.addTarget(self, action: #selector(btnShareAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(giftPopUp)
     }
     
     @objc func btnAlertCloseAction(_ sender: Any){
-        self.inviteGiftPopUp.removeFromSuperview()
+        self.giftPopUp.removeFromSuperview()
     }
     
     
+    @objc func btnTextAction(_ sender: Any){
+        self.giftPopUp.removeFromSuperview()
+        self.shareData()
+    }
+    
+    @objc func btnEmailAction(_ sender: Any){
+        self.giftPopUp.removeFromSuperview()
+        self.shareData()
+    }
+    
+    @objc func btnShareAction(_ sender: Any){
+
+        self.giftPopUp.removeFromSuperview()
+        self.shareData()
+    }
+    
+    func shareData(){
+        let image = UIImage.init(named: "upbeat")
+        let text = "Lorem ipsum"
+        let imageToShare = [text,image!] as [Any]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+            print(success ? "SUCCESS!" : "FAILURE")
+            
+            if success{
+                self.xibJournalPopupCall()
+            }
+        }
+        
+        
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    
+    func xibJournalPopupCall(){
+        alertJournalPopup = UINib(nibName: "WWMJouranlPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMJouranlPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertJournalPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertJournalPopup.lblTitle.text = "Nice one!"
+        alertJournalPopup.lblSubtitle.text = "Your Message has been shared."
+        UIView.transition(with: alertJournalPopup, duration: 2.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertJournalPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.alertJournalPopup.removeFromSuperview()
+            }
+        }
+    }
+    
+    func podcastData(){
+       let podcast1 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Howard Donald from Take That", duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
+        let podcast2 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Madeleine Shaw", duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
+        let podcast3 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Sam Branson", duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
+        let podcast4 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Jasmine Hemsley", duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
+        
+        self.podData.append(podcast1)
+        self.podData.append(podcast2)
+        self.podData.append(podcast3)
+        self.podData.append(podcast4)
+        
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func btnTimerClicked(_ sender: UIButton) {
+        self.type = "timer"
+        self.guided_type = ""
+        self.meditationApi()
+    }
+
+    @IBAction func btnGuidedClicked(_ sender: UIButton) {
+        self.xibCallGuided()
+    }
+
+    @IBAction func btnLearnClicked(_ sender: UIButton) {
+        self.type = "learn"
+        self.guided_type = ""
+        self.meditationApi()
+    }
+    
+    
+    //MARK: popup for guided
+    func xibCallGuided(){
+        guideStart = UINib(nibName: "WWMGuidedStart", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMGuidedStart
+        let window = UIApplication.shared.keyWindow!
+        
+        guideStart.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        guideStart.btnClose.addTarget(self, action: #selector(btnGuideCloseAction(_:)), for: .touchUpInside)
+        guideStart.btnMoreInformation.addTarget(self, action: #selector(btnMoreInformationActions(_:)), for: .touchUpInside)
+        guideStart.btnSpritual.addTarget(self, action: #selector(btnSpritualAction(_:)), for: .touchUpInside)
+        guideStart.btnPractical.addTarget(self, action: #selector(btnPracticalAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(guideStart)
+    }
+    
+    @IBAction func btnPracticalAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+        guided_type = "practical"
+        self.type = "guided"
+        self.meditationApi()
+        
+    }
+    @IBAction func btnSpritualAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+        guided_type = "spiritual"
+        self.type = "guided"
+        self.meditationApi()
+    }
+    
+    @IBAction func btnGuideCloseAction(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+    }
+    
+    @IBAction func btnMoreInformationActions(_ sender: UIButton) {
+        guideStart.removeFromSuperview()
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        vc.strUrl = URL_MOREINFO
+        vc.strType = "More Information"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    //MARK:- API Calling
+    func meditationApi() {
+        self.view.endEditing(true)
+
+       // WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : self.userData.meditation_id,
+            "level_id"      : self.userData.level_id,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : self.type,
+            "guided_type"   : self.guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                self.appPreference.setIsProfileCompleted(value: true)
+                self.appPreference.setType(value: self.type)
+                self.appPreference.setGuideType(value: self.guided_type)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+                
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+            }
+
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
     func meditationHistoryListAPI() {
         
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+      //  WWMHelperClass.showLoaderAnimate(on: self.view)
+        self.data.removeAll()
         let param = ["user_id": self.appPreference.getUserID()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -231,52 +449,115 @@ class WWMHomeTabVC: WWMBaseViewController {
                     }
                 }
             }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+         //   WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
+    
+    func secondsToMinutesSeconds (second : Int) -> String {
+        return String.init(format: "%02d:%02d", second/60,second%60)
+    }
+    
+    @IBAction func btnPodcastShowAllClicked(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPodcastListVC") as! WWMPodcastListVC
+        
+        vc.podData = self.podData
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        
+        vc.strType = "Buy Book"
+        vc.strUrl = URL_WebSite
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "WWMHomeMedHistoryCVC", for: indexPath) as! WWMHomeMedHistoryCVC
         
-        cell.layer.cornerRadius = 8
+            cell.layer.cornerRadius = 8
         
-//        if self.data[indexPath.row].image == ""{
-//            cell.imgTitle.image = UIImage(named: "rectangle-1")
-//        }else{
-//            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
-//        }
-//
-//        cell.lblTitle.text = self.data[indexPath.row].title
-//        cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
-//        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
-//        cell.lblMin.text = "\(self.data[indexPath.row].duration/60)"
+            if self.data[indexPath.row].image == ""{
+                cell.imgTitle.image = UIImage(named: "rectangle-1")
+            }else{
+                cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
+            }
+
+            cell.lblTitle.text = self.data[indexPath.row].title
+            cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+            cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+            cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
+        
+        
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
+        
+            let date_completed = self.data[indexPath.row].date
+            if date_completed != ""{
+            let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                
+            print("dateCompare.... \(dateCompare)")
+            if dateCompare == 1{
+                //equal
+                let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
+                let hourText = "\(hour) h ago".replacingOccurrences(of:
+                    "-", with: "")
+                cell.lblHr.text = hourText
+            }else{
+                let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
+                let daysText = "\(day) d ago".replacingOccurrences(of:
+                    "-", with: "")
+                cell.lblHr.text = daysText
+                }
+            }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 281)
+        return CGSize(width: 180, height: 281)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
 }
 
 extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.podData.count - 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
+        
+        cell.lblTitle.text = self.podData[indexPath.row].title
+        let data = self.podData[indexPath.row]
+        let duration = secondsToMinutesSeconds(second: data.duration)
+        cell.lblTime.text = "\(duration)"
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
+            data.player = AVPlayer(playerItem:playerItem)
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        if !data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+        }else{
+            cell.playPauseImg.image = UIImage(named: "pauseAudio")
+        }
         return cell
     }
     
@@ -286,7 +567,29 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPodcastListVC") as! WWMPodcastListVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+        let data = self.podData[indexPath.row]
+        
+        if !data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "pauseAudio")
+            data.player.play()
+            data.isPlay = true
+        }else{
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+            data.player.pause()
+            data.isPlay = false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+        let data = self.podData[indexPath.row]
+        
+        if data.isPlay {
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+            data.player.pause()
+            data.isPlay = false
+        }
     }
 }

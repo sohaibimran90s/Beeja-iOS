@@ -10,7 +10,9 @@ import UIKit
 
 class WWMChooseMantraListTVC: UITableViewCell {
 
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblStepDescription: UILabel!
+    @IBOutlet weak var btnPlayMantra: UIButton!
     @IBOutlet weak var btnProceed: UIButton!
     @IBOutlet weak var imgArraow: UIImageView!
     @IBOutlet weak var backImgView: UIImageView!

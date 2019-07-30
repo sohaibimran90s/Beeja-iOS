@@ -12,7 +12,8 @@ class WWMLearnFlightModeVC: WWMBaseViewController {
     
     @IBOutlet weak var btnSkip: UIButton!
     @IBOutlet weak var btnFlightMode: UIButton!
-
+    var audio: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,9 +33,7 @@ class WWMLearnFlightModeVC: WWMBaseViewController {
     
     @IBAction func btnFlightModeClicked(_ sender: UIButton) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+        xibCall1()
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton) {

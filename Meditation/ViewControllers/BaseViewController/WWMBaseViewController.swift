@@ -13,13 +13,17 @@ class WWMBaseViewController: UIViewController {
     let appPreference = WWMAppPreference()
     var userData = WWMUserData.sharedInstance
     var alertPopupView = WWMAlertController()
+    var title1: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.setUserDataFromPreference()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        // Do any additional setup after loading the view.
+        //self.setUserDataFromPreference()
     }
     
     func setUserDataFromPreference() {
@@ -29,12 +33,10 @@ class WWMBaseViewController: UIViewController {
     }
     
     func setNavigationBar(isShow:Bool,title:String){
-        self.title = title
+        self.navigationItem.title = title
         self.navigationController?.navigationBar.barTintColor = UIColor.init(hexString: "#292178")
         self.navigationController?.navigationItem.backBarButtonItem?.title = ""
         self.navigationController?.navigationBar.tintColor = UIColor.white
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
 
         if isShow {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -48,11 +50,18 @@ class WWMBaseViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
-        sideMenuBtn.setImage(UIImage.init(named: "menu_44"), for: .normal)
+        
+        self.title1 = title
+        if title == "Settings"{
+            sideMenuBtn.setImage(UIImage.init(named: "Close_Icon"), for: .normal)
+        }else{
+            sideMenuBtn.setImage(UIImage.init(named: "menu_44"), for: .normal)
+        }
+        
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
         sideMenuBtn.contentMode = .scaleAspectFit
         
-        var leftTitle = UIButton.init()
+        let leftTitle = UIButton.init()
         let barButtonPracticalSpiritual = UIButton.init()
         let barButtonPracticalSpiritualImage = UIButton.init()
         
@@ -172,8 +181,13 @@ class WWMBaseViewController: UIViewController {
     // MARK: Button Action
     
     @IBAction func btnSideMenuAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
-        self.navigationController?.pushViewController(vc, animated: false)
+        
+        if self.title1 == "Settings"{
+            self.navigationController?.popToRootViewController(animated: true)
+        }else{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
     }
     
     @IBAction func btnFlightModeAction(_ sender: UIButton) {
@@ -204,6 +218,10 @@ class WWMBaseViewController: UIViewController {
     
     @IBAction func btnBackAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func secondToMinuteSecond(second : Int) -> String {
+        return String.init(format: "%02d:%02d", second/60,second%60)
     }
 }
 

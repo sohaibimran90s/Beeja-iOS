@@ -19,6 +19,8 @@ class WWMLearnStepListTVC: UITableViewCell {
     @IBOutlet weak var lblUprLine: UILabel!
     @IBOutlet weak var lblBelowLine: UILabel!
     @IBOutlet weak var backCellView: UIView!
+    @IBOutlet weak var lblSteps: UILabel!
+    @IBOutlet weak var lblStepsTitle: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

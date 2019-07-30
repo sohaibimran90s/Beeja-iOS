@@ -119,6 +119,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewAvMinutes.maxValue = 100
         self.viewDays.maxValue = 100
         
+        scrollView.setContentOffset(.zero, animated: true)
+        
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
         if self.appPreffrence.getType() == "timer"{
@@ -865,8 +867,8 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
-                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
-                    cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays1")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays2")
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")
@@ -892,7 +894,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                 cell.imgViewBack.isHidden = false
                 if self.milestoneData.milestoneEnabledData[indexPath.row].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
-                    cell.imgViewTitle1.image = UIImage(named: "mileHour1")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour2")
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
@@ -900,7 +902,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")
-                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
                     cell.lblTitle.text = "Sessions"
                 }
                 cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
@@ -928,8 +930,8 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                 
                 if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "hours_meditate"{
                     cell.imgViewTitle.image = UIImage(named: "hour")
-                    cell.imgViewTitle1.image = UIImage(named: "mileHour2")
-                    cell.imgViewTitle1_.image = UIImage(named: "mileHour2")
+                    cell.imgViewTitle1.image = UIImage(named: "mileHour1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileHour1")
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
@@ -938,8 +940,8 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")
-                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
-                    cell.imgViewTitle1_.image = UIImage(named: "mileSession2")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
                     cell.lblTitle.text = "Sessions"
                 }
                 cell.imgViewBack1.image = UIImage(named: "slice_back1")
@@ -959,7 +961,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.lblTitle.text = "Hours\nMeditated"
                 }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "consecutive_days"{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
-                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
+                    cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
                     cell.lblTitle.text = "Consecutive\nDays"
                 }else{
                     cell.imgViewTitle.image = UIImage(named: "session")

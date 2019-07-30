@@ -99,7 +99,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
             "meditation_id" : self.selectedMeditation_Id,
             "level_id"         : self.selectedLevel_Id,
             "user_id"       : self.appPreference.getUserID(),
-            "type" : "timer",
+            "type" : self.type,
             "guided_type" : ""
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -107,9 +107,10 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                 self.appPreference.setIsProfileCompleted(value: true)
                 
                 self.appPreference.setGuideType(value: "")
-                self.appPreference.setType(value: "timer")
+                self.appPreference.setType(value: self.type)
                 
                 
+                print("self.type.... \(self.type)")
                 //MM_BEEJA_LETSMEDITATE_V2
                 
                 //MARK:- play sonic sound

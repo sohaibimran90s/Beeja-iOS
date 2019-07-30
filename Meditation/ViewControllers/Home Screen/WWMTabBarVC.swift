@@ -42,21 +42,29 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         }
         
         self.delegate = self
+       // getUserProfileData(lat: self.lat, long: self.long)
         setupView()
-        
-        
-        //self.getUserProfileData()
         
         if !reachable.isConnectedToNetwork() {
             if self.appPreffrence.isLogout() {
+                
                 var userData = WWMUserData()
                 userData = WWMUserData.init(json: self.appPreffrence.getUserData())
                 print(userData)
-                lat = userData.latitude
-                long = userData.longitude
-                city = userData.city
-                country = userData.country
-                self.getUserProfileData()
+                
+//                self.lat = userData.latitude
+//                self.long = userData.longitude
+//                city = userData.city
+//                country = userData.country
+                
+                let userData1 = self.appPreffrence.getUserData()
+            
+                self.lat = userData1["latitude"] as? String ?? ""
+                self.long = userData1["longitude"] as? String ?? ""
+                self.city = userData1["city"] as? String ?? ""
+                self.country = userData1["country"] as? String ?? ""
+                
+                self.getUserProfileData(lat: self.lat, long: self.long)
             }else {
                 self.connectionLost()
             }
@@ -68,10 +76,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
-        if lat == "" {
+        if self.lat == "" {
             getCityAndCountry()
         }
         
@@ -83,18 +90,18 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             var userData = WWMUserData()
             userData = WWMUserData.init(json: self.appPreffrence.getUserData())
             print(userData)
-            lat = userData.latitude
-            long = userData.longitude
+            self.lat = userData.latitude
+            self.long = userData.longitude
             city = userData.city
             country = userData.country
         }
         
-        getUserProfileData()
+        getUserProfileData(lat: self.lat, long: self.long)
     }
     
     func getCityAndCountry() {
-        lat = "\(currentLocation.coordinate.latitude)"
-        long = "\(currentLocation.coordinate.longitude)"
+        self.lat = "\(currentLocation.coordinate.latitude)"
+        self.long = "\(currentLocation.coordinate.longitude)"
         let geoCoder = CLGeocoder()
         //let location = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
         geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
@@ -104,18 +111,31 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 // Place details
                 guard let placeMark = placemarks?.first else {
                     if self.appPreffrence.isLogout() {
+                        
                         var userData = WWMUserData()
                         userData = WWMUserData.init(json: self.appPreffrence.getUserData())
                         print(userData)
-                        self.lat = userData.latitude
-                        self.long = userData.longitude
-                        self.city = userData.city
-                        self.country = userData.country
+                        
+                        let userData1 = self.appPreffrence.getUserData()
+                        
+//                        self.lat = userData.latitude
+//                        self.long = userData.longitude
+//                        self.city = userData.city
+//                        self.country = userData.country
+                        
+                        self.lat = userData1["latitude"] as? String ?? ""
+                        self.long = userData1["longitude"] as? String ?? ""
+                        self.city = userData1["city"] as? String ?? ""
+                        self.country = userData1["country"] as? String ?? ""
+                        
+                        
+                        print("lat.. \(self.lat) long... \(self.long) city.. \(self.city) country... \(self.country)")
                     }
                     
-                    self.getUserProfileData()
+                    self.getUserProfileData(lat: self.lat, long: self.lat)
                     return
                 }
+                
                 
                 // Location name
                 if let locationName = placeMark.location {
@@ -139,20 +159,35 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.country = countryPlace
                     print(self.country)
                 }
-                self.getUserProfileData()
+                
+                
+                print("lat.. \(self.lat) long... \(self.long)")
+                
+                self.getUserProfileData(lat: self.lat, long: self.lat)
         })
     }
     
     
     func setupView() {
         
+        WWMHelperClass.selectedType = ""
+        
         if self.appPreffrence.getType() == "timer"{
             self.viewControllers?.remove(at: 3)
+            self.viewControllers?.remove(at: 3)
+            
         }else if self.appPreffrence.getType() == "guided"{
             self.viewControllers?.remove(at: 2)
+            self.viewControllers?.remove(at: 3)
+        }else if self.appPreffrence.getType() == "learn"{
+            WWMHelperClass.selectedType = "learn"
+            self.viewControllers?.remove(at: 2)
+            self.viewControllers?.remove(at: 2)
         }else {
-         self.viewControllers?.remove(at: 3)
+            self.viewControllers?.remove(at: 3)
+            self.viewControllers?.remove(at: 3)
         }
+        
         
         if self.milestoneType == "hours_meditate"{
             WWMHelperClass.milestoneType = "hours_meditate"
@@ -170,6 +205,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             self.selectedIndex = 2
         }
         
+        if !KUSERDEFAULTS.bool(forKey: "defaultSelection"){
+            self.selectedIndex = 0
+            KUSERDEFAULTS.set(true, forKey: "defaultSelection")
+        }
+        
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
@@ -185,6 +225,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func setDataToDb(json:[String:Any]) {
+        
+        print("database setting.... \(json)")
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             WWMHelperClass.deletefromDb(dbName: "DBSettings")
@@ -202,6 +244,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         settingDB.moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
         settingDB.morningReminderTime = json["MorningReminderTime"] as? String ?? ""
         settingDB.afterNoonReminderTime = json["AfternoonReminderTime"] as? String ?? ""
+        settingDB.learnReminderTime = json["LearnReminderTime"] as? String ?? ""
+        settingDB.isLearnReminder = json["IsLearnReminder"] as? Bool ?? false
+        settingDB.mantraID = json["MantraID"] as? Int ?? 1
         
         settingDB.prepTime = "10"
         settingDB.meditationTime = "90"
@@ -270,30 +315,47 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         print("Selected view controller")
     }
     
-    func getUserProfileData() {
+    func getUserProfileData(lat: String, long: String) {
         //WWMHelperClass.showSVHud()
         if !isGetProfileCall {
             isGetProfileCall = true
         let param = [
             "user_id":self.appPreffrence.getUserID(),
             "lat": lat,
-            "long":long,
+            "long": long,
             "city":city,
             "country":country
             ] as [String : Any]
+            
+        print("param... \(param)")
+            
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {
+                        
+                        WWMHelperClass.hideLoaderAnimate(on: self.view)
+                        
                         var userData = WWMUserData.sharedInstance
                         userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                        print("userData****** \(userData)")
+
+                        
+                        print("userData****** \(userData) userprofile....\(result["user_profile"] as! [String : Any])")
                         
                         var userSubscription = WWMUserData.sharedInstance
                         userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
                         
+                        
+                        
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                         self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
+                        
+                        if let userProfile = result["user_profile"] as? [String : Any]{
+                            self.appPreffrence.setUserName(value:  userProfile["name"] as? String ?? "")
+                        }
+                        
+                        self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
+                        
                         
                         print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool())")
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
@@ -312,7 +374,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                                 self.appPreffrence.setPostJournalCount(value: 6)
                             }
                         }
-                        
                         self.setDataToDb(json: result["settings"] as! [String:Any])
                     }else {
                         self.getDataFromDatabase()
@@ -367,7 +428,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     @IBAction func btnDoneAction(_ sender: Any) {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        self.getUserProfileData()
+        self.getUserProfileData(lat: self.lat, long: self.long)
     }
     
     

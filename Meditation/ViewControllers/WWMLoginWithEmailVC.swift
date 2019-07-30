@@ -26,7 +26,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     var tap = UITapGestureRecognizer()
     
     var isFromWelcomeBack = false
-    
+    let appPreffrence = WWMAppPreference()
+    var userEmail: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +42,24 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             
             self.btnLogin.setTitle("Next", for: .normal)
             viewContinueAsEmail.isHidden = false
-            self.lblUserName.text = self.userData.name
+            
+            print("getuserdata..... \(self.appPreffrence.getUserData())")
+            //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+            let getuserdata = self.appPreffrence.getUserData()
+            
+            if let name = getuserdata["name"] as? String{
+                self.lblUserName.text = name
+            }
+            
+            //self.lblUserLoginType.text = self.userData.email
+            //self.lblUserName.text = self.userData.name
             //self.lblUserEmail.text = self.userData.email
+            
             viewEmail.isHidden = true
             
-            let userLoginTypeArray = self.userData.email.components(separatedBy: "@")
+            if let userEmail = getuserdata["email"] as? String{
+                self.userEmail = userEmail
+            let userLoginTypeArray = userEmail.components(separatedBy: "@")
             if userLoginTypeArray.count > 1 {
                 if userLoginTypeArray[0].count > 3{
                     var myString: String = String(userLoginTypeArray[0].prefix(3))
@@ -84,13 +98,14 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                     self.lblUserEmail.text = myString
                 }else{
                     
-                    self.lblUserEmail.text = self.userData.email
+                    self.lblUserEmail.text = userEmail
                 }
                 print(userLoginTypeArray[0])
                 print(userLoginTypeArray[1])
             }else{
-                self.lblUserEmail.text = self.userData.email
+                self.lblUserEmail.text = userEmail
             }
+          }
         }else {
             viewContinueAsEmail.isHidden = true
             viewEmail.isHidden = false
@@ -173,7 +188,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "email": isFromWelcomeBack ? self.userData.email: txtViewEmail.text!,
+            "email": isFromWelcomeBack ? self.userEmail: txtViewEmail.text!,
             "password":txtViewPassword.text!,
             "deviceId": kDeviceID,
             "deviceToken" : appPreference.getDeviceToken(),
@@ -185,15 +200,17 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             "model": UIDevice.current.model,
             "version": UIDevice.current.systemVersion
         ]
+        
+        print("backparam... \(param)")
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
-                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
-                        self.appPreference.setUserName(value: userProfile["name"] as! String)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
+                        self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
@@ -206,7 +223,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                         }
                     }
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
             }else {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{

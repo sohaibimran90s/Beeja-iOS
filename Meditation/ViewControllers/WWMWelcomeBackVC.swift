@@ -16,6 +16,9 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
     @IBOutlet weak var lblUserLoginType: UILabel!
     @IBOutlet weak var imageViewProfile: UIImageView!
     @IBOutlet weak var btnUseAnother: UIButton!
+    
+    let appPreffrence = WWMAppPreference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
@@ -29,54 +32,65 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
     func setupView(){
         self.btnUseAnother.layer.borderWidth = 2.0
         self.btnUseAnother.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.lblUserName.text = self.userData.name
+        
+        print("getuserdata..... \(self.appPreffrence.getUserData())")
+        //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+        let getuserdata = self.appPreffrence.getUserData()
+        
+        if let name = getuserdata["name"] as? String{
+            self.lblUserName.text = name
+        }
+        
         //self.lblUserLoginType.text = self.userData.email
         
-            let userLoginTypeArray = self.userData.email.components(separatedBy: "@")
+        if let userEmail = getuserdata["email"] as? String{
+            let userLoginTypeArray = userEmail.components(separatedBy: "@")
             if userLoginTypeArray.count > 1 {
-            if userLoginTypeArray[0].count > 3{
-                var myString: String = String(userLoginTypeArray[0].prefix(3))
-                print(myString)
-                
-                let abc = myString.count
-                let pqr = userLoginTypeArray[0].count
-                let mno = pqr - abc
-                
-                for _ in 0..<mno{
-                    myString.append(contentsOf: "*")
+                if userLoginTypeArray[0].count > 3{
+                    var myString: String = String(userLoginTypeArray[0].prefix(3))
+                    print(myString)
+                    
+                    let abc = myString.count
+                    let pqr = userLoginTypeArray[0].count
+                    let mno = pqr - abc
+                    
+                    for _ in 0..<mno{
+                        myString.append(contentsOf: "*")
+                    }
+                    
+                    myString.append(contentsOf: "@")
+                    myString.append(contentsOf: userLoginTypeArray[1])
+                    print(myString)
+                    
+                    self.lblUserLoginType.text = myString
+                    
+                }else if userLoginTypeArray[0].count > 1{
+                    var myString: String = String(userLoginTypeArray[0].prefix(1))
+                    print(myString)
+                    
+                    let abc = myString.count
+                    let pqr = userLoginTypeArray[0].count
+                    let mno = pqr - abc
+                    
+                    for _ in 0..<mno{
+                        myString.append(contentsOf: "*")
+                    }
+                    
+                    myString.append(contentsOf: "@")
+                    myString.append(contentsOf: userLoginTypeArray[1])
+                    print(myString)
+                    
+                    self.lblUserLoginType.text = myString
+                }else{
+                    
+                    self.lblUserLoginType.text = userEmail
                 }
-                
-                myString.append(contentsOf: "@")
-                myString.append(contentsOf: userLoginTypeArray[1])
-                print(myString)
-                
-                self.lblUserLoginType.text = myString
-                
-            }else if userLoginTypeArray[0].count > 1{
-                var myString: String = String(userLoginTypeArray[0].prefix(1))
-                print(myString)
-                
-                let abc = myString.count
-                let pqr = userLoginTypeArray[0].count
-                let mno = pqr - abc
-                
-                for _ in 0..<mno{
-                    myString.append(contentsOf: "*")
-                }
-                
-                myString.append(contentsOf: "@")
-                myString.append(contentsOf: userLoginTypeArray[1])
-                print(myString)
-                
-                self.lblUserLoginType.text = myString
+                print(userLoginTypeArray[0])
+                print(userLoginTypeArray[1])
             }else{
-                
-                self.lblUserLoginType.text = self.userData.email
+                self.lblUserLoginType.text = userEmail
             }
-            print(userLoginTypeArray[0])
-            print(userLoginTypeArray[1])
-            }else{
-                self.lblUserLoginType.text = self.userData.email
+
         }
         
         self.imageViewProfile.sd_setImage(with: URL.init(string: self.userData.profileImage), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
@@ -223,7 +237,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
-                        self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
@@ -234,7 +248,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                         }
                     }
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
                 }
                 
             }else {

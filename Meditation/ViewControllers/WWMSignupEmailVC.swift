@@ -118,13 +118,16 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
-                    self.appPreference.setUserToken(value: userProfile["token"] as! String)
+                    self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as! Int)")
-                    self.appPreference.setUserName(value: userProfile["name"] as! String)
+                    self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    
+                    
+                    
 //                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
 //                    self.navigationController?.pushViewController(vc, animated: true)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -132,7 +135,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     vc.value = "SignupLetsStart"
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as! String, title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
                 
                 
@@ -185,6 +188,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setUserData(value: [:])
                         
                         print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
+                        
+                        KUSERDEFAULTS.set(false, forKey: "defaultSelection")
                         
                         if isProfileCompleted {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
