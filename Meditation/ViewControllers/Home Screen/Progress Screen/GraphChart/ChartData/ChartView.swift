@@ -139,6 +139,8 @@ class CustomChart: LineChartView{
       dataEntries.append(entry)
     }
     
+    print("dataentries... \(dataEntries)")
+    
     let set = LineChartDataSet(entries: dataEntries)
     set.mode = .horizontalBezier
     set.drawValuesEnabled = false

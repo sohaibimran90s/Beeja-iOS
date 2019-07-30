@@ -327,7 +327,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     self.moodProgressData = WWMMoodProgressData.init(json: statsData)
                     
                     
-                    print(print(self.moodProgressData.color_score.pre))
+                    print("self.moodProgressData.color_score.pre... \(self.moodProgressData.color_score.pre)")
+                    print("self.moodProgressData.color_score.post... \(self.moodProgressData.color_score.post)")
                     
                     self.graphChartApiCall()
                     self.tblMoodProgress.reloadData()
@@ -341,7 +342,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     }
                 }
             }
-            self.graphChartApiCall()
+           // self.graphChartApiCall()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
@@ -367,8 +368,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                         self?.addBoth()
                         self?.month.text = self?.data.first?.date.monthName
                     }else{
-                        self?.baseViewHeightConstraint.constant = 550
-                        self?.graphBaseView.isHidden = true
+                        self?.baseViewHeightConstraint.constant = 1152
+                        self?.graphBaseView.isHidden = false
                     }
                 }
             }
@@ -389,30 +390,35 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
         self.chartView.clearData()
         
-        switch self.currentChartStatus {
-        case .both:
-            self.currentChartStatus  = .pre
-            addPreMood()
+        if self.data.count > 0{
+            switch self.currentChartStatus {
+            case .both:
+                self.currentChartStatus  = .pre
+                addPreMood()
+                
+                self.updateLabels(pre: true, post: false)
+                
+            case .pre:
+                self.currentChartStatus = .post
+                addPostMood()
+                
+                self.updateLabels(pre: false, post: true)
+            case .post:
+                self.currentChartStatus = .both
+                self.addBoth()
+                
+                self.updateLabels(pre: true, post: true)
+                
+            default:
+                break
+            }
             
-            self.updateLabels(pre: true, post: false)
-            
-        case .pre:
-            self.currentChartStatus = .post
-            addPostMood()
-            
-            self.updateLabels(pre: false, post: true)
-        case .post:
-            self.currentChartStatus = .both
-            self.addBoth()
-            
-            self.updateLabels(pre: true, post: true)
-            
-        default:
-            break
+            self.chartView.refresh()
+            pageControl.currentPage = self.currentChartStatus.rawValue
+
+        }else{
+            print("no graph data....")
         }
-        
-        self.chartView.refresh()
-        pageControl.currentPage = self.currentChartStatus.rawValue
     }
     
     func addPreMood(){
@@ -421,12 +427,13 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         let data = chartView.getPreMood(dataPoints: preData.compactMap({$0.id.moodType.getChartId()}), value: self.data.compactMap({$0.date.day}))
         data.drawCircleHoleEnabled = true
         let colors = preData.compactMap({$0.id.moodType.getChartId()}).compactMap({LineChartFormatter().getStrip(for: Double($0))})
+        print("precolor... \(colors)")
+        
         data.circleColors = colors
         data.circleHoleRadius = data.circleRadius - 1
         data.circleHoleColor = UIColor.white
         data.invertColors = true
         self.chartView.update(pre: data)
-        
         
     }
     

@@ -39,6 +39,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     var paidFreeUSer: String = ""
     var ismove = false
+    var watched_duration: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -323,6 +324,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if self.totalAudioLength != ""{
                 print("totalaudiolength... \(self.totalDuration)")
                 print("currentTime... \(self.player.currentTime().seconds)")
+                self.watched_duration = Int(round(self.player.currentTime().seconds))
                 let remainingTime = self.totalDuration - Int(round(self.player.currentTime().seconds))
                 self.lblTimer.text = self.secondToMinuteSecond(second: remainingTime)
             }
@@ -342,10 +344,10 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
             
-            WWMHelperClass.selectedType = "learn"
-            vc.watched_duration = "\(self.player.currentTime().seconds)"
+            vc.watched_duration = "\(self.watched_duration)"
+            vc.value = "learnCongrats"
             self.navigationController?.pushViewController(vc, animated: false)
         }
     }
@@ -364,7 +366,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
             
-            vc.watched_duration = "\(self.player.currentTime().seconds)"
+            vc.watched_duration = "\(self.watched_duration)"
             vc.value = "learnCongrats"
             self.navigationController?.pushViewController(vc, animated: false)
             

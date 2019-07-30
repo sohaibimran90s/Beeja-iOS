@@ -913,7 +913,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setUserID(value: "")
                 self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
-                
+                self.appPreffrence.setPrePostJournalBool(value: false)
+
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
                 WWMHelperClass.deletefromDb(dbName: "DBContactUs")
@@ -943,7 +944,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 
             }
             
-            self.appPreffrence.setPrePostJournalBool(value: true)
+            
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }

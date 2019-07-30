@@ -107,6 +107,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = ["user_id":self.appPreference.getUserID(),
         "med_type" : self.appPreference.getType()]
+        
+        print("jounallist.... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
@@ -175,7 +178,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
             let getPostJournalCount = self.appPreference.getPostJournalCount()
             if getPostJournalCount < 1{
-                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Post")
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your journal before purchase of any subscription plan.", type: "post")
             }else{
                 xibJournalView()
             }
@@ -307,6 +310,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             "mood_id":"",
             "med_type" : self.appPreference.getType()
         ]
+        
+        print("journal param.... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.xibJournalPopupCall()

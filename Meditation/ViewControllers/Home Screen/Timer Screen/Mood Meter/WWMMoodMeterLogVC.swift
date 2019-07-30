@@ -84,9 +84,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }else{
             self.lblExpressMood.text = ""
         }
+        
+        print("oodData.show_burn... \(moodData.show_burn)")
         if !moodData.show_burn {
             btnBurnMood.isHidden = true
         }
+        
+        if WWMHelperClass.selectedType == "learn"{
+            btnBurnMood.isHidden = true
+        }
+        
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
@@ -128,7 +135,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     @objc func playerDidFinishPlaying(note: NSNotification) {
-        if self.type == "Pre" {
+        if self.type == "pre" {
             self.navigationController?.isNavigationBarHidden = false
             self.navigationController?.popToRootViewController(animated: false)
         }else {
@@ -162,7 +169,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     func getPrePostMoodData(){
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-            if self.type == "Pre" {
+            if self.type == "pre" {
                 let getPreJournalCount = self.appPreference.getPreJournalCount()
                 if getPreJournalCount < 7 && getPreJournalCount != 0{
                     self.appPreference.setPreJournalCount(value: self.appPreference.getPreJournalCount() - 1)
@@ -187,17 +194,13 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }) { (Bool) in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.alertPopup.removeFromSuperview()
-                if WWMHelperClass.selectedType == "learn"{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else{
-                    self.navigateToDashboard()
-                }
+                self.navigateToDashboard()
             }
         }
     }
     
     func completeMeditationAPI() {
+        
 
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
@@ -217,7 +220,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "user_id":self.appPreference.getUserID(),
                 "meditation_type":type,
                 "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":"",
+                "tell_us_why":txtViewLog.text ?? "",
                 "prep_time":prepTime,
                 "meditation_time":meditationTime,
                 "rest_time":restTime,
@@ -237,7 +240,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "user_id":self.appPreference.getUserID(),
                 "meditation_type":type,
                 "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text,
+                "tell_us_why":txtViewLog.text ?? "",
                 "prep_time":prepTime,
                 "meditation_time":meditationTime,
                 "rest_time":restTime,
@@ -247,7 +250,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 ] as [String : Any]
         }
         
-        print("param... \(param)")
+        print("param meterlog... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -299,11 +302,17 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
+        print("self.type..... \(self.type)")
         if WWMHelperClass.selectedType == "learn"{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
-            self.navigationController?.pushViewController(vc, animated: true)
+            if self.type == "pre" {
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popToRootViewController(animated: false)
+            }else {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }else{
-            if self.type == "Pre" {
+            if self.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)
             }else {

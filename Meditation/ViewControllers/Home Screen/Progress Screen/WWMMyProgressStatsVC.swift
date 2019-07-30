@@ -592,6 +592,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //WWMHelperClass.showSVHud()
         //WWMHelperClass.showLoaderAnimate(on: self.view)
         
+        print("add session params.... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
@@ -668,15 +670,16 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let param = ["user_id":self.appPreference.getUserID(),
                      "med_type" : self.appPreference.getType(),
                      "month":self.strMonthYear]
+        print("param stats... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
-                   
                 }
-                self.isLeft = false
-                self.setData()
-                self.collectionViewCal.reloadData()
+                    self.isLeft = false
+                    self.setData()
+                    self.collectionViewCal.reloadData()
                 
                 self.getMilestoneData()
             }else {
@@ -686,14 +689,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     }else{
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
-                    
                 }
-                
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
             
             
-           // WWMHelperClass.hideLoaderAnimate(on: self.view)
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -706,8 +707,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
-                    
-
                     
                     self.tableView.reloadData()
                   print("enabledCount...\(self.milestoneData.milestoneEnabledData.count)++ disabledCount...\(self.milestoneData.milestoneDisabledData.count)")

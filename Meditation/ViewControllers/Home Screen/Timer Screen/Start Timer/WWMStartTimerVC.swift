@@ -54,8 +54,6 @@ class WWMStartTimerVC: WWMBaseViewController {
         animationViewMed.loopMode = .loop
         view.insertSubview(animationViewMed, belowSubview: viewPause)
         
-        
-        
         animationViewRest = AnimationView(name: "circle_loader")
         animationViewRest.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
         animationViewRest.center = self.view.center
@@ -69,7 +67,6 @@ class WWMStartTimerVC: WWMBaseViewController {
         animationViewPrep.contentMode = .scaleAspectFill
         animationViewPrep.loopMode = .loop
         backView.insertSubview(animationViewPrep, belowSubview: viewPause)
-        
         
         animationViewPrep.isHidden = false
         animationViewMed.isHidden = true
@@ -225,7 +222,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         }else {
             self.timerType = ""
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-            vc.type = "Post"
+            vc.type = "post"
             vc.prepTime = self.prepTime
             vc.meditationTime = self.meditationTime
             vc.restTime = self.restTime
@@ -333,7 +330,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime!)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-                    vc.type = "Post"
+                    vc.type = "post"
                     vc.prepTime = self.prepTime
                     vc.meditationTime = 0
                     vc.restTime = 0
@@ -365,7 +362,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime!)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-                    vc.type = "Post"
+                    vc.type = "post"
                     vc.prepTime = self.prepTime
                     vc.meditationTime = self.meditationTime
                     vc.restTime = 0
@@ -389,7 +386,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                 self.playAudioFile(fileName: settingData.finishChime!)
                 self.timer.invalidate()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-                vc.type = "Post"
+                vc.type = "post"
                 vc.prepTime = self.prepTime
                 vc.meditationTime = self.meditationTime
                 vc.restTime = self.restTime
@@ -490,7 +487,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBAction func btnDoneAction(_ sender: Any) {
          alertPopupView.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
-        vc.type = "Post"
+        vc.type = "post"
         if self.timerType == "Prep"{
             vc.prepTime = self.prepTime - self.seconds
             vc.meditationTime = 0

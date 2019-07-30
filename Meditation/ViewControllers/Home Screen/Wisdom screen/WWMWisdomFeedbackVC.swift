@@ -73,7 +73,7 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     func wisdomFeedback(param: [String: Any]) {
         if isGuided {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-            vc.type = "Post"
+            vc.type = "post"
             vc.meditationID = "0"
             vc.levelID = "0"
             vc.category_Id = self.cat_id

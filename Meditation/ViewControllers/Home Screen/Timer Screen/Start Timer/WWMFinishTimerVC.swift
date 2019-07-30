@@ -103,7 +103,7 @@ class WWMFinishTimerVC: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 self.alertPrompt.removeFromSuperview()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-                vc.type = "Post"
+                vc.type = "post"
                 vc.prepTime = self.prepTime
                 vc.meditationTime = self.meditationTime
                 vc.restTime = self.restTime
@@ -119,7 +119,7 @@ class WWMFinishTimerVC: UIViewController {
         
         if self.settingData.moodMeterEnable {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-            vc.type = "Post"
+            vc.type = "post"
             vc.prepTime = self.prepTime
             vc.meditationTime = self.meditationTime
             vc.restTime = self.restTime

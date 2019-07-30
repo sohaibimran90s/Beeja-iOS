@@ -249,18 +249,18 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             if self.settingData.moodMeterEnable {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-                vc.type = "Post"
+                vc.type = "post"
                 vc.meditationID = "0"
                 vc.levelID = "0"
                 vc.category_Id = self.cat_id
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(self.player.currentTime().seconds)"
+                vc.watched_duration = "\(Int(round(self.player.currentTime().seconds)))"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-                vc.type = "Post"
+                vc.type = "post"
                 vc.prepTime = 0
                 vc.meditationTime = 0
                 vc.restTime = 0
@@ -270,7 +270,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(self.player.currentTime().seconds)"
+                vc.watched_duration = "\(Int(round(self.player.currentTime().seconds)))"
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

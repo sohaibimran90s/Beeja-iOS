@@ -54,7 +54,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         super.viewDidLoad()
         
         
-        if type == "Pre" {
+        if type == "pre" {
             self.btnAskMeAgain.isHidden = true
             self.btnSkip.isHidden = true
         }else{
@@ -113,7 +113,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 
                 if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
                     
-                    if self.type == "Pre" {
+                    if self.type == "pre" {
                         let getPreMoodCount = self.appPreference.getPreMoodCount()
                         let getPreJournalCount = self.appPreference.getPreJournalCount()
                         
@@ -169,7 +169,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     @objc func btnAlertDoneAction(_ sender: Any){
-        if type == "Pre" {
+        if type == "pre" {
             
             print("getPreJournalCount.... \(self.appPreference.getPreJournalCount())")
              print("getPreMoodCount.... \(self.appPreference.getPreMoodCount())")
@@ -227,15 +227,29 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func callWWMMoodMeterLogVC(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
         
-        if self.type == "Pre"{
-            if self.appPreference.getPreMoodCount() > 0{
+        print("type..... \(self.type)")
+        print("apppre... \(self.appPreffrence.getPrePostJournalBool())")
+        print("postmoddcount.. \(self.appPreference.getPostMoodCount())")
+        print("getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
+        if self.type == "pre"{
+            if !self.appPreffrence.getPrePostJournalBool(){
                 vc.moodData = arrMoodData[selectedIndex]
                 vc.selectedIndex = String(selectedIndex)
+            }else{
+                if self.appPreference.getPreMoodCount() > 0{
+                    vc.moodData = arrMoodData[selectedIndex]
+                    vc.selectedIndex = String(selectedIndex)
+                }
             }
         }else{
-            if self.appPreference.getPostMoodCount() > 0{
+            if !self.appPreffrence.getPrePostJournalBool(){
                 vc.moodData = arrMoodData[selectedIndex]
                 vc.selectedIndex = String(selectedIndex)
+            }else{
+                if self.appPreference.getPostMoodCount() > 0{
+                    vc.moodData = arrMoodData[selectedIndex]
+                    vc.selectedIndex = String(selectedIndex)
+                }
             }
         }
         
@@ -302,6 +316,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 ] as [String : Any]
         }
         
+        print("meter param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
@@ -338,6 +354,9 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         self.arrButton.removeAll()
         var tags: Int = 0
         for mood in self.arrMoodData {
+            
+            print("mood...\(mood.id)")
+            print("mood...\(mood.name)")
             
             //buttons....
             button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
@@ -476,7 +495,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
                 ] as [String : Any]
             
-            print("param.... \(param)")
+            print("meter param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
@@ -536,7 +555,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         if selectedIndex != -1 {
             if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
                 
-                if self.type == "Pre" {
+                if self.type == "pre" {
                     
                     print("getPostJournalCount.... \(self.appPreference.getPreJournalCount())")
                     if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){

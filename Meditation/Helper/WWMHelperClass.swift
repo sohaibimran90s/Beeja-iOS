@@ -206,7 +206,7 @@ class WWMHelperClass {
         }
     }
     
-    class func dateComparison1(expiryDate: String) -> Int{
+    class func dateComparison1(expiryDate: String) -> (Int, Int){
         
         var date_completed: String = ""
         if expiryDate != ""{
@@ -231,9 +231,9 @@ class WWMHelperClass {
         print("day..... \(day)")
         
         if currentDate == expireDate{
-            return 1
+            return (1, day)
         }else{
-            return 0
+            return (0, day)
         }
     }
     

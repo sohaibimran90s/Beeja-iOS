@@ -306,9 +306,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     func podcastData(){
        let podcast1 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Howard Donald from Take That", duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
-        let podcast2 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Madeleine Shaw", duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
+        let podcast2 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Jasmine Hemsley", duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
         let podcast3 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Sam Branson", duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
-        let podcast4 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Jasmine Hemsley", duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
+        let podcast4 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Madeleine Shaw", duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
         
         self.podData.append(podcast1)
         self.podData.append(podcast2)
@@ -396,19 +396,15 @@ class WWMHomeTabVC: WWMBaseViewController {
                 self.appPreference.setGuideType(value: self.guided_type)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 UIApplication.shared.keyWindow?.rootViewController = vc
-                
-                
-            }else {
+             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                     }else{
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
-                    
                 }
             }
-
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
@@ -416,6 +412,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     func meditationHistoryListAPI() {
         
       //  WWMHelperClass.showLoaderAnimate(on: self.view)
+        self.medHisViewHeightConstraint.constant = 0
         self.data.removeAll()
         let param = ["user_id": self.appPreference.getUserID()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -437,9 +434,9 @@ class WWMHomeTabVC: WWMBaseViewController {
                 }
                 
                 
-                print("param....****** \(URL_MEDITATIONHISTORY+"/page=1")")
-                print("param....****** \(param)")
-                print("result....****** \(result)")
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1")")
+                print("param MedHist....****** \(param)")
+                print("result medHist....****** \(result)")
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -496,7 +493,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
         
         
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
         
             let date_completed = self.data[indexPath.row].date
@@ -504,15 +501,16 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
                 
             print("dateCompare.... \(dateCompare)")
-            if dateCompare == 1{
+            if dateCompare.0 == 1{
                 //equal
                 let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
                 let hourText = "\(hour) h ago".replacingOccurrences(of:
                     "-", with: "")
                 cell.lblHr.text = hourText
             }else{
-                let day =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).day ?? 0
-                let daysText = "\(day) d ago".replacingOccurrences(of:
+                //let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate!).day ?? 0
+                //print("day.... \(day) currentDate... \(currentDate!) expiredate... \(expireDate!)")
+                let daysText = "\(dateCompare.1) d ago".replacingOccurrences(of:
                     "-", with: "")
                 cell.lblHr.text = daysText
                 }

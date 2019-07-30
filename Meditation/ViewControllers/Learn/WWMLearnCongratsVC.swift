@@ -16,7 +16,7 @@ class WWMLearnCongratsVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("wathced duration.... \(watched_duration)")
+        print("wathced duration.... \(String(describing: Int(watched_duration)))")
         
     }
     
@@ -41,7 +41,7 @@ class WWMLearnCongratsVC: WWMBaseViewController {
                 vc.emotion_Id = ""
                 vc.audio_Id = ""
                 vc.rating = ""
-                vc.type = "Post"
+                vc.type = "post"
                 vc.watched_duration = self.watched_duration
                 
                 self.navigationController?.pushViewController(vc, animated: true)

@@ -88,7 +88,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
             self.completeMeditationAPI()
             
             if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-                if self.type == "Pre"{
+                if self.type == "pre"{
                     let getPreJournalCount = self.appPreference.getPreJournalCount()
                     if getPreJournalCount < 7 && getPreJournalCount != 0{
                         self.appPreference.setPreJournalCount(value: self.appPreference.getPreJournalCount() - 1)
@@ -154,7 +154,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 ] as [String : Any]
         }
         
-                WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        print("journal param... \(param)")
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

@@ -166,7 +166,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
     
     @IBAction func btnExpressMoodAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-        vc.type = "Pre"
+        vc.type = "pre"
         vc.meditationID = "0"
         vc.levelID = "0"
         self.navigationController?.pushViewController(vc, animated: false)

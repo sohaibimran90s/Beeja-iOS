@@ -33,10 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     let appPreference = WWMAppPreference()
     let center = UNUserNotificationCenter.current()
     let reachability = Reachability()
-     var auth = SPTAuth()
-     let gcmMessageIDKey = "gcm.message_id"
+    var auth = SPTAuth()
+    let gcmMessageIDKey = "gcm.message_id"
     
     let appPreffrence = WWMAppPreference()
+    var date = Date()
+    var value = 0
     
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -385,14 +387,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         center.delegate = self
     }
     
-    
-    
     func setLocalPush(){
+        
+        
+        if self.value == 1{
+            print("tomm")
+            print("date... \(date)")
+        }else if self.value == 2{
+            print("everyday")
+            print("date... \(date)")
+        }else{
+            print("defult")
+            print("date... \(date)")
+        }
+        
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             let settingData = data[0]
             if settingData.isMorningReminder {
-                if settingData.morningReminderTime == "" {
+                if settingData.morningReminderTime != "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
@@ -414,7 +427,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }else {
                         str = "Good Evening!"
                     }
-                    
                 }
  
                 // let timeStemp = Int(date!.timeIntervalSince1970)
@@ -444,7 +456,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
             }
             if settingData.isAfterNoonReminder {
-                if settingData.afterNoonReminderTime == "" {
+                if settingData.afterNoonReminderTime != "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
@@ -497,14 +509,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
             
             if settingData.isLearnReminder {
-                if settingData.learnReminderTime == "" {
+                if settingData.learnReminderTime != "" {
                 let dateFormate = DateFormatter()
                 dateFormate.locale = NSLocale.current
                 dateFormate.dateFormat = "dd:MM:yyyy"
+                    
                 var strDate = dateFormate.string(from: Date())
                 strDate = strDate + " \(settingData.learnReminderTime!)"
                 dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
+                    
                 print(settingData.learnReminderTime!)
+                    
                 let date = dateFormate.date(from: strDate)
                 let arrTemp = settingData.learnReminderTime?.components(separatedBy: ":")
                 let str = "Learn to meditate"
@@ -515,23 +530,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 content.body = NSString.localizedUserNotificationString(forKey: "It's time to learn beeja meditation", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-Learn"
-                //print(Int(Date().timeIntervalSince1970))
-                //print(timeStemp)
-                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-                // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
-                // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
-                let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
-                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                
-                //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
-                let request = UNNotificationRequest(identifier: "LearnReminder", content: content, trigger: notificationTrigger)
-                center.add(request){ (error) in
-                    if error == nil {
-                        print("schedule push succeed")
+                    
+                    
+                if self.value == 1{
+                    if self.date == date{
+                        let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
+                        let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                            
+                            
+                        let request = UNNotificationRequest(identifier: "LearnReminder", content: content, trigger: notificationTrigger)
+                        center.add(request){ (error) in
+                            if error == nil {
+                                print("schedule push succeed")
+                            }
+                        }
+                    }
+                    print("tomm... date... \(self.date) date1... \(date!)")
+                }else if self.value == 2{
+                    if self.date > date!{
+                        let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
+                        let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                            
+                            
+                        let request = UNNotificationRequest(identifier: "LearnReminder", content: content, trigger: notificationTrigger)
+                        center.add(request){ (error) in
+                            if error == nil {
+                                print("schedule push succeed")
+                            }
+                        }
+                    }
+                    print("everyday... date... \(self.date) date1... \(date!)")
+                }else{
+                    let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
+                    let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                        
+                        
+                    let request = UNNotificationRequest(identifier: "LearnReminder", content: content, trigger: notificationTrigger)
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
                     }
                 }
-              }
-                
+              }//end if settingData.learnReminderTime != ""
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["LearnReminder"])
             }

@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
+class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var lblTitle: UILabel!
@@ -23,6 +23,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         
         self.lblTitle.text = self.strType
         webView.navigationDelegate = self
+        webView.scrollView.delegate = self
         
         let reachable = Reachabilities()
         
@@ -79,5 +80,9 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate {
         //WWMHelperClass.hideActivity(fromView: self.view)
         WWMHelperClass.hideLoaderAnimate(on: self.view)
         
+    }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.pinchGestureRecognizer?.isEnabled = false
     }
 }

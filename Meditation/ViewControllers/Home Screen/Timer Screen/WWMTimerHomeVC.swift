@@ -3,7 +3,7 @@
 //  Meditation
 //
 //  Created by Roshan Kumawat on 17/12/18.
-//  Copyright © 2018 Cedita. All rights reserved.
+//  Copyright © 2018 Cedita. Allx rights reserved.
 //
 
 import UIKit
@@ -269,7 +269,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     @IBAction func btnExpressMoodAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
-        vc.type = "Pre"
+        vc.type = "pre"
         
         vc.meditationID = "\(self.selectedMeditationData.meditationId)"
         vc.levelID = "\(self.selectedLevelData.levelId)"

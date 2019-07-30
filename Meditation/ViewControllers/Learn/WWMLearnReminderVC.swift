@@ -16,11 +16,17 @@ class WWMLearnReminderVC: WWMBaseViewController {
     @IBOutlet weak var hourBtn: UIButton!
     @IBOutlet weak var minBtn: UIButton!
     @IBOutlet weak var amPmBtn: UIButton!
+    @IBOutlet weak var btnTomm: UIButton!
+    @IBOutlet weak var btnEveryday: UIButton!
     
+    let dateFormatter = DateFormatter()
     let datePicker = UIDatePicker()
+    var date = Date()
+    
     var finalTime: String = ""
     
     var settingData = DBSettings()
+    var flag = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +51,40 @@ class WWMLearnReminderVC: WWMBaseViewController {
         
     }
     
+    @IBAction func btnTommClicked(_ sender: UIButton) {
+        self.btnTomm.setBackgroundImage(UIImage(named: "onRadio"), for: .normal)
+        self.btnEveryday.setBackgroundImage(UIImage(named: "offRadio"), for: .normal)
+        
+        dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
+        let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
+        AppDelegate.sharedDelegate().date = tommDate!
+        AppDelegate.sharedDelegate().value = 1
+        print("tommDate... \(tommDate!)")
+        
+    }
+    
+    @IBAction func btnEverydayClicked(_ sender: UIButton) {
+        self.btnTomm.setBackgroundImage(UIImage(named: "offRadio"), for: .normal)
+        self.btnEveryday.setBackgroundImage(UIImage(named: "onRadio"), for: .normal)
+        
+        dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
+        let afterThirtyDate = Calendar.current.date(byAdding: .day, value: 30, to: date)
+        AppDelegate.sharedDelegate().date = afterThirtyDate!
+        AppDelegate.sharedDelegate().value = 2
+        print("afterThirtyDate... \(afterThirtyDate!)")
+        flag = 1
+    }
+    
+    
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
+        if flag == 0{
+            dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
+            let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
+            AppDelegate.sharedDelegate().date = tommDate!
+            AppDelegate.sharedDelegate().value = 1
+            print("tommDate... \(tommDate!)")
+        }
+        
         callPushNotification()
         self.settingAPI()
     }
@@ -57,7 +96,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
     // MARK:- UITextField Delegate Methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
     }
     
     func callPushNotification() {
@@ -73,7 +111,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
     }
     
     @objc func handleDatePicker(sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         settingData.learnReminderTime = dateFormatter.string(from: sender.date)
         
@@ -111,11 +148,10 @@ class WWMLearnReminderVC: WWMBaseViewController {
     }
     
     @objc func donedatePicker(){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(formatter.string(from: datePicker.date))")
+        dateFormatter.dateFormat = "HH:mm a"
+        print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
         
-        let date1 = formatter.string(from: datePicker.date)
+        let date1 = dateFormatter.string(from: datePicker.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  datePicker.date)
         let hour = components.hour!
         let minute = components.minute!
@@ -129,8 +165,8 @@ class WWMLearnReminderVC: WWMBaseViewController {
         self.hourBtn.setTitle("\(hour)", for: .normal)
         self.minBtn.setTitle("\(minute)", for: .normal)
         
-        formatter.dateFormat = "HH:mm"
-        self.finalTime = formatter.string(from: datePicker.date)
+        dateFormatter.dateFormat = "HH:mm"
+        self.finalTime = dateFormatter.string(from: datePicker.date)
         
         self.view.endEditing(true)
     }

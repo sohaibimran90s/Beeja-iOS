@@ -11,6 +11,10 @@ import UIKit
 class WWMLearnStepListVC: WWMBaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var layoutMoodWidth: NSLayoutConstraint!
+    @IBOutlet weak var layoutExpressMoodViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var lblExpressMood: UILabel!
+
     
     var selectedIndex = 0
     var total_paid: Int = 0
@@ -23,6 +27,9 @@ class WWMLearnStepListVC: WWMBaseViewController {
         
         self.setNavigationBar(isShow: false, title: "")
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.setAnimationForExpressMood()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +39,28 @@ class WWMLearnStepListVC: WWMBaseViewController {
         getLearnSetpsAPI()
         self.selectedIndex = 0
         self.tableView.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.lblExpressMood.transform = CGAffineTransform(rotationAngle:CGFloat(+Double.pi/2))
+        self.layoutMoodWidth.constant = 90
+    }
+    
+    func setAnimationForExpressMood() {
+        
+        UIView.animate(withDuration: 2.5, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.layoutExpressMoodViewWidth.constant = 40
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+    }
+    
+    @IBAction func btnExpressMoodAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
+        vc.type = "pre"
+        vc.meditationID = "0"
+        vc.levelID = "0"
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     @IBAction func btnIntroClicked(_ sender: UIButton) {
@@ -147,7 +176,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
         
-        if self.total_paid > 42{
+        if self.total_paid > 41{
             cell.imgLock.image = UIImage(named: "")
             cell.isUserInteractionEnabled = true
         }else{
@@ -187,7 +216,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         var position = 0
         var dateCompareLoopCount = 0
 
-        if self.total_paid > 42{
+        if self.total_paid > 41{
             dateCompareLoopCount = self.learnStepsListData.count - 1
         }else{
             dateCompareLoopCount = 2
@@ -203,7 +232,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             let date_completed = self.learnStepsListData[i].date_completed
             if date_completed != ""{
                 let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                if dateCompare == 1{
+                if dateCompare.0 == 1{
                     flag = 1
                     break
                 }

@@ -358,6 +358,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         
                         print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool())")
+                        print("userSubscription.expiry_date... \(userSubscription.expiry_date)")
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
 
                         if difference == 1{
@@ -386,6 +387,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

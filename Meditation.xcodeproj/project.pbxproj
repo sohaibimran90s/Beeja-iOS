@@ -22,7 +22,6 @@
 		2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FDB222812A200018538 /* WWMMoodProgressDurationView.swift */; };
 		2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E316FDD222812B300018538 /* WWMMoodProgressDurationView.xib */; };
 		2E316FE02229346F00018538 /* WWMSetMyOwnVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E316FDF2229346F00018538 /* WWMSetMyOwnVC.swift */; };
-		2E326ECB222EB4B700A0F1A1 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */; };
 		2E326ECD222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */; };
 		2E34A906228ED653005B4091 /* data17.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E34A905228ED653005B4091 /* data17.json */; };
 		2E34A90822929526005B4091 /* final.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E34A90722929526005B4091 /* final.json */; };
@@ -194,6 +193,7 @@
 		61083F4222D32E34001B770D /* WWMMilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */; };
 		61083F4422D354E4001B770D /* WWMMilestoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4322D354E4001B770D /* WWMMilestoneData.swift */; };
 		61083F4622D37B6F001B770D /* login11.json in Resources */ = {isa = PBXBuildFile; fileRef = 61083F4522D37B6E001B770D /* login11.json */; };
+		610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 610DA34A22F010CB0006FD78 /* Burn.mp4 */; };
 		6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */; };
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
@@ -438,7 +438,6 @@
 		2E316FDB222812A200018538 /* WWMMoodProgressDurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressDurationView.swift; sourceTree = "<group>"; };
 		2E316FDD222812B300018538 /* WWMMoodProgressDurationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMoodProgressDurationView.xib; sourceTree = "<group>"; };
 		2E316FDF2229346F00018538 /* WWMSetMyOwnVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSetMyOwnVC.swift; sourceTree = "<group>"; };
-		2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
 		2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMBackgroundVedioView.swift; sourceTree = "<group>"; };
 		2E34A905228ED653005B4091 /* data17.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data17.json; sourceTree = "<group>"; };
 		2E34A90722929526005B4091 /* final.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = final.json; sourceTree = "<group>"; };
@@ -620,6 +619,7 @@
 		61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestoneCell2.swift; sourceTree = "<group>"; };
 		61083F4322D354E4001B770D /* WWMMilestoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestoneData.swift; sourceTree = "<group>"; };
 		61083F4522D37B6E001B770D /* login11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login11.json; sourceTree = "<group>"; };
+		610DA34A22F010CB0006FD78 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
 		6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnGetSetVC.swift; sourceTree = "<group>"; };
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
@@ -1221,6 +1221,7 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				610DA34A22F010CB0006FD78 /* Burn.mp4 */,
 				613C6F7822DF3D630012113B /* all_discs.json */,
 				61426B1E22DC5303006FE825 /* circle_loader.json */,
 				61426B2022DC5304006FE825 /* float3.json */,
@@ -1245,7 +1246,6 @@
 				2E4371B522004D9900EF5D62 /* Chimes */,
 				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
-				2E326ECA222EB4B700A0F1A1 /* Burn.mp4 */,
 				613071ED22D86FD2009CBCA1 /* walkthough.mp4 */,
 				613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */,
 				613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */,
@@ -1983,6 +1983,7 @@
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
 				613F081322CF356E0042515C /* hand.json in Resources */,
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
+				610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */,
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
@@ -1994,7 +1995,6 @@
 				61426B2322DC5304006FE825 /* float3.json in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
 				61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */,
-				2E326ECB222EB4B700A0F1A1 /* Burn.mp4 in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
 				2EC81C5821E75BCF003B0EEE /* MoodMeterData.geojson in Resources */,

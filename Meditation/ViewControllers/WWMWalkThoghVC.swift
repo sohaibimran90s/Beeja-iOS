@@ -17,9 +17,11 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var value: String = "help"
     var videoCompleted = 0
     var watched_duration = ""
+    let reachable = Reachabilities()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("watched walk... \(self.watched_duration)")
         
         let videoFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         viewVideo.frame = videoFrame
@@ -34,6 +36,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         if (value == "help" || value == "learnStepList"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
+        }else if value == "SignupLetsStart"{
+            self.btnCrossSkip.isHidden = true
         }else{
             self.btnCrossSkip.setBackgroundImage(UIImage(named: ""), for: .normal)
             
@@ -83,7 +87,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
         print("abc....***** \(self.videoCompleted )")
+        print("value... \(value)")
         if self.videoCompleted == 1{
+            if !reachable.isConnectedToNetwork() {
+                self.navigationController?.popViewController(animated: true)
+                return
+            }
             if value == "help"{
                 self.navigationController?.popViewController(animated: true)
             }else if value == "learnCongrats"{
@@ -96,6 +105,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
+            //WWMLearnStepListVC
         }
         
     }
