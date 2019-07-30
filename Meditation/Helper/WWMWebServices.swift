@@ -9,6 +9,7 @@
 
 import Foundation
 import UIKit
+import SwiftyRSA
 
 class WWMWebServices {
     
@@ -17,7 +18,10 @@ class WWMWebServices {
     typealias ASCompletionBlockAsDictionary = (_ result: Dictionary<String, Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsArray = (_ result: Array<Any>, _ error: Error?, _ success: Bool) -> Void
     
-    
+    class func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
     
     //MARK: - Service Methods
     
@@ -43,7 +47,32 @@ class WWMWebServices {
             "cache-control": "no-cache"
         ]
         request.allHTTPHeaderFields = headers
+
+    // RSA Implementation
+    
+    do {
+        guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+        }
+        let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let publicKey = try PublicKey.init(pemEncoded: keyString)
         
+        let clear = try ClearMessage(string:self.randomString(length: 16), using: .utf8)
+        let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+        let base64String = encrypted.base64String
+        let param = "pulse:" + base64String
+
+        request.addValue(param, forHTTPHeaderField: "Authorization")
+        //Authorize
+        //Authorization
+        
+    } catch {
+        print("Failed")
+        print(error)
+    }
+    
+    
+    
+    
         
         if isUserToken {
             let appPreference = WWMAppPreference()
