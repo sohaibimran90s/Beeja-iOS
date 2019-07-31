@@ -30,7 +30,6 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
         
-        
         // change selected bar color
         settings.style.buttonBarBackgroundColor = .clear
         settings.style.buttonBarItemBackgroundColor = .clear
@@ -41,10 +40,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
             //settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
         }
        
-        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 24)
-        
-            //UIFont.init(name: "Maax-Bold", size: 24)!
-        //settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 14)!
+        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 18)
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
