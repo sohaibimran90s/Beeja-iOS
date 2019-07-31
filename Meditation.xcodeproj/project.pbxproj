@@ -113,7 +113,6 @@
 		2EA6DB0E21C3E2C6006A8E1D /* WWMNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6DB0D21C3E2C6006A8E1D /* WWMNavigationVC.swift */; };
 		2EA9E81E225614BB00E2D73D /* DBJournalData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9E81C225614BA00E2D73D /* DBJournalData+CoreDataClass.swift */; };
 		2EA9E81F225614BB00E2D73D /* DBJournalData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9E81D225614BA00E2D73D /* DBJournalData+CoreDataProperties.swift */; };
-		2EACF985225375E700171688 /* private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2EACF983225375E600171688 /* private.pem */; };
 		2EACF986225375E700171688 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2EACF984225375E700171688 /* public.pem */; };
 		2EAE29B52231447C008E4361 /* CircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAE29B42231447C008E4361 /* CircularSlider.swift */; };
 		2EAE29B722326452008E4361 /* WWMMoodProgressCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAE29B622326452008E4361 /* WWMMoodProgressCVC.swift */; };
@@ -539,7 +538,6 @@
 		2EA6DB0D21C3E2C6006A8E1D /* WWMNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMNavigationVC.swift; sourceTree = "<group>"; };
 		2EA9E81C225614BA00E2D73D /* DBJournalData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBJournalData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2EA9E81D225614BA00E2D73D /* DBJournalData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBJournalData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2EACF983225375E600171688 /* private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = private.pem; sourceTree = "<group>"; };
 		2EACF984225375E700171688 /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public.pem; sourceTree = "<group>"; };
 		2EAE29B42231447C008E4361 /* CircularSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSlider.swift; sourceTree = "<group>"; };
 		2EAE29B622326452008E4361 /* WWMMoodProgressCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressCVC.swift; sourceTree = "<group>"; };
@@ -1230,7 +1228,6 @@
 				613F081222CF356E0042515C /* hand.json */,
 				613F081022CF324F0042515C /* register.json */,
 				6142C52522B0D7B8009300BB /* loader.json */,
-				2EACF983225375E600171688 /* private.pem */,
 				2EACF984225375E700171688 /* public.pem */,
 				2E34A90722929526005B4091 /* final.json */,
 				2E34A9092292D926005B4091 /* final1.json */,
@@ -2013,7 +2010,6 @@
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
 				2EACF986225375E700171688 /* public.pem in Resources */,
-				2EACF985225375E700171688 /* private.pem in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
 				2E34A90822929526005B4091 /* final.json in Resources */,

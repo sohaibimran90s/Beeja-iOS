@@ -206,7 +206,7 @@ class WWMHelperClass {
         }
     }
     
-    class func dateComparison1(expiryDate: String) -> (Int, Int){
+    class func dateComparison1(expiryDate: String) -> (Int, Int, Int){
         
         var date_completed: String = ""
         if expiryDate != ""{
@@ -222,18 +222,26 @@ class WWMHelperClass {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDateString = dateFormatter.string(from: Date())
-        let currentDate = dateFormatter.date(from: currentDateString)!
+        var currentDate = dateFormatter.date(from: currentDateString)!
         
         let expireDate = dateFormatter.date(from: date_completed) ?? currentDate
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
-        print("day..... \(day)")
         
         if currentDate == expireDate{
-            return (1, day)
+            //yyyy-MM-dd HH:mm:ss
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
+            let expirDate = dateFormatter.date(from: expiryDate)!
+            
+            let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
+            let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
+            print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min)")
+            return (1, day, second)
         }else{
-            return (0, day)
+            return (0, day, 0)
         }
     }
     

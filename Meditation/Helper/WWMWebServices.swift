@@ -9,6 +9,7 @@
 
 import Foundation
 import UIKit
+import SwiftyRSA
 
 class WWMWebServices {
     
@@ -16,8 +17,6 @@ class WWMWebServices {
     
     typealias ASCompletionBlockAsDictionary = (_ result: Dictionary<String, Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsArray = (_ result: Array<Any>, _ error: Error?, _ success: Bool) -> Void
-    
-    
     
     //MARK: - Service Methods
     
@@ -43,7 +42,32 @@ class WWMWebServices {
             "cache-control": "no-cache"
         ]
         request.allHTTPHeaderFields = headers
+
+    // RSA Implementation
+    
+    do {
+        guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+        }
+        let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let publicKey = try PublicKey.init(pemEncoded: keyString)
         
+        let clear = try ClearMessage(string:"pulse", using: .utf8)
+        let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+        let base64String = encrypted.base64String
+        let param = "pulse:" + base64String
+
+        request.addValue(param, forHTTPHeaderField: "Authorization")
+        //Authorize
+        //Authorization
+        
+    } catch {
+        print("Failed")
+        print(error)
+    }
+    
+    
+    
+    
         
         if isUserToken {
             let appPreference = WWMAppPreference()
@@ -100,6 +124,27 @@ class WWMWebServices {
         guard let url = URL(string: stringUrl) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        // RSA Implementation
+        
+        do {
+            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+            }
+            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey.init(pemEncoded: keyString)
+            
+            let clear = try ClearMessage(string:"pulse", using: .utf8)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let base64String = encrypted.base64String
+            let param = "pulse:" + base64String
+            
+            request.addValue(param, forHTTPHeaderField: "Authorization")
+            //Authorize
+            //Authorization
+            
+        } catch {
+            print("Failed")
+            print(error)
+        }
         
 
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")

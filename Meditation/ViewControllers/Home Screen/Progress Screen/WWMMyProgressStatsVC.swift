@@ -123,11 +123,18 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
+        print("self.appPreffrence.getType().... \(self.appPreffrence.getType())")
+        
         if self.appPreffrence.getType() == "timer"{
             self.btnAddSession.setTitle("Add a Session", for: .normal)
             self.btnAddSessionTopConstraint.constant = 20
             self.btnAddSessionHeightConstraint.constant = 30
             self.viewAddSession.isHidden = false
+        }else if self.appPreffrence.getType() == "learn"{
+            self.btnAddSession.setTitle("", for: .normal)
+            self.btnAddSessionTopConstraint.constant = 0
+            self.btnAddSessionHeightConstraint.constant = 0
+            self.viewAddSession.isHidden = true
         }else if self.appPreffrence.getType() == "guided"{
             self.btnAddSession.setTitle("", for: .normal)
             self.btnAddSessionTopConstraint.constant = 0

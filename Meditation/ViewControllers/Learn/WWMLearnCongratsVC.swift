@@ -16,7 +16,7 @@ class WWMLearnCongratsVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("wathced duration.... \(String(describing: Int(watched_duration)))")
+        print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
     }
     

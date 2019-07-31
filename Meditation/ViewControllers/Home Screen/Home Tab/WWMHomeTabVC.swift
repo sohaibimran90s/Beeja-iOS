@@ -54,7 +54,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.meditationHistoryListAPI()
         
         self.podData = []
         self.podcastData()
@@ -82,7 +81,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        
+        self.meditationHistoryListAPI()
+
         self.setNavigationBar(isShow: false, title: "")
         scrollView.setContentOffset(.zero, animated: true)
 
@@ -492,10 +492,8 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.heartLbl.text = "\(self.data[indexPath.row].like)"
             cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
         
-        
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            let expireDate = dateFormatter.date(from: self.data[indexPath.row].date) ?? self.currentDate
-        
+
             let date_completed = self.data[indexPath.row].date
             if date_completed != ""{
             let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
@@ -503,13 +501,17 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             print("dateCompare.... \(dateCompare)")
             if dateCompare.0 == 1{
                 //equal
-                let hour =  Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentDate, to: expireDate!).hour ?? 0
-                let hourText = "\(hour) h ago".replacingOccurrences(of:
-                    "-", with: "")
-                cell.lblHr.text = hourText
+                let sec: Int = Int("\(dateCompare.2)".replacingOccurrences(of:
+                    "-", with: "")) ?? 0
+                print("dateCompare.2... \(sec)")
+                if sec < 60{
+                    cell.lblHr.text = "just now"
+                }else if sec < 3600{
+                    cell.lblHr.text = "\(sec/60) m ago"
+                }else{
+                    cell.lblHr.text = "\(sec/3600) h ago"
+                }
             }else{
-                //let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate!).day ?? 0
-                //print("day.... \(day) currentDate... \(currentDate!) expiredate... \(expireDate!)")
                 let daysText = "\(dateCompare.1) d ago".replacingOccurrences(of:
                     "-", with: "")
                 cell.lblHr.text = daysText
