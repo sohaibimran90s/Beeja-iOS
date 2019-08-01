@@ -470,8 +470,11 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         
+        let url = self.appPreffrence.getOffers()
+        print("url /.... \(url[0])")
+        
         vc.strType = "Buy Book"
-        vc.strUrl = URL_WebSite
+        vc.strUrl = url[0] 
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

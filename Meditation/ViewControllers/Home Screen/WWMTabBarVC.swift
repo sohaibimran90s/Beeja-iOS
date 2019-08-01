@@ -346,6 +346,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                         self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                         
+                        self.appPreffrence.setOffers(value: result["offers"] as! [String])
+                        
                         if let userProfile = result["user_profile"] as? [String : Any]{
                             self.appPreffrence.setUserName(value:  userProfile["name"] as? String ?? "")
                         }

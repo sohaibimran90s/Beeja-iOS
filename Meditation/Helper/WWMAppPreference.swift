@@ -52,6 +52,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setOffers(value: [String]) {
+        defaults.set(value, forKey: "offers")
+        defaults.synchronize()
+    }
+    
     func setLearnPageURL(value: String) {
         defaults.set(value, forKey: "learn_page_url")
         defaults.synchronize()
@@ -92,6 +97,10 @@ class WWMAppPreference: NSObject {
     func setGuideType(value:String) {
         defaults.set(value, forKey: "guided_type")
         defaults.synchronize()
+    }
+    
+    func getOffers() -> [String] {
+        return UserDefaults.standard.array(forKey: "offers") as! [String]
     }
     
     func getHomePageURL() -> String {
