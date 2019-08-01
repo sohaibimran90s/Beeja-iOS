@@ -47,6 +47,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setHomePageURL(value: String) {
+        defaults.set(value, forKey: "home_page_url")
+        defaults.synchronize()
+    }
+    
+    func setLearnPageURL(value: String) {
+        defaults.set(value, forKey: "learn_page_url")
+        defaults.synchronize()
+    }
+    
     func setPreMoodCount(value: Int){
         defaults.set(value, forKey: "preMoodCount")
     }
@@ -82,6 +92,14 @@ class WWMAppPreference: NSObject {
     func setGuideType(value:String) {
         defaults.set(value, forKey: "guided_type")
         defaults.synchronize()
+    }
+    
+    func getHomePageURL() -> String {
+        return UserDefaults.standard.string(forKey: "home_page_url") ?? ""
+    }
+    
+    func getLearnPageURL() -> String {
+        return UserDefaults.standard.string(forKey: "learn_page_url") ?? ""
     }
     
     func getSessionAvailableData() -> Bool{

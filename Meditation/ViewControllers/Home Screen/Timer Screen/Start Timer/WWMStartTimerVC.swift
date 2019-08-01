@@ -62,7 +62,8 @@ class WWMStartTimerVC: WWMBaseViewController {
         view.insertSubview(animationViewRest, belowSubview: viewPause)
         
         animationViewPrep = AnimationView(name: "all_discs")
-        animationViewPrep.frame = CGRect(x: 0, y: 0, width: self.backView.frame.size.width, height: self.view.frame.size.height)
+        animationViewPrep.frame = CGRect(x: self.view.frame.origin.x, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        animationViewPrep.alpha = 0.15
         animationViewPrep.center = self.view.center
         animationViewPrep.contentMode = .scaleAspectFill
         animationViewPrep.loopMode = .loop
@@ -212,7 +213,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.lblTimerType.text = "Meditation"
             self.timerType = "Meditation"
             self.seconds = self.meditationTime
-            self.playAudioFile(fileName: settingData.startChime!)
+            self.playAudioFile(fileName: settingData.startChime ?? kChimes_BURMESE_BELL)
             lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }else if self.restTime > 0 {
             self.lblTimerType.text = "Rest"
@@ -320,14 +321,14 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.lblTimerType.text = "Meditation"
                     self.timerType = "Meditation"
                     self.seconds = self.meditationTime
-                    self.playAudioFile(fileName: settingData.startChime!)
+                    self.playAudioFile(fileName: settingData.startChime ?? kChimes_BURMESE_BELL)
                 }else if self.restTime > 0 {
                     self.lblTimerType.text = "Rest"
                     self.timerType = "Rest"
                     self.seconds = self.restTime
-                    self.playAudioFile(fileName: settingData.endChime!)
+                    self.playAudioFile(fileName: settingData.endChime ?? kChimes_JaiGuruDev)
                 }else {
-                    self.playAudioFile(fileName: settingData.finishChime!)
+                    self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
                     vc.type = "post"
@@ -357,9 +358,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.lblTimerType.text = "Rest"
                     self.timerType = "Rest"
                     self.seconds = self.restTime
-                    self.playAudioFile(fileName: settingData.endChime!)
+                    self.playAudioFile(fileName: settingData.endChime ?? kChimes_JaiGuruDev)
                 }else {
-                    self.playAudioFile(fileName: settingData.finishChime!)
+                    self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
                     vc.type = "post"
@@ -374,7 +375,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             }else{
                 if self.seconds == self.meditationTime/2+1 {
                     if isAmbientSoundPlay {
-                        self.playAudioFile(fileName: settingData.intervalChime!)
+                        self.playAudioFile(fileName: settingData.intervalChime ?? kChimes_CONCH)
                     }
                 }
             }
@@ -383,7 +384,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             
         }else if timerType == "Rest"{
             if self.seconds < 1 {
-                self.playAudioFile(fileName: settingData.finishChime!)
+                self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                 self.timer.invalidate()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
                 vc.type = "post"

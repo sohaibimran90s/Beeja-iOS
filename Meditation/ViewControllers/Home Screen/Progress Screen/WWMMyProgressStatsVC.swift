@@ -104,6 +104,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         alertNotificationView.imgViewLogo.image = UIImage(named: imgLogo)
         alertNotificationView.imgViewLogo1.image = UIImage(named: imgLogo1)
         alertNotificationView.btnDismiss.addTarget(self, action: #selector(btnDissmissPopUp), for: .touchUpInside)
+        
+        WWMHelperClass.milestoneType = ""
+        
         window.rootViewController?.view.addSubview(alertNotificationView)
     }
     

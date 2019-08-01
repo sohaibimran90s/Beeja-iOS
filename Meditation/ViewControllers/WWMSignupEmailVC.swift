@@ -117,6 +117,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
+                print("signup result... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as! Int)")
@@ -125,11 +126,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
+                    self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
                     
-                    
-                    
-//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-//                    self.navigationController?.pushViewController(vc, animated: true)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.value = "SignupLetsStart"
@@ -189,14 +188,14 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         
                         print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
                         
-                        KUSERDEFAULTS.set(false, forKey: "defaultSelection")
-                        
+                        self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
+                        self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
+                                                
                         if isProfileCompleted {
+                            
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                         }else {
-//                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-//                            self.navigationController?.pushViewController(vc, animated: true)
                             
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                             

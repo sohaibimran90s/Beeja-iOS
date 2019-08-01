@@ -12,6 +12,7 @@ import AVKit
 
 class WWMHomeTabVC: WWMBaseViewController {
 
+    @IBOutlet weak var lblMedHistoryText: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblStartedText: UILabel!
     @IBOutlet weak var lblIntroText: UILabel!
@@ -210,12 +211,13 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @IBAction func btnVideoClicked(_ sender: UIButton) {
-        let videoURL = Bundle.main.url(forResource: "walkthough", withExtension: "mp4")
+        let videoURL: String = self.appPreffrence.getHomePageURL()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
 
-        if let videoURL = videoURL {
+        if videoURL != ""{
             print("videourl... \(videoURL)")
-            player = AVPlayer(url: videoURL)
+            player = AVPlayer(url: URL(string: videoURL)!)
             playerController.player = player
             present(playerController, animated: true){
                 self.player?.play()
@@ -413,6 +415,8 @@ class WWMHomeTabVC: WWMBaseViewController {
         
       //  WWMHelperClass.showLoaderAnimate(on: self.view)
         self.medHisViewHeightConstraint.constant = 0
+        self.lblMedHistoryText.textColor = UIColor.clear
+        
         self.data.removeAll()
         let param = ["user_id": self.appPreference.getUserID()]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -427,9 +431,11 @@ class WWMHomeTabVC: WWMBaseViewController {
                     
                     if self.data.count > 0{
                         self.medHisViewHeightConstraint.constant = 416
+                        self.lblMedHistoryText.textColor = UIColor.white
                         self.collectionView.reloadData()
                     }else{
                         self.medHisViewHeightConstraint.constant = 0
+                        self.lblMedHistoryText.textColor = UIColor.clear
                     }
                 }
                 
@@ -538,6 +544,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
+        
+        if indexPath.row == 2{
+          tableView.separatorStyle = .none
+        }
         
         cell.lblTitle.text = self.podData[indexPath.row].title
         let data = self.podData[indexPath.row]

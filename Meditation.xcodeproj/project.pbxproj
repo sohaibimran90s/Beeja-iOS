@@ -199,7 +199,6 @@
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
 		612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */; };
 		613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */; };
-		613071EE22D86FD2009CBCA1 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 613071ED22D86FD2009CBCA1 /* walkthough.mp4 */; };
 		613071F022D879BC009CBCA1 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EF22D879BC009CBCA1 /* VideoView.swift */; };
 		613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */; };
 		613071F422D8FB97009CBCA1 /* WWMHomePodcastTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F322D8FB97009CBCA1 /* WWMHomePodcastTVC.swift */; };
@@ -624,7 +623,6 @@
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
 		613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeTabVC.swift; sourceTree = "<group>"; };
-		613071ED22D86FD2009CBCA1 /* walkthough.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = walkthough.mp4; sourceTree = "<group>"; };
 		613071EF22D879BC009CBCA1 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeMedHistoryCVC.swift; sourceTree = "<group>"; };
 		613071F322D8FB97009CBCA1 /* WWMHomePodcastTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomePodcastTVC.swift; sourceTree = "<group>"; };
@@ -1243,7 +1241,6 @@
 				2E4371B522004D9900EF5D62 /* Chimes */,
 				2E4A4733220DB22B00DF0C68 /* Ambient Sound */,
 				2E43717A21FF1DDA00EF5D62 /* vibe_images.jpg */,
-				613071ED22D86FD2009CBCA1 /* walkthough.mp4 */,
 				613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */,
 				613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */,
 				2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */,
@@ -2033,7 +2030,6 @@
 				613071FE22D9F60F009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav in Resources */,
 				2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */,
 				2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */,
-				613071EE22D86FD2009CBCA1 /* walkthough.mp4 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
 				61426B2122DC5304006FE825 /* circle_loader.json in Resources */,

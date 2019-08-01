@@ -205,11 +205,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             self.selectedIndex = 2
         }
         
-        if !KUSERDEFAULTS.bool(forKey: "defaultSelection"){
-            self.selectedIndex = 0
-            KUSERDEFAULTS.set(true, forKey: "defaultSelection")
-        }
-        
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)
@@ -346,7 +341,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
                         
                         
-                        
+                        self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
+                        self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                         self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                         

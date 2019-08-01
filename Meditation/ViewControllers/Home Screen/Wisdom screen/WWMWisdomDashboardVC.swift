@@ -24,8 +24,10 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         print("frame width.... \(self.view.frame.size.width/2)")
         buttonBarView.frame.origin.y = -18
         if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 60
+            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 41
+            //60
         }
+    
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
@@ -37,7 +39,6 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size: 24)!
-            //settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
         }
        
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 18)
@@ -45,10 +46,10 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
         settings.style.buttonBarItemsShouldFillAvailiableWidth = false
-        settings.style.buttonBarLeftContentInset = 0
-        settings.style.buttonBarRightContentInset = 0
-        settings.style.buttonBarMinimumInteritemSpacing = 0.0
-        settings.style.buttonBarItemLeftRightMargin = 0
+        settings.style.buttonBarLeftContentInset = 10
+        settings.style.buttonBarRightContentInset = 10
+        settings.style.buttonBarMinimumInteritemSpacing = 10
+        settings.style.buttonBarItemLeftRightMargin = 10
         
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
@@ -71,6 +72,5 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
             arrVC.add(vc)
         }
         return arrVC as! [UIViewController]
-       // return [UIViewController]
     }
 }

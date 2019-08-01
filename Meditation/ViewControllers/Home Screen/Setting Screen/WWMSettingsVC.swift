@@ -928,7 +928,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 loginManager.logOut()
                 GIDSignIn.sharedInstance()?.signOut()
                 GIDSignIn.sharedInstance()?.disconnect()
-                KUSERDEFAULTS.set(false, forKey: "defaultSelection")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc

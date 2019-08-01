@@ -18,6 +18,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var videoCompleted = 0
     var watched_duration = ""
     let reachable = Reachabilities()
+    let appPreffrence = WWMAppPreference()
+    
+    var lat = ""
+    var long = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +63,20 @@ class WWMWalkThoghVC: WWMBaseViewController {
     //MARK:- video function
     func playVideo() {
         
-        let videoURL = Bundle.main.url(forResource: "walkthough", withExtension: "mp4")
-        if let videoURL = videoURL {
+        
+        var videoURL: String = ""
+        
+        if value == "SignupLetsStart"{
+            videoURL = self.appPreffrence.getHomePageURL()
+        }else if (value == "help" || value == "learnStepList"){
+            videoURL = self.appPreffrence.getLearnPageURL()
+        }else{
+            videoURL = self.appPreffrence.getLearnPageURL()
+        }
+        
+        print("walkthough videoURL... \(videoURL)")
+        
+        if videoURL != "" {
             print("videourl... \(videoURL)")
             viewVideo.configure(url: "\(videoURL)")
             viewVideo.isLoop = true
