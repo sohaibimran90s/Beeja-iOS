@@ -188,7 +188,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             self.viewControllers?.remove(at: 3)
         }
         
-        
         if self.milestoneType == "hours_meditate"{
             WWMHelperClass.milestoneType = "hours_meditate"
             self.selectedIndex = 4
@@ -204,7 +203,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
             self.selectedIndex = 2
         }
-        
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]
         layerGradient.frame = CGRect(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 84)

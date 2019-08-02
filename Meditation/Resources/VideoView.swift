@@ -26,6 +26,8 @@ class VideoView: UIView {
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.frame = bounds
             playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerLayer?.goFullscreen()
+            
             if let playerLayer = self.playerLayer {
                 layer.addSublayer(playerLayer)
                 self.layer.insertSublayer(playerLayer, at: 0)
@@ -58,5 +60,30 @@ class VideoView: UIView {
             //player?.play()
         }
     }
+}
 
+extension CGAffineTransform {
+    
+    static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
+}
+
+extension AVPlayerLayer {
+    
+    var fullScreenAnimationDuration: TimeInterval {
+        return 0.15
+    }
+    
+    func minimizeToFrame(_ frame: CGRect) {
+        UIView.animate(withDuration: fullScreenAnimationDuration) {
+            self.setAffineTransform(.identity)
+            self.frame = frame
+        }
+    }
+    
+    func goFullscreen() {
+        UIView.animate(withDuration: fullScreenAnimationDuration) {
+            self.setAffineTransform(.ninetyDegreeRotation)
+            self.frame = UIScreen.main.bounds
+        }
+    }
 }

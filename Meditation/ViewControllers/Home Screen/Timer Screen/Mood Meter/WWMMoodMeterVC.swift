@@ -384,6 +384,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         print("sender selected button label with tag.....\(sender.tag) selectedName...\(self.arrMoodData[sender.tag].name) buttonName.... \(arrButton[sender.tag].titleLabel?.text ?? "") selected index button... \(sender.tag)")
         
         selectedIndex = sender.tag
+        
 
         for index in 0..<arrButton.count {
             let button = arrButton[index]

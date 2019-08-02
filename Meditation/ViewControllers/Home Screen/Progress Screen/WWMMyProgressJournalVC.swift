@@ -176,11 +176,15 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     @IBAction func btnAddJournalAction(_ sender: Any) {
         
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+            
             let getPostJournalCount = self.appPreference.getPostJournalCount()
-            if getPostJournalCount < 1{
+            if getPostJournalCount == 0{
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your journal before purchase of any subscription plan.", type: "post")
             }else{
-                xibJournalView()
+                
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You have only post \(getPostJournalCount) journal enteries left.", type: "Post")
+                
+               // xibJournalView()
             }
         }else{
             xibJournalView()
@@ -206,7 +210,17 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
     
     @objc func btnAlertDoneAction(_ sender: Any){
-        self.alertPopupView1.removeFromSuperview()
+        
+     if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+        let getPostJournalCount = self.appPreference.getPostJournalCount()
+        if getPostJournalCount == 0{
+            self.alertPopupView1.removeFromSuperview()
+        }else{
+            xibJournalView()
+        }
+     }else{
+          self.alertPopupView1.removeFromSuperview()
+        }
     }
     
     func xibJournalView(){
