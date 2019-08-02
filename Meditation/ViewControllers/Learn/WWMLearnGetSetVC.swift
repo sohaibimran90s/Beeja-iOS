@@ -56,10 +56,10 @@ class WWMLearnGetSetVC: WWMBaseViewController {
             self.lblGetSet.alpha = 1
             self.lblGetSet.center.y = self.lblGetSet.center.y - 30
         }, completion: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
                 self.navigationController?.pushViewController(vc, animated: true)
-            })
+            //})
         })
     }
     

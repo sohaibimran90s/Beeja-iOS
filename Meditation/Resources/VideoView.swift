@@ -38,6 +38,7 @@ class VideoView: UIView {
         }
     }
     
+    
     func play() {
         if player?.timeControlStatus != AVPlayer.TimeControlStatus.playing {
             player?.play()

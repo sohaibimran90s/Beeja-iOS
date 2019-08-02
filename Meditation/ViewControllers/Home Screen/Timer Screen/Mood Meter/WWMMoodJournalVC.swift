@@ -109,6 +109,9 @@ class WWMMoodJournalVC: WWMBaseViewController {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var param: [String: Any] = [:]
+        
+        print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
+        
         if WWMHelperClass.selectedType == "learn"{
             param = [
                 "type":"learn",
@@ -118,12 +121,12 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
                 "guided_type" : self.userData.guided_type,
-                "watched_duration" : self.watched_duration,
+                "duration" : self.watched_duration,
                 "rating" : self.rating,
                 "user_id":self.appPreference.getUserID(),
                 "meditation_type":type,
                 "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text,
+                "tell_us_why":txtViewLog.text ?? "",
                 "prep_time":prepTime,
                 "meditation_time":meditationTime,
                 "rest_time":restTime,
@@ -144,7 +147,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "user_id":self.appPreference.getUserID(),
                 "meditation_type":type,
                 "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text,
+                "tell_us_why":txtViewLog.text ?? "",
                 "prep_time":prepTime,
                 "meditation_time":meditationTime,
                 "rest_time":restTime,
@@ -155,6 +158,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         }
         
         print("journal param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {

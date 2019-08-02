@@ -23,6 +23,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var lat = ""
     var long = ""
     
+    var player1: AVPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("watched walk... \(self.watched_duration)")
@@ -67,7 +69,27 @@ class WWMWalkThoghVC: WWMBaseViewController {
         var videoURL: String = ""
         
         if value == "SignupLetsStart"{
-            videoURL = self.appPreffrence.getHomePageURL()
+            //videoURL = self.appPreffrence.getHomePageURL()
+            guard let path = Bundle.main.path(forResource: "app_walkthrough", ofType:"mp4") else {
+                debugPrint("video.mp4 not found")
+                return
+            }
+            
+            viewVideo.configure(url: "\(path)")
+            
+            player1 = AVPlayer(url: URL(fileURLWithPath: path))
+            player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
+            let playerLayer = AVPlayerLayer(player: player1)
+            playerLayer.frame = self.view.frame
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerLayer.goFullscreen()
+            self.view.layer.addSublayer(playerLayer)
+            player1?.seek(to: CMTime.zero)
+            
+           // NotificationCenter.default.addObserver(self, selector:#selector(reachTheEndOfTheVideo1(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player1?.currentItem)
+            player1?.play()
+            self.videoCompleted = 1
+            return
         }else if (value == "help" || value == "learnStepList"){
             videoURL = self.appPreffrence.getLearnPageURL()
         }else{
@@ -94,6 +116,18 @@ class WWMWalkThoghVC: WWMBaseViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+//    @objc func reachTheEndOfTheVideo1(note: NSNotification){
+//        if self.videoCompleted == 1{
+//            if !reachable.isConnectedToNetwork() {
+//                self.navigationController?.popViewController(animated: true)
+//                return
+//            }
+//
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
+//    }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
         print("abc....***** \(self.videoCompleted )")

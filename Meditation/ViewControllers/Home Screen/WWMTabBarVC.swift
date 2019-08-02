@@ -274,14 +274,14 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 levelDB.levelId = Int32(dic.levelId)
                 levelDB.levelName = dic.levelName
                 levelDB.prepTime = Int32(dic.prepTime)!
-                levelDB.meditationTime = Int32(dic.meditationTime)!
-                levelDB.restTime = Int32(dic.restTime)!
-                levelDB.minPrep = Int32(dic.minPrep)!
-                levelDB.minRest = Int32(dic.minRest)!
-                levelDB.minMeditation = Int32(dic.minMeditation)!
-                levelDB.maxPrep = Int32(dic.maxPrep)!
-                levelDB.maxRest = Int32(dic.maxRest)!
-                levelDB.maxMeditation = Int32(dic.maxMeditation)!
+                levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
+                levelDB.restTime = Int32(dic.restTime) ?? 0
+                levelDB.minPrep = Int32(dic.minPrep) ?? 0
+                levelDB.minRest = Int32(dic.minRest) ?? 0
+                levelDB.minMeditation = Int32(dic.minMeditation) ?? 0
+                levelDB.maxPrep = Int32(dic.maxPrep) ?? 0
+                levelDB.maxRest = Int32(dic.maxRest) ?? 0
+                levelDB.maxMeditation = Int32(dic.maxMeditation) ?? 0
                 meditationDB.addToLevels(levelDB)
             }
             settingDB.addToMeditationData(meditationDB)

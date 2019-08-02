@@ -90,9 +90,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             btnBurnMood.isHidden = true
         }
         
-        if WWMHelperClass.selectedType == "learn"{
-            btnBurnMood.isHidden = true
-        }
+//        if WWMHelperClass.selectedType == "learn"{
+//            btnBurnMood.isHidden = true
+//        }
         
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
