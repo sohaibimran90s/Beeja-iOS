@@ -25,6 +25,8 @@ class WWMHelperClass {
     //learn
     static var step_audio: String = ""
     static var timer_audio: String = ""
+    static var outro_audio: String = ""
+    static var step_title: String = ""
     static var total_paid: Int = 0
     static var mantra_id: Int = 1
     static var step_id: Int = 1

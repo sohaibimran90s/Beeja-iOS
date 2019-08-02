@@ -10,12 +10,17 @@ import UIKit
 
 class WWMLearnCongratsVC: WWMBaseViewController {
 
+    @IBOutlet weak var lblStep: UILabel!
+    @IBOutlet weak var lblStepDescription: UILabel!
+
     var watched_duration = ""
     var alertPrompt = WWMPromptMsg()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lblStep.text = "Step \(WWMHelperClass.step_id)"
+        self.lblStepDescription.text = "You 've completed step \(WWMHelperClass.step_id) of The learn too meditate flow"
         print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
     }

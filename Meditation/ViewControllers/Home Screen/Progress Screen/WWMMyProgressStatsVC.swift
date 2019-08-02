@@ -473,6 +473,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let meditationTime1 = hour1*3600 + minutes1*60 + seconds1
         let meditationTime2 = hour2*3600 + minutes2*60 + seconds2
         
+        print("meditationTime1.... \(meditationTime1) meditationTime2.... \(meditationTime2)")
+        
         let param = ["user_id":self.appPreference.getUserID(),
                      "meditation_id":self.selectedMeditationId,
                      "level_id":self.selectedLevelId,

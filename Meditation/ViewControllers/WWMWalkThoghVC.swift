@@ -89,12 +89,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.viewVideo.stop()
         if (value == "help" || value == "learnStepList"){
             self.navigationController?.popViewController(animated: true)
-        }else if value == "learnCongrats"{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
-            
-            WWMHelperClass.selectedType = "learn"
-            vc.watched_duration = self.watched_duration
-            self.navigationController?.pushViewController(vc, animated: false)
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
             self.navigationController?.pushViewController(vc, animated: true)
@@ -111,18 +105,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }
             if value == "help"{
                 self.navigationController?.popViewController(animated: true)
-            }else if value == "learnCongrats"{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
-                
-                WWMHelperClass.selectedType = "learn"
-                vc.watched_duration = self.watched_duration
-                self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
-            //WWMLearnStepListVC
         }
-        
     }
 }

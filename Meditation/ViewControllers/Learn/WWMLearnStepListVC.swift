@@ -208,10 +208,11 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         
         WWMHelperClass.step_audio = self.learnStepsListData[sender.tag].step_audio
         WWMHelperClass.timer_audio = self.learnStepsListData[sender.tag].timer_audio
+        WWMHelperClass.outro_audio = self.learnStepsListData[sender.tag].outro_audio
         WWMHelperClass.step_id = self.learnStepsListData[sender.tag].id
+        WWMHelperClass.step_title = self.learnStepsListData[sender.tag].title
         WWMHelperClass.total_paid = self.total_paid
         
-
         var flag = 0
         var position = 0
         var dateCompareLoopCount = 0

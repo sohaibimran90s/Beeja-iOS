@@ -15,6 +15,7 @@ class LearnStepsListData: NSObject{
     var date_completed: String = ""
     var title: String = ""
     var timer_audio: String = ""
+    var outro_audio: String = ""
     var Description: String = ""
     var step_audio: String = ""
     var completed: Bool = false
@@ -30,6 +31,7 @@ class LearnStepsListData: NSObject{
         self.timer_audio = json["timer_audio"] as? String ?? ""
         self.Description = json["description"] as? String ?? ""
         self.step_audio = json["step_audio"] as? String ?? ""
+        self.outro_audio = json["outro_audio"] as? String ?? ""
         self.completed = json["completed"] as? Bool ?? false
     }
 }

@@ -1,14 +1,14 @@
 //
-//  WWMLearnPlayPauseAudioVC.swift
+//  WWMLearnOutroVC.swift
 //  Meditation
 //
-//  Created by Prema Negi on 13/07/19.
+//  Created by Prema Negi on 02/08/19.
 //  Copyright © 2019 Cedita. All rights reserved.
 //
 
 import UIKit
 
-class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
+class WWMLearnOutroVC: WWMBaseViewController {
 
     @IBOutlet weak var btnStart: UIButton!
     @IBOutlet weak var btnReplay: UIButton!
@@ -22,7 +22,9 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     var isPlay: Bool = false
     
     var timer = Timer()
-
+    
+    var watched_duration: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +40,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
         
         self.btnReplay.setImage(UIImage(named: "pauseAudio"), for: .normal)
         
-        print("timeraudio... \(WWMHelperClass.timer_audio)")
+        print("outroaudio... \(WWMHelperClass.outro_audio)")
         self.audioPlay()
     }
     
@@ -47,7 +49,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                 try AVAudioSession.sharedInstance().setActive(true)
-                let playerItem = AVPlayerItem.init(url:URL.init(string: (WWMHelperClass.step_audio))!)
+                let playerItem = AVPlayerItem.init(url:URL.init(string: (WWMHelperClass.outro_audio))!)
                 self.player = AVPlayer(playerItem: playerItem)
                 
                 NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -117,13 +119,11 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     @IBAction func btnBeginClicked(_ sender: UIButton) {
         self.player.pause()
         self.timer.invalidate()
-        if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraVC") as! WWMChooseMantraVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnLetsMeditateVC") as! WWMLearnLetsMeditateVC
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+        
+        WWMHelperClass.selectedType = "learn"
+        vc.watched_duration = self.watched_duration
+        self.navigationController?.pushViewController(vc, animated: false)
     }
 }

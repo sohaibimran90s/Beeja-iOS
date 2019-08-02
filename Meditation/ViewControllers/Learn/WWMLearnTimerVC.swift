@@ -44,6 +44,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lblTimerType.text = "Step\(WWMHelperClass.step_id): \(WWMHelperClass.step_title)"
         setUpView()
         
         animationView = AnimationView(name: "final1")
@@ -63,7 +64,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         self.lblTimer.text = self.secondToMinuteSecond(second: self.seconds)
         animationView.play()
 
-        if WWMHelperClass.step_id > 3{
+        if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
             self.combinedMantraAPI()
         }else{
             self.play(url: URL.init(string: WWMHelperClass.timer_audio)!)
@@ -140,7 +141,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         var param: [String: Any] = [:]
         
-        if WWMHelperClass.step_id == 4{
+        if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
             param = ["step_id": WWMHelperClass.step_id, "mantra_id": WWMHelperClass.mantra_id] as [String : Any]
         }else{
             param = ["step_id": WWMHelperClass.step_id, "mantra_id": self.settingData.mantraID] as [String : Any]
@@ -344,11 +345,20 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
             
-            vc.watched_duration = "\(self.watched_duration)"
-            vc.value = "learnCongrats"
-            self.navigationController?.pushViewController(vc, animated: false)
+            if WWMHelperClass.outro_audio != ""{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
+                
+                WWMHelperClass.selectedType = "learn"
+                vc.watched_duration = "\(self.watched_duration)"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }else{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+                
+                WWMHelperClass.selectedType = "learn"
+                vc.watched_duration = "\(self.watched_duration)"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
         }
     }
     
@@ -364,11 +374,19 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-            
-            vc.watched_duration = "\(self.watched_duration)"
-            vc.value = "learnCongrats"
-            self.navigationController?.pushViewController(vc, animated: false)
+            if WWMHelperClass.outro_audio != ""{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
+                
+                WWMHelperClass.selectedType = "learn"
+                vc.watched_duration = "\(self.watched_duration)"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }else{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+                
+                WWMHelperClass.selectedType = "learn"
+                vc.watched_duration = "\(self.watched_duration)"
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
             
         }
     }
