@@ -1,4 +1,6 @@
 import Foundation
+import SwiftyRSA
+import UIKit
 
 class ChartApi{
     
@@ -29,7 +31,32 @@ class ChartApi{
         "cache-control": "no-cache"
     ]
     
+    
+    
+    
     var request = URLRequest(url: URL(string: URL_MOODPROGRESS)!)
+    
+    do {
+        guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+        }
+        let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let publicKey = try PublicKey.init(pemEncoded: keyString)
+        
+        let clear = try ClearMessage(string:"pulse", using: .utf8)
+        let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+        let base64String = encrypted.base64String
+        let param = "pulse:" + base64String
+        
+        request.addValue(param, forHTTPHeaderField: "Authorization")
+        //Authorize
+        //Authorization
+        
+    } catch {
+        print("Failed")
+        print(error)
+    }
+    
+    
     request.httpMethod = "POST"
     request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
     request.allHTTPHeaderFields = headers
@@ -37,6 +64,7 @@ class ChartApi{
     let session = URLSession.shared
     let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
         print("response.... \(response) data.... \(data)")
+       
         do {
             let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
             //print("json++++++.. \(json)")

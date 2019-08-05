@@ -400,13 +400,15 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let diff = Double(360) / Double(self.arrMoodData.count)
         let angle = Double(selectedIndex) * diff
         self.circularSlider(circularSlider!, angleDidChanged: angle)
+        self.circularSlider?.updateAngle()
+        self.circularSlider?.updateThumb(with: true)
         
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
     }
     
     func translatedAngle(angle: Double) -> Double {
-        print("angle..... \(angle)")
+        print("angle ****..... \(angle)")
         //450
         var angle = Double(450) -  angle
         if angle > 360 {
@@ -419,7 +421,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         self.animationView.stop()
         self.viewLottieAnimation?.isHidden = true
-        print("newAngle.... \(newAngle)")
+        print("newAngle ***.... \(newAngle)")
         let angle = self.translatedAngle(angle: newAngle)
         self.moodView?.isHidden = false
         let diff = Double(360) / Double(self.arrMoodData.count)

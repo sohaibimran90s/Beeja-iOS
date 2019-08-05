@@ -68,10 +68,10 @@ let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
 
-let URL_BASE  = "https://beta.beejameditation.com/api/v1/"
+let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
-let URL_BASE  = "https://beta.beejameditation.com/api/v1/"
+let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 
 #endif
@@ -96,7 +96,7 @@ let URL_COMMUNITYDATA        = URL_BASE + "communityData"
 let URL_SUBSCRIPTIONPURCHASE    = URL_BASE + "subscriptionPurchase"//
 let URL_GETSUBSCRIPTIONPPLANS    = URL_BASE + "getSubscriptionPlans"//
 let URL_GETPROFILE                  = URL_BASE + "getProfile"
-let URL_UPLOADHASHTAG                  = URL_BASE + "uploadHashTag"//
+let URL_UPLOADHASHTAG                  = "https://beta.beejameditation.com/api/v1/" + "uploadHashTag"//
 let URL_GETVIBESIMAGES                  = URL_BASE + "getVibesImages"//getVibesImages
 let URL_ADDSESSION                  = URL_BASE + "addSession"//
 let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//

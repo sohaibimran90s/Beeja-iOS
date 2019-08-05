@@ -103,7 +103,7 @@ protocol CircularSliderDelegate: AnyObject {
         return actualPoint
     }
     
-    private func updateThumb(with animation:Bool) {
+    func updateThumb(with animation:Bool) {
         self.thumbImageView?.image = self.thumbIcon
         if animation {
             self.thumbImageView?.layer.removeAllAnimations()
@@ -161,9 +161,10 @@ protocol CircularSliderDelegate: AnyObject {
         return (angle*180)/Double.pi
     }
     
-    private func updateAngle() {
+    func updateAngle() {
         if self.sliderDelegate != nil {
             let angle = self.angleInDegrees()
+            print("angleInDegrees.... \(angle)")
             self.sliderDelegate?.circularSlider(self, angleDidChanged: angle)
         }
     }
