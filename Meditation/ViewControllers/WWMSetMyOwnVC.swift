@@ -302,7 +302,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
         meditationDB.meditationId = Int32(self.selectedMeditation_Id)
         meditationDB.setmyown = 1
-        meditationDB.meditationName = self.txtViewMeditationName.text!
+        meditationDB.meditationName = self.txtViewMeditationName.text ?? ""
         meditationDB.isMeditationSelected = true
         
             let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
@@ -357,7 +357,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             }
             
             let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName!,
+                        "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
                         "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]

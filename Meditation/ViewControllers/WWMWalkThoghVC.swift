@@ -31,13 +31,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         let videoFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         viewVideo.frame = videoFrame
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         
         setNavigationBar(isShow:false,title:"")
         NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         if (value == "help" || value == "learnStepList"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
@@ -54,6 +53,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
         
         self.playVideo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+       // player1?.play()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -144,5 +149,17 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+    }
+    
+    //App enter in forground.
+    @objc func applicationWillEnterForeground(_ notification: Notification) {
+        if ((player1?.pause()) != nil){
+            self.player1?.play()
+        }
+    }
+    
+    //App enter in forground.
+    @objc func applicationDidEnterBackground(_ notification: Notification) {
+        self.player1?.pause()
     }
 }

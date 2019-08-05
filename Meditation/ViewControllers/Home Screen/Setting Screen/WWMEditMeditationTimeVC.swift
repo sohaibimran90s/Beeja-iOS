@@ -157,7 +157,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             }
             
             let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName!,
+                        "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
                         "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]

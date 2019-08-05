@@ -130,7 +130,7 @@ protocol CircularSliderDelegate: AnyObject {
             if transformedPoint.y > 0 {
                 return Double.pi/2
             } else {
-                return  3*Double.pi/2
+                return 3*Double.pi/2
             }
         } else if transformedPoint.y == 0 {
             if transformedPoint.x > 0 {
