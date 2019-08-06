@@ -397,11 +397,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }
         }
         
-        let diff = Double(360) / Double(self.arrMoodData.count)
-        let angle = Double(selectedIndex) * diff
-        self.circularSlider(circularSlider!, angleDidChanged: angle)
-        self.circularSlider?.updateAngle()
-        self.circularSlider?.updateThumb(with: true)
+//        let diff = Double(360) / Double(self.arrMoodData.count)
+//        let angle = Double(selectedIndex) * diff
+//        self.circularSlider(circularSlider!, angleDidChanged: angle)
+//        self.circularSlider?.updateAngle()
+//        self.circularSlider?.updateThumb(with: true)
         
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
