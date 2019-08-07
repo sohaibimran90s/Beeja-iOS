@@ -67,8 +67,8 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
-
-let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
+let URL_BASE  = KUSERDEFAULTS.string(forKey: "BASEURL") + "/"
+//let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
 let URL_BASE  = "https://beta.beejameditation.com/api/v2/"

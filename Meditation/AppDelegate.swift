@@ -129,6 +129,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func showForceUpdate() {
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
             if success {
+                if let baseUrl = result["base_url"] as? String{
+                    KUSERDEFAULTS.set(baseUrl, forKey: "BASEURL")
+                }else {
+                    KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: "BASEURL")
+                }
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
