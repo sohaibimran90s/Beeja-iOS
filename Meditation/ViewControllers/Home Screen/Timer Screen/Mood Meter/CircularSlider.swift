@@ -20,7 +20,7 @@ protocol CircularSliderDelegate: AnyObject {
     private var backGround: UIImageView?
     private var touchIndicator: UIImageView?
     private weak var sliderDelegate: CircularSliderDelegate?
-    private var thumbCenter: CGPoint?
+    var thumbCenter: CGPoint?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -70,7 +70,7 @@ protocol CircularSliderDelegate: AnyObject {
         return self.consideredRadius() - self.thumbRadius
     }
     
-    private func findIntersectionOfCircleWithLineFromCenter(to point: CGPoint) -> CGPoint? {
+    func findIntersectionOfCircleWithLineFromCenter(to point: CGPoint) -> CGPoint? {
         let transformedPoint = CGPoint(x: point.x - self.bounds.size.width/2, y: self.bounds.size.height/2 - point.y)
         var y: Double!
         var x: Double!

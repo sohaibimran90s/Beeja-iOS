@@ -45,6 +45,9 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         cell.lblDuration.text = "(\(self.secondsToMinutesSeconds(second: data.audio_Duration)))"
         cell.lblAuthorName.text = data.author_name
         
+        print("data.paid... \(data.paid)")
+        print("data.audio_Duration... \(data.audio_Duration)")
+        
         if !data.paid{
             if data.audio_Duration > 900{
                 cell.lblFreeDuration.text = "(Free for 15:00 min)"

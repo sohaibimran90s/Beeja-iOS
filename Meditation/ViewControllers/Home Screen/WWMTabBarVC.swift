@@ -276,7 +276,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 levelDB.prepTime = Int32(dic.prepTime)!
                 levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
                 levelDB.restTime = Int32(dic.restTime) ?? 0
-                levelDB.minPrep = Int32(dic.minPrep) ?? 0
+                levelDB.minPrep = Int32(dic.minPrep) ?? 1
                 levelDB.minRest = Int32(dic.minRest) ?? 0
                 levelDB.minMeditation = Int32(dic.minMeditation) ?? 0
                 levelDB.maxPrep = Int32(dic.maxPrep) ?? 0

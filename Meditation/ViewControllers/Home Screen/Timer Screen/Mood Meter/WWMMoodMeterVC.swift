@@ -397,14 +397,32 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }
         }
         
-//        let diff = Double(360) / Double(self.arrMoodData.count)
-//        let angle = Double(selectedIndex) * diff
+        let diff = Double(360) / Double(self.arrMoodData.count)
+        let angle = Double(selectedIndex) * diff
+        
+        let distance = self.distance(a: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: 0), b: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: (self.circularSlider?.frame.size.height)!/2))
+        
+        let rect = CGPoint.init(x:(self.circularSlider?.frame.size.width)!/2 + CGFloat(distance * cos(angle)) , y: (self.circularSlider?.frame.size.height)!/2 + CGFloat(distance*sin(angle)))
+        
+        self.circularSlider?.thumbCenter = self.circularSlider?.findIntersectionOfCircleWithLineFromCenter(to: rect)
+        self.circularSlider?.setTouchIndicator(true)
+        self.circularSlider?.updateThumb(with: true)
+        self.circularSlider?.updateAngle()
+        
+        //(x + r*cos(a), y + r*sin(a))
 //        self.circularSlider(circularSlider!, angleDidChanged: angle)
 //        self.circularSlider?.updateAngle()
 //        self.circularSlider?.updateThumb(with: true)
         
         let x = Int(self.moodView!.bounds.size.width / 2) * selectedIndex
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+    }
+    
+    func distance( a: CGPoint,  b: CGPoint) -> Double {
+        let xDist = a.x - b.x
+        let yDist = a.y - b.y
+        
+        return Double(sqrt(xDist*xDist + yDist*yDist))
     }
     
     func translatedAngle(angle: Double) -> Double {

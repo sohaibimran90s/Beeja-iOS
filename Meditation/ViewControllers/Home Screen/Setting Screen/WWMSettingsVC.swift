@@ -260,11 +260,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTitle.text = self.arrTimeChimes[indexPath.row-1]
                         cell.lblTime.isHidden = false
                         if indexPath.row == 1 {
-                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime!)!)
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime ?? "0") ?? 0)
                         }else if indexPath.row == 3 {
-                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.meditationTime!)!)
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.meditationTime ?? "0") ?? 0)
                         }else if indexPath.row == 5 {
-                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.restTime!)!)
+                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.restTime ?? "0") ?? 0)
                         }
                         
                     }else {
@@ -838,7 +838,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     let leveldata = [
                                      "level_id": level.levelId,
                                      "isSelected": level.isLevelSelected,
-                                     "name": level.levelName!,
+                                     "name": level.levelName ?? "",
                                      "prep_time": "\(level.prepTime)",
                                      "meditation_time": "\(level.meditationTime)",
                                      "rest_time": "\(level.restTime)",
@@ -853,7 +853,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
             
             let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName!,
+                        "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
                         "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]
@@ -861,19 +861,19 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }
         //"IsMilestoneAndRewards"
         let group = [
-            "startChime": self.settingData.startChime!,
-            "endChime": self.settingData.endChime!,
-            "finishChime": self.settingData.finishChime!,
-            "intervalChime": self.settingData.intervalChime!,
-            "ambientSound": self.settingData.ambientChime!,
+            "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
+            "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
+            "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
+            "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
+            "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
             "moodMeterEnable": self.settingData.moodMeterEnable,
             "IsMorningReminder": self.settingData.isMorningReminder,
             "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime  ?? "13:30",
             "MantraID":self.settingData.mantraID,
-            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
             "IsLearnReminder":self.settingData.isLearnReminder,
             "meditation_data" : meditation_data
             ] as [String : Any]

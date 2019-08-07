@@ -14,6 +14,7 @@ import EFCountingLabel
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
 
+    @IBOutlet weak var lblGraphFromToDate: UILabel!
     @IBOutlet weak var btnChangeDuration: UIButton!
     @IBOutlet weak var baseViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var graphBaseView: UIView!
@@ -367,6 +368,42 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                         self?.data = data
                         self?.addBoth()
                         self?.month.text = self?.data.first?.date.monthName
+                        
+                        let format = DateFormatter()
+                        format.dateFormat = "dd/MM/yyyy"
+
+                        let month1: String = format.monthSymbols[Calendar.current.component(.month, from: format.date(from: "\(data[0].date)")!) - 1]
+                        let monthString: String = String(month1.prefix(3))
+                        
+                        if data.count > 1{
+                            let firstDay: String = "\(Calendar.current.component(.day, from: format.date(from: "\(data[0].date)")!))"
+                            let lastDay: String = "\(Calendar.current.component(.day, from: format.date(from: "\(data[data.count - 1].date)")!))"
+                            if firstDay.count == 1{
+                                if lastDay.count == 1{
+                                    self?.lblGraphFromToDate.text = "0\(firstDay)-0\(lastDay)\(monthString)"
+                                }else{
+                                    self?.lblGraphFromToDate.text = "0\(firstDay)-\(lastDay)\(monthString)"
+                                }
+                            }else{
+                                if lastDay.count == 1{
+                                    self?.lblGraphFromToDate.text = "\(firstDay)-0\(lastDay)\(monthString)"
+                                }else{
+                                    self?.lblGraphFromToDate.text = "\(firstDay)-\(lastDay)\(monthString)"
+                                }
+                            }
+                        }else{
+                            let firstDay: String = "\(Calendar.current.component(.day, from: format.date(from: "\(data[0].date)")!))"
+                            if firstDay.count == 1{
+                                self?.lblGraphFromToDate.text = "0\(firstDay)\(monthString)"
+                            }else{
+                                self?.lblGraphFromToDate.text = "\(firstDay)\(monthString)"
+                            }
+                        }
+
+                        print("data[0].date... \(data[0].date) calendar.component(.month, from: date).. \(Calendar.current.component(.month, from: format.date(from: "\(data[0].date)")!))  calendar.component(.day, from: date).. \(Calendar.current.component(.day, from: format.date(from: "\(data[0].date)")!))")
+
+                        print(format.monthSymbols[Calendar.current.component(.month, from: format.date(from: "\(data[0].date)")!) - 1])
+                        
                     }else{
                         self?.baseViewHeightConstraint.constant = 1152
                         self?.graphBaseView.isHidden = false

@@ -196,7 +196,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "user_id":self.appPreference.getUserID(),
             "meditation_name":txtViewMeditationName.text ?? "",
             "prep_time":"\(self.prepTime)",
-            "meditation_time":"\(self.meditationTime))",
+            "meditation_time":"\(self.meditationTime)",
             "rest_time":"\(self.restTime)",
             "setmyown": 1,
             "level_name": "Beginner",

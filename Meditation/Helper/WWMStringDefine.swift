@@ -159,16 +159,16 @@ let  Validatation_JournalOfflineMsg  =
 /************************************/
 //Static Urls
 
-let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy"
-let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition"
-let URL_Help   = "https://www.beejameditation.com/contact-us/"
-let URL_FAQ   = "https://www.beejameditation.com/faqs/"
+let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
+let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
+let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1 "
+let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"
-let URL_FINDCOURSE   = "https://www.beejameditation.com/courses/beginners/"
+let URL_FINDCOURSE   = "https://beta.beejameditation.com/courses/beginners?mobile_view=1"
 let URL_OurStory   = "https://www.beejameditation.com/about-us/"
 let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
-let URL_GUIDED   = "https://www.willwilliamsmeditation.co.uk/please-guide-me/"
-let URL_MOREINFO   = "https://beta.beejameditation.com/more-info"
+let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
+let URL_MOREINFO   = "https://beta.beejameditation.com/more-info?mobile_view=1"
 
 
 // Social Links **************************

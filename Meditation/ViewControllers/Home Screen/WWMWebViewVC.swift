@@ -24,6 +24,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
         self.lblTitle.text = self.strType
         webView.navigationDelegate = self
         webView.scrollView.delegate = self
+        webView.scrollView.bounces = false
         
         let reachable = Reachabilities()
         
