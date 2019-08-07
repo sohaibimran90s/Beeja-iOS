@@ -16,41 +16,42 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     var animationView = AnimationView()
     var executionTime: Double = 0.0
     let startDate = Date()
+    var alertPopupView1 = WWMAlertController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         KUSERDEFAULTS.set("0", forKey: "restore")
-        do {
-            let password = "password"
-            let salt = AES256Crypter.randomSalt()
-            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-            let keyStr = String.init(bytes: key, encoding: .utf8)
-            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
-            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
-            }
-            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-            let publicKey = try PublicKey.init(pemEncoded: keyString)
-            let clear = try ClearMessage(string: "pulse", using: .utf8)
-            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-            let base64String = encrypted.base64String
-//            print(base64String)
-//            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
+//        do {
+//            let password = "password"
+//            let salt = AES256Crypter.randomSalt()
+//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
+//            let keyStr = String.init(bytes: key, encoding: .utf8)
+//            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
+//            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
 //            }
-//            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
-//            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
-//            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
-//            let string = try clear1.string(encoding: .utf8)
-//            print(string)
-            let param = "pulse:" + base64String
-            self.getFirstEncryptesKey(param: param, key: password)
-
-
-
-        } catch {
-            print("Failed")
-            print(error)
-        }
+//            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+//            let publicKey = try PublicKey.init(pemEncoded: keyString)
+//            let clear = try ClearMessage(string: "pulse", using: .utf8)
+//            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+//            let base64String = encrypted.base64String
+////            print(base64String)
+////            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
+////            }
+////            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
+////            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
+////            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
+////            let string = try clear1.string(encoding: .utf8)
+////            print(string)
+//            let param = "pulse:" + base64String
+//            self.getFirstEncryptesKey(param: param, key: password)
+//
+//
+//
+//        } catch {
+//            print("Failed")
+//            print(error)
+//        }
 
         WWMHelperClass.selectedType = ""
         self.imageViewLoader.isHidden = true
@@ -64,9 +65,89 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         animationView.loopMode = .loop
         self.view.addSubview(animationView)
         animationView.play()
-        self.getMoodMeterDataAPI()
+        self.showForceUpdate()
     }
     
+    func showForceUpdate() {
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
+            if success {
+                if let force_update = result["force_update"] as? Bool{
+                    if force_update{
+                        if self.needsUpdate(){
+                            self.forceToUpdatePopUp()
+                        }else {
+                            self.getMoodMeterDataAPI()
+                        }
+                    }else {
+                        self.getMoodMeterDataAPI()
+                    }
+                }else {
+                    self.getMoodMeterDataAPI()
+                }
+                
+            }else {
+                self.getMoodMeterDataAPI()
+            }
+            
+        }
+    }
+    
+    func needsUpdate() -> Bool {
+        let infoDictionary = Bundle.main.infoDictionary
+        let appID = "1453359245"//infoDictionary?["CFBundleIdentifier"] as? String
+        let url = URL(string: "http://itunes.apple.com/lookup?id=\(appID)")
+        var data: Data? = nil
+        if let url = url {
+            data = try? Data(contentsOf: url)
+        }
+        var lookup: [AnyHashable : Any]? = nil
+        do {
+            if let data = data {
+                lookup = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
+            }
+        } catch {
+        }
+        
+        if (lookup?["resultCount"] as? NSNumber)?.intValue == 1 {
+            if let results = lookup?["results"] as? [[String:Any]] {
+                let appStoreVersion = results[0]["version"] as? String
+                let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
+                if !(appStoreVersion == currentVersion) {
+                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
+                    return true
+                }
+            }
+            
+            
+        }
+        return false
+    }
+    
+    func forceToUpdatePopUp(){
+        
+        alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView1.isRemove = false
+        alertPopupView1.btnOK.layer.borderWidth = 2.0
+        alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView1.lblTitle.text = "New Version Available"
+        alertPopupView1.lblSubtitle.text = "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.btnOK.setTitle("Update", for: .normal)
+        alertPopupView1.btnClose.isHidden = true
+        
+        alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
+    @IBAction func btnForceToUpdateDoneAction(_ sender: Any) {
+        //https://apps.apple.com/us/app/beeja-meditation/id1453359245
+        UIApplication.shared.open(URL.init(string: "https://apps.apple.com/is/app/beeja-meditation/id1453359245")!, options: [:], completionHandler: nil)
+        
+    }
+
 
     func getFirstEncryptesKey(param:String, key:String) {
         

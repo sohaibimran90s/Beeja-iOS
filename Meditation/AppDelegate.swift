@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     let gcmMessageIDKey = "gcm.message_id"
     
     let appPreffrence = WWMAppPreference()
+    var alertPopupView1 = WWMAlertController()
     var date = Date()
     var value = 0
     
@@ -114,6 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     
+    
+    
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         
@@ -123,7 +126,88 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
+    func showForceUpdate() {
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
+            if success {
+                if let force_update = result["force_update"] as? Bool{
+                    if force_update{
+                        if self.needsUpdate(){
+                            self.forceToUpdatePopUp()
+                        }else {
+                            self.syncDataWithServer()
+                        }
+                    }else {
+                        self.syncDataWithServer()
+                    }
+                }else {
+                    self.syncDataWithServer()
+                }
+                
+            }else {
+                self.syncDataWithServer()
+            }
+            
+        }
+    }
     
+    
+    func needsUpdate() -> Bool {
+        let infoDictionary = Bundle.main.infoDictionary
+        let appID = "1453359245"//infoDictionary?["CFBundleIdentifier"] as? String
+        let url = URL(string: "http://itunes.apple.com/lookup?id=\(appID)")
+        var data: Data? = nil
+        if let url = url {
+            data = try? Data(contentsOf: url)
+        }
+        var lookup: [AnyHashable : Any]? = nil
+        do {
+            if let data = data {
+                lookup = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
+            }
+        } catch {
+        }
+        
+        if (lookup?["resultCount"] as? NSNumber)?.intValue == 1 {
+            if let results = lookup?["results"] as? [[String:Any]] {
+                let appStoreVersion = results[0]["version"] as? String
+                let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
+                if !(appStoreVersion == currentVersion) {
+                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
+                    return true
+                }
+            }
+            
+            
+        }
+        return false
+    }
+    
+    func forceToUpdatePopUp(){
+        
+        alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView1.isRemove = false
+        alertPopupView1.btnOK.layer.borderWidth = 2.0
+        alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView1.lblTitle.text = "New Version Available"
+        alertPopupView1.lblSubtitle.text = "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.btnOK.setTitle("Update", for: .normal)
+        alertPopupView1.btnClose.isHidden = true
+        
+        alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
+    @IBAction func btnForceToUpdateDoneAction(_ sender: Any) {
+        //https://apps.apple.com/us/app/beeja-meditation/id1453359245
+        UIApplication.shared.open(URL.init(string: "https://apps.apple.com/is/app/beeja-meditation/id1453359245")!, options: [:], completionHandler: nil)
+        
+    }
+
+
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call.hasConnected {
             print("Call Connect -> ")
@@ -179,10 +263,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         switch reachability.connection {
         case .wifi:
-            self.syncDataWithServer()
+            self.showForceUpdate()
+            
             print("Reachable via WiFi")
         case .cellular:
-            self.syncDataWithServer()
+            self.showForceUpdate()
+            
             print("Reachable via Cellular")
         case .none:
             print("Network not reachable")
@@ -307,6 +393,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        
        
     }
     

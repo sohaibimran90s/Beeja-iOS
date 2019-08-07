@@ -23,10 +23,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
+    var alertPopupView1 = WWMAlertController()
+    
     var isGetProfileCall = false
     
     var alertPopup = WWMAlertPopUp()
-    
     var milestoneType: String = ""
 
     override func viewDidLoad() {
@@ -289,6 +290,39 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMHelperClass.saveDb()
         NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
         
+       // print(needsUpdate())
+    }
+    
+    //  Converted to Swift 5 by Swiftify v5.0.7505 - https://objectivec2swift.com/
+    func needsUpdate() -> Bool {
+        let infoDictionary = Bundle.main.infoDictionary
+        let appID = "1453359245"//infoDictionary?["CFBundleIdentifier"] as? String
+        let url = URL(string: "http://itunes.apple.com/lookup?id=\(appID)")
+        var data: Data? = nil
+        if let url = url {
+            data = try? Data(contentsOf: url)
+        }
+        var lookup: [AnyHashable : Any]? = nil
+        do {
+            if let data = data {
+                lookup = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
+            }
+        } catch {
+        }
+        
+        if (lookup?["resultCount"] as? NSNumber)?.intValue == 1 {
+            if let results = lookup?["results"] as? [[String:Any]] {
+                let appStoreVersion = results[0]["version"] as? String
+                let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
+                if !(appStoreVersion == currentVersion) {
+                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
+                    return true
+                }
+            }
+            
+            
+        }
+        return false
     }
 
     // UITabBarDelegate
@@ -333,7 +367,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
 
                         
-                        print("userData****** \(userData) userprofile....\(result["user_profile"] as! [String : Any])")
+                        print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
                         
                         var userSubscription = WWMUserData.sharedInstance
                         userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
@@ -372,6 +406,14 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                         }
                         self.setDataToDb(json: result["settings"] as! [String:Any])
+                        
+//                        if let force_update = result["force_update"] as? Bool{
+//                            if force_update{
+//                                if self.needsUpdate(){
+//                                    self.forceToUpdatePopUp()
+//                                }
+//                            }
+//                        }
                     }else {
                         self.getDataFromDatabase()
                     }
@@ -423,12 +465,40 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
+    func forceToUpdatePopUp(){
+        
+        alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView1.isRemove = false
+        alertPopupView1.btnOK.layer.borderWidth = 2.0
+        alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView1.lblTitle.text = "New Version Available"
+        alertPopupView1.lblSubtitle.text = "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.btnOK.setTitle("Update", for: .normal)
+        alertPopupView1.btnClose.isHidden = true
+        
+        alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
+        alertPopupView1.btnClose.addTarget(self, action: #selector(btnForceToUpdateCancelAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
     @IBAction func btnDoneAction(_ sender: Any) {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         self.getUserProfileData(lat: self.lat, long: self.long)
     }
     
+    @IBAction func btnForceToUpdateDoneAction(_ sender: Any) {
+        //https://apps.apple.com/us/app/beeja-meditation/id1453359245
+        UIApplication.shared.open(URL.init(string: "https://apps.apple.com/is/app/beeja-meditation/id1453359245")!, options: [:], completionHandler: nil)
+
+    }
+    
+    @IBAction func btnForceToUpdateCancelAction(_ sender: Any) {
+    }
     
     func showToast(message : String) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 160, y: self.view.frame.size.height/2, width: self.view.frame.size.width - 60, height: 100))

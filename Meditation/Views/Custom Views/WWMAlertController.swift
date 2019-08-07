@@ -14,9 +14,13 @@ class WWMAlertController: UIView {
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblSubtitle: UILabel!
+    var isRemove = true
     
     @IBAction func btnOK(_ sender: UIButton) {
-        self.removeFromSuperview()
+        if isRemove {
+                self.removeFromSuperview()
+        }
+        
     }
     
     @IBAction func btnClose(_ sender: UIButton) {

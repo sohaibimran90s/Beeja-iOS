@@ -262,5 +262,52 @@ class WWMWebServices {
         postDataTask.resume()
     }
     
+    
+    class func requestAPIWithBodyForceUpdate(urlString:String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
+        var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
+        print("Request URL: \(urlString)")
+        request.httpMethod = "GET"
+        let headers = [
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "cache-control": "no-cache"
+        ]
+        request.allHTTPHeaderFields = headers
+        
+        request.timeoutInterval = 45
+        var postDataTask = URLSessionDataTask()
+        postDataTask.priority = URLSessionDataTask.highPriority
+        
+        
+        postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in
+            //            var json : (Any);
+            if data != nil && response != nil {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    let results = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
+                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    print("Result: \(myString ?? "")")
+                    
+                    completionHandler(json  as! Dictionary<String, Any>, nil, true)
+                    return
+                }catch {
+                    print(error.localizedDescription)
+                    completionHandler([:], error, false)
+                    return;
+                }
+                
+            }else if error != nil {
+                
+                completionHandler([:], error, false)
+            }else {
+                completionHandler([:], nil, false)
+            }
+        })
+        postDataTask.resume()
+    }
+    
 }
 
