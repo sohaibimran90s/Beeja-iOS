@@ -38,6 +38,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
+        self.btnCrossSkip.isHidden = false
+        
         if (value == "help" || value == "learnStepList"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
@@ -95,7 +97,26 @@ class WWMWalkThoghVC: WWMBaseViewController {
             player1?.play()
             self.videoCompleted = 1
             return
-        }else if (value == "help" || value == "learnStepList"){
+        }else if value == "help"{
+            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else {
+                debugPrint("video.mp4 not found")
+                return
+            }
+            
+            player1 = AVPlayer(url: URL(fileURLWithPath: path))
+            player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
+            let playerLayer = AVPlayerLayer(player: player1)
+            playerLayer.frame = self.view.frame
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill            
+            self.viewVideo.layer.addSublayer(playerLayer)
+            player1?.seek(to: CMTime.zero)
+            
+            player1?.play()
+            self.videoCompleted = 1
+            return
+            
+        
+        }else if value == "learnStepList"{
             videoURL = self.appPreffrence.getLearnPageURL()
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()

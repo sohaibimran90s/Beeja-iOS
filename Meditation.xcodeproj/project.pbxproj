@@ -195,6 +195,7 @@
 		610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 610DA34A22F010CB0006FD78 /* Burn.mp4 */; };
 		6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */; };
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
+		61208D2A22FC3C1A00514840 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 61208D2922FC3C1A00514840 /* walkthough.mp4 */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
 		612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */; };
@@ -622,6 +623,7 @@
 		6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnGetSetVC.swift; sourceTree = "<group>"; };
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
 		61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 2.xcdatamodel"; sourceTree = "<group>"; };
+		61208D2922FC3C1A00514840 /* walkthough.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = walkthough.mp4; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				61208D2922FC3C1A00514840 /* walkthough.mp4 */,
 				61FBD25F22F461B200EE6902 /* app_walkthrough.mp4 */,
 				610DA34A22F010CB0006FD78 /* Burn.mp4 */,
 				613C6F7822DF3D630012113B /* all_discs.json */,
@@ -2037,6 +2040,7 @@
 				2E4A473F220DB22B00DF0C68 /* BIRDSONG 1.mp3 in Resources */,
 				613071FE22D9F60F009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav in Resources */,
 				2E4371C222004D9A00EF5D62 /* HARP.mp3 in Resources */,
+				61208D2A22FC3C1A00514840 /* walkthough.mp4 in Resources */,
 				2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */,
 				2E4371C422004D9A00EF5D62 /* SITAR.mp3 in Resources */,
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
