@@ -621,6 +621,7 @@
 		610DA34A22F010CB0006FD78 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
 		6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnGetSetVC.swift; sourceTree = "<group>"; };
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
+		61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 2.xcdatamodel"; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
@@ -2912,9 +2913,10 @@
 		2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */,
 				2E93D2FE21F5FFC300163E57 /* WWMDatabase.xcdatamodel */,
 			);
-			currentVersion = 2E93D2FE21F5FFC300163E57 /* WWMDatabase.xcdatamodel */;
+			currentVersion = 61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */;
 			path = WWMDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

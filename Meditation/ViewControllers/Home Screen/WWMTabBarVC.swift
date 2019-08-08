@@ -475,9 +475,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         alertPopupView1.btnOK.layer.borderWidth = 2.0
         alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView1.lblTitle.text = "New Version Available"
-        alertPopupView1.lblSubtitle.text = "There is a newer version available for download! Please update the app by visiting the Apple Store."
-        alertPopupView1.btnOK.setTitle("Update", for: .normal)
+        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? "New Version Available"
+        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? "Update", for: .normal)
         alertPopupView1.btnClose.isHidden = true
         
         alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)

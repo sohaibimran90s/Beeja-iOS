@@ -30,8 +30,10 @@ let  kLoginTypeGoogle : String!               = "ggl"
 let  kLoginTypeFacebook : String!             = "fb"
 let  kDeviceType : String!                    = "ios"
 let  kDeviceID : String!                      = UIDevice.current.identifierForVendor!.uuidString
-
-
+let  KFORCETOUPDATETITLE : String = "titleForceToUpdate"
+let  KFORCETOUPDATEDES : String = "desForceToUpdate"
+let  KBASEURL = "baseURL"
+let  KUPGRADEBUTTON = "upgrade"
 
 
 /************************************************/
@@ -67,12 +69,12 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
-let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: "BASEURL") ?? "https://beta.beejameditation.com")/api/v2/"
-//let URL_BASE  = KUSERDEFAULTS.string(forKey: "BASEURL") ?? "https://beta.beejameditation.com" + "/api/v2/"
+let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
+//let URL_BASE  = KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com" + "/api/v2/"
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
-let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: "BASEURL") ?? "https://beta.beejameditation.com")/api/v2/"
+let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
 
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
@@ -164,7 +166,7 @@ let  Validatation_JournalOfflineMsg  =
 
 let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
 let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
-let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1 "
+let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1"
 let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"
 let URL_FINDCOURSE   = "https://beta.beejameditation.com/courses/beginners?mobile_view=1"

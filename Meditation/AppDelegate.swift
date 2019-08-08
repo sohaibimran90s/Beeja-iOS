@@ -130,10 +130,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
             if success {
                 if let baseUrl = result["base_url"] as? String{
-                    KUSERDEFAULTS.set(baseUrl, forKey: "BASEURL")
+                    KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                 }else {
-                    KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: "BASEURL")
+                    KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
                 }
+                
+                if let title = result["title"] as? String{
+                    KUSERDEFAULTS.set(title, forKey: KFORCETOUPDATETITLE)
+                }
+                
+                if let content = result["content"] as? String{
+                    KUSERDEFAULTS.set(content, forKey: KFORCETOUPDATEDES)
+                }
+                
+                if let button = result["button"] as? String{
+                    KUSERDEFAULTS.set(button, forKey: KUPGRADEBUTTON)
+                }
+                
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
@@ -197,9 +210,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         alertPopupView1.btnOK.layer.borderWidth = 2.0
         alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView1.lblTitle.text = "New Version Available"
-        alertPopupView1.lblSubtitle.text = "There is a newer version available for download! Please update the app by visiting the Apple Store."
-        alertPopupView1.btnOK.setTitle("Update", for: .normal)
+        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? "New Version Available"
+        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? "Update", for: .normal)
         alertPopupView1.btnClose.isHidden = true
         
         alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
@@ -608,10 +621,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 dateFormate.dateFormat = "dd:MM:yyyy"
                     
                 var strDate = dateFormate.string(from: Date())
-                strDate = strDate + " \(settingData.learnReminderTime!)"
+                strDate = strDate + " \(settingData.learnReminderTime ?? "14:00")"
                 dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
-                    
-                print(settingData.learnReminderTime!)
                     
                 let date = dateFormate.date(from: strDate)
                 let arrTemp = settingData.learnReminderTime?.components(separatedBy: ":")
@@ -790,7 +801,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let url = self.applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            let option = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: option)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

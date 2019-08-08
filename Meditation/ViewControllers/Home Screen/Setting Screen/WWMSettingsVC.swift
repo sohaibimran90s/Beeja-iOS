@@ -815,6 +815,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             settingData.isMilestoneAndRewards = btn.isOn
         }else if btn.tag == 101 {
             settingData.isLearnReminder = btn.isOn
+            if settingData.learnReminderTime == "" || settingData.learnReminderTime == nil {
+                settingData.learnReminderTime = "08:00"
+            }
             // Enable Learn Reminder
         }
         self.settingAPI()
@@ -871,7 +874,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
             "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime  ?? "13:30",
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
             "MantraID":self.settingData.mantraID,
             "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
             "IsLearnReminder":self.settingData.isLearnReminder,
