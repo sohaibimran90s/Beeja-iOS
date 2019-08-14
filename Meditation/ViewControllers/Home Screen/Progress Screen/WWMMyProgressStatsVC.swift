@@ -605,8 +605,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //WWMHelperClass.showLoaderAnimate(on: self.view)
         
         print("add session params.... \(param)")
-        
+        addSessionView.btnDone.isUserInteractionEnabled = false
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            self.addSessionView.btnDone.isUserInteractionEnabled = true
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {
@@ -617,8 +618,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     }
                 }
             }else {
+                self.addSessionView.btnDone.isUserInteractionEnabled = true
                 self.saveSessionDatatoDB(param: param)
             }
+            self.addSessionView.btnDone.isUserInteractionEnabled = true
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }

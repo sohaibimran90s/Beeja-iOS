@@ -77,11 +77,15 @@ class WWMLearnStepListVC: WWMBaseViewController {
         //WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        //let param = ["user_id": "747"] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            print("learn result... \(result)")
             if sucess {
-                if let total_paid = result["total_paid"] as? Int{
-                    self.total_paid = total_paid
+                if let total_paid = result["total_paid"] as? Double{
+                    print("total_paid double.. \(total_paid)")
+                    self.total_paid = Int(round(total_paid))
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
@@ -176,6 +180,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
         
+        print("self.total_paid... \(self.total_paid)")
         if self.total_paid > 41{
             cell.imgLock.image = UIImage(named: "")
             cell.isUserInteractionEnabled = true
