@@ -398,7 +398,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                                 
                                 print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
                                 
-                                
                                 self.appPreffrence.setPostMoodCount(value: 6)
                                 self.appPreffrence.setPreMoodCount(value: 6)
                                 self.appPreffrence.setPreJournalCount(value: 6)

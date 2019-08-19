@@ -182,7 +182,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your journal before purchase of any subscription plan.", type: "post")
             }else{
                 
-                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You have only post \(getPostJournalCount) journal enteries left.", type: "Post")
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You have \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
                 
                // xibJournalView()
             }

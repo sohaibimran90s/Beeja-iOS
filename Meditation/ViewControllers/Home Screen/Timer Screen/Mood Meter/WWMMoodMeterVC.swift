@@ -121,13 +121,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         if (getPreMoodCount == 0 && getPreJournalCount == 0) || (getPreMoodCount == 0 && getPreJournalCount > 0){
                             print("getPreMoodCount... \(getPreMoodCount)")
                             
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Pre")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have used your free mood and journal entries. Subscribe now for unlimited access.", type: "Pre")
                             self.view.isUserInteractionEnabled = false
                             
                         }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have only pre \(getPreMoodCount) mood and \(getPreJournalCount) journal enteries left.", type: "Pre")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
                             self.view.isUserInteractionEnabled = true
-                            
                         }
                     }else{
                         let getPostMoodCount = self.appPreference.getPostMoodCount()
@@ -137,11 +136,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         if (getPostMoodCount == 0) && (getPostJournalCount == 0){
                             print("getPostMoodCount... \(getPostMoodCount)")
 
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You can't lock your mood before purchase of any subscription plan.", type: "Post")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have used your free mood and journal entries. Subscribe now for unlimited access.", type: "Post")
                             self.view.isUserInteractionEnabled = false
                             
                         }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have only post \(getPostMoodCount) mood and \(getPostJournalCount) journal enteries left.", type: "Post")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have \(getPostMoodCount) post mood and \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
+                            
                             self.view.isUserInteractionEnabled = true
                         }
                     }
@@ -401,6 +401,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let angle = Double(selectedIndex) * diff
         
         let distance = self.distance(a: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: 0), b: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: (self.circularSlider?.frame.size.height)!/2))
+        print("distance... \(distance) angle... \(angle)")
         
         let rect = CGPoint.init(x:(self.circularSlider?.frame.size.width)!/2 + CGFloat(distance * cos(angle)) , y: (self.circularSlider?.frame.size.height)!/2 + CGFloat(distance*sin(angle)))
         

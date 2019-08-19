@@ -227,7 +227,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                     "plan_id" : plan_id,
                     "user_id" : self.appPreference.getUserID(),
                     "subscription_plan" : subscriptionPlan,
-                    "date_time" : transaction.transactionDate!.timeIntervalSince1970,
+                    "date_time" : transaction.transactionDate!.timeIntervalSince1970 * 1000,
                     "transaction_id" : transaction.transactionIdentifier! as Any,
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]

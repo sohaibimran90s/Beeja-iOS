@@ -631,10 +631,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "It's time to learn beeja meditation", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: "It's time to learn Beeja meditation.", arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-Learn"
-                    
                     
                 if self.value == 1{
                     if self.date == date{

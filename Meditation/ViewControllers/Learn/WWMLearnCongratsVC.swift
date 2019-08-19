@@ -20,7 +20,7 @@ class WWMLearnCongratsVC: WWMBaseViewController {
         super.viewDidLoad()
         
         self.lblStep.text = "Step \(WWMHelperClass.step_id)"
-        self.lblStepDescription.text = "You 've completed step \(WWMHelperClass.step_id) of The learn too meditate flow"
+        self.lblStepDescription.text = "You've completed step \(WWMHelperClass.step_id) of the learn too meditate flow"
         print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
     }

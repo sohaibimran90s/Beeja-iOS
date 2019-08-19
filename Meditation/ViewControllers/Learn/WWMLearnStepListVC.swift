@@ -228,7 +228,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             dateCompareLoopCount = 2
             if sender.tag > 2{
                 self.xibCall(title1: "Please subscribe to Annual subscription to open this.\n" +
-                    "If you are a monthly subscriber, you will get access to further steps once you subscribe for 6 months.")
+                    "If you subscribe monthly, you will gain access to further steps after 6 months of Beeja membership.")
                 return
             }
         }
@@ -260,7 +260,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             if flag == 2{
                 print("first play the \(self.learnStepsListData[position].step_name)")
                 
-                self.xibCall(title1: "Sequential learning is more effective! Please go through \(self.learnStepsListData[position].step_name) first")
+                self.xibCall(title1: "Oops, you seem to have jumped ahead. Return to step \(self.learnStepsListData[position].step_name) to get the most from your learning.")
             }else{
                 WWMHelperClass.selectedType = "learn"
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
