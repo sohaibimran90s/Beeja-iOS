@@ -74,7 +74,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Show all",
+        let attributeString = NSMutableAttributedString(string: KSHOWALL,
                                                         attributes: attributes)
         btnPodcastShowAll.setAttributedTitle(attributeString, for: .normal)
     }
@@ -89,17 +89,17 @@ class WWMHomeTabVC: WWMBaseViewController {
 
         print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         
-        self.lblName.text = "Welcome \(self.appPreffrence.getUserName())!"
+        self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
         
         if self.appPreffrence.getSessionAvailableData(){
             self.viewVideoHeightConstraint.constant = 140
-            self.lblStartedText.text = "How can we help you today?"
+            self.lblStartedText.text = KHOMELBL
             self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
             self.lblIntroText.isHidden = true
             self.imgGiftIcon.isHidden = true
             self.imgPlayIcon.isHidden = true
         }else{
-            self.lblStartedText.text = "To get started, try our 12-step learn to meditate series."
+            self.lblStartedText.text = KHOMELBL1
             self.backImgVideo.image = UIImage(named: "bg1")
             self.lblIntroText.isHidden = false
             self.imgGiftIcon.isHidden = false
@@ -272,7 +272,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     func shareData(){
         let image = UIImage.init(named: "upbeat")
-        let text = "Lorem ipsum"
+        let text = KSHARETEXT
         let imageToShare = [text,image!] as [Any]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
@@ -295,8 +295,8 @@ class WWMHomeTabVC: WWMBaseViewController {
         let window = UIApplication.shared.keyWindow!
         
         alertJournalPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        alertJournalPopup.lblTitle.text = "Nice one!"
-        alertJournalPopup.lblSubtitle.text = "Your Message has been shared."
+        alertJournalPopup.lblTitle.text = KNICEONE
+        alertJournalPopup.lblSubtitle.text = KMSGSHARED
         UIView.transition(with: alertJournalPopup, duration: 2.0, options: .transitionCrossDissolve, animations: {
             window.rootViewController?.view.addSubview(self.alertJournalPopup)
         }) { (Bool) in
@@ -307,10 +307,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func podcastData(){
-       let podcast1 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Howard Donald from Take That", duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
-        let podcast2 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Jasmine Hemsley", duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
-        let podcast3 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Sam Branson", duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
-        let podcast4 = WWMPodCastData.init(id: 1, title: "Will Williams Podcast with Madeleine Shaw", duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
+       let podcast1 = WWMPodCastData.init(id: 1, title: KPODCAST1, duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
+        let podcast2 = WWMPodCastData.init(id: 1, title: KPODCAST2, duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
+        let podcast3 = WWMPodCastData.init(id: 1, title: KPODCAST3, duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
+        let podcast4 = WWMPodCastData.init(id: 1, title: KPODCAST4, duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
         
         self.podData.append(podcast1)
         self.podData.append(podcast2)
@@ -373,7 +373,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         guideStart.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         vc.strUrl = URL_MOREINFO
-        vc.strType = "More Information"
+        vc.strType = KMOREINFORMATION
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -473,7 +473,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         let url = self.appPreffrence.getOffers()
         print("url /.... \(url[0])")
         
-        vc.strType = "Buy Book"
+        vc.strType = KBUYBOOK
         vc.strUrl = url[0] 
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -497,7 +497,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }
 
             cell.lblTitle.text = self.data[indexPath.row].title
-            cell.lblSubTitle.text = "Meditation for \(self.data[indexPath.row].type)"
+            cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].type)"
             cell.heartLbl.text = "\(self.data[indexPath.row].like)"
             cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
         
@@ -514,7 +514,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     "-", with: "")) ?? 0
                 print("dateCompare.2... \(sec)")
                 if sec < 60{
-                    cell.lblHr.text = "just now"
+                    cell.lblHr.text = KJUSTNOW
                 }else if sec < 3600{
                     cell.lblHr.text = "\(sec/60) m ago"
                 }else{
@@ -533,11 +533,6 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 180, height: 281)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
 }
 
 extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{

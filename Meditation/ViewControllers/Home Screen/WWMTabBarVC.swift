@@ -37,7 +37,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             print("restore.... \(restoreValue)")
             if restoreValue == "1"{
-                self.showToast(message: "Your subscription has been restored.")
+                self.showToast(message: KRESTOREMSG)
                 KUSERDEFAULTS.set("0", forKey: "restore")
             }
         }
@@ -456,8 +456,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = kAlertTitle
-        alertPopupView.lblSubtitle.text = "Oh no, we've lost you! Please check your internet connection."
-        alertPopupView.btnOK.setTitle("Retry", for: .normal)
+        alertPopupView.lblSubtitle.text = internetConnectionLostMsg
+        alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
         alertPopupView.btnClose.isHidden = true
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -474,8 +474,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         alertPopupView1.btnOK.layer.borderWidth = 2.0
         alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? "New Version Available"
-        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? "There is a newer version available for download! Please update the app by visiting the Apple Store."
+        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? KFORCEUPDATETITLE
+        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? KFORCEUPDATESUBTITLE
         alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? "Update", for: .normal)
         alertPopupView1.btnClose.isHidden = true
         

@@ -150,11 +150,83 @@ let Validation_ConfirmPasswordMessage:String!                  = "Oops. Please c
 let Validation_PasswordMatchMessage:String!                  = "Uh oh, those passwords don't match. Please try again."
 let Validation_OldNewSamePassword:String!                  = "Oops. New password should not be same"
 let Validation_EmailName: String!                    = "Oops, please enter your name and email address."
-
 let internetConnectionLostMsg: String!              = "Oh no, we've lost you! Please check your internet connection."
 
-// My Progress Journal
 
+let KOK = "Ok"
+let KOKYOU = "Ok You,"
+let KSTEP = "Step"
+
+//WWMLearnStepListVC
+let KLEARNANNUALSUBS = "Please subscribe to Annual subscription to open this.\n" + "If you subscribe monthly, you will gain access to further steps after 6 months of Beeja membership."
+let KLEARNONESTEP = "Keep your learning to one step per day. Please come back tomorrow!"
+let KLEARNJUMPSTEP = "Oops, you seem to have jumped ahead. Return to step"
+let KLEARNJUMPSTEP1 = "to get the most from your learning."
+
+//WWMLearnCongratsVC
+let KSTEPCONGMSG = "You've completed step"
+let KSTEPCONGMSG1 = "of the learn too meditate flow"
+
+//WWMHomeTabVC
+let KWELCOME = "Welcome"
+let KHOMELBL = "How can we help you today?"
+let KHOMELBL1 = "To get started, try our 12-step learn to meditate series."
+let KSHARETEXT = "Lorem ipsum"
+let KNICEONE = "Nice one!"
+let KMSGSHARED = "Your Message has been shared."
+let KPODCAST1 = "Will Williams Podcast with Howard Donald from Take That"
+let KPODCAST2 = "Will Williams Podcast with Jasmine Hemsley"
+let KPODCAST3 = "Will Williams Podcast with Sam Branson"
+let KPODCAST4 = "Will Williams Podcast with Madeleine Shaw"
+let KMEDITATIONFOR = "Meditation for"
+let KBUYBOOK = "Buy Book"
+let KJUSTNOW = "just now"
+let KMOREINFORMATION = "More Information"
+let KSHOWALL = "Show all"
+
+//WWMGuidedAudioListVC
+let KFREEAUDIO = "(Free for 15:00 min)"
+let KSUBSPLANEXP = "Your subscription plan has expired."
+let KSUBSPLANEXPDES = "Don't worry, we already have a new plan for you. Please purchase any subscription plan to listen this audio."
+
+//WWMGuidedMeditationTimerVC
+let KPRACTICAL = "Practical"
+let KSPIRITUAL = "Spiritual"
+
+//WWMTabBarVC
+let KRETRY = "Retry"
+let KRESTOREMSG = "Your subscription has been restored."
+let KFORCEUPDATETITLE = "New Version Available"
+let KFORCEUPDATESUBTITLE = "There is a newer version available for download! Please update the app by visiting the Apple Store."
+
+//WWMSideMenuVC
+let KOURSTORY = "Our Story"
+let KINSTAGRAM = "Instagram"
+let KFACEBOOK = "Facebook"
+let KYOUTUBE = "You Tube"
+let KTWITTER = "Twitter"
+let KLINKEDIN = "LinkedIn"
+let KBEEJA = "Beeja"
+let KFAQ = "FAQ"
+let KFINDCOURSE = "Find a Course"
+let KLEARN = "Learn"
+let KGUIDED = "Guided"
+
+//WWMSupportVC
+let KVALIDATIONNAME = "Oops. Please write your valid name"
+let KSUPPORTMSG = "Thanks for your message! The team will be in touch soon."
+
+//WWMUpgradeBeejaVC
+let KBUYBOOKTITLE = "What do you want to do?"
+let KBUY = "Buy"
+let KBILLEDTEXT = "*that's just £3.50 a month"
+let KRESTOREPROBTITLE = "Please contact us if problem still persists."
+let KRESTOREPROBSUBTITLE = "There was some problem restoring your subscription. Please try after some time."
+
+//WWMWisdomFeedbackVC
+let KSESSIONMSG = "Did you like the\nsession?"
+
+// My Progress Journal
 let  Validatation_JournalOfflineMsg  =
 "Any new entries posted during no-Internet connection will be listed once it gets synced with server and device gets online."
 /**/

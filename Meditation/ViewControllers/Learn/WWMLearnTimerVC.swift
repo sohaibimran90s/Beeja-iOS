@@ -44,7 +44,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblTimerType.text = "Step\(WWMHelperClass.step_id): \(WWMHelperClass.step_title)"
+        self.lblTimerType.text = "\(KSTEP)\(WWMHelperClass.step_id): \(WWMHelperClass.step_title)"
         setUpView()
         
         animationView = AnimationView(name: "final1")

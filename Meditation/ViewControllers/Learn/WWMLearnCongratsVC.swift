@@ -19,8 +19,8 @@ class WWMLearnCongratsVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblStep.text = "Step \(WWMHelperClass.step_id)"
-        self.lblStepDescription.text = "You've completed step \(WWMHelperClass.step_id) of the learn too meditate flow"
+        self.lblStep.text = "\(KSTEP) \(WWMHelperClass.step_id)"
+        self.lblStepDescription.text = "\(KSTEPCONGMSG) \(WWMHelperClass.step_id) \(KSTEPCONGMSG1)"
         print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
     }

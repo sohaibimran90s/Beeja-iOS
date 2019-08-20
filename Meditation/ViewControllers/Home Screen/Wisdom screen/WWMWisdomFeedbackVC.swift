@@ -48,7 +48,8 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
     func setUpView(){
         
         self.setNavigationBar(isShow: false, title: "")
-        lblSession.text = "Did you like the\nsession?"
+        lblSession.text = KSESSIONMSG
+        
         self.lblFlowType.text = self.flowType
         self.lblMeditationType.text = self.meditationType
         self.btnYes.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
@@ -100,7 +101,6 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
                         }else{
                             WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                         }
-                        
                     }
                 }
                 //WWMHelperClass.dismissSVHud()
@@ -161,7 +161,6 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         }else {
         delegate?.videoURl(url: self.videoURL)
         }
-        
         self.navigationController?.popViewController(animated: true)
     }
 }

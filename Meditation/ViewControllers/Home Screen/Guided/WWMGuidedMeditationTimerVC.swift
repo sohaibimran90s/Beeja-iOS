@@ -69,9 +69,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
 
         print(self.appPreference.getGuideType())
         if self.appPreference.getGuideType() == "practical" {
-            self.lblGuidedFlowType.text = "Practical ~ \(self.cat_Name) ~ \(self.emotion_Name)"
+            self.lblGuidedFlowType.text = "\(KPRACTICAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
         }else {
-            self.lblGuidedFlowType.text = "Spiritual ~ \(self.cat_Name) ~ \(self.emotion_Name)"
+            self.lblGuidedFlowType.text = "\(KSPIRITUAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
         }
         if self.audioData.vote {
             self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
@@ -292,6 +292,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.player.pause()
         }, completion: nil)
     }
+    
     // MARK:- Button Action
     
     @IBAction func btnResumeAction(_ sender: Any) {

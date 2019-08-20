@@ -85,12 +85,12 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = kAlertTitle
-        alertPopupView.lblSubtitle.text = "What do you want to do?"
-        alertPopupView.btnOK.setTitle("Buy", for: .normal)
+        alertPopupView.lblSubtitle.text = KBUYBOOKTITLE
+        alertPopupView.btnOK.setTitle(KBUY, for: .normal)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView)
-        }
+    }
     
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
@@ -129,7 +129,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.buttonIndex = 1
         self.subscriptionPlan = "annual"
         self.subscriptionAmount = "41.99"
-        self.lblBilledText.text = "*that's just £3.50 a month"
+        self.lblBilledText.text = KBILLEDTEXT
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = true
@@ -273,7 +273,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
-        
     }
     
     func subscriptionSucessAPI(param : [String : Any]) {
@@ -300,7 +299,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                     }else{
                         
                         if self.continueRestoreValue == "1"{
-                            WWMHelperClass.showPopupAlertController(sender: self, message: "Please contact us if problem still persists.", title: "There was some problem restoring your subscription. Please try after some time.")
+                            WWMHelperClass.showPopupAlertController(sender: self, message: KRESTOREPROBTITLE, title: KRESTOREPROBSUBTITLE)
                         }else{
                             WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                         }
@@ -311,6 +310,4 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-    
-    
 }

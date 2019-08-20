@@ -26,7 +26,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblStep.text = "Step \(WWMHelperClass.step_id)"
+        self.lblStep.text = "\(KSTEP) \(WWMHelperClass.step_id)"
         self.setupView()
     }
     

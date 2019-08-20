@@ -39,12 +39,12 @@ class WWMLearnLetsMeditateVC: WWMBaseViewController {
         if userName != ""{
             if userName.contains(" "){
                 let userNameArr = userName.components(separatedBy: " ")
-                self.userName.text = "Ok \(userNameArr[0]),"
+                self.userName.text = "\(KOK) \(userNameArr[0]),"
             }else{
-                self.userName.text = "Ok \(self.appPreference.getUserName()),"
+                self.userName.text = "\(KOK) \(self.appPreference.getUserName()),"
             }
         }else{
-            self.userName.text = "Ok You,"
+            self.userName.text = KOKYOU
         }
         
         self.animateUserName()

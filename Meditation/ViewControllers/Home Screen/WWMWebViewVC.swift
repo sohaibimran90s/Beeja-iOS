@@ -37,8 +37,8 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
             alertPopupView.btnOK.layer.borderWidth = 2.0
             alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             
-            alertPopupView.lblTitle.text = "Alert"
-            alertPopupView.lblSubtitle.text = "Oh no, we've lost you! Please check your internet connection."
+            alertPopupView.lblTitle.text = kAlertTitle
+            alertPopupView.lblSubtitle.text = internetConnectionLostMsg
             alertPopupView.btnClose.isHidden = true
             
             alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)

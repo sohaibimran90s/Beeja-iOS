@@ -53,7 +53,7 @@ class WWMSupportVC: WWMBaseViewController {
         if txtViewName.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
         }else if txtViewName.text == "You" || txtViewName.text == "you"{
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Oops. Please write your valid name", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KVALIDATIONNAME, title: kAlertTitle)
         }else if (txtViewName.text?.count)! < 3 {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_MinimumCharacter, title: kAlertTitle)
         }else if txtViewEmail.text == "" {
@@ -99,7 +99,7 @@ class WWMSupportVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = ""
-        alertPopupView.lblSubtitle.text = "Thanks for your message! The team will be in touch soon."
+        alertPopupView.lblSubtitle.text = KSUPPORTMSG
         alertPopupView.btnClose.isHidden = true
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)

@@ -50,7 +50,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         if !data.paid{
             if data.audio_Duration > 900{
-                cell.lblFreeDuration.text = "(Free for 15:00 min)"
+                cell.lblFreeDuration.text = KFREEAUDIO
             }else{
                 cell.lblFreeDuration.text = ""
             }
@@ -66,7 +66,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let data = self.arrAudioList[indexPath.row]
         
         if data.paid{
-            self.getFreeMoodMeterAlert(title: "Your subscription plan has expired.", subTitle: "Don't worry, we already have a new plan for you. Please purchase any subscription plan to listen this audio.")
+            self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
             self.view.isUserInteractionEnabled = false
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC

@@ -60,7 +60,7 @@ class WWMSideMenuVC: WWMBaseViewController {
     @IBAction func btnOurStoryAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         vc.strUrl = URL_OurStory
-        vc.strType = "Our Story"
+        vc.strType = KOURSTORY
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -145,34 +145,34 @@ class WWMSideMenuVC: WWMBaseViewController {
         switch index {
         case 1:
             vc.strUrl = URL_Insta
-            vc.strType = "Instagram"
+            vc.strType = KINSTAGRAM
         case 2:
             vc.strUrl = URL_Facebook
-            vc.strType = "Facebook"
+            vc.strType = KFACEBOOK
         case 3:
             vc.strUrl = URL_YouTube
-            vc.strType = "You Tube"
+            vc.strType = KYOUTUBE
         case 4:
             vc.strUrl = URL_Twitter
-            vc.strType = "Twitter"
+            vc.strType = KTWITTER
         case 5:
             vc.strUrl = URL_LinkedIn
-            vc.strType = "LinkedIn"
+            vc.strType = KLINKEDIN
         case 6:
             vc.strUrl = URL_WebSite
-            vc.strType = "Beeja"
+            vc.strType = KBEEJA
         case 7:
             vc.strUrl = URL_FAQ
-            vc.strType = "FAQ"
+            vc.strType = KFAQ
         case 8:
             vc.strUrl = URL_FINDCOURSE
-            vc.strType = "Find a Course"
+            vc.strType = KFINDCOURSE
         case 9:
             vc.strUrl = URL_LEARN
-            vc.strType = "Learn"
+            vc.strType = KLEARN
         case 10:
             vc.strUrl = URL_GUIDED
-            vc.strType = "Guided"
+            vc.strType = KGUIDED
         default:
             return
         }
