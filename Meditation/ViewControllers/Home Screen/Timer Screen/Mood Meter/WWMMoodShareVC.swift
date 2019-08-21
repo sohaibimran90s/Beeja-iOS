@@ -33,7 +33,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
@@ -47,8 +47,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         let window = UIApplication.shared.keyWindow!
         
         alertJournalPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        alertJournalPopup.lblTitle.text = "Nice one!"
-        alertJournalPopup.lblSubtitle.text = "Your Message has been shared."
+        alertJournalPopup.lblTitle.text = KNICEONE
+        alertJournalPopup.lblSubtitle.text = KMSGSHARED
         UIView.transition(with: alertJournalPopup, duration: 2.0, options: .transitionCrossDissolve, animations: {
             window.rootViewController?.view.addSubview(self.alertJournalPopup)
         }) { (Bool) in

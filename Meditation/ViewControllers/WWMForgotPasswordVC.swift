@@ -72,7 +72,7 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
     
     @IBAction func btnEmailMagicLinkAction(_ sender: UIButton) {
         if txtViewEmail.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Oops, don't forget to enter your email", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KDONTFORGETEMAIL, title: kAlertTitle)
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
@@ -91,7 +91,7 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 print(result)
                 self.navigationController?.popViewController(animated: true)
-                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                WWMHelperClass.showPopupAlertController(sender: self, message: KSUCCESSRESETLINK, title: kAlertTitle)
                 
                 //"Success Message: We've sent you a magic link to reset your password. Please check your inbox.
                // Error Message: Oops, this email isn't registered with the Beeja App / Oops, looks like this email has been registered using Facebook or Google. Try logging in again via one of them."""
@@ -100,10 +100,8 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
                     WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                 }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: KFAILRESETLINK, title: kAlertTitle)
                 }
-                
-                
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)

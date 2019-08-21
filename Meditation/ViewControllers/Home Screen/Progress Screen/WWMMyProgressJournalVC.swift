@@ -26,7 +26,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KNEXT
     }
     
     @objc func checkAction(sender : UITapGestureRecognizer) {
@@ -62,9 +62,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             
             cell.lblJournalDesc.text = data.text
             if data.mood_status.lowercased() == "post" {
-                cell.lblMeditationType.text = "Post Meditation"
+                cell.lblMeditationType.text = KPOSTMEDITATION
             }else if data.mood_status.lowercased() == "pre" {
-                cell.lblMeditationType.text = "Pre Meditation"
+                cell.lblMeditationType.text = KPREMEDITATION
             }else{
                 cell.lblMeditationType.text = ""
             }
@@ -90,11 +90,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         }
         
         return UITableViewCell()
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Roshan")
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -179,10 +177,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             
             let getPostJournalCount = self.appPreference.getPostJournalCount()
             if getPostJournalCount == 0{
-                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You can't lock your journal before purchase of any subscription plan.", type: "post")
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: KNOFREEJOURNAL, type: "post")
             }else{
                 
-                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: "Your subscription plan has expired.", subTitle: "You have \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
+                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: "\(KYOUHAVE) \(getPostJournalCount) \(KNOFREEJOURNALMSG)", type: "Post")
                 
                // xibJournalView()
             }
@@ -283,7 +281,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     @IBAction func btnSubmitJournalAction(_ sender: Any) {
         if journalView.txtViewJournal.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter your journal.", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERJOURNAL, title: kAlertTitle)
         }else {
             self.addJournalAPI()
         }
@@ -403,7 +401,7 @@ extension WWMMyProgressJournalVC: UITextViewDelegate{
         journalView.btnSubmit.isUserInteractionEnabled = false
         if journalView.txtViewJournal.text == "" {
             journalView.btnSubmit.isUserInteractionEnabled = true
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter your journal.", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERJOURNAL, title: kAlertTitle)
         }else {
             journalView.btnSubmit.isUserInteractionEnabled = false
             self.addJournalAPI()

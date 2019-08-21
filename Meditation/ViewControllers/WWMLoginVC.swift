@@ -10,6 +10,7 @@ import UIKit
 import GoogleSignIn
 import FBSDKLoginKit
 import Lottie
+import Crashlytics
 
 class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
 
@@ -221,6 +222,9 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "Unauthorized request")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)

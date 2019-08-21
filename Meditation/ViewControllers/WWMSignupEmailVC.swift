@@ -8,6 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Crashlytics
 
 class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
 
@@ -120,7 +121,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 print("signup result... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
-                    self.appPreference.setUserID(value: "\(userProfile["user_id"] as! Int)")
+                    self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
+                    Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    
                     self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
                     self.appPreference.setIsProfileCompleted(value: false)
@@ -179,6 +182,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)

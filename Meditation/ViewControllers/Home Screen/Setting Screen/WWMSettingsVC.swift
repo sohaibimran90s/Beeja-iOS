@@ -250,7 +250,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Times & Chimes"
+                    cell.lblTitle.text = KTIMESCHIMES
                     cell.lblDropDown.isHidden = true
                     cell.imgViewDropDown.isHidden = true
                 }else {
@@ -291,7 +291,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 1 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Preset"
+                    cell.lblTitle.text = KPRESET
                     cell.lblDropDown.text = selectedMeditationData.meditationName
                     cell.txtView.inputView = pickerStartChimes
                     cell.txtView.isUserInteractionEnabled = true
@@ -318,7 +318,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 2{
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Reminders"
+                    cell.lblTitle.text = KREMINDERS
                     cell.lblDropDown.isHidden = true
                     cell.imgViewDropDown.isHidden = true
                 }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
@@ -379,7 +379,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Learn To Meditate"
+                    cell.lblTitle.text = KLEARNTOMEDITATE
                     cell.lblDropDown.isHidden = true
                     cell.imgViewDropDown.isHidden = true
                 }else if indexPath.row == 1 {
@@ -408,7 +408,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Reminders"
+                    cell.lblTitle.text = KREMINDERS
                     cell.lblDropDown.isHidden = true
                     cell.imgViewDropDown.isHidden = true
                 }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
@@ -469,7 +469,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.section == 0{
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
-                    cell.lblTitle.text = "Reminders"
+                    cell.lblTitle.text = KREMINDERS
                     cell.lblDropDown.isHidden = true
                     cell.imgViewDropDown.isHidden = true
                 }else if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5 || indexPath.row == 6{
@@ -555,7 +555,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                                     level1![index].isLevelSelected =  false
                                 }
                             }
-                            
                         }
                     }
                     self.settingAPI()
@@ -573,7 +572,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }else if indexPath.row == 8 {
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                     activityViewController.popoverPresentationController?.sourceView = self.view
@@ -615,7 +614,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }else if indexPath.row == 8 {
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                     activityViewController.popoverPresentationController?.sourceView = self.view
@@ -648,7 +647,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }else if indexPath.row == 8 {
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                    let textToShare = "Be more connected with the Beeja app... \(url!.absoluteString)"
+                    let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                     activityViewController.popoverPresentationController?.sourceView = self.view
@@ -670,8 +669,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
         }
-        
-        
     }
     
     // MARK: Button Action
@@ -759,10 +756,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView.lblTitle.text = "Alert"
-        alertPopupView.lblSubtitle.text = "Do you really want to say goodbye?"
-        alertPopupView.btnOK.setTitle("Yes, I'm off", for: .normal)
-        alertPopupView.btnClose.setTitle("No, I'll stay", for: .normal)
+        alertPopupView.lblTitle.text = kAlertTitle
+        alertPopupView.lblSubtitle.text = KSAYGOODBYE
+        alertPopupView.btnOK.setTitle(KSAYGOODBYEYES, for: .normal)
+        alertPopupView.btnClose.setTitle(KSAYGOODBYENO, for: .normal)
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -788,13 +785,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         switch index {
         case 11:
             vc.strUrl = URL_PrivacyPolicy
-            vc.strType = "Privacy Policy"
+            vc.strType = KPRIVACYPOLICY
         case 12:
             vc.strUrl = URL_TermsnCondition
-            vc.strType = "Terms & Conditions"
+            vc.strType = KTERMSCONDITION
         case 10:
             vc.strUrl = URL_Help
-            vc.strType = "Help"
+            vc.strType = KHELP
         default:
             return
         }
@@ -929,6 +926,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setUserName(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
                 self.appPreffrence.setPrePostJournalBool(value: false)
+                self.appPreffrence.setExpiryDate(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

@@ -69,7 +69,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
 
@@ -121,11 +121,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         if (getPreMoodCount == 0 && getPreJournalCount == 0) || (getPreMoodCount == 0 && getPreJournalCount > 0){
                             print("getPreMoodCount... \(getPreMoodCount)")
                             
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have used your free mood and journal entries. Subscribe now for unlimited access.", type: "Pre")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Pre")
                             self.view.isUserInteractionEnabled = false
                             
                         }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: "Your subscription plan has expired.", subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
                             self.view.isUserInteractionEnabled = true
                         }
                     }else{
@@ -136,11 +136,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         if (getPostMoodCount == 0) && (getPostJournalCount == 0){
                             print("getPostMoodCount... \(getPostMoodCount)")
 
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have used your free mood and journal entries. Subscribe now for unlimited access.", type: "Post")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Post")
                             self.view.isUserInteractionEnabled = false
                             
                         }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: "Your subscription plan has expired.", subTitle: "You have \(getPostMoodCount) post mood and \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPostMoodCount) post mood and \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
                             
                             self.view.isUserInteractionEnabled = true
                         }
@@ -472,7 +472,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         print("selected mood = \(mood.name)")
         self.btnConfirm.isHidden = false
-        self.lblMoodselect.text = "Move dot to select your current feeling"
+        self.lblMoodselect.text = KMOVEDOTSELECT
     }
     
 

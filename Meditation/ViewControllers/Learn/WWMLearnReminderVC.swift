@@ -40,7 +40,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
     func setupView(){
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
@@ -138,9 +138,9 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let toolbar = UIToolbar();
         toolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker))
+        let doneButton = UIBarButtonItem(title: KDONE, style: .plain, target: self, action: #selector(donedatePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(donedatePicker))
+        let cancelButton = UIBarButtonItem(title: KCANCEL, style: .plain, target: self, action: #selector(donedatePicker))
         toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
         
         txtView.inputAccessoryView = toolbar

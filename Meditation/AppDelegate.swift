@@ -194,8 +194,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     return true
                 }
             }
-            
-            
         }
         return false
     }
@@ -210,9 +208,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         alertPopupView1.btnOK.layer.borderWidth = 2.0
         alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? "New Version Available"
-        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? "There is a newer version available for download! Please update the app by visiting the Apple Store."
-        alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? "Update", for: .normal)
+        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? KFORCEUPDATETITLE
+        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? KFORCEUPDATESUBTITLE
+        alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? KUPDATE, for: .normal)
         alertPopupView1.btnClose.isHidden = true
         
         alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
@@ -521,24 +519,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 print(settingData.morningReminderTime!)
                 let date = dateFormate.date(from: strDate)
                 let arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
-                var str = "Good Morning!"
+                var str = KGOODMORNING
                 if arrTemp?.count == 2 {
                     let hours = Int(arrTemp?[0] ?? "0") ?? 0
                     let minutes = Int(arrTemp?[1] ?? "0") ?? 0
                     let seconds = hours*60 + minutes
                     if seconds < 720 {
-                        str = "Good Morning!"
+                        str = KGOODMORNING
                     }else if 720 <= seconds && seconds < 1080 {
-                        str = "Good Afternoon!"
+                        str = KGOODAFTERNOON
                     }else {
-                        str = "Good Evening!"
+                        str = KGOODEVENING
                     }
                 }
  
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "It's time for Beeja.", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-MorningReminder"
                 //print(Int(Date().timeIntervalSince1970))
@@ -573,24 +571,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let date = dateFormate.date(from: strDate)
                 print(date!)
                 let arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
-                var str = "Good Morning!"
+                var str = KGOODMORNING
                 if arrTemp?.count == 2 {
                     let hours = Int(arrTemp?[0] ?? "0") ?? 0
                     let minutes = Int(arrTemp?[1] ?? "0") ?? 0
                     let seconds = hours*60 + minutes
                     if seconds < 720 {
-                        str = "Good Morning!"
+                        str = KGOODMORNING
                     }else if 720 <= seconds && seconds < 1080 {
-                        str = "Good Afternoon!"
+                        str = KGOODAFTERNOON
                     }else {
-                        str = "Good Evening!"
+                        str = KGOODEVENING
                     }
                     
                 }
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey: str, arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "It's time for Beeja.", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-AfterNoonReminder"
                 // print(Int(Date().timeIntervalSince1970))
@@ -626,12 +624,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     
                 let date = dateFormate.date(from: strDate)
                 let arrTemp = settingData.learnReminderTime?.components(separatedBy: ":")
-                let str = "Learn to meditate"
+                let str = KLEARNTOMEDITATE1
                 
                 // let timeStemp = Int(date!.timeIntervalSince1970)
                 let content = UNMutableNotificationContent()
                 content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: "It's time to learn Beeja meditation.", arguments: nil)
+                content.body = NSString.localizedUserNotificationString(forKey: KTIMETOLEARN, arguments: nil)
                 content.sound = UNNotificationSound.default
                 content.threadIdentifier = "local-notifications-Learn"
                     

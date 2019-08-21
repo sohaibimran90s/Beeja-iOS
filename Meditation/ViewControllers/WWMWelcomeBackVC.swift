@@ -9,6 +9,7 @@
 import UIKit
 import GoogleSignIn
 import FBSDKLoginKit
+import Crashlytics
 
 class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate{
 
@@ -236,7 +237,9 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as! Int)")
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {

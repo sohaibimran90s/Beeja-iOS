@@ -25,7 +25,7 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         super.viewDidLoad()
 
         self.imgViewLogo.isHidden = true
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KNEXT
         self.setupView()
     }
 
@@ -116,6 +116,4 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-
 }

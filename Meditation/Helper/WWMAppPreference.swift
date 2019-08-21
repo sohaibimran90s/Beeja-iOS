@@ -78,6 +78,10 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "postJournalCount")
     }
     
+    func setExpiryDate(value: Bool){
+        defaults.set(value, forKey: "expiryDateDiff")
+    }
+    
     
     func setPreJournalCount(value: Int){
         defaults.set(value, forKey: "preJournalCount")
@@ -113,6 +117,10 @@ class WWMAppPreference: NSObject {
     
     func getSessionAvailableData() -> Bool{
         return defaults.bool(forKey: "session_available")
+    }
+    
+    func getExpiryDate() -> Bool{
+        return defaults.bool(forKey: "expiryDateDiff")
     }
     
     func getPrePostJournalBool() -> Bool{

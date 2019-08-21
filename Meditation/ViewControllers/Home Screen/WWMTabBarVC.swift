@@ -391,6 +391,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         print("userSubscription.expiry_date... \(userSubscription.expiry_date)")
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
 
+                        self.appPreffrence.setExpiryDate(value: false)
+                        
                         if difference == 1{
                             if !self.appPreffrence.getPrePostJournalBool(){
                                 
@@ -403,7 +405,10 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                                 self.appPreffrence.setPreJournalCount(value: 6)
                                 self.appPreffrence.setPostJournalCount(value: 6)
                             }
+                        }else{
+                            self.appPreffrence.setExpiryDate(value: true)
                         }
+                        
                         self.setDataToDb(json: result["settings"] as! [String:Any])
                         
 //                        if let force_update = result["force_update"] as? Bool{

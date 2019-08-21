@@ -24,7 +24,7 @@ class WWMLearnFlightModeVC: WWMBaseViewController {
     func setupView(){
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         

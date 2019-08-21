@@ -19,6 +19,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var type = ""
     var arrAudioList = [WWMGuidedAudioData]()
     var alertPopupView1 = WWMAlertController()
+    let appPreffrence = WWMAppPreference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,14 +49,18 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         print("data.paid... \(data.paid)")
         print("data.audio_Duration... \(data.audio_Duration)")
         
-        if !data.paid{
-            if data.audio_Duration > 900{
-                cell.lblFreeDuration.text = KFREEAUDIO
+        if self.appPreffrence.getExpiryDate(){
+            cell.lblFreeDuration.text = ""
+        }else{
+            if !data.paid{
+                if data.audio_Duration > 900{
+                    cell.lblFreeDuration.text = KFREEAUDIO
+                }else{
+                    cell.lblFreeDuration.text = ""
+                }
             }else{
                 cell.lblFreeDuration.text = ""
             }
-        }else{
-            cell.lblFreeDuration.text = ""
         }
         
         return cell
@@ -77,13 +82,18 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             vc.emotion_Id = "\(self.emotionData.emotion_Id)"
             vc.emotion_Name = self.emotionData.emotion_Name
             
-            if data.audio_Duration > 900{
-                vc.seconds = 900
-            }else{
+            
+            if self.appPreffrence.getExpiryDate(){
                 vc.seconds = data.audio_Duration
+            }else{
+                if data.audio_Duration > 900{
+                    vc.seconds = 900
+                }else{
+                    vc.seconds = data.audio_Duration
+                }
             }
-            self.navigationController?.pushViewController(vc, animated: true)
 
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

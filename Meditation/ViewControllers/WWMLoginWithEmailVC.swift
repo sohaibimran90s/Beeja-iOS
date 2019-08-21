@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     
@@ -40,7 +41,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
         
         if isFromWelcomeBack {
             
-            self.btnLogin.setTitle("Next", for: .normal)
+            self.btnLogin.setTitle(KNEXT, for: .normal)
             viewContinueAsEmail.isHidden = false
             
             print("getuserdata..... \(self.appPreffrence.getUserData())")
@@ -163,7 +164,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     @IBAction func btnLoginAction(_ sender: UIButton) {
         if !isFromWelcomeBack {
             if txtViewEmail.text == "" {
-                WWMHelperClass.showPopupAlertController(sender: self, message: "Oops, don't forget to enter your email.", title: kAlertTitle)
+                WWMHelperClass.showPopupAlertController(sender: self, message: KDONTFORGETEMAIL, title: kAlertTitle)
                 return
             }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
                 WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
@@ -175,8 +176,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
         }else {
                 self.loginWithEmail()
         }
-        
-        
     }
     
     @IBAction func btnForgotPasswordAction(_ sender: UIButton) {
@@ -209,6 +208,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
@@ -223,13 +224,13 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                         }
                     }
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? KFAILTORECOGNISEEMAIL, title: kAlertTitle)
                 }
             }else {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
                     WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                 }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? KFAILTORECOGNISEEMAIL, title: kAlertTitle)
                 }
                 
 

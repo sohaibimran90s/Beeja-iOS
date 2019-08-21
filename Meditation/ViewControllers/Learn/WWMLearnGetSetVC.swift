@@ -14,6 +14,7 @@ class WWMLearnGetSetVC: WWMBaseViewController {
     
     @IBOutlet weak var lblGetComfy: UILabel!
     @IBOutlet weak var lblGetSet: UILabel!
+    var value: Bool = true
 
     
     override func viewDidLoad() {
@@ -23,7 +24,7 @@ class WWMLearnGetSetVC: WWMBaseViewController {
         self.lblGetSet.alpha = 0
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
@@ -56,15 +57,17 @@ class WWMLearnGetSetVC: WWMBaseViewController {
             self.lblGetSet.alpha = 1
             self.lblGetSet.center.y = self.lblGetSet.center.y - 30
         }, completion: { _ in
-            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
-                self.navigationController?.pushViewController(vc, animated: true)
-            //})
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                if self.value{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            })
         })
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton) {
-        
+        self.value =  false
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnPlayPauseAudioVC") as! WWMLearnPlayPauseAudioVC
         self.navigationController?.pushViewController(vc, animated: true)
     }

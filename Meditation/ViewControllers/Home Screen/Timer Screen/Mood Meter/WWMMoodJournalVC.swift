@@ -36,7 +36,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KNEXT
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         self.view.addGestureRecognizer(gesture)
 
@@ -57,7 +57,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
@@ -83,7 +83,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     @IBAction func btnSubmitAction(_ sender: Any) {
         if  txtViewLog.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Time to update your journal", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
             self.completeMeditationAPI()
             
@@ -232,7 +232,7 @@ extension WWMMoodJournalVC: UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
         //self.view.removeGestureRecognizer(tap)
         if  txtViewLog.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Time to update your journal", title: kAlertTitle)
+            WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
             self.completeMeditationAPI()
         }

@@ -139,7 +139,7 @@ let Validation_MinimumCharacter:String!               = "Minimum characters shou
 let Validation_QueryMessage:String!                    = "Oops. You need to enter a message!"
 
 
-let Validation_invalidEmailMessage:String!              = "Uh oh, that e-mail address isn't valid."
+let Validation_invalidEmailMessage:String!              = "Uh oh, that email address isn't valid."
 let Validation_passwordMessage:String!                  = "Oops - don't forget to enter your password..."
 
 let Validation_JournalMessage:String!                  = "Please enter your meditation experience."
@@ -186,8 +186,6 @@ let KSHOWALL = "Show all"
 
 //WWMGuidedAudioListVC
 let KFREEAUDIO = "(Free for 15:00 min)"
-let KSUBSPLANEXP = "Your subscription plan has expired."
-let KSUBSPLANEXPDES = "Don't worry, we already have a new plan for you. Please purchase any subscription plan to listen this audio."
 
 //WWMGuidedMeditationTimerVC
 let KPRACTICAL = "Practical"
@@ -195,9 +193,6 @@ let KSPIRITUAL = "Spiritual"
 
 //WWMTabBarVC
 let KRETRY = "Retry"
-let KRESTOREMSG = "Your subscription has been restored."
-let KFORCEUPDATETITLE = "New Version Available"
-let KFORCEUPDATESUBTITLE = "There is a newer version available for download! Please update the app by visiting the Apple Store."
 
 //WWMSideMenuVC
 let KOURSTORY = "Our Story"
@@ -220,11 +215,71 @@ let KSUPPORTMSG = "Thanks for your message! The team will be in touch soon."
 let KBUYBOOKTITLE = "What do you want to do?"
 let KBUY = "Buy"
 let KBILLEDTEXT = "*that's just £3.50 a month"
-let KRESTOREPROBTITLE = "Please contact us if problem still persists."
-let KRESTOREPROBSUBTITLE = "There was some problem restoring your subscription. Please try after some time."
 
 //WWMWisdomFeedbackVC
 let KSESSIONMSG = "Did you like the\nsession?"
+
+//WWMSettingsVC
+let KTIMESCHIMES = "Times & Chimes"
+let KPRESET = "Preset"
+let KREMINDERS = "Reminders"
+let KLEARNTOMEDITATE = "Learn To Meditate"
+let KLEARNTOMEDITATE1 = "Learn to meditate"
+let KBEMORECONNECTED = "Be more connected with the Beeja app..."
+let KPRIVACYPOLICY = "Privacy Policy"
+let KTERMSCONDITION = "Terms & Conditions"
+let KHELP = "Help"
+
+//WWMLoginWithEmailVC
+let KNEXT = "Next"
+let KDONTFORGETEMAIL = "Oops, don't forget to enter your email."
+
+//WWMMyProgressJournalVC
+let KPOSTMEDITATION = "Post Meditation"
+let KPREMEDITATION = "Pre Meditation"
+
+//WWMMoodJournalVC
+let KTIMETOUPDATEJOUR = "Time to update your journal"
+
+//WWMMoodMeterVC
+let KSKIP = "Skip"
+let KMOVEDOTSELECT = "Move dot to select your current feeling"
+
+//WWMLearnReminderVC
+let KDONE = "Done"
+let KCANCEL = "Cancel"
+
+//WWMMoodMeterLogVC
+let KJOURNALUPDATED = "Great job! Your journal has been updated."
+let KMOODTRACKERUPDATED = "Thanks! Your mood tracker has been updated."
+
+//POPUP ALERTS
+let KSAYGOODBYE = "Do you really want to say goodbye?"
+let KSAYGOODBYEYES = "Yes, I'm off"
+let KSAYGOODBYENO = "No, I'll stay"
+let KSUBSPLANEXP = "Your subscription plan has expired."
+let KSUBSPLANEXPDES = "Don't worry, we already have a new plan for you. Please purchase any subscription plan to listen this audio."
+let KRESTOREPROBTITLE = "Please contact us if problem still persists."
+let KRESTOREPROBSUBTITLE = "There was some problem restoring your subscription. Please try after some time."
+let KFORCEUPDATETITLE = "New Version Available"
+let KFORCEUPDATESUBTITLE = "There is a newer version available for download! Please update the app by visiting the Apple Store."
+let KRESTOREMSG = "Your subscription has been restored."
+let KNOFREEJOURNAL = "You have used your free journal entries. Subscribe now for unlimited access."
+let KYOUHAVE = "You have"
+let KNOFREEJOURNALMSG = "journal entries left. Subscribe for more."
+let KENTERJOURNAL = "Please enter your journal."
+let KNOFREEMOODJOU = "You have used your free mood and journal entries. Subscribe now for unlimited access."
+let KSUCCESSRESETLINK = "We've sent you a magic link to reset your password. Please check your inbox."
+let KFAILRESETLINK = "Oops, this email isn't registered with the Beeja App / Oops, looks like this email has been registered using Facebook or Google. Try logging in again via one of them."
+let KFAILTORECOGNISEEMAIL = "Argh, sorry. We don't recognise that email address. Please try again or create a new account."
+
+//appdelegate
+let KGOODMORNING = "Good morning!"
+let KGOODAFTERNOON = "Good afternoon!"
+let KGOODEVENING = "Good evening!"
+let KITSTIMEFORBEEJA = "It's time for Beeja."
+let KUPDATE = "Update"
+let KTIMETOLEARN = "It's time to learn Beeja meditation."
 
 // My Progress Journal
 let  Validatation_JournalOfflineMsg  =

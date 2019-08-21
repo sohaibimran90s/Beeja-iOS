@@ -262,7 +262,10 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 self.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.learnStepsListData[position].step_name) \(KLEARNJUMPSTEP1)")
             }else{
                 WWMHelperClass.selectedType = "learn"
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
+//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
+//                self.navigationController?.pushViewController(vc, animated: true)
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

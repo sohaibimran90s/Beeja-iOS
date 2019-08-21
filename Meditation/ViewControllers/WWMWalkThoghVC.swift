@@ -49,7 +49,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             self.btnCrossSkip.setBackgroundImage(UIImage(named: ""), for: .normal)
             
             let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
-            let attributeString = NSMutableAttributedString(string: "Skip",
+            let attributeString = NSMutableAttributedString(string: KSKIP,
                                                             attributes: attributes)
             btnCrossSkip.setAttributedTitle(attributeString, for: .normal)
         }

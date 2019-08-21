@@ -47,7 +47,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Done"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KDONE
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         self.view.addGestureRecognizer(gesture)
@@ -68,7 +68,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
         
-        let attributeString = NSMutableAttributedString(string: "Skip",
+        let attributeString = NSMutableAttributedString(string: KSKIP,
                                                         attributes: attributes)
         btnSkip.setAttributedTitle(attributeString, for: .normal)
         
@@ -283,12 +283,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func logExperience() {
         
         if self.txtViewLog.text != "" {
-            self.popupTitle = "Great job! Your journal has been updated."
+            self.popupTitle = KJOURNALUPDATED
             self.xibCall()
         }else {
             if self.hidShowMoodMeter == "Show"{
                 if self.selectedIndex != ""{
-                    self.popupTitle = "Thanks! Your mood tracker has been updated."
+                    self.popupTitle = KMOODTRACKERUPDATED
                     self.xibCall()
                 }else{
                     self.navigateToDashboard()
