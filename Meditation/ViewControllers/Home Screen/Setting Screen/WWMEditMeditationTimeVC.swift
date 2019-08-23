@@ -77,7 +77,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     func setUpSliderTimesAccordingToLevels() {
         self.sliderPrepTime.minimumValue = Float(self.selectedLevelData.minPrep)
         self.sliderPrepTime.maximumValue = Float(self.selectedLevelData.maxPrep)
-        self.sliderPrepTime.value = Float(settingData.prepTime!)!
+        self.sliderPrepTime.value = Float(settingData.prepTime ?? "0")!
         self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
         
         self.sliderMeditationTime.minimumValue = Float(self.selectedLevelData.minMeditation)

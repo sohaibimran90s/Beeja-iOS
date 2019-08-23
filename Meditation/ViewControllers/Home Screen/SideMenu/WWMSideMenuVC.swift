@@ -24,20 +24,28 @@ class WWMSideMenuVC: WWMBaseViewController {
         super.viewDidLoad()
 
        
-        let getUserData = self.appPreffrence.getUserData()
-        
-        if let name = getUserData["name"] as? String{
-            self.lblName.text = name
-        }
-        
-        let cityName = getUserData["city"] as? String ?? ""
-        let countryName = getUserData["country"] as? String ?? ""
-        
-        if cityName != ""  && countryName != "" {
-            self.lblLocation.text = "\(cityName), \(countryName)"
+        self.lblName.text = self.appPreference.getUserName()
+        if self.userData.city != ""  && self.userData.country != "" {
+            self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
         }else {
-            self.lblLocation.text = "\(cityName) \(countryName)"
+            self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
         }
+        
+//        let getUserData = self.appPreffrence.getUserData()
+//
+//        if let name = getUserData["name"] as? String{
+//            self.lblName.text = name
+//        }
+//
+//        let cityName = getUserData["city"] as? String ?? ""
+//        let countryName = getUserData["country"] as? String ?? ""
+//
+//        if cityName != ""  && countryName != "" {
+//            self.lblLocation.text = "\(cityName), \(countryName)"
+//        }else {
+//            self.lblLocation.text = "\(cityName) \(countryName)"
+//        }
+        
         print(WWMHelperClass.getVersion())
         self.lblVersion.text = WWMHelperClass.getVersion()
         

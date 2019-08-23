@@ -139,7 +139,7 @@ let Validation_MinimumCharacter:String!               = "Minimum characters shou
 let Validation_QueryMessage:String!                    = "Oops. You need to enter a message!"
 
 
-let Validation_invalidEmailMessage:String!              = "Uh oh, that email address isn't valid."
+let Validation_invalidEmailMessage:String!              = "Uh oh, that e-mail address isn't valid."
 let Validation_passwordMessage:String!                  = "Oops - don't forget to enter your password..."
 
 let Validation_JournalMessage:String!                  = "Please enter your meditation experience."
@@ -252,6 +252,7 @@ let KCANCEL = "Cancel"
 //WWMMoodMeterLogVC
 let KJOURNALUPDATED = "Great job! Your journal has been updated."
 let KMOODTRACKERUPDATED = "Thanks! Your mood tracker has been updated."
+let KMEDITATIONUPDATED = "Great stuff! Your meditation experience has been logged. "
 
 //POPUP ALERTS
 let KSAYGOODBYE = "Do you really want to say goodbye?"
@@ -279,7 +280,7 @@ let KGOODAFTERNOON = "Good afternoon!"
 let KGOODEVENING = "Good evening!"
 let KITSTIMEFORBEEJA = "It's time for Beeja."
 let KUPDATE = "Update"
-let KTIMETOLEARN = "It's time to learn Beeja meditation."
+let KTIMETOLEARN = "It's time to learn Beeja"
 
 // My Progress Journal
 let  Validatation_JournalOfflineMsg  =

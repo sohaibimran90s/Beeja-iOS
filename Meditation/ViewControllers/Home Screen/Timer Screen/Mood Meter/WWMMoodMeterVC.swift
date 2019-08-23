@@ -231,6 +231,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         print("apppre... \(self.appPreffrence.getPrePostJournalBool())")
         print("postmoddcount.. \(self.appPreference.getPostMoodCount())")
         print("getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
+        
+        vc.selectedIndex = String(selectedIndex)
         if self.type == "pre"{
             if !self.appPreffrence.getPrePostJournalBool(){
                 vc.moodData = arrMoodData[selectedIndex]

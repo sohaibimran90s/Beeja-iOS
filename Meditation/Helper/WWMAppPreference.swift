@@ -198,11 +198,11 @@ class WWMAppPreference: NSObject {
     }
     
     func getUserData() -> [String:Any] {
-        return UserDefaults.standard.dictionary(forKey: "UserData")!
+        return UserDefaults.standard.dictionary(forKey: "UserData") ?? [:]
     }
     
     func getUserSubscription() -> [String:Any] {
-        return UserDefaults.standard.dictionary(forKey: "UserSubscription")!
+        return UserDefaults.standard.dictionary(forKey: "UserSubscription") ?? [:]
     }
     
     

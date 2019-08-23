@@ -274,7 +274,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 levelDB.levelId = Int32(dic.levelId)
                 levelDB.levelName = dic.levelName
-                levelDB.prepTime = Int32(dic.prepTime)!
+                levelDB.prepTime = Int32(dic.prepTime) ?? 0
                 levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
                 levelDB.restTime = Int32(dic.restTime) ?? 0
                 levelDB.minPrep = Int32(dic.minPrep) ?? 1
@@ -429,7 +429,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
             }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

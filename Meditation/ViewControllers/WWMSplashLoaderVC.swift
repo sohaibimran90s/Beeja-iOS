@@ -245,8 +245,8 @@ class WWMSplashLoaderVC: WWMBaseViewController {
             alertPopupView.btnOK.layer.borderWidth = 2.0
             alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             
-            alertPopupView.lblTitle.text = "Alert"
-            alertPopupView.lblSubtitle.text = "Oh no, we've lost you! Please check your internet connection."
+            alertPopupView.lblTitle.text = kAlertTitle
+            alertPopupView.lblSubtitle.text = internetConnectionLostMsg
             alertPopupView.btnClose.isHidden = true
             
             alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -295,15 +295,15 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                     levelDB.isLevelSelected = false
                     levelDB.levelId = Int32(dic.levelId)
                     levelDB.levelName = dic.levelName
-                    levelDB.prepTime = Int32(dic.prepTime)!
-                    levelDB.meditationTime = Int32(dic.meditationTime)!
-                    levelDB.restTime = Int32(dic.restTime)!
-                    levelDB.minPrep = Int32(dic.minPrep)!
-                    levelDB.minRest = Int32(dic.minRest)!
-                    levelDB.minMeditation = Int32(dic.minMeditation)!
-                    levelDB.maxPrep = Int32(dic.maxPrep)!
-                    levelDB.maxRest = Int32(dic.maxRest)!
-                    levelDB.maxMeditation = Int32(dic.maxMeditation)!
+                    levelDB.prepTime = Int32(dic.prepTime) ?? 0
+                    levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
+                    levelDB.restTime = Int32(dic.restTime) ?? 0
+                    levelDB.minPrep = Int32(dic.minPrep) ?? 0
+                    levelDB.minRest = Int32(dic.minRest) ?? 0
+                    levelDB.minMeditation = Int32(dic.minMeditation) ?? 0
+                    levelDB.maxPrep = Int32(dic.maxPrep) ?? 0
+                    levelDB.maxRest = Int32(dic.maxRest) ?? 0
+                    levelDB.maxMeditation = Int32(dic.maxMeditation) ?? 0
                     meditationDB.addToLevels(levelDB)
                 }
                 WWMHelperClass.saveDb()
@@ -358,12 +358,12 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 }
             }
         }else {
-            let alert = UIAlertController(title: "Alert",
-                                          message: "Oh no, we've lost you! Please check your internet connection.",
+            let alert = UIAlertController(title: kAlertTitle,
+                                          message: internetConnectionLostMsg,
                                           preferredStyle: UIAlertController.Style.alert)
             
             
-            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
+            let OKAction = UIAlertAction.init(title: KOK, style: .default) { (UIAlertAction) in
                 self.getMeditationDataAPI()
             }
             alert.addAction(OKAction)

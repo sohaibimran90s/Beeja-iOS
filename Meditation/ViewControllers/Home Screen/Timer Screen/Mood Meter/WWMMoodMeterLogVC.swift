@@ -283,11 +283,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func logExperience() {
         
         if self.txtViewLog.text != "" {
-            self.popupTitle = KJOURNALUPDATED
+            if self.selectedIndex != "-1"{
+                self.popupTitle = KMEDITATIONUPDATED
+            }else{
+                self.popupTitle = KJOURNALUPDATED
+            }
+            
             self.xibCall()
         }else {
             if self.hidShowMoodMeter == "Show"{
-                if self.selectedIndex != ""{
+                if self.selectedIndex != "-1"{
                     self.popupTitle = KMOODTRACKERUPDATED
                     self.xibCall()
                 }else{

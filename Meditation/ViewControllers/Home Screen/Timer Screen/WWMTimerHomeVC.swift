@@ -258,6 +258,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     }
     
     @IBAction func btnStartTimerAction(_ sender: Any) {
+        self.btnStartTimer.isUserInteractionEnabled = true
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
         vc.prepTime = self.prepTime
         vc.meditationTime = self.meditationTime
