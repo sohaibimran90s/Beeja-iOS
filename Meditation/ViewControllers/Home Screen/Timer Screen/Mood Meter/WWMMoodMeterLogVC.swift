@@ -42,7 +42,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var alertPopup = WWMAlertPopUp()
     
     var tap = UITapGestureRecognizer()
-    var selectedIndex = ""
+    var selectedIndex = "-1"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +125,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         player?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = self.view.frame
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         self.view.layer.addSublayer(playerLayer)
         player?.seek(to: CMTime.zero)
         

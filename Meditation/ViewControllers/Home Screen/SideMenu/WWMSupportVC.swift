@@ -54,8 +54,6 @@ class WWMSupportVC: WWMBaseViewController {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
         }else if txtViewName.text == "You" || txtViewName.text == "you"{
             WWMHelperClass.showPopupAlertController(sender: self, message: KVALIDATIONNAME, title: kAlertTitle)
-        }else if (txtViewName.text?.count)! < 3 {
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_MinimumCharacter, title: kAlertTitle)
         }else if txtViewEmail.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_EmailName, title: kAlertTitle)
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){

@@ -104,7 +104,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
        // tapGestureRecognizer.delegate = self
        // playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
        // playerViewController.allowsPictureInPicturePlayback = true
-        self.playerViewController.videoGravity = .resizeAspectFill
+        self.playerViewController.videoGravity = .resizeAspect
 //        self.present(playerViewController, animated: true) {
 //
 //        }

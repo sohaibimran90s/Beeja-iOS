@@ -25,7 +25,7 @@ class VideoView: UIView {
             player = AVPlayer(url: videoURL)
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.frame = bounds
-            playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspect
             playerLayer?.goFullscreen()
             
             if let playerLayer = self.playerLayer {

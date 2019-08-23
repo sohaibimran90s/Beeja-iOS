@@ -88,7 +88,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
             let playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
             playerLayer.goFullscreen()
             self.view.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
@@ -107,7 +107,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
             let playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill            
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
             self.viewVideo.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
             
