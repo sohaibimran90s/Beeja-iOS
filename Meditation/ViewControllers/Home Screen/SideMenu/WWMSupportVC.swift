@@ -74,6 +74,9 @@ class WWMSupportVC: WWMBaseViewController {
                       "email" : txtViewEmail.text!,
                       "queryText" : txtViewQuery.text!
             ] as [String : Any]
+        
+        print("contact param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 //self.navigationController?.popViewController(animated: true)

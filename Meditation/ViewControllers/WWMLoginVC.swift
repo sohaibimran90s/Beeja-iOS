@@ -46,7 +46,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         animationView.stop()
         self.viewLottieAnimation.isHidden = true
         self.imgSignup.isHidden = false
-        self.viewStartBeeja.backgroundColor = UIColor.white
+        self.viewStartBeeja.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
         viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
         self.lblSignup.textColor = UIColor.black
         self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")

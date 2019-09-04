@@ -90,6 +90,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             btnBurnMood.isHidden = true
         }
         
+        if self.type == "pre"{
+            if !moodData.show_burn {
+                btnBurnMood.isHidden = true
+                btnLogExperience.isHidden = false
+            }else{
+                btnBurnMood.isHidden = false
+                btnLogExperience.isHidden = true
+            }
+        }
+        
 //        if WWMHelperClass.selectedType == "learn"{
 //            btnBurnMood.isHidden = true
 //        }

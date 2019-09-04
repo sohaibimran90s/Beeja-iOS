@@ -2639,7 +2639,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SCw-So-8mA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1630" y="2712"/>
+            <point key="canvasLocation" x="1849" y="2711"/>
         </scene>
         <!--Timer HomeVC-->
         <scene sceneID="C5z-qx-maO">
@@ -10422,13 +10422,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="222.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="8EQ-18-gyM">
-                                                <rect key="frame" x="25" y="48.5" width="325" height="125.5"/>
+                                                <rect key="frame" x="25" y="49" width="325" height="124"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dU6-D2-xiV">
                                                         <rect key="frame" x="27.5" y="0.0" width="270" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guided Meditation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npl-pu-ES3">
-                                                                <rect key="frame" x="0.0" y="0.0" width="270" height="19.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="270" height="19"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -10437,7 +10437,7 @@
                                                                 </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Practical  ⁓  Voice  ⁓  Relax" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVE-3T-7t6">
-                                                                <rect key="frame" x="0.0" y="19.5" width="270" height="30.5"/>
+                                                                <rect key="frame" x="0.0" y="19" width="270" height="31"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -10457,7 +10457,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7z-MO-fxv">
-                                                        <rect key="frame" x="107" y="75" width="111.5" height="50.5"/>
+                                                        <rect key="frame" x="110" y="75" width="105.5" height="49"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="42"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -10479,10 +10479,10 @@
                                         <rect key="frame" x="0.0" y="222.5" width="375" height="222"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SG6-Kd-voB">
-                                                <rect key="frame" x="70" y="65" width="235" height="92.5"/>
+                                                <rect key="frame" x="70" y="65.5" width="235" height="91.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Did you like the session?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoL-8U-VpK">
-                                                        <rect key="frame" x="0.0" y="0.0" width="235" height="24.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="235" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="20"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -10491,7 +10491,7 @@
                                                         </variation>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="UCP-Mq-YRI">
-                                                        <rect key="frame" x="0.0" y="52.5" width="235" height="40"/>
+                                                        <rect key="frame" x="0.0" y="51.5" width="235" height="40"/>
                                                         <subviews>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtS-HT-7sg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="107.5" height="40"/>
@@ -10582,7 +10582,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBq-01-XkL">
-                                                <rect key="frame" x="119" y="16" width="137" height="32"/>
+                                                <rect key="frame" x="120" y="16" width="135" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="ybk-iw-GLO"/>
                                                 </constraints>
