@@ -939,6 +939,10 @@ Copyright 2018 Google
    limitations under the License.
 
 
+## FirebaseCrash
+
+Copyright 2018 Google
+
 ## FirebaseInstanceID
 
 Copyright 2018 Google

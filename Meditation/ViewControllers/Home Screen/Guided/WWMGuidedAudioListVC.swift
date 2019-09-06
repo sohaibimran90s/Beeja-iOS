@@ -70,10 +70,10 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         let data = self.arrAudioList[indexPath.row]
         
-        if data.paid{
-            self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
-            self.view.isUserInteractionEnabled = false
-        }else{
+//        if data.paid{
+//            self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
+//            self.view.isUserInteractionEnabled = false
+//        }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             
             vc.audioData = self.arrAudioList[indexPath.row]
@@ -86,15 +86,20 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             if self.appPreffrence.getExpiryDate(){
                 vc.seconds = data.audio_Duration
             }else{
-                if data.audio_Duration > 900{
-                    vc.seconds = 900
+                if !data.paid{
+                    if data.audio_Duration > 900{
+                        vc.seconds = 900
+                    }else{
+                        vc.seconds = data.audio_Duration
+                    }
                 }else{
-                    vc.seconds = data.audio_Duration
+                    self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
+                    self.view.isUserInteractionEnabled = false
                 }
             }
 
             self.navigationController?.pushViewController(vc, animated: true)
-        }
+        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

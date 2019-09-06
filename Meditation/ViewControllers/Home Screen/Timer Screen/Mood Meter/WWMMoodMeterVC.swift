@@ -400,7 +400,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         let diff = Double(360) / Double(self.arrMoodData.count)
-        let angle = Double(selectedIndex) * diff
+        let angle1 = Double(selectedIndex) * diff
+        let angle = self.translatedAngle(angle: angle1)
         
         let distance = self.distance(a: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: 0), b: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: (self.circularSlider?.frame.size.height)!/2))
         print("distance... \(distance) angle... \(angle)")

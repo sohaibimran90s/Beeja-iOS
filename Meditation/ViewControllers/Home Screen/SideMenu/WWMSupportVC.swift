@@ -72,7 +72,7 @@ class WWMSupportVC: WWMBaseViewController {
                       "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
                       "email" : txtViewEmail.text!,
-                      "queryText" : txtViewQuery.text!
+                      "body" : txtViewQuery.text!
             ] as [String : Any]
         
         print("contact param... \(param)")

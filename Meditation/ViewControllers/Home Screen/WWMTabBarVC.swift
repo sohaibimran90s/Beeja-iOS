@@ -332,6 +332,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             itemTab.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
             if itemTab == item {
                 
+                //itemTab.selectedImage = UIImage.gifImageWithName("Home_White_1")
+                
                 itemTab.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
             }
         }

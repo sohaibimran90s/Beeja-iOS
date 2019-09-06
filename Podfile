@@ -10,6 +10,7 @@ target 'Meditation' do
 	pod 'Firebase/Core'
   pod 'Firebase/Messaging'
 	pod 'Firebase/Auth'
+  pod 'Firebase/Crash'
 	pod 'GoogleSignIn'
 	pod 'FBSDKLoginKit'
 	pod 'lottie-ios', '~> 3.0.4'
