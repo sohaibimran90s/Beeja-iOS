@@ -200,7 +200,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         let param = [
                 "mood_id":self.moodData.id
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETVIBESIMAGES, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETVIBESIMAGES, context: "WWMMoodShareVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func showForceUpdate() {
-        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "AppDelegate") { (result, error, success) in
             if success {
                 if let baseUrl = result["base_url"] as? String{
                     KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
@@ -279,12 +279,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         switch reachability.connection {
         case .wifi:
+            
+            //appPreference
             self.showForceUpdate()
             
+            self.appPreference.setConnectionType(value: "wifi")
             print("Reachable via WiFi")
         case .cellular:
             self.showForceUpdate()
             
+            self.appPreference.setConnectionType(value: "cellular")
             print("Reachable via Cellular")
         case .none:
             print("Network not reachable")
@@ -308,7 +312,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
             }
             let param = ["offline_data":arrData]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
@@ -331,7 +335,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
             }
             let param = ["offline_data":arrData]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, context: "AppDelegate", headerType: kPOSTHeader,  isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     WWMHelperClass.deletefromDb(dbName: "DBAddSession")
                     self.syncAddJournalData()
@@ -356,7 +360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
             }
             let param = ["offline_data":arrData]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     WWMHelperClass.deletefromDb(dbName: "DBJournalData")
                     self.syncContactUsData()
@@ -371,7 +375,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func syncContactUsData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBContactUs") as! [DBContactUs]
         if data.count > 0 {
-            WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     WWMHelperClass.deletefromDb(dbName: "DBContactUs")
                 }

@@ -53,7 +53,7 @@ class WWMFAQsVC: WWMBaseViewController {
         
         let param = ["step_id": 1] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPFAQ, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPFAQ, context: "WWMFAQsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 print("faqs data..... \(result)")

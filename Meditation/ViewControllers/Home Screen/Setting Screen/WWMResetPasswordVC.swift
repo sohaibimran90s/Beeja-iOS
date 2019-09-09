@@ -61,7 +61,7 @@ class WWMResetPasswordVC: WWMBaseViewController {
             "oldPassword" : txtViewOldPassword.text ?? "",
             "newPassword" : txtViewNewPassword.text ?? ""
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, context: "WWMResetPasswordVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)
                 WWMHelperClass.showPopupAlertController(sender: self, message:result["message"] as? String ?? "Unauthorized request" , title: kAlertTitle)

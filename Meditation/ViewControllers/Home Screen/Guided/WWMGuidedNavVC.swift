@@ -131,7 +131,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             "type" : type,
             "guided_type" : guided_type
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setType(value: self.type)
@@ -186,7 +186,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         
         
         let param = ["guided_type":self.type]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

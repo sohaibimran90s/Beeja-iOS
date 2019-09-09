@@ -69,7 +69,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
     func showForceUpdate() {
-        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json") { (result, error, success) in
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
                 
                 if let baseUrl = result["base_url"] as? String{
@@ -159,7 +159,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     func getFirstEncryptesKey(param:String, key:String) {
         
         
-        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader) { (result, error, success) in
+        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader, context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
                 if let encryptedStr = result["_hsk"] as? String {
                     
@@ -195,7 +195,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
     func getSecondEncryptesKey(param:String, key:String) {
-        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader) { (result, error, success) in
+        WWMWebServices.requestAPIRSAEncryption(param: param, urlString: URL_HANDSHAKE, headerType: kPOSTHeader, context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
                 if let encryptedStr = result["_hsk"] as? String {
                     
@@ -374,7 +374,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     
     func getMoodMeterDataAPI() {
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             
             self.executionTime = Date().timeIntervalSince(self.startDate)
 
@@ -388,7 +388,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     
     
     func getMeditationDataAPI() {
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMEDITATIONDATA, headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMEDITATIONDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             
             self.executionTime = Date().timeIntervalSince(self.startDate)
             

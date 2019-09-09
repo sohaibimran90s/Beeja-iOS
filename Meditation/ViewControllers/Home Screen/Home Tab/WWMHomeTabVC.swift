@@ -389,7 +389,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             "type"          : self.type,
             "guided_type"   : self.guided_type
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -419,7 +419,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.data.removeAll()
         let param = ["user_id": self.appPreference.getUserID()]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["data"] as? [String: Any]{
                     if let records = data["records"] as? [[String: Any]]{

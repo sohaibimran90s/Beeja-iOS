@@ -20,11 +20,45 @@ class WWMWebServices {
     
     //MARK: - Service Methods
     
-   class func requestAPIWithBody(param:[String:Any], urlString:String, headerType:String, isUserToken:Bool, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
+    class func requestAPIWithBody(param:[String:Any], urlString:String, context: String, headerType:String, isUserToken:Bool, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
         
+        var x_Params: [String: Any] = [:]
+        var X_Params: String = ""
     
+        var userData = WWMUserData()
+        let appPreffrence = WWMAppPreference()
+        userData = WWMUserData.init(json:appPreffrence.getUserData())
+        print(userData)
+        
+        let os = ProcessInfo().operatingSystemVersion
+        let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+    
+        x_Params["app_ver"] = WWMHelperClass.getVersion()
+        x_Params["build_no"] = WWMHelperClass.getBuildVersion()
+        x_Params["LC"] = userData.country
+        x_Params["LG"] = "en"
+        x_Params["Context"] = context
+        x_Params["Manufacturer"] = "iPhone"
+        x_Params["Model"] = UIDevice.modelName
+        x_Params["OS"] = "iOS" + os_version
+        x_Params["Missing Permissions"] = ""
+        x_Params["Architecture"] = ""
+        x_Params["Connection_type"] = appPreffrence.getConnectionType()
+        
+        
+        if let theJSONData = try? JSONSerialization.data(
+            withJSONObject: x_Params,
+            options: []) {
+            let theJSONText = String(data: theJSONData,
+                                     encoding: .ascii)
+           X_Params = theJSONText ?? ""
+            //print("JSON string = \(theJSONText!)")
+        }
+        
+        print("X_Params.... \(X_Params)")
+        
         
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
     
@@ -39,7 +73,8 @@ class WWMWebServices {
         let headers = [
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            "cache-control": "no-cache"
+            "cache-control": "no-cache",
+            "X-Params": X_Params
         ]
         request.allHTTPHeaderFields = headers
 
@@ -209,7 +244,7 @@ class WWMWebServices {
     
    // RSA Encryption
     
-    class func requestAPIRSAEncryption(param:String, urlString:String, headerType:String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
+    class func requestAPIRSAEncryption(param:String, urlString:String, headerType:String, context: String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -225,9 +260,46 @@ class WWMWebServices {
 //            request.httpBody = jsonData
 //        }
         request.httpMethod = headerType
+        
+        var x_Params: [String: Any] = [:]
+        var X_Params: String = ""
+        
+        var userData = WWMUserData()
+        let appPreffrence = WWMAppPreference()
+        userData = WWMUserData.init(json:appPreffrence.getUserData())
+        print(userData)
+        
+        let os = ProcessInfo().operatingSystemVersion
+        let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+        
+        x_Params["app_ver"] = WWMHelperClass.getVersion()
+        x_Params["build_no"] = WWMHelperClass.getBuildVersion()
+        x_Params["LC"] = userData.country
+        x_Params["LG"] = "en"
+        x_Params["Context"] = context
+        x_Params["Manufacturer"] = "iPhone"
+        x_Params["Model"] = UIDevice.modelName
+        x_Params["OS"] = "iOS" + os_version
+        x_Params["Missing Permissions"] = ""
+        x_Params["Architecture"] = ""
+        x_Params["Connection_type"] = appPreffrence.getConnectionType()
+        
+        
+        if let theJSONData = try? JSONSerialization.data(
+            withJSONObject: x_Params,
+            options: []) {
+            let theJSONText = String(data: theJSONData,
+                                     encoding: .ascii)
+            X_Params = theJSONText ?? ""
+            //print("JSON string = \(theJSONText!)")
+        }
+        
+        print("X_Params.... \(X_Params)")
+        
         let headers = [
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
+            "X-Params": X_Params
         ]
         request.allHTTPHeaderFields = headers
         request.addValue(param, forHTTPHeaderField: "Authorization")
@@ -263,16 +335,51 @@ class WWMWebServices {
     }
     
     
-    class func requestAPIWithBodyForceUpdate(urlString:String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
+    class func requestAPIWithBodyForceUpdate(urlString:String, context: String, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
         print("Request URL: \(urlString)")
         request.httpMethod = "GET"
+        
+        var x_Params: [String: Any] = [:]
+        var X_Params: String = ""
+        
+        var userData = WWMUserData()
+        let appPreffrence = WWMAppPreference()
+        userData = WWMUserData.init(json:appPreffrence.getUserData())
+        print(userData)
+        
+        let os = ProcessInfo().operatingSystemVersion
+        let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+        
+        x_Params["app_ver"] = WWMHelperClass.getVersion()
+        x_Params["build_no"] = WWMHelperClass.getBuildVersion()
+        x_Params["LC"] = userData.country
+        x_Params["LG"] = "en"
+        x_Params["Context"] = context
+        x_Params["Manufacturer"] = "iPhone"
+        x_Params["Model"] = UIDevice.modelName
+        x_Params["OS"] = "iOS" + os_version
+        x_Params["Missing Permissions"] = ""
+        x_Params["Architecture"] = ""
+        x_Params["Connection_type"] = appPreffrence.getConnectionType()
+        
+        
+        if let theJSONData = try? JSONSerialization.data(
+            withJSONObject: x_Params,
+            options: []) {
+            let theJSONText = String(data: theJSONData,
+                                     encoding: .ascii)
+            X_Params = theJSONText ?? ""
+            //print("JSON string = \(theJSONText!)")
+        }
+        
         let headers = [
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            "cache-control": "no-cache"
+            "cache-control": "no-cache",
+            "X-Params": X_Params
         ]
         request.allHTTPHeaderFields = headers
         

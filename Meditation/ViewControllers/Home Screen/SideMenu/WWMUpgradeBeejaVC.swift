@@ -252,7 +252,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     
     func getSubscriptionPlanId(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
@@ -279,7 +279,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         
         print("param.....###### \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 if self.continueRestoreValue == "1"{
                     KUSERDEFAULTS.set("1", forKey: "restore")

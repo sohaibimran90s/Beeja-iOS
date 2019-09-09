@@ -176,6 +176,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setConnectionType(value:String) {
+        defaults.set(value, forKey: "connectionType")
+        defaults.synchronize()
+    }
+    
     func setIsProfileCompleted(value:Bool) {
         defaults.set(value, forKey: "IsProfileCompleted")
         defaults.synchronize()
@@ -203,6 +208,10 @@ class WWMAppPreference: NSObject {
     
     func getUserSubscription() -> [String:Any] {
         return UserDefaults.standard.dictionary(forKey: "UserSubscription") ?? [:]
+    }
+    
+    func getConnectionType() -> String {
+        return UserDefaults.standard.string(forKey: "connectionType") ?? ""
     }
     
     

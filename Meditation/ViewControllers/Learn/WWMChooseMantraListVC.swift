@@ -37,7 +37,7 @@ class WWMChooseMantraListVC: WWMBaseViewController {
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMChooseMantraListVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["data"] as? [[String: Any]]{
                     for json in data{
@@ -190,7 +190,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             "group": group
             ] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMChooseMantraListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

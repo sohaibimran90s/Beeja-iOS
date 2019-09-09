@@ -207,7 +207,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "med_min": "0",
             "med_max": "7200"
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SETMYOWN, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SETMYOWN, context: "WWMSetMyOwnVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let result1 = result["result"] as? [String:Any] {
                     self.selectedMeditation_Id = result1["meditation_id"] as! Int
@@ -250,7 +250,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "type" : "timer",
             "guided_type" : ""
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSetMyOwnVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let sucessAPI = result["success"] as? Bool {
                     if sucessAPI {
@@ -384,7 +384,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "group": group
             ] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSetMyOwnVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

@@ -36,7 +36,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
         }
         
         let param = ["user_id":self.appPreference.getUserID()]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETWISDOM, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETWISDOM, context: "WWMWisdomNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

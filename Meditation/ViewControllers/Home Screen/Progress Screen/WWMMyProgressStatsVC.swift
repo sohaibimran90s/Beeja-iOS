@@ -606,7 +606,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         print("add session params.... \(param)")
         addSessionView.btnDone.isUserInteractionEnabled = false
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             self.addSessionView.btnDone.isUserInteractionEnabled = true
             if sucess {
                 if let success = result["success"] as? Bool {
@@ -687,7 +687,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                      "month":self.strMonthYear]
         print("param stats... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
@@ -715,7 +715,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func getMilestoneData() {
         let param = ["user_id":self.appPreference.getUserID()]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MILESTONE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MILESTONE, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["result"] as? [String:Any] {
                     self.milestoneData = WWMMilestoneData.init(json: data)

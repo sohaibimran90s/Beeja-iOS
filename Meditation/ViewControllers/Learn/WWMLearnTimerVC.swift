@@ -149,7 +149,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         print("param learn timer... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMBINEDMANTRA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMBINEDMANTRA, context: "WWMLearnTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["data"] as? [String: Any]{
                     if let audio_url = data["audio_url"] as? String{

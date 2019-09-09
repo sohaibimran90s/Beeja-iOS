@@ -116,7 +116,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
             "type" : type,
             "guided_type" : guided_type
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
                 

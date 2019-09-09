@@ -236,7 +236,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
             "group": group
             ] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMLearnReminderVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)

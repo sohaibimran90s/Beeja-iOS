@@ -311,7 +311,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         let param = ["user_id":self.appPreference.getUserID(),"med_type" : self.appPreference.getType(), "date": xData, "type": self.type]
         
         print("mood para... \(param)")
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, context: "WWMMyProgressMoodVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 if let statsData = result["result"] as? [String:Any] {

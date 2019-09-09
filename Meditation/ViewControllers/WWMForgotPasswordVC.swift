@@ -87,7 +87,7 @@ class WWMForgotPasswordVC: WWMBaseViewController,UITextFieldDelegate {
         let param = [
             "email": txtViewEmail.text!
         ]
-        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_FORGOTPASSWORD, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_FORGOTPASSWORD, context: "WWMForgotPasswordVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 print(result)
                 self.navigationController?.popViewController(animated: true)

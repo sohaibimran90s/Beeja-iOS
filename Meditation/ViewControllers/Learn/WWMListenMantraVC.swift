@@ -29,7 +29,7 @@ class WWMListenMantraVC: WWMBaseViewController {
         
        // WWMHelperClass.showLoaderAnimate(on: self.view)
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMListenMantraVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["data"] as? [[String: Any]]{
                     for json in data{

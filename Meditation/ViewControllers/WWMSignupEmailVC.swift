@@ -115,7 +115,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             "model": UIDevice.current.model,
             "version": UIDevice.current.systemVersion
         ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 print("signup result... \(result)")
@@ -175,7 +175,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             ] as [String : Any]
         
         print("param2... \(param)")
-        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {

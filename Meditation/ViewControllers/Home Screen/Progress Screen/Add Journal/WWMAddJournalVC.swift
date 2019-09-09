@@ -60,7 +60,7 @@ class WWMAddJournalVC: WWMBaseViewController {
             "date_time":"\(Int(Date().timeIntervalSince1970))",
             "mood_id":""
             ]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "WWMAddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.dismiss(animated: true, completion: nil)
             }else {

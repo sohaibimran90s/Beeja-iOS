@@ -557,7 +557,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             "user_Id":self.appPreference.getUserID(),
             "month":self.strMonthYear
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.communityData = WWMCommunityData.init(json: result["result"] as! [String : Any])
                 self.tblViewCommunity.reloadData()

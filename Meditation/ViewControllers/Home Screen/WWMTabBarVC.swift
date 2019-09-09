@@ -74,8 +74,23 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             locManager.desiredAccuracy = kCLLocationAccuracyBest
             locManager.requestWhenInUseAuthorization()
             locManager.startUpdatingLocation()
+            
+            
+            
+            if CLLocationManager.locationServicesEnabled() {
+                switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                    print("loction permission not access")
+                case .authorizedAlways, .authorizedWhenInUse:
+                    print("Access")
+                }
+            } else {
+                print("Location services are not enabled")
+            }
         }
     }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
@@ -358,7 +373,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             
         print("param... \(param)")
             
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {

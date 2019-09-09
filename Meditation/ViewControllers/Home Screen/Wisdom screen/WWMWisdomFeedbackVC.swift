@@ -86,7 +86,7 @@ class WWMWisdomFeedbackVC: WWMBaseViewController {
         }else {
             //WWMHelperClass.showSVHud()
             WWMHelperClass.showLoaderAnimate(on: self.view)
-            WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, context: "WWMWisdomFeedbackVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
                 if sucess {
                     if let success = result["success"] as? Bool {
                         print(success)

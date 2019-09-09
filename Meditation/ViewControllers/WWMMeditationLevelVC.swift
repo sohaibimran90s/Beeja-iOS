@@ -102,7 +102,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
             "type" : self.type,
             "guided_type" : ""
         ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMMeditationLevelVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setIsProfileCompleted(value: true)
                 

@@ -21,6 +21,42 @@ class ChartApi{
     let xData = dateFormatter.string(from: currentDate)
     print(xData)
     
+    
+    var x_Params: [String: Any] = [:]
+    var X_Params: String = ""
+    
+    var userData = WWMUserData()
+    let appPreffrence = WWMAppPreference()
+    userData = WWMUserData.init(json:appPreffrence.getUserData())
+    print(userData)
+    
+    let os = ProcessInfo().operatingSystemVersion
+    let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+    
+    x_Params["app_ver"] = WWMHelperClass.getVersion()
+    x_Params["build_no"] = WWMHelperClass.getBuildVersion()
+    x_Params["LC"] = userData.country
+    x_Params["LG"] = "en"
+    x_Params["Context"] = "ChartApi"
+    x_Params["Manufacturer"] = "iPhone"
+    x_Params["Model"] = UIDevice.modelName
+    x_Params["OS"] = "iOS" + os_version
+    x_Params["Missing Permissions"] = ""
+    x_Params["Architecture"] = ""
+    x_Params["Connection_type"] = appPreffrence.getConnectionType()
+    
+    
+    if let theJSONData = try? JSONSerialization.data(
+        withJSONObject: x_Params,
+        options: []) {
+        let theJSONText = String(data: theJSONData,
+                                 encoding: .ascii)
+        X_Params = theJSONText ?? ""
+        //print("JSON string = \(theJSONText!)")
+    }
+    
+    
+    
     let params = ["user_id": appPreference.getUserID(),"med_type" : appPreference.getType(), "date": xData, "type": type]
     
     print("graph params... \(params)")
@@ -28,10 +64,9 @@ class ChartApi{
     let headers = [
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
-        "cache-control": "no-cache"
+        "cache-control": "no-cache",
+        "X-Params": X_Params
     ]
-    
-    
     
     
     var request = URLRequest(url: URL(string: URL_MOODPROGRESS)!)
