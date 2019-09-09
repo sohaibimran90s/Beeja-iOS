@@ -72,8 +72,15 @@ class WWMWalkThoghVC: WWMBaseViewController {
     //MARK:- video function
     func playVideo() {
         
-        
         var videoURL: String = ""
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        }
+        catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
+        
         
         if value == "SignupLetsStart"{
             //videoURL = self.appPreffrence.getHomePageURL()
@@ -81,6 +88,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 debugPrint("video.mp4 not found")
                 return
             }
+            
             
             viewVideo.configure(url: "\(path)")
             
