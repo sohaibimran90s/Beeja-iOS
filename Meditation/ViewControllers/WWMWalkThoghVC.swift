@@ -23,7 +23,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var lat = ""
     var long = ""
     
-    var player1: AVPlayer?
+    var player1: AVPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()

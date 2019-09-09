@@ -41,7 +41,7 @@ class ChartApi{
     x_Params["Manufacturer"] = "iPhone"
     x_Params["Model"] = UIDevice.modelName
     x_Params["OS"] = "iOS" + os_version
-    x_Params["Missing Permissions"] = ""
+    x_Params["Missing Permissions"] = appPreffrence.getLoctionDenied()
     x_Params["Architecture"] = ""
     x_Params["Connection_type"] = appPreffrence.getConnectionType()
     

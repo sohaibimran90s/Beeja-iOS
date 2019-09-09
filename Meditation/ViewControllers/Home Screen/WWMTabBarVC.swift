@@ -81,19 +81,24 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 switch CLLocationManager.authorizationStatus() {
                 case .notDetermined, .restricted, .denied:
                     print("loction permission not access")
+                    
+                    self.appPreffrence.setLoctionDenied(value: "Location Disable")
                 case .authorizedAlways, .authorizedWhenInUse:
                     print("Access")
+                    
+                    self.appPreffrence.setLoctionDenied(value: "Location Enable")
                 }
             } else {
+                self.appPreffrence.setLoctionDenied(value: "Location Disable")
                 print("Location services are not enabled")
             }
         }
     }
     
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
+        self.appPreffrence.setLoctionDenied(value: "Location Enable")
         if self.lat == "" {
             getCityAndCountry()
         }
@@ -103,6 +108,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if self.appPreffrence.isLogout() {
+            self.appPreffrence.setLoctionDenied(value: "Location Disable")
             var userData = WWMUserData()
             userData = WWMUserData.init(json: self.appPreffrence.getUserData())
             print(userData)

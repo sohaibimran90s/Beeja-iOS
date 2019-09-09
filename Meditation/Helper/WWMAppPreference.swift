@@ -181,6 +181,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setLoctionDenied(value:String) {
+        defaults.set(value, forKey: "locationDenied")
+        defaults.synchronize()
+    }
+    
     func setIsProfileCompleted(value:Bool) {
         defaults.set(value, forKey: "IsProfileCompleted")
         defaults.synchronize()
@@ -196,6 +201,10 @@ class WWMAppPreference: NSObject {
     
     func getDeviceToken() -> String {
         return UserDefaults.standard.string(forKey: kDeviceToken) ?? ""
+    }
+    
+    func getLoctionDenied() -> String  {
+        return UserDefaults.standard.string(forKey: "locationDenied") ?? "Location Enabled"
     }
 
     func getToken() -> String {
