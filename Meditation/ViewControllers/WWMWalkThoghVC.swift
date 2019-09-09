@@ -60,13 +60,22 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        UIApplication.shared.isStatusBarHidden = true
        // player1?.play()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
+        
         btnCrossSkip.setTitle("", for: .normal)
+        
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     //MARK:- video function
