@@ -15,7 +15,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
     @IBOutlet weak var layoutExpressMoodViewWidth: NSLayoutConstraint!
     @IBOutlet weak var lblExpressMood: UILabel!
 
-    
+    let appPreffrence = WWMAppPreference()
     var selectedIndex = 0
     var total_paid: Int = 0
     
@@ -181,7 +181,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         cell.btnProceed.tag = indexPath.row
         
         print("self.total_paid... \(self.total_paid)")
-        if self.total_paid > 41{
+        if self.appPreffrence.getExpiryDate(){
             cell.imgLock.image = UIImage(named: "")
             cell.isUserInteractionEnabled = true
         }else{
@@ -221,8 +221,9 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         var flag = 0
         var position = 0
         var dateCompareLoopCount = 0
+        var senderTag = -1
 
-        if self.total_paid > 41{
+        if self.appPreffrence.getExpiryDate(){
             dateCompareLoopCount = self.learnStepsListData.count - 1
         }else{
             dateCompareLoopCount = 2
@@ -238,6 +239,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             if date_completed != ""{
                 let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
                 if dateCompare.0 == 1{
+                    senderTag = i
                     flag = 1
                     break
                 }
@@ -245,8 +247,19 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         if flag == 1{
+            
+            print("sender.Tag.... \(sender.tag) senderTag.... \(senderTag)")
+            
+            if sender.tag == senderTag{
+                WWMHelperClass.selectedType = "learn"
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                self.xibCall(title1: KLEARNONESTEP)
+            }
             print("already played the step")
-            self.xibCall(title1: KLEARNONESTEP)
+            
         }else{
             for i in 0..<sender.tag{
                 if !self.learnStepsListData[i].completed{
@@ -262,8 +275,6 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 self.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.learnStepsListData[position].step_name) \(KLEARNJUMPSTEP1)")
             }else{
                 WWMHelperClass.selectedType = "learn"
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnFlightModeVC") as! WWMLearnFlightModeVC
-//                self.navigationController?.pushViewController(vc, animated: true)
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
                 self.navigationController?.pushViewController(vc, animated: true)

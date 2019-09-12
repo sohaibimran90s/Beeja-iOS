@@ -85,6 +85,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             if self.appPreffrence.getExpiryDate(){
                 vc.seconds = data.audio_Duration
+                self.navigationController?.pushViewController(vc, animated: true)
             }else{
                 if !data.paid{
                     if data.audio_Duration > 900{
@@ -92,13 +93,14 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     }else{
                         vc.seconds = data.audio_Duration
                     }
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }else{
                     self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
                     self.view.isUserInteractionEnabled = false
                 }
             }
 
-            self.navigationController?.pushViewController(vc, animated: true)
+        
         //}
     }
     

@@ -43,12 +43,15 @@ class WWMStartTimerVC: WWMBaseViewController {
     var animationViewMed = AnimationView()
     var animationViewPrep = AnimationView()
     var animationViewRest = AnimationView()
+    
+    var updateBgTimer: Timer?
+    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         animationViewMed = AnimationView(name: "final1")
-        animationViewMed.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        animationViewMed.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
         animationViewMed.center = self.view.center
         animationViewMed.contentMode = .scaleAspectFill
         animationViewMed.loopMode = .loop
@@ -94,6 +97,55 @@ class WWMStartTimerVC: WWMBaseViewController {
         notificationCenter.removeObserver(self)
         self.playerAmbient.stop()
         UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
+    //MARK: Run timer in background
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.addObserver()
+    }
+    
+    //register background task
+    func registerBackgroundTask(){
+        self.backgroundTask = UIApplication.shared.beginBackgroundTask(expirationHandler: nil); assert(self.backgroundTask != .invalid)
+    }
+    
+    //end background task
+    func endBackgroundTask(){
+        if backgroundTask != .invalid{
+            UIApplication.shared.endBackgroundTask(self.backgroundTask)
+            self.backgroundTask = .invalid
+        }
+    }
+    
+    func addObserver(){
+        notificationCenter.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    @objc func didEnterBackground(){
+        registerBackgroundTask()
+        if self.updateBgTimer == nil && self.backgroundTask == .invalid{
+            self.updateBgTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimerInBackground), userInfo: nil, repeats: true)
+        }
+    }
+    
+    @objc func updateTimerInBackground(){
+        switch UIApplication.shared.applicationState {
+        case .active:
+            print("active state")
+            
+            self.updateBgTimer?.invalidate()
+            self.updateBgTimer = nil
+            self.endBackgroundTask()
+            
+        case .background:
+            print("backgrond state")
+            updateTimer()
+        default:
+            print("default state")
+        }
     }
     
     //MARK: animated View
@@ -309,6 +361,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     //#selector(self.updateTimer)
     @objc func updateTimer() {
+        print("seconds... \(seconds)")
         if timerType == "Prep"{
             if self.seconds < 1 {
                 if self.meditationTime > 0 {

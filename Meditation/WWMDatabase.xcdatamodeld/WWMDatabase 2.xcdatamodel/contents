@@ -57,7 +57,7 @@
         <attribute name="isMilestoneAndRewards" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMorningReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="learnReminderTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mantraID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mantraID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="meditationTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="moodMeterEnable" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="morningReminderTime" optional="YES" attributeType="String" syncable="YES"/>
