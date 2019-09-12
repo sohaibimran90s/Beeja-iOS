@@ -43,6 +43,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     }
     
     func audioPlay(){
+        self.endTimeLbl.text = "02:53"
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -64,6 +65,14 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
                 self.slider.maximumValue = Float(duration1)
                 self.slider.value = 0.0
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+                
+                
+                if self.beginTimeLbl.text == self.endTimeLbl.text{
+                    self.btnStart.isHidden = false
+                    self.isPlayComplete = true
+                    self.btnReplay.setImage(UIImage(named: "replay"), for: .normal)
+                }
+                
                 
                 self.player.play()
                 
