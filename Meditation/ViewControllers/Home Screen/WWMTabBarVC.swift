@@ -242,32 +242,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     func setDataToDb(json:[String:Any]) {
         
         print("database setting.... \(json)")
-        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-        if data.count > 0 {
-            WWMHelperClass.deletefromDb(dbName: "DBSettings")
-        }
-        let settingDB = WWMHelperClass.fetchEntity(dbName: "DBSettings") as! DBSettings
-        
-        settingDB.startChime = json["startChime"] as? String ?? ""
-        settingDB.ambientChime = json["ambientSound"] as? String ?? ""
-        settingDB.endChime = json["endChime"] as? String ?? ""
-        settingDB.finishChime = json["finishChime"] as? String ?? ""
-        settingDB.intervalChime = json["intervalChime"] as? String ?? ""
-        settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
-        settingDB.isMilestoneAndRewards = json["IsMilestoneAndRewards"] as? Bool ?? false
-        settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
-        settingDB.moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
-        settingDB.morningReminderTime = json["MorningReminderTime"] as? String ?? ""
-        settingDB.afterNoonReminderTime = json["AfternoonReminderTime"] as? String ?? ""
-        settingDB.learnReminderTime = json["LearnReminderTime"] as? String ?? ""
-        settingDB.isLearnReminder = json["IsLearnReminder"] as? Bool ?? false
-        settingDB.mantraID = json["MantraID"] as? Int ?? 1
-        
-        settingDB.prepTime = "10"
-        settingDB.meditationTime = "90"
-        settingDB.restTime = "20"
-        
-        
         var arrMeditationData = [WWMMeditationData]()
         if let dataMeditation = json["meditation_data"] as? [[String:Any]]{
             for dict in dataMeditation {
@@ -276,74 +250,71 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
         }
         
-        for  index in 0..<arrMeditationData.count {
-            let dataM = arrMeditationData[index]
-            let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
-            meditationDB.meditationId = Int32(dataM.meditationId)
-            meditationDB.setmyown = Int32(dataM.setmyown)
-            meditationDB.meditationName = dataM.meditationName
-            meditationDB.isMeditationSelected = dataM.isSelected
+        if arrMeditationData.count > 0{
+            let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+            if data.count > 0 {
+                WWMHelperClass.deletefromDb(dbName: "DBSettings")
+            }
+            let settingDB = WWMHelperClass.fetchEntity(dbName: "DBSettings") as! DBSettings
             
-            for  index in 0..<dataM.levels.count {
-                let dic = dataM.levels[index]
-                let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
-                levelDB.isLevelSelected = dic.isSelected
-                if dic.isSelected {
-                    settingDB.prepTime = "\(dic.prepTime)"
-                    settingDB.meditationTime = "\(dic.meditationTime)"
-                    settingDB.restTime = "\(dic.restTime)"
+            settingDB.startChime = json["startChime"] as? String ?? ""
+            settingDB.ambientChime = json["ambientSound"] as? String ?? ""
+            settingDB.endChime = json["endChime"] as? String ?? ""
+            settingDB.finishChime = json["finishChime"] as? String ?? ""
+            settingDB.intervalChime = json["intervalChime"] as? String ?? ""
+            settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
+            settingDB.isMilestoneAndRewards = json["IsMilestoneAndRewards"] as? Bool ?? false
+            settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
+            settingDB.moodMeterEnable = json["moodMeterEnable"] as? Bool ?? false
+            settingDB.morningReminderTime = json["MorningReminderTime"] as? String ?? ""
+            settingDB.afterNoonReminderTime = json["AfternoonReminderTime"] as? String ?? ""
+            settingDB.learnReminderTime = json["LearnReminderTime"] as? String ?? ""
+            settingDB.isLearnReminder = json["IsLearnReminder"] as? Bool ?? false
+            settingDB.mantraID = json["MantraID"] as? Int ?? 1
+            
+            settingDB.prepTime = "10"
+            settingDB.meditationTime = "90"
+            settingDB.restTime = "20"
+            
+            
+            for  index in 0..<arrMeditationData.count {
+                let dataM = arrMeditationData[index]
+                let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
+                meditationDB.meditationId = Int32(dataM.meditationId)
+                meditationDB.setmyown = Int32(dataM.setmyown)
+                meditationDB.meditationName = dataM.meditationName
+                meditationDB.isMeditationSelected = dataM.isSelected
+                
+                for  index in 0..<dataM.levels.count {
+                    let dic = dataM.levels[index]
+                    let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
+                    levelDB.isLevelSelected = dic.isSelected
+                    if dic.isSelected {
+                        settingDB.prepTime = "\(dic.prepTime)"
+                        settingDB.meditationTime = "\(dic.meditationTime)"
+                        settingDB.restTime = "\(dic.restTime)"
+                    }
+                    levelDB.levelId = Int32(dic.levelId)
+                    levelDB.levelName = dic.levelName
+                    levelDB.prepTime = Int32(dic.prepTime) ?? 0
+                    levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
+                    levelDB.restTime = Int32(dic.restTime) ?? 0
+                    levelDB.minPrep = Int32(dic.minPrep) ?? 1
+                    levelDB.minRest = Int32(dic.minRest) ?? 0
+                    levelDB.minMeditation = Int32(dic.minMeditation) ?? 0
+                    levelDB.maxPrep = Int32(dic.maxPrep) ?? 0
+                    levelDB.maxRest = Int32(dic.maxRest) ?? 0
+                    levelDB.maxMeditation = Int32(dic.maxMeditation) ?? 0
+                    meditationDB.addToLevels(levelDB)
                 }
-                levelDB.levelId = Int32(dic.levelId)
-                levelDB.levelName = dic.levelName
-                levelDB.prepTime = Int32(dic.prepTime) ?? 0
-                levelDB.meditationTime = Int32(dic.meditationTime) ?? 0
-                levelDB.restTime = Int32(dic.restTime) ?? 0
-                levelDB.minPrep = Int32(dic.minPrep) ?? 1
-                levelDB.minRest = Int32(dic.minRest) ?? 0
-                levelDB.minMeditation = Int32(dic.minMeditation) ?? 0
-                levelDB.maxPrep = Int32(dic.maxPrep) ?? 0
-                levelDB.maxRest = Int32(dic.maxRest) ?? 0
-                levelDB.maxMeditation = Int32(dic.maxMeditation) ?? 0
-                meditationDB.addToLevels(levelDB)
+                settingDB.addToMeditationData(meditationDB)
             }
-            settingDB.addToMeditationData(meditationDB)
-        }
-        WWMHelperClass.saveDb()
-        NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
-        
-       // print(needsUpdate())
-    }
-    
-    //  Converted to Swift 5 by Swiftify v5.0.7505 - https://objectivec2swift.com/
-    func needsUpdate() -> Bool {
-        let infoDictionary = Bundle.main.infoDictionary
-        let appID = "1453359245"//infoDictionary?["CFBundleIdentifier"] as? String
-        let url = URL(string: "http://itunes.apple.com/lookup?id=\(appID)")
-        var data: Data? = nil
-        if let url = url {
-            data = try? Data(contentsOf: url)
-        }
-        var lookup: [AnyHashable : Any]? = nil
-        do {
-            if let data = data {
-                lookup = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
-            }
-        } catch {
-        }
-        
-        if (lookup?["resultCount"] as? NSNumber)?.intValue == 1 {
-            if let results = lookup?["results"] as? [[String:Any]] {
-                let appStoreVersion = results[0]["version"] as? String
-                let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
-                if !(appStoreVersion == currentVersion) {
-                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
-                    return true
-                }
-            }
+            WWMHelperClass.saveDb()
+            NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
             
-            
+        }else {
+            self.getDataFromDatabase()
         }
-        return false
     }
 
     // UITabBarDelegate
@@ -433,14 +404,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         self.setDataToDb(json: result["settings"] as! [String:Any])
-                        
-//                        if let force_update = result["force_update"] as? Bool{
-//                            if force_update{
-//                                if self.needsUpdate(){
-//                                    self.forceToUpdatePopUp()
-//                                }
-//                            }
-//                        }
+                    
                     }else {
                         self.getDataFromDatabase()
                     }
@@ -491,39 +455,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
-    func forceToUpdatePopUp(){
-        
-        alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
-        let window = UIApplication.shared.keyWindow!
-        
-        alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        alertPopupView1.isRemove = false
-        alertPopupView1.btnOK.layer.borderWidth = 2.0
-        alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
-        alertPopupView1.lblTitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATETITLE) ?? KFORCEUPDATETITLE
-        alertPopupView1.lblSubtitle.text = KUSERDEFAULTS.string(forKey: KFORCETOUPDATEDES) ?? KFORCEUPDATESUBTITLE
-        alertPopupView1.btnOK.setTitle(KUSERDEFAULTS.string(forKey: KUPGRADEBUTTON) ?? "Update", for: .normal)
-        alertPopupView1.btnClose.isHidden = true
-        
-        alertPopupView1.btnOK.addTarget(self, action: #selector(btnForceToUpdateDoneAction(_:)), for: .touchUpInside)
-        alertPopupView1.btnClose.addTarget(self, action: #selector(btnForceToUpdateCancelAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(alertPopupView1)
-    }
     
     @IBAction func btnDoneAction(_ sender: Any) {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         self.getUserProfileData(lat: self.lat, long: self.long)
-    }
-    
-    @IBAction func btnForceToUpdateDoneAction(_ sender: Any) {
-        //https://apps.apple.com/us/app/beeja-meditation/id1453359245
-        UIApplication.shared.open(URL.init(string: "https://apps.apple.com/is/app/beeja-meditation/id1453359245")!, options: [:], completionHandler: nil)
-
-    }
-    
-    @IBAction func btnForceToUpdateCancelAction(_ sender: Any) {
     }
     
     func showToast(message : String) {
