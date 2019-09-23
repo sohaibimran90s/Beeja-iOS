@@ -154,7 +154,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         print("lat.. \(self.lat) long... \(self.long) city.. \(self.city) country... \(self.country)")
                     }
                     
-                    self.getUserProfileData(lat: self.lat, long: self.lat)
+                    self.getUserProfileData(lat: self.lat, long: self.long)
                     return
                 }
                 
@@ -185,7 +185,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                 print("lat.. \(self.lat) long... \(self.long)")
                 
-                self.getUserProfileData(lat: self.lat, long: self.lat)
+                self.getUserProfileData(lat: self.lat, long: self.long)
         })
     }
     
