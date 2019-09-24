@@ -17,6 +17,7 @@ class WWMWebServices {
     
     typealias ASCompletionBlockAsDictionary = (_ result: Dictionary<String, Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsArray = (_ result: Array<Any>, _ error: Error?, _ success: Bool) -> Void
+    typealias ASCompletionBlockAsImage = (_ result: UIImage, _ error: Error?, _ success: Bool) -> Void
     
     //MARK: - Service Methods
     
@@ -416,5 +417,29 @@ class WWMWebServices {
         postDataTask.resume()
     }
     
+    
+    class func requestwithImageUrl(url: URL, completionHandler: @escaping ASCompletionBlockAsImage) -> Void {
+           
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+        
+                if  let data = data, error == nil{
+                if let image = UIImage(data: data) {
+                    
+                    completionHandler(image, nil, true)
+                }else {
+                    let imageDefault = UIImage.init(named: "AppIcon")
+                    completionHandler(imageDefault!, nil, true)
+                    }
+            
+            } else if error != nil {
+                
+                completionHandler(UIImage(), error, false)
+            }else {
+                completionHandler(UIImage(), nil, false)
+            }
+            }.resume()
+           
+       }
 }
 

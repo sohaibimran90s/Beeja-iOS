@@ -145,11 +145,45 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 
                 self.present(activityViewController, animated: true, completion: nil)
             }else {
-                let url = URL.init(string: self.arrImages[self.selectedIndex])
-                self.downloaded(url: url!)
+                if let url = URL.init(string: self.arrImages[self.selectedIndex]){
+                    
+                    self.downloadImageWithUrl(url: url)
+                }
+                //self.downloaded(url: url!)
+                
             }
     }
     
+    func downloadImageWithUrl(url: URL) {
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        WWMWebServices.requestwithImageUrl(url: url) { (image, error, success) in
+            if success {
+                let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
+                let imageToShare = [text,image] as [Any]
+                let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                
+                activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+                    print(success ? "SUCCESS!" : "FAILURE")
+                    if success{
+                        self.xibJournalPopupCall()
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }else {
+                    
+                         activityViewController.popoverPresentationController?.sourceView = self.view 
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }
+                }
+                
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
     
     func downloaded(url: URL) {
         //WWMHelperClass.showSVHud()
@@ -168,9 +202,14 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                             self.xibJournalPopupCall()
                         }
                     }
-                    activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                     
-                    self.present(activityViewController, animated: true, completion: nil)
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }else {
+                        
+                       self.present(activityViewController, animated: true, completion: nil)
+                    }
                 }else {
                     let image = UIImage.init(named: "AppIcon")
                     let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
@@ -183,9 +222,12 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                             self.xibJournalPopupCall()
                         }
                     }
-                    activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-                    
-                    self.present(activityViewController, animated: true, completion: nil)
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }else {
+                       self.present(activityViewController, animated: true, completion: nil)
+                    }
                     }
             
             } else { return }
