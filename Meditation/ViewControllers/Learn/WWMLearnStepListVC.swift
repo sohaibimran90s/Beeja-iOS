@@ -30,15 +30,18 @@ class WWMLearnStepListVC: WWMBaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
         }
+        
+        self.selectedIndex = 0
+        getLearnSetpsAPI()
+        
+        //self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         self.navigationController?.isNavigationBarHidden = true
-        getLearnSetpsAPI()
-        self.selectedIndex = 0
-        self.tableView.reloadData()
+        
     }
     
     override func viewDidLayoutSubviews() {

@@ -111,7 +111,7 @@ class WWMWebServices {
         
         request.timeoutInterval = 45
         var postDataTask = URLSessionDataTask()
-        postDataTask.priority = URLSessionDataTask.highPriority
+       // postDataTask.priority = URLSessionDataTask.highPriority
         
         
         postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in
@@ -305,7 +305,7 @@ class WWMWebServices {
         request.addValue(param, forHTTPHeaderField: "Authorization")
         request.timeoutInterval = 45
         var postDataTask = URLSessionDataTask()
-        postDataTask.priority = URLSessionDataTask.highPriority
+       // postDataTask.priority = URLSessionDataTask.highPriority
         
         
         postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in
@@ -385,7 +385,7 @@ class WWMWebServices {
         
         request.timeoutInterval = 45
         var postDataTask = URLSessionDataTask()
-        postDataTask.priority = URLSessionDataTask.highPriority
+       // postDataTask.priority = URLSessionDataTask.highPriority
         
         
         postDataTask = session.dataTask(with: request, completionHandler: { (data : Data?,response : URLResponse?, error : Error?) in

@@ -24,7 +24,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         print("frame width.... \(self.view.frame.size.width/2)")
         buttonBarView.frame.origin.y = -18
         if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 41
+            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 51
             //60
         }
     
@@ -38,7 +38,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarBackgroundColor = .clear
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size: 24)!
+            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size:  18)!
         }
        
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 18)
@@ -46,10 +46,10 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
         settings.style.buttonBarItemsShouldFillAvailiableWidth = false
-        settings.style.buttonBarLeftContentInset = 10
-        settings.style.buttonBarRightContentInset = 10
-        settings.style.buttonBarMinimumInteritemSpacing = 10
-        settings.style.buttonBarItemLeftRightMargin = 10
+        settings.style.buttonBarLeftContentInset = 20
+        settings.style.buttonBarRightContentInset = 20
+        settings.style.buttonBarMinimumInteritemSpacing = 20
+        settings.style.buttonBarItemLeftRightMargin = 20
         
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in

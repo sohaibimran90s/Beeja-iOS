@@ -68,6 +68,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
                 
                 
                 if self.beginTimeLbl.text == self.endTimeLbl.text{
+                    self.beginTimeLbl.text = self.endTimeLbl.text
                     self.btnStart.isHidden = false
                     self.isPlayComplete = true
                     self.btnReplay.setImage(UIImage(named: "replay"), for: .normal)
