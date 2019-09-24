@@ -93,7 +93,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if value == "SignupLetsStart"{
             //videoURL = self.appPreffrence.getHomePageURL()
-            guard let path = Bundle.main.path(forResource: "app_walkthrough", ofType:"mp4") else {
+            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else {
                 debugPrint("video.mp4 not found")
                 return
             }
@@ -106,11 +106,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
             let playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
             playerLayer.videoGravity = AVLayerVideoGravity.resize
-            playerLayer.goFullscreen()
+            //playerLayer.goFullscreen()
             self.view.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
             
-           // NotificationCenter.default.addObserver(self, selector:#selector(reachTheEndOfTheVideo1(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player1?.currentItem)
             player1?.play()
             self.videoCompleted = 1
             return
