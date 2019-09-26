@@ -66,6 +66,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }
         self.tblViewSetting.reloadData()
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        DispatchQueue.global(qos: .background).async {
+            self.settingAPI()
+        }
+    }
+    
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
             return "\(second) sec"
@@ -106,7 +114,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             self.navigationController?.pushViewController(vc, animated: true)
         }else {
             callPushNotification()
-            self.settingAPI()
+            //self.settingAPI()
             self.tblViewSetting.reloadData()
         }
     }
@@ -557,7 +565,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             }
                         }
                     }
-                    self.settingAPI()
+                    //self.settingAPI()
                     self.tblViewSetting.reloadData()
                 }
                 
@@ -829,7 +837,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             // Enable Learn Reminder
         }
-        self.settingAPI()
+        //self.settingAPI()
         self.tblViewSetting.reloadData()
     }
     
@@ -839,7 +847,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func settingAPI() {
         //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+      //  WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
@@ -900,7 +908,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
-                    self.tblViewSetting.reloadData()
+                    //self.tblViewSetting.reloadData()
                 }
             }else {
                 if error != nil {
