@@ -188,7 +188,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
     // MARK:- API Calling
     
     func settingAPI() {
-        WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
