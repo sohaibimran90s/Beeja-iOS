@@ -86,7 +86,17 @@ class WWMLearnReminderVC: WWMBaseViewController {
         }
         
         callPushNotification()
-        self.settingAPI()
+        
+        self.navigationController?.popViewController(animated: true)
+        
+       if self.appPreference.isLogin(){
+            DispatchQueue.global(qos: .background).async {
+                let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+                       if data.count > 0 {
+                           self.settingAPI()
+                }
+            }
+        }
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton){
@@ -178,7 +188,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
     // MARK:- API Calling
     
     func settingAPI() {
-        //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
@@ -240,15 +249,9 @@ class WWMLearnReminderVC: WWMBaseViewController {
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }else {
-                if error != nil {
-                    //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    print("WWMLearnReminderVC")
                 }
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

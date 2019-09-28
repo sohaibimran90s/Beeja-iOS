@@ -379,12 +379,13 @@ class WWMHomeTabVC: WWMBaseViewController {
 
     //MARK:- API Calling
 
-    
+    func meditationApiBackground(){
+        
+    }
     
     func meditationApi() {
         self.view.endEditing(true)
 
-       // WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : self.userData.meditation_id,
             "level_id"      : self.userData.level_id,
@@ -395,22 +396,12 @@ class WWMHomeTabVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setType(value: self.type)
                 self.appPreference.setGuideType(value: self.guided_type)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 UIApplication.shared.keyWindow?.rootViewController = vc
-             }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                }
-            }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+             }
         }
     }
     
