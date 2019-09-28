@@ -69,8 +69,15 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     
     override func viewWillDisappear(_ animated: Bool) {
-        DispatchQueue.global(qos: .background).async {
-            self.settingAPI()
+        super.viewWillDisappear(false)
+        
+        if self.appPreference.isLogin(){
+            DispatchQueue.global(qos: .background).async {
+                let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+                       if data.count > 0 {
+                           self.settingAPI()
+                }
+            }
         }
     }
     
@@ -565,7 +572,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             }
                         }
                     }
-                    //self.settingAPI()
+//                  self.settingAPI()
                     self.tblViewSetting.reloadData()
                 }
                 
@@ -837,17 +844,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             // Enable Learn Reminder
         }
-        //self.settingAPI()
+//      self.settingAPI()
         self.tblViewSetting.reloadData()
     }
-    
     
     
     // MARK:- API Calling
     
     func settingAPI() {
-        //WWMHelperClass.showSVHud()
-      //  WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
@@ -914,9 +918,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 if error != nil {
 //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                 }
-            }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+              }
             }
     }
     
