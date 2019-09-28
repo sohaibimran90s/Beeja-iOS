@@ -119,7 +119,22 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
         
         if WWMHelperClass.value == "mantra"{
             self.settingData.mantraID = self.mantraData[sender.tag].id
-            self.settingAPI()
+            
+            let arrVc = self.navigationController?.viewControllers
+            for vc in arrVc! {
+                if vc.isKind(of: WWMSettingsVC.classForCoder()){
+                    self.navigationController?.popToViewController(vc, animated: true)
+                }
+            }
+            
+            if self.appPreference.isLogin(){
+                DispatchQueue.global(qos: .background).async {
+                    let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+                           if data.count > 0 {
+                               self.settingAPI()
+                    }
+                }
+            }
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnLetsMeditateVC") as! WWMLearnLetsMeditateVC
             
@@ -131,9 +146,6 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
     // MARK:- API Calling
     
     func settingAPI() {
-        //WWMHelperClass.showSVHud()
-       
-        WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
@@ -194,20 +206,10 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
-                    let arrVc = self.navigationController?.viewControllers
-                    for vc in arrVc! {
-                        if vc.isKind(of: WWMSettingsVC.classForCoder()){
-                            self.navigationController?.popToViewController(vc, animated: true)
-                        }
-                    }
-                }
-            }else {
-                if error != nil {
-                    //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    print("WWMChooseMantraListVC")
+                    
                 }
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }
