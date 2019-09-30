@@ -110,7 +110,18 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         self.settingData.prepTime = "\(Int(self.sliderPrepTime.value))"
         self.settingData.restTime = "\(Int(self.sliderRestTime.value))"
         self.settingData.meditationTime = "\(Int(self.sliderMeditationTime.value))"
-        self.settingAPI()
+        
+        
+        if self.appPreference.isLogin(){
+            DispatchQueue.global(qos: .background).async {
+                let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+                       if data.count > 0 {
+                           self.settingAPI()
+                }
+            }
+        }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnCancelAction(_ sender: Any) {
@@ -130,8 +141,6 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     // MARK:- API Calling
     
     func settingAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
@@ -189,19 +198,9 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
+                    print("WWMEditMeditationTimeVC background thread")
                 }
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
