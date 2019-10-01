@@ -126,6 +126,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
+    @available(iOS 13.0, *)
+    func changeRootViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let nextViewController = storyBoard.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+       
+        
+        self.window!.rootViewController = nextViewController
+    }
+    
     func showForceUpdate() {
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "AppDelegate") { (result, error, success) in
             if success {

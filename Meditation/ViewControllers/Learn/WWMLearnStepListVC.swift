@@ -34,7 +34,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.selectedIndex = 0
         getLearnSetpsAPI()
         
-        //self.tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,9 +76,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
     //MARK: API call
     func getLearnSetpsAPI() {
         
-        self.learnStepsListData.removeAll()
-        //WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+        self.learnStepsListData.removeAll()        
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         //let param = ["user_id": "747"] as [String : Any]
         

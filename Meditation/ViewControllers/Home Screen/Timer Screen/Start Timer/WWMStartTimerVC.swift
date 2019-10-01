@@ -21,8 +21,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     var restTime = 0
     var meditationID = ""
     var levelID = ""
-    var player = AVAudioPlayer()
-    var playerAmbient = AVAudioPlayer()
+    var player: AVAudioPlayer?
+    var playerAmbient: AVAudioPlayer?
     var settingData = DBSettings()
  
     var isAmbientSoundPlay = false
@@ -95,7 +95,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
-        self.playerAmbient.stop()
+        self.playerAmbient?.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
@@ -297,7 +297,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.viewPause.isHidden = false
             self.timer.invalidate()
             self.isStop = true
-            self.playerAmbient.stop()
+            self.playerAmbient?.stop()
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
             self.animationViewRest.pause()
@@ -323,7 +323,7 @@ class WWMStartTimerVC: WWMBaseViewController {
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
             
             
-            player.play()
+            player?.play()
             
         } catch let error {
             print(error.localizedDescription)
@@ -344,8 +344,8 @@ class WWMStartTimerVC: WWMBaseViewController {
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
             
             if isAmbientSoundPlay {
-                playerAmbient.play()
-                playerAmbient.numberOfLoops = -1
+                playerAmbient?.play()
+                playerAmbient?.numberOfLoops = -1
             }
             
         } catch let error {
@@ -463,7 +463,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.viewPause.isHidden = false
             self.timer.invalidate()
             self.isStop = true
-            self.playerAmbient.stop()
+            self.playerAmbient?.stop()
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
             self.animationViewRest.pause()
@@ -482,7 +482,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.isStop = false
             self.runTimer()
             if self.isAmbientSoundPlay {
-                self.playerAmbient.play()
+                self.playerAmbient?.play()
             }
             self.animationViewMed.play()
             self.animationViewPrep.play()
@@ -529,7 +529,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.isStop = false
         self.runTimer()
         if self.isAmbientSoundPlay {
-            self.playerAmbient.play()
+            self.playerAmbient?.play()
         }
         self.animationViewMed.play()
         self.animationViewPrep.play()
@@ -564,7 +564,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         if !isStop {
             timer.invalidate()
             self.isStop = true
-            self.playerAmbient.stop()
+            self.playerAmbient?.stop()
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
             self.animationViewRest.pause()

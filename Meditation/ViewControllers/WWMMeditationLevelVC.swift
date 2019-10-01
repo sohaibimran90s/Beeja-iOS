@@ -24,7 +24,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     var selectedMeditation_Id = ""
     var selectedLevel_Id = ""
     
-    var player = AVAudioPlayer()
+    var player: AVAudioPlayer?
 
     
     override func viewDidLoad() {
@@ -171,10 +171,10 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
             /// change fileTypeHint according to the type of your audio file (you can omit this)
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
-            player.delegate = self
+            player?.delegate = self
             
             // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
-            player.play()
+            player?.play()
         } catch let error as NSError {
             print("error: \(error.localizedDescription)")
         }
@@ -183,8 +183,14 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("finished")//It is working now! printed "finished"!
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-             UIApplication.shared.keyWindow?.rootViewController = vc
+             if #available(iOS 13.0, *) {
+                 let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+                 let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                 window?.rootViewController = vc
+             } else {
+                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                 UIApplication.shared.keyWindow?.rootViewController = vc
+             }
         }
 
     }

@@ -34,7 +34,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     //var alertPopupView = WWMAlertController()
     
     var pickerStartChimes = UIPickerView()
-    var player = AVAudioPlayer()
+    var player: AVAudioPlayer?
     
     var settingData = DBSettings()
     var arrMeditationData = [DBMeditationData]()
@@ -83,7 +83,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
-            player.play()
+            player?.play()
             isPlayerPlay = true
             
         } catch let error {
@@ -95,7 +95,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if self.isPlayerPlay {
-           self.player.stop()
+            self.player?.stop()
             self.isPlayerPlay = false
         }
         if isSetMyOwn {
@@ -771,7 +771,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        self.logoutAPI()
+        DispatchQueue.main.async {
+         self.logoutAPI()
+        }
         self.alertPopupView.removeFromSuperview()
     }
     
@@ -916,7 +918,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "token" : appPreference.getToken()
+            "token" : appPreference.getToken(),
+            "user_id": self.appPreference.getUserID()
         ]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -941,9 +944,18 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 loginManager.logOut()
                 GIDSignIn.sharedInstance()?.signOut()
                 GIDSignIn.sharedInstance()?.disconnect()
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                let vcc = UINavigationController.init(rootViewController: vc)
-                UIApplication.shared.keyWindow?.rootViewController = vcc
+                
+                if #available(iOS 13.0, *) {
+                    let vc = self.storyboard?.instantiateViewController(identifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                    let vcc = UINavigationController.init(rootViewController: vc)
+                    window?.rootViewController = vcc
+                } else {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                    let vcc = UINavigationController.init(rootViewController: vc)
+                    UIApplication.shared.keyWindow?.rootViewController = vcc
+                }
+                
             }else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
