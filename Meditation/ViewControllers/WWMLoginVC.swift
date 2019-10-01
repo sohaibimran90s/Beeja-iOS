@@ -231,8 +231,14 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
                         if isProfileCompleted {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc
+                            if #available(iOS 13.0, *) {
+                                let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+                                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                                window?.rootViewController = vc
+                            } else {
+                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                UIApplication.shared.keyWindow?.rootViewController = vc
+                            }
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                             self.navigationController?.pushViewController(vc, animated: true)

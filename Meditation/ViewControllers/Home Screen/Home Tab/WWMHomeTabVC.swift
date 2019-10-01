@@ -323,7 +323,25 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBAction func btnTimerClicked(_ sender: UIButton) {
         self.type = "timer"
         self.guided_type = ""
-        self.meditationApi()
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        if #available(iOS 13.0, *) {
+            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = vc
+        
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
     }
 
     @IBAction func btnGuidedClicked(_ sender: UIButton) {
@@ -333,7 +351,24 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBAction func btnLearnClicked(_ sender: UIButton) {
         self.type = "learn"
         self.guided_type = ""
-        self.meditationApi()
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        if #available(iOS 13.0, *) {
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.changeRootViewController()
+            
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+       DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
     }
     
     
@@ -355,14 +390,46 @@ class WWMHomeTabVC: WWMBaseViewController {
         guideStart.removeFromSuperview()
         guided_type = "practical"
         self.type = "guided"
-        self.meditationApi()
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        if #available(iOS 13.0, *) {
+            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = vc
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
         
     }
     @IBAction func btnSpritualAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         guided_type = "spiritual"
         self.type = "guided"
-        self.meditationApi()
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        if #available(iOS 13.0, *) {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
     }
     
     @IBAction func btnGuideCloseAction(_ sender: UIButton) {
@@ -384,7 +451,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func meditationApi() {
-        self.view.endEditing(true)
+        
 
         let param = [
             "meditation_id" : self.userData.meditation_id,
@@ -395,6 +462,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+<<<<<<< HEAD
                 
                 self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setType(value: self.type)
@@ -402,6 +470,11 @@ class WWMHomeTabVC: WWMBaseViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 UIApplication.shared.keyWindow?.rootViewController = vc
              }
+=======
+                print("success")
+                print("WWMHomeTabVC")
+            }
+>>>>>>> dev-AVPlayer
         }
     }
     

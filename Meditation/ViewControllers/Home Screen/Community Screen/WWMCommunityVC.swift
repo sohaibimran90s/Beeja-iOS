@@ -20,7 +20,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var loginUrl: URL?
     var accessToken: String!
     @objc dynamic var currentPlaylist: [Dictionary<String, Any>]?
-    var playerAV = AVAudioPlayer()
+    var playerAV: AVAudioPlayer?
     var isChangingProgress: Bool = false
     var playListURIToBePlay: String!
     var rowTemp: Int = -2

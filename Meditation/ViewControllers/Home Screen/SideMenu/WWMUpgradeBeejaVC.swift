@@ -283,12 +283,24 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             if sucess {
                 if self.continueRestoreValue == "1"{
                     KUSERDEFAULTS.set("1", forKey: "restore")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    if #available(iOS 13.0, *) {
+                        let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+                        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                        window?.rootViewController = vc
+                    } else {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
                     
                 }else{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    if #available(iOS 13.0, *) {
+                        let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+                        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                        window?.rootViewController = vc
+                    } else {
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
                 }
             }else {
                 

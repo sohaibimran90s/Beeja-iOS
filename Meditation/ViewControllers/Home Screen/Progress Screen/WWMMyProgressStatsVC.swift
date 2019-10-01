@@ -68,7 +68,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var isLeft = false
     var circle = true
     
-    var player = AVAudioPlayer()
+    var player:  AVAudioPlayer?
 
 
     override func viewDidLoad() {
@@ -111,7 +111,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @objc func btnDissmissPopUp(){
-        self.player.stop()
+        self.player?.stop()
         alertNotificationView.removeFromSuperview()
     }
     
@@ -1007,10 +1007,10 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
             /// change fileTypeHint according to the type of your audio file (you can omit this)
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
             
-            player.delegate = self
+            player?.delegate = self
             
             // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
-            player.play()
+            player?.play()
         } catch let error as NSError {
             print("error: \(error.localizedDescription)")
         }
@@ -1019,6 +1019,6 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
     
         print("finished")//It is working now! printed "finished"!
-        self.player.stop()
+        self.player?.stop()
     }
 }

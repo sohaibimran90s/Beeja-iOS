@@ -1,4 +1,7 @@
-//
+  
+  
+  
+  //
 //  WWMWelcomeBackVC.swift
 //  Meditation
 //
@@ -48,7 +51,9 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
             let userLoginTypeArray = userEmail.components(separatedBy: "@")
             if userLoginTypeArray.count > 1 {
                 if userLoginTypeArray[0].count > 3{
-                    var myString: String = String(userLoginTypeArray[0].prefix(3))
+                    
+                    print(String("String(userLoginTypeArray[0]... \(userLoginTypeArray[0])"))
+                    var myString: String = "\(userLoginTypeArray[0].prefix(3))"
                     print(myString)
                     
                     let abc = myString.count
@@ -86,15 +91,14 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                     
                     self.lblUserLoginType.text = userEmail
                 }
-                print(userLoginTypeArray[0])
-                print(userLoginTypeArray[1])
+                //print(userLoginTypeArray[0])
+                //print(userLoginTypeArray[1])
             }else{
                 self.lblUserLoginType.text = userEmail
             }
 
         }
-        
-        self.imageViewProfile.sd_setImage(with: URL.init(string: self.userData.profileImage), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        imageViewProfile.sd_setImage(with: URL(string: self.userData.profileImage), placeholderImage: UIImage(named: "AppIcon.png"))
         
     }
 
@@ -243,8 +247,14 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc
+                            if #available(iOS 13.0, *) {
+                                let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+                                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                                window?.rootViewController = vc
+                            } else {
+                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                UIApplication.shared.keyWindow?.rootViewController = vc
+                            }
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                             self.navigationController?.pushViewController(vc, animated: true)

@@ -216,9 +216,11 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
                 self.appPreference.setUserToken(value: "")
                 self.appPreference.setUserID(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
+                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)
                 UIApplication.shared.keyWindow?.rootViewController = vcc
+                
             }else {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
                     WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
