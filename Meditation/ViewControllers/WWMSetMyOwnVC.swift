@@ -333,7 +333,10 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             self.settingData.addToMeditationData(meditationDB)
         }
         
-        self.settingAPI()
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            self.settingAPI()
+        }
     }
     
     func settingAPI() {
