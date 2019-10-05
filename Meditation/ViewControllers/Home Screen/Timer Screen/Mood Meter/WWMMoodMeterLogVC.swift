@@ -121,7 +121,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     @IBAction func btnSkipAction(_ sender: Any) {
         self.txtViewLog.text = ""
-        self.completeMeditationAPI()
+        
+        DispatchQueue.global(qos: .background).async {
+            self.completeMeditationAPI()
+        }
+        self.logExperience()
     }
     
     @IBAction func btnBurnMoodAction(_ sender: Any) {
@@ -171,9 +175,13 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
         }else {
-            
-            self.completeMeditationAPI()
+        
             self.getPrePostMoodData()
+            
+            DispatchQueue.global(qos: .background).async {
+                self.completeMeditationAPI()
+            }
+            self.logExperience()
         }
     }
     
@@ -210,9 +218,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     func completeMeditationAPI() {
-        
-
-        WWMHelperClass.showLoaderAnimate(on: self.view)
         
         var param: [String: Any] = [:]
         
@@ -264,19 +269,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
+                if let _ = result["success"] as? Bool {
+                    print("success moodmeterlogvc background api run")
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    self.logExperience()
+                    //self.logExperience()
                 }else {
                     self.saveToDB(param: param)
                 }
-                
             }else {
                 self.saveToDB(param: param)
             }
-
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -287,7 +289,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         meditationDB.meditationData = myString
         WWMHelperClass.saveDb()
-        self.logExperience()
+        //self.logExperience()
     }
     
     func logExperience() {
@@ -366,15 +368,5 @@ extension WWMMoodMeterLogVC: UITextViewDelegate{
         let newText = (txtViewLog.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
-    }
-    
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        //self.view.removeGestureRecognizer(tap)
-//        if  txtViewLog.text == "" {
-//            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_JournalMessage, title: kAlertTitle)
-//        }else {
-//            self.completeMeditationAPI()
-//        }
     }
 }

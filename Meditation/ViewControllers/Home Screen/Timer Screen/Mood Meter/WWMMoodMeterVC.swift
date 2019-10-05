@@ -208,7 +208,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
                 self.view.isUserInteractionEnabled = false
                 self.alertPopupView1.removeFromSuperview()
-                completeMeditationAPI()
+                
+                DispatchQueue.global(qos: .background).async {
+                    self.completeMeditationAPI()
+                }
+                self.navigateToDashboard()
+                
             }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
                 self.alertPopupView1.removeFromSuperview()
                 self.view.isUserInteractionEnabled = false
@@ -271,8 +276,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     
     func completeMeditationAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+
         var param: [String: Any] = [:]
         if WWMHelperClass.selectedType == "learn"{
             param = [
@@ -324,7 +328,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             if sucess {
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    self.navigateToDashboard()
+                    print("success... moodmetervc meditationcomplete api in background")
+                    //self.navigateToDashboard()
                 }else {
                     self.saveToDB(param: param)
                 }
@@ -332,8 +337,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }else {
                 self.saveToDB(param: param)
             }
-
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -499,7 +502,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
 
-            WWMHelperClass.showLoaderAnimate(on: self.view)
             let param = [
                 "type": self.userData.type,
                 "category_id": self.category_Id,
@@ -522,22 +524,27 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             
             print("meter param... \(param)")
             
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    if let success = result["success"] as? Bool {
-                        print(success)
-                        self.appPreffrence.setSessionAvailableData(value: true)
-                        self.navigateToDashboard()
+            
+            //background thread meditation api*
+            DispatchQueue.global(qos: .background).async {
+                WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                    if sucess {
+                        if let _ = result["success"] as? Bool {
+                            print("success... moodmetervc meditationcomplete api in background")
+                            self.appPreffrence.setSessionAvailableData(value: true)
+                            //self.navigateToDashboard()
+                        }else {
+                            self.saveToDB(param: param)
+                        }
+                        
                     }else {
                         self.saveToDB(param: param)
                     }
-                    
-                }else {
-                    self.saveToDB(param: param)
                 }
-                //WWMHelperClass.dismissSVHud()
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-            }
+            }//background thread meditation api*
+
+            self.navigateToDashboard()
+            
         }
     }
     
@@ -547,7 +554,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         meditationDB.meditationData = myString
         WWMHelperClass.saveDb()
-        self.navigateToDashboard()
+        //self.navigateToDashboard()
     }
     
     func navigateToDashboard() {
@@ -588,13 +595,22 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         self.callWWMMoodMeterLogVC()
                     }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() == 0){
                         
-                        completeMeditationAPI()
+                        
+                        DispatchQueue.global(qos: .background).async {
+                            self.completeMeditationAPI()
+                        }
+                        self.navigateToDashboard()
+                        
                     }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
                         
                         self.callWWMMoodMeterLogVC()
                     }else if (self.appPreference.getPreMoodCount() > 0) && (self.appPreference.getPreJournalCount() == 0){
                         
-                        completeMeditationAPI()
+                        DispatchQueue.global(qos: .background).async {
+                            self.completeMeditationAPI()
+                        }
+                        self.navigateToDashboard()
+                        
                     }else{
                         
                         self.callWWMMoodMeterLogVC()
@@ -617,13 +633,21 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         self.callWWMMoodMeterLogVC()
                     }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
                         
-                        completeMeditationAPI()
+                        DispatchQueue.global(qos: .background).async {
+                            self.completeMeditationAPI()
+                        }
+                        self.navigateToDashboard()
+                        
                     }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
                         
                         self.callWWMMoodMeterLogVC()
                     }else if (self.appPreference.getPostMoodCount() > 0) && (self.appPreference.getPostJournalCount() == 0){
                         
-                        completeMeditationAPI()
+                        DispatchQueue.global(qos: .background).async {
+                            self.completeMeditationAPI()
+                        }
+                        self.navigateToDashboard()
+                        
                     }else{
                         
                         self.callWWMMoodMeterLogVC()
