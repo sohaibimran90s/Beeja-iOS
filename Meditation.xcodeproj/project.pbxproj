@@ -395,6 +395,8 @@
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
+		61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */; };
+		61FE76682348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE76662348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift */; };
 		6B31C886239092ED89F368E5 /* Pods_MeditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */; };
 		6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */; };
 		6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */; };
@@ -823,6 +825,8 @@
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
+		61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMeditationHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		61FE76662348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMeditationHistory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -874,6 +878,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */,
+				61FE76662348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift */,
 				2E9CCCB3225C67C5001465AD /* DBAddSession+CoreDataClass.swift */,
 				2E9CCCB4225C67C5001465AD /* DBAddSession+CoreDataProperties.swift */,
 				2EA9E81C225614BA00E2D73D /* DBJournalData+CoreDataClass.swift */,
@@ -2504,6 +2510,7 @@
 				61416ECE22BBB45600C9339E /* MarkerView.swift in Sources */,
 				61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */,
 				6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */,
+				61FE76682348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift in Sources */,
 				61416ECD22BBB45600C9339E /* MarkerImage.swift in Sources */,
 				2E4966172218089D00BC6219 /* WWMCommunityCollectionViewCell.swift in Sources */,
 				61416E9322BBB3B400C9339E /* BarLineChartViewBase.swift in Sources */,
@@ -2540,6 +2547,7 @@
 				2E93D2FF21F5FFC300163E57 /* WWMDatabase.xcdatamodeld in Sources */,
 				61416F5122BBB5B500C9339E /* ChartFormatter.swift in Sources */,
 				61416F1922BBB4FB00C9339E /* ChartBaseDataSet.swift in Sources */,
+				61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */,
 				614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */,
 				2EEF9AED221AEC900016A77C /* DBTimerData+CoreDataProperties.swift in Sources */,
 			);

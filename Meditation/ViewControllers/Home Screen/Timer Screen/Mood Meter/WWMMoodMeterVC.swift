@@ -337,6 +337,38 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
     }
     
+    //MeditationHistoryList API
+    func meditationHistoryListAPI() {
+        
+        let param = ["user_id": self.appPreffrence.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        
+                        let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                        if meditationHistoryData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                        }
+                        
+                        for dict in records{
+                            let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMeditationHistory.data = myString
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                }
+                
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                print("success moodmeterVC meditationhistoryapi in background thread")
+            }
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.createMoodScroller()

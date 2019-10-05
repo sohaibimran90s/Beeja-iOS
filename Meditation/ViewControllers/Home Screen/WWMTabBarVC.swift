@@ -31,7 +31,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var milestoneType: String = ""
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
@@ -42,8 +41,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
         }
         
+        DispatchQueue.global(qos: .background).async {
+            self.meditationHistoryListAPI()
+        }
+        
         self.delegate = self
-       // getUserProfileData(lat: self.lat, long: self.long)
         setupView()
         
         if !reachable.isConnectedToNetwork() {
@@ -52,11 +54,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 var userData = WWMUserData()
                 userData = WWMUserData.init(json: self.appPreffrence.getUserData())
                 print(userData)
-                
-//                self.lat = userData.latitude
-//                self.long = userData.longitude
-//                city = userData.city
-//                country = userData.country
                 
                 let userData1 = self.appPreffrence.getUserData()
             
@@ -314,6 +311,37 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             
         }else {
             self.getDataFromDatabase()
+        }
+    }
+    
+    //MeditationHistoryList API
+    func meditationHistoryListAPI() {
+        
+        let param = ["user_id": self.appPreffrence.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        
+                        let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                        if meditationHistoryData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                        }
+                        
+                        for dict in records{
+                            let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMeditationHistory.data = myString
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                }
+                
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                print("success tabbarVC meditationhistoryapi in background thread")
+            }
         }
     }
 

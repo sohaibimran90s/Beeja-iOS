@@ -82,7 +82,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.meditationHistoryListAPI()
+        self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
         scrollView.setContentOffset(.zero, animated: true)
@@ -465,49 +465,46 @@ class WWMHomeTabVC: WWMBaseViewController {
         }
     }
     
-    func meditationHistoryListAPI() {
+    
+     func fetchMeditationHistDataFromDB() {
         
-      //  WWMHelperClass.showLoaderAnimate(on: self.view)
         self.medHisViewHeightConstraint.constant = 0
         self.lblMedHistoryText.textColor = UIColor.clear
         
-        self.data.removeAll()
-        let param = ["user_id": self.appPreference.getUserID()]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let data = result["data"] as? [String: Any]{
-                    if let records = data["records"] as? [[String: Any]]{
-                        for dict in records{
-                            let data = WWMMeditationHistoryListData(json: dict)
-                            self.data.append(data)
-                        }
-                    }
-                    
-                    if self.data.count > 0{
-                        self.medHisViewHeightConstraint.constant = 416
-                        self.lblMedHistoryText.textColor = UIColor.white
-                        self.collectionView.reloadData()
-                    }else{
-                        self.medHisViewHeightConstraint.constant = 0
-                        self.lblMedHistoryText.textColor = UIColor.clear
-                    }
-                }
-                
-                
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1")")
-                print("param MedHist....****** \(param)")
-                print("result medHist....****** \(result)")
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
+         let meditationHistDB = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+         if meditationHistDB.count > 0 {
+            var data = WWMMeditationHistoryListData()
+            for dict in meditationHistDB {
+                if let jsonResult = self.convertToDictionary(text: dict.data ?? "") {
+                    data = WWMMeditationHistoryListData.init(json: jsonResult)
+                    self.data.append(data)
                 }
             }
-         //   WWMHelperClass.hideLoaderAnimate(on: self.view)
+            
+            if self.data.count > 0{
+                    self.medHisViewHeightConstraint.constant = 416
+                    self.lblMedHistoryText.textColor = UIColor.white
+                    self.collectionView.reloadData()
+                }else{
+                    self.medHisViewHeightConstraint.constant = 0
+                    self.lblMedHistoryText.textColor = UIColor.clear
+                }
+         }else{
+            print("no meditation list data...")
+            self.medHisViewHeightConstraint.constant = 0
+            self.lblMedHistoryText.textColor = UIColor.clear
         }
+    }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
