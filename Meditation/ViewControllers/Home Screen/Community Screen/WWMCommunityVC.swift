@@ -39,6 +39,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
@@ -49,22 +51,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         accessToken = "Not Assigned"
         //setup()
         NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-       // CallingFuncs()
-        
-        
-        /*
-         self.observers = [
-         WWMSpotifyManager.sharedManager.observe(\.currentPlaylist, options: [.initial]) { [weak self] (playlist, change) in
-         
-         DispatchQueue.main.async{
-         //put your code here
-         self?.tblViewCommunity.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-         }
-         
-         
-         }
-         
-         ]*/
         
         notificationCenter.addObserver(self, selector: #selector(appMovedFromBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -92,7 +78,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     
                 }
             }
-            
         }
     }
     
@@ -124,9 +109,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 print(self.accessToken)
                 self.tblViewCommunity.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
             }
-            
         }
-        
     }
     
     @objc func updateAfterFirstLogin () {
@@ -179,9 +162,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     // MARK:- UITable View Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if self.communityData.events.count == 0 {
-//            return 2
-//        }
+        
         return 3
     }
     
@@ -190,55 +171,27 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         if self.communityData.events.count == 0 {
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
-                //cell actual size with spotify 264
                 
                 tableView.rowHeight = 0
-//                cell.collectionViewCommunity.isHidden = true
-//                cell.btnSpotifyPlayList.isHidden = true
-//                cell.btnConnectSpotify.isHidden = true
-//                cell.viewUnderLine.isHidden = true
+            }else if indexPath.row == 1 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "CellSecond") as! WWMCommunityTableViewCell
                 
-//                cell.webView.navigationDelegate = self
-//                let url = URL.init(string: "https://embed.spotify.com/?uri=spotify:user:0lxudwzk336zlvnfgkuwo2uxy:playlist:7JX1OZ3T1fTZg86rGbNKuw")
-//                let request = URLRequest.init(url: url!)
-//                cell.webView.load(request)
-                
-                //cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
-//                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
-//
-//                cell.btnConnectSpotify.layer.borderWidth = 2.0
-//                cell.btnConnectSpotify.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-//                cell.btnConnectSpotify.addTarget(self, action: #selector(btnCheckSpotifyAction(_:)), for: .touchUpInside)
-//                cell.btnConnectSpotify.isHidden = true
-//                cell.btnSpotifyPlayList.isHidden = false
-//                cell.viewUnderLine.isHidden = false
-//
-//                if !boolConnectSpotify{
-//                    cell.btnConnectSpotify.isHidden = false
-//                    cell.btnSpotifyPlayList.isHidden = true
-//                    cell.viewUnderLine.isHidden = true
-//                }else{
-//                    cell.btnConnectSpotify.isHidden = true
-//                    cell.btnSpotifyPlayList.isHidden = false
-//                    cell.viewUnderLine.isHidden = false
-//                }
-                
+                tableView.rowHeight = 0
             }else {
                 tableView.rowHeight = UITableView.automaticDimension
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellThird") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnUploadHashTagsAction(_:)), for: .touchUpInside)
+                //tableView.rowHeight = 0
+                cell.collectionViewCommunity.tag = indexPath.row
+                cell.collectionViewCommunity.reloadData()
             }
-            cell.collectionViewCommunity.tag = indexPath.row
-            cell.collectionViewCommunity.reloadData()
+            
             return cell
         }else {
             if indexPath.row == 0 {
                 tableView.rowHeight = 0
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellFirst") as! WWMCommunityTableViewCell
-//                cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
-//                cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewSpotifyAction(_:)), for: .touchUpInside)
-                
                 
                 cell.webView.navigationDelegate = self
                 let url = URL.init(string: "https://embed.spotify.com/?uri=spotify:user:0lxudwzk336zlvnfgkuwo2uxy:playlist:7JX1OZ3T1fTZg86rGbNKuw")
@@ -270,7 +223,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if self.communityData.events.count == 0 {
-            if collectionView.tag == 1 {
+            print("collectionview.tag... \(collectionView.tag)")
+            
+            if collectionView.tag == 2 {
                 if self.communityData.hashtags.count > 6 {
                     return 6
                 }
@@ -311,17 +266,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     let imageUrl = imageDictionary["url"] as? String ?? ""
                     print("\(imageUrl)")
                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-                    
-                    /*  if let imageSize = imageDictionary["height"] as? Int {
-                     if imageSize == 640 {
-                     let imageUrl = imageDictionary["url"] as! String
-                     print("\(imageUrl)")
-                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-                     }
-                     }*/
-                    
                 }
-            }else if collectionView.tag == 1 {
+            }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {
                     cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellMore", for: indexPath) as! WWMCommunityCollectionViewCell
                     return cell
@@ -403,7 +349,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     rowTemp = -1
                     SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
                 }
-            }else if collectionView.tag == 1 {
+            }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {
                     let data = self.communityData.hashtags
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllHashTagsVC") as! WWMCommunityAllHashTagsVC
@@ -557,9 +503,14 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             "user_Id":self.appPreference.getUserID(),
             "month":self.strMonthYear
             ] as [String : Any]
+        
+        print("URL_COMMUNITYDATA... \(URL_COMMUNITYDATA)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.communityData = WWMCommunityData.init(json: result["result"] as! [String : Any])
+                
+                print("self.communityData.events.count..... \(self.communityData.events.count)")
+                       print("self.communityData.events.count..... \(self.communityData.hashtags.count)")
                 self.tblViewCommunity.reloadData()
             }else {
                 if error != nil {

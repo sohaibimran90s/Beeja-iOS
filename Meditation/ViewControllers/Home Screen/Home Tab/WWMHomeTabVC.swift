@@ -468,9 +468,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     
      func fetchMeditationHistDataFromDB() {
         
-        self.medHisViewHeightConstraint.constant = 0
-        self.lblMedHistoryText.textColor = UIColor.clear
-        
+        self.data.removeAll()
          let meditationHistDB = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
          if meditationHistDB.count > 0 {
             var data = WWMMeditationHistoryListData()

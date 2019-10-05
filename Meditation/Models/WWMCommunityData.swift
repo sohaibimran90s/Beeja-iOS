@@ -15,6 +15,7 @@ class WWMCommunityData: NSObject {
     
     
     override init() {
+        
     }
     
     init(json:[String:Any]) {

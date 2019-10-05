@@ -78,14 +78,17 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     @IBAction func btnSkipAction(_ sender: Any) {
         self.txtViewLog.text = ""
-        self.completeMeditationAPI()
+        
+        DispatchQueue.global(qos: .background).async {
+            self.completeMeditationAPI()
+        }
+        self.logExperience()
     }
     
     @IBAction func btnSubmitAction(_ sender: Any) {
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
-            self.completeMeditationAPI()
             
             if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
                 if self.type == "pre"{
@@ -100,14 +103,17 @@ class WWMMoodJournalVC: WWMBaseViewController {
                     }
                 }
             }
+            
+            DispatchQueue.global(qos: .background).async {
+                self.completeMeditationAPI()
+            }
+            self.logExperience()
         }
     }
 
     
     func completeMeditationAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+
         var param: [String: Any] = [:]
         
         print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
@@ -161,10 +167,12 @@ class WWMMoodJournalVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
+                if let _ = result["success"] as? Bool {
+                    print("success moodjournalvc background meditationcomplete api...")
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    self.logExperience()
+                    
+                    self.meditationHistoryListAPI()
+                    //self.logExperience()
                 }else {
                     self.saveToDB(param: param)
                 }
@@ -172,8 +180,6 @@ class WWMMoodJournalVC: WWMBaseViewController {
             }else {
                 self.saveToDB(param: param)
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -184,7 +190,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         meditationDB.meditationData = myString
         WWMHelperClass.saveDb()
-        self.logExperience()
+        //self.logExperience()
     }
     
     func logExperience() {
@@ -216,7 +222,38 @@ class WWMMoodJournalVC: WWMBaseViewController {
             }
             self.navigationController?.popToRootViewController(animated: false)
         }
+    
+    //MeditationHistoryList API
+    func meditationHistoryListAPI() {
+        
+        let param = ["user_id": self.appPreffrence.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        
+                        let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                        if meditationHistoryData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                        }
+                        
+                        for dict in records{
+                            let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMeditationHistory.data = myString
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                }
+                
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                print("success moodjournalVC meditationhistoryapi in background thread")
+            }
+        }
     }
+}
 
 extension WWMMoodJournalVC: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
@@ -234,7 +271,10 @@ extension WWMMoodJournalVC: UITextViewDelegate{
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
-            self.completeMeditationAPI()
+            DispatchQueue.global(qos: .background).async {
+                self.completeMeditationAPI()
+            }
+            self.logExperience()
         }
     }
 }

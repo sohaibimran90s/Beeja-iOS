@@ -72,11 +72,22 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
                 
-                if let baseUrl = result["base_url"] as? String{
-                    KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                }else {
-                    KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+                #if DEBUG
+                    print("I'm running in DEBUG mode")
+                
+                    if let baseUrl = result["staging_url"] as? String{
+                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                    }else {
+                        KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
+                    }
+                #else
+                    print("I'm running in a non-DEBUG mode")
+                    if let baseUrl = result["base_url"] as? String{
+                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                    }else {
+                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
                 }
+                #endif
                 
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{

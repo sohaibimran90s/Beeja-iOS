@@ -223,6 +223,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 //"plan_id" : transaction.payment.productIdentifier
                 //"subscription_plan" : self.subscriptionPlan
                 
+                
                 let param = [
                     "plan_id" : plan_id,
                     "user_id" : self.appPreference.getUserID(),
@@ -248,7 +249,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             }
         }
     }
-    
     
     func getSubscriptionPlanId(){
         
