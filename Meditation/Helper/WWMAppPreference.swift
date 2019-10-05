@@ -82,6 +82,10 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "expiryDateDiff")
     }
     
+    func SetExpireDateBackend(value: String){
+        defaults.set(value, forKey: "expiryDate")
+    }
+    
     
     func setPreJournalCount(value: Int){
         defaults.set(value, forKey: "preJournalCount")
@@ -122,6 +126,11 @@ class WWMAppPreference: NSObject {
     func getExpiryDate() -> Bool{
         return defaults.bool(forKey: "expiryDateDiff")
     }
+    
+    func getExpireDateBackend() -> String {
+        return UserDefaults.standard.string(forKey: "expiryDate") ?? ""
+    }
+    //
     
     func getPrePostJournalBool() -> Bool{
         return defaults.bool(forKey: "prePostJournalBool")
@@ -175,6 +184,8 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "UserName")
         defaults.synchronize()
     }
+    
+    
     
     func setConnectionType(value:String) {
         defaults.set(value, forKey: "connectionType")

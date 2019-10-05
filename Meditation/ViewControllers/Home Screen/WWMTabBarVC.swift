@@ -29,7 +29,12 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     var alertPopup = WWMAlertPopUp()
     var milestoneType: String = ""
-
+    
+    var product_id: String = ""
+    var responseArray: [[String: Any]] = []
+    var date_time: Any?
+    var transaction_id: Any?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -316,6 +321,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDataFromDatabase()
         }
     }
+    
+
 
     // UITabBarDelegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -373,6 +380,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                         
                         self.appPreffrence.setOffers(value: result["offers"] as! [String])
+                
                         
                         if let userProfile = result["user_profile"] as? [String : Any]{
                             self.appPreffrence.setUserName(value:  userProfile["name"] as? String ?? "")
@@ -381,8 +389,10 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
                         
                         
-                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool())")
-                        print("userSubscription.expiry_date... \(userSubscription.expiry_date)")
+                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date)")
+                        
+                        self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
+
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
 
                         self.appPreffrence.setExpiryDate(value: false)
@@ -404,7 +414,39 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         self.setDataToDb(json: result["settings"] as! [String:Any])
-                    
+                        
+                        
+                        //*receiptValidation
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        
+                        
+                        if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                            if expiryDate != ""{
+                                print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                
+                                print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                                
+                                let expireDate = formatter.date(from: expiryDate)!
+                                
+                                let currentDateString = formatter.string(from: Date())
+                                let currentDate = formatter.date(from: currentDateString)!
+                                
+                                if currentDate > expireDate{
+                                    print("currentDate is greater than expireDate")
+                                    if self.appPreffrence.isLogin(){
+                                        DispatchQueue.global(qos: .background).async {
+                                            self.receiptValidation()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //receiptValidation*
+                        
                     }else {
                         self.getDataFromDatabase()
                     }
@@ -415,6 +457,166 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 self.getDataFromDatabase()
             }
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
+            }
+        }
+    }
+    
+    
+    
+    func receiptValidation() {
+          
+          let receiptFileURL = Bundle.main.appStoreReceiptURL
+          let receiptData = try? Data(contentsOf: receiptFileURL!)
+          if let recieptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)){
+              let jsonDict: [String: AnyObject] = ["receipt-data" : recieptString as AnyObject, "password" : "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject]
+              
+              do {
+                  let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
+                  let verifyReceiptURL = "https:/sandbox.itunes.apple.com/verifyReceipt"
+                  let storeURL = URL(string: verifyReceiptURL)!
+                  var storeRequest = URLRequest(url: storeURL)
+                  storeRequest.httpMethod = "POST"
+                  storeRequest.httpBody = requestData
+                  
+                  let session = URLSession(configuration: URLSessionConfiguration.default)
+                  let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
+                      
+                      do {
+                          let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                          print("=======>",jsonResponse)
+                          if let date = self?.getExpirationDateFromResponse(jsonResponse as! NSDictionary) {
+                            print("date... \(date)")
+                            
+                            if let expiryDate = self?.appPreffrence.getExpireDateBackend(){
+                                if expiryDate != ""{
+                                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                    
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    
+                                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                                    
+                                    let expireDate = formatter.date(from: expiryDate)!
+                                    
+                                    if date > expireDate{
+                                        print("product_id... \(self?.product_id ?? "")")
+                                        print("repurchased")
+                                        self?.getSubscriptionPlanId()
+                                    }else{
+                                        print("expired")
+                                    }
+                                }
+                            }
+                        }
+                      } catch let parseError {
+                          print(parseError)
+                      }
+                  })
+                  task.resume()
+              } catch let parseError {
+                  print(parseError)
+              }
+        }
+    }
+      
+    func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
+          
+          if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
+              
+            let lastReceipt = receiptInfo.lastObject as! NSDictionary
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+             
+            if let product_id = lastReceipt["product_id"] as? String {
+                self.product_id = product_id
+            }
+            
+            if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
+                self.date_time = purchase_date_ms
+            }
+            
+            if let transaction_id = lastReceipt["transaction_id"]{
+                self.transaction_id = transaction_id
+            }
+            
+            if let expiresDate = lastReceipt["purchase_date"] as? String {
+                return formatter.date(from: expiresDate)
+            }
+              
+              return nil
+          }
+          else {
+              return nil
+          }
+      }
+    
+    
+    func getSubscriptionPlanId(){
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+            if sucess {
+                if let result = response["result"] as? [[String: Any]]{
+                    self.responseArray = result
+                   print("result.... \(result)")
+                    
+                    var getProductId: Bool = false
+                    var plan_id: Int = 2
+                    var subscriptionPlan: String = "annual"
+                    var subscriptionAmount: Any?
+                    
+                    for i in 0..<self.responseArray.count{
+                        if let dict = self.responseArray[i] as? [String: Any]{
+                            if let product_id = dict["product_id"] as? String{
+                                if self.product_id == product_id{
+                                    self.product_id = product_id
+                                    
+                                    if let id = dict["id"] as? Int{
+                                        plan_id = id
+                                    }
+                                    
+                                    if let name = dict["name"] as? String{
+                                        subscriptionPlan = name
+                                    }
+                                                                        
+                                    if let cost = dict["cost"]{
+                                        subscriptionAmount = cost
+                                    }
+                                                                        
+                                    getProductId = true
+                                    break
+                                }
+                            }
+                        }
+                    }
+                    
+                    if getProductId{
+                                                
+                        let param = [
+                            "plan_id" : plan_id,
+                            "user_id" : self.appPreffrence.getUserID(),
+                            "subscription_plan" : subscriptionPlan,
+                            "date_time" : self.date_time!,
+                            "transaction_id" : self.transaction_id!,
+                            "amount" : subscriptionAmount!
+                            ] as [String : Any]
+                        
+                        print("param,,,,... \(param)")
+                        self.subscriptionSucessAPI(param: param)
+                    }
+                }
+            }
+        }
+    }
+    
+    func subscriptionSucessAPI(param : [String : Any]) {
+        
+        print("param.....###### \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+            if sucess {
+                print("success.... upgrade beeja tab bar vc")
+                print("lat...\(self.lat) long... \(self.long)")
+                self.getUserProfileData(lat: self.lat, long: self.long)
             }
         }
     }
