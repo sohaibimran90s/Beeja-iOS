@@ -948,6 +948,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
                 WWMHelperClass.deletefromDb(dbName: "DBSettings")
                 WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+                WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
                 
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
