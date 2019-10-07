@@ -10,6 +10,10 @@
         <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData"/>
     </entity>
+    <entity name="DBCommunityData" representedClassName="DBCommunityData" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="String"/>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
     </entity>
@@ -85,9 +89,10 @@
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
         <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="120"/>
+        <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
-        <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
+        <element name="DBCommunityData" positionX="-18" positionY="135" width="128" height="73"/>
     </elements>
 </model>

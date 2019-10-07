@@ -45,7 +45,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
-        self.getCommunityAPI()
+        //self.getCommunityAPI()
         self.setUpNavigationBarForDashboard(title: "Community")
         
         accessToken = "Not Assigned"
@@ -61,12 +61,14 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        self.fetchCommunityDataFromDB()
     }
     
     @objc func appMovedFromBackground() {
         print("App moved from background!")
-        self.getCommunityAPI()
-        
+        //self.getCommunityAPI()
+        self.fetchCommunityDataFromDB()
     }
     
     
@@ -126,7 +128,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             boolConnectSpotify = false
         }
         
-        self.getCommunityAPI()
+        //self.getCommunityAPI()
+        self.fetchCommunityDataFromDB()
         
     }
     
@@ -496,29 +499,48 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         }
      }
     
-    func getCommunityAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "user_Id":self.appPreference.getUserID(),
-            "month":self.strMonthYear
-            ] as [String : Any]
-        
-        print("URL_COMMUNITYDATA... \(URL_COMMUNITYDATA)")
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                self.communityData = WWMCommunityData.init(json: result["result"] as! [String : Any])
-                
-                print("self.communityData.events.count..... \(self.communityData.events.count)")
-                       print("self.communityData.events.count..... \(self.communityData.hashtags.count)")
-                self.tblViewCommunity.reloadData()
-            }else {
-                if error != nil {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+    func fetchCommunityDataFromDB() {
+        let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
+        if comunityDataDB.count > 0 {
+            for dict in comunityDataDB {
+                if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
+                    self.communityData = WWMCommunityData.init(json: jsonResult)
                 }
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            print(self.communityData.events.count)
+            self.tblViewCommunity.reloadData()
+        }
+    }
+    
+    func getCommunityAPI() {
+
+        let param = [
+            "user_Id": self.appPreference.getUserID(),
+            "month": self.strMonthYear
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                let comunityData = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
+                if comunityData.count > 0 {
+                    WWMHelperClass.deletefromDb(dbName: "DBCommunityData")
+                }
+                
+                //self.journalData.removeAll()
+                self.communityData = WWMCommunityData.init(json: result["result"] as! [String : Any])
+                let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
+                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: result["result"] as! [String : Any], options:.prettyPrinted)
+                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                dbCommunityData.data = myString
+                
+                let timeInterval = Int(Date().timeIntervalSince1970)
+                print("timeInterval.... \(timeInterval)")
+                
+                dbCommunityData.last_time_stamp = "\(timeInterval)"
+                
+                WWMHelperClass.saveDb()
+                self.tblViewCommunity.reloadData()
+            }
         }
     }
     

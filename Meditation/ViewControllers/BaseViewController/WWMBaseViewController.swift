@@ -223,5 +223,16 @@ class WWMBaseViewController: UIViewController {
     func secondToMinuteSecond(second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
     }
+    
+    func convertToDictionary1(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
 }
 

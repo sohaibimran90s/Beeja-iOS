@@ -388,6 +388,8 @@
 		614678E922E4BEA8006AA6E9 /* WWMFAQsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */; };
 		6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */; };
 		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
+		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
+		615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
 		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
 		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
@@ -818,6 +820,8 @@
 		614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsData.swift; sourceTree = "<group>"; };
 		6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMilestonePopUp.xib; sourceTree = "<group>"; };
 		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
+		615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListVC.swift; sourceTree = "<group>"; };
 		6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListTVC.swift; sourceTree = "<group>"; };
@@ -878,6 +882,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */,
+				615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */,
 				61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */,
 				61FE76662348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift */,
 				2E9CCCB3225C67C5001465AD /* DBAddSession+CoreDataClass.swift */,
@@ -2369,6 +2375,7 @@
 				61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */,
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
 				61416EC822BBB45600C9339E /* ComponentBase.swift in Sources */,
+				615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */,
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				61416F0E22BBB4C800C9339E /* RadarChartDataEntry.swift in Sources */,
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
@@ -2548,6 +2555,7 @@
 				61416F5122BBB5B500C9339E /* ChartFormatter.swift in Sources */,
 				61416F1922BBB4FB00C9339E /* ChartBaseDataSet.swift in Sources */,
 				61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */,
+				615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */,
 				614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */,
 				2EEF9AED221AEC900016A77C /* DBTimerData+CoreDataProperties.swift in Sources */,
 			);

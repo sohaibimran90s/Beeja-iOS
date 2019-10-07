@@ -35,6 +35,10 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var date_time: Any?
     var transaction_id: Any?
     
+    //community
+    var strMonthYear = ""
+    var communityData = WWMCommunityData()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +50,14 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
         }
         
+        //community
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyyMM"
+        self.strMonthYear = dateFormatter.string(from: Date())
+        
         DispatchQueue.global(qos: .background).async {
+            self.getDictionaryAPI()
             self.meditationHistoryListAPI()
         }
         
@@ -316,6 +327,102 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             
         }else {
             self.getDataFromDatabase()
+        }
+    }
+    
+    //GET dictionary api
+    //MARK: API call
+    func getDictionaryAPI() {
+                
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_DICTIONARY, context: "URL_DICTIONARY", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                print("get dictionary result... \(result)")
+                if let mantras = result["mantras"]{
+                    
+                }
+                
+                if let communtiyTimeStamp = result["guidedData"]{
+                    
+                    self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
+                
+                }
+                
+                print("success tabbarVC getdictionaryapi in background thread")
+            }
+        }
+    }
+    
+    func fetchCommunityDataFromDB(time_stamp: Any) {
+        let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
+        if comunityDataDB.count > 0 {
+            
+            for dict in comunityDataDB {
+                
+                //let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                let currentDateString = dateFormatter.string(from: Date())
+                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let apiTimeStamp: String = "\(time_stamp)"
+
+                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                
+                let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                
+                print("date1... \(systemDate) date2... \(apiDate)")
+                if systemDate < apiDate{
+                    self.getCommunityAPI()
+                }
+            }
+        }else{
+            self.getCommunityAPI()
+        }
+        
+    }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    //MARK: Community api
+    func getCommunityAPI() {
+
+        let param = [
+            "user_Id":self.appPreffrence.getUserID(),
+            "month":self.strMonthYear
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                let comunityData = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
+                if comunityData.count > 0 {
+                    WWMHelperClass.deletefromDb(dbName: "DBCommunityData")
+                }
+                
+                let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
+                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: result["result"] as! [String : Any], options:.prettyPrinted)
+                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                dbCommunityData.data = myString
+                
+                let timeInterval = Int(Date().timeIntervalSince1970)
+                print("timeInterval.... \(timeInterval)")
+                
+                dbCommunityData.last_time_stamp = "\(timeInterval)"
+                
+                WWMHelperClass.saveDb()
+                
+                print("success tabbarVC getcommunity in background thread")
+            }
         }
     }
     
