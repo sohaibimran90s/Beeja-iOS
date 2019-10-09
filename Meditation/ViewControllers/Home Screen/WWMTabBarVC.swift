@@ -343,7 +343,12 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                 if let communtiyTimeStamp = result["guidedData"]{
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
+                }
                 
+                //wisdom data*
+                if let combinedMantra = result["combinedMantra"]{
+                    self.fetchWistomDataFromDB(time_stamp: combinedMantra)
+                    
                 }
                 
                 print("success tabbarVC getdictionaryapi in background thread")
@@ -489,6 +494,117 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
             }
         }
+    
+    //get wisdom api
+    func fetchWistomDataFromDB(time_stamp: Any) {
+        let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
+        let wisdomVideoData = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
+        if wisdomDataDB.count > 0 {
+            print("wisdomDataDB.. \(wisdomDataDB.count)")
+            print("wisdomVideoData.. \(wisdomVideoData.count)")
+            
+            for dict in wisdomDataDB {
+                            
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                let currentDateString = dateFormatter.string(from: Date())
+                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let apiTimeStamp: String = "\(time_stamp)"
+
+                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                
+                let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                
+                print("date1... \(systemDate) date2... \(apiDate)")
+                if systemDate < apiDate{
+                    self.getWisdomAPI()
+                }
+            }
+        }else{
+            self.getWisdomAPI()
+        }
+        
+    }
+    
+    func getWisdomAPI() {
+        
+        let param = ["user_id":self.appPreffrence.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETWISDOM, context: "WWMWisdomNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let _ = result["success"] as? Bool {
+                    
+                    print("success getWisdomAPI \(result)")
+                    if let wisdomList = result["result"] as? [[String:Any]] {
+                        
+                        let wisdomData = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
+                        if wisdomData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBWisdomData")
+                        }
+                        
+                        let wisdomVideoData = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
+                        if wisdomVideoData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBWisdomVideoData")
+                        }
+                        
+                        for dict in wisdomList {
+                            var wisdom_id: Int = 0
+                            print("wisdom result... \(result)")
+                            let dbWisdomData = WWMHelperClass.fetchEntity(dbName: "DBWisdomData") as! DBWisdomData
+                        
+                            if let id = dict["id"]{
+                                dbWisdomData.id = "\(id)"
+                                wisdom_id = id as? Int ?? 0
+                            }
+                            if let name = dict["name"] as? String{
+                                dbWisdomData.name = name
+                            }
+                            
+                            let timeInterval = Int(Date().timeIntervalSince1970)
+                            print("timeInterval.... \(timeInterval)")
+                            
+                            dbWisdomData.last_time_stamp = "\(timeInterval)"
+                            
+                            if let video_list = dict["video_list"] as? [[String: Any]]{
+                                for dict1 in video_list{
+                                    let dbWisdomVideoData = WWMHelperClass.fetchEntity(dbName: "DBWisdomVideoData") as! DBWisdomVideoData
+                                    
+                                    if let id = dict1["id"]{
+                                        dbWisdomVideoData.video_id = "\(id)"
+                                    }
+                                    if let duration = dict1["duration"] as? String{
+                                        dbWisdomVideoData.video_duration = duration
+                                    }
+                                    if let name = dict1["name"] as? String{
+                                        dbWisdomVideoData.video_name = name
+                                    }
+                                    if let poster_image = dict1["poster_image"] as? String{
+                                        dbWisdomVideoData.video_img = poster_image
+                                    }
+                                    if let video_url = dict1["video_url"] as? String{
+                                        dbWisdomVideoData.video_url = video_url
+                                    }
+                                    
+                                    if let vote = dict1["vote"] as? Bool{
+                                        dbWisdomVideoData.video_vote = vote
+                                    }
+
+                                    dbWisdomVideoData.wisdom_id = "\(wisdom_id)"
+                                    WWMHelperClass.saveDb()
+                                    print("wisdomVideoData.count... \(wisdomVideoData.count)")
+                                }
+                            }
+                            
+                            WWMHelperClass.saveDb()
+                        }
+                        print("wisdomData tabbarvc in background thread...")
+                    }
+                }
+            }
+        }
+    }
+
 
     
     //MeditationHistoryList API

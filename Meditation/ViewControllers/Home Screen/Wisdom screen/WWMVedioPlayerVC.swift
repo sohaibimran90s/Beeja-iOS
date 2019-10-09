@@ -129,6 +129,21 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     }
     
     func finishVideo() {
+        
+        let wisdomVideoDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
+
+        for dict1 in wisdomVideoDataDB{
+            if dict1.video_id == self.video_id{
+                if self.rating == 1{
+                    dict1.video_vote = true
+                }else{
+                    dict1.video_vote = false
+                }
+                
+                WWMHelperClass.saveDb()
+            }
+        }
+        
         self.notificationCenter.removeObserver(self)
         self.player?.pause()
         let watchDuration = self.player?.currentTime().seconds ?? 0
@@ -142,7 +157,11 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         
         print(param)
         self.navigationController?.navigationBar.isHidden = false
-        self.wisdomFeedback(param: param as Dictionary<String, Any>)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.wisdomFeedback(param: param as Dictionary<String, Any>)
+        }
+        
         self.navigationController?.popViewController(animated: true)
     }
     

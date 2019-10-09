@@ -194,6 +194,10 @@
 		61083F4622D37B6F001B770D /* login11.json in Resources */ = {isa = PBXBuildFile; fileRef = 61083F4522D37B6E001B770D /* login11.json */; };
 		610D06D1234DBF090001E8A6 /* DBMantras+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06CF234DBF090001E8A6 /* DBMantras+CoreDataClass.swift */; };
 		610D06D2234DBF090001E8A6 /* DBMantras+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06D0234DBF090001E8A6 /* DBMantras+CoreDataProperties.swift */; };
+		610D06DD234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06DB234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift */; };
+		610D06DE234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06DC234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift */; };
+		610D06E1234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */; };
+		610D06E2234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06E0234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift */; };
 		610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 610DA34A22F010CB0006FD78 /* Burn.mp4 */; };
 		6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */; };
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
@@ -626,6 +630,10 @@
 		61083F4522D37B6E001B770D /* login11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login11.json; sourceTree = "<group>"; };
 		610D06CF234DBF090001E8A6 /* DBMantras+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMantras+CoreDataClass.swift"; sourceTree = "<group>"; };
 		610D06D0234DBF090001E8A6 /* DBMantras+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMantras+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		610D06DB234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		610D06DC234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomVideoData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		610D06E0234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomVideoData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		610DA34A22F010CB0006FD78 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
 		6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnGetSetVC.swift; sourceTree = "<group>"; };
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
@@ -886,6 +894,10 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */,
+				610D06E0234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift */,
+				610D06DB234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift */,
+				610D06DC234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift */,
 				610D06CF234DBF090001E8A6 /* DBMantras+CoreDataClass.swift */,
 				610D06D0234DBF090001E8A6 /* DBMantras+CoreDataProperties.swift */,
 				615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */,
@@ -2270,6 +2282,7 @@
 				61416F1222BBB4C800C9339E /* PieChartDataEntry.swift in Sources */,
 				2EB0865A22817069008BF6E4 /* WWMGuidedEmotionVC.swift in Sources */,
 				2E93D2FB21F5D14900163E57 /* WWMHelperClass.swift in Sources */,
+				610D06DE234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift in Sources */,
 				2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */,
 				2EB0865C22817069008BF6E4 /* WWMGuidedDashboardVC.swift in Sources */,
 				61416F0022BBB4C800C9339E /* ChartData.swift in Sources */,
@@ -2300,6 +2313,7 @@
 				61416EC522BBB45600C9339E /* YAxis.swift in Sources */,
 				61416E7A22BBB37C00C9339E /* CombinedHighlighter.swift in Sources */,
 				2E5D1A5E21EF461C00AEB3BC /* DataCrypto.swift in Sources */,
+				610D06E1234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift in Sources */,
 				2EE247F221E6315400857C25 /* PieSliceModel.swift in Sources */,
 				61416E3522BBB23B00C9339E /* LegendRenderer.swift in Sources */,
 				61416E8B22BBB3B400C9339E /* LineChartView.swift in Sources */,
@@ -2490,6 +2504,7 @@
 				2E99BAEB21E3383D009F0909 /* WWMAppPreference.swift in Sources */,
 				61416F0122BBB4C800C9339E /* BubbleChartDataSet.swift in Sources */,
 				2E2F8A3821BE9BA200516AFF /* WWMSignupLetsStartVC.swift in Sources */,
+				610D06E2234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift in Sources */,
 				61416E7522BBB37C00C9339E /* BarHighlighter.swift in Sources */,
 				61416EA722BBB40300C9339E /* DefaultAxisValueFormatter.swift in Sources */,
 				2EE247EA21E6315400857C25 /* PieLineTextLayerAnimator.swift in Sources */,
@@ -2550,6 +2565,7 @@
 				61416E2E22BBB23B00C9339E /* XAxisRenderer.swift in Sources */,
 				61416F2722BBB53000C9339E /* ILineScatterCandleRadarChartDataSet.swift in Sources */,
 				2EEF9AE8221AEC900016A77C /* DBMoodMeter+CoreDataClass.swift in Sources */,
+				610D06DD234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift in Sources */,
 				2EE247E221E6315400857C25 /* Globals.swift in Sources */,
 				2EE247E021E6315400857C25 /* PieChartDelegate.swift in Sources */,
 				61416E1C22BBB1C600C9339E /* DataApproximator+N.swift in Sources */,
