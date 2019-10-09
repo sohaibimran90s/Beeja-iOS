@@ -337,12 +337,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_DICTIONARY, context: "URL_DICTIONARY", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 print("get dictionary result... \(result)")
-                if let mantras = result["mantras"]{
-                    
+                 if let mantras = result["mantras"]{
+                    self.fetchMantrasDataFromDB(time_stamp: mantras)
                 }
                 
                 if let communtiyTimeStamp = result["guidedData"]{
-                    
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
                 
                 }
@@ -425,6 +424,72 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             }
         }
     }
+    
+    //get mantras
+    
+    func fetchMantrasDataFromDB(time_stamp: Any) {
+            let mantrasDataDB = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+            if mantrasDataDB.count > 0 {
+                
+                for dict in mantrasDataDB {
+                                
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                    let currentDateString = dateFormatter.string(from: Date())
+                    let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                    let apiTimeStamp: String = "\(time_stamp)"
+
+                     print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                    
+                    let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                    let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                    
+                    print("date1... \(systemDate) date2... \(apiDate)")
+                    if systemDate < apiDate{
+                        self.getMantrasAPI()
+                    }
+                }
+            }else{
+                self.getMantrasAPI()
+            }
+            
+        }
+        
+        func getMantrasAPI() {
+            
+            WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMListenMantraVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    
+                    if let data = result["data"] as? [[String: Any]]{
+                        
+                        let mantrasData = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+                        if mantrasData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMantras")
+                        }
+                        
+                        for dict in data{
+                            
+                            print("mantras result... \(result)")
+                            let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMantrasData.data = myString
+                            
+                            let timeInterval = Int(Date().timeIntervalSince1970)
+                            print("timeInterval.... \(timeInterval)")
+                            
+                            dbMantrasData.last_time_stamp = "\(timeInterval)"
+                            
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                    print("success tabbarvc getmantras api in background")
+                }
+            }
+        }
+
     
     //MeditationHistoryList API
     func meditationHistoryListAPI() {

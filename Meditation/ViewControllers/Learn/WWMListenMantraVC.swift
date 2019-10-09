@@ -21,27 +21,61 @@ class WWMListenMantraVC: WWMBaseViewController {
         super.viewDidLoad()
         
         self.playPauseBtn.setImage(UIImage(named: "pauseAudio"), for: .normal)
-        getMantrasAPI()
+        
+        //getMantrasAPI()
+        self.fetchMantrasDataFromDB()
+    }
+    
+    func fetchMantrasDataFromDB() {
+        let mantrasDataDB = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+        if mantrasDataDB.count > 0 {
+            print("mantrasDataDB.count WWMListenMantraVC... \(mantrasDataDB.count)")
+            for dict in mantrasDataDB {
+                if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
+                    let mantraData = WWMMantraData.init(json: jsonResult)
+                    self.mantraData.append(mantraData)
+                }
+            }
+            
+            if self.mantraData.count > 0{
+                self.audioPlay(audio: self.mantraData[0].mantra_audio)
+            }
+        }else{
+            self.getMantrasAPI()
+        }
     }
     
     //MARK: API call
     func getMantrasAPI() {
-        
-       // WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+                
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMListenMantraVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["data"] as? [[String: Any]]{
-                    for json in data{
-                        let mantraData = WWMMantraData.init(json: json)
-                        self.mantraData.append(mantraData)
+                    let mantrasData = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+                    if mantrasData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBMantras")
+                    }
+                    for dict in data{
+                        
+                        print("mantras result... \(result)")
+                        print("listenmantravc getmantras api")
+                        
+                        
+                        let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
+                        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                        dbMantrasData.data = myString
+                        
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        print("timeInterval.... \(timeInterval)")
+                        
+                        dbMantrasData.last_time_stamp = "\(timeInterval)"
+                        WWMHelperClass.saveDb()
+                        
+                        self.fetchMantrasDataFromDB()
+                        
                     }
                 }
-                
-                if self.mantraData.count > 0{
-                    self.audioPlay(audio: self.mantraData[0].mantra_audio)
-                }
-                print("mantras.... \(result)")
                 
             }else {
                 if error != nil {
@@ -52,7 +86,6 @@ class WWMListenMantraVC: WWMBaseViewController {
                     }
                 }
             }
-          //  WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     

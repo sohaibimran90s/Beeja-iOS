@@ -24,7 +24,8 @@ class WWMChooseMantraListVC: WWMBaseViewController {
         super.viewDidLoad()
 
         self.setNavigationBar(isShow: false, title: "")
-        getMantrasAPI()
+        //getMantrasAPI()
+        self.fetchMantrasDataFromDB()
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
@@ -32,36 +33,69 @@ class WWMChooseMantraListVC: WWMBaseViewController {
         
     }
     
-    //MARK: API call
-    func getMantrasAPI() {
-        
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMChooseMantraListVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let data = result["data"] as? [[String: Any]]{
-                    for json in data{
-                        let mantraData = WWMMantraData.init(json: json)
-                        self.mantraData.append(mantraData)
-                    }
-                    
-                    self.tableView.reloadData()
-                }
-                
-                print("mantras.... \(result)")
-                
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
+    func fetchMantrasDataFromDB() {
+        let mantrasDataDB = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+        if mantrasDataDB.count > 0 {
+            print("mantrasDataDB.count WWMChooseMantraListVC... \(mantrasDataDB.count)")
+            for dict in mantrasDataDB {
+                if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
+                    let mantraData = WWMMantraData.init(json: jsonResult)
+                    self.mantraData.append(mantraData)
                 }
             }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            
+            self.tableView.reloadData()
+        }else{
+            self.getMantrasAPI()
         }
     }
+
+    
+    //MARK: API call
+     func getMantrasAPI() {
+           
+           WWMHelperClass.showLoaderAnimate(on: self.view)
+           
+           WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMChooseMantraListVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+               if sucess {
+                   if let data = result["data"] as? [[String: Any]]{
+                       let mantrasData = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+                       if mantrasData.count > 0 {
+                           WWMHelperClass.deletefromDb(dbName: "DBMantras")
+                       }
+                       for dict in data{
+                           
+                           print("mantras result... \(result)")
+                           print("choosemantralist getmantras api")
+                           
+                           
+                           let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
+                           let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                           let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                           dbMantrasData.data = myString
+                           
+                           let timeInterval = Int(Date().timeIntervalSince1970)
+                           print("timeInterval.... \(timeInterval)")
+                           
+                           dbMantrasData.last_time_stamp = "\(timeInterval)"
+                           WWMHelperClass.saveDb()
+                           
+                           self.fetchMantrasDataFromDB()
+                           
+                       }
+                   }
+               }else {
+                   if error != nil {
+                       if error?.localizedDescription == "The Internet connection appears to be offline."{
+                           WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                       }else{
+                           WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                       }
+                   }
+               }
+               WWMHelperClass.hideLoaderAnimate(on: self.view)
+           }
+       }
 }
 
 extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
