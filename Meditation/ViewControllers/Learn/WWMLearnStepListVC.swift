@@ -34,6 +34,10 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.selectedIndex = 0
         getLearnSetpsAPI()
         
+        DispatchQueue.global(qos: .background).async {
+            self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -135,6 +139,78 @@ class WWMLearnStepListVC: WWMBaseViewController {
             }
         }
     }
+    
+    //MARK: StepFAQ
+    func fetchStepFaqDataFromDB(time_stamp: Any) {
+        let stepFaqDataDB = WWMHelperClass.fetchDB(dbName: "DBStepFaq") as! [DBStepFaq]
+        if stepFaqDataDB.count > 0 {
+            
+            for dict in stepFaqDataDB {
+                                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                let currentDateString = dateFormatter.string(from: Date())
+                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let apiTimeStamp: String = "\(time_stamp)"
+
+                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                
+                let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                
+                print("date1... \(systemDate) date2... \(apiDate)")
+                if systemDate < apiDate{
+                    self.stepFaqAPI()
+                }
+            }
+        }else{
+            self.stepFaqAPI()
+        }
+    }
+    
+    //MARK: API call
+    func stepFaqAPI() {
+                
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_STEPFAQ, context: "WWMFAQsVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                
+                print("StepFaq WWMLearnStepListVC in background thread...")
+                print("faqs data..... \(result)")
+                if let data = result["data"] as? [[String: Any]]{
+                    
+                    let stepFaqData = WWMHelperClass.fetchDB(dbName: "DBStepFaq") as! [DBStepFaq]
+                    if stepFaqData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBStepFaq")
+                    }
+                    
+                    for dict in data {
+                        let dbStepFaqData = WWMHelperClass.fetchEntity(dbName: "DBStepFaq") as! DBStepFaq
+                        
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        print("timeInterval.... \(timeInterval)")
+                        
+                        dbStepFaqData.last_time_stamp = "\(timeInterval)"
+                        
+                        if let id = dict["step_id"]{
+                            dbStepFaqData.step_id = "\(id)"
+                        }
+                        if let answers = dict["answers"] as? String{
+                            dbStepFaqData.answers = answers
+                        }
+                        
+                        if let question = dict["question"] as? String{
+                            dbStepFaqData.question = question
+                        }
+                        
+                        WWMHelperClass.saveDb()
+                    }
+                    
+                }
+            }
+        }
+    }//end stepFaqAPI
 }
 
 extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{

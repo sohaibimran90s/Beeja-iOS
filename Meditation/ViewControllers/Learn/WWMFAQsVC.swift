@@ -21,8 +21,9 @@ class WWMFAQsVC: WWMBaseViewController {
         
         self.btnGotIt.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         
-        self.stepFaqAPI()
+        self.fetchStepFAQDataFromDB(step_id: "\(WWMHelperClass.step_id)")
     }
+
     
     @IBAction func btnGotItClicked(_ sender: UIButton) {
         
@@ -46,38 +47,27 @@ class WWMFAQsVC: WWMBaseViewController {
         }
     }
     
-    //MARK: API call
-    func stepFaqAPI() {
+    //MARK: Fetch StepFAQ Data from DB
+    func fetchStepFAQDataFromDB(step_id: String) {
+        let stepFaqDataDB = WWMHelperClass.fetchDB(dbName: "DBStepFaq") as! [DBStepFaq]
         
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        
-        let param = ["step_id": 1] as [String : Any]
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPFAQ, context: "WWMFAQsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
+        var jsonString: [String: Any] = [:]
+        if stepFaqDataDB.count > 0 {
+            print("self.stepFaqDataDB... \(stepFaqDataDB.count)")
+            for dict in stepFaqDataDB {
                 
-                print("faqs data..... \(result)")
-                if let data = result["data"] as? [[String: Any]]{
-                    for json in data{
-                        let faqsData = WWMFAQsData.init(json: json)
-                        self.faqsData.append(faqsData)
-                    }
+                if dict.step_id == step_id{
+                    jsonString["answers"] = dict.answers
+                    jsonString["question"] = dict.question
                     
-                    self.tableView.reloadData()
+                    let faqsData = WWMFAQsData.init(json: jsonString)
+                    self.faqsData.append(faqsData)
                 }
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                }
+                
+                print("self.faqsData... \(self.faqsData.count)")
             }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-    
 }
 
 extension WWMFAQsVC: UITableViewDelegate, UITableViewDataSource{

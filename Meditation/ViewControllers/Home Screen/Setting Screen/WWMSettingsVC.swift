@@ -952,6 +952,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBWisdomData")
                 WWMHelperClass.deletefromDb(dbName: "DBWisdomVideoData")
                 WWMHelperClass.deletefromDb(dbName: "DBCommunityData")
+                WWMHelperClass.deletefromDb(dbName: "DBStepFaq")
                 
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)

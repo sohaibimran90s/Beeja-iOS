@@ -126,7 +126,7 @@ let URL_MANTRAS      = URL_BASE + "mantras"
 
 let URL_COMBINEDMANTRA = URL_BASE + "combinedMantra"
 
-let URL_STEPFAQ         = URL_BASE + "stepFaq"
+let URL_STEPFAQ         = URL_BASE + "dictionary/setp_faqs"
 
 let URL_DICTIONARY  = URL_BASE + "dictionary"
 
