@@ -107,6 +107,15 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setStepFAQTimeStamp(value:Any) {
+        defaults.set("\(value)", forKey: "stepFAQTimeStamp")
+        defaults.synchronize()
+    }
+    
+    func getStepFAQTimeStamp() -> String {
+        return UserDefaults.standard.string(forKey: "stepFAQTimeStamp") ?? ""
+    }
+    
     func getOffers() -> [String] {
         return UserDefaults.standard.array(forKey: "offers") as! [String]
     }

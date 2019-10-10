@@ -77,6 +77,12 @@
         <attribute name="startChime" optional="YES" attributeType="String"/>
         <relationship name="meditationData" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBMeditationData"/>
     </entity>
+    <entity name="DBStepFaq" representedClassName="DBStepFaq" syncable="YES">
+        <attribute name="answers" optional="YES" attributeType="String"/>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+        <attribute name="step_id" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DBTimerData" representedClassName="DBTimerData" syncable="YES">
         <attribute name="levelId" optional="YES" attributeType="String"/>
         <attribute name="levelName" optional="YES" attributeType="String"/>
@@ -115,5 +121,6 @@
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>
+        <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
     </elements>
 </model>
