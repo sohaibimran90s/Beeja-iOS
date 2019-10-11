@@ -337,10 +337,13 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_DICTIONARY, context: "URL_DICTIONARY", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 print("get dictionary result... \(result)")
+                
+                //mantras data*
                  if let mantras = result["mantras"]{
                     self.fetchMantrasDataFromDB(time_stamp: mantras)
                 }
                 
+                //community data*
                 if let communtiyTimeStamp = result["guidedData"]{
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
                 }
@@ -361,6 +364,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.fetchStepsDataFromDB(time_stamp: steps)
                 }
                 
+                //stepFaq*
+                if let stepFaq = result["stepFaq"]{
+                    self.appPreffrence.setStepFAQTimeStamp(value: stepFaq)
+                    
+                }
                 print("success tabbarVC getdictionaryapi in background thread")
             }
         }
