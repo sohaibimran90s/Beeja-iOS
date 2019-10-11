@@ -25,7 +25,7 @@ class LearnStepsListData: NSObject{
     
     init(json: [String: Any]) {
         self.step_name = json["step_name"] as? String ?? ""
-        self.id = json["id"] as? Int ?? 0
+        self.id = Int("\(json["id"] ?? "0")") ?? 0
         self.date_completed = json["date_completed"] as? String ?? ""
         self.title = json["title"] as? String ?? ""
         self.timer_audio = json["timer_audio"] as? String ?? ""

@@ -32,13 +32,13 @@ class WWMLearnStepListVC: WWMBaseViewController {
         }
         
         self.selectedIndex = 0
-        getLearnSetpsAPI()
+
         
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         }
         
-        self.tableView.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationLearnSteps(notification:)), name: Notification.Name("notificationLearnSteps"), object: nil)
     }
     
     
@@ -46,7 +46,50 @@ class WWMLearnStepListVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         self.navigationController?.isNavigationBarHidden = true
+        self.fetchStepsDataFromDB()
         
+    }
+    
+    @objc func notificationLearnSteps(notification: Notification) {
+           self.fetchStepsDataFromDB()
+       }
+    
+    //MARK: Fetch Steps Data From DB
+    func fetchStepsDataFromDB() {
+        let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+        
+        if getStepsDataDB.count > 0 {
+            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
+            self.learnStepsListData.removeAll()
+            for dict in getStepsDataDB {
+                
+                var jsonData: [String: Any] = [:]
+                
+                jsonData["step_name"] = dict.step_name
+                jsonData["id"] = dict.id
+                jsonData["date_completed"] = dict.date_completed
+                jsonData["title"] = dict.title
+                jsonData["timer_audio"] = dict.timer_audio
+                jsonData["description"] = dict.description1
+                jsonData["step_audio"] = dict.step_audio
+                jsonData["outro_audio"] = dict.outro_audio
+                jsonData["completed"] = dict.completed
+                
+                let learnStepsListData = LearnStepsListData.init(json: jsonData)
+                self.learnStepsListData.append(learnStepsListData)
+                
+                print("jsonData... \(jsonData)")
+            }
+            
+            for i in 0..<self.learnStepsListData.count{
+                print("date_completed... \(self.learnStepsListData[i].date_completed)")
+                print("completed... \(self.learnStepsListData[i].completed)")
+            }
+            
+            print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
+            print("learnStepsListData count... \(self.learnStepsListData.count)")
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,47 +121,6 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
-    //MARK: API call
-    func getLearnSetpsAPI() {
-        
-        self.learnStepsListData.removeAll()        
-        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        //let param = ["user_id": "747"] as [String : Any]
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPS, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            
-            print("learn result... \(result)")
-            if sucess {
-                if let total_paid = result["total_paid"] as? Double{
-                    print("total_paid double.. \(total_paid)")
-                    self.total_paid = Int(round(total_paid))
-                }
-                
-                if let data = result["data"] as? [[String: Any]]{
-                    for json in data{
-                        let learnStepsListData = LearnStepsListData.init(json: json)
-                        self.learnStepsListData.append(learnStepsListData)
-                    }
-                }
-                
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-                
-                self.tableView.reloadData()
-                
-                print("self.total_paid......\(self.total_paid)")
-                print("self.learnStepsListData......\(self.learnStepsListData.count)")
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                }
-            }
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
     
     @IBAction func btnSideMenuClicked(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
@@ -158,6 +160,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                
                 
                 print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{

@@ -356,7 +356,122 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
                 }
                 
+                //steps data*
+                if let steps = result["steps"]{
+                    self.fetchStepsDataFromDB(time_stamp: steps)
+                }
+                
                 print("success tabbarVC getdictionaryapi in background thread")
+            }
+        }
+    }
+    
+    
+    //MARK: Fetch Steps Data From DB
+    func fetchStepsDataFromDB(time_stamp: Any) {
+           let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+           if getStepsDataDB.count > 0 {
+               
+               for dict in getStepsDataDB {
+                                   
+                   let dateFormatter = DateFormatter()
+                   dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                   let currentDateString = dateFormatter.string(from: Date())
+                   let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                   let apiTimeStamp: String = "\(time_stamp)"
+
+                    print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                   
+                   let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                   let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                   
+                   print("date1... \(systemDate) date2... \(apiDate)")
+                   if systemDate < apiDate{
+                       self.getLearnSetpsAPI()
+                   }
+               }
+           }else{
+               self.getLearnSetpsAPI()
+           }
+       }
+
+    
+    //MARK: getLearnSetps API call
+    func getLearnSetpsAPI() {
+        
+        //self.learnStepsListData.removeAll()
+        let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPS, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            print("learn result... \(result)")
+            if let _ = result["success"] as? Bool {
+                if let total_paid = result["total_paid"] as? Double{
+                    print("total_paid double.. \(total_paid)")
+                    WWMHelperClass.total_paid = Int(round(total_paid))
+                }
+                
+                if let data = result["data"] as? [[String: Any]]{
+                    
+                    print("GetLearnSetpsAPI count... \(data.count)")
+                    
+                    let getStepsData = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+                    if getStepsData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                    }
+                    
+                    for dict in data{
+                        
+                        let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
+                            
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        print("timeInterval.... \(timeInterval)")
+                        
+                        
+                        dbStepsData.last_time_stamp = "\(timeInterval)"
+                        
+                        if let completed = dict["completed"] as? Bool{
+                            dbStepsData.completed = completed
+                        }
+                        
+                        if let date_completed = dict["date_completed"] as? String{
+                            dbStepsData.date_completed = date_completed
+                        }
+                        
+                        if let description = dict["description"] as? String{
+                            dbStepsData.description1 = description
+                        }
+                        
+                        if let id = dict["id"]{
+                            dbStepsData.id = "\(id)"
+                        }
+                        
+                        if let outro_audio = dict["outro_audio"] as? String{
+                            dbStepsData.outro_audio = outro_audio
+                        }
+                        
+                        if let step_audio = dict["step_audio"] as? String{
+                            dbStepsData.step_audio = step_audio
+                        }
+                        
+                        if let step_name = dict["step_name"] as? String{
+                            dbStepsData.step_name = step_name
+                        }
+                        
+                        if let timer_audio = dict["timer_audio"] as? String{
+                            dbStepsData.timer_audio = timer_audio
+                        }
+                        
+                        if let title = dict["title"] as? String{
+                            dbStepsData.title = title
+                        }
+                        
+                        WWMHelperClass.saveDb()
+                    }
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearnSteps"), object: nil)
+                }
             }
         }
     }

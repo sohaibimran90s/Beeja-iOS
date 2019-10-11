@@ -22,6 +22,36 @@ class WWMFAQsVC: WWMBaseViewController {
         self.btnGotIt.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         
         self.fetchStepFAQDataFromDB(step_id: "\(WWMHelperClass.step_id)")
+        self.fetchStepsDataFromDB()
+    }
+    
+    
+    //MARK: Fetch Steps Data From DB
+    func fetchStepsDataFromDB() {
+        let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+        
+        if getStepsDataDB.count > 0 {
+            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
+            //self.arrImages.removeAll()
+            
+            for dict in getStepsDataDB {
+                
+                print("dict.id... \(dict.id ?? "") WWMHelperClass.step_id... \(WWMHelperClass.step_id)")
+                if dict.id == "\(WWMHelperClass.step_id)"{
+                    
+                    dict.completed = true
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let currentDateString = dateFormatter.string(from: Date())
+                    print("faq current date string... \(currentDateString)")
+                    dict.date_completed = "\(currentDateString)"
+                    
+                    print("dict.date_completed... \(dict.date_completed ?? "nothing")")
+                    WWMHelperClass.saveDb()
+                }
+            }
+        }
     }
 
     
