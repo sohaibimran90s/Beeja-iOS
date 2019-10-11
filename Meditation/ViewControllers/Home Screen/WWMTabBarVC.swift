@@ -351,10 +351,95 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     
                 }
                 
+                //getVibesImages data*
+                if let getVibesImages = result["getVibesImages"]{
+                    self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
+                }
+                
                 print("success tabbarVC getdictionaryapi in background thread")
             }
         }
     }
+    
+    
+    //MARK: Fetch Get Vibes Data From DB
+    
+    func fetchGetVibesDataFromDB(time_stamp: Any) {
+        let getVibesDataDB = WWMHelperClass.fetchDB(dbName: "DBGetVibesImages") as! [DBGetVibesImages]
+        if getVibesDataDB.count > 0 {
+            
+            for dict in getVibesDataDB {
+                                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                let currentDateString = dateFormatter.string(from: Date())
+                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let apiTimeStamp: String = "\(time_stamp)"
+
+                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                
+                let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
+                let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
+                
+                print("date1... \(systemDate) date2... \(apiDate)")
+                if systemDate < apiDate{
+                    self.getVibesAPI()
+                }
+            }
+        }else{
+            self.getVibesAPI()
+        }
+    }
+    
+    func getVibesAPI() {
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETVIBESIMAGES, context: "WWMMoodShareVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let _ = result["success"] as? Bool {
+                    print("result getVibesAPI... \(result)")
+                    print("GetVibesAPI tabbarvc in background thread...")
+                    
+                    if let data = result["data"] as? [[String: Any]]{
+                        
+                        print("GetVibesAPI count... \(data.count)")
+                        
+                        let getVibesData = WWMHelperClass.fetchDB(dbName: "DBGetVibesImages") as! [DBGetVibesImages]
+                        if getVibesData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGetVibesImages")
+                        }
+                        
+                        for dict in data {
+                            
+                            if let images = dict["images"] as? [String]{
+                                if images.count > 0{
+                                    for i in 0..<images.count{
+                                        let dbGetVibesData = WWMHelperClass.fetchEntity(dbName: "DBGetVibesImages") as! DBGetVibesImages
+                                            
+                                        let timeInterval = Int(Date().timeIntervalSince1970)
+                                        print("timeInterval.... \(timeInterval)")
+                                        
+                                        dbGetVibesData.images = images[i]
+                                        
+                                        dbGetVibesData.last_time_stamp = "\(timeInterval)"
+                                        
+                                        if let id = dict["mood_id"]{
+                                            dbGetVibesData.mood_id = "\(id)"
+                                        }
+                                        
+                                        WWMHelperClass.saveDb()
+                                        
+                                    }//end images array
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//end getVibesAPI
+    
+    
+    //MARK: Fetch Community Data From DB
     
     func fetchCommunityDataFromDB(time_stamp: Any) {
         let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]

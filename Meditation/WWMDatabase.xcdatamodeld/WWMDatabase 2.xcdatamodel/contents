@@ -17,6 +17,11 @@
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="DBGetVibesImages" representedClassName="DBGetVibesImages" syncable="YES">
+        <attribute name="images" optional="YES" attributeType="String"/>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="mood_id" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DBJournalData" representedClassName="DBJournalData" syncable="YES">
         <attribute name="journalData" optional="YES" attributeType="String"/>
     </entity>
@@ -118,9 +123,10 @@
         <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
+        <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>
-        <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
+        <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>
     </elements>
 </model>

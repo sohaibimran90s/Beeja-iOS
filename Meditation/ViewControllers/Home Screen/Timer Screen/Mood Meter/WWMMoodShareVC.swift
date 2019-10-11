@@ -39,7 +39,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         
         self.btnShare.layer.borderWidth = 2.0
         self.btnShare.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.getVibesAPI()
+        
+        self.fetchGetVibesDataFromDB(mood_id: "\(self.moodData.id)")
     }
     
     func xibJournalPopupCall(){
@@ -236,26 +237,23 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
             }.resume()
     }
     
-    func getVibesAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-                "mood_id":self.moodData.id
-            ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETVIBESIMAGES, context: "WWMMoodShareVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    self.arrImages.removeAll()
-                    self.arrImages = result["result"] as! [String]
+    //MARK: fetch GetVibes Data From DB
+    func fetchGetVibesDataFromDB(mood_id: String) {
+        print("mood_id... \(mood_id)")
+        let getVibesDataDB = WWMHelperClass.fetchDB(dbName: "DBGetVibesImages") as! [DBGetVibesImages]
+        
+        if getVibesDataDB.count > 0 {
+            print("self.getVibesDataDB... \(getVibesDataDB.count)")
+            self.arrImages.removeAll()
+            for dict in getVibesDataDB {
+                if dict.mood_id == mood_id{
+                    self.arrImages.append(dict.images ?? "atease")
                 }
-                self.imageCollectionView.reloadData()
-                
-            }else {
-               self.imageCollectionView.reloadData()
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            print("self.arrImages... \(arrImages.count) \(arrImages)")
+            self.imageCollectionView.reloadData()
+        }else{
+            self.imageCollectionView.reloadData()
         }
     }
 

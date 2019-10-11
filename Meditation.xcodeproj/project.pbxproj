@@ -402,6 +402,8 @@
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
+		61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36323507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift */; };
+		61BBC36623507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36423507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift */; };
 		61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */; };
 		61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
@@ -842,6 +844,8 @@
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
+		61BBC36323507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGetVibesImages+CoreDataClass.swift"; sourceTree = "<group>"; };
+		61BBC36423507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGetVibesImages+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
@@ -898,6 +902,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				61BBC36323507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift */,
+				61BBC36423507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift */,
 				61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */,
 				61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */,
 				610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */,
@@ -2410,6 +2416,7 @@
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
 				61416F3F22BBB56900C9339E /* LineChartDataProvider.swift in Sources */,
 				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
+				61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */,
 				61416E8F22BBB3B400C9339E /* PieChartView.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,
@@ -2571,6 +2578,7 @@
 				613ED77E22E0AE910063B10B /* WWMPodCastData.swift in Sources */,
 				2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */,
 				61416E2E22BBB23B00C9339E /* XAxisRenderer.swift in Sources */,
+				61BBC36623507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift in Sources */,
 				61416F2722BBB53000C9339E /* ILineScatterCandleRadarChartDataSet.swift in Sources */,
 				2EEF9AE8221AEC900016A77C /* DBMoodMeter+CoreDataClass.swift in Sources */,
 				610D06DD234E1C560001E8A6 /* DBWisdomData+CoreDataClass.swift in Sources */,
