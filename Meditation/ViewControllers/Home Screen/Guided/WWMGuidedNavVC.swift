@@ -106,7 +106,23 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.imgSpritual.isHidden = true
         self.imgPractical.isHidden = false
         
-        self.meditationApi()
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        if #available(iOS 13.0, *) {
+            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = vc
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
     }
     
     @IBAction func btnSpritualClicked(_ sender: UIButton) {
@@ -117,13 +133,26 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.imgSpritual.isHidden = false
         self.imgPractical.isHidden = true
         
-        self.meditationApi()
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        if #available(iOS 13.0, *) {
+            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = vc
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
+        }
     }
     
     func meditationApi() {
-        self.view.endEditing(true)
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : self.userData.meditation_id,
             "level_id"         : self.userData.level_id,
@@ -133,30 +162,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setIsProfileCompleted(value: true)
-                self.appPreference.setType(value: self.type)
-                self.appPreference.setGuideType(value: self.guided_type)
-                if #available(iOS 13.0, *) {
-                    let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                    window?.rootViewController = vc
-                } else {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
-                }
-                
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                    
-                }
+                print("meditation api in guidednav in background...")
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
