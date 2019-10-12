@@ -77,6 +77,12 @@ class WWMHomeTabVC: WWMBaseViewController {
         let attributeString = NSMutableAttributedString(string: KSHOWALL,
                                                         attributes: attributes)
         btnPodcastShowAll.setAttributedTitle(attributeString, for: .normal)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationMeditationHistory(notification:)), name: Notification.Name("notificationMeditationHistory"), object: nil)
+    }
+    
+    @objc func notificationMeditationHistory(notification: Notification) {
+        self.fetchMeditationHistDataFromDB()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,6 +140,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         }
         self.tableView.reloadData()
     }
+    
     
     //MARK: get screen size for setting video according to device
     func getScreenSize(){
