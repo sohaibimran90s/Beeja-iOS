@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -26,7 +27,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         self.setUpNavigationBarForAudioGuided(title: self.type)
         self.lblEmotionTitle.text = emotionData.emotion_Name
-        self.getAudioListAPI()
+        
+        self.fetchGuidedAudioDataFromDB()
     }
     
     // MARK:- UICollection View Delegate Methods
@@ -154,43 +156,45 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
     }
     
-    // MARK : API Calling
+    //MARK: Fetch Guided Audio Data From DB
     
-    func getAudioListAPI() {
-        self.view.endEditing(true)
-
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+    func fetchGuidedAudioDataFromDB() {
         
-        let param = ["emotion_id":emotionData.emotion_Id,
-                     "user_id":self.appPreference.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDAudio, context: "WWMGuidedAudioListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    if let audioList = result["result"] as? [[String:Any]] {
-                        
-                        print("audioList... \(audioList)")
-                        
-                        for data in audioList {
-                            let audioData = WWMGuidedAudioData.init(json: data)
-                            self.arrAudioList.append(audioData)
-                        }
-                        self.audioCollectionView.reloadData()
-                    }
-                }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
-                }
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                }
+        let guidedAudioDataDB = self.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
+        if guidedAudioDataDB.count > 0{
+            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
+            
+            self.arrAudioList.removeAll()
+            
+            var jsonString: [String: Any] = [:]
+            for dict in guidedAudioDataDB {
+                
+                jsonString["id"] = Int((dict as AnyObject).audio_id ?? "0")
+                jsonString["duration"] = Int((dict as AnyObject).duration ?? "0")
+                jsonString["audio_name"] = (dict as AnyObject).audio_name as? String
+                jsonString["audio_image"] = (dict as AnyObject).audio_image as? String
+                jsonString["audio_url"] = (dict as AnyObject).audio_url as? String
+                jsonString["author_name"] = (dict as AnyObject).author_name as? String
+                jsonString["vote"] = (dict as AnyObject).vote
+                jsonString["paid"] = (dict as AnyObject).paid
+                
+                let audioData = WWMGuidedAudioData.init(json: jsonString)
+                self.arrAudioList.append(audioData)
             }
-
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            
+            self.audioCollectionView.reloadData()
+            
         }
+    }
+    
+    func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
     }
 }

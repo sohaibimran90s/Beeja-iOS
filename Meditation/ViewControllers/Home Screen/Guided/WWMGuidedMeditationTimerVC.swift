@@ -247,6 +247,18 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
+            let guidedAudioDataDB = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
+            for dict1 in guidedAudioDataDB{
+                if dict1.emotion_id == self.emotion_Id{
+                    if self.rating == 1{
+                        dict1.vote = true
+                    }else{
+                        dict1.vote = false
+                    }
+                    WWMHelperClass.saveDb()
+                }
+            }
+            
             if self.settingData.moodMeterEnable {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
                 vc.type = "post"

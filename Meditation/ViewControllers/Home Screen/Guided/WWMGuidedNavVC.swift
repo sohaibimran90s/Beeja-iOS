@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class WWMGuidedNavVC: WWMBaseViewController {
 
@@ -62,6 +63,12 @@ class WWMGuidedNavVC: WWMBaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
+    }
+    
+    @objc func notificationGuided(notification: Notification) {
+        self.fetchGuidedDataFromDB()
     }
     
     @objc func handleDropDownTap(_ sender: UITapGestureRecognizer) {
@@ -70,7 +77,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.getGuidedListAPI()
+        self.fetchGuidedDataFromDB()
     }
     
     override func viewDidLayoutSubviews() {
@@ -185,55 +192,73 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
-    // MARK : API Calling
-    
-    func getGuidedListAPI() {
+    //MARK: Fetch Guided Data From DB
+    func fetchGuidedDataFromDB() {
         
-        self.dropDownView.isHidden = true
-        self.view.endEditing(true)
-        
-        if arrGuidedList.count > 0 {
-            //WWMHelperClass.showSVHud()
-            WWMHelperClass.showLoaderAnimate(on: self.view)
-        }
-        
-        
-        let param = ["guided_type":self.type]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    if let wisdomList = result["result"] as? [[String:Any]] {
-                        self.arrGuidedList.removeAll()
-                        for data in wisdomList {
-                            let wisdomData = WWMGuidedData.init(json: data)
-                            self.arrGuidedList.append(wisdomData)
-                        }
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
-                        vc.arrGuidedList = self.arrGuidedList
-                        vc.type = self.typeTitle
-                        self.addChild(vc)
-                        vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-                        self.containerView.addSubview((vc.view)!)
-                        vc.didMove(toParent: self)
-                    }
+        let guidedDataDB = self.fetchGuidedFilterDB(type: self.type, dbName: "DBGuidedData")
+        if guidedDataDB.count > 0{
+            print("guidedDataDB count... \(guidedDataDB.count)")
+            
+            self.arrGuidedList.removeAll()
+            
+            var jsonString: [String: Any] = [:]
+            var jsonEmotionsString: [String: Any] = [:]
+            var jsonEmotions: [[String: Any]] = []
+            for dict in guidedDataDB {
+                
+                jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
+                jsonString["name"] = (dict as AnyObject).guided_name as? String
+                
+                
+                let guidedEmotionsDataDB = self.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
+                
+                for dict1 in guidedEmotionsDataDB{
                     
-                }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                    jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
+                    jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
+                    jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
+                    jsonEmotionsString["tile_type"] = (dict1 as AnyObject).tile_type ?? ""
+                    
+                    jsonEmotions.append(jsonEmotionsString)
                 }
                 
-            }else {
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                    
-                }
+                jsonString["emotion_list"] = jsonEmotions
+                
+                let guidedData = WWMGuidedData.init(json: jsonString)
+                self.arrGuidedList.append(guidedData)
             }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
+            vc.arrGuidedList = self.arrGuidedList
+            vc.type = self.typeTitle
+            self.addChild(vc)
+            vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+            self.containerView.addSubview((vc.view)!)
+            vc.didMove(toParent: self)
         }
+       
+    }
+    
+    func fetchGuidedFilterDB(type: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "meditation_type == %@", type)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+    
+    func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", guided_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
     }
 }

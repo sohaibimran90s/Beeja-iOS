@@ -955,6 +955,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBStepFaq")
                 WWMHelperClass.deletefromDb(dbName: "DBGetVibesImages")
                 WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
