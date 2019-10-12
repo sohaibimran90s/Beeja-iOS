@@ -234,6 +234,12 @@ let KHELP = "Help"
 let KNEXT = "Next"
 let KDONTFORGETEMAIL = "Oops, don't forget to enter your email."
 
+//WWMSignUpPasswordVC
+let KENTERPASS = "Please enter the password"
+let KRETYPECONFIRMPASS = "Please retype the password"
+let KPASSLENGTH = "Password should be minimum of 6 character"
+let KPASSNOTMATCH = "Password not match"
+
 //WWMMyProgressJournalVC
 let KPOSTMEDITATION = "Post Meditation"
 let KPREMEDITATION = "Pre Meditation"

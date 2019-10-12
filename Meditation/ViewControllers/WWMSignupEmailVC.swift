@@ -67,7 +67,12 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             if isFromFb {
                 self.loginWithSocial()
             }else {
-                self.signUpApi()
+                //self.signUpApi()
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpPasswordVC") as! WWMSignUpPasswordVC
+                
+                vc.email = txtViewEmail.text!
+                vc.name = self.name
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             
         }
@@ -96,7 +101,13 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             if isFromFb {
                 self.loginWithSocial()
             }else {
-                self.signUpApi()
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpPasswordVC") as! WWMSignUpPasswordVC
+                
+                vc.email = txtViewEmail.text!
+                vc.name = self.name
+                self.navigationController?.pushViewController(vc, animated: true)
+                //self.signUpApi()
             }
         }
     }
