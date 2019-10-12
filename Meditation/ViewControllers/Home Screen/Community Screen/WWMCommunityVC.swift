@@ -53,6 +53,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
         notificationCenter.addObserver(self, selector: #selector(appMovedFromBackground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationCommunity(notification:)), name: Notification.Name("notificationCommunity"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,6 +63,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        self.fetchCommunityDataFromDB()
+    }
+    
+    @objc func notificationCommunity(notification: Notification) {
         self.fetchCommunityDataFromDB()
     }
     

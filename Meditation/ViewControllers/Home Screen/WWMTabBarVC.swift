@@ -632,7 +632,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 dbCommunityData.last_time_stamp = "\(timeInterval)"
                 
                 WWMHelperClass.saveDb()
-                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationCommunity"), object: nil)
                 print("success tabbarVC getcommunity in background thread")
             }
         }
