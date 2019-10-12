@@ -350,7 +350,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                 //wisdom data*
                 if let combinedMantra = result["combinedMantra"]{
-                    self.fetchWistomDataFromDB(time_stamp: combinedMantra)
+                    self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
                     
                 }
                 
@@ -704,7 +704,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     
     //get wisdom api
-    func fetchWistomDataFromDB(time_stamp: Any) {
+    func fetchWisdomDataFromDB(time_stamp: Any) {
         let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
         let wisdomVideoData = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
         if wisdomDataDB.count > 0 {
@@ -806,6 +806,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                             
                             WWMHelperClass.saveDb()
                         }
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationWisdom"), object: nil)
                         print("wisdomData tabbarvc in background thread...")
                     }
                 }

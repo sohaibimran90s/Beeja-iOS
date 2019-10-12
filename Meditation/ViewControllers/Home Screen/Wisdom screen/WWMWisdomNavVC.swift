@@ -17,7 +17,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationWisdom(notification:)), name: Notification.Name("notificationWisdom"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +26,10 @@ class WWMWisdomNavVC: WWMBaseViewController {
         
         self.fetchWisdomDataFromDB()
         //self.getWisdomAPI()
+    }
+
+    @objc func notificationWisdom(notification: Notification) {
+        self.fetchWisdomDataFromDB()
     }
     
     // MARK: fetch WisdomData From DB
