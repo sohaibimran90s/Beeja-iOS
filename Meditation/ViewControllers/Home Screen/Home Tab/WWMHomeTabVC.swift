@@ -340,15 +340,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = vc
         
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
 
     @IBAction func btnGuidedClicked(_ sender: UIButton) {
@@ -368,15 +363,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.changeRootViewController()
-            
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     
@@ -408,14 +398,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = vc
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     @IBAction func btnSpritualAction(_ sender: UIButton) {
@@ -432,13 +418,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     @IBAction func btnGuideCloseAction(_ sender: UIButton) {
@@ -466,7 +449,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("success meditationapi WWMHomeTabVC background thread")
+                print("success meditationdata api WWMHomeTabVC background thread")
              }
 
         }

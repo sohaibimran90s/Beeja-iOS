@@ -188,14 +188,10 @@ class WWMSplashAnimationVC: WWMBaseViewController {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else if self.appPreference.isLogout() {
-                        if #available(iOS 13.0, *) {
-                            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-                            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                            window?.rootViewController = vc
-                        } else {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc
-                        }
+                        
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                        
                     }else {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                         self.navigationController?.pushViewController(vc, animated: false)
@@ -207,38 +203,8 @@ class WWMSplashAnimationVC: WWMBaseViewController {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                     self.navigationController?.pushViewController(vc, animated: false)
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                //                if self.appPreference.isLogin() {
-                //                    if self.appPreference.isLogout() {
-                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                //                        UIApplication.shared.keyWindow?.rootViewController = vc
-                //
-                //                    }else {
-                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                //                        self.navigationController?.pushViewController(vc, animated: true)
-                //                    }
-                //
-                //                }else if self.appPreference.isLogout() {
-                //                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                //                            self.navigationController?.pushViewController(vc, animated: false)
-                //
-                //                }else {
-                //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                //                        self.navigationController?.pushViewController(vc, animated: false)
-                //                }
             }
         }
-        
-        
     }
     
     func getDailyUserSplashTxt() -> [String] {

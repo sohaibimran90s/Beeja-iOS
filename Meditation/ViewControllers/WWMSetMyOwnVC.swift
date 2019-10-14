@@ -261,14 +261,10 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                             self.welcomeView.isHidden = false
                         }) { (Bool) in
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                if #available(iOS 13.0, *) {
-                                    let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-                                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                                    window?.rootViewController = vc
-                                } else {
-                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                                    UIApplication.shared.keyWindow?.rootViewController = vc
-                                }
+                                
+                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                UIApplication.shared.keyWindow?.rootViewController = vc
+                                
                             }
                         }
                     }else {

@@ -965,16 +965,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 GIDSignIn.sharedInstance()?.signOut()
                 GIDSignIn.sharedInstance()?.disconnect()
                 
-                if #available(iOS 13.0, *) {
-                    let vc = self.storyboard?.instantiateViewController(identifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                    let vcc = UINavigationController.init(rootViewController: vc)
-                    window?.rootViewController = vcc
-                } else {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                    let vcc = UINavigationController.init(rootViewController: vc)
-                    UIApplication.shared.keyWindow?.rootViewController = vcc
-                }
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                let vcc = UINavigationController.init(rootViewController: vc)
+                UIApplication.shared.keyWindow?.rootViewController = vcc
+                
                 
             }else {
                 if error != nil {

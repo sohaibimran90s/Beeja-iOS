@@ -183,15 +183,9 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("finished")//It is working now! printed "finished"!
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-             if #available(iOS 13.0, *) {
-                 let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-                 let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                 window?.rootViewController = vc
-             } else {
-                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                 UIApplication.shared.keyWindow?.rootViewController = vc
-             }
+             
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+            UIApplication.shared.keyWindow?.rootViewController = vc
         }
-
     }
 }

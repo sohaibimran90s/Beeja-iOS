@@ -122,14 +122,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = vc
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     @IBAction func btnSpritualClicked(_ sender: UIButton) {
@@ -149,14 +145,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        if #available(iOS 13.0, *) {
-            let vc = self.storyboard?.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = vc
-        } else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-            UIApplication.shared.keyWindow?.rootViewController = vc
-        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+        
     }
     
     func meditationApi() {

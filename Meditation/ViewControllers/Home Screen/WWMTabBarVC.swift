@@ -338,11 +338,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 print("get dictionary result... \(result)")
                 
-                //mantras data*
-                 if let mantras = result["mantras"]{
-                    self.fetchMantrasDataFromDB(time_stamp: mantras)
-                }
-                
                 //community data*
                 if let communtiyTimeStamp = result["guidedData"]{
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
@@ -354,9 +349,9 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     
                 }
                 
-                //getVibesImages data*
-                if let getVibesImages = result["getVibesImages"]{
-                    self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
+                //guided data*
+                if let guidedData = result["guidedData"]{
+                    self.fetchGuidedDataFromDB(time_stamp: guidedData)
                 }
                 
                 //steps data*
@@ -364,15 +359,22 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.fetchStepsDataFromDB(time_stamp: steps)
                 }
                 
+                //mantras data*
+                 if let mantras = result["mantras"]{
+                    self.fetchMantrasDataFromDB(time_stamp: mantras)
+                }
+                
+                //getVibesImages data*
+                if let getVibesImages = result["getVibesImages"]{
+                    self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
+                }
+                
                 //stepFaq*
                 if let stepFaq = result["stepFaq"]{
                     self.appPreffrence.setStepFAQTimeStamp(value: stepFaq)
                     
                 }
-                //guided data*
-                if let guidedData = result["guidedData"]{
-                    self.fetchGuidedDataFromDB(time_stamp: guidedData)
-                }
+                
                 print("success tabbarVC getdictionaryapi in background thread")
             }
         }

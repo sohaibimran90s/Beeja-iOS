@@ -384,7 +384,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                         }
                     }
                 }
-                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
                 print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
                 print("success moodmeterLogVC meditationhistoryapi in background thread")
             }
