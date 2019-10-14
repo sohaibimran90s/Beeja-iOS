@@ -205,6 +205,7 @@
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
 		612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */; };
+		612DFCB62351BD060055ED96 /* WWMSignUpPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612DFCB52351BD050055ED96 /* WWMSignUpPasswordVC.swift */; };
 		613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */; };
 		613071F022D879BC009CBCA1 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EF22D879BC009CBCA1 /* VideoView.swift */; };
 		613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */; };
@@ -654,6 +655,7 @@
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
+		612DFCB52351BD050055ED96 /* WWMSignUpPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignUpPasswordVC.swift; sourceTree = "<group>"; };
 		613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeTabVC.swift; sourceTree = "<group>"; };
 		613071EF22D879BC009CBCA1 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeMedHistoryCVC.swift; sourceTree = "<group>"; };
@@ -1366,6 +1368,7 @@
 				2EB9072921B65C88009891E8 /* WWMSplashAnimationVC.swift */,
 				2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */,
 				613071F522D9AED1009CBCA1 /* WWMWalkThoghVC.swift */,
+				612DFCB52351BD050055ED96 /* WWMSignUpPasswordVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2512,6 +2515,7 @@
 				2EB0865E22817069008BF6E4 /* WWMGuidedMeditationTimerVC.swift in Sources */,
 				6130720122D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift in Sources */,
 				2EC81C5E21E7781A003B0EEE /* WWMWebViewVC.swift in Sources */,
+				612DFCB62351BD060055ED96 /* WWMSignUpPasswordVC.swift in Sources */,
 				6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */,
 				61416E9122BBB3B400C9339E /* RadarChartView.swift in Sources */,
 				613C6F6D22DEF9E70012113B /* WWMChooseMantraListVC.swift in Sources */,

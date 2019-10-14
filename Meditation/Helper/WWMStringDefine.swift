@@ -236,6 +236,12 @@ let KHELP = "Help"
 let KNEXT = "Next"
 let KDONTFORGETEMAIL = "Oops, don't forget to enter your email."
 
+//WWMSignUpPasswordVC
+let KENTERPASS = "Oops. Please enter a password."
+let KRETYPECONFIRMPASS = "Oops. Please enter confirm password."
+let KPASSLENGTH = "Oops. The password should have min 6 chars."
+let KPASSNOTMATCH = "Oops. The password doesn't match with confirm password."
+
 //WWMMyProgressJournalVC
 let KPOSTMEDITATION = "Post Meditation"
 let KPREMEDITATION = "Pre Meditation"
@@ -272,6 +278,7 @@ let KYOUHAVE = "You have"
 let KNOFREEJOURNALMSG = "journal entries left. Subscribe for more."
 let KENTERJOURNAL = "Please enter your journal."
 let KNOFREEMOODJOU = "You have used your free mood and journal entries. Subscribe now for unlimited access."
+let KNOFREEMOOD = "You have used your free mood entries. Subscribe now for unlimited access."
 let KSUCCESSRESETLINK = "We've sent you a magic link to reset your password. Please check your inbox."
 let KFAILRESETLINK = "Oops, this email isn't registered with the Beeja App / Oops, looks like this email has been registered using Facebook or Google. Try logging in again via one of them."
 let KFAILTORECOGNISEEMAIL = "Argh, sorry. We don't recognise that email address. Please try again or create a new account."

@@ -124,10 +124,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Pre")
                             self.view.isUserInteractionEnabled = false
                             
-                        }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
-                            self.view.isUserInteractionEnabled = true
                         }
+//                        else{
+//                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
+//                            self.view.isUserInteractionEnabled = true
+//                        }
                     }else{
                         let getPostMoodCount = self.appPreference.getPostMoodCount()
                         let getPostJournalCount = self.appPreference.getPostJournalCount()
@@ -139,8 +140,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Post")
                             self.view.isUserInteractionEnabled = false
                             
-                        }else{
-                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPostMoodCount) post mood and \(getPostJournalCount) journal entries left. Subscribe for more.", type: "Post")
+                        }else if(getPostMoodCount == 0) && (getPostJournalCount != 0){
+                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOOD, type: "Post")
                             
                             self.view.isUserInteractionEnabled = true
                         }
