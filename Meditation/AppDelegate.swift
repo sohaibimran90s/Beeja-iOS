@@ -126,10 +126,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
-    @available(iOS 13.0, *)
+
     func changeRootViewController() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let nextViewController = storyBoard.instantiateViewController(identifier: "WWMTabBarVC") as! WWMTabBarVC
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
        
         
         self.window!.rootViewController = nextViewController
