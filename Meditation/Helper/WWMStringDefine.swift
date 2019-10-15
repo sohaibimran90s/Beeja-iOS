@@ -321,5 +321,11 @@ let URL_LinkedIn   = "https://www.linkedin.com/company/10193966/admin/"
 let URL_YouTube = "https://www.youtube.com/channel/UCysJyoHtICcn2vdNeyLhV_A"
 
 
+// in app repurchase status links *********
+#if DEBUG
+let kURL_INAPPS_RECEIPT = "https:/sandbox.itunes.apple.com/verifyReceipt"
+#else
+let kURL_INAPPS_RECEIPT = "https://buy.itunes.apple.com/verifyReceipt"
+#endif
 
 

@@ -1165,7 +1165,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
               
               do {
                   let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
-                  let verifyReceiptURL = "https:/sandbox.itunes.apple.com/verifyReceipt"
+                  let verifyReceiptURL = kURL_INAPPS_RECEIPT
                   let storeURL = URL(string: verifyReceiptURL)!
                   var storeRequest = URLRequest(url: storeURL)
                   storeRequest.httpMethod = "POST"
