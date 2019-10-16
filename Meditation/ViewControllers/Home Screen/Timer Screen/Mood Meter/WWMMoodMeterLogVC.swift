@@ -129,7 +129,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     @IBAction func btnBurnMoodAction(_ sender: Any) {
-        self.createBackground(name: "Burn", type: "mp4")
+        self.createBackground(name: "Burn", type: "mov")
     }
     
     func createBackground(name: String, type: String) {

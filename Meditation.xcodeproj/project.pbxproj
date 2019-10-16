@@ -198,7 +198,6 @@
 		610D06DE234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06DC234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift */; };
 		610D06E1234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */; };
 		610D06E2234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D06E0234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift */; };
-		610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 610DA34A22F010CB0006FD78 /* Burn.mp4 */; };
 		6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */; };
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
 		6112C0D72339EA54004705C9 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6112C0D62339EA54004705C9 /* walkthough.mp4 */; };
@@ -406,6 +405,7 @@
 		617C284323525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284123525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift */; };
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
+		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
@@ -647,7 +647,6 @@
 		610D06DC234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		610D06DF234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomVideoData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		610D06E0234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWisdomVideoData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		610DA34A22F010CB0006FD78 /* Burn.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Burn.mp4; sourceTree = "<group>"; };
 		6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnGetSetVC.swift; sourceTree = "<group>"; };
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
 		6112C0D62339EA54004705C9 /* walkthough.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = walkthough.mp4; sourceTree = "<group>"; };
@@ -857,6 +856,7 @@
 		617C284123525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedEmotionsData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
@@ -1290,8 +1290,8 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6197CD5023574A26001E5E4B /* Burn.mov */,
 				6112C0D62339EA54004705C9 /* walkthough.mp4 */,
-				610DA34A22F010CB0006FD78 /* Burn.mp4 */,
 				613C6F7822DF3D630012113B /* all_discs.json */,
 				61426B1E22DC5303006FE825 /* circle_loader.json */,
 				61426B2022DC5304006FE825 /* float3.json */,
@@ -2048,12 +2048,12 @@
 				2E4A473A220DB22B00DF0C68 /* WAVES & CHIMES.mp3 in Resources */,
 				2E4A473D220DB22B00DF0C68 /* CHIMES ONLY.mp3 in Resources */,
 				2EC95862220AC1BA009D5144 /* Maax-BoldItalic.ttf in Resources */,
+				6197CD5123574A26001E5E4B /* Burn.mov in Resources */,
 				2E5DF5B42271B89200CF2935 /* WWMGuidedStart.xib in Resources */,
 				2EC95864220AC1BA009D5144 /* Maax-Black.ttf in Resources */,
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
 				613F081322CF356E0042515C /* hand.json in Resources */,
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
-				610DA34B22F010CB0006FD78 /* Burn.mp4 in Resources */,
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
