@@ -105,7 +105,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //        }
         
         if moodData.name != "" {
-            self.txtViewLog.text = "I am feeling \(moodData.name) because"
+            self.txtViewLog.text = "I am feeling \(moodData.name.lowercased()) because"
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }
         
