@@ -314,10 +314,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func podcastData(){
-       let podcast1 = WWMPodCastData.init(id: 1, title: KPODCAST1, duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false)
-        let podcast2 = WWMPodCastData.init(id: 1, title: KPODCAST2, duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false)
-        let podcast3 = WWMPodCastData.init(id: 1, title: KPODCAST3, duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false)
-        let podcast4 = WWMPodCastData.init(id: 1, title: KPODCAST4, duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false)
+       let podcast1 = WWMPodCastData.init(id: 1, title: KPODCAST1, duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME1)
+        let podcast2 = WWMPodCastData.init(id: 1, title: KPODCAST2, duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME2)
+        let podcast3 = WWMPodCastData.init(id: 1, title: KPODCAST3, duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME3)
+        let podcast4 = WWMPodCastData.init(id: 1, title: KPODCAST4, duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false, analyticsName: KPODCASTNAME4)
         
         self.podData.append(podcast1)
         self.podData.append(podcast2)
@@ -351,6 +351,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
 
     @IBAction func btnLearnClicked(_ sender: UIButton) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "LEARN", itemName: "")
+        
         self.type = "learn"
         self.guided_type = ""
         
@@ -507,6 +510,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         
         let url = self.appPreffrence.getOffers()
@@ -616,6 +621,9 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
         let data = self.podData[indexPath.row]
+        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
         
         if !data.isPlay {
             cell.playPauseImg.image = UIImage(named: "pauseAudio")

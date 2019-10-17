@@ -83,6 +83,8 @@ class WWMMyProgressVC: WWMBaseViewController {
     }
     
     @IBAction func btnJournalAction(_ sender: Any) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_JOURNAL", itemId: "VIEWED", itemName: "")
         self.setUpSelectedButtonUI(btn: btnJournal)
     }
     
@@ -91,6 +93,8 @@ class WWMMyProgressVC: WWMBaseViewController {
     }
     
     @IBAction func btnStatsAction(_ sender: Any) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "STATS", itemId: "SECTIONVIEWED", itemName: "")
         self.setUpSelectedButtonUI(btn: btnStats)
     }
     /*

@@ -76,6 +76,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         playerViewController.vote = data.vote
         playerViewController.video_id = self.video_id
         playerViewController.cat_Id = "\(self.wisdomData.cat_Id)"
+        playerViewController.video_Name = self.videoTitle
         playerViewController.player = player
 
          btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))

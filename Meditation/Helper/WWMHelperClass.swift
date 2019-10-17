@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 import SystemConfiguration
 import Lottie
+import Firebase
 
 class WWMHelperClass {
     
@@ -34,7 +35,23 @@ class WWMHelperClass {
     
     //static var imageView = UIImageView()
     
-    
+    // Analytics
+    class func sendEventAnalytics(contentType:String, itemId:String, itemName:String) {
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-Beeja-App-Started",
+//            AnalyticsParameterItemName: "Roshan Login in Beeja app",
+//            AnalyticsParameterContentType: "App Login"
+//            ])
+        if itemName == "" {
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterContentType: "\(contentType)_\(itemId)"
+                ])
+        }else {
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterContentType: "\(contentType)_\(itemId)_\(itemName)"
+            ])
+        }
+    }
     
     class func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")

@@ -77,6 +77,9 @@ class WWMMoodJournalVC: WWMBaseViewController {
     }
     
     @IBAction func btnSkipAction(_ sender: Any) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "SKIPPED", itemName: "")
+        
         self.txtViewLog.text = ""
         
         DispatchQueue.global(qos: .background).async {
@@ -107,6 +110,8 @@ class WWMMoodJournalVC: WWMBaseViewController {
             DispatchQueue.global(qos: .background).async {
                 self.completeMeditationAPI()
             }
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
             self.logExperience()
         }
     }
@@ -274,6 +279,8 @@ extension WWMMoodJournalVC: UITextViewDelegate{
             DispatchQueue.global(qos: .background).async {
                 self.completeMeditationAPI()
             }
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
             self.logExperience()
         }
     }

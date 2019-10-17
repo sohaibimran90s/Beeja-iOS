@@ -73,7 +73,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_MILESTONES_GRAPH", itemId: "VIEWED", itemName: "")
         self.viewHourMeditate.value = 0
         self.viewAvMinutes.value = 0
         self.viewDays.value = 0

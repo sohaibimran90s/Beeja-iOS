@@ -52,11 +52,15 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     }
 
     @IBAction func btnKnowMeditationAction(_ sender: UIButton) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "I_KNOW_HOW", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationListVC") as! WWMMeditationListVC
         vc.type = "timer"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnGuideAction(_ sender: UIButton) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "GUIDE_ME", itemName: "")
 //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
 //        vc.strUrl = URL_GUIDED
 //        vc.strType = "Guided"
@@ -99,7 +103,8 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     }
     
     @IBAction func btnLearnAction(_ sender: UIButton) {
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "LIKE_TO_LEARN", itemName: "")
         guided_type = ""
         self.meditationApi(type: "learn")
     }

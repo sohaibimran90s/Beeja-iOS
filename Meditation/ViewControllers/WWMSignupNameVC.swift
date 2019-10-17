@@ -67,7 +67,8 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
             self.btnNext.setTitleColor(UIColor.white, for: .normal)
             self.btnNext.backgroundColor = UIColor.clear
         }
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_NAME", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
         if self.txtViewName.text == "" {
             vc.name = "You"
@@ -107,6 +108,8 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
     // MARK: - UIButton Action
     
     @IBAction func btnNextAction(_ sender: UIButton) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_NAME", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
         if self.txtViewName.text == "" {
             vc.name = "You"

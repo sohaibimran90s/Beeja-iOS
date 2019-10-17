@@ -63,6 +63,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
 
     
     @IBAction func btnSkipAction(_ sender: Any) {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "SKIPPED", itemName: "IOS")
         self.movetoDashboard()
     }
     
@@ -127,7 +129,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     // MARK:- Button Action
     
     @IBAction func btnSendToFriendAction(_ sender: Any) {
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "EMOTION", itemName: "IOS")
             if self.arrImages.count == 0 {
                 let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
                 let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"

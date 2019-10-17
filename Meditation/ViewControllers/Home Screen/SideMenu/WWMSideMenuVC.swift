@@ -66,6 +66,7 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     @IBAction func btnOurStoryAction(_ sender: Any) {
+        WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "OUR_STORY", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         vc.strUrl = URL_OurStory
         vc.strType = KOURSTORY
@@ -73,14 +74,17 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     @IBAction func btnSupportAction(_ sender: Any) {
+        WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "CONTACT_US", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSupportVC") as! WWMSupportVC
         self.navigationController?.pushViewController(vc, animated: true)
        
     }
     @IBAction func btnFAQAction(_ sender: Any) {
+        WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "FAQ", itemName: "")
         self.openWebView(index: 7)
     }
     @IBAction func btnFindCourseAction(_ sender: Any) {
+        WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "FIND_A_COURSE", itemName: "")
         self.openWebView(index: 8)
     }
     
@@ -91,6 +95,7 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     @IBAction func btnSettingBeejaAction(_ sender: Any) {
+        WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "SETTINGS", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSettingsVC") as! WWMSettingsVC
         self.navigationController?.pushViewController(vc, animated: true)
     }

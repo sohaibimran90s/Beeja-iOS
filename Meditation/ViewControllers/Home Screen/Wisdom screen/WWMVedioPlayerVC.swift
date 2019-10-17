@@ -18,6 +18,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     var vote = false
     var video_id: String = ""
     var cat_Id: String = ""
+    var video_Name: String = ""
     var timer = Timer()
     var timerInterval = 10
     var notificationCenter = NotificationCenter.default
@@ -161,10 +162,27 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         DispatchQueue.global(qos: .background).async {
             self.wisdomFeedback(param: param as Dictionary<String, Any>)
         }
+        // Analytics
+        var analyticItemId = self.video_Name.uppercased()
+        analyticItemId = analyticItemId.replacingOccurrences(of: " ", with: "_")
+        if self.rating == 1 {
+            WWMHelperClass.sendEventAnalytics(contentType: "WISDOM", itemId: analyticItemId, itemName: "LIKE")
+        }
         
+        WWMHelperClass.sendEventAnalytics(contentType: "WISDOM", itemId: analyticItemId, itemName: self.convertDurationIntoPercentage(duration: Int(watchDuration)))
         self.navigationController?.popViewController(animated: true)
     }
-    
+    func convertDurationIntoPercentage(duration:Int) -> String  {
+        if ((self.player?.currentItem?.duration) != nil) {
+            let totalTime = CMTimeGetSeconds((self.player?.currentItem!.duration)!)
+            var per = (Double(duration)/totalTime)*100
+            per = per/10
+            per = per.rounded()
+            per = per*10
+            return "\(Int(per))%"
+        }
+        return "0%"
+    }
     func wisdomFeedback(param: [String: Any]) {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)

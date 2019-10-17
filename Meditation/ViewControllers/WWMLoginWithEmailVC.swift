@@ -179,6 +179,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     }
     
     @IBAction func btnForgotPasswordAction(_ sender: UIButton) {
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FORGOT_PASSWORD", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMForgotPasswordVC") as! WWMForgotPasswordVC
         self.navigationController?.pushViewController(vc, animated: true)
     }

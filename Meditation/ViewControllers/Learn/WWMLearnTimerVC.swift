@@ -362,8 +362,28 @@ class WWMLearnTimerVC: WWMBaseViewController {
         }
     }
     
+    func convertDurationIntoPercentage(duration:Int) -> String  {
+        if ((self.player.currentItem?.duration) != nil) {
+            let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
+            var per = (Double(duration)/totalTime)*100
+            per = per/10
+            per = per.rounded()
+            per = per*10
+            return "\(Int(per))%"
+        }
+        return "0%"
+    }
     func moveToFeedBack() {
         if !ismove {
+            var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
+            analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
+            var analyticStepTitle = WWMHelperClass.step_title.uppercased()
+            analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
+        
+                WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+            
+            
+            
             
             ismove = true
             self.timer.invalidate()

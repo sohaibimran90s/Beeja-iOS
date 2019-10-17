@@ -28,10 +28,13 @@ class WWMFinishTimerVC: UIViewController {
     
     var prepTime = 0
     var meditationTime = 0
+    var meditationMaxTime = 0
     var restTime = 0
     var type = ""   // Pre | Post
     var meditationID = ""
     var levelID = ""
+    var meditationName = ""
+    var levelName = ""
     var settingData = DBSettings()
     var alertPrompt = WWMPromptMsg()
     
@@ -115,7 +118,25 @@ class WWMFinishTimerVC: UIViewController {
         }
     }
     
+    func convertDurationIntoPercentage(duration:Int) -> String  {
+        if self.meditationMaxTime > 0 {
+            
+            var per = (Double(duration)/Double(self.meditationMaxTime))*100
+            per = per/10
+            per = per.rounded()
+            per = per*10
+            return "\(Int(per))%"
+        }
+        return "0%"
+    }
+    
     @IBAction func btnDoneAction(_ sender: Any) {
+        var analyticMedName = self.meditationName.uppercased()
+        analyticMedName = analyticMedName.replacingOccurrences(of: " ", with: "_")
+        var analyticLevelName = self.levelName.uppercased()
+        analyticLevelName = analyticLevelName.replacingOccurrences(of: " ", with: "_")
+        
+        WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "\(analyticMedName)_\(analyticLevelName)", itemName:self.convertDurationIntoPercentage(duration:self.meditationTime))
         
         if self.settingData.moodMeterEnable {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC

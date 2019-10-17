@@ -79,7 +79,8 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
         
         let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
         let data = self.podData[indexPath.row]
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
         if !data.isPlay {
             cell.playPauseImg.image = UIImage(named: "pauseAudio")
             data.player.play()

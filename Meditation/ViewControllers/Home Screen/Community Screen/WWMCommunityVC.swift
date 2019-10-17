@@ -404,6 +404,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }
             }else if collectionView.tag == 1 {
                 let data = self.communityData.events[indexPath.row]
+                
+                // Analytics
+                var analyticsName = data.eventTitle.uppercased()
+                analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
+                WWMHelperClass.sendEventAnalytics(contentType: "COMMUNITY", itemId: "EVENTS", itemName: analyticsName)
+                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
                 
                 vc.strUrl = data.url

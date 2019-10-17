@@ -521,6 +521,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBAction func btnSkipAction(_ sender: Any) {
         
+        // Analytics
+        if self.type == "pre" {
+            WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_PRE", itemId: "SKIPPED", itemName: "")
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_POST", itemId: "SKIPPED", itemName: "")
+        }
+        
         if WWMHelperClass.selectedType == "learn"{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
             vc.type = self.type
@@ -616,6 +623,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     @IBAction func btnNextAction(_ sender: Any) {
+        // Analytics
+        let moodData = arrMoodData[selectedIndex]
+        if self.type == "pre" {
+            WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_PRE", itemId: moodData.name.uppercased(), itemName: "")
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_POST", itemId: moodData.name.uppercased(), itemName: "")
+        }
         remainingLogFunc()
     }
     

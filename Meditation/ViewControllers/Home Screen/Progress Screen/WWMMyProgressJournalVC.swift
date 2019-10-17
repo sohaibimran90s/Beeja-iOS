@@ -312,6 +312,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     func addJournalAPI() {
         self.view.endEditing(true)
 
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_JOURNAL", itemId: "ENTRY_RECORDED", itemName: "")
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "mood_color":"",

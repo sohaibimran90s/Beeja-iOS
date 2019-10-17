@@ -38,6 +38,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     var audio_Id = "0"
     var watched_duration = "0"
     var rating = "0"
+    var checkAnalyticStr = ""
     
     var alertPopup = WWMAlertPopUp()
     
@@ -106,6 +107,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name) because"
+            self.checkAnalyticStr = self.txtViewLog.text
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }
         
@@ -125,6 +127,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         DispatchQueue.global(qos: .background).async {
             self.completeMeditationAPI()
         }
+        
         self.logExperience()
     }
     
@@ -295,6 +298,15 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     func logExperience() {
+        
+        // Analytics
+        if self.txtViewLog.text == "" {
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "SKIPPED", itemName: "")
+        }else if self.txtViewLog.text == self.checkAnalyticStr {
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "EMPTY", itemName: "")
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
+        }
         
         if self.txtViewLog.text != "" {
             if self.selectedIndex != "-1"{

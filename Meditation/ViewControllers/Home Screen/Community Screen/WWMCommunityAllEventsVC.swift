@@ -45,6 +45,12 @@ class WWMCommunityAllEventsVC: WWMBaseViewController,UICollectionViewDelegate,UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = self.arrAllEvent[indexPath.row]
+        
+        // Analytics
+        var analyticsName = data.eventTitle.uppercased()
+        analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
+        WWMHelperClass.sendEventAnalytics(contentType: "COMMUNITY", itemId: "EVENTS", itemName: analyticsName)
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         
             vc.strUrl = data.url

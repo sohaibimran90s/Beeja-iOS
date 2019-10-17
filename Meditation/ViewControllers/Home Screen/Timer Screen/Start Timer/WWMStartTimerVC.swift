@@ -21,6 +21,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     var restTime = 0
     var meditationID = ""
     var levelID = ""
+    var meditationName = ""
+    var levelName = ""
     var player: AVAudioPlayer?
     var playerAmbient: AVAudioPlayer?
     var settingData = DBSettings()
@@ -275,10 +277,14 @@ class WWMStartTimerVC: WWMBaseViewController {
         }else {
             self.timerType = ""
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            vc.meditationMaxTime = self.meditationTime
+            vc.meditationName = self.meditationName
+            vc.levelName = self.levelName
             vc.type = "post"
             vc.prepTime = self.prepTime
             vc.meditationTime = self.meditationTime
             vc.restTime = self.restTime
+            
             
             vc.meditationID = self.meditationID
             vc.levelID = self.levelID
@@ -384,6 +390,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    vc.meditationMaxTime = self.meditationTime
+                    vc.meditationName = self.meditationName
+                    vc.levelName = self.levelName
                     vc.type = "post"
                     vc.prepTime = self.prepTime
                     vc.meditationTime = 0
@@ -416,6 +425,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    vc.meditationMaxTime = self.meditationTime
+                    vc.meditationName = self.meditationName
+                    vc.levelName = self.levelName
                     vc.type = "post"
                     vc.prepTime = self.prepTime
                     vc.meditationTime = self.meditationTime
@@ -440,6 +452,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                 self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                 self.timer.invalidate()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                vc.meditationMaxTime = self.meditationTime
+                vc.meditationName = self.meditationName
+                vc.levelName = self.levelName
                 vc.type = "post"
                 vc.prepTime = self.prepTime
                 vc.meditationTime = self.meditationTime
@@ -541,6 +556,9 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBAction func btnDoneAction(_ sender: Any) {
          alertPopupView.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+        vc.meditationMaxTime = self.meditationTime
+        vc.meditationName = self.meditationName
+        vc.levelName = self.levelName
         vc.type = "post"
         if self.timerType == "Prep"{
             vc.prepTime = self.prepTime - self.seconds

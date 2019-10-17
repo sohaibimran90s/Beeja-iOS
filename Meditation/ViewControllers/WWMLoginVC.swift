@@ -91,12 +91,13 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     // MARK: Button Action
     
     @IBAction func btnLoginWithEmailAction(_ sender: UIButton) {
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "LOG_IN", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
-        
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
         let loginManager = FBSDKLoginManager()
         loginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (loginResult, error) in
 
@@ -148,7 +149,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
  
     
     @IBAction func btnStartBe(_ sender: UIButton) {
-        
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
             self.navigationController?.pushViewController(vc, animated: true)
@@ -156,6 +157,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     }
     
     @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
          GIDSignIn.sharedInstance()?.delegate = self
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance()?.signIn()

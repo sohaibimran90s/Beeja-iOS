@@ -84,7 +84,8 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
     }
     
     func signUpApi() {
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_PASSWORD", itemName: "")
         print("email... \(email) name... \(self.name) password... \(self.txtViewPassword.text!) retype password... \(self.txtViewRetypePassword.text!)")
         
         

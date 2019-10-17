@@ -64,6 +64,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_EMAIL", itemName: "")
             if isFromFb {
                 self.loginWithSocial()
             }else {
@@ -98,6 +100,8 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else {
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_EMAIL", itemName: "")
             if isFromFb {
                 self.loginWithSocial()
             }else {

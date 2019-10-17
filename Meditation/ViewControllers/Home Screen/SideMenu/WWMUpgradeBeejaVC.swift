@@ -161,6 +161,14 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnContinuePaymentAction(sender: AnyObject) {
+        if self.selectedProductIndex == 0 {
+            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "MONTHLY")
+        }else if self.selectedProductIndex == 1 {
+            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "ANNUAL")
+        }else if self.selectedProductIndex == 2{
+            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
+        }
+        
          self.continueRestoreValue = "0"
          if reachable.isConnectedToNetwork() {
             self.showActions()

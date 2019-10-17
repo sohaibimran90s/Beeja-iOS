@@ -265,6 +265,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
         vc.restTime = self.restTime
         vc.meditationID = "\(self.selectedMeditationData.meditationId)"
         vc.levelID = "\(self.selectedLevelData.levelId)"
+        vc.meditationName = self.selectedMeditationData.meditationName ?? ""
+        vc.levelName = self.selectedLevelData.levelName ?? ""
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

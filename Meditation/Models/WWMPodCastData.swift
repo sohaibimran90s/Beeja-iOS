@@ -17,15 +17,25 @@ class WWMPodCastData: NSObject{
     var url_link: String = ""
     var isPlay = false
     var player = AVPlayer()
+    var analyticsName:String = ""
+    
     
     override init() {
     }
     
-    init(id: Int, title: String, duration: Int, url_link: String, isPlay: Bool) {
+//    init(id: Int, title: String, duration: Int, url_link: String, isPlay: Bool) {
+//        self.id = id
+//        self.title = title
+//        self.duration = duration
+//        self.url_link = url_link
+//        self.isPlay = isPlay
+//    }
+    init(id: Int, title: String, duration: Int, url_link: String, isPlay: Bool, analyticsName:String) {
         self.id = id
         self.title = title
         self.duration = duration
         self.url_link = url_link
         self.isPlay = isPlay
+        self.analyticsName = analyticsName
     }
 }

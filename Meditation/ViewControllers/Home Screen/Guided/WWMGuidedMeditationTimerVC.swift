@@ -236,8 +236,38 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     var ismove = false
+    
+    func convertDurationIntoPercentage(duration:Int) -> String  {
+        if ((self.player.currentItem?.duration) != nil) {
+            let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
+            var per = (Double(duration)/totalTime)*100
+            per = per/10
+            per = per.rounded()
+            per = per*10
+            return "\(Int(per))%"
+        }
+        return "0%"
+    }
+    
     func moveToFeedBack() {
         if !ismove {
+            var analyticCatName = self.cat_Name.uppercased()
+            analyticCatName = analyticCatName.replacingOccurrences(of: " ", with: "_")
+            var analyticEmotionName = self.emotion_Name.uppercased()
+            analyticEmotionName = analyticEmotionName.replacingOccurrences(of: " ", with: "_")
+            if self.appPreference.getGuideType() == "practical" {
+                if self.rating == 1 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
+                }
+                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+            }else {
+                if self.rating == 1 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
+                }
+                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+            }
+            
+            
             
             ismove = true
             self.timer.invalidate()

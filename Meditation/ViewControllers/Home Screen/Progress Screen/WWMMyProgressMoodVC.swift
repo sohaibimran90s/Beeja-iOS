@@ -236,9 +236,13 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         if indexPath.row == 0 {
             meditationData = color_score.pre
             cell.btnMeditationType.setTitle("Pre Medtiation", for: .normal)
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_MOOD_GRAPH_PRE", itemId: "VIEWED", itemName: "")
         }else {
             meditationData = color_score.post
             cell.btnMeditationType.setTitle("Post Medtiation", for: .normal)
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_MOOD_GRAPH_POST", itemId: "VIEWED", itemName: "")
         }
         
         cell.viewCircle1.rate = 0

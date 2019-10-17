@@ -94,21 +94,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             print("could not start reachability notifier")
         }
         
-        
-                // Analytics
-        
-       Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-                AnalyticsParameterItemID: "id-Beeja-App-Started",
-                    AnalyticsParameterItemName: "Roshan Login in Beeja app",
-                    AnalyticsParameterContentType: "App Login"
-                    ])
         self.requestAuthorization()
         self.setLocalPush()
         
         callObserver.setDelegate(self, queue: nil)
         
        // Crashlytics.sharedInstance().crash()
-        
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-Beeja-App-Started-123",
+//            AnalyticsParameterContentType: "App Login 123"
+//            ])
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
         return true
