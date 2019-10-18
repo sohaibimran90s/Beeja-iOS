@@ -88,6 +88,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        UIApplication.shared.isStatusBarHidden = true
         self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
@@ -126,6 +127,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
+        UIApplication.shared.isStatusBarHidden = false
         self.lblName.center.y = self.lblName.center.y + 20
         self.lblStartedText.center.y = self.lblStartedText.center.y + 16
         self.lblIntroText.center.y = self.lblIntroText.center.y + 20

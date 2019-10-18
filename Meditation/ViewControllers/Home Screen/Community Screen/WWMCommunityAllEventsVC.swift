@@ -19,7 +19,8 @@ class WWMCommunityAllEventsVC: WWMBaseViewController,UICollectionViewDelegate,UI
     
     
     @IBAction func btnBackClicked(_ sender: UIButton) {
-        self.navigationController?.isNavigationBarHidden = false
+        
+        self.setNavigationBar(isShow: false, title: "")
         self.navigationController?.popViewController(animated: true)
     }
     

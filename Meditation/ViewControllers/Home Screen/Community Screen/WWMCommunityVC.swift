@@ -41,12 +41,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         super.viewDidLoad()
         
         
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
         //self.getCommunityAPI()
-        self.setUpNavigationBarForDashboard(title: "Community")
         
         accessToken = "Not Assigned"
         //setup()
@@ -63,6 +63,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        self.setUpNavigationBarForDashboard(title: "Community")
         self.fetchCommunityDataFromDB()
     }
     

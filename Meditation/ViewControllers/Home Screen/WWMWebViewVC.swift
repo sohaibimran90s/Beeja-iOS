@@ -60,6 +60,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
     override func viewWillDisappear(_ animated: Bool) {
         self.webView.stopLoading()
         UIApplication.shared.isStatusBarHidden = false
+        self.setNavigationBar(isShow: false, title: strType)
     }
     
     func loadWebView() {

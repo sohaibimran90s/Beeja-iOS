@@ -47,6 +47,7 @@ class WWMBaseViewController: UIViewController {
     
     
     func setUpNavigationBarForDashboard(title:String) {
+        self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
