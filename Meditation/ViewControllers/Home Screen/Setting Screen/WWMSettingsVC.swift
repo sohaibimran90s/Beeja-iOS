@@ -419,8 +419,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }else if indexPath.section == 1 {
                 
-                
-                
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
                     cell.lblTitle.text = KREMINDERS

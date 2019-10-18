@@ -341,12 +341,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 if sucess {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
-                    self.syncAddJournalData()
+                    self.syncAddSessionData()
                 }
             }
             
         }else {
-            syncAddJournalData()
+            syncAddSessionData()
         }
     }
     
@@ -372,9 +372,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
-    
-    
-    
     func syncAddJournalData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
         if data.count > 0 {
@@ -391,7 +388,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     self.syncContactUsData()
                 }
             }
-            
         }else {
             self.syncContactUsData()
         }
@@ -403,9 +399,85 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     WWMHelperClass.deletefromDb(dbName: "DBContactUs")
+                    self.syncSettingAPI()
                 }
             }
+        }else {
+            self.syncSettingAPI()
+        }
+    }
+    
+    func syncSettingAPI() {
+        
+        var settingData = DBSettings()
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+        }
+        
+        var meditation_data = [[String:Any]]()
+        let meditationData = settingData.meditationData!.array as? [DBMeditationData]
+        for dic in meditationData!{
+            let levels = dic.levels?.array as? [DBLevelData]
+            var levelDic = [[String:Any]]()
+            for level in levels! {
+                let leveldata = [
+                    "level_id": level.levelId,
+                    "isSelected": level.isLevelSelected,
+                    "name": level.levelName!,
+                    "prep_time": "\(level.prepTime)",
+                    "meditation_time": "\(level.meditationTime)",
+                    "rest_time": "\(level.restTime)",
+                    "prep_min": "\(level.minPrep)",
+                    "prep_max": "\(level.maxPrep)",
+                    "med_min": "\(level.minMeditation)",
+                    "med_max": "\(level.maxMeditation)",
+                    "rest_min": "\(level.minRest)",
+                    "rest_max": "\(level.maxRest)"
+                    ] as [String : Any]
+                levelDic.append(leveldata)
+            }
             
+            let data = ["meditation_id":dic.meditationId,
+                        "meditation_name":dic.meditationName ?? "",
+                        "isSelected":dic.isMeditationSelected,
+                        "setmyown" : dic.setmyown,
+                        "levels":levelDic] as [String : Any]
+            meditation_data.append(data)
+        }
+        //"IsMilestoneAndRewards"
+        let group = [
+            "startChime": settingData.startChime!,
+            "endChime": settingData.endChime!,
+            "finishChime": settingData.finishChime!,
+            "intervalChime": settingData.intervalChime!,
+            "ambientSound": settingData.ambientChime!,
+            "moodMeterEnable": settingData.moodMeterEnable,
+            "IsMorningReminder": settingData.isMorningReminder,
+            "IsMilestoneAndRewards": settingData.isMilestoneAndRewards,
+            "MorningReminderTime": settingData.morningReminderTime!,
+            "IsAfternoonReminder": settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": settingData.afterNoonReminderTime!,
+            "MantraID": settingData.mantraID,
+            "LearnReminderTime": settingData.learnReminderTime!,
+            "IsLearnReminder": settingData.isLearnReminder,
+            "meditation_data" : meditation_data
+            ] as [String : Any]
+        
+        let param = [
+            "user_id": self.appPreference.getUserID(),
+            "isJson": true,
+            "group": group
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    print(success)
+                    print("settingapi appdelegate with background")
+                }
+            }
         }
     }
     
