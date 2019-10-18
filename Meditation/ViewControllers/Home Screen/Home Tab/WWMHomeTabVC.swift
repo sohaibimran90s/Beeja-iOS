@@ -234,6 +234,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
         playerController.dismiss(animated: true, completion: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnGiftClicked(_ sender: UIButton) {
@@ -477,10 +479,14 @@ class WWMHomeTabVC: WWMBaseViewController {
                     self.medHisViewHeightConstraint.constant = 0
                     self.lblMedHistoryText.textColor = UIColor.clear
                 }
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
          }else{
             print("no meditation list data...")
             self.medHisViewHeightConstraint.constant = 0
             self.lblMedHistoryText.textColor = UIColor.clear
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
         }
     }
     

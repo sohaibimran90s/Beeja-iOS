@@ -228,6 +228,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
             self.containerView.addSubview((vc.view)!)
             vc.didMove(toParent: self)
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)
         }
        
     }

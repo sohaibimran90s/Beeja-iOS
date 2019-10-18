@@ -89,6 +89,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
             print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
             print("learnStepsListData count... \(self.learnStepsListData.count)")
             self.tableView.reloadData()
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
         }
     }
     
