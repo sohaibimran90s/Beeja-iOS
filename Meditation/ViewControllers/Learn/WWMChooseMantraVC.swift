@@ -15,6 +15,8 @@ class WWMChooseMantraVC: WWMBaseViewController {
 
     var value: String = ""
     
+    let reachable = Reachabilities()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,9 +43,13 @@ class WWMChooseMantraVC: WWMBaseViewController {
     
     @IBAction func btnMantraClicked(_ sender: UIButton) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMListenMantraVC") as! WWMListenMantraVC
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+        if reachable.isConnectedToNetwork() {
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMListenMantraVC") as! WWMListenMantraVC
+            self.navigationController?.pushViewController(vc, animated: true)
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton) {

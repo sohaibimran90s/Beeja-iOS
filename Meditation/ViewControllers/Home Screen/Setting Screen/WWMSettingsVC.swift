@@ -50,7 +50,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         
         pickerStartChimes.delegate = self
         pickerStartChimes.dataSource = self
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -215,9 +214,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         print("....userdate.... \(self.userData.type)")
         
         
-        if self.userData.type == "timer" {
+        if self.appPreffrence.getType() == "timer" {
             return 3
-        }else if self.userData.type == "learn" {
+        }else if self.appPreffrence.getType() == "learn" {
             return 2
         }else {
             return 1
@@ -225,7 +224,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.userData.type == "timer" {
+        if self.appPreffrence.getType() == "timer" {
             if section == 0 {
                 for data in self.arrMeditationData {
                     if data.isMeditationSelected {
@@ -247,7 +246,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else {
                 return arrSettings.count+1
             }
-        }else if self.userData.type == "learn" {
+        }else if self.appPreffrence.getType() == "learn" {
             if section == 0 {
                 return arrLearn.count+1
             }else {
@@ -261,7 +260,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = WWMSettingTableViewCell()
-        if self.userData.type == "timer" {
+        if self.appPreffrence.getType() == "timer" {
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
@@ -390,7 +389,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     cell.lblTitle.text = self.arrSettings[indexPath.row-1]
                 }
             }
-        }else if self.userData.type == "learn" {
+        }else if self.appPreffrence.getType() == "learn" {
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
@@ -546,7 +545,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.userData.type == "timer" {
+        if self.appPreffrence.getType() == "timer" {
             if indexPath.section == 0 {
                 if indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 5{
                     self.moveToEditMeditationTimeScreen()
@@ -606,7 +605,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.logout()
                 }
             }
-        }else if self.userData.type == "learn"{
+        }else if self.appPreffrence.getType() == "learn"{
             if indexPath.section == 0{
                 if indexPath.row == 1{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraVC") as! WWMChooseMantraVC
@@ -688,7 +687,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     @IBAction func btnPickerAction(_ sender: WWMCustomButton) {
         if let cell = tblViewSetting.cellForRow(at: sender.indexPath) as? WWMSettingTableViewCell {
-            if self.userData.type == "timer" {
+            if self.appPreffrence.getType() == "timer" {
                 if sender.indexPath.section == 0{
                     if sender.indexPath.row == 8{
                         self.arrPickerSound = self.arrAmbientSound
@@ -707,7 +706,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     datePickerView.tag = sender.indexPath.row
                     datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
                 }
-            }else if self.userData.type == "learn" {
+            }else if self.appPreffrence.getType() == "learn" {
                 if sender.indexPath.section == 1{
                     let datePickerView = UIDatePicker()
                     datePickerView.datePickerMode = .time

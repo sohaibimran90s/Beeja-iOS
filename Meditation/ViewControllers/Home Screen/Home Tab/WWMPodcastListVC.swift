@@ -12,6 +12,8 @@ class WWMPodcastListVC: WWMBaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var podData: [WWMPodCastData] = []
+    
+    let reachable = Reachabilities()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,17 +79,22 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
-        let data = self.podData[indexPath.row]
         
-        if !data.isPlay {
-            cell.playPauseImg.image = UIImage(named: "pauseAudio")
-            data.player.play()
-            data.isPlay = true
-        }else{
-            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-            data.player.pause()
-            data.isPlay = false
+        if reachable.isConnectedToNetwork() {
+            let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+                   let data = self.podData[indexPath.row]
+                   
+                   if !data.isPlay {
+                       cell.playPauseImg.image = UIImage(named: "pauseAudio")
+                       data.player.play()
+                       data.isPlay = true
+                   }else{
+                       cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+                       data.player.pause()
+                       data.isPlay = false
+                   }
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }
     

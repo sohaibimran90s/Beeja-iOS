@@ -50,6 +50,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     var type = ""
     
     let appPreffrence = WWMAppPreference()
+    let reachable = Reachabilities()
     
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
@@ -339,6 +340,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.userData.type = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -622,17 +624,21 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
-        let data = self.podData[indexPath.row]
-        
-        if !data.isPlay {
-            cell.playPauseImg.image = UIImage(named: "pauseAudio")
-            data.player.play()
-            data.isPlay = true
-        }else{
-            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-            data.player.pause()
-            data.isPlay = false
+        if reachable.isConnectedToNetwork() {
+           let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+           let data = self.podData[indexPath.row]
+           
+           if !data.isPlay {
+               cell.playPauseImg.image = UIImage(named: "pauseAudio")
+               data.player.play()
+               data.isPlay = true
+           }else{
+               cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+               data.player.pause()
+               data.isPlay = false
+           }
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }
     
