@@ -209,7 +209,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                                                 
                         if isProfileCompleted {
                             
-                            
+                            self.appPreference.setGetProfile(value: true)
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                         }else {

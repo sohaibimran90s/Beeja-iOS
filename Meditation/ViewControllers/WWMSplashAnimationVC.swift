@@ -189,6 +189,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else if self.appPreference.isLogout() {
                         
+                        self.appPreference.setGetProfile(value: true)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                         UIApplication.shared.keyWindow?.rootViewController = vc
                         

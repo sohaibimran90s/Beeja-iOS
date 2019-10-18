@@ -183,7 +183,8 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("finished")//It is working now! printed "finished"!
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-             
+            
+            self.appPreference.setGetProfile(value: true)
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
             UIApplication.shared.keyWindow?.rootViewController = vc
         }
