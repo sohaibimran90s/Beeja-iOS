@@ -93,6 +93,8 @@ class WWMLearnOutroVC: WWMBaseViewController {
         self.btnStart.isHidden = false
         self.isPlayComplete = true
         self.btnReplay.setImage(UIImage(named: "replay"), for: .normal)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnReplayClicked(_ sender: UIButton) {

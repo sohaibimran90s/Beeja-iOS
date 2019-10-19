@@ -84,6 +84,8 @@ class WWMWisdomNavVC: WWMBaseViewController {
                 self.containerView.addSubview((vc.view)!)
                 vc.didMove(toParent: self)
             }
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationWisdom"), object: nil)
         }
     }
 }

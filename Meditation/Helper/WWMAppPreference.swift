@@ -12,6 +12,11 @@ class WWMAppPreference: NSObject {
     
     let defaults = UserDefaults.standard
     
+    func setGetProfile(value:Bool) {
+        defaults.set(value, forKey: "getProfile")
+        defaults.synchronize()
+    }
+    
     func setIsLogin(value:Bool) {
         defaults.set(value, forKey: "login")
         defaults.synchronize()
@@ -110,6 +115,10 @@ class WWMAppPreference: NSObject {
     func setStepFAQTimeStamp(value:Any) {
         defaults.set("\(value)", forKey: "stepFAQTimeStamp")
         defaults.synchronize()
+    }
+    
+    func getGetProfile() -> Bool{
+        return defaults.bool(forKey: "getProfile")
     }
     
     func getStepFAQTimeStamp() -> String {

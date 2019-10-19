@@ -22,6 +22,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
     var learnStepsListData: [LearnStepsListData] = []
     var alertPopup = WWMAlertPopUp()
     
+    let reachable = Reachabilities()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,6 +91,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
             print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
             print("learnStepsListData count... \(self.learnStepsListData.count)")
             self.tableView.reloadData()
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
         }
     }
     
@@ -332,10 +336,16 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             print("sender.Tag.... \(sender.tag) senderTag.... \(senderTag)")
             
             if sender.tag == senderTag{
-                WWMHelperClass.selectedType = "learn"
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
-                self.navigationController?.pushViewController(vc, animated: true)
+                if reachable.isConnectedToNetwork() {
+                    WWMHelperClass.selectedType = "learn"
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                 }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }
+                
             }else{
                 self.xibCall(title1: KLEARNONESTEP)
             }
@@ -355,10 +365,15 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 
                 self.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.learnStepsListData[position].step_name) \(KLEARNJUMPSTEP1)")
             }else{
-                WWMHelperClass.selectedType = "learn"
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
-                self.navigationController?.pushViewController(vc, animated: true)
+                if reachable.isConnectedToNetwork() {
+                    WWMHelperClass.selectedType = "learn"
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                 }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }
             }
         }
     }

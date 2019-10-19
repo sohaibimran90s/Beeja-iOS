@@ -399,7 +399,14 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             print("mood...\(mood.name)")
             
             //buttons....
-            button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
+            
+            //Modified By Akram Fonts
+            let widthButton = width+24
+            let xDimensionButton = x-15
+            button = UIButton(frame: CGRect(x: xDimensionButton, y: y, width: widthButton, height: height))
+
+            
+            //button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
             button.backgroundColor = .clear
             
             button.setTitle(mood.name, for: .normal)

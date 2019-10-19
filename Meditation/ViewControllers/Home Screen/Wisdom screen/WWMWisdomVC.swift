@@ -23,6 +23,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     var isFavourite = false
     var rating = 0
 
+    let reachable = Reachabilities()
     
     //MARK:- Viewcontroller Delegate
     override func viewDidLoad() {
@@ -66,54 +67,44 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = self.wisdomData.cat_VideoList[indexPath.row]
-        self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
-        self.videoURL = self.wisdomData.cat_VideoList[indexPath.row].video_Url
-        self.videoTitle = self.wisdomData.cat_VideoList[indexPath.row].video_Name
-        let videoURL = URL(string: data.video_Url)
-        let player = AVPlayer(url: videoURL!)
-        playerViewController = self.storyboard?.instantiateViewController(withIdentifier: "WWMVedioPlayerVC") as! WWMVedioPlayerVC
-        playerViewController.vote = data.vote
-        playerViewController.video_id = self.video_id
-        playerViewController.cat_Id = "\(self.wisdomData.cat_Id)"
-        playerViewController.video_Name = self.videoTitle
-        playerViewController.player = player
+        
+        if reachable.isConnectedToNetwork() {
+            let data = self.wisdomData.cat_VideoList[indexPath.row]
+            self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
+            self.videoURL = self.wisdomData.cat_VideoList[indexPath.row].video_Url
+            self.videoTitle = self.wisdomData.cat_VideoList[indexPath.row].video_Name
+            let videoURL = URL(string: data.video_Url)
+            let player = AVPlayer(url: videoURL!)
+            playerViewController = self.storyboard?.instantiateViewController(withIdentifier: "WWMVedioPlayerVC") as! WWMVedioPlayerVC
+            playerViewController.vote = data.vote
+            playerViewController.video_id = self.video_id
+            playerViewController.cat_Id = "\(self.wisdomData.cat_Id)"
+            playerViewController.video_Name = self.videoTitle
+            playerViewController.player = player
 
-         btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))
-        btnFavourite.layer.cornerRadius = 10
-        btnFavourite.clipsToBounds = true
-        btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.50)
-        btnFavourite.contentMode = .scaleAspectFit
-        btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
-        btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
-        if data.vote {
-            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
-            self.isFavourite = true
-            self.rating = 1
+             btnFavourite = UIButton.init(frame: CGRect.init(x: (self.view.frame.size.width/2)-50, y: 24, width: 48, height: 44))
+            btnFavourite.layer.cornerRadius = 10
+            btnFavourite.clipsToBounds = true
+            btnFavourite.backgroundColor = UIColor.init(red: 189/255, green: 189/255, blue: 189/255, alpha: 0.50)
+            btnFavourite.contentMode = .scaleAspectFit
+            btnFavourite.imageEdgeInsets = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+            btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
+            if data.vote {
+                self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
+                self.isFavourite = true
+                self.rating = 1
+            }
+            btnFavourite.isUserInteractionEnabled = true
+            btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
+            playerViewController.showsPlaybackControls = true
+            self.playerViewController.videoGravity = .resizeAspect
+            self.playerViewController.player!.play()
+            self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
+            self.navigationController?.pushViewController(playerViewController, animated: true)
+            
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
-        btnFavourite.isUserInteractionEnabled = true
-        btnFavourite.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
-        
-      //  playerViewController.contentOverlayView?.insertSubview(btnFavourite, aboveSubview: playerViewController.view)
-        
-        playerViewController.showsPlaybackControls = true
-        //playerViewController.contentOverlayView?.bringSubviewToFront(btnFavourite)
-       // print(playerViewController.contentOverlayView?.subviews)
-       // let subviews = playerViewController.contentOverlayView?.subviews
-        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onCustomTap(sender:)))
-       // tapGestureRecognizer.numberOfTapsRequired = 1;
-       // tapGestureRecognizer.delegate = self
-       // playerViewController.view.addGestureRecognizer(tapGestureRecognizer)
-       // playerViewController.allowsPictureInPicturePlayback = true
-        self.playerViewController.videoGravity = .resizeAspect
-//        self.present(playerViewController, animated: true) {
-//
-//        }
-        self.playerViewController.player!.play()
-        
-        self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
-       // self.playerViewController.addObserver(self, forKeyPath: #keyPath(UIViewController.view.frame), options: [.old, .new], context: nil)
-        self.navigationController?.pushViewController(playerViewController, animated: true)
     }
     
     @objc func buttonTapped() {
@@ -188,7 +179,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     
     func wisdomFeedback(param: [String: Any]) {
         //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+        //WWMHelperClass.showLoaderAnimate(on: self.view)
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_WISHDOMFEEDBACK, context: "WWMWisdomVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
@@ -197,7 +188,8 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
                 }else {
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
                 }
-            }else{
+            }
+            /*else{
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
@@ -206,9 +198,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
                     }
                     
                 }
-            }
+            }*/
             //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            //WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

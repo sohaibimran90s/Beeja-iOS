@@ -16,7 +16,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTimerType: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
     @IBOutlet weak var backView: UIView!
-    
+    //notificationCenter.removeObserver(self)
     var notificationCenter = NotificationCenter.default
 
     var gradientLayer: CAGradientLayer!
@@ -359,6 +359,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }
+            
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         }
     }
     

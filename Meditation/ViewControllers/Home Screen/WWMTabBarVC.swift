@@ -233,9 +233,6 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             WWMHelperClass.milestoneType = "sessions"
             self.selectedIndex = 4
         }else{
-            DispatchQueue.main.async {
-                WWMHelperClass.showLoaderAnimate(on: self.view)
-            }
             self.selectedIndex = 2
         }
         
@@ -1037,7 +1034,17 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func getUserProfileData(lat: String, long: String) {
-        //WWMHelperClass.showSVHud()
+        if self.appPreffrence.getGetProfile(){
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            self.getProfileDataInBackground(lat: self.lat, long: self.long)
+        }else{
+            DispatchQueue.global(qos: .background).async {
+                self.getProfileDataInBackground(lat: self.lat, long: self.long)
+            }
+        }
+    }
+    
+    func getProfileDataInBackground(lat: String, long: String){
         if !isGetProfileCall {
             isGetProfileCall = true
         let param = [
@@ -1066,7 +1073,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                         var userSubscription = WWMUserData.sharedInstance
                         userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
                         
-                        
+                        self.appPreffrence.setGetProfile(value: false)
                         self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
                         self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
@@ -1352,8 +1359,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
         self.getUserProfileData(lat: self.lat, long: self.long)
     }
     

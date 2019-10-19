@@ -112,6 +112,8 @@ class WWMListenMantraVC: WWMBaseViewController {
         self.player.pause()
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnPlayPauseClicked(_ sender: UIButton) {

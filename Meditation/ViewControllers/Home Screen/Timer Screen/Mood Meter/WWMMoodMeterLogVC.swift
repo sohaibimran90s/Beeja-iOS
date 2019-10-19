@@ -106,7 +106,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //        }
         
         if moodData.name != "" {
-            self.txtViewLog.text = "I am feeling \(moodData.name) because"
+            self.txtViewLog.text = "I am feeling \(moodData.name.lowercased()) because"
             self.checkAnalyticStr = self.txtViewLog.text
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }
@@ -132,7 +132,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     }
     
     @IBAction func btnBurnMoodAction(_ sender: Any) {
-        self.createBackground(name: "Burn", type: "mp4")
+        self.createBackground(name: "Burn", type: "mov")
     }
     
     func createBackground(name: String, type: String) {
@@ -170,8 +170,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 vc.rating = self.rating
                 vc.watched_duration = self.watched_duration
             self.navigationController?.pushViewController(vc, animated: true)
-            
         }
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
     }
     
     @IBAction func btnLogExperienceAction(_ sender: Any) {

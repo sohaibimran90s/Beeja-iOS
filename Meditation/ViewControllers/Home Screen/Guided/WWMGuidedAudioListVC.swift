@@ -22,6 +22,8 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var alertPopupView1 = WWMAlertController()
     let appPreffrence = WWMAppPreference()
     
+    let reachable = Reachabilities()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,40 +72,37 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let data = self.arrAudioList[indexPath.row]
-        
-//        if data.paid{
-//            self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
-//            self.view.isUserInteractionEnabled = false
-//        }else{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-            
-            vc.audioData = self.arrAudioList[indexPath.row]
-            vc.cat_id = self.cat_Id
-            vc.cat_Name = self.cat_Name
-            vc.emotion_Id = "\(self.emotionData.emotion_Id)"
-            vc.emotion_Name = self.emotionData.emotion_Name
-            
-            
-            if self.appPreffrence.getExpiryDate(){
-                vc.seconds = data.audio_Duration
-                self.navigationController?.pushViewController(vc, animated: true)
-            }else{
-                if !data.paid{
-                    if data.audio_Duration > 900{
-                        vc.seconds = 900
-                    }else{
-                        vc.seconds = data.audio_Duration
-                    }
+        if reachable.isConnectedToNetwork() {
+                let data = self.arrAudioList[indexPath.row]
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+                
+                vc.audioData = self.arrAudioList[indexPath.row]
+                vc.cat_id = self.cat_Id
+                vc.cat_Name = self.cat_Name
+                vc.emotion_Id = "\(self.emotionData.emotion_Id)"
+                vc.emotion_Name = self.emotionData.emotion_Name
+                
+                
+                if self.appPreffrence.getExpiryDate(){
+                    vc.seconds = data.audio_Duration
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else{
-                    self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
-                    self.view.isUserInteractionEnabled = false
+                    if !data.paid{
+                        if data.audio_Duration > 900{
+                            vc.seconds = 900
+                        }else{
+                            vc.seconds = data.audio_Duration
+                        }
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
+                        self.view.isUserInteractionEnabled = false
+                    }
                 }
-            }
-
-        
-        //}
+            
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

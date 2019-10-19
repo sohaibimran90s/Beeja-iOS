@@ -50,6 +50,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     var type = ""
     
     let appPreffrence = WWMAppPreference()
+    let reachable = Reachabilities()
     
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
@@ -88,6 +89,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        UIApplication.shared.isStatusBarHidden = true
         self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
@@ -126,6 +128,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
+        UIApplication.shared.isStatusBarHidden = false
         self.lblName.center.y = self.lblName.center.y + 20
         self.lblStartedText.center.y = self.lblStartedText.center.y + 16
         self.lblIntroText.center.y = self.lblIntroText.center.y + 20
@@ -234,6 +237,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
         playerController.dismiss(animated: true, completion: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnGiftClicked(_ sender: UIButton) {
@@ -335,6 +340,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.userData.type = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -480,10 +486,14 @@ class WWMHomeTabVC: WWMBaseViewController {
                     self.medHisViewHeightConstraint.constant = 0
                     self.lblMedHistoryText.textColor = UIColor.clear
                 }
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
          }else{
             print("no meditation list data...")
             self.medHisViewHeightConstraint.constant = 0
             self.lblMedHistoryText.textColor = UIColor.clear
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
         }
     }
     
@@ -618,21 +628,22 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
-        let data = self.podData[indexPath.row]
-        
+        if reachable.isConnectedToNetwork() {
+           let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
+           let data = self.podData[indexPath.row]
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
-        
-        if !data.isPlay {
-            cell.playPauseImg.image = UIImage(named: "pauseAudio")
-            data.player.play()
-            data.isPlay = true
-        }else{
-            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-            data.player.pause()
-            data.isPlay = false
+           if !data.isPlay {
+               cell.playPauseImg.image = UIImage(named: "pauseAudio")
+               data.player.play()
+               data.isPlay = true
+           }else{
+               cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+               data.player.pause()
+               data.isPlay = false
+           }
+         }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }
     
