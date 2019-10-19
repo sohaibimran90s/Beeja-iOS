@@ -163,22 +163,39 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.isSetMyOwn = true
             }else {
                 self.isSetMyOwn = false
-            for index in 0..<arrMeditationData.count {
-                if index == row {
-                    self.selectedMeditationData = arrMeditationData[index]
-                    arrMeditationData[index].isMeditationSelected = true
-                    if arrMeditationData[index].meditationName == "Beeja" || arrMeditationData[index].meditationName == "Vedic/Transcendental" {
+            for indexs in 0..<arrMeditationData.count {
+                if indexs == row {
+                    self.selectedMeditationData = arrMeditationData[indexs]
+                    arrMeditationData[indexs].isMeditationSelected = true
+                    if arrMeditationData[indexs].meditationName == "Beeja" || arrMeditationData[indexs].meditationName == "Vedic/Transcendental" {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_JaiGuruDev.uppercased().replacingOccurrences(of: " ", with: "_"))
                         settingData.endChime = kChimes_JaiGuruDev
                     }else {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_HIMALAYAN_BELL.uppercased().replacingOccurrences(of: " ", with: "_"))
                         settingData.endChime = kChimes_HIMALAYAN_BELL
                     }
-                    if let levels = arrMeditationData[index].levels?.array as? [DBLevelData] {
+                    if let levels = arrMeditationData[indexs].levels?.array as? [DBLevelData] {
                         for index in 0..<levels.count {
                             if index == 0 {
                                 levels[index].isLevelSelected = true
                                 self.settingData.prepTime = "\(levels[index].prepTime)"
                                 self.settingData.meditationTime = "\(levels[index].meditationTime)"
                                 self.settingData.restTime = "\(levels[index].restTime)"
+                                
+                                // Analytics
+                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MEDITATION_TIME", itemName: "\(levels[index].meditationTime)")
+                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PREP_TIME", itemName: "\(levels[index].prepTime)")
+                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "REST_TIME", itemName: "\(levels[index].restTime)")
+                                
+                                
+                                var analyticsName = arrMeditationData[indexs].meditationName?.uppercased() ?? ""
+                                analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
+                                
+                                var levelName = levels[index].levelName?.uppercased() ?? ""
+                                levelName = levelName.replacingOccurrences(of: " ", with: "_")
+                                
+                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PRESET_\(analyticsName)", itemName: levelName)
+                                
                             }else {
                                 levels[index].isLevelSelected = false
                             }
@@ -186,7 +203,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                     
                 }else {
-                    arrMeditationData[index].isMeditationSelected = false
+                    arrMeditationData[indexs].isMeditationSelected = false
                     
                 }
             }
@@ -195,15 +212,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }else {
             let fileName = arrPickerSound[row]
             self.playAudioFile(fileName: fileName)
+            var analyticsName = fileName.uppercased()
+            analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
             if self.pickerStartChimes.tag == 8 {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "AMBIENT_SOUND", itemName: analyticsName)
                 self.settingData.ambientChime = arrPickerSound[row]
             }else if self.pickerStartChimes.tag == 2 {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "START_CHIME", itemName: analyticsName)
                 self.settingData.startChime = arrPickerSound[row]
             }else if self.pickerStartChimes.tag == 4 {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: analyticsName)
                 self.settingData.endChime = arrPickerSound[row]
             }else if self.pickerStartChimes.tag == 6 {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "COMPLETION_CHIME", itemName: analyticsName)
                 self.settingData.finishChime = arrPickerSound[row]
             }else if self.pickerStartChimes.tag == 7 {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "INTERVAL_CHIME", itemName: analyticsName)
                 self.settingData.intervalChime = arrPickerSound[row]
             }
         }
@@ -578,6 +602,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 
             }else if indexPath.section == 2 {
                 if indexPath.row == 7 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
                     let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
@@ -586,6 +611,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                     }
                 }else if indexPath.row == 8 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
                     let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
@@ -593,9 +619,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     activityViewController.popoverPresentationController?.sourceView = self.view
                     self.present(activityViewController, animated: true, completion: nil)
                 }else if indexPath.row == 9 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
                     print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
@@ -620,6 +648,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }else if indexPath.section == 1{
                 if indexPath.row == 7 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
                     let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
@@ -628,6 +657,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                     }
                 }else if indexPath.row == 8 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
                     let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
@@ -635,9 +665,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     activityViewController.popoverPresentationController?.sourceView = self.view
                     self.present(activityViewController, animated: true, completion: nil)
                 }else if indexPath.row == 9 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
                     print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
@@ -653,6 +685,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }else {
             if indexPath.section == 0 {
                 if indexPath.row == 7 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
                     let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
@@ -661,6 +694,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
                     }
                 }else if indexPath.row == 8 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
                     let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
                     let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
                     let imageToShare = [textToShare] as [Any]
@@ -668,9 +702,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     activityViewController.popoverPresentationController?.sourceView = self.view
                     self.present(activityViewController, animated: true, completion: nil)
                 }else if indexPath.row == 9 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
+                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
                     print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
@@ -753,8 +789,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         dateFormatter.dateFormat = "HH:mm"
         if sender.tag == 2 {
            settingData.morningReminderTime = dateFormatter.string(from: sender.date)
+            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MORNING_REMINDER_TIME", itemName: "\(dateFormatter.string(from: sender.date))")
         }else if sender.tag == 4 {
             settingData.afterNoonReminderTime = dateFormatter.string(from: sender.date)
+            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "AFTERNOON_REMINDER_TIME", itemName: "\(dateFormatter.string(from: sender.date))")
         }
     }
     
@@ -801,9 +839,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         switch index {
         case 11:
+            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PRIVACY_POLICY", itemName: "")
             vc.strUrl = URL_PrivacyPolicy
             vc.strType = KPRIVACYPOLICY
         case 12:
+            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TERMS_CONDITIONS", itemName: "")
             vc.strUrl = URL_TermsnCondition
             vc.strType = KTERMSCONDITION
         case 10:
@@ -830,19 +870,46 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     @IBAction func btnSwitchAction(_ sender: Any) {
         let btn = sender as! UISwitch
         if btn.tag == 1 {
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "ENABLE_MORNING_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "ENABLE_MORNING_REMINDER", itemName: "OFF")
+            }
             settingData.isMorningReminder = btn.isOn
             callPushNotification()
         }else if btn.tag == 3 {
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "ENABLE_AFTERNOON_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "ENABLE_AFTERNOON_REMINDER", itemName: "OFF")
+            }
             settingData.isAfterNoonReminder = btn.isOn
             callPushNotification()
         }else if btn.tag == 5 {
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MOOD_METER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MOOD_METER", itemName: "OFF")
+            }
             settingData.moodMeterEnable = btn.isOn
         }else if btn.tag == 6 {
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MILESTONES_REWARDS", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MILESTONES_REWARDS", itemName: "OFF")
+            }
+            
             settingData.isMilestoneAndRewards = btn.isOn
         }else if btn.tag == 101 {
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER", itemName: "OFF")
+            }
             settingData.isLearnReminder = btn.isOn
             if settingData.learnReminderTime == "" || settingData.learnReminderTime == nil {
                 settingData.learnReminderTime = "08:00"
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER_TIME", itemName: "08:00")
             }
             // Enable Learn Reminder
         }
@@ -926,6 +993,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     func logoutAPI() {
 
+        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LOGOUT", itemName: "")
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "token" : appPreference.getToken(),

@@ -153,7 +153,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
         
         if WWMHelperClass.value == "mantra"{
             self.settingData.mantraID = self.mantraData[sender.tag].id
-            
+            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_MANTRA", itemName: self.mantraData[sender.tag].title.uppercased().replacingOccurrences(of: " ", with: "_"))
             let arrVc = self.navigationController?.viewControllers
             for vc in arrVc! {
                 if vc.isKind(of: WWMSettingsVC.classForCoder()){
