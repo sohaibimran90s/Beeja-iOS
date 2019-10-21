@@ -185,6 +185,9 @@ let KBUYBOOK = "Buy Book"
 let KJUSTNOW = "just now"
 let KMOREINFORMATION = "More Information"
 let KSHOWALL = "Show all"
+let kAFTERNOON = "Good Afternoon"
+let kEVENING = "Good Evening"
+let kMORNING = "Good Morning"
 
 //WWMGuidedAudioListVC
 let KFREEAUDIO = "(Free for 15:00 min)"

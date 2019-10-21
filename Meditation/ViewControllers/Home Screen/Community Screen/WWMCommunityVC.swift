@@ -526,6 +526,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             }
             print(self.communityData.events.count)
             self.tblViewCommunity.reloadData()
+            self.tblViewCommunity.setContentOffset(.zero, animated: true)
         }
     }
     
