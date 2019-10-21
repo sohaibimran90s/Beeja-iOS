@@ -122,9 +122,17 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        
+        /*
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
+        UIApplication.shared.keyWindow?.rootViewController = vc*/
+        
+        if #available(iOS 13.0, *) {
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+            
+        } else {
+            UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+        }
         
     }
     
@@ -145,9 +153,16 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        
+        /*
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
+        UIApplication.shared.keyWindow?.rootViewController = vc*/
+        if #available(iOS 13.0, *) {
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+            
+        } else {
+            UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+        }
         
     }
     
