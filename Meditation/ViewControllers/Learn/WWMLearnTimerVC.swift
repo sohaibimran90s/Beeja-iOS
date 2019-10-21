@@ -359,8 +359,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }
-            
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         }
     }
     

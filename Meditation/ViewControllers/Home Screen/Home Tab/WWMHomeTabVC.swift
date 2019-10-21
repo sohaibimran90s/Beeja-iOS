@@ -96,8 +96,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         scrollView.setContentOffset(.zero, animated: true)
 
         print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
-        
-        self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
+        print("self.appPreffrence.getUserName()... \(self.appPreffrence.getUserName())")
         
         if self.appPreffrence.getSessionAvailableData(){
             self.viewVideoHeightConstraint.constant = 140
@@ -106,7 +105,24 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.lblIntroText.isHidden = true
             self.imgGiftIcon.isHidden = true
             self.imgPlayIcon.isHidden = true
+            
+            let date = Date()// Aug 25, 2017, 11:55 AM
+            let calendar = Calendar.current
+            let hour = calendar.component(.hour, from: date)
+            
+            if hour < 12 {
+                print("good morning")
+                self.lblName.text = "\(kMORNING)\n\(self.appPreffrence.getUserName())!"
+            }else if hour < 18 {
+                print("good afternoon")
+                self.lblName.text = "\(kAFTERNOON)\n\(self.appPreffrence.getUserName())!"
+            }else{
+                print("good evening")
+                self.lblName.text = "\(kEVENING)\n\(self.appPreffrence.getUserName())!"
+            }
         }else{
+            
+            self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
             self.lblStartedText.text = KHOMELBL1
             self.backImgVideo.image = UIImage(named: "bg1")
             self.lblIntroText.isHidden = false
@@ -238,7 +254,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
         playerController.dismiss(animated: true, completion: nil)
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnGiftClicked(_ sender: UIButton) {
