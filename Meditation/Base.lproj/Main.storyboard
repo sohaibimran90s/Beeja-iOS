@@ -11688,10 +11688,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28A-Gz-TtK">
-                                        <rect key="frame" x="309" y="10" width="46" height="46"/>
+                                        <rect key="frame" x="311" y="0.0" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="LeD-Wj-z4M"/>
-                                            <constraint firstAttribute="height" constant="46" id="ZNX-h2-hcW"/>
+                                            <constraint firstAttribute="width" constant="44" id="LeD-Wj-z4M"/>
+                                            <constraint firstAttribute="height" constant="44" id="ZNX-h2-hcW"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="menu_44"/>
                                         <connections>
@@ -11699,7 +11699,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Learn to meditate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4E-s7-PNO">
-                                        <rect key="frame" x="25" y="26.5" width="197" height="29.5"/>
+                                        <rect key="frame" x="25" y="14.5" width="197" height="29.5"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -11707,7 +11707,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="u4E-s7-PNO" firstAttribute="leading" secondItem="Rl2-h4-QER" secondAttribute="leading" constant="25" id="Ees-bk-YAE"/>
-                                    <constraint firstItem="28A-Gz-TtK" firstAttribute="top" secondItem="Rl2-h4-QER" secondAttribute="top" constant="10" id="VXk-dY-wSu"/>
+                                    <constraint firstItem="28A-Gz-TtK" firstAttribute="top" secondItem="Rl2-h4-QER" secondAttribute="top" id="VXk-dY-wSu"/>
                                     <constraint firstItem="u4E-s7-PNO" firstAttribute="bottom" secondItem="28A-Gz-TtK" secondAttribute="bottom" id="oK5-MG-F28"/>
                                     <constraint firstAttribute="height" constant="60" id="rTN-my-JJT"/>
                                     <constraint firstAttribute="trailing" secondItem="28A-Gz-TtK" secondAttribute="trailing" constant="20" id="zQw-Dt-I4y"/>
@@ -12022,7 +12022,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dus-YT-caj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="10225"/>
+            <point key="canvasLocation" x="2360.8000000000002" y="10224.737631184409"/>
         </scene>
         <!--Wisdom NavVC-->
         <scene sceneID="iNk-KJ-5zl">
