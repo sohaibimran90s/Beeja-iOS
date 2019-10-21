@@ -2833,7 +2833,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.191001;
+				MARKETING_VERSION = 2.2.191021;
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2869,7 +2869,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.191001;
+				MARKETING_VERSION = 2.2.191021;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
