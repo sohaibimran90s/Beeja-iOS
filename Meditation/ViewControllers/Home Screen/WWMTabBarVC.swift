@@ -10,7 +10,7 @@ import UIKit
 import Lottie
 import CoreLocation
 
-class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
+class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
     let layerGradient = CAGradientLayer()
     var currentLocation: CLLocation!
@@ -41,6 +41,34 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let navigationVCCommunity = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCCommunity") as! UINavigationController//
+        let navigationVCProgress = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCProgress") as! UINavigationController//
+        let navigationVCWisdom = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCWisdom") as! UINavigationController//
+        let navigationVCGuided = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCGuided") as! UINavigationController//
+        let navigationVCTimer = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCTimer") as! UINavigationController//
+        let navigationVCLearn = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCLearn") as! UINavigationController//
+        let navigationVCHome = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCHome") as! UINavigationController//
+        
+        
+        navigationVCHome.tabBarItem = ESTabBarItem.init(WWMHomeAnimateContentView(), title: "Home", image: nil, selectedImage: nil)
+        navigationVCCommunity.tabBarItem = ESTabBarItem.init(WWMCommunityAnimateContentView(), title: "Community", image: nil, selectedImage: nil)
+        navigationVCGuided.tabBarItem = ESTabBarItem.init(WWMGuideAnimateContentView(), title: "Guided", image: nil, selectedImage: nil)
+        navigationVCTimer.tabBarItem = ESTabBarItem.init(WWMTimerAnimateContentView(), title: "Timer", image: nil, selectedImage: nil)
+        navigationVCLearn.tabBarItem = ESTabBarItem.init(WWMLearnAnimateContentView(), title: "Learn", image: nil, selectedImage: nil)
+        navigationVCWisdom.tabBarItem = ESTabBarItem.init(WWMWisdomAnimateContentView(), title: "Wisdom", image: nil, selectedImage: nil)
+        navigationVCProgress.tabBarItem = ESTabBarItem.init(WWMProgressAnimateContentView(), title: "Progress", image: nil, selectedImage: nil)
+        self.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCTimer,navigationVCGuided,navigationVCLearn, navigationVCWisdom, navigationVCProgress]
+        
+        
+        
+        
+        
+        
+        
+        
         
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             print("restore.... \(restoreValue)")
@@ -1013,7 +1041,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-
+/*
     // UITabBarDelegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         for itemTab in  self.tabBar.items!{
@@ -1032,7 +1060,7 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         print("Selected view controller")
     }
-    
+    */
     func getUserProfileData(lat: String, long: String) {
         if self.appPreffrence.getGetProfile(){
             WWMHelperClass.showLoaderAnimate(on: self.view)

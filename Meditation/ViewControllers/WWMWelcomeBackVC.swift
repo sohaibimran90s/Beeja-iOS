@@ -248,8 +248,16 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc
+                         /*   let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc*/
+                            if #available(iOS 13.0, *) {
+                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                                window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+                            } else {
+                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+                            }
                             
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
