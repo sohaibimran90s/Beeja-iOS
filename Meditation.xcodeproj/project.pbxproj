@@ -123,7 +123,6 @@
 		2EB0865E22817069008BF6E4 /* WWMGuidedMeditationTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB0865922817068008BF6E4 /* WWMGuidedMeditationTimerVC.swift */; };
 		2EB08666228ABA92008BF6E4 /* WWMVedioPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB08665228ABA92008BF6E4 /* WWMVedioPlayerVC.swift */; };
 		2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */ = {isa = PBXBuildFile; fileRef = 2EB08667228AE46F008BF6E4 /* dataTimer.json */; };
-		2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */; };
 		2EB1F11021DF601200F98EC2 /* SplashLoader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2EB1F10F21DF601200F98EC2 /* SplashLoader.gif */; };
 		2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */; };
 		2EB9072A21B65C88009891E8 /* WWMLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB9072721B65C88009891E8 /* WWMLoginVC.swift */; };
@@ -399,6 +398,7 @@
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
 		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
 		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
+		6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */; };
 		617C283E23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283C23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift */; };
 		617C283F23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283D23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift */; };
 		617C284223525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */; };
@@ -2297,6 +2297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */,
 				61416F1722BBB4C800C9339E /* LineChartData.swift in Sources */,
 				2EE247EE21E6315400857C25 /* AlphaPieViewLayerAnimator.swift in Sources */,
 				2EEF9AEB221AEC900016A77C /* DBMeditationData+CoreDataClass.swift in Sources */,
@@ -2464,7 +2465,6 @@
 				617C283F23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift in Sources */,
 				61416E3122BBB23B00C9339E /* ScatterChartRenderer.swift in Sources */,
 				61416F0822BBB4C800C9339E /* PieChartData.swift in Sources */,
-				2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */,
 				2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */,
 				2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */,
 				61416F5322BBB5B500C9339E /* ChartView.swift in Sources */,
@@ -2472,7 +2472,6 @@
 				61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */,
 				61416E6222BBB31400C9339E /* XAxisRendererHorizontalBarChart.swift in Sources */,
 				61416EDB22BBB47A00C9339E /* AnimatedViewPortJob.swift in Sources */,
-				2EB1F10E21D60BA300F98EC2 /* WWMExtension.swift in Sources */,
 				2EAE29B52231447C008E4361 /* CircularSlider.swift in Sources */,
 				2EE247AA21E4CF9500857C25 /* WWMSideMenuVC.swift in Sources */,
 				61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */,

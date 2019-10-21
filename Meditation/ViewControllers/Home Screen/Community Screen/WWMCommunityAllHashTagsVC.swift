@@ -11,6 +11,9 @@ import UIKit
 class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var arrAllHashTag = [WWMCommunityHashtagsData]()
+    
+    var titleMAW: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -35,7 +35,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var strMonthYear = ""
     
     var notificationCenter = NotificationCenter.default
-    
+    var titleMeditateAW: String = "#meditateanywhere"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -213,6 +213,15 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 if self.communityData.events.count < 3 {
                     cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)/2
                 }
+                
+                if self.communityData.events.count <= 4{
+                    cell.btnSpotifyPlayList.isHidden = true
+                    cell.viewConnectSpotify.isHidden = true
+                }else{
+                    cell.btnSpotifyPlayList.isHidden = false
+                    cell.viewConnectSpotify.isHidden = false
+                }
+                
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewAllEventsAction(_:)), for: .touchUpInside)
             }else {
@@ -220,6 +229,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 cell = tableView.dequeueReusableCell(withIdentifier: "CellThird") as! WWMCommunityTableViewCell
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-8)/2.5
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnUploadHashTagsAction(_:)), for: .touchUpInside)
+                cell.lblMAW.text = self.titleMeditateAW
             }
             cell.collectionViewCommunity.tag = indexPath.row
             cell.collectionViewCommunity.reloadData()
@@ -258,8 +268,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 return self.currentPlaylist?.count ?? 0
             }
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -305,6 +313,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 cell.lblTitle.text = data.eventTitle
+                
+                
                 
             }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {
@@ -363,6 +373,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     let data = self.communityData.hashtags
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllHashTagsVC") as! WWMCommunityAllHashTagsVC
                     vc.arrAllHashTag = data
+                    vc.titleMAW = self.titleMeditateAW
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
@@ -517,10 +528,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             for dict in comunityDataDB {
                 if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
                     self.communityData = WWMCommunityData.init(json: jsonResult)
+                    self.titleMeditateAW = self.communityData.titleAnyWhere
                 }
             }
             print(self.communityData.events.count)
             self.tblViewCommunity.reloadData()
+            self.tblViewCommunity.setContentOffset(.zero, animated: true)
         }
     }
     

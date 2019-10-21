@@ -12,13 +12,17 @@ class WWMCommunityData: NSObject {
 
     var events = [WWMCommunityEventsData]()
     var hashtags   = [WWMCommunityHashtagsData]()
-    
+    var titleAnyWhere: String = ""
     
     override init() {
         
     }
     
     init(json:[String:Any]) {
+        
+        if let title = json["title"] as? String{
+            self.titleAnyWhere = title
+        }
         if let arrLevels = json["hashtags"] as? [[String:Any]]{
             for dict in arrLevels {
                 let hashtagData = WWMCommunityHashtagsData.init(json: dict)
