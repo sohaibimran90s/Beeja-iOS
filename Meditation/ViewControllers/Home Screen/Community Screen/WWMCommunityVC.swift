@@ -213,6 +213,15 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 if self.communityData.events.count < 3 {
                     cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)/2
                 }
+                
+                if self.communityData.events.count <= 4{
+                    cell.btnSpotifyPlayList.isHidden = true
+                    cell.viewConnectSpotify.isHidden = true
+                }else{
+                    cell.btnSpotifyPlayList.isHidden = false
+                    cell.viewConnectSpotify.isHidden = false
+                }
+                
                 cell.layoutCollectionviewHeight.constant = (self.view.frame.size.width-14)
                 cell.btnSpotifyPlayList.addTarget(self, action: #selector(btnViewAllEventsAction(_:)), for: .touchUpInside)
             }else {
@@ -305,6 +314,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 cell.lblTitle.text = data.eventTitle
+                
+                
                 
             }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {

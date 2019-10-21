@@ -238,7 +238,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
         playerController.dismiss(animated: true, completion: nil)
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     @IBAction func btnGiftClicked(_ sender: UIButton) {

@@ -186,8 +186,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-        
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     //App enter in forground.
