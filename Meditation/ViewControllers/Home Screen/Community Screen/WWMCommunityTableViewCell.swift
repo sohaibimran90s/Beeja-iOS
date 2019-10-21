@@ -18,7 +18,8 @@ class WWMCommunityTableViewCell: UITableViewCell, WKNavigationDelegate {
     @IBOutlet weak var viewConnectSpotify: UIView!
     @IBOutlet weak var viewUnderLine: UIView!
     @IBOutlet weak var webView: WKWebView!
-        
+    @IBOutlet weak var lblMAW: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
