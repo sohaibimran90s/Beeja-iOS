@@ -27,7 +27,12 @@ class WWMCommunityAnimateContentView: CommunityAnimateContentView {
     let lottieView: AnimationView = {
         let lottieView = AnimationView(name: "globe")
         lottieView.loopMode = .playOnce
+       // lottieView.frame = CGRect(x: 10, y: 10, width: 10, height: 10)
         lottieView.contentMode = .scaleAspectFit
+       // LottieView.init(frame: CGRect(x: 10, y: 10, width: 10, height: 10))
+        
+       //   lottieView.contentMode = .redraw
+        
 //        lottieView.play()
         return lottieView
     }()
