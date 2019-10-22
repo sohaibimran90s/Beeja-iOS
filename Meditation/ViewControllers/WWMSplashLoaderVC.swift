@@ -451,17 +451,22 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                     self.animationView.stop()
                     self.animationView.isHidden = true
                     self.lblLogo.isHidden = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        
-                        self.loadSplashScreenafterDelay()
-                    }
+                    
+                    
+                    self.animateSonicLogo()
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//
+//                        self.loadSplashScreenafterDelay()
+//                    }
                 }
             }else{
                 print("more....")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.loadSplashScreenafterDelay()
-                }
+                self.animateSonicLogo()
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//                    self.loadSplashScreenafterDelay()
+//                }
             }
         }else {
             let alert = UIAlertController(title: kAlertTitle,
