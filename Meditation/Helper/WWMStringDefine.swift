@@ -304,6 +304,8 @@ let  Validatation_JournalOfflineMsg  =
 /**/
 
 
+let kTESTFLIGHT = true
+
 
 /************************************/
 //Static Urls

@@ -406,6 +406,8 @@
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
+		61B66604235EF15D008660E5 /* sonicLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B66603235EF15C008660E5 /* sonicLogo.json */; };
+		61B66606235F0892008660E5 /* SonicLogo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 61B66605235F0891008660E5 /* SonicLogo.wav */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
 		61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */; };
 		61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */; };
@@ -857,6 +859,8 @@
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
+		61B66603235EF15C008660E5 /* sonicLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sonicLogo.json; sourceTree = "<group>"; };
+		61B66605235F0891008660E5 /* SonicLogo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SonicLogo.wav; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
 		61B6AE1A224A5F320067F2E1 /* WWMAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMAlertController.xib; sourceTree = "<group>"; };
 		61B6AE1E224A64030067F2E1 /* WWMAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertController.swift; sourceTree = "<group>"; };
@@ -1291,6 +1295,8 @@
 			isa = PBXGroup;
 			children = (
 				6197CD5023574A26001E5E4B /* Burn.mov */,
+				61B66603235EF15C008660E5 /* sonicLogo.json */,
+				61B66605235F0891008660E5 /* SonicLogo.wav */,
 				6112C0D62339EA54004705C9 /* walkthough.mp4 */,
 				613C6F7822DF3D630012113B /* all_discs.json */,
 				61426B1E22DC5303006FE825 /* circle_loader.json */,
@@ -2082,6 +2088,7 @@
 				61083F4622D37B6F001B770D /* login11.json in Resources */,
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
+				61B66606235F0892008660E5 /* SonicLogo.wav in Resources */,
 				2EACF986225375E700171688 /* public.pem in Resources */,
 				2E4371C322004D9A00EF5D62 /* CHIME.mp3 in Resources */,
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
@@ -2097,6 +2104,7 @@
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,
+				61B66604235EF15D008660E5 /* sonicLogo.json in Resources */,
 				6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */,
 				6144293D224B72D400C6682C /* WWMAlertPopUp.xib in Resources */,
 				2EC9585D220AC1BA009D5144 /* MaaxRounded-Bold.ttf in Resources */,

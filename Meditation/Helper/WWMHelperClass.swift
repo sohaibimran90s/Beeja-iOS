@@ -77,25 +77,25 @@ class WWMHelperClass {
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
-    class func showLoader(on view: UIView) {
-        DispatchQueue.main.async(execute: {() -> Void in
-            let imageView = UIImageView.init(frame: CGRect.init(x: view.frame.size.width/2 - 25, y: view.frame.size.height/2 - 25, width: 50, height: 50))
-            imageView.image = UIImage.gifImageWithName("ee_loading_img")
-            view.addSubview(imageView)
-        })
-    }
+//    class func showLoader(on view: UIView) {
+//        DispatchQueue.main.async(execute: {() -> Void in
+//            let imageView = UIImageView.init(frame: CGRect.init(x: view.frame.size.width/2 - 25, y: view.frame.size.height/2 - 25, width: 50, height: 50))
+//            imageView.image = UIImage.gifImageWithName("ee_loading_img")
+//            view.addSubview(imageView)
+//        })
+//    }
     
-    class func hideLoader(fromView view:UIView) {
-        DispatchQueue.main.async(execute: {() -> Void in
-            let subviewsEnum :NSEnumerator = (view.subviews as NSArray).reverseObjectEnumerator()
-            _ = UIView();
-            for subview in subviewsEnum{
-                if (subview is UIImageView) {
-                    (subview as AnyObject).removeFromSuperview()
-                }
-            }
-        })
-    }
+//    class func hideLoader(fromView view:UIView) {
+//        DispatchQueue.main.async(execute: {() -> Void in
+//            let subviewsEnum :NSEnumerator = (view.subviews as NSArray).reverseObjectEnumerator()
+//            _ = UIView();
+//            for subview in subviewsEnum{
+//                if (subview is UIImageView) {
+//                    (subview as AnyObject).removeFromSuperview()
+//                }
+//            }
+//        })
+//    }
     
     
     class func showLoaderAnimate(on view: UIView) {

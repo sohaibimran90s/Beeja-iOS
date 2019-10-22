@@ -10,14 +10,16 @@ import UIKit
 import SwiftyRSA
 import Lottie
 
-class WWMSplashLoaderVC: WWMBaseViewController {
+class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
 
-    @IBOutlet weak var imageViewLoader: UIImageView!
+    @IBOutlet weak var lblLogo: UILabel!
     var animationView = AnimationView()
     var executionTime: Double = 0.0
     let startDate = Date()
     var alertPopupView1 = WWMAlertController()
-
+    var animationSonicLogoView = AnimationView()
+    var player: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +56,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
 //        }
 
         WWMHelperClass.selectedType = ""
-        self.imageViewLoader.isHidden = true
+        self.lblLogo.isHidden = true
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")
         //self.saveMeditationDataToDB(data: ["":""])
@@ -65,6 +67,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
         animationView.loopMode = .loop
         self.view.addSubview(animationView)
         animationView.play()
+        
         self.showForceUpdate()
     }
     
@@ -81,12 +84,28 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                         KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
                     }
                 #else
+                
                     print("I'm running in a non-DEBUG mode")
-                    if let baseUrl = result["base_url"] as? String{
-                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                    }else {
-                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
-                }
+                    
+                    if kTESTFLIGHT{
+                        if let baseUrl = result["staging_url"] as? String{
+                            KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                        }else {
+                            KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
+                        }
+                    }else{
+                        if let baseUrl = result["base_url"] as? String{
+                                KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                            }else {
+                                KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+                        }
+                    }
+                
+//                    if let baseUrl = result["base_url"] as? String{
+//                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+//                    }else {
+//                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+//                    }
                 #endif
                 
                 if let force_update = result["force_update"] as? Bool{
@@ -221,8 +240,34 @@ class WWMSplashLoaderVC: WWMBaseViewController {
     }
     
     func loadSplashScreenafterDelay() {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSplashAnimationVC") as! WWMSplashAnimationVC
-        self.navigationController?.pushViewController(vc, animated: false)
+        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSplashAnimationVC") as! WWMSplashAnimationVC
+        //self.navigationController?.pushViewController(vc, animated: false)
+        
+        self.pushToViewController()
+    }
+    
+    func pushToViewController(){
+        if self.appPreference.isLogin() {
+            if !self.appPreference.isProfileComplete() {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if self.appPreference.isLogout() {
+                
+                self.appPreference.setGetProfile(value: true)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+            }else {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
+        }else if self.appPreference.isLogout() {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+            self.navigationController?.pushViewController(vc, animated: false)
+        }else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
     }
     
    
@@ -326,24 +371,74 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 if self.executionTime < 3.0{
                     print("less....")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                        
                         self.animationView.stop()
                         self.animationView.isHidden = true
-                        self.imageViewLoader.isHidden = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            
-                            self.loadSplashScreenafterDelay()
-                        }
+                        self.lblLogo.isHidden = false
+                        
+                        self.animateSonicLogo()
+                       
+                        
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+//                            self.loadSplashScreenafterDelay()
+//                        }
                     }
                 }else{
                     print("more....")
                     self.animationView.stop()
                     self.animationView.isHidden = true
-                    self.imageViewLoader.isHidden = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self.loadSplashScreenafterDelay()
-                    }
-                }//end else
-            }
+                    self.lblLogo.isHidden = false
+                    
+                    self.animateSonicLogo()
+                    
+                    
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+//                        self.loadSplashScreenafterDelay()
+//                    }
+            }//end else
+        }
+    
+    //MARK: Sonic
+    func animateSonicLogo(){
+        self.animationSonicLogoView = AnimationView(name: "sonicLogo")
+        self.animationSonicLogoView.frame = CGRect(x: self.view.frame.size.width/2 - 150, y: self.view.frame.size.height/2 - 200, width: 300, height: 300)
+        self.animationSonicLogoView.contentMode = .scaleAspectFit
+        self.animationSonicLogoView.loopMode = .playOnce
+        self.view.addSubview(self.animationSonicLogoView)
+        self.playAudioFile(fileName: "SonicLogo")
+        
+    }
+    
+    func playAudioFile(fileName:String) {
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "wav") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            
+            player?.delegate = self
+            
+            /* iOS 10 and earlier require the following line:
+             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
+            
+            
+            player?.play()
+            self.animationSonicLogoView.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("finished")//It is working now! printed "finished"!
+        
+        self.loadSplashScreenafterDelay()
+    }
+
     
     func getMeditationDataFromDB() {
         let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
@@ -355,7 +450,7 @@ class WWMSplashLoaderVC: WWMBaseViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                     self.animationView.stop()
                     self.animationView.isHidden = true
-                    self.imageViewLoader.isHidden = false
+                    self.lblLogo.isHidden = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         
                         self.loadSplashScreenafterDelay()

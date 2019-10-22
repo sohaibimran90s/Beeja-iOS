@@ -233,6 +233,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             }
             cell.collectionViewCommunity.tag = indexPath.row
             cell.collectionViewCommunity.reloadData()
+            
             return cell
         }
     }
@@ -533,6 +534,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
             }
             print(self.communityData.events.count)
             self.tblViewCommunity.reloadData()
+            
+            if self.tblViewCommunity.numberOfRows(inSection: 0) != 0 {
+                self.tblViewCommunity.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+            
+            
             self.tblViewCommunity.setContentOffset(.zero, animated: true)
         }
     }
