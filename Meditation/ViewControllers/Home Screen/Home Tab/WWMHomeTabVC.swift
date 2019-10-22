@@ -30,6 +30,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imgTopBar: UIImageView!
     
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
@@ -89,19 +90,22 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        UIApplication.shared.isStatusBarHidden = true
+        //UIApplication.shared.isStatusBarHidden = true
         self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
         scrollView.setContentOffset(.zero, animated: true)
+        //scrollView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
 
         print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         print("self.appPreffrence.getUserName()... \(self.appPreffrence.getUserName())")
+        self.imgTopBar.isHidden = true
         
         if self.appPreffrence.getSessionAvailableData(){
             self.viewVideoHeightConstraint.constant = 140
             self.lblStartedText.text = KHOMELBL
             self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
+            //self.imgTopBar.image = UIImage(named: "meditationHistoryBG")
             self.lblIntroText.isHidden = true
             self.imgGiftIcon.isHidden = true
             self.imgPlayIcon.isHidden = true
@@ -125,6 +129,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
             self.lblStartedText.text = KHOMELBL1
             self.backImgVideo.image = UIImage(named: "bg1")
+            //self.imgTopBar.image = UIImage(named: "bg1")
             self.lblIntroText.isHidden = false
             self.imgGiftIcon.isHidden = false
             self.imgPlayIcon.isHidden = false
@@ -144,7 +149,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        UIApplication.shared.isStatusBarHidden = false
+        //UIApplication.shared.isStatusBarHidden = false
         self.lblName.center.y = self.lblName.center.y + 20
         self.lblStartedText.center.y = self.lblStartedText.center.y + 16
         self.lblIntroText.center.y = self.lblIntroText.center.y + 20
