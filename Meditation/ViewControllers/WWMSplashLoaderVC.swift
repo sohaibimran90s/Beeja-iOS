@@ -94,10 +94,10 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                             KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
                         }
                     }else{
-                        if let baseUrl = result["base_url"] as? String{
+                        if let baseUrl = result["staging_url"] as? String{
                                 KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                             }else {
-                                KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+                                KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
                         }
                     }
                 
