@@ -4268,8 +4268,8 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="3vy-xW-tiy">
-                                                    <rect key="frame" x="12" y="77" width="153" height="23.5"/>
-                                                    <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
+                                                    <rect key="frame" x="12" y="79" width="153" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
