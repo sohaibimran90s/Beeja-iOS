@@ -149,25 +149,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 #else
                     print("I'm running in a non-DEBUG mode")
                 
-                    if kTESTFLIGHT{
-                        if let baseUrl = result["staging_url"] as? String{
-                            KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                        }else {
-                            KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
-                        }
-                    }else{
-                        if let baseUrl = result["staging_url"] as? String{
-                                KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                            }else {
-                                KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
-                        }
+                    if let baseUrl = result["staging_url"] as? String{
+                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                    }else {
+                        KUSERDEFAULTS.set("https://staging.beejameditation.com", forKey: KBASEURL)
                     }
-                
-//                    if let baseUrl = result["base_url"] as? String{
-//                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-//                    }else {
-//                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
-//                    }
                 #endif
                 
                 if let title = result["title"] as? String{
