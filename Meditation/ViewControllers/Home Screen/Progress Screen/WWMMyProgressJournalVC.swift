@@ -175,14 +175,21 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
             
+            
             let getPostJournalCount = self.appPreference.getPostJournalCount()
             if getPostJournalCount == 0{
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: KNOFREEJOURNAL, type: "post")
             }else{
                 
-                self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: "\(KYOUHAVE) \(getPostJournalCount) \(KNOFREEJOURNALMSG)", type: "Post")
+                //self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: "\(KYOUHAVE) \(getPostJournalCount) \(KNOFREEJOURNALMSG)", type: "Post")
                 
-               // xibJournalView()
+                if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                     xibJournalView()
+                   
+                }else{
+                     self.alertPopupView1.removeFromSuperview()
+                    
+                }
             }
         }else{
             xibJournalView()

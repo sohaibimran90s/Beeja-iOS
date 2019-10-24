@@ -1035,8 +1035,15 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getUserProfileData(lat: String, long: String) {
         if self.appPreffrence.getGetProfile(){
-            WWMHelperClass.showLoaderAnimate(on: self.view)
-            self.getProfileDataInBackground(lat: self.lat, long: self.long)
+            
+            // CONNECTION IS NOT REACHABLE
+            if !reachable.isConnectedToNetwork() {
+                
+                self.connectionLost()
+            }else{// CONNECTION IS AVAILABLE
+                WWMHelperClass.showLoaderAnimate(on: self.view)
+                self.getProfileDataInBackground(lat: self.lat, long: self.long)
+            }
         }else{
             DispatchQueue.global(qos: .background).async {
                 self.getProfileDataInBackground(lat: self.lat, long: self.long)
@@ -1157,6 +1164,11 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
                 self.getDataFromDatabase()
             }
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
+                
+                DispatchQueue.global(qos: .background).async {
+                    self.getDictionaryAPI()
+                    self.meditationHistoryListAPI()
+                }
             }
         }
     }
@@ -1360,7 +1372,13 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     
     @IBAction func btnDoneAction(_ sender: Any) {
         
-        self.getUserProfileData(lat: self.lat, long: self.long)
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            print("dismiss popup...")
+        }else{
+            self.getUserProfileData(lat: self.lat, long: self.long)
+        }
     }
     
     func showToast(message : String) {

@@ -471,7 +471,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func getMoodMeterDataAPI() {
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
-            
+            print("URL_GETMOODMETERDATA result... \(result)")
             self.executionTime = Date().timeIntervalSince(self.startDate)
 
             if sucess {
