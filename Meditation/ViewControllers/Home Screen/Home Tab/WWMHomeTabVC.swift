@@ -99,13 +99,14 @@ class WWMHomeTabVC: WWMBaseViewController {
 
         print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         print("self.appPreffrence.getUserName()... \(self.appPreffrence.getUserName())")
-        self.imgTopBar.isHidden = true
+        //self.imgTopBar.isHidden = true
         
         if self.appPreffrence.getSessionAvailableData(){
+            self.imgTopBar.isHidden = false
             self.viewVideoHeightConstraint.constant = 140
             self.lblStartedText.text = KHOMELBL
             self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
-            //self.imgTopBar.image = UIImage(named: "meditationHistoryBG")
+            self.imgTopBar.image = UIImage(named: "meditationHistoryBG")
             self.lblIntroText.isHidden = true
             self.imgGiftIcon.isHidden = true
             self.imgPlayIcon.isHidden = true
@@ -125,7 +126,7 @@ class WWMHomeTabVC: WWMBaseViewController {
                 self.lblName.text = "\(kEVENING)\n\(self.appPreffrence.getUserName())!"
             }
         }else{
-            
+            self.imgTopBar.isHidden = true
             self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
             self.lblStartedText.text = KHOMELBL1
             self.backImgVideo.image = UIImage(named: "bg1")
