@@ -14,7 +14,7 @@ target 'Meditation' do
 	pod 'GoogleSignIn'
 	pod 'FBSDKLoginKit'
 	pod 'lottie-ios', '~> 3.0.4'
-	pod 'GaugeKit'
+	pod 'GaugeKit', '~> 0.4.4'
 	pod 'SDWebImage'
 	pod 'Fabric'
 	pod 'Crashlytics'
@@ -24,6 +24,7 @@ target 'Meditation' do
   pod 'IQKeyboardManagerSwift'
   pod 'UICircularProgressRing'
   pod 'EFCountingLabel'
+  pod 'Alamofire'
 
   target 'MeditationTests' do
     inherit! :search_paths

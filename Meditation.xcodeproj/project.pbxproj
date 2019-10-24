@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -67,7 +67,6 @@
 		2E4CE29F2209A03400059396 /* dataClock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E4CE29E2209A03400059396 /* dataClock.json */; };
 		2E59340A2264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */; };
 		2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */; };
-		2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */; };
 		2E5CCE8E21C79E840085224B /* WWMSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */; };
 		2E5CCE9021C79EA80085224B /* WWMMyProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */; };
 		2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5CCE9121C79EBE0085224B /* WWMWisdomVC.swift */; };
@@ -422,6 +421,7 @@
 		6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */; };
 		6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */; };
 		78ADD3E70FD1AE1E83FE7C8E /* Pods_MeditationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3CFC2BF646A938192DD625 /* Pods_MeditationUITests.framework */; };
+		E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */; };
 		E07831F1235E3BCA00B352ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E07831D6235E3BCA00B352ED /* Localizable.strings */; };
 		E07831F2235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07831D8235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift */; };
 		E07831F3235E3BCA00B352ED /* ESTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07831D9235E3BCA00B352ED /* ESTabBarController.swift */; };
@@ -536,7 +536,6 @@
 		2E4CE29E2209A03400059396 /* dataClock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dataClock.json; sourceTree = "<group>"; };
 		2E5934092264A92C00ECD9B9 /* WWMWisdomDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomDashboardVC.swift; sourceTree = "<group>"; };
 		2E59340B2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomNavVC.swift; sourceTree = "<group>"; };
-		2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerHomeVC.swift; sourceTree = "<group>"; };
 		2E5CCE8D21C79E840085224B /* WWMSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingsVC.swift; sourceTree = "<group>"; };
 		2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressVC.swift; sourceTree = "<group>"; };
 		2E5CCE9121C79EBE0085224B /* WWMWisdomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomVC.swift; sourceTree = "<group>"; };
@@ -897,6 +896,7 @@
 		6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDCE084A12C87DE5C17EE29 /* Pods-MeditationUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMTimerHomeVC.swift; sourceTree = "<group>"; };
 		E07831D7235E3BCA00B352ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E07831D8235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemMoreContentView.swift; sourceTree = "<group>"; };
 		E07831D9235E3BCA00B352ED /* ESTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarController.swift; sourceTree = "<group>"; };
@@ -1141,8 +1141,8 @@
 		2E5CCE8621C79DB70085224B /* Timer Screen */ = {
 			isa = PBXGroup;
 			children = (
+				E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */,
 				2E93D2D621F1B90E00163E57 /* Start Timer */,
-				2E5CCE8721C79E030085224B /* WWMTimerHomeVC.swift */,
 				2EC81C5221E745EA003B0EEE /* Mood Meter */,
 				61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */,
 			);
@@ -2334,16 +2334,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2356,48 +2351,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/EFCountingLabel/EFCountingLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GaugeKit/GaugeKit.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
-				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EFCountingLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GaugeKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2556,6 +2514,7 @@
 				61416E8D22BBB3B400C9339E /* PieRadarChartViewBase.swift in Sources */,
 				61416F2A22BBB53000C9339E /* IBubbleChartDataSet.swift in Sources */,
 				61416EB422BBB42600C9339E /* ChartUtils.swift in Sources */,
+				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,
 				61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */,
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
@@ -2580,12 +2539,10 @@
 				61416F1022BBB4C800C9339E /* PieChartDataSet.swift in Sources */,
 				61416E4622BBB29500C9339E /* SquareShapeRenderer.swift in Sources */,
 				61416E3322BBB23B00C9339E /* AxisRendererBase.swift in Sources */,
-				2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */,
 				617C283F23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift in Sources */,
 				61416E3122BBB23B00C9339E /* ScatterChartRenderer.swift in Sources */,
 				61416F0822BBB4C800C9339E /* PieChartData.swift in Sources */,
 				2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */,
-				2E5CCE8821C79E030085224B /* WWMTimerHomeVC.swift in Sources */,
 				61416F5322BBB5B500C9339E /* ChartView.swift in Sources */,
 				61426B2B22DCA9E0006FE825 /* WWMChooseMantraVC.swift in Sources */,
 				61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */,
