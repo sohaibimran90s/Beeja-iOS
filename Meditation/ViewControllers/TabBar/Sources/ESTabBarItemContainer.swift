@@ -46,7 +46,7 @@ internal class ESTabBarItemContainer: UIControl {
         super.layoutSubviews()
         for subview in self.subviews {
             if let subview = subview as? ESTabBarItemContentView {
-                subview.frame = CGRect.init(x: subview.insets.left, y: subview.insets.top, width: bounds.size.width - subview.insets.left - subview.insets.right, height: bounds.size.height - subview.insets.top - subview.insets.bottom)
+                subview.frame = CGRect.init(x: subview.insets.left+8, y: subview.insets.top, width: bounds.size.width - subview.insets.left - subview.insets.right-20, height: bounds.size.height - subview.insets.top - subview.insets.bottom-20)
                 subview.updateLayout()
             }
         }
