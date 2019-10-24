@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var date = Date()
     var value = 0
     
+    var tabBarController:UITabBarController?
+    
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -123,11 +125,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
 
     func changeRootViewController() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+      /*  let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
        
         
-        self.window!.rootViewController = nextViewController
+        self.window!.rootViewController = nextViewController*/
+        self.window!.rootViewController = self.animatedTabBarController()
     }
     
     func showForceUpdate() {
@@ -812,26 +815,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if let milestoneType = userInfo["milestoneType"] as? String{
             if milestoneType == "hours_meditate"{
    
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+              /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 
                 vc.milestoneType = "hours_meditate"
-                UIApplication.shared.keyWindow?.rootViewController = vc
+                UIApplication.shared.keyWindow?.rootViewController = vc*/
+                
+                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
                 
             }else if milestoneType == "consecutive_days"{
                 
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+              /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 
                 vc.milestoneType = "consecutive_days"
-                UIApplication.shared.keyWindow?.rootViewController = vc
+                UIApplication.shared.keyWindow?.rootViewController = vc*/
+                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
             }else{
                 
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+             /*   let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 
                 vc.milestoneType = "sessions"
-                UIApplication.shared.keyWindow?.rootViewController = vc
+                UIApplication.shared.keyWindow?.rootViewController = vc*/
+                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
             }
         }
         
@@ -961,5 +968,41 @@ extension AppDelegate : MessagingDelegate {
         print("Received data message: \(remoteMessage.appData)")
     }
     // [END ios_10_data_message]
+    
+    func animatedTabBarController()-> UITabBarController? {
+        if self.tabBarController == nil {
+            self.tabBarController = lottieSytleTabbar()
+        }
+        return self.tabBarController
+    }
+    
+    func lottieSytleTabbar() -> WWMTabBarVC {
+        UITabBar.appearance().barTintColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController = storyBoard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        
+        
+        
+        //        let navigationVCCommunity = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCCommunity") as! UINavigationController
+        //        let navigationVCProgress = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCProgress") as! UINavigationController
+        //        let navigationVCWisdom = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCWisdom") as! UINavigationController
+        //        let navigationVCGuided = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCGuided") as! UINavigationController
+        //        let navigationVCTimer = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCTimer") as! UINavigationController
+        //        let navigationVCLearn = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCLearn") as! UINavigationController
+        //        let navigationVCHome = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCHome") as! UINavigationController
+        //
+        //
+        //        navigationVCHome.tabBarItem = ESTabBarItem.init(WWMHomeAnimateContentView(), title: "Home", image: nil, selectedImage: nil)
+        //        navigationVCCommunity.tabBarItem = ESTabBarItem.init(WWMCommunityAnimateContentView(), title: "Community", image: nil, selectedImage: nil)
+        //        navigationVCGuided.tabBarItem = ESTabBarItem.init(WWMGuideAnimateContentView(), title: "Guided", image: nil, selectedImage: nil)
+        //        navigationVCTimer.tabBarItem = ESTabBarItem.init(WWMTimerAnimateContentView(), title: "Timer", image: nil, selectedImage: nil)
+        //        navigationVCLearn.tabBarItem = ESTabBarItem.init(WWMLearnAnimateContentView(), title: "Learn", image: nil, selectedImage: nil)
+        //        navigationVCWisdom.tabBarItem = ESTabBarItem.init(WWMWisdomAnimateContentView(), title: "Wisdom", image: nil, selectedImage: nil)
+        //        navigationVCProgress.tabBarItem = ESTabBarItem.init(WWMProgressAnimateContentView(), title: "Progress", image: nil, selectedImage: nil)
+        //        tabBarController.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCGuided,navigationVCTimer,navigationVCLearn, navigationVCWisdom, navigationVCProgress]
+        
+        return tabBarController
+    }
+    
 }
 

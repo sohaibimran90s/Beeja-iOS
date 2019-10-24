@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.9.0)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -123,6 +124,7 @@ PODS:
   - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
+  - Alamofire
   - Crashlytics
   - EFCountingLabel
   - Fabric
@@ -131,7 +133,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Crash
   - Firebase/Messaging
-  - GaugeKit
+  - GaugeKit (~> 0.4.4)
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - lottie-ios (~> 3.0.4)
@@ -143,6 +145,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Bolts
     - Crashlytics
     - EFCountingLabel
@@ -175,6 +178,7 @@ SPEC REPOS:
     - XLPagerTabStrip
 
 SPEC CHECKSUMS:
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   EFCountingLabel: c25faa62a975f8ef9b2cb0928e8675520e8e2739
@@ -206,6 +210,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: fddcf14e652a29b074294eda1cdde61b9a9c18d5
+PODFILE CHECKSUM: 52d62d073aec556c3365fcc7a340e32013c3043f
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.5
