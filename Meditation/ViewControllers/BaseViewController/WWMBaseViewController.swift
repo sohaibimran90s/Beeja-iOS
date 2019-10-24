@@ -183,6 +183,11 @@ class WWMBaseViewController: UIViewController {
     
     @IBAction func btnSideMenuAction(_ sender: UIButton) {
         
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count < 1 {
+            return
+        }
+        
         if self.title1 == "Settings"{
             self.navigationController?.popToRootViewController(animated: true)
         }else{

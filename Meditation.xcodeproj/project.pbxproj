@@ -83,7 +83,6 @@
 		2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */; };
 		2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */; };
 		2E5EA5C821EDDBEB0076328A /* WWMCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */; };
-		2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		2E6C8406222427180070E799 /* WWMUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C8405222427180070E799 /* WWMUserData.swift */; };
 		2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */; };
 		2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */; };
@@ -200,6 +199,7 @@
 		6112A43022DA042200A88C08 /* WWMLearnGetSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A42F22DA042200A88C08 /* WWMLearnGetSetVC.swift */; };
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
 		6112C0D72339EA54004705C9 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6112C0D62339EA54004705C9 /* walkthough.mp4 */; };
+		6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
 		612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */; };
@@ -2305,6 +2305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */,
 				6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */,
 				61416F1722BBB4C800C9339E /* LineChartData.swift in Sources */,
 				2EE247EE21E6315400857C25 /* AlphaPieViewLayerAnimator.swift in Sources */,
@@ -2326,7 +2327,6 @@
 				2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */,
 				612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */,
 				61416E2F22BBB23B00C9339E /* RadarChartRenderer.swift in Sources */,
-				2E5EA5CA21EDFB650076328A /* WWMEditMeditationTimeVC.swift in Sources */,
 				61416F1222BBB4C800C9339E /* PieChartDataEntry.swift in Sources */,
 				2EB0865A22817069008BF6E4 /* WWMGuidedEmotionVC.swift in Sources */,
 				2E93D2FB21F5D14900163E57 /* WWMHelperClass.swift in Sources */,

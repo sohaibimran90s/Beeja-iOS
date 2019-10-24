@@ -39,6 +39,8 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
     var strMonthYear = ""
     var communityData = WWMCommunityData()
     
+    var flagConnAlertShow = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -1038,8 +1040,17 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
             
             // CONNECTION IS NOT REACHABLE
             if !reachable.isConnectedToNetwork() {
+                if !self.flagConnAlertShow{
+                    self.connectionLost()
+                    self.flagConnAlertShow = true
+                }else{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        self.popUpForOfflineMode()
+                        //self.btnDoneAction()
+                    })
+                }
                 
-                self.connectionLost()
+                
             }else{// CONNECTION IS AVAILABLE
                 WWMHelperClass.showLoaderAnimate(on: self.view)
                 self.getProfileDataInBackground(lat: self.lat, long: self.long)
@@ -1369,15 +1380,54 @@ class WWMTabBarVC: UITabBarController,UITabBarControllerDelegate,CLLocationManag
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
+    func popUpForOfflineMode(){
+        
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = kAlertTitle
+        alertPopupView.lblSubtitle.text = "Seems this your first time after login. \nYou will have to get online once to setup your account and support the offline functionality."
+        alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
+        alertPopupView.btnClose.isHidden = true
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneOfflinePopUP(_:)), for: .touchUpInside)
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
     
     @IBAction func btnDoneAction(_ sender: Any) {
         
-        WWMHelperClass.hideLoaderAnimate(on: self.view)
+        self.btnDoneAction()
+        
+    }
+    
+    @IBAction func btnDoneOfflinePopUP(_ sender: Any) {
+        self.btnDoneAction()
+    }
+    
+    func btnDoneAction(){
+        //WWMHelperClass.hideLoaderAnimate(on: self.view)
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             print("dismiss popup...")
         }else{
-            self.getUserProfileData(lat: self.lat, long: self.long)
+            if !reachable.isConnectedToNetwork() {
+                if !self.flagConnAlertShow{
+                    self.connectionLost()
+                    self.flagConnAlertShow = true
+                }else{
+                    print("no alert...")
+                    self.getUserProfileData(lat: self.lat, long: self.long)
+                    
+                }
+            }else{
+                self.getUserProfileData(lat: self.lat, long: self.long)
+            }
         }
     }
     

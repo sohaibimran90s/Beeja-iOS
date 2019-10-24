@@ -258,6 +258,10 @@ class WWMTimerHomeVC: WWMBaseViewController {
     }
     
     @IBAction func btnStartTimerAction(_ sender: Any) {
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count < 1{
+            return
+        }
         self.btnStartTimer.isUserInteractionEnabled = true
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
         vc.prepTime = self.prepTime
