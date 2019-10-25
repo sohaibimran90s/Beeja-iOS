@@ -978,6 +978,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if sucess {
                 if let success = result["success"] as? Bool {
                     print(success)
+                    print("settingVC... \(result)")
                     //self.tblViewSetting.reloadData()
                 }
             }else {

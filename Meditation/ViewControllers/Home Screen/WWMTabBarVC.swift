@@ -1418,7 +1418,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         alertPopupView.lblTitle.text = kAlertTitle
-        alertPopupView.lblSubtitle.text = "Seems this your first time after login. \nYou will have to get online once to setup your account and support the offline functionality."
+        alertPopupView.lblSubtitle.text = "Seems this is your first time after login. \nYou will have to get online once to setup your account and support the offline functionality."
         alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
         alertPopupView.btnClose.isHidden = true
         
@@ -1429,9 +1429,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        
         self.btnDoneAction()
-        
     }
     
     @IBAction func btnDoneOfflinePopUP(_ sender: Any) {
@@ -1443,6 +1441,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             print("dismiss popup...")
+            self.getDataFromDatabase()
         }else{
             if !reachable.isConnectedToNetwork() {
                 if !self.flagConnAlertShow{
