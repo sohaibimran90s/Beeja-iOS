@@ -469,6 +469,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 "group": group
                 ] as [String : Any]
             
+            print("param delegte ... \(param)")
+            
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let _ = result["success"] as? Bool {

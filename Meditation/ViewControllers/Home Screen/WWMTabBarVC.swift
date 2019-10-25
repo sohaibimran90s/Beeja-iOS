@@ -1160,7 +1160,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         self.setDataToDb(json: result["settings"] as! [String:Any])
-                        
+                        print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
                         
                         //*receiptValidation
                         let formatter = DateFormatter()

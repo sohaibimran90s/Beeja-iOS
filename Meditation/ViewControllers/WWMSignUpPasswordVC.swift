@@ -119,10 +119,11 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
                     self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                     self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
                     
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                    
-                    vc.value = "SignupLetsStart"
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.responseFromServer(title: result, subTitle: "Response from Naushad")
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+//
+//                    vc.value = "SignupLetsStart"
+//                    self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                     WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
@@ -139,5 +140,30 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
+    }
+    
+    func responseFromServer(title: [String: Any], subTitle: String){
+        
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertPopupView.lblTitle.text = subTitle
+        alertPopupView.lblSubtitle.text = "\(title)"
+        alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
+        alertPopupView.btnClose.isHidden = true
+        
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+        
+        vc.value = "SignupLetsStart"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -974,6 +974,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             "group": group
             ] as [String : Any]
         
+        print("settings param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
