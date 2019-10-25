@@ -471,8 +471,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
-                    if let success = result["success"] as? Bool {
-                        print(success)
+                    if let _ = result["success"] as? Bool {
+                        print("setting appdelegate... \(result)")
                         print("settingapi appdelegate with background")
                     }
                 }
