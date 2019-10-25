@@ -69,12 +69,12 @@ let kAmbient_BIRDSONG_1                         = "BIRDSONG 1"
 let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
-let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://staging.beejameditation.com")/api/v2/"
+let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
 //let URL_BASE  = KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com" + "/api/v2/"
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
-let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://staging.beejameditation.com")/api/v2/"
+let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
 
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
@@ -310,29 +310,30 @@ let kTESTFLIGHT = true
 /************************************/
 //Static Urls for Beta
 
-//let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
-//let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
-//let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1"
-//let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
-//let URL_WebSite   = "https://www.beejameditation.com/"
-//let URL_FINDCOURSE   = "https://beta.beejameditation.com/courses/beginners?mobile_view=1"
-//let URL_OurStory   = "https://www.beejameditation.com/about-us/"
-//let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
-//let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
-//let URL_MOREINFO   = "https://beta.beejameditation.com/more-info?mobile_view=1"
-
-
-//Static Urls for staging
-let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy?mobile_view=1"
-let URL_TermsnCondition   = "https://staging.beejameditation.com/terms-and-condition?mobile_view=1"
-let URL_Help   = "https://staging.beejameditation.com/contact-us?mobile_view=1"
-let URL_FAQ   = "https://staging.beejameditation.com/faqs?mobile_view=1"
+let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
+let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
+let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1"
+let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"
-let URL_FINDCOURSE   = "https://staging.beejameditation.com/courses/beginners?mobile_view=1"
+let URL_FINDCOURSE   = "https://beta.beejameditation.com/courses/beginners?mobile_view=1"
 let URL_OurStory   = "https://www.beejameditation.com/about-us/"
 let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
 let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
-let URL_MOREINFO   = "https://staging.beejameditation.com/more-info?mobile_view=1"
+let URL_MOREINFO   = "https://beta.beejameditation.com/more-info?mobile_view=1"
+
+
+//Static Urls for staging
+
+//let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy?mobile_view=1"
+//let URL_TermsnCondition   = "https://staging.beejameditation.com/terms-and-condition?mobile_view=1"
+//let URL_Help   = "https://staging.beejameditation.com/contact-us?mobile_view=1"
+//let URL_FAQ   = "https://staging.beejameditation.com/faqs?mobile_view=1"
+//let URL_WebSite   = "https://www.beejameditation.com/"
+//let URL_FINDCOURSE   = "https://staging.beejameditation.com/courses/beginners?mobile_view=1"
+//let URL_OurStory   = "https://www.beejameditation.com/about-us/"
+//let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
+//let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
+//let URL_MOREINFO   = "https://staging.beejameditation.com/more-info?mobile_view=1"
 
 
 // Social Links **************************
