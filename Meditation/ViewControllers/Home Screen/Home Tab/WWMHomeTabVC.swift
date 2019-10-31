@@ -243,8 +243,12 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @IBAction func btnVideoClicked(_ sender: UIButton) {
-        let videoURL: String = self.appPreffrence.getHomePageURL()
         
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+        
+        vc.value = "help"
+        self.navigationController?.pushViewController(vc, animated: true)
+      /*  let videoURL: String = self.appPreffrence.getHomePageURL()
         NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
 
         if videoURL != ""{
@@ -254,7 +258,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             present(playerController, animated: true){
                 self.player?.play()
             }
-        }
+        }*/
     }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification){

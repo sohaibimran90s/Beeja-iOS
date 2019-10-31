@@ -571,7 +571,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }else{
                 if (nav.visibleViewController?.isKind(of: WWMVedioPlayerVC.classForCoder()))! {
 
-                        return .allButUpsideDown
+                        //return .allButUpsideDown
+                    return .all
                     }
                 }
             }

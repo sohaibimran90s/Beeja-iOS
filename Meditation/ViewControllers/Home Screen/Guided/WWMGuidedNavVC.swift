@@ -122,10 +122,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        /*
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc*/
         
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+      /*
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
             window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
@@ -133,7 +133,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         } else {
             UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
         }
-        
+        */
     }
     
     @IBAction func btnSpritualClicked(_ sender: UIButton) {
@@ -153,17 +153,17 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        /*
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc*/
-        if #available(iOS 13.0, *) {
+        UIApplication.shared.keyWindow?.rootViewController = vc
+     /*   if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
             window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
             
         } else {
             UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
         }
-        
+        */
     }
     
     func meditationApi() {
@@ -231,7 +231,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 }
                 
                 jsonString["emotion_list"] = jsonEmotions
-                
+                jsonEmotions.removeAll()
                 let guidedData = WWMGuidedData.init(json: jsonString)
                 self.arrGuidedList.append(guidedData)
             }
