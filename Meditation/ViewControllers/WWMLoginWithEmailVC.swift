@@ -221,16 +221,10 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
-                           /* let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                            UIApplication.shared.keyWindow?.rootViewController = vc*/
-                            if #available(iOS 13.0, *) {
-                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                                window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-                            } else {
-                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                                UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-                            }
+                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                            
                             
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
