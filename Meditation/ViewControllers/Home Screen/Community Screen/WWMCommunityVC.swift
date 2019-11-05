@@ -530,8 +530,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
                     self.communityData = WWMCommunityData.init(json: jsonResult)
                     self.titleMeditateAW = self.communityData.titleAnyWhere
+                    print("self.titleMeditateAW... \(self.titleMeditateAW)")
                 }
             }
+            print("self.titleMeditateAW*... \(self.titleMeditateAW)")
             print(self.communityData.events.count)
             self.tblViewCommunity.reloadData()
             

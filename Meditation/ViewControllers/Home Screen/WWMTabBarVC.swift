@@ -773,7 +773,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                print("dict... \(dict)")
+                
+                print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -807,8 +809,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "user_Id":self.appPreffrence.getUserID(),
             "month":self.strMonthYear
             ] as [String : Any]
+        
+        print("param get community.. \(param) URL_COMMUNITYDATA... \(URL_COMMUNITYDATA)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+                
+                print("result getcommunity... \(result)")
                 
                 let comunityData = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
                 if comunityData.count > 0 {
@@ -816,18 +822,22 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 
                 let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
-                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: result["result"] as! [String : Any], options:.prettyPrinted)
-                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                dbCommunityData.data = myString
                 
-                let timeInterval = Int(Date().timeIntervalSince1970)
-                print("timeInterval.... \(timeInterval)")
-                
-                dbCommunityData.last_time_stamp = "\(timeInterval)"
-                
-                WWMHelperClass.saveDb()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationCommunity"), object: nil)
-                print("success tabbarVC getcommunity in background thread")
+                if let result = result["result"] as? [String: Any]{
+                    print("result get community... \(result)")
+                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: result, options:.prettyPrinted)
+                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    dbCommunityData.data = myString
+                    
+                    let timeInterval = Int(Date().timeIntervalSince1970)
+                    print("timeInterval.... \(timeInterval)")
+                    
+                    dbCommunityData.last_time_stamp = "\(timeInterval)"
+                    
+                    WWMHelperClass.saveDb()
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationCommunity"), object: nil)
+                    print("success tabbarVC getcommunity in background thread")
+                }
             }
         }
     }
