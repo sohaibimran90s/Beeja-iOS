@@ -179,6 +179,9 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
             per = per/10
             per = per.rounded()
             per = per*10
+            guard !(per.isNaN || per.isInfinite) else {
+                return "0%" // or do some error handling
+            }
             return "\(Int(per))%"
         }
         return "0%"

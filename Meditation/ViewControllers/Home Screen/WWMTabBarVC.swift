@@ -1153,6 +1153,35 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
 
                         self.appPreffrence.setExpiryDate(value: false)
                         
+                        if let subscription = result["subscription"] as? [String : Any]{
+                            if let journal = subscription["journal"] as? [String : Any]{
+                                if let post = journal["post"] as? Int{
+                                    if post >= 6{
+                                        self.appPreffrence.setPostJournalCount(value: 0)
+                                    }
+                                }
+                                
+                                if let pre = journal["pre"] as? Int{
+                                    if pre >= 6{
+                                        self.appPreffrence.setPreJournalCount(value: 0)
+                                    }
+                                }
+                            }
+                            if let mood = subscription["mood"] as? [String : Any]{
+                                if let post = mood["post"] as? Int{
+                                    if post >= 6{
+                                        self.appPreffrence.setPostMoodCount(value: 0)
+                                    }
+                                }
+                                
+                                if let pre = mood["pre"] as? Int{
+                                    if pre >= 6{
+                                        self.appPreffrence.setPreMoodCount(value: 0)
+                                    }
+                                }
+                            }
+                        }
+                        
                         if difference == 1{
                             if !self.appPreffrence.getPrePostJournalBool(){
                                 
@@ -1160,10 +1189,49 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 
                                 print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
                                 
-                                self.appPreffrence.setPostMoodCount(value: 6)
-                                self.appPreffrence.setPreMoodCount(value: 6)
-                                self.appPreffrence.setPreJournalCount(value: 6)
-                                self.appPreffrence.setPostJournalCount(value: 6)
+                                
+                                if let subscription = result["subscription"] as? [String : Any]{
+                                    if let journal = subscription["journal"] as? [String : Any]{
+                                        if let post = journal["post"] as? Int{
+                                            if post >= 6{
+                                                self.appPreffrence.setPostJournalCount(value: 0)
+                                            }else{
+                                                self.appPreffrence.setPostJournalCount(value: 6)
+                                            }
+                                        }
+                                        
+                                        if let pre = journal["pre"] as? Int{
+                                            if pre >= 6{
+                                                self.appPreffrence.setPreJournalCount(value: 0)
+                                            }else{
+                                                self.appPreffrence.setPreJournalCount(value: 6)
+                                            }
+                                        }
+                                    }
+                                    if let mood = subscription["mood"] as? [String : Any]{
+                                        if let post = mood["post"] as? Int{
+                                            if post >= 6{
+                                                self.appPreffrence.setPostMoodCount(value: 0)
+                                            }else{
+                                                self.appPreffrence.setPostMoodCount(value: 6)
+                                            }
+                                        }
+                                        
+                                        if let pre = mood["pre"] as? Int{
+                                            if pre >= 6{
+                                                self.appPreffrence.setPreMoodCount(value: 0)
+                                            }else{
+                                                self.appPreffrence.setPreMoodCount(value: 6)
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                
+//                                self.appPreffrence.setPostMoodCount(value: 6)
+//                                self.appPreffrence.setPreMoodCount(value: 6)
+//                                self.appPreffrence.setPreJournalCount(value: 6)
+//                                self.appPreffrence.setPostJournalCount(value: 6)
                             }
                         }else{
                             self.appPreffrence.setExpiryDate(value: true)
