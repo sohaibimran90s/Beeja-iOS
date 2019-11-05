@@ -574,6 +574,19 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             }else{
                 cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
             }
+        
+            if self.data[indexPath.row].type == "guided"{
+                if self.data[indexPath.row].like < 1{
+                    cell.heartLbl.isHidden = true
+                    cell.heartImg.isHidden = true
+                }else{
+                    cell.heartLbl.isHidden = false
+                    cell.heartImg.isHidden = false
+                }
+            }else{
+                cell.heartLbl.isHidden = true
+                cell.heartImg.isHidden = true
+            }
 
             cell.lblTitle.text = self.data[indexPath.row].title
             cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].type)"

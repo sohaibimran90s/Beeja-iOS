@@ -1030,6 +1030,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 if let data = result["data"] as? [String: Any]{
                     if let records = data["records"] as? [[String: Any]]{
                         
+                        print("meditationHistory records... \(records)")
+                        
                         let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
                         if meditationHistoryData.count > 0 {
                             WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
