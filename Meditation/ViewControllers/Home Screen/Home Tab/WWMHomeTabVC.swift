@@ -500,6 +500,8 @@ class WWMHomeTabVC: WWMBaseViewController {
                 if let jsonResult = self.convertToDictionary(text: dict.data ?? "") {
                     data = WWMMeditationHistoryListData.init(json: jsonResult)
                     self.data.append(data)
+                    
+                    print("meditation history cart dict... \(dict)")
                 }
             }
             
@@ -588,6 +590,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 cell.heartImg.isHidden = true
             }
 
+            print("meditation history title... \(self.data[indexPath.row].title)")
             cell.lblTitle.text = self.data[indexPath.row].title
             cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].type)"
             cell.heartLbl.text = "\(self.data[indexPath.row].like)"
