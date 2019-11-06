@@ -25,7 +25,7 @@ class LearnAnimateContentView: ESTabBarItemContentView {
 
 class WWMLearnAnimateContentView: LearnAnimateContentView {
     let lottieView: AnimationView = {
-        let lottieView = AnimationView(name: "learn-inactive")
+        let lottieView = AnimationView(name: "learn")
         lottieView.loopMode = .playOnce
         lottieView.contentMode = .scaleAspectFit
 //        lottieView.play()
