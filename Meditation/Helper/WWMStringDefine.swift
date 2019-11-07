@@ -309,9 +309,14 @@ let kTESTFLIGHT = true
 
 /************************************/
 //Static Urls for Beta
-
+/*
 let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
 let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
+*/
+//Modified By Akram
+let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy-policy/"
+let URL_TermsnCondition   = "https://staging.beejameditation.com/beeja-terms-conditions/"
+
 let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1"
 let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"

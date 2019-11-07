@@ -190,7 +190,9 @@ class WWMTimerHomeVC: WWMBaseViewController {
             if self.min == 1{
                 return String.init(format: "%d:%02d", second/60,second%60)
             }else{
-                return String.init(format: "%d mins", second/60)
+                // Modified By Akram
+                // return String.init(format: "%d mins", second/60)
+                return String.init(format: "%d:%02d", second/60,second%60)
             }
         }
     }
@@ -221,7 +223,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
             if self.min < 2{
                 self.prepTime = Int(self.sliderPrepTime.value/15) * 15
             }else{
-                self.prepTime = Int(self.sliderPrepTime.value/60) * 60
+                //Modified By Akram
+                self.prepTime = Int(self.sliderPrepTime.value/30) * 30
             }
         }else{
             self.prepTime = Int(self.sliderPrepTime.value/15) * 15
@@ -248,7 +251,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
             if self.min < 2{
                 self.restTime = Int(self.sliderRestTime.value/15) * 15
             }else{
-                self.restTime = Int(self.sliderRestTime.value/60) * 60
+                //Modified By Akram
+                self.restTime = Int(self.sliderRestTime.value/30) * 30
             }
         }else{
             self.restTime = Int(self.sliderRestTime.value/15) * 15
