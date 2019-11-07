@@ -126,6 +126,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
                         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
                         dbJournal.data = myString
+                        dbJournal.meditation_type = self.appPreference.getType()
                         WWMHelperClass.saveDb()
                     }
                     self.tableViewJournal.reloadData()

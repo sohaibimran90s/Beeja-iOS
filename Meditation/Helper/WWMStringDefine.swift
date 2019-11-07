@@ -192,6 +192,10 @@ let KSHOWALL = "Show all"
 let kAFTERNOON = "Good Afternoon"
 let kEVENING = "Good Evening"
 let kMORNING = "Good Morning"
+let kMEDITATIONSESSINO = "Meditation session"
+let kTIMER = "TIMER"
+let kLEARN = "LEARN"
+let kGUIDED = "GUIDED"
 
 //WWMGuidedAudioListVC
 let KFREEAUDIO = "(Free for 15:00 min)"

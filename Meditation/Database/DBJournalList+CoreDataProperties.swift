@@ -17,5 +17,5 @@ extension DBJournalList {
     }
 
     @NSManaged public var data: String?
-
+    @NSManaged public var meditation_type: String?
 }
