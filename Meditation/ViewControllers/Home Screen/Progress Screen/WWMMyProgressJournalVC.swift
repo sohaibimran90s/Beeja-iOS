@@ -111,24 +111,37 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, context: "WWMMyProgressJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let arrJournal = result["result"] as? [[String:Any]] {
-                    let moodData = WWMHelperClass.fetchDB(dbName: "DBJournalList") as! [DBJournalList]
-                    if moodData.count > 0 {
-                        WWMHelperClass.deletefromDb(dbName: "DBJournalList")
-                    }
-                    
-                    
                     self.journalData.removeAll()
-                    var journal = WWMJournalProgressData()
-                    for dict in arrJournal {
-                        journal = WWMJournalProgressData.init(json: dict)
-                        self.journalData.append(journal)
-                        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalList") as! DBJournalList
-                        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
-                        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                        dbJournal.data = myString
-                        dbJournal.meditation_type = self.appPreference.getType()
-                        WWMHelperClass.saveDb()
+                
+                    
+                        //WWMHelperClass.deletefromDb(dbName: "DBJournalList")
+                        var i = 0
+                        for dict in arrJournal {
+                            
+                            let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalList") as! DBJournalList
+                            if dbJournal.meditation_type == self.appPreference.getType(){
+                                
+                                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                                
+                                WWMHelperClass.updateJournalfromDb(dbName: "DBJournalList", index: i, data: myString!, meditation_type: self.appPreference.getType())
+                                
+                                i += 1
+                            }else{
+                                var journal = WWMJournalProgressData()
+                                for dict in arrJournal {
+                                    journal = WWMJournalProgressData.init(json: dict)
+                                    self.journalData.append(journal)
+                                    let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalList") as! DBJournalList
+                                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                                    dbJournal.data = myString
+                                    dbJournal.meditation_type = self.appPreference.getType()
+                                    WWMHelperClass.saveDb()
+                            }
+                        }
                     }
+                    
                     self.tableViewJournal.reloadData()
                 }else {
                     self.fetchDataFromDB()
