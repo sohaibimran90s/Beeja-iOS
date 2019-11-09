@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 #if DEBUG
                     print("I'm running in DEBUG mode")
                 
-                    if let baseUrl = result["base_url"] as? String{
+                    if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                     }else {
                         KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
@@ -152,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 #else
                     print("I'm running in a non-DEBUG mode")
                 
-                    if let baseUrl = result["base_url"] as? String{
+                    if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                     }else {
                         KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)

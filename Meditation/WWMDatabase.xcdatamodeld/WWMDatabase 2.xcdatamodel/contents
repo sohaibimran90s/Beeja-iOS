@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DBAddSession" representedClassName="DBAddSession" syncable="YES">
         <attribute name="addSession" optional="YES" attributeType="String"/>
     </entity>
@@ -51,6 +51,7 @@
     </entity>
     <entity name="DBJournalList" representedClassName="DBJournalList" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
+        <attribute name="meditation_type" optional="YES" attributeType="String"/>
     </entity>
     <entity name="DBLevelData" representedClassName="DBLevelData" syncable="YES">
         <attribute name="isLevelSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -151,8 +152,11 @@
         <element name="DBCommunityData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>
+        <element name="DBGuidedAudioData" positionX="0" positionY="153" width="128" height="178"/>
+        <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="103"/>
+        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="118"/>
         <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
-        <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="60"/>
+        <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="73"/>
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
         <element name="DBMantras" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
@@ -165,8 +169,5 @@
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>
-        <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="103"/>
-        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="118"/>
-        <element name="DBGuidedAudioData" positionX="0" positionY="153" width="128" height="178"/>
     </elements>
 </model>
