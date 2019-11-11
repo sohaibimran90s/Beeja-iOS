@@ -311,7 +311,7 @@ let  Validatation_JournalOfflineMsg  =
 
 
 // If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
-let kBETA_ENABLED = false
+let kBETA_ENABLED = true
 
 
 let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"
