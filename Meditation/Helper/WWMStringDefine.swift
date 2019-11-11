@@ -70,11 +70,13 @@ let kChimes_JaiGuruDev                          = "JAI GURU DEVA"
 
 #if DEVELOPMENT
 let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
+let URL_BASE_WEBVIEW = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")"
 //let URL_BASE  = KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com" + "/api/v2/"
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
 #else
 let URL_BASE  = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")/api/v2/"
+let URL_BASE_WEBVIEW = "\(KUSERDEFAULTS.string(forKey: KBASEURL) ?? "https://beta.beejameditation.com")"
 
 //let URL_BASE  = "https://beta.beejameditation.com/api/v2/"
 //"https://service.launchpad-stage.in/api/v1/"//
@@ -329,16 +331,18 @@ let kTESTFLIGHT = true
 
 
 //Static Urls for staging
-let URL_PrivacyPolicy   = "https://staging.beejameditation.com/privacy-policy/"
-let URL_TermsnCondition   = "https://staging.beejameditation.com/beeja-terms-conditions/"
-let URL_Help   = "https://staging.beejameditation.com/contact-us?mobile_view=1"
-let URL_FAQ   = "https://staging.beejameditation.com/faqs?mobile_view=1"
+
+
+let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"
+let URL_TermsnCondition   = URL_BASE_WEBVIEW + "/beeja-terms-conditions?mobile_view=1"
+let URL_Help   = URL_BASE_WEBVIEW + "/contact-us?mobile_view=1"
+let URL_FAQ   = URL_BASE_WEBVIEW + "/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"
-let URL_FINDCOURSE   = "https://staging.beejameditation.com/courses/beginners?mobile_view=1"
+let URL_FINDCOURSE   = URL_BASE_WEBVIEW + "/courses/beginners?mobile_view=1"
 let URL_OurStory   = "https://www.beejameditation.com/about-us/"
-let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
-let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
-let URL_MOREINFO   = "https://staging.beejameditation.com/more-info?mobile_view=1"
+let URL_LEARN   = URL_BASE_WEBVIEW + "/love-to-learn/"
+let URL_GUIDED   = URL_BASE_WEBVIEW + "/please-guide-me/"
+let URL_MOREINFO   = URL_BASE_WEBVIEW + "/more-info?mobile_view=1"
 
 
 // Social Links **************************

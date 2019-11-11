@@ -18,6 +18,8 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("strurl.... \(strUrl)")
 
         self.setNavigationBar(isShow: false, title: strType)
         
