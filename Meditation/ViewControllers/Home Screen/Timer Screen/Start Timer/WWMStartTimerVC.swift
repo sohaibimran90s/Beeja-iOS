@@ -60,7 +60,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         view.insertSubview(animationViewMed, belowSubview: viewPause)
         
         animationViewRest = AnimationView(name: "circle_loader")
-        animationViewRest.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        animationViewRest.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
         animationViewRest.center = self.view.center
         animationViewRest.contentMode = .scaleAspectFill
         animationViewRest.loopMode = .loop
