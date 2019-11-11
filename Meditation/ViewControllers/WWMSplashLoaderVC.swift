@@ -82,7 +82,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                     
                     if let baseUrl = result["base_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                        print("URL_BASE... \(baseUrl) /privacy-policy?mobile_view=1")
                     }else {
                         KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
                     }
@@ -92,7 +91,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                     
                     if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                        print("URL_BASE... \(baseUrl) /privacy-policy?mobile_view=1")
                     }else {
                         KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
                     }
