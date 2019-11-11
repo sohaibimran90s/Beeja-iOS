@@ -141,29 +141,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 //staging_url
                 //base_url
                 
-                #if DEBUG
+                //set url from backend using constant*
+                if kBETA_ENABLED{
+                    
+                    print("I'm running in a non-DEBUG mode")
+                    
+                    if let baseUrl = result["base_url"] as? String{
+                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                        print("URL_BASE... \(baseUrl) /privacy-policy?mobile_view=1")
+                    }else {
+                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+                    }
+                }else{
+                    
                     print("I'm running in DEBUG mode")
-                
+                    
                     if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                         print("URL_BASE... \(baseUrl) /privacy-policy?mobile_view=1")
                     }else {
                         KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
                     }
-                
-                
-                #else
-                    print("I'm running in a non-DEBUG mode")
-                
-                    if let baseUrl = result["staging_url"] as? String{
-                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                        print("URL_BASE... \(baseUrl)/privacy-policy?mobile_view=1")
-                    }else {
-                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
-                    }
-                
-                
-                #endif
+                }//*end
                 
                 if let title = result["title"] as? String{
                     KUSERDEFAULTS.set(title, forKey: KFORCETOUPDATETITLE)

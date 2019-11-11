@@ -310,27 +310,8 @@ let  Validatation_JournalOfflineMsg  =
 /**/
 
 
-let kTESTFLIGHT = true
-
-
-/************************************/
-//Static Urls for Beta
-
-
-//let URL_PrivacyPolicy   = "https://beta.beejameditation.com/privacy?mobile_view=1"
-//let URL_TermsnCondition   = "https://beta.beejameditation.com/terms-and-condition?mobile_view=1"
-//let URL_Help   = "https://beta.beejameditation.com/contact-us?mobile_view=1"
-//let URL_FAQ   = "https://beta.beejameditation.com/faqs?mobile_view=1"
-
-//let URL_WebSite   = "https://www.beejameditation.com/"
-//let URL_FINDCOURSE   = "https://beta.beejameditation.com/courses/beginners?mobile_view=1"
-//let URL_OurStory   = "https://www.beejameditation.com/about-us/"
-//let URL_LEARN   = "https://www.beejameditation.com/love-to-learn/"
-//let URL_GUIDED   = "https://www.beejameditation.com/please-guide-me/"
-//let URL_MOREINFO   = "https://beta.beejameditation.com/more-info?mobile_view=1"
-
-
-//Static Urls for staging
+// If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
+let kBETA_ENABLED = true
 
 
 let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"
