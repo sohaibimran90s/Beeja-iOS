@@ -24,7 +24,7 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Done"
         self.setupView()
     }
     
@@ -53,28 +53,12 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.removeGestureRecognizer(tap)
-        
-        if txtViewPassword.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)
-        }else if txtViewPassword.text!.count < 6{
-            WWMHelperClass.showPopupAlertController(sender: self, message: KPASSLENGTH, title: kAlertTitle)
-        }else if txtViewRetypePassword.text == "" {
-             WWMHelperClass.showPopupAlertController(sender: self, message: KRETYPECONFIRMPASS, title: kAlertTitle)
-        }else if txtViewPassword.text != txtViewRetypePassword.text{
-            WWMHelperClass.showPopupAlertController(sender: self, message: KPASSNOTMATCH, title: kAlertTitle)
-        }else{
-            self.signUpApi()
-        }
     }
         
     @IBAction func btnNextAction(_ sender: UIButton) {
         if txtViewPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)
-        }
-//        else if txtViewPassword.text!.count < 6{
-//            WWMHelperClass.showPopupAlertController(sender: self, message: KPASSLENGTH, title: kAlertTitle)
-//        }
-        else if txtViewRetypePassword.text == "" {
+        }else if txtViewRetypePassword.text == "" {
              WWMHelperClass.showPopupAlertController(sender: self, message: KRETYPECONFIRMPASS, title: kAlertTitle)
         }else if txtViewPassword.text != txtViewRetypePassword.text{
             WWMHelperClass.showPopupAlertController(sender: self, message: KPASSNOTMATCH, title: kAlertTitle)
