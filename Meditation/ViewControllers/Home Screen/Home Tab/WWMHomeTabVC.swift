@@ -665,7 +665,9 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
         
         if indexPath.row == 2{
-          tableView.separatorStyle = .none
+            cell.lineLbl.isHidden = true
+        }else{
+            cell.lineLbl.isHidden = false
         }
         
         cell.lblTitle.text = self.podData[indexPath.row].title

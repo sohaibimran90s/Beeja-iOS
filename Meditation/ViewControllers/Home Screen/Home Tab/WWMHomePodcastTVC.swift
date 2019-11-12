@@ -13,6 +13,7 @@ class WWMHomePodcastTVC: UITableViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var playPauseImg: UIImageView!
+    @IBOutlet weak var lineLbl: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
