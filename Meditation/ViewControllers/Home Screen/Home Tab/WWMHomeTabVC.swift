@@ -500,6 +500,8 @@ class WWMHomeTabVC: WWMBaseViewController {
                 if let jsonResult = self.convertToDictionary(text: dict.data ?? "") {
                     data = WWMMeditationHistoryListData.init(json: jsonResult)
                     self.data.append(data)
+                    
+                    print("meditation history cart dict... \(dict)")
                 }
             }
             
@@ -561,7 +563,11 @@ class WWMHomeTabVC: WWMBaseViewController {
 
 extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data.count
+        if self.data.count > 10{
+            return 10
+        }else{
+           return self.data.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -569,13 +575,32 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
             cell.layer.cornerRadius = 8
         
+            cell.lblSubTitle.numberOfLines = 2
+            cell.lblSubTitle.sizeToFit()
+        
             if self.data[indexPath.row].image == ""{
                 cell.imgTitle.image = UIImage(named: "rectangle-1")
             }else{
                 cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
             }
         
-            if self.data[indexPath.row].type == "guided"{
+        
+            if self.data[indexPath.row].type == "timer"{
+                cell.lblTitle.text = kTIMER
+                cell.lblSubTitle.text = kMEDITATIONSESSINO
+                
+                cell.heartLbl.isHidden = true
+                cell.heartImg.isHidden = true
+            }else if self.data[indexPath.row].type == "learn"{
+                cell.lblTitle.text = kLEARN
+                cell.lblSubTitle.text = "\(self.data[indexPath.row].title)"
+                
+                cell.heartLbl.isHidden = true
+                cell.heartImg.isHidden = true
+            }else{
+                cell.lblTitle.text = kGUIDED
+                cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].title)"
+                
                 if self.data[indexPath.row].like < 1{
                     cell.heartLbl.isHidden = true
                     cell.heartImg.isHidden = true
@@ -583,15 +608,19 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                     cell.heartLbl.isHidden = false
                     cell.heartImg.isHidden = false
                 }
-            }else{
-                cell.heartLbl.isHidden = true
-                cell.heartImg.isHidden = true
             }
 
-            cell.lblTitle.text = self.data[indexPath.row].title
-            cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].type)"
+            print("meditation history title... \(self.data[indexPath.row].title)")
+            
             cell.heartLbl.text = "\(self.data[indexPath.row].like)"
-            cell.lblMin.text = "\(self.data[indexPath.row].duration/60) min"
+        
+            if self.data[indexPath.row].duration < 60 && self.data[indexPath.row].duration != 0{
+                cell.lblMin.text = "\(self.data[indexPath.row].duration) sec"
+            }else{
+                print("duration..... \(self.data[indexPath.row].duration)")
+                cell.lblMin.text = "\(Int(round(Double(self.data[indexPath.row].duration)/60.0))) min"
+            }
+            
         
             dateFormatter.dateFormat = "yyyy-MM-dd"
 

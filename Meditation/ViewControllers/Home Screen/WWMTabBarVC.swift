@@ -59,7 +59,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         navigationVCCommunity.tabBarItem = ESTabBarItem.init(WWMCommunityAnimateContentView(), title: "Community", image: nil, selectedImage: nil)
         navigationVCGuided.tabBarItem = ESTabBarItem.init(WWMGuideAnimateContentView(), title: "Guided", image: nil, selectedImage: nil)
         navigationVCTimer.tabBarItem = ESTabBarItem.init(WWMTimerAnimateContentView(), title: "Timer", image: nil, selectedImage: nil)
-        navigationVCLearn.tabBarItem = ESTabBarItem.init(WWMLearnAnimateContentView(), title: "Learn", image: nil, selectedImage: nil)
+        let extractedExpr = WWMLearnAnimateContentView()
+        navigationVCLearn.tabBarItem = ESTabBarItem.init(extractedExpr, title: "Learn", image: nil, selectedImage: nil)
         navigationVCWisdom.tabBarItem = ESTabBarItem.init(WWMWisdomAnimateContentView(), title: "Wisdom", image: nil, selectedImage: nil)
         navigationVCProgress.tabBarItem = ESTabBarItem.init(WWMProgressAnimateContentView(), title: "Progress", image: nil, selectedImage: nil)
         self.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCTimer,navigationVCGuided,navigationVCLearn, navigationVCWisdom, navigationVCProgress]

@@ -41,21 +41,36 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var animateBool: Int = 0
     
     var animationView = AnimationView()
+    @IBOutlet weak var backView: UIView!
     
     @IBOutlet weak var viewLottieAnimation: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        animationView = AnimationView(name: "final1")
-        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
-        //animationView.center = self.viewLottieAnimation.center
-        animationView.contentMode = .scaleAspectFit
+        self.viewLottieAnimation.isHidden = true
+        spinnerImage.isHidden = true
+        
+        
+        animationView = AnimationView(name: "all_discs")
+        animationView.frame = CGRect(x: self.view.frame.origin.x, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        animationView.alpha = 0.15
+        animationView.center = self.view.center
+        animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
-        viewLottieAnimation.addSubview(animationView)
+        backView.insertSubview(animationView, belowSubview: viewPause)
+        
+        
+        
+//        animationView = AnimationView(name: "final1")
+//        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+//        //animationView.center = self.viewLottieAnimation.center
+//        animationView.contentMode = .scaleAspectFit
+//        animationView.loopMode = .loop
+//        viewLottieAnimation.addSubview(animationView)
         
         animationView.play()
-        spinnerImage.isHidden = true
+        
         
         self.setUpView()
         
@@ -244,6 +259,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             per = per/10
             per = per.rounded()
             per = per*10
+            
+            guard !(per.isNaN || per.isInfinite) else {
+                return "0%" // or do some error handling
+            }
+            
             return "\(Int(per))%"
         }
         return "0%"

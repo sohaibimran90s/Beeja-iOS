@@ -600,7 +600,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 2 {
                 if indexPath.row == 7 {
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
-                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
+                    //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
                     
@@ -646,7 +648,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 1{
                 if indexPath.row == 7 {
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
-                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
+                    //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
                     
@@ -683,7 +687,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.section == 0 {
                 if indexPath.row == 7 {
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
-                    let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                    
+                    let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
+                    //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
                     
                     let url = URL.init(string: iOSAppStoreURLFormat)
                     

@@ -81,7 +81,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         self.txtViewLog.delegate = self
         
         if moodData.name != ""{
-            self.lblExpressMood.text = "\(moodData.name)."
+            self.lblExpressMood.text = "\(moodData.name)"
         }else{
             self.lblExpressMood.text = ""
         }
@@ -106,7 +106,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
 //        }
         
         if moodData.name != "" {
-            self.txtViewLog.text = "I am feeling \(moodData.name.lowercased()) because"
+            self.txtViewLog.text = "I am feeling \(moodData.name.uppercased()) because"
             self.checkAnalyticStr = self.txtViewLog.text
             self.lblTextCount.text = "\(self.txtViewLog.text.count)/1500"
         }

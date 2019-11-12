@@ -29,7 +29,7 @@ class WWMMeditationHistoryListData: NSObject{
         self.id = json["id"] as? Int ?? 0
         self.image = json["image"] as? String ?? ""
         self.like = json["like"] as? Int ?? 0
-        self.title = json[title] as? String ?? ""
+        self.title = json["title"] as? String ?? ""
         self.type = json["type"] as? String ?? ""
         
         if let time = json["time"] as? [String: Any]{

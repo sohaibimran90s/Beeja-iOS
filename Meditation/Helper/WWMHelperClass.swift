@@ -301,6 +301,32 @@ class WWMHelperClass {
         
     }
     
+    class func updateJournalfromDb(dbName: String, index: Int, data: String, meditation_type: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "meditation_type == %@", meditation_type)
+        
+        do{
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext
+            
+            let fetchDataJournal = try managedContext.fetch(fetchRequest)
+            
+            let objectUpdate = fetchDataJournal[index] as! NSManagedObject
+            print("data...+++ \(data)")
+            objectUpdate.setValue(data, forKey: "data")
+            objectUpdate.setValue(meditation_type, forKey: "meditation_type")
+            
+            do{
+                try managedContext.save()
+            }catch{
+                print("error journal...")
+            }
+            
+        }catch{
+            print("error update cart...")
+        }
+    }
+    
     class func fetchEntity(dbName : String) -> NSManagedObject {
         let appDelegate =
             UIApplication.shared.delegate as! AppDelegate

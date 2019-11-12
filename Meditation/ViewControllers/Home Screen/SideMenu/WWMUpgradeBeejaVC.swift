@@ -19,7 +19,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var selectedProductIndex = 1
     var transactionInProgress = false
     var productsArray = [SKProduct]()
-    var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub"]
+    var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub","get_240_gbp_lifetime_sub"]
     
     let reachable = Reachabilities()
     var subscriptionAmount: String = "41.99"
@@ -152,7 +152,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewMonthly.isHidden = true
         for index in 0..<self.productsArray.count {
             let product = self.productsArray[index]
-            if product.productIdentifier == "get_108_gbp_lifetime_sub" {
+            if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
             }
             print(product.productIdentifier)
