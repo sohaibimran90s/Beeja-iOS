@@ -136,6 +136,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                 let imageToShare = [text,image!] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
+                
                 activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
                     print(success ? "SUCCESS!" : "FAILURE")
                     
@@ -165,7 +167,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                 let imageToShare = [text,image] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "Subject")
+                activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
                 
                 activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
                     print(success ? "SUCCESS!" : "FAILURE")
@@ -200,7 +202,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                     let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                     let imageToShare = [text,image] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                    activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "Subject")
+                    activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
                     
                     activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
                         print(success ? "SUCCESS!" : "FAILURE")
@@ -221,6 +223,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                     let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
                     let imageToShare = [text,image!] as [Any]
                     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                    activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
                     
                     activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
                         print(success ? "SUCCESS!" : "FAILURE")
