@@ -27,6 +27,11 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     var settingData = DBSettings()
     var selectedMeditationData  = DBMeditationData()
     var selectedLevelData  = DBLevelData()
+    
+    var min = 0
+    var prepTime = 0
+    var restTime = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,15 +99,52 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     
     
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
-        self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
-        self.selectedLevelData.prepTime = Int32(self.sliderPrepTime.value)
+        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
+        
+        self.min = Int(self.sliderPrepTime.value)/60
+        
+        if (self.min != 0){
+            if self.min < 2{
+                self.prepTime = Int(self.sliderPrepTime.value/15) * 15
+            }else{
+                //Modified By Akram
+                self.prepTime = Int(self.sliderPrepTime.value/30) * 30
+            }
+        }else{
+            self.prepTime = Int(self.sliderPrepTime.value/15) * 15
+        }
+        
+        self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.prepTime))
+        self.selectedLevelData.prepTime = Int32(self.prepTime)
+        
+      //  self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
+      //  self.selectedLevelData.prepTime = Int32(self.sliderPrepTime.value)
     }
     @IBAction func sliderMeditationTimeValueChangedAction(_ sender: Any) {
         self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
         self.selectedLevelData.meditationTime = Int32(self.sliderMeditationTime.value)
     }
     @IBAction func sliderRestTimeValueChangedAction(_ sender: Any) {
-        self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+        
+        self.min = Int(self.sliderRestTime.value)/60
+        
+        if (self.min != 0){
+            if self.min < 2{
+                self.restTime = Int(self.sliderRestTime.value/15) * 15
+            }else{
+                self.restTime = Int(self.sliderRestTime.value/30) * 30
+                if self.min >= 5{
+                    self.restTime = Int(self.sliderRestTime.value/60) * 60
+                }
+            }
+        }else{
+            self.restTime = Int(self.sliderRestTime.value/15) * 15
+        }
+        
+        self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.restTime))
+        self.selectedLevelData.restTime = Int32(self.restTime)
+        
+      //  self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.selectedLevelData.restTime = Int32(self.sliderRestTime.value)
     }
     
@@ -128,16 +170,33 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
+    /*
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
             return "\(second) sec"
         }else {
             return String.init(format: "%d:%02d min", second/60,second%60)
         }
-        
     }
-    
+    */
+    func secondsToMinutesSeconds (second : Int) -> String {
+        if second<60 {
+            return String.init(format: "%d:%02d", second/60,second%60)
+        }else {
+            if self.min == 1{
+                return String.init(format: "%d:%02d", second/60,second%60)
+            }else{
+                // Modified By Akram
+                // return String.init(format: "%d mins", second/60)
+                if self.min >= 5 {
+                    //return String.init(format: "%d:%02d mins", second/60,second%60)
+                    return String.init(format: "%d mins", second/60,second%60)
+                }
+                return String.init(format: "%d:%02d", second/60,second%60)
+                
+            }
+        }
+    }
     // MARK:- API Calling
     
     func settingAPI() {

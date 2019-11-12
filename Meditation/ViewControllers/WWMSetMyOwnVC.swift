@@ -104,7 +104,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.restTime = Int(self.sliderRestTime.value)
     }
-    
+    /*
     func secondsToMinutesSeconds (second : Int) -> String {
         if second<60 {
             return String.init(format: "%d:%02d", second/60,second%60)
@@ -112,11 +112,30 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             if self.min == 1{
                 return String.init(format: "%d:%02d", second/60,second%60)
             }else{
-                return String.init(format: "%d mins", second/60)
+               // return String.init(format: "%d mins", second/60)
+                return String.init(format: "%d:%02d", second/60,second%60)
             }
         }
     }
-    
+    */
+    func secondsToMinutesSeconds (second : Int) -> String {
+        if second<60 {
+            return String.init(format: "%d:%02d", second/60,second%60)
+        }else {
+            if self.min == 1{
+                return String.init(format: "%d:%02d", second/60,second%60)
+            }else{
+                // Modified By Akram
+                // return String.init(format: "%d mins", second/60)
+                if self.min >= 5 {
+                    //return String.init(format: "%d:%02d mins", second/60,second%60)
+                    return String.init(format: "%d mins", second/60,second%60)
+                }
+                return String.init(format: "%d:%02d", second/60,second%60)
+                
+            }
+        }
+    }
     func secondsToMinutesSeconds1 (second : Int) -> String {
         if second<60 {
             return String.init(format: "%d:%02d", second/60,second%60)
@@ -138,12 +157,15 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             if self.min < 2{
                 self.prepTime = Int(self.sliderPrepTime.value/15) * 15
             }else{
-                self.prepTime = Int(self.sliderPrepTime.value/60) * 60
+                self.prepTime = Int(self.sliderPrepTime.value/30) * 30
             }
         }else{
             self.prepTime = Int(self.sliderPrepTime.value/15) * 15
         }
         self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.prepTime))
+        
+        
+        
     }
     @IBAction func sliderMeditationTimeValueChangedAction(_ sender: Any) {
         self.min = Int(self.sliderMeditationTime.value)/60
@@ -163,7 +185,10 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             if self.min < 2{
                 self.restTime = Int(self.sliderRestTime.value/15) * 15
             }else{
-                self.restTime = Int(self.sliderRestTime.value/60) * 60
+                self.restTime = Int(self.sliderRestTime.value/30) * 30
+                if self.min >= 5{
+                    self.restTime = Int(self.sliderRestTime.value/60) * 60
+                }
             }
         }else{
             self.restTime = Int(self.sliderRestTime.value/15) * 15
