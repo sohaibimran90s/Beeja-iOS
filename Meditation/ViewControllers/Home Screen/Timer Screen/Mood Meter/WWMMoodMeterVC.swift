@@ -21,6 +21,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @IBOutlet weak var circularSlider: CircularSlider?
     var moodScroller: UIScrollView?
     
+    @IBOutlet weak var viewMoodMeter: UIView!
+    @IBOutlet weak var imgMoodMeter: UIImageView!
+    @IBOutlet weak var lblMoodMeter: UILabel!
+    
     let appPreffrence = WWMAppPreference()
     
     var arrMoodData = [WWMMoodMeterData]()
@@ -84,6 +88,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         arrMoodData = moodMeter.getMoodMeterData()
         
         self.moodView?.isHidden = true
+        self.lblMoodMeter.isHidden = true
         self.moodView?.layer.cornerRadius = 20
         self.moodView?.clipsToBounds = true
         
@@ -377,7 +382,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        self.createMoodScroller()
+        //self.createMoodScroller()
     }
 
     func createMoodScroller() {
@@ -490,7 +495,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         self.viewLottieAnimation?.isHidden = true
         print("newAngle ***.... \(newAngle)")
         let angle = self.translatedAngle(angle: newAngle)
-        self.moodView?.isHidden = false
+        //self.moodView?.isHidden = false
+        self.lblMoodMeter.isHidden = false
         let diff = Double(360) / Double(self.arrMoodData.count)
         let selectedMood = angle / diff
         let x = Int(self.moodView!.bounds.size.width / 2) * Int(selectedMood)
@@ -506,6 +512,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let mood = self.arrMoodData[moodIndex]
 
         print("selected index slider... \(selectedIndex)")
+        self.lblMoodMeter.text = self.arrMoodData[moodIndex].name
+        self.imgMoodMeter.image = UIImage(named: self.arrMoodData[moodIndex].name)
         
         for index in 0..<arrButton.count {
             let button = arrButton[index]
