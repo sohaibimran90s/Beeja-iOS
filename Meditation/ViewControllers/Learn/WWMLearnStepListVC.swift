@@ -33,9 +33,6 @@ class WWMLearnStepListVC: WWMBaseViewController {
             self.setAnimationForExpressMood()
         }
         
-        self.selectedIndex = 0
-
-        
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         }
@@ -83,10 +80,25 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 print("jsonData... \(jsonData)")
             }
             
+            //* logic for expanding the cell which we have to play
+            var flag = 0
+            
             for i in 0..<self.learnStepsListData.count{
                 print("date_completed... \(self.learnStepsListData[i].date_completed)")
                 print("completed... \(self.learnStepsListData[i].completed)")
+                
+                if i !=  self.learnStepsListData.count - 1{
+                    if self.learnStepsListData[i].completed == true{
+                        self.selectedIndex = i + 1
+                        flag = 1
+                    }
+                }
             }
+            
+            if flag == 0{
+                self.selectedIndex = 0
+            }
+            //*end here
             
             print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
             print("learnStepsListData count... \(self.learnStepsListData.count)")
@@ -240,27 +252,30 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             
             cell.backImgView.backgroundColor = UIColor(red: 14.0/255.0, green: 31.0/255.0, blue: 104.0/255.0, alpha: 0.7)
             cell.imgArraow.image = UIImage(named: "upArrow")
-            
-            cell.lblNoOfSteps.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
-            cell.lblUprLine.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
-            cell.lblBelowLine.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
-            
         }else{
             cell.lblStepDescription.isHidden = true
             cell.btnProceed.isHidden = true
             
             cell.backImgView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
             cell.imgArraow.image = UIImage(named: "downArrow")
-            
-            cell.lblNoOfSteps.backgroundColor = UIColor.white
-            cell.lblUprLine.backgroundColor = UIColor.white
-            cell.lblBelowLine.backgroundColor = UIColor.white
         }
         
         if indexPath.row == 0{
             cell.lblUprLine.isHidden = true
+        }else{
+            cell.lblUprLine.isHidden = false
         }
         
+        if self.learnStepsListData[indexPath.row].completed == true{
+            
+            cell.lblNoOfSteps.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+            cell.lblUprLine.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+            cell.lblBelowLine.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+        }else{
+            cell.lblNoOfSteps.backgroundColor = UIColor.white
+            cell.lblUprLine.backgroundColor = UIColor.white
+            cell.lblBelowLine.backgroundColor = UIColor.white
+        }
         
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
@@ -272,8 +287,18 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             if indexPath.row > 2{
                 cell.imgLock.image = UIImage(named: "lock")
+                
+                cell.lblNoOfSteps.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+                cell.lblUprLine.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+                cell.lblBelowLine.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+                cell.lblNoOfSteps.textColor = UIColor.black.withAlphaComponent(0.5)
             }else{
                 cell.imgLock.image = UIImage(named: "")
+                
+                cell.lblNoOfSteps.backgroundColor = UIColor.white
+                cell.lblUprLine.backgroundColor = UIColor.white
+                cell.lblBelowLine.backgroundColor = UIColor.white
+                cell.lblNoOfSteps.textColor = UIColor.black
             }
         }
         
