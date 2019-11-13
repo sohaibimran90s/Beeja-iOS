@@ -499,6 +499,20 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         self.lblMoodMeter.isHidden = false
         let diff = Double(360) / Double(self.arrMoodData.count)
         let selectedMood = angle / diff
+        
+        let moodIndex = Int(selectedMood)
+        selectedIndex = moodIndex
+        
+        print("moodIndex... \(moodIndex) self.arrMoodData... \(self.arrMoodData.count)")
+        
+        if moodIndex >= 72{
+            self.lblMoodMeter.text = self.arrMoodData[71].name
+            self.imgMoodMeter.image = UIImage(named: self.arrMoodData[71].name)
+        }else{
+            self.lblMoodMeter.text = self.arrMoodData[moodIndex].name
+            self.imgMoodMeter.image = UIImage(named: self.arrMoodData[moodIndex].name)
+        }
+        
         let x = Int(self.moodView!.bounds.size.width / 2) * Int(selectedMood)
         self.moodScroller?.setContentOffset(CGPoint(x: x, y: 0), animated: true)
     }
