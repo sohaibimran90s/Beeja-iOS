@@ -294,11 +294,6 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 cell.lblNoOfSteps.textColor = UIColor.black.withAlphaComponent(0.5)
             }else{
                 cell.imgLock.image = UIImage(named: "")
-                
-                cell.lblNoOfSteps.backgroundColor = UIColor.white
-                cell.lblUprLine.backgroundColor = UIColor.white
-                cell.lblBelowLine.backgroundColor = UIColor.white
-                cell.lblNoOfSteps.textColor = UIColor.black
             }
         }
         
