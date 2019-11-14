@@ -80,11 +80,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
     
-    func secondsToMinutesSeconds (second : Int) -> String {
+    func secondsToMinutesSeconds(second : Int) -> String {
+        print("secinndnddd... \(second)")
         if second<60 {
             return "\(second) sec"
         }else {
-            return String.init(format: "%d:%02d min", second/60,second%60)
+            let x = String.init(format: "%d:%02d min", second/60,second%60)
+            return x
         }
         
     }
@@ -299,8 +301,15 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTime.isHidden = false
                         if indexPath.row == 1 {
                             cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime ?? "0") ?? 0)
-                        }else if indexPath.row == 3 {
-                            cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.meditationTime ?? "0") ?? 0)
+                        }else if indexPath.row == 3 {                            
+                            if let meditationTime = settingData.meditationTime{
+                                print("meditationTime====== \(meditationTime)")
+                                cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(meditationTime)!)
+                            }else{
+                                cell.lblTime.text = self.secondsToMinutesSeconds(second: 0)
+                            }
+                           
+                            
                         }else if indexPath.row == 5 {
                             cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.restTime ?? "0") ?? 0)
                         }
