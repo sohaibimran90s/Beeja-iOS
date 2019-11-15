@@ -367,12 +367,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 print("get dictionary result... \(result)")
                 
                 //community data*
-                if let communtiyTimeStamp = result["guidedData"]{
+                if let communtiyTimeStamp = result["community"]{
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
                 }
                 
                 //wisdom data*
-                if let combinedMantra = result["combinedMantra"]{
+                if let combinedMantra = result["wisdom"]{
                     self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
                     
                 }
