@@ -139,7 +139,6 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         print("self.meditationTime... \(self.meditationTime)")
 
         self.settingData.meditationTime = "\(self.meditationTime)"
-        print("settingData.meditationTime... \(settingData.meditationTime)")
     }
     
     @IBAction func sliderRestTimeValueChangedAction(_ sender: Any) {
