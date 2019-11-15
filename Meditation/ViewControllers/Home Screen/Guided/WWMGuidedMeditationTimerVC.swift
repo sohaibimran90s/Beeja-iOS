@@ -264,6 +264,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 return "0%" // or do some error handling
             }
             
+            WWMHelperClass.complete_percentage = "\(Int(per))"
+            
             return "\(Int(per))%"
         }
         return "0%"

@@ -264,6 +264,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
         
@@ -274,8 +275,10 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 if let _ = result["success"] as? Bool {
                     print("success moodmeterlogvc background api run")
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    
                     self.meditationHistoryListAPI()
+
+                    WWMHelperClass.complete_percentage = "0"
+                    
                     //self.logExperience()
                 }else {
                     self.saveToDB(param: param)

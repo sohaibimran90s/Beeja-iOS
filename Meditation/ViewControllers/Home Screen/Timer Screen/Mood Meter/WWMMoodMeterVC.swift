@@ -305,6 +305,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }else{
             param = [
@@ -325,6 +326,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
         
@@ -335,8 +337,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     print("success... moodmetervc meditationcomplete api in background")
-                    
                     self.meditationHistoryListAPI()
+
+                    WWMHelperClass.complete_percentage = "0"
+                    
                     //self.navigateToDashboard()
                 }else {
                     self.saveToDB(param: param)
@@ -591,6 +595,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id": self.levelID,
                 "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
+                "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
             
             print("meter param... \(param)")
@@ -604,6 +609,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             print("success... moodmetervc meditationcomplete api in background")
                             self.appPreffrence.setSessionAvailableData(value: true)
                             self.meditationHistoryListAPI()
+                            
+                            WWMHelperClass.complete_percentage = "0"
                             //self.navigateToDashboard()
                         }else {
                             self.saveToDB(param: param)

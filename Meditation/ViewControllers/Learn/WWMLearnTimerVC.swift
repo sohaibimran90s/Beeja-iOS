@@ -374,10 +374,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 return "0%" // or do some error handling
             }
             
+            WWMHelperClass.complete_percentage = "\(Int(per))"
+            
             return "\(Int(per))%"
         }
         return "0%"
     }
+    
     func moveToFeedBack() {
         if !ismove {
             var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
@@ -386,9 +389,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
         
                 WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
-            
-            
-            
             
             ismove = true
             self.timer.invalidate()

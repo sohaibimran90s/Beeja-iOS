@@ -33,7 +33,8 @@ class WWMHelperClass {
     static var step_id: Int = 1
     static var value: String = ""
     
-    //static var imageView = UIImageView()
+    //Analytic %age
+    static var complete_percentage: String = "0"
     
     // Analytics
     class func sendEventAnalytics(contentType:String, itemId:String, itemName:String) {
