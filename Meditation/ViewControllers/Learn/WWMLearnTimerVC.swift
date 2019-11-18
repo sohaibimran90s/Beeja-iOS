@@ -28,6 +28,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     var seconds = 0
     var totalDuration: Int = 0
     var totalAudioLength: String = ""
+    var totalAudioLengthAnalytics: Int = 0
     
     var settingData = DBSettings()
     var animationView = AnimationView()
@@ -250,6 +251,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
             
             let duration = CMTimeGetSeconds((self.player.currentItem?.asset.duration)!)
             self.totalDuration  = Int(round(duration))
+            self.totalAudioLengthAnalytics = self.totalDuration/60
+            
             self.totalAudioLength = self.secondToMinuteSecond(second : self.totalDuration)
             
             NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -345,6 +348,21 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
+            var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
+            analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
+            var analyticStepTitle = WWMHelperClass.step_title.uppercased()
+            analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
+                   
+                       
+            var audioPlayPercentageCompleteStatus = ""
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage >= 95{
+                    audioPlayPercentageCompleteStatus = "_COMPLETED"
+                }
+            }
+                       
+            WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName: "\(self.totalAudioLengthAnalytics)\(audioPlayPercentageCompleteStatus)")
+            
             
             if WWMHelperClass.outro_audio != ""{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
@@ -365,20 +383,17 @@ class WWMLearnTimerVC: WWMBaseViewController {
     func convertDurationIntoPercentage(duration:Int) -> String  {
         if ((self.player.currentItem?.duration) != nil) {
             let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
-            var per = (Double(duration)/totalTime)*100
-            per = per/10
-            per = per.rounded()
-            per = per*10
+            let per = (Double(duration)/totalTime)*100
             
             guard !(per.isNaN || per.isInfinite) else {
-                return "0%" // or do some error handling
+                return "0" // or do some error handling
             }
             
             WWMHelperClass.complete_percentage = "\(Int(per))"
             
-            return "\(Int(per))%"
+            return "\(Int(per))"
         }
-        return "0%"
+        return "0"
     }
     
     func moveToFeedBack() {
@@ -388,7 +403,15 @@ class WWMLearnTimerVC: WWMBaseViewController {
             var analyticStepTitle = WWMHelperClass.step_title.uppercased()
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
         
-                WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+            
+            var audioPlayPercentageCompleteStatus = ""
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage >= 95{
+                    audioPlayPercentageCompleteStatus = "_COMPLETED"
+                }
+            }
+            
+            WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName: "\(self.totalAudioLengthAnalytics)\(audioPlayPercentageCompleteStatus)")
             
             ismove = true
             self.timer.invalidate()

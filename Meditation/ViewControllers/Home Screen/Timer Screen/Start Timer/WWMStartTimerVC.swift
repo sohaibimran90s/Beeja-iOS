@@ -19,6 +19,11 @@ class WWMStartTimerVC: WWMBaseViewController {
     var prepTime = 0
     var meditationTime = 0
     var restTime = 0
+    
+    var meditationTimeAnalytics = 0
+    var meditationTimeSecondsAnalytics = 0
+    
+    
     var meditationID = ""
     var levelID = ""
     var meditationName = ""
@@ -48,6 +53,10 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     var updateBgTimer: Timer?
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    
+    var flag = 0
+    var meditationPlayPercentageCompleteStatus = ""
+    var meditationPlayPercentage = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -258,6 +267,8 @@ class WWMStartTimerVC: WWMBaseViewController {
             }
         }
         
+        self.meditationTimeAnalytics = self.meditationTime
+        
         if self.prepTime > 0 {
             self.seconds = self.prepTime
             lblTimerType.text = "Prep"
@@ -277,6 +288,14 @@ class WWMStartTimerVC: WWMBaseViewController {
         }else {
             self.timerType = ""
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            
+            if flag == 1{
+                WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+            }else{
+                WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+            }
+
+            
             vc.meditationMaxTime = self.meditationTime
             vc.meditationName = self.meditationName
             vc.levelName = self.levelName
@@ -390,6 +409,14 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    
+                    if flag == 1{
+                        WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+                    }else{
+                        WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+                    }
+
+                    
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
                     vc.levelName = self.levelName
@@ -425,6 +452,14 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                     self.timer.invalidate()
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                    
+                    if flag == 1{
+                        WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+                    }else{
+                        WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+                    }
+
+                    
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
                     vc.levelName = self.levelName
@@ -445,6 +480,24 @@ class WWMStartTimerVC: WWMBaseViewController {
                 }
             }
             seconds = seconds-1
+            
+            //convertDurationIntoPercentage
+            self.meditationTimeSecondsAnalytics = self.meditationTimeAnalytics - seconds
+            print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
+            
+            
+            if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
+                if meditationPlayPercentage >= 95{
+                    self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
+                    self.flag = 1
+                }else{
+                    self.meditationPlayPercentage = meditationPlayPercentage
+                }
+            }
+            
+            
+            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
         }else if timerType == "Rest"{
@@ -452,6 +505,13 @@ class WWMStartTimerVC: WWMBaseViewController {
                 self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
                 self.timer.invalidate()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+                
+                if flag == 1{
+                    WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+                }else{
+                    WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+                }
+                
                 vc.meditationMaxTime = self.meditationTime
                 vc.meditationName = self.meditationName
                 vc.levelName = self.levelName
@@ -556,6 +616,15 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBAction func btnDoneAction(_ sender: Any) {
          alertPopupView.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+        
+        print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+        
+        if flag == 1{
+            WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+        }else{
+            WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+        }
+        
         vc.meditationMaxTime = self.meditationTime
         vc.meditationName = self.meditationName
         vc.levelName = self.levelName
@@ -593,6 +662,21 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.timer1.invalidate()
         
         self.xibCall()
+    }
+    
+    func convertDurationIntoPercentage(duration:Int) -> String  {
+
+          let per = (Double(duration)/Double(meditationTimeAnalytics))*100
+
+          guard !(per.isNaN || per.isInfinite) else {
+               return "0" // or do some error handling
+           }
+
+          WWMHelperClass.complete_percentage = "\(Int(per))"
+
+          return "\(Int(per))"
+
+        return "0"
     }
 }
 

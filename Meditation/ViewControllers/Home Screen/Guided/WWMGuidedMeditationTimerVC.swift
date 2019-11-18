@@ -26,6 +26,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var emotion_Name = ""
     var isFavourite = false
     var rating = 0
+    var totalDuration: Int = 0
     
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
@@ -104,6 +105,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             try AVAudioSession.sharedInstance().setActive(true)
             let playerItem = AVPlayerItem(url: url)
             self.player = AVPlayer(playerItem:playerItem)
+            
+            let duration = CMTimeGetSeconds((self.player.currentItem?.asset.duration)!)
+            self.totalDuration  = Int(round(duration)/60)
+            print("totalDuration... \(totalDuration)")
+            
             player.volume = 1.0
             player.play()
             self.isPlayer = true
@@ -255,20 +261,17 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     func convertDurationIntoPercentage(duration:Int) -> String  {
         if ((self.player.currentItem?.duration) != nil) {
             let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
-            var per = (Double(duration)/totalTime)*100
-            per = per/10
-            per = per.rounded()
-            per = per*10
+            let per = (Double(duration)/totalTime)*100
             
             guard !(per.isNaN || per.isInfinite) else {
-                return "0%" // or do some error handling
+                return "0" // or do some error handling
             }
             
             WWMHelperClass.complete_percentage = "\(Int(per))"
             
-            return "\(Int(per))%"
+            return "\(Int(per))"
         }
-        return "0%"
+        return "0"
     }
     
     func moveToFeedBack() {
@@ -277,16 +280,28 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             analyticCatName = analyticCatName.replacingOccurrences(of: " ", with: "_")
             var analyticEmotionName = self.emotion_Name.uppercased()
             analyticEmotionName = analyticEmotionName.replacingOccurrences(of: " ", with: "_")
+            
+            var audioPlayPercentageCompleteStatus = ""
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage >= 95{
+                    audioPlayPercentageCompleteStatus = "_COMPLETED"
+                }
+            }
+            
+            
             if self.appPreference.getGuideType() == "practical" {
                 if self.rating == 1 {
                     WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
                 }
-                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
+               
+                
+                
             }else {
                 if self.rating == 1 {
                     WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
                 }
-                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName:self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
             }
             
             

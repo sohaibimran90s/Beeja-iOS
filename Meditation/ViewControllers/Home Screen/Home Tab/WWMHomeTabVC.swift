@@ -358,6 +358,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @IBAction func btnTimerClicked(_ sender: UIButton) {
+        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "TIMER", itemName: "")
+        
         self.type = "timer"
         self.guided_type = ""
         
@@ -420,6 +424,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnPracticalAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
+        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
+        
         guided_type = "practical"
         self.type = "guided"
         
@@ -440,6 +448,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnSpritualAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
+        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "SPIRITUAL")
+        
         guided_type = "spiritual"
         self.type = "guided"
         
@@ -548,7 +560,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
         // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "")
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "BUY_NOW")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         
         let url = self.appPreffrence.getOffers()
