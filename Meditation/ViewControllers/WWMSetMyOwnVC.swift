@@ -288,15 +288,17 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                                 
                                 self.appPreference.setGetProfile(value: true)
-                              /*  let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                                UIApplication.shared.keyWindow?.rootViewController = vc*/
-                                if #available(iOS 13.0, *) {
-                                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                                    window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-                                    
-                                } else {
-                                    UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-                                }
+                              
+                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                                UIApplication.shared.keyWindow?.rootViewController = vc
+                                
+//                                if #available(iOS 13.0, *) {
+//                                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+//                                    window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+//
+//                                } else {
+//                                    UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+//                                }
                                 
                             }
                         }

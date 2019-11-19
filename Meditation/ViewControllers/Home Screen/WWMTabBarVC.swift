@@ -44,6 +44,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.updateDiskStatus()
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let navigationVCCommunity = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCCommunity") as! UINavigationController//
@@ -64,14 +66,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         navigationVCWisdom.tabBarItem = ESTabBarItem.init(WWMWisdomAnimateContentView(), title: "Wisdom", image: nil, selectedImage: nil)
         navigationVCProgress.tabBarItem = ESTabBarItem.init(WWMProgressAnimateContentView(), title: "Progress", image: nil, selectedImage: nil)
         self.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCTimer,navigationVCGuided,navigationVCLearn, navigationVCWisdom, navigationVCProgress]
-        
-        
-        
-        
-        
-        
-        
-        
         
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             print("restore.... \(restoreValue)")
@@ -1555,5 +1549,16 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()
         })
+    }
+    
+    // MARK: update disk space status
+    func updateDiskStatus() {
+         
+        let usedSpace = String(format:NSLocalizedString("Used %@", comment: ""), DiskStatus.usedDiskSpace)
+        let freeSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.freeDiskSpace)
+        let totalSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.totalDiskSpace)
+        
+        print("usedSpace... \(usedSpace) freeSpace... \(freeSpace) totalSpace... \(totalSpace) ramSpace... \(ProcessInfo.processInfo.physicalMemory/1073741824)")
+        
     }
 }

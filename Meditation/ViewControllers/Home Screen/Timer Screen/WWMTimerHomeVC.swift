@@ -340,14 +340,15 @@ class WWMTimerHomeVC: WWMBaseViewController {
 
 extension WWMTimerHomeVC: WWMTimerPresetVCDelegate{
     func choosePresetName(index: Int) {
-        let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-        for indexLevel in 0..<levels!.count {
-            let level = levels![indexLevel]
-            if index == indexLevel {
-                selectedLevelData = level
-                self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+        if let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]{
+            for indexLevel in 0..<levels.count {
+                let level = levels[indexLevel]
+                if index == indexLevel {
+                    selectedLevelData = level
+                    self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
+                }
             }
+            self.setUpSliderTimesAccordingToLevels()
         }
-        self.setUpSliderTimesAccordingToLevels()
     }
 }

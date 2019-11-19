@@ -20,6 +20,9 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
         super.viewDidLoad()
         
         print("strurl.... \(strUrl)")
+        
+        self.webView.sizeToFit()
+        self.webView.contentMode = .scaleAspectFit
 
         self.setNavigationBar(isShow: false, title: strType)
         
@@ -88,5 +91,17 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let requestURL = navigationAction.request.url?.absoluteString else { return}
+        
+        if requestURL == "https://wchat.freshchat.com" {
+            decisionHandler(.allow)
+        }else {
+            decisionHandler(.allow)
+        }
+        
     }
 }

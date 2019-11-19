@@ -675,8 +675,6 @@ class WWMStartTimerVC: WWMBaseViewController {
           WWMHelperClass.complete_percentage = "\(Int(per))"
 
           return "\(Int(per))"
-
-        return "0"
     }
 }
 

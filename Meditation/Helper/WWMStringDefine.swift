@@ -313,17 +313,29 @@ let  Validatation_JournalOfflineMsg  =
 // If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
 let kBETA_ENABLED = false
 
+/*dynamic webView URLs
+ let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"
+ let URL_TermsnCondition   = URL_BASE_WEBVIEW + "/beeja-terms-conditions?mobile_view=1"
+ let URL_Help   = URL_BASE_WEBVIEW + "/contact-us?mobile_view=1"
+ let URL_FAQ   = URL_BASE_WEBVIEW + "/faqs?mobile_view=1"
+ let URL_WebSite   = "https://www.beejameditation.com/"
+ let URL_FINDCOURSE   = URL_BASE_WEBVIEW + "/courses/beginners?mobile_view=1"
+ let URL_OurStory   = URL_BASE_WEBVIEW + "/our-story?mobile_view=1"
+ let URL_LEARN   = URL_BASE_WEBVIEW + "/love-to-learn/"
+ let URL_GUIDED   = URL_BASE_WEBVIEW + "/please-guide-me/"
+ let URL_MOREINFO   = URL_BASE_WEBVIEW + "/more-info?mobile_view=1"
+ */
 
-let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"
-let URL_TermsnCondition   = URL_BASE_WEBVIEW + "/beeja-terms-conditions?mobile_view=1"
-let URL_Help   = URL_BASE_WEBVIEW + "/contact-us?mobile_view=1"
-let URL_FAQ   = URL_BASE_WEBVIEW + "/faqs?mobile_view=1"
+let URL_PrivacyPolicy   =  "https://www.beejameditation.com" + "/privacy-policy?mobile_view=1"
+let URL_TermsnCondition   = "https://www.beejameditation.com" + "/beeja-terms-conditions?mobile_view=1"
+let URL_Help   = "https://www.beejameditation.com" + "/contact-us?mobile_view=1"
+let URL_FAQ   = "https://www.beejameditation.com" + "/faqs?mobile_view=1"
 let URL_WebSite   = "https://www.beejameditation.com/"
-let URL_FINDCOURSE   = URL_BASE_WEBVIEW + "/courses/beginners?mobile_view=1"
-let URL_OurStory   = URL_BASE_WEBVIEW + "/our-story?mobile_view=1"
-let URL_LEARN   = URL_BASE_WEBVIEW + "/love-to-learn/"
-let URL_GUIDED   = URL_BASE_WEBVIEW + "/please-guide-me/"
-let URL_MOREINFO   = URL_BASE_WEBVIEW + "/more-info?mobile_view=1"
+let URL_FINDCOURSE   = "https://www.beejameditation.com" + "/courses/beginners?mobile_view=1"
+let URL_OurStory   = "https://www.beejameditation.com" + "/our-story?mobile_view=1"
+let URL_LEARN   = "https://www.beejameditation.com" + "/love-to-learn/"
+let URL_GUIDED   = "https://www.beejameditation.com" + "/please-guide-me/"
+let URL_MOREINFO   = "https://www.beejameditation.com" + "/more-info?mobile_view=1"
 
 
 // Social Links **************************
