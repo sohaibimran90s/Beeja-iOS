@@ -53,10 +53,11 @@ class WWMHomeTabVC: WWMBaseViewController {
     let appPreffrence = WWMAppPreference()
     let reachable = Reachabilities()
     
+    var timerCount = 0
+    
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.podData = []
         self.podcastData()
@@ -91,6 +92,10 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         //UIApplication.shared.isStatusBarHidden = true
+        timerCount = Int.random(in: 0...4)
+        WWMHelperClass.timerCount = timerCount
+        print("timercount... \(timerCount)")
+        
         self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
@@ -590,28 +595,32 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             cell.lblSubTitle.numberOfLines = 2
             cell.lblSubTitle.sizeToFit()
         
-            if self.data[indexPath.row].image == ""{
-                cell.imgTitle.image = UIImage(named: "rectangle-1")
-            }else{
-                cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
-            }
-        
-        
             if self.data[indexPath.row].type == "timer"{
                 cell.lblTitle.text = kTIMER
                 cell.lblSubTitle.text = kMEDITATIONSESSINO
                 
                 cell.heartLbl.isHidden = true
                 cell.heartImg.isHidden = true
+                cell.lblLTMStep.isHidden = true
+                
+                cell.imgTitle.image = UIImage(named: self.data[indexPath.row].timerImage)
+        
             }else if self.data[indexPath.row].type == "learn"{
                 cell.lblTitle.text = kLEARN
                 cell.lblSubTitle.text = "\(self.data[indexPath.row].title)"
                 
                 cell.heartLbl.isHidden = true
                 cell.heartImg.isHidden = true
+                cell.lblLTMStep.isHidden = false
+                
+                cell.imgTitle.image = UIImage(named: "LTMBg")
+                cell.lblLTMStep.text = "\(self.data[indexPath.row].level_id)"
             }else{
                 cell.lblTitle.text = kGUIDED
                 cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].title)"
+                cell.lblLTMStep.isHidden = true
+                
+                cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
                 
                 if self.data[indexPath.row].like < 1{
                     cell.heartLbl.isHidden = true

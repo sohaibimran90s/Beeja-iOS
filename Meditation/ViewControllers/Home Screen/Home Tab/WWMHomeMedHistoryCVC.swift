@@ -16,4 +16,5 @@ class WWMHomeMedHistoryCVC: UICollectionViewCell {
     @IBOutlet weak var lblSubTitle: UILabel!
     @IBOutlet weak var lblMin: UILabel!
     @IBOutlet weak var lblHr: UILabel!
+    @IBOutlet weak var lblLTMStep: UILabel!
 }

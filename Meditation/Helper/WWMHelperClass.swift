@@ -32,6 +32,7 @@ class WWMHelperClass {
     static var mantra_id: Int = 1
     static var step_id: Int = 1
     static var value: String = ""
+    static var timerCount: Int = 0
     
     //Analytic %age
     static var complete_percentage: String = "0"
