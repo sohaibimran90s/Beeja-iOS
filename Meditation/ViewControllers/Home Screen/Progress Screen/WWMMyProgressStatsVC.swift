@@ -659,7 +659,15 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 for data in meditationData {
                     if data.isMeditationSelected {
                         if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
-                            self.viewBottom.isHidden = true
+                            //self.viewBottom.isHidden = true
+                            
+                            self.lblAvSession.text = "Total Sessions"
+                            self.lblLongestSession.text = "Consecutive Days"
+                            
+                            if !self.circle{
+                                self.lblValueSession.text = "\(self.statsData.total_Session ?? 0)"
+                                self.lblValueDays.text = "\(self.statsData.cons_days ?? 0)"
+                            }
                         }
                     }
                 }
