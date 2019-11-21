@@ -99,6 +99,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             playerViewController.showsPlaybackControls = true
             self.playerViewController.videoGravity = .resizeAspect
             self.playerViewController.player!.play()
+            
             self.playerViewController.exitsFullScreenWhenPlaybackEnds = true
             self.navigationController?.pushViewController(playerViewController, animated: true)
             
@@ -224,6 +225,5 @@ extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
         }
     }
 }
-
 
 

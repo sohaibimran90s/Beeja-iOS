@@ -23,6 +23,8 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     var timerInterval = 10
     var notificationCenter = NotificationCenter.default
     var playerStatus: String = "Playing"
+    
+    var playerAudio:  AVAudioPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,8 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         self.timerNavigation()
+        
+        self.playSound(name: "AMBIENTADAPTATIONLOOP")
     }
     
     @objc func automaticHiddenNavigation(){
@@ -48,6 +52,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
             self.navigationController?.navigationBar.isHidden = false
         }
     }
+    
     
     func timerNavigation(){
         
@@ -72,12 +77,14 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
             if self.player?.rate == 1  {
                 print("Playing")
                 self.playerStatus = "Playing"
+                self.playerAudio?.play()
                 self.navigationController?.navigationBar.isHidden = false
                 self.timerInterval = Int(4.6)
                 self.timerNavigation()
             }else{
                 print("Stop")
                 self.playerStatus = "Stop"
+                self.playerAudio?.pause()
                 self.navigationController?.navigationBar.isHidden = false
             }
         }
@@ -85,7 +92,6 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     
     @objc func appMovedToBackground() {
         self.finishVideo()
-        
     }
 
     @objc func updateTimer() {
@@ -147,6 +153,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         
         self.notificationCenter.removeObserver(self)
         self.player?.pause()
+        self.playerAudio?.pause()
         let watchDuration = self.player?.currentTime().seconds ?? 0
         let param = [
             "user_id": self.appPreference.getUserID(),
@@ -244,6 +251,37 @@ extension WWMVedioPlayerVC: UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension WWMVedioPlayerVC: AVAudioPlayerDelegate{
+    func playSound(name: String ) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+            print("url not found")
+            return
+        }
+        
+        do {
+            /// this codes for making this app ready to takeover the device audio
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /// change fileTypeHint according to the type of your audio file (you can omit this)
+            playerAudio = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            playerAudio?.delegate = self
+            
+            // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
+            playerAudio?.play()
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    
+        print("finished")//It is working now! printed "finished"!
+        self.playerAudio?.play()
     }
 }
 

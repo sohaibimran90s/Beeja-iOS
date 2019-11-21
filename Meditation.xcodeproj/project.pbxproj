@@ -374,6 +374,7 @@
 		61416F5222BBB5B500C9339E /* ChartApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F4E22BBB5B500C9339E /* ChartApi.swift */; };
 		61416F5322BBB5B500C9339E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F4F22BBB5B500C9339E /* ChartView.swift */; };
 		61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F5422BBB5E500C9339E /* RippleEffect.swift */; };
+		614259F52386A4F500DE7CE5 /* AMBIENTADAPTATIONLOOP.wav in Resources */ = {isa = PBXBuildFile; fileRef = 614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */; };
 		61426B1D22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */; };
 		61426B2122DC5304006FE825 /* circle_loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1E22DC5303006FE825 /* circle_loader.json */; };
 		61426B2222DC5304006FE825 /* loop2.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1F22DC5303006FE825 /* loop2.json */; };
@@ -853,6 +854,7 @@
 		61416F4F22BBB5B500C9339E /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		61416F5422BBB5E500C9339E /* RippleEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RippleEffect.swift; sourceTree = "<group>"; };
 		61416F5622BBBA1800C9339E /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AMBIENTADAPTATIONLOOP.wav; sourceTree = "<group>"; };
 		61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnLetsMeditateVC.swift; sourceTree = "<group>"; };
 		61426B1E22DC5303006FE825 /* circle_loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = circle_loader.json; sourceTree = "<group>"; };
 		61426B1F22DC5303006FE825 /* loop2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loop2.json; sourceTree = "<group>"; };
@@ -1346,6 +1348,7 @@
 			isa = PBXGroup;
 			children = (
 				6197CD5023574A26001E5E4B /* Burn.mov */,
+				614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */,
 				61B66603235EF15C008660E5 /* sonicLogo.json */,
 				61B66605235F0891008660E5 /* SonicLogo.wav */,
 				6112C0D62339EA54004705C9 /* walkthough.mp4 */,
@@ -2172,6 +2175,7 @@
 				613F081322CF356E0042515C /* hand.json in Resources */,
 				2E4CE29222087A1000059396 /* singleLineLeft.png in Resources */,
 				2E4371C522004D9A00EF5D62 /* SPARROW.mp3 in Resources */,
+				614259F52386A4F500DE7CE5 /* AMBIENTADAPTATIONLOOP.wav in Resources */,
 				2E4B1BA521B5044D002F8A25 /* Assets.xcassets in Resources */,
 				E0783207235E3BCA00B352ED /* graph.json in Resources */,
 				2E4371D12203033300EF5D62 /* MeditationData.geojson in Resources */,
