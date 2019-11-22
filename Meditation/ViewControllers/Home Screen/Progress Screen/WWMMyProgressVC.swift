@@ -94,7 +94,7 @@ class WWMMyProgressVC: WWMBaseViewController {
     
     @IBAction func btnStatsAction(_ sender: Any) {
         // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "STATS", itemId: "SECTIONVIEWED", itemName: "")
+        WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS", itemId: "CALENDAR", itemName: "VIEWED")
         self.setUpSelectedButtonUI(btn: btnStats)
     }
     /*
