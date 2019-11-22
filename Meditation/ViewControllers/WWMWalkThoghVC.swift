@@ -37,6 +37,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
         self.sliderBackView.isHidden = true
+        self.sliderBackView.isUserInteractionEnabled = false
         
         let videoFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         viewVideo.frame = videoFrame
@@ -211,6 +212,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     @IBAction func btnSkipCrossClicked(_ sender: UIButton) {
         self.viewVideo.stop()
         self.player1?.pause()
+        self.timer.invalidate()
         
         if (value == "help" || value == "learnStepList"){
             self.navigationController?.popViewController(animated: true)
@@ -235,6 +237,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
         print("abc....***** \(self.videoCompleted )")
         print("value... \(value)")
+        self.timer.invalidate()
         if self.videoCompleted == 1{
             if !reachable.isConnectedToNetwork() {
                 self.navigationController?.popViewController(animated: true)
