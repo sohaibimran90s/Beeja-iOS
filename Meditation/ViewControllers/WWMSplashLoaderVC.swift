@@ -19,41 +19,19 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     var alertPopupView1 = WWMAlertController()
     var animationSonicLogoView = AnimationView()
     var player: AVAudioPlayer?
+    var playerLoaderAudio:  AVAudioPlayer?
+    
+    
+    //to check which audio is play
+    var flag = false
+    
+    //to run for sonic logo
+    var stopLoaderAudio = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         KUSERDEFAULTS.set("0", forKey: "restore")
-//        do {
-//            let password = "password"
-//            let salt = AES256Crypter.randomSalt()
-//            let key = try AES256Crypter.createKey(password: password.data(using: .utf8)!, salt: salt)
-//            let keyStr = String.init(bytes: key, encoding: .utf8)
-//            let plainText = "\(UIDevice.current.identifierForVendor!)" + ":\(password)"
-//            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
-//            }
-//            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-//            let publicKey = try PublicKey.init(pemEncoded: keyString)
-//            let clear = try ClearMessage(string: "pulse", using: .utf8)
-//            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-//            let base64String = encrypted.base64String
-////            print(base64String)
-////            guard let path1 = Bundle.main.path(forResource: "private", ofType: "pem") else { return
-////            }
-////            let keyString1 = try String(contentsOf: URL(fileURLWithPath: path1), encoding: .utf8)
-////            let privatKey = try PrivateKey.init(pemEncoded: keyString1)
-////            let clear1 = try encrypted.decrypted(with: privatKey, padding: .PKCS1)
-////            let string = try clear1.string(encoding: .utf8)
-////            print(string)
-//            let param = "pulse:" + base64String
-//            self.getFirstEncryptesKey(param: param, key: password)
-//
-//
-//
-//        } catch {
-//            print("Failed")
-//            print(error)
-//        }
 
         WWMHelperClass.selectedType = ""
         self.lblLogo.isHidden = true
@@ -64,10 +42,10 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         animationView = AnimationView(name: "loader")
         animationView.frame = CGRect(x: view.frame.size.width/2 - 200, y: view.frame.size.height/2 - 200, width: 400, height: 400)
         animationView.contentMode = .scaleAspectFit
-        animationView.loopMode = .loop
+        animationView.loopMode = .playOnce
         self.view.addSubview(animationView)
-        animationView.play()
         
+        //self.playSound(name: "LOADERSOUND")
         self.showForceUpdate()
     }
     
@@ -116,6 +94,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             
         }
     }
+    
     
     func needsUpdate() -> Bool {
         let infoDictionary = Bundle.main.infoDictionary
@@ -170,7 +149,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     @IBAction func btnForceToUpdateDoneAction(_ sender: Any) {
         //https://apps.apple.com/us/app/beeja-meditation/id1453359245
         UIApplication.shared.open(URL.init(string: "https://apps.apple.com/is/app/beeja-meditation/id1453359245")!, options: [:], completionHandler: nil)
-        
     }
 
 
@@ -282,6 +260,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             self.getMeditationDataAPI()
         }else {
             
+            self.stopLoaderAudio = false
+            
             alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
             let window = UIApplication.shared.keyWindow!
             
@@ -354,36 +334,9 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             }
         
                 dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
+                self.stopLoaderAudio = true
         
                 print("excution..... \(self.executionTime)")
-                if self.executionTime < 3.0{
-                    print("less....")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-                        
-                        self.animationView.stop()
-                        self.animationView.isHidden = true
-                        self.lblLogo.isHidden = false
-                        
-                        self.animateSonicLogo()
-                       
-                        
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-//                            self.loadSplashScreenafterDelay()
-//                        }
-                    }
-                }else{
-                    print("more....")
-                    self.animationView.stop()
-                    self.animationView.isHidden = true
-                    self.lblLogo.isHidden = false
-                    
-                    self.animateSonicLogo()
-                    
-                    
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-//                        self.loadSplashScreenafterDelay()
-//                    }
-            }//end else
         }
     
     //MARK: Sonic
@@ -394,7 +347,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         self.animationSonicLogoView.loopMode = .playOnce
         self.view.addSubview(self.animationSonicLogoView)
         self.playAudioFile(fileName: "SonicLogo")
-        
     }
     
     func playAudioFile(fileName:String) {
@@ -411,51 +363,25 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             
             /* iOS 10 and earlier require the following line:
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
-            
-            
+            self.flag = true
             player?.play()
-            self.animationSonicLogoView.play()
+            self.animationSonicLogoView.play(completion: {animationFinished in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        self.loadSplashScreenafterDelay()
+                }
+            })
             
         } catch let error {
             print(error.localizedDescription)
         }
     }
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("finished")//It is working now! printed "finished"!
-        
-        self.loadSplashScreenafterDelay()
-    }
-
-    
     func getMeditationDataFromDB() {
         let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
             print("dbData... \(dbData) excution..... \(self.executionTime)")
             
-            if self.executionTime < 3.0{
-                print("less....")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-                    self.animationView.stop()
-                    self.animationView.isHidden = true
-                    self.lblLogo.isHidden = false
-                    
-                    
-                    self.animateSonicLogo()
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//
-//                        self.loadSplashScreenafterDelay()
-//                    }
-                }
-            }else{
-                print("more....")
-                
-                self.animateSonicLogo()
-                
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                    self.loadSplashScreenafterDelay()
-//                }
-            }
+            self.stopLoaderAudio = true
         }else {
             let alert = UIAlertController(title: kAlertTitle,
                                           message: internetConnectionLostMsg,
@@ -473,6 +399,23 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     
     func getMoodMeterDataAPI() {
         
+        if self.stopLoaderAudio{
+                print("less....")
+                            
+                self.animationView.stop()
+                self.animationView.isHidden = true
+                self.lblLogo.isHidden = false
+                                
+                self.animateSonicLogo()
+                
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            // self.loadSplashScreenafterDelay()
+            //}
+                            
+                
+            return
+        }
+        
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             print("URL_GETMOODMETERDATA result... \(result)")
             self.executionTime = Date().timeIntervalSince(self.startDate)
@@ -487,6 +430,9 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     
     
     func getMeditationDataAPI() {
+        
+        self.playSound(name: "LOADERSOUND")
+        
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMEDITATIONDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             
             self.executionTime = Date().timeIntervalSince(self.startDate)
@@ -500,3 +446,33 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     }
 
 }
+
+extension WWMSplashLoaderVC{
+    func playSound(name: String ) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+            print("url not found")
+            return
+        }
+        
+        do {
+            /// this codes for making this app ready to takeover the device audio
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /// change fileTypeHint according to the type of your audio file (you can omit this)
+            playerLoaderAudio = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            playerLoaderAudio?.delegate = self
+            
+            // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
+            playerLoaderAudio?.play()
+            animationView.play(completion: {animationFinished in
+                self.playerLoaderAudio?.pause()
+                self.getMoodMeterDataAPI()
+            })
+        } catch let error as NSError {
+            print("error: \(error.localizedDescription)")
+        }
+    }
+}
+

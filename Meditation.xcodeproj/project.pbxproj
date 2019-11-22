@@ -375,6 +375,7 @@
 		61416F5322BBB5B500C9339E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F4F22BBB5B500C9339E /* ChartView.swift */; };
 		61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416F5422BBB5E500C9339E /* RippleEffect.swift */; };
 		614259F52386A4F500DE7CE5 /* AMBIENTADAPTATIONLOOP.wav in Resources */ = {isa = PBXBuildFile; fileRef = 614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */; };
+		614259F92386B29900DE7CE5 /* LOADERSOUND.wav in Resources */ = {isa = PBXBuildFile; fileRef = 614259F82386B29900DE7CE5 /* LOADERSOUND.wav */; };
 		61426B1D22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */; };
 		61426B2122DC5304006FE825 /* circle_loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1E22DC5303006FE825 /* circle_loader.json */; };
 		61426B2222DC5304006FE825 /* loop2.json in Resources */ = {isa = PBXBuildFile; fileRef = 61426B1F22DC5303006FE825 /* loop2.json */; };
@@ -855,6 +856,7 @@
 		61416F5422BBB5E500C9339E /* RippleEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RippleEffect.swift; sourceTree = "<group>"; };
 		61416F5622BBBA1800C9339E /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = AMBIENTADAPTATIONLOOP.wav; sourceTree = "<group>"; };
+		614259F82386B29900DE7CE5 /* LOADERSOUND.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = LOADERSOUND.wav; sourceTree = "<group>"; };
 		61426B1C22DC4BA0006FE825 /* WWMLearnLetsMeditateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnLetsMeditateVC.swift; sourceTree = "<group>"; };
 		61426B1E22DC5303006FE825 /* circle_loader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = circle_loader.json; sourceTree = "<group>"; };
 		61426B1F22DC5303006FE825 /* loop2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loop2.json; sourceTree = "<group>"; };
@@ -1349,6 +1351,7 @@
 			children = (
 				6197CD5023574A26001E5E4B /* Burn.mov */,
 				614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */,
+				614259F82386B29900DE7CE5 /* LOADERSOUND.wav */,
 				61B66603235EF15C008660E5 /* sonicLogo.json */,
 				61B66605235F0891008660E5 /* SonicLogo.wav */,
 				6112C0D62339EA54004705C9 /* walkthough.mp4 */,
@@ -2189,6 +2192,7 @@
 				61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
+				614259F92386B29900DE7CE5 /* LOADERSOUND.wav in Resources */,
 				2EC81C5821E75BCF003B0EEE /* MoodMeterData.geojson in Resources */,
 				2EC95860220AC1BA009D5144 /* Maax-MediumItalic.otf in Resources */,
 				2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */,
