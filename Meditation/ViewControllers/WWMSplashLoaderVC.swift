@@ -209,8 +209,19 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSplashAnimationVC") as! WWMSplashAnimationVC
         //self.navigationController?.pushViewController(vc, animated: false)
         
-        player?.pause()
+        self.stopPlayer()
         self.pushToViewController()
+    }
+    
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
     }
     
     func pushToViewController(){
