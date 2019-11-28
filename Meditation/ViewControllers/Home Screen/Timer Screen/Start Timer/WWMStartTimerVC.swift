@@ -30,6 +30,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     var levelName = ""
     var player: AVAudioPlayer?
     var playerAmbient: AVAudioPlayer?
+   // var playerSlient: AVAudioPlayer?
     var settingData = DBSettings()
  
     var isAmbientSoundPlay = false
@@ -107,6 +108,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
         self.playerAmbient?.stop()
+        //self.playerSlient?.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
@@ -309,7 +311,13 @@ class WWMStartTimerVC: WWMBaseViewController {
             vc.levelID = self.levelID
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        self.playAmbientSoundAudioFile(fileName: settingData.ambientChime!)
+        
+        if isAmbientSoundPlay {
+            self.playAmbientSoundAudioFile(fileName: settingData.ambientChime!)
+        }else {
+            self.playAmbientSoundAudioFile(fileName: "slient")
+        }
+        //self.playSlientAudioFile(fileName: "slient")
         runTimer()
     }
 
@@ -355,6 +363,29 @@ class WWMStartTimerVC: WWMBaseViewController {
         }
     }
     
+//    func playSlientAudioFile(fileName:String) {
+//        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
+//
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+//            try AVAudioSession.sharedInstance().setActive(true)
+//
+//            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+//            playerSlient = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+//
+//            /* iOS 10 and earlier require the following line:
+//             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
+//
+//
+//                playerSlient?.play()
+//                playerSlient?.numberOfLoops = -1
+//
+//
+//        } catch let error {
+//            print(error.localizedDescription)
+//        }
+//    }
+    
     func playAmbientSoundAudioFile(fileName:String) {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
         
@@ -368,10 +399,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             /* iOS 10 and earlier require the following line:
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
             
-            if isAmbientSoundPlay {
                 playerAmbient?.play()
                 playerAmbient?.numberOfLoops = -1
-            }
+            
             
         } catch let error {
             print(error.localizedDescription)
@@ -539,6 +569,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.timer.invalidate()
             self.isStop = true
             self.playerAmbient?.stop()
+            //self.playerSlient?.stop()
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
             self.animationViewRest.pause()
@@ -559,6 +590,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             if self.isAmbientSoundPlay {
                 self.playerAmbient?.play()
             }
+           // self.playerSlient?.play()
             self.animationViewMed.play()
             self.animationViewPrep.play()
             self.animationViewRest.play()
@@ -606,6 +638,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         if self.isAmbientSoundPlay {
             self.playerAmbient?.play()
         }
+        //self.playerSlient?.play()
         self.animationViewMed.play()
         self.animationViewPrep.play()
         self.animationViewRest.play()
@@ -652,6 +685,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             timer.invalidate()
             self.isStop = true
             self.playerAmbient?.stop()
+           // self.playerSlient?.stop()
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
             self.animationViewRest.pause()
