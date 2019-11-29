@@ -217,6 +217,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         if (value == "help" || value == "learnStepList"){
             self.navigationController?.popViewController(animated: true)
         }else{
+            // Analytics
+            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_SKIPPED", itemName: "")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
             self.navigationController?.pushViewController(vc, animated: true)
         }
