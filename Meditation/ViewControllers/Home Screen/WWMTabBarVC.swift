@@ -1138,8 +1138,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
                             
                             //this is for hide or unhide setting for paid and unpaid user
-                            self.appPreffrence.setIsSubscribedBool(value: true)
-                            //self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
+                            self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
                             
                         }
                         
