@@ -36,7 +36,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
 
     var isPlayer = false
     var isStop = false
-    var player = AVPlayer()
+    var player: AVPlayer?
     
     var paidFreeUSer: String = ""
     var ismove = false
@@ -79,8 +79,27 @@ class WWMLearnTimerVC: WWMBaseViewController {
         self.createColorSets()
     }
     
-    //MARK: animated View
+    override func viewWillDisappear(_ animated: Bool) {
+        notificationCenter.removeObserver(self)
+        self.timer.invalidate()
+        self.timer1.invalidate()
+        self.player?.pause()
+        self.stopPlayer()
+    }
     
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
+    }
+    
+    //MARK: animated View
     func createColorSets() {
         
         colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
@@ -192,7 +211,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = true
             self.isStop = false
-            self.player.play()
+            self.player?.play()
             self.animationView.play()
             
             if self.animateBool == 1{
@@ -216,7 +235,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         }
         
         self.isStop = false
-        self.player.play()
+        self.player?.play()
         self.animationView.play()
         alertPopupView.removeFromSuperview()
     }
@@ -230,7 +249,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         if !isStop {
             self.isStop = true
             self.animationView.pause()
-            self.player.pause()
+            self.player?.pause()
         }
         
         self.animateBool = 1
@@ -249,7 +268,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             let playerItem = AVPlayerItem(url: url)
             self.player = AVPlayer(playerItem:playerItem)
             
-            let duration = CMTimeGetSeconds((self.player.currentItem?.asset.duration)!)
+            let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
             self.totalDuration  = Int(round(duration))
             self.totalAudioLengthAnalytics = self.totalDuration/60
             
@@ -258,11 +277,11 @@ class WWMLearnTimerVC: WWMBaseViewController {
             NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
             
             self.lblTimer.text = "\(totalAudioLength)"
-            player.volume = 1.0
+            player?.volume = 1.0
             
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
             
-            player.play()
+            player?.play()
             self.isPlayer = true
             
         } catch let error as NSError {
@@ -319,7 +338,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
             }
             
-            self.player.pause()
+            self.player?.pause()
         }, completion: nil)
     }
     
@@ -327,9 +346,9 @@ class WWMLearnTimerVC: WWMBaseViewController {
         if isPlayer {
             if self.totalAudioLength != ""{
                 print("totalaudiolength... \(self.totalDuration)")
-                print("currentTime... \(self.player.currentTime().seconds)")
-                self.watched_duration = Int(round(self.player.currentTime().seconds))
-                let remainingTime = self.totalDuration - Int(round(self.player.currentTime().seconds))
+                print("currentTime... \(self.player!.currentTime().seconds)")
+                self.watched_duration = Int(round(self.player!.currentTime().seconds))
+                let remainingTime = self.totalDuration - Int(round(self.player!.currentTime().seconds))
                 self.lblTimer.text = self.secondToMinuteSecond(second: remainingTime)
             }
         }
@@ -342,7 +361,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             ismove = true
             self.timer.invalidate()
             self.animationView.stop()
-            self.player.pause()
+            self.player?.pause()
             
             self.animateBool = 1
             self.pauseAnimation()
@@ -355,7 +374,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                    
                        
             var audioPlayPercentageCompleteStatus = ""
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player!.currentTime().seconds)))){
                 if audioPlayPercentage >= 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
@@ -381,8 +400,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     func convertDurationIntoPercentage(duration:Int) -> String  {
-        if ((self.player.currentItem?.duration) != nil) {
-            let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
+        if ((self.player?.currentItem?.duration) != nil) {
+            let totalTime = CMTimeGetSeconds(((self.player?.currentItem!.duration)!))
             let per = (Double(duration)/totalTime)*100
             
             guard !(per.isNaN || per.isInfinite) else {
@@ -405,7 +424,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
             
             var audioPlayPercentageCompleteStatus = ""
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
                 if audioPlayPercentage >= 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
@@ -416,7 +435,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             ismove = true
             self.timer.invalidate()
             self.animationView.stop()
-            self.player.pause()
+            self.player?.pause()
             
             self.animateBool = 1
             self.pauseAnimation()
@@ -449,7 +468,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            self.player.pause()
+            self.player?.pause()
         }, completion: nil)
     }
 

@@ -142,11 +142,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         notificationCenter.removeObserver(self)
         self.player?.pause()
         self.timer1.invalidate()
+        self.timer.invalidate()
         self.stopPlayer()
         
         UIApplication.shared.isIdleTimerDisabled = false
     }
-    
     
     
     override func viewWillAppear(_ animated: Bool) {

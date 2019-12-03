@@ -209,12 +209,12 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-                        
+                                                
                         //self.appPreference.setUserID(value:"1715")
                         
                         Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                         
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")

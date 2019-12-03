@@ -37,6 +37,9 @@ class WWMHelperClass {
     //Analytic %age
     static var complete_percentage: String = "0"
     
+    //3D-Touch
+    static var loginSignupBool = false
+    
     // Analytics
     class func sendEventAnalytics(contentType:String, itemId:String, itemName:String) {
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [

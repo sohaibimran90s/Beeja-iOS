@@ -39,6 +39,14 @@ class WWMPodcastListVC: WWMBaseViewController {
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        for data in podData {
+            if data.isPlay {
+                data.player.pause()
+            }
+        }
+    }
 }
 
 extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{

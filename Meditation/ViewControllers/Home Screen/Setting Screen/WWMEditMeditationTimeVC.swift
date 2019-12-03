@@ -300,6 +300,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
                 self.appPreference.setUserToken(value: "")
                 self.appPreference.setUserID(value: "")
                 self.appPreference.setIsProfileCompleted(value: false)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                 let vcc = UINavigationController.init(rootViewController: vc)

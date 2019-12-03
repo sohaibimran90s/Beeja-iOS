@@ -44,6 +44,11 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
         self.playSound(name: "AMBIENTADAPTATIONLOOP")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.playerAudio?.stop()
+        self.timer.invalidate()
+    }
+    
     @objc func automaticHiddenNavigation(){
         print("automaticHiddenNavigation.........")
         if self.playerStatus == "Playing"{

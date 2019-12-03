@@ -169,6 +169,21 @@ class WWMHomeTabVC: WWMBaseViewController {
             }
         }
         self.tableView.reloadData()
+        
+        self.player?.pause()
+        self.stopPlayer()
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
     }
     
     

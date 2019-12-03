@@ -153,66 +153,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool{
         var handle = false
         guard let shortCutType = shortcutItem.type as String? else {return false}
-        
-        self.dismissRootViewController()
+    
         UserDefaults.standard.set(true, forKey: "shortCutType")
         print("shortCutType++++ \(shortCutType)")
         switch shortCutType {
         case "Timer":
-            print("Take me to timer")
-            handle = true
             
-            self.type = "timer"
-            self.guided_type = ""
-  
-            self.pushTimerGuidedLearnVC()
+            let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+            if data.count > 0 {
+                self.dismissRootViewController()
+                print("Take me to timer")
+                handle = true
+                              
+                self.type = "timer"
+                self.guided_type = ""
+                    
+                self.pushTimerGuidedLearnVC()
+            }
             
             break
         case "Guided":
-            print("Guided Meditation")
-            handle = true
             
-            self.type = "guided"
-            self.appPreference.setGuideType(value: self.guided_type)
-            
-            if self.appPreference.getGuideType() == "spiritual"{
-                guided_type = "spiritual"
-            }else{
-                guided_type = "practical"
+            let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+            if data.count > 0 {
+                self.dismissRootViewController()
+                print("Guided Meditation")
+                handle = true
+                    
+                self.type = "guided"
+                self.appPreference.setGuideType(value: self.guided_type)
+                    
+                if self.appPreference.getGuideType() == "spiritual"{
+                    guided_type = "spiritual"
+                }else{
+                    guided_type = "practical"
+                }
+                    
+                self.pushTimerGuidedLearnVC()
             }
-            
-            self.pushTimerGuidedLearnVC()
             
             break
         case "Learn":
-            print("Learn to Meditate")
-            handle = true
             
-            self.type = "learn"
-            self.guided_type = ""
-            
-            self.pushTimerGuidedLearnVC()
+            let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+            if data.count > 0 {
+                self.dismissRootViewController()
+                print("Learn to Meditate")
+                handle = true
+                    
+                self.type = "learn"
+                self.guided_type = ""
+                    
+                self.pushTimerGuidedLearnVC()
+            }
             
             break
+            
         case "Login":
             print("Learn to Meditate")
             handle = true
             
-            if self.appPreference.isLogout() {
-                
-//                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-//                    let rootViewController = self.window!.rootViewController as! UINavigationController
-//                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-//                    rootViewController.pushViewController(profileViewController, animated: true)
-//                }
-            }else {
-                
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            
+            let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
+            if moodData.count < 1 {
+                let rootViewController = self.window!.rootViewController as! UINavigationController
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
+                rootViewController.pushViewController(profileViewController, animated: false)
+            }else{
+                if self.appPreference.isLogout() {
+                    let rootViewController = self.window!.rootViewController as! UINavigationController
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                    rootViewController.pushViewController(profileViewController, animated: false)
+                    
+                }else{
+
                     let rootViewController = self.window!.rootViewController as! UINavigationController
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                    rootViewController.pushViewController(profileViewController, animated: true)
+                    rootViewController.pushViewController(profileViewController, animated: false)
                 }
             }
             
@@ -220,6 +240,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         case "Signup":
             print("Learn to Meditate")
             handle = true
+            
+            let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
+            if moodData.count < 1 {
+                let rootViewController = self.window!.rootViewController as! UINavigationController
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
+                rootViewController.pushViewController(profileViewController, animated: false)
+            }else{
+                
+                WWMHelperClass.loginSignupBool = true
+                    
+                let rootViewController = self.window!.rootViewController as! UINavigationController
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                rootViewController.pushViewController(profileViewController, animated: false)
+                
+            }
+            
             break
         default:
             break
@@ -247,18 +285,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if let topController = UIApplication.shared.keyWindow?.rootViewController {
             if let navcontroller = topController.children[0] as? UINavigationController{
                 navcontroller.popToRootViewController(animated: false)
-            
-                //self.changeRootViewController()
             }
         }
     }
-    
-    func changeRootViewController() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
-    }
-    
     
     func meditationApi() {
         let param = [
@@ -274,50 +303,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 print("success meditationdata api WWMHomeTabVC background thread")
              }
 
-        }
-    }
-
-    
-    func pushToViewController(){
-        
-        self.dismissRootViewController()
-        
-        if self.appPreference.isLogin() {
-            if !self.appPreference.isProfileComplete() {
-                
-                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                let rootViewController = self.window!.rootViewController as! UINavigationController
-                rootViewController.pushViewController(loginPageView, animated: true)
-                
-            }else if self.appPreference.isLogout() {
-                
-                self.appPreference.setGetProfile(value: true)
-                
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                UIApplication.shared.keyWindow?.rootViewController = vc
-                
-            }else {
-                
-                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                let rootViewController = self.window!.rootViewController as! UINavigationController
-                rootViewController.pushViewController(loginPageView, animated: true)
-                
-            }
-        }else if self.appPreference.isLogout() {
-            
-            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-            let rootViewController = self.window!.rootViewController as! UINavigationController
-            rootViewController.pushViewController(loginPageView, animated: true)
-            
-        }else {
-            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-            let rootViewController = self.window!.rootViewController as! UINavigationController
-            rootViewController.pushViewController(loginPageView, animated: true)
         }
     }//3D touch code end*
     
