@@ -1043,6 +1043,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
                 loginManager.logOut()

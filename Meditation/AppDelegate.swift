@@ -43,6 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     var tabBarController:UITabBarController?
     
+    var userData = WWMUserData.sharedInstance
+    
+    var guided_type = ""
+    var type = ""
+    var application: UIApplication?
+    
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -52,6 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     //MARK: Appdelegate Methods
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.application = application
         
         auth.redirectURL = URL(string: "Beeja-App://GetPlayList")
         auth.sessionUserDefaultsKey = "current session"
@@ -101,6 +109,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         callObserver.setDelegate(self, queue: nil)
         
+        self.addShortCuts(application: application)
+        NotificationCenter.default.addObserver(self, selector: #selector(addShortCutsRefresh), name: NSNotification.Name(rawValue: "logoutSuccessful"), object: nil)
+        
        // Crashlytics.sharedInstance().crash()
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
 //            AnalyticsParameterItemID: "id-Beeja-App-Started-123",
@@ -111,8 +122,204 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         return true
     }
     
+    //MARK: For 3d touch code
+    
+    @objc func addShortCutsRefresh () {
+        self.addShortCuts(application: self.application!)
+    }
+        
+    func addShortCuts(application: UIApplication){
+        
+        let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(type: .search), userInfo: nil)
+        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(type: .update), userInfo: nil)
+        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
+        let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
+        let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
+        
+        if self.appPreference.isLogin() {
+            application.shortcutItems = [timer, guided, learn]
+        }else{
+            application.shortcutItems = [login, signup]
+        }
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        print("abc.......")
+        let handleShortCutItem = self.handleShortCutItem(shortcutItem: shortcutItem)
+        completionHandler(handleShortCutItem)
+    }
+    
+    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool{
+        var handle = false
+        guard let shortCutType = shortcutItem.type as String? else {return false}
+        
+        self.dismissRootViewController()
+        UserDefaults.standard.set(true, forKey: "shortCutType")
+        print("shortCutType++++ \(shortCutType)")
+        switch shortCutType {
+        case "Timer":
+            print("Take me to timer")
+            handle = true
+            
+            self.type = "timer"
+            self.guided_type = ""
+  
+            self.pushTimerGuidedLearnVC()
+            
+            break
+        case "Guided":
+            print("Guided Meditation")
+            handle = true
+            
+            self.type = "guided"
+            self.appPreference.setGuideType(value: self.guided_type)
+            
+            if self.appPreference.getGuideType() == "spiritual"{
+                guided_type = "spiritual"
+            }else{
+                guided_type = "practical"
+            }
+            
+            self.pushTimerGuidedLearnVC()
+            
+            break
+        case "Learn":
+            print("Learn to Meditate")
+            handle = true
+            
+            self.type = "learn"
+            self.guided_type = ""
+            
+            self.pushTimerGuidedLearnVC()
+            
+            break
+        case "Login":
+            print("Learn to Meditate")
+            handle = true
+            
+            if self.appPreference.isLogout() {
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+//                    let rootViewController = self.window!.rootViewController as! UINavigationController
+//                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+//                    rootViewController.pushViewController(profileViewController, animated: true)
+//                }
+            }else {
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                    let rootViewController = self.window!.rootViewController as! UINavigationController
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                    rootViewController.pushViewController(profileViewController, animated: true)
+                }
+            }
+            
+            break
+        case "Signup":
+            print("Learn to Meditate")
+            handle = true
+            break
+        default:
+            break
+        }
+        
+        return handle
+    }
     
     
+    func pushTimerGuidedLearnVC(){
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
+    
+    func dismissRootViewController(){
+        if let topController = UIApplication.shared.keyWindow?.rootViewController {
+            if let navcontroller = topController.children[0] as? UINavigationController{
+                navcontroller.popToRootViewController(animated: false)
+            
+                //self.changeRootViewController()
+            }
+        }
+    }
+    
+    func changeRootViewController() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
+    
+    func meditationApi() {
+        let param = [
+            "meditation_id" : self.userData.meditation_id,
+            "level_id"      : self.userData.level_id,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : self.type,
+            "guided_type"   : self.guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                print("success meditationdata api WWMHomeTabVC background thread")
+             }
+
+        }
+    }
+
+    
+    func pushToViewController(){
+        
+        self.dismissRootViewController()
+        
+        if self.appPreference.isLogin() {
+            if !self.appPreference.isProfileComplete() {
+                
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                let rootViewController = self.window!.rootViewController as! UINavigationController
+                rootViewController.pushViewController(loginPageView, animated: true)
+                
+            }else if self.appPreference.isLogout() {
+                
+                self.appPreference.setGetProfile(value: true)
+                
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+            }else {
+                
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                let rootViewController = self.window!.rootViewController as! UINavigationController
+                rootViewController.pushViewController(loginPageView, animated: true)
+                
+            }
+        }else if self.appPreference.isLogout() {
+            
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+            let rootViewController = self.window!.rootViewController as! UINavigationController
+            rootViewController.pushViewController(loginPageView, animated: true)
+            
+        }else {
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginPageView = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+            let rootViewController = self.window!.rootViewController as! UINavigationController
+            rootViewController.pushViewController(loginPageView, animated: true)
+        }
+    }//3D touch code end*
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
@@ -121,16 +328,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if let vc = window?.rootViewController as? WWMStartTimerVC{
             vc.updateTimer()
         }
-    }
-    
-
-    func changeRootViewController() {
-      /*  let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-       
-        
-        self.window!.rootViewController = nextViewController*/
-        self.window!.rootViewController = self.animatedTabBarController()
     }
     
     func showForceUpdate() {
@@ -513,7 +710,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
+        self.addShortCuts(application: application)
         
        
     }

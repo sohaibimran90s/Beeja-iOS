@@ -373,7 +373,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
         self.userData.type = "timer"
         
         DispatchQueue.global(qos: .background).async {
@@ -400,7 +399,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()

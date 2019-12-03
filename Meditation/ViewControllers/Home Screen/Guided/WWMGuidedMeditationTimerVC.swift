@@ -15,7 +15,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var seconds = 0
     var timer = Timer()
     var isStop = false
-    var player = AVPlayer()
+    var player: AVPlayer?
     var settingData = DBSettings()
     var audioData = WWMGuidedAudioData()
     var notificationCenter = NotificationCenter.default
@@ -106,12 +106,12 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             let playerItem = AVPlayerItem(url: url)
             self.player = AVPlayer(playerItem:playerItem)
             
-            let duration = CMTimeGetSeconds((self.player.currentItem?.asset.duration)!)
+            let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
             self.totalDuration  = Int(round(duration)/60)
             print("totalDuration... \(totalDuration)")
             
-            player.volume = 1.0
-            player.play()
+            player?.volume = 1.0
+            player?.play()
             self.isPlayer = true
             
         } catch let error as NSError {
@@ -134,15 +134,20 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
             }
             
-            self.player.pause()
+            self.player?.pause()
         }, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
+        self.player?.pause()
+        self.timer1.invalidate()
+        self.stopPlayer()
         
         UIApplication.shared.isIdleTimerDisabled = false
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
@@ -150,6 +155,18 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         self.createColorSets()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
     }
     
     
@@ -248,7 +265,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         if isPlayer {
-            let remainingTime = self.seconds - Int(self.player.currentTime().seconds)
+            let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
             if remainingTime == 0 {
                 self.moveToFeedBack()
@@ -259,8 +276,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var ismove = false
     
     func convertDurationIntoPercentage(duration:Int) -> String  {
-        if ((self.player.currentItem?.duration) != nil) {
-            let totalTime = CMTimeGetSeconds((self.player.currentItem!.duration))
+        if ((self.player?.currentItem?.duration) != nil) {
+            let totalTime = CMTimeGetSeconds(((self.player?.currentItem!.duration)!))
             let per = (Double(duration)/totalTime)*100
             
             guard !(per.isNaN || per.isInfinite) else {
@@ -282,7 +299,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             analyticEmotionName = analyticEmotionName.replacingOccurrences(of: " ", with: "_")
             
             var audioPlayPercentageCompleteStatus = ""
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
                 if audioPlayPercentage >= 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
@@ -335,7 +352,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(Int(round(self.player.currentTime().seconds)))"
+                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds)!)))"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
@@ -349,7 +366,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(Int(round(self.player.currentTime().seconds)))"
+                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds)!)))"
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -368,7 +385,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            self.player.pause()
+            self.player?.pause()
         }, completion: nil)
     }
     
@@ -378,7 +395,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = true
             self.isStop = false
-            self.player.play()
+            self.player?.play()
             self.animationView.play()
             
             if self.animateBool == 1{
@@ -431,7 +448,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         
         self.isStop = false
-        self.player.play()
+        self.player?.play()
         self.animationView.play()
         alertPopupView.removeFromSuperview()
     }
@@ -446,7 +463,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         if !isStop {
             self.isStop = true
             self.animationView.pause()
-            self.player.pause()
+            self.player?.pause()
         }
         
         self.animateBool = 1
