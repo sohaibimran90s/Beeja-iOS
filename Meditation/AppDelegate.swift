@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
         let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
         
-        if self.appPreference.isLogin() {
+        if self.appPreference.isProfileComplete() {
             application.shortcutItems = [timer, guided, learn]
         }else{
             application.shortcutItems = [login, signup]
@@ -181,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 handle = true
                     
                 self.type = "guided"
-                self.appPreference.setGuideType(value: self.guided_type)
+                
                     
                 if self.appPreference.getGuideType() == "spiritual"{
                     guided_type = "spiritual"
@@ -220,33 +220,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
                 rootViewController.pushViewController(profileViewController, animated: false)
-            }else{
-                if self.appPreference.isLogout() {
+            }else if self.appPreffrence.getCheckEnterSignupLogin(){
+                    print("checkEnterSignupLogin is true login")
+                if self.appPreference.isLogin() {
+                  if !self.appPreference.isProfileComplete() {
+                        
+                        let rootViewController = self.window!.rootViewController as! UINavigationController
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        rootViewController.pushViewController(profileViewController, animated: false)
+                    }
+                        
+                }
+                    
+            }else if self.appPreference.isLogout(){
                     let rootViewController = self.window!.rootViewController as! UINavigationController
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
                     rootViewController.pushViewController(profileViewController, animated: false)
-                    
-                }else{
-
+            }else{
                     let rootViewController = self.window!.rootViewController as! UINavigationController
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                     rootViewController.pushViewController(profileViewController, animated: false)
-                }
             }
             
             break
         case "Signup":
             print("Learn to Meditate")
             handle = true
-            
+            //isProfileComplete
             let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
             if moodData.count < 1 {
                 let rootViewController = self.window!.rootViewController as! UINavigationController
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
                 rootViewController.pushViewController(profileViewController, animated: false)
+            }else if self.appPreffrence.getCheckEnterSignupLogin(){
+                print("checkEnterSignupLogin is true signup")
+                
+                if self.appPreference.isLogin() {
+                  if !self.appPreference.isProfileComplete() {
+                        
+                        let rootViewController = self.window!.rootViewController as! UINavigationController
+                        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        rootViewController.pushViewController(profileViewController, animated: false)
+                    }
+                        
+                }
             }else{
                 
                 WWMHelperClass.loginSignupBool = true
@@ -695,7 +717,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        self.addShortCuts(application: application)
+        //self.addShortCuts(application: application)
         
        
     }

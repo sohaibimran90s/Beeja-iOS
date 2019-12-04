@@ -246,6 +246,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
             self.navigationController?.pushViewController(vc, animated: false)
         }
+        
+        return
     }
     
    

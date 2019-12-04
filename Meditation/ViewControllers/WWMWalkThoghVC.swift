@@ -55,6 +55,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
         
+            self.appPreffrence.setCheckEnterSignupLogin(value: true)
             self.btnCrossSkip.setBackgroundImage(UIImage(named: ""), for: .normal)
             
             let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]

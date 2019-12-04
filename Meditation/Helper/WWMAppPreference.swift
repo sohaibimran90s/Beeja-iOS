@@ -219,6 +219,17 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "IsProfileCompleted")
         defaults.synchronize()
     }
+
+    
+    func setCheckEnterSignupLogin(value:Bool) {
+        defaults.set(value, forKey: "checkEnterSignupLogin")
+        defaults.synchronize()
+    }
+    
+    func getCheckEnterSignupLogin() -> Bool {
+        return UserDefaults.standard.bool(forKey: "checkEnterSignupLogin")
+    }
+    
     
     func getUserID() -> String {
         return UserDefaults.standard.string(forKey: "User_Id") ?? ""
