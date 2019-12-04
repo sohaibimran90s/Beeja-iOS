@@ -28,6 +28,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     //to run for sonic logo
     var stopLoaderAudio = false
     
+    var loadSplashScreenafterDelayFlag = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -377,9 +379,16 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
              player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileTypeMPEGLayer3) */
             self.flag = true
             player?.play()
+            
+            if loadSplashScreenafterDelayFlag{
+                return
+            }
+            
             self.animationSonicLogoView.play(completion: {animationFinished in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                        self.loadSplashScreenafterDelay()
+                    self.loadSplashScreenafterDelay()
+                    self.loadSplashScreenafterDelayFlag = true
+                    self.animationSonicLogoView.pause()
                 }
             })
             
