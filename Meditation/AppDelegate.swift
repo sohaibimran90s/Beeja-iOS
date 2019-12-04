@@ -130,9 +130,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
     func addShortCuts(application: UIApplication){
         
-        let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(type: .search), userInfo: nil)
-        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(type: .update), userInfo: nil)
-        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
+        let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(templateImageName: "Group_21_Copy_2"), userInfo: nil)
+        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(templateImageName: "guided_short"), userInfo: nil)
+        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(templateImageName: "learn_short"), userInfo: nil)
         let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
         let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
         

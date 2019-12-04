@@ -309,7 +309,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 ] as [String : Any]
         }else{
             param = [
-                "type":self.userData.type,
+                "type": WWMHelperClass.selectedType,
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -554,6 +554,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBAction func btnSkipAction(_ sender: Any) {
         
+        print("self.userData.type.... \(self.userData.type)")
+        
         // Analytics
         if self.type == "pre" {
             WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_PRE", itemId: "SKIPPED", itemName: "")
@@ -578,7 +580,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }else{
 
             let param = [
-                "type": self.userData.type,
+                "type": WWMHelperClass.selectedType,
                 "category_id": self.category_Id,
                 "emotion_id": self.emotion_Id,
                 "audio_id": self.audio_Id,

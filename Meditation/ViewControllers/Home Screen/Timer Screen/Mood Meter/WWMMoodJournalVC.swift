@@ -148,7 +148,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
         }else{
             param = [
-                "type":self.userData.type,
+                "type": WWMHelperClass.selectedType,
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,

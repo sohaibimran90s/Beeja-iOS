@@ -384,6 +384,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "timer"
         self.guided_type = ""
+        WWMHelperClass.selectedType = "timer"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -410,6 +411,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "learn"
         self.guided_type = ""
+        WWMHelperClass.selectedType = "learn"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -448,6 +450,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "practical"
         self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -472,6 +475,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "spiritual"
         self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)

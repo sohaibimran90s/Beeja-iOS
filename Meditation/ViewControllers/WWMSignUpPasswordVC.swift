@@ -94,9 +94,7 @@ class WWMSignUpPasswordVC: WWMBaseViewController, UITextFieldDelegate {
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
                     Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-                    
+                                        
                     self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
                     self.appPreference.setIsProfileCompleted(value: false)
