@@ -123,40 +123,23 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.restTime = Int(self.sliderRestTime.value)
-        if !self.userData.is_subscribed {
-            
-            
-            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
-            let window = UIApplication.shared.keyWindow!
-            
-            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-            alertPopupView.btnOK.layer.borderWidth = 2.0
-            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            
-            alertPopupView.lblTitle.text = kAlertTitle
-            alertPopupView.lblSubtitle.text = "Your subscription plan is expired to continue please upgrade."
-            alertPopupView.btnClose.isHidden = true
-            
-            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
-            window.rootViewController?.view.addSubview(alertPopupView)
-            
-            
-            
-            
-//            let alert = UIAlertController(title: kAlertTitle,
-//                                          message: "Your subscription plan is expired to continue please upgrade.",
-//                                          preferredStyle: UIAlertController.Style.alert)
-//            
-//            
-//            let okAction = UIAlertAction.init(title: "OK", style: .default) { (UIAlertAction) in
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            
-//            alert.addAction(okAction)
-//            self.navigationController!.present(alert, animated: true,completion: nil)
-            
-        }
+        
+//        if !self.userData.is_subscribed {
+//
+//            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+//            let window = UIApplication.shared.keyWindow!
+//
+//            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+//            alertPopupView.btnOK.layer.borderWidth = 2.0
+//            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+//
+//            alertPopupView.lblTitle.text = kAlertTitle
+//            alertPopupView.lblSubtitle.text = "Your subscription plan is expired to continue please upgrade."
+//            alertPopupView.btnClose.isHidden = true
+//
+//            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+//            window.rootViewController?.view.addSubview(alertPopupView)
+//        }
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {

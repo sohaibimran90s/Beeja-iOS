@@ -18,10 +18,14 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<string>$(MARKETING_VERSION)</string>
 =======
 	<string>3.1.191126</string>
 >>>>>>> releases/release-26-11-2019
+=======
+	<string>3.2.191203</string>
+>>>>>>> dev-releases/dev-release-03-12-2019
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

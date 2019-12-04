@@ -82,6 +82,7 @@
 		2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C321EC7E6F0076328A /* WWMSupportVC.swift */; };
 		2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */; };
 		2E5EA5C821EDDBEB0076328A /* WWMCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */; };
+		2E65FB90238FAEA900576120 /* slient.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E65FB8F238FAEA800576120 /* slient.mp3 */; };
 		2E6C8406222427180070E799 /* WWMUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C8405222427180070E799 /* WWMUserData.swift */; };
 		2E7360E322159B4700D04EE4 /* WWMAddJournalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */; };
 		2E85F1612204660B008073A2 /* JAI GURU DEVA.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */; };
@@ -559,6 +560,7 @@
 		2E5EA5C521EC9A310076328A /* WWMSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSettingTableViewCell.swift; sourceTree = "<group>"; };
 		2E5EA5C721EDDBEB0076328A /* WWMCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCustomButton.swift; sourceTree = "<group>"; };
 		2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditMeditationTimeVC.swift; sourceTree = "<group>"; };
+		2E65FB8F238FAEA800576120 /* slient.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slient.mp3; sourceTree = "<group>"; };
 		2E6C8405222427180070E799 /* WWMUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMUserData.swift; sourceTree = "<group>"; };
 		2E6C840722256DFC0070E799 /* Meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meditation.entitlements; sourceTree = "<group>"; };
 		2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1367,6 +1369,7 @@
 				2E34A90722929526005B4091 /* final.json */,
 				2E34A9092292D926005B4091 /* final1.json */,
 				2E34A905228ED653005B4091 /* data17.json */,
+				2E65FB8F238FAEA800576120 /* slient.mp3 */,
 				2EB08667228AE46F008BF6E4 /* dataTimer.json */,
 				2E4CE29E2209A03400059396 /* dataClock.json */,
 				2E4CE28D22087A0F00059396 /* doubleLineLeft.png */,
@@ -2223,6 +2226,7 @@
 				61426B2222DC5304006FE825 /* loop2.json in Resources */,
 				613F081122CF324F0042515C /* register.json in Resources */,
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
+				2E65FB90238FAEA900576120 /* slient.mp3 in Resources */,
 				E0783203235E3BCA00B352ED /* globe.json in Resources */,
 				2E4CE29322087A1000059396 /* doubleLineRight.png in Resources */,
 				2E4CE2892208591300059396 /* CalendarData.geojson in Resources */,

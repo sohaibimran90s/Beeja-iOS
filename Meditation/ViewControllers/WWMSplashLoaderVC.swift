@@ -79,7 +79,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
-                            self.forceToUpdatePopUp()
+                            //self.forceToUpdatePopUp()
+                            self.getMoodMeterDataAPI()
                         }else {
                             self.getMoodMeterDataAPI()
                         }
