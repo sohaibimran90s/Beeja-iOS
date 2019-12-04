@@ -230,22 +230,24 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func setupView() {
         
-        WWMHelperClass.selectedType = ""
-        
         if self.appPreffrence.getType() == "timer"{
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
+            WWMHelperClass.selectedType = "timer"
             
         }else if self.appPreffrence.getType() == "guided"{
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 3)
+            WWMHelperClass.selectedType = "guided"
         }else if self.appPreffrence.getType() == "learn"{
             WWMHelperClass.selectedType = "learn"
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 2)
+            WWMHelperClass.selectedType = "learn"
         }else {
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
+            WWMHelperClass.selectedType = "timer"
         }
         
         if self.milestoneType == "hours_meditate"{

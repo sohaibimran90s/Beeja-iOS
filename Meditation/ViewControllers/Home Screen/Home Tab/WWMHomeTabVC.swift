@@ -375,6 +375,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
         self.userData.type = "timer"
+        WWMHelperClass.selectedType = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -396,6 +397,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "learn"
         self.guided_type = ""
+        WWMHelperClass.selectedType = "learn"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -435,6 +437,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "practical"
         self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -459,6 +462,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "spiritual"
         self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
