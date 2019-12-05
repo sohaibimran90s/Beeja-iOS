@@ -37,6 +37,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var notificationCenter = NotificationCenter.default
     var titleMeditateAW: String = "#meditateanywhere"
     
+    var alertZoomImgPopup = WWMZoomImgViewPopUp()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -377,12 +379,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     vc.titleMAW = self.titleMeditateAW
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
                     
                     let data = self.communityData.hashtags[indexPath.row]
-                    vc.imgURL = data.url
-                    vc.modalPresentationStyle = .overCurrentContext
-                    self.present(vc, animated: false, completion: nil)
+                    self.xibCall(imgURL: data.url)
+    
                 }
             }
         }else {
@@ -443,12 +443,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     vc.arrAllHashTag = data
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
                     
                     let data = self.communityData.hashtags[indexPath.row]
-                    vc.imgURL = data.url
-                    vc.modalPresentationStyle = .overCurrentContext
-                    self.present(vc, animated: false, completion: nil)
+                    self.xibCall(imgURL: data.url)
+            
                 }
                 
             }
@@ -479,6 +477,25 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
 //             application.open(spotifyUrl!, options: [:], completionHandler: nil)
 //        }
 //    }
+    
+    func xibCall(imgURL: String){
+        alertZoomImgPopup = UINib(nibName: "WWMZoomImgViewPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMZoomImgViewPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        print("imgURL..... \(imgURL)")
+        
+        alertZoomImgPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        
+        alertZoomImgPopup.imgView.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        alertZoomImgPopup.backBtn.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        window.rootViewController?.view.addSubview(alertZoomImgPopup)
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        alertZoomImgPopup.removeFromSuperview()
+    }
     
     @IBAction func btnCheckSpotifyAction(_ sender: Any){
         self.CallingFuncs()

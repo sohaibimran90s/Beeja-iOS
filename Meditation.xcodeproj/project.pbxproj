@@ -409,7 +409,8 @@
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
-		61B0ECB423991BD100E7EDB8 /* WWMZoomImgVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B0ECB323991BD100E7EDB8 /* WWMZoomImgVC.swift */; };
+		61B0ECB8239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */; };
+		61B0ECBA2399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */; };
 		61B66604235EF15D008660E5 /* sonicLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B66603235EF15C008660E5 /* sonicLogo.json */; };
 		61B66606235F0892008660E5 /* SonicLogo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 61B66605235F0891008660E5 /* SonicLogo.wav */; };
 		61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */; };
@@ -891,7 +892,8 @@
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
-		61B0ECB323991BD100E7EDB8 /* WWMZoomImgVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMZoomImgVC.swift; sourceTree = "<group>"; };
+		61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMZoomImgViewPopUp.xib; sourceTree = "<group>"; };
+		61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMZoomImgViewPopUp.swift; sourceTree = "<group>"; };
 		61B66603235EF15C008660E5 /* sonicLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sonicLogo.json; sourceTree = "<group>"; };
 		61B66605235F0891008660E5 /* SonicLogo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SonicLogo.wav; sourceTree = "<group>"; };
 		61B6AE18224A3E520067F2E1 /* WWMTimerPresetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTimerPresetVC.swift; sourceTree = "<group>"; };
@@ -1241,6 +1243,8 @@
 				6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */,
 				613071F722D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib */,
 				613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */,
+				61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */,
+				61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -1438,7 +1442,6 @@
 				2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */,
 				613071F522D9AED1009CBCA1 /* WWMWalkThoghVC.swift */,
 				612DFCB52351BD050055ED96 /* WWMSignUpPasswordVC.swift */,
-				61B0ECB323991BD100E7EDB8 /* WWMZoomImgVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2249,6 +2252,7 @@
 				2E4B1BA321B5044B002F8A25 /* Main.storyboard in Resources */,
 				61426B2122DC5304006FE825 /* circle_loader.json in Resources */,
 				E0783201235E3BCA00B352ED /* learn-inactive.json in Resources */,
+				61B0ECB8239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib in Resources */,
 				E0783205235E3BCA00B352ED /* guide-inactive.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2532,7 +2536,6 @@
 				61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */,
 				61416F0422BBB4C800C9339E /* CandleChartDataSet.swift in Sources */,
 				2EEF9AE9221AEC900016A77C /* DBJournalList+CoreDataProperties.swift in Sources */,
-				61B0ECB423991BD100E7EDB8 /* WWMZoomImgVC.swift in Sources */,
 				61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */,
 				61416EDC22BBB47A00C9339E /* AnimatedZoomViewJob.swift in Sources */,
 				2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */,
@@ -2715,6 +2718,7 @@
 				2E2F8A3421BE7C8E00516AFF /* WWMSignupNameVC.swift in Sources */,
 				61416F3B22BBB56900C9339E /* ChartDataProvider.swift in Sources */,
 				612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */,
+				61B0ECBA2399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift in Sources */,
 				61416E4722BBB29500C9339E /* XShapeRenderer.swift in Sources */,
 				61416E3022BBB23B00C9339E /* YAxisRendererHorizontalBarChart.swift in Sources */,
 				2EE247AE21E5D9D200857C25 /* WWMMyProgressMoodVC.swift in Sources */,
