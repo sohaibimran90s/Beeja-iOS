@@ -131,6 +131,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
                 
                 self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: self.guided_type)
+                self.appPreference.setGuideTypeFor3DTouch(value: self.guided_type)
                 
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false

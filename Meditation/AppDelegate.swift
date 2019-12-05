@@ -183,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 self.type = "guided"
                 
                     
-                if self.appPreference.getGuideType() == "spiritual"{
+                if self.appPreference.getGuideTypeFor3DTouch() == "spiritual"{
                     guided_type = "spiritual"
                 }else{
                     guided_type = "practical"
@@ -381,7 +381,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
-                            self.forceToUpdatePopUp()
+                            //self.forceToUpdatePopUp()
+                            self.syncDataWithServer()
                         }else {
                             self.syncDataWithServer()
                         }

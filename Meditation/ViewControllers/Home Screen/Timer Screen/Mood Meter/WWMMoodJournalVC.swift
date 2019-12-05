@@ -152,7 +152,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
-                "guided_type" : self.userData.guided_type,
+                "guided_type" : self.appPreffrence.getGuideType(),
                 "watched_duration" : self.watched_duration,
                 "rating" : self.rating,
                 "user_id":self.appPreference.getUserID(),

@@ -112,6 +112,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setGuideTypeFor3DTouch(value:String) {
+        defaults.set(value, forKey: "guided_type_3DTouch")
+        defaults.synchronize()
+    }
+    
     func setStepFAQTimeStamp(value:Any) {
         defaults.set("\(value)", forKey: "stepFAQTimeStamp")
         defaults.synchronize()
@@ -187,6 +192,10 @@ class WWMAppPreference: NSObject {
     }
     func getGuideType() -> String {
         return UserDefaults.standard.string(forKey: "guided_type") ?? ""
+    }
+    
+    func getGuideTypeFor3DTouch() -> String {
+        return UserDefaults.standard.string(forKey: "guided_type_3DTouch") ?? "practical"
     }
     
     func setUserToken(value:String) {

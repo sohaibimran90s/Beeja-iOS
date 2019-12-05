@@ -144,6 +144,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                     self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                     self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
                     
@@ -206,6 +207,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                        self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         self.appPreference.setUserData(value: [:])
                         
                         print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")

@@ -390,6 +390,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.userData.type = "timer"
+        WWMHelperClass.selectedType = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -456,6 +457,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -481,6 +483,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
