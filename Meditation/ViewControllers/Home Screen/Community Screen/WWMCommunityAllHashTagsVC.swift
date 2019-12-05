@@ -49,4 +49,13 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         return CGSize.init(width: width, height: width)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
+        
+        vc.imgURL = self.arrAllHashTag[indexPath.row].url
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false, completion: nil)
+    }
+    
 }

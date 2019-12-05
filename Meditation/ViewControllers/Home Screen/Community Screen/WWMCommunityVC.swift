@@ -376,6 +376,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     vc.arrAllHashTag = data
                     vc.titleMAW = self.titleMeditateAW
                     self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
+                    
+                    let data = self.communityData.hashtags[indexPath.row]
+                    vc.imgURL = data.url
+                    vc.modalPresentationStyle = .overCurrentContext
+                    self.present(vc, animated: false, completion: nil)
                 }
             }
         }else {
@@ -435,6 +442,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMCommunityAllHashTagsVC") as! WWMCommunityAllHashTagsVC
                     vc.arrAllHashTag = data
                     self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
+                    
+                    let data = self.communityData.hashtags[indexPath.row]
+                    vc.imgURL = data.url
+                    vc.modalPresentationStyle = .overCurrentContext
+                    self.present(vc, animated: false, completion: nil)
                 }
                 
             }
