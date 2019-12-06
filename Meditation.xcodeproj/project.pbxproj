@@ -396,6 +396,8 @@
 		614678E922E4BEA8006AA6E9 /* WWMFAQsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */; };
 		6147F56122CCDCCB00A749D5 /* WWMMilestonePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */; };
 		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
+		615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */; };
+		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
 		615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
@@ -880,6 +882,9 @@
 		614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsData.swift; sourceTree = "<group>"; };
 		6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMMilestonePopUp.xib; sourceTree = "<group>"; };
 		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
+		615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 3.xcdatamodel"; sourceTree = "<group>"; };
+		615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
@@ -984,6 +989,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */,
+				615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */,
 				617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */,
 				617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */,
 				617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */,
@@ -2461,10 +2468,12 @@
 				61416EC522BBB45600C9339E /* YAxis.swift in Sources */,
 				61416E7A22BBB37C00C9339E /* CombinedHighlighter.swift in Sources */,
 				2E5D1A5E21EF461C00AEB3BC /* DataCrypto.swift in Sources */,
+				615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */,
 				610D06E1234E1CBB0001E8A6 /* DBWisdomVideoData+CoreDataClass.swift in Sources */,
 				2EE247F221E6315400857C25 /* PieSliceModel.swift in Sources */,
 				61416E3522BBB23B00C9339E /* LegendRenderer.swift in Sources */,
 				61416E8B22BBB3B400C9339E /* LineChartView.swift in Sources */,
+				615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */,
 				2E5DF5A7226DC76F00CF2935 /* WWMGuidedData.swift in Sources */,
 				61416EB122BBB42600C9339E /* ChartColorTemplates.swift in Sources */,
 				2EE247B321E5EFBD00857C25 /* WWMJournalTableViewCell.swift in Sources */,
@@ -3132,10 +3141,11 @@
 		2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */,
 				61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */,
 				2E93D2FE21F5FFC300163E57 /* WWMDatabase.xcdatamodel */,
 			);
-			currentVersion = 61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */;
+			currentVersion = 615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */;
 			path = WWMDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

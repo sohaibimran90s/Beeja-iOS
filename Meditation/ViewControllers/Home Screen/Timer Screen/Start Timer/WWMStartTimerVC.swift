@@ -9,9 +9,11 @@
 import UIKit
 import AVFoundation
 import Lottie
+import CoreData
 
 class WWMStartTimerVC: WWMBaseViewController {
 
+    let appPreffrence = WWMAppPreference()
     var seconds = 0
     var timer = Timer()
     var isStop = false
@@ -58,6 +60,14 @@ class WWMStartTimerVC: WWMBaseViewController {
     var flag = 0
     var meditationPlayPercentageCompleteStatus = ""
     var meditationPlayPercentage = 0
+    
+    var backgroundFlag = false
+    //var meditationLTMTime = 0
+    var meditationLTMTimeFlag = false
+    var offlineCompleteData: [String: Any] = [:]
+    var meditationLTMPlayPercentage = 0
+    var dataAppendFlag = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,6 +243,9 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
+        
+        self.appPreffrence.setMeditationLTMTimeFlag(value: true)
+        
         self.animationViewMed.pause()
         self.animationViewPrep.pause()
         self.animationViewRest.pause()
@@ -517,7 +530,54 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.meditationTimeSecondsAnalytics = self.meditationTimeAnalytics - seconds
             print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
             
+            //for 95% LTM
+        
             
+            
+            if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
+                
+                self.meditationLTMPlayPercentage = meditationPlayPercentage
+                if meditationPlayPercentage < 95{
+                    
+                }else if meditationPlayPercentage < 98{
+                    
+                }else{
+                    
+                }
+            }
+            
+            //to insert into database
+            offlineCompleteData["type"] = "timer"
+            offlineCompleteData["category_id"] = "0"
+            offlineCompleteData["emotion_id"] = "0"
+            offlineCompleteData["audio_id"] = "0"
+            offlineCompleteData["guided_type"] = ""
+            offlineCompleteData["watched_duration"] = "0"
+            offlineCompleteData["rating"] = "0"
+            offlineCompleteData["user_id"] = self.appPreference.getUserID()
+            offlineCompleteData["meditation_type"] = "post"
+            offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
+            offlineCompleteData["tell_us_why"] = ""
+            offlineCompleteData["prep_time"] = self.prepTime
+            offlineCompleteData["meditation_time"] = self.meditationTime
+            offlineCompleteData["rest_time"] = self.restTime
+            offlineCompleteData["meditation_id"] = self.meditationID
+            offlineCompleteData["level_id"] = self.levelID
+            offlineCompleteData["mood_id"] = "0"
+            offlineCompleteData["complete_percentage"] = self.meditationLTMPlayPercentage
+             
+            if !self.dataAppendFlag{
+                self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
+            }else{
+                let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+                if nintyFivePercentDB.count > 0{
+                    self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
+                }
+                
+                print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+            }
+            
+            //analytics
             if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
                 if meditationPlayPercentage >= 95{
                     self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
@@ -560,6 +620,43 @@ class WWMStartTimerVC: WWMBaseViewController {
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }
     }
+    
+    
+    func addNintyFiveCompletionDataFromDB(dict: [String: Any]) {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        
+        let dbNintyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNintyFiveCompletionData") as! DBNintyFiveCompletionData
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbNintyFivePercent.data = myString
+        dbNintyFivePercent.id = "\(nintyFivePercentDB.count)"
+        WWMHelperClass.saveDb()
+        self.dataAppendFlag = true
+    }
+    
+    func updateNintyFiveCompletionDataFromDB(id: String, data: [String: Any]){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "DBNintyFiveCompletionData")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+            if fetchResults?.count != 0 {
+                // update
+                let managedObject = fetchResults?[0]
+                
+                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: data, options:.prettyPrinted)
+                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                
+                managedObject?.setValue(myString, forKey: "data")
+                managedObject?.setValue(id, forKey: "id")
+                
+                WWMHelperClass.saveDb()
+            }
+        }
+    }
+    
     
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)

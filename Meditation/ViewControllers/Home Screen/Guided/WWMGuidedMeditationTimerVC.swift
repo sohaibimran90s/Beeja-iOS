@@ -46,6 +46,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @IBOutlet weak var viewLottieAnimation: UIView!
     
+    var nintyFivedata: [DBNintyFiveCompletionData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -276,6 +278,20 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     func moveToFeedBack() {
         if !ismove {
+            
+            //for 95% LTM
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage < 95{
+                    
+                }else if audioPlayPercentage < 98{
+                    
+                }else{
+                    
+                }
+            }
+            
+            
+            //For analytics
             var analyticCatName = self.cat_Name.uppercased()
             analyticCatName = analyticCatName.replacingOccurrences(of: " ", with: "_")
             var analyticEmotionName = self.emotion_Name.uppercased()
@@ -294,7 +310,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                     WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
                 }
                 WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
-               
                 
                 
             }else {
@@ -314,6 +329,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
+            //save in database
             let guidedAudioDataDB = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
             for dict1 in guidedAudioDataDB{
                 if dict1.emotion_id == self.emotion_Id{
@@ -326,6 +342,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 }
             }
             
+            //to push view controllers
             if self.settingData.moodMeterEnable {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
                 vc.type = "post"
@@ -354,6 +371,23 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             }
         }
     }
+    
+    func fetchNintyFiveCompletionDataFromDB() {
+        
+        //self.data.removeAll()
+         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+         if nintyFivePercentDB.count > 0 {
+
+            for dict in nintyFivePercentDB {
+                let dbNintyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNintyFiveCompletionData") as! DBNintyFiveCompletionData
+                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                dbNintyFivePercent.data = myString
+                WWMHelperClass.saveDb()
+            }
+        }
+    }
+    
     func secondsToMinutesSeconds (second : Int) -> String {
         return String.init(format: "%02d:%02d", second/60,second%60)
     }

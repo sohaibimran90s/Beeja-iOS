@@ -112,6 +112,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setMeditationLTMTimeFlag(value: Bool) {
+        defaults.set(value, forKey: "meditationLTMTimeFlag")
+        defaults.synchronize()
+    }
+    
     func setStepFAQTimeStamp(value:Any) {
         defaults.set("\(value)", forKey: "stepFAQTimeStamp")
         defaults.synchronize()
@@ -135,6 +140,10 @@ class WWMAppPreference: NSObject {
     
     func getLearnPageURL() -> String {
         return UserDefaults.standard.string(forKey: "learn_page_url") ?? ""
+    }
+    
+    func getMeditationLTMTimeFlag() -> Bool {
+        return defaults.bool(forKey: "meditationLTMTimeFlag")
     }
     
     func getSessionAvailableData() -> Bool{

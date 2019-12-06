@@ -339,6 +339,17 @@ class WWMLearnTimerVC: WWMBaseViewController {
     @objc func playerDidFinishPlaying(sender: Notification) {
         if !ismove {
             
+            //for 95% LTM
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage < 95{
+                    
+                }else if audioPlayPercentage < 98{
+                    
+                }else{
+                    
+                }
+            }
+            
             ismove = true
             self.timer.invalidate()
             self.animationView.stop()
@@ -348,12 +359,12 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
+            //for analytics
             var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
             analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
             var analyticStepTitle = WWMHelperClass.step_title.uppercased()
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
                    
-                       
             var audioPlayPercentageCompleteStatus = ""
             if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
                 if audioPlayPercentage >= 95{
