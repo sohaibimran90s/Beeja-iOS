@@ -62,8 +62,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     var meditationPlayPercentage = 0
     
     var backgroundFlag = false
-    //var meditationLTMTime = 0
-    var meditationLTMTimeFlag = false
+
+    //for offline meditation data parameters
     var offlineCompleteData: [String: Any] = [:]
     var meditationLTMPlayPercentage = 0
     var dataAppendFlag = false
@@ -243,9 +243,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func appMovedToBackground() {
         print("App moved to background!")
-        
-        self.appPreffrence.setMeditationLTMTimeFlag(value: true)
-        
+                
         self.animationViewMed.pause()
         self.animationViewPrep.pause()
         self.animationViewRest.pause()
@@ -537,17 +535,17 @@ class WWMStartTimerVC: WWMBaseViewController {
             if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
                 
                 self.meditationLTMPlayPercentage = meditationPlayPercentage
+                
                 if meditationPlayPercentage < 95{
-                    
                 }else if meditationPlayPercentage < 98{
-                    
                 }else{
-                    
                 }
             }
             
             //to insert into database
             offlineCompleteData["type"] = "timer"
+            offlineCompleteData["step_id"] = ""
+            offlineCompleteData["mantra_id"] = ""
             offlineCompleteData["category_id"] = "0"
             offlineCompleteData["emotion_id"] = "0"
             offlineCompleteData["audio_id"] = "0"
@@ -559,7 +557,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
             offlineCompleteData["tell_us_why"] = ""
             offlineCompleteData["prep_time"] = self.prepTime
-            offlineCompleteData["meditation_time"] = self.meditationTime
+            offlineCompleteData["meditation_time"] = Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: ""))
             offlineCompleteData["rest_time"] = self.restTime
             offlineCompleteData["meditation_id"] = self.meditationID
             offlineCompleteData["level_id"] = self.levelID
@@ -572,9 +570,12 @@ class WWMStartTimerVC: WWMBaseViewController {
                 let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
+                    
+                    print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+
                 }
                 
-                print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+                print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }
             
             //analytics
@@ -588,7 +589,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             }
             
             
-            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
             
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
@@ -621,7 +622,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         }
     }
     
-    
+    //offline data for meditation
     func addNintyFiveCompletionDataFromDB(dict: [String: Any]) {
         
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
@@ -640,6 +641,8 @@ class WWMStartTimerVC: WWMBaseViewController {
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        print("id+++++ \(id) data+++++ \(data)")
         
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {

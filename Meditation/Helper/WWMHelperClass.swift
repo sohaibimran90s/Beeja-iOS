@@ -300,8 +300,27 @@ class WWMHelperClass {
                 print(error)
             }
         }
-        
     }
+    
+    class func deleteRowfromDb(dbName: String, id: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        
+        let param = try? managedContext.fetch(fetchRequest)
+        for object in param! {
+            managedContext.delete(object as! NSManagedObject)
+            do {
+                try managedContext.save()
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     
     class func updateJournalfromDb(dbName: String, index: Int, data: String, meditation_type: String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)

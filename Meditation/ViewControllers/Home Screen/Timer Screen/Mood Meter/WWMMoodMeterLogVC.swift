@@ -221,6 +221,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     func completeMeditationAPI() {
         
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
+        
         var param: [String: Any] = [:]
         
         if WWMHelperClass.selectedType == "learn"{
@@ -244,6 +249,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }else{
             param = [

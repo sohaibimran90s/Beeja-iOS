@@ -35,6 +35,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
         
         self.dropDownView.isHidden = true
         
+        self.offlineDatatoServerCall()
+        
         containertapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDropDownTap(_:)))
         containertapGesture.delegate = self as? UIGestureRecognizerDelegate
         
@@ -66,6 +68,88 @@ class WWMGuidedNavVC: WWMBaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
     }
+    
+    //insert offline data to server
+    func offlineDatatoServerCall(){
+
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            
+            for data in nintyFivePercentDB{
+                
+                print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
+                
+                if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
+                    
+                    print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
+                    
+                    self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")")
+                    
+                }
+            }
+        }
+    }
+    
+    func completeMeditationAPI(mood_id: String, user_id: String, rest_time: String, emotion_id: String, tell_us_why: String, prep_time: String, meditation_time: String, watched_duration: String, level_id: String, complete_percentage: String, rating: String, meditation_type: String, category_id: String, meditation_id: String, date_time: String, type: String, guided_type: String, audio_id: String, step_id: String, mantra_id: String, id: String) {
+
+        var param: [String: Any] = [:]
+        if type == "learn"{
+            param = [
+                "type": type,
+                "step_id": step_id,
+                "mantra_id": mantra_id,
+                "category_id" : category_id,
+                "emotion_id" : emotion_id,
+                "audio_id" : audio_id,
+                "guided_type" : guided_type,
+                "duration" : watched_duration,
+                "rating" : rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": mood_id,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }else{
+            param = [
+                "type": type,
+                "category_id": category_id,
+                "emotion_id": emotion_id,
+                "audio_id": audio_id,
+                "guided_type": guided_type,
+                "watched_duration": watched_duration,
+                "rating": rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": mood_id,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }
+
+        print("meter param... \(param)")
+
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+
+                print("URL_MEDITATIONCOMPLETE..... success guided")
+                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id)
+            }
+        }
+    }//insert offline data to server*
+
     
     @objc func notificationGuided(notification: Notification) {
         self.fetchGuidedDataFromDB()
