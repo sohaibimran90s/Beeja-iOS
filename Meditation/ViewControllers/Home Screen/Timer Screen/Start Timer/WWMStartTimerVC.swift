@@ -535,11 +535,6 @@ class WWMStartTimerVC: WWMBaseViewController {
             if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
                 
                 self.meditationLTMPlayPercentage = meditationPlayPercentage
-                
-                if meditationPlayPercentage < 95{
-                }else if meditationPlayPercentage < 98{
-                }else{
-                }
             }
             
             //to insert into database
@@ -720,6 +715,11 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+        }else{
+            alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
+        }
         
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         

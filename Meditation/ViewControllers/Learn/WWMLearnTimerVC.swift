@@ -187,6 +187,12 @@ class WWMLearnTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+        }else{
+            alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
+        }
+        
         
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
@@ -331,6 +337,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         
+        self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))) ?? 0
+        
         if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
             if audioPlayPercentage >= 95{
                 self.fetchStepsDataFromDB()
@@ -454,17 +462,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         if !ismove {
-            
-            //for 95% LTM
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
-                if audioPlayPercentage < 95{
-                    
-                }else if audioPlayPercentage < 98{
-                    
-                }else{
-                    
-                }
-            }
             
             ismove = true
             self.timer.invalidate()

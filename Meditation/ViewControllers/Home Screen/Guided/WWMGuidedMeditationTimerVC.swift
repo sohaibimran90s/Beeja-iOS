@@ -257,6 +257,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @objc func updateTimer() {
         if isPlayer {
             
+            self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))) ?? 0
+            
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
             offlineCompleteData["step_id"] = ""
@@ -532,6 +534,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+        }else{
+            alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
+        }
         
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         

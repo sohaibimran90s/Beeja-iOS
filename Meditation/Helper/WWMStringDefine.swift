@@ -199,6 +199,10 @@ let kTIMER = "TIMER"
 let kLEARN = "LEARN"
 let kGUIDED = "GUIDED"
 
+//xib popup
+let kLTMABOVENINTEYFIVEPOPUP = "The integration period at the end of your meditation is very important. By cutting it short you may lose some or all of the benefits."
+let kLTMBELOWNINTEYFIVEPOPUP = "We want you to know, that Beeja loves you so!"
+
 //WWMGuidedAudioListVC
 let KFREEAUDIO = "(Free for 15:00 min)"
 
