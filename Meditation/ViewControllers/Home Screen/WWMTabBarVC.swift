@@ -1134,18 +1134,20 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                         self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                         self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
-                        
                         self.appPreffrence.setOffers(value: result["offers"] as! [String])
                 
                         
                         if let userProfile = result["user_profile"] as? [String : Any]{
-                            self.appPreffrence.setUserName(value:  userProfile["name"] as? String ?? "")
+                            self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
+                            
+                            //this is for hide or unhide setting for paid and unpaid user
+                            self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
+                            
                         }
                         
                         self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
                         
-                        
-                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date)")
+                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
                         
                         self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
 

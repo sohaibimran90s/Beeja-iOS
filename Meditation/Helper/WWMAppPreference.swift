@@ -87,10 +87,13 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "expiryDateDiff")
     }
     
+    func setIsSubscribedBool(value: Bool){
+        defaults.set(value, forKey: "is_subscribed")
+    }
+    
     func SetExpireDateBackend(value: String){
         defaults.set(value, forKey: "expiryDate")
     }
-    
     
     func setPreJournalCount(value: Int){
         defaults.set(value, forKey: "preJournalCount")
@@ -115,6 +118,10 @@ class WWMAppPreference: NSObject {
     func setStepFAQTimeStamp(value:Any) {
         defaults.set("\(value)", forKey: "stepFAQTimeStamp")
         defaults.synchronize()
+    }
+    
+    func getIsSubscribedBool() -> Bool{
+        return defaults.bool(forKey: "is_subscribed")
     }
     
     func getGetProfile() -> Bool{
