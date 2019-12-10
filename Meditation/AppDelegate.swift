@@ -130,11 +130,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
     func addShortCuts(application: UIApplication){
         
-        let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(templateImageName: "Group_21_Copy_20"), userInfo: nil)
-        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(templateImageName: "Group_21_Copy_4"), userInfo: nil)
-        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(templateImageName: "Group_21_Copy_3"), userInfo: nil)
-        let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
-        let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(type: .share), userInfo: nil)
+        let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
+        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
+        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
+        let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
+        let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
         
         if self.appPreference.isProfileComplete() {
             application.shortcutItems = [timer, guided, learn]
