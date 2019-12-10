@@ -393,7 +393,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Alv-ao-l51">
+<<<<<<< HEAD
                                 <rect key="frame" x="169.5" y="100" width="36" height="32.5"/>
+=======
+                                <rect key="frame" x="169.5" y="120" width="36" height="32.5"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Alv-ao-l51" secondAttribute="height" multiplier="72:65" id="3du-R3-n5E"/>
                                 </constraints>
@@ -1516,7 +1520,11 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="vL7-rW-gwO">
+<<<<<<< HEAD
                                                             <rect key="frame" x="306.5" y="22.5" width="29.5" height="14"/>
+=======
+                                                            <rect key="frame" x="306.5" y="23" width="29.5" height="14"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -1525,7 +1533,11 @@
                                                             </variation>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Sh6-Dg-LNq">
+<<<<<<< HEAD
                                                             <rect key="frame" x="344" y="26.5" width="11" height="6"/>
+=======
+                                                            <rect key="frame" x="344" y="27" width="11" height="6"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                                         </imageView>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q8e-LU-HW5">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
@@ -10732,7 +10744,7 @@
         <!--Community All Hash TagsVC-->
         <scene sceneID="tPr-Rm-Ldt">
             <objects>
-                <viewController storyboardIdentifier="WWMCommunityAllHashTagsVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2XL-c7-s8m" customClass="WWMCommunityAllHashTagsVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WWMCommunityAllHashTagsVC" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2XL-c7-s8m" customClass="WWMCommunityAllHashTagsVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G6B-BM-UTO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -12855,7 +12867,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book" translatesAutoresizingMaskIntoConstraints="NO" id="R3k-Ke-mTH">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book1" translatesAutoresizingMaskIntoConstraints="NO" id="R3k-Ke-mTH">
                                                         <rect key="frame" x="20" y="122" width="150" height="150"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="150" id="Yhh-jA-feL"/>
@@ -14353,7 +14365,11 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set your password!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIo-7I-vFW">
+<<<<<<< HEAD
                                 <rect key="frame" x="80.5" y="233.5" width="214.5" height="29.5"/>
+=======
+                                <rect key="frame" x="80.5" y="253.5" width="214.5" height="29.5"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29.5" id="p67-2B-hsX"/>
                                 </constraints>
@@ -14365,7 +14381,11 @@
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="0Jy-OJ-iv4">
+<<<<<<< HEAD
                                 <rect key="frame" x="37.5" y="311" width="300" height="123"/>
+=======
+                                <rect key="frame" x="37.5" y="331" width="300" height="123"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OlP-y0-7Ia">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
@@ -14436,10 +14456,17 @@
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="cqe-Ib-4eb">
+<<<<<<< HEAD
                                 <rect key="frame" x="169.5" y="150" width="36" height="32.5"/>
                             </imageView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu6-h5-kMP">
                                 <rect key="frame" x="75" y="479" width="225" height="40"/>
+=======
+                                <rect key="frame" x="169.5" y="170" width="36" height="32.5"/>
+                            </imageView>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu6-h5-kMP">
+                                <rect key="frame" x="75" y="499" width="225" height="40"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1mQ-70-LvH"/>
@@ -14461,7 +14488,11 @@
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="2" translatesAutoresizingMaskIntoConstraints="NO" id="qSI-Qo-O7c">
+<<<<<<< HEAD
                                 <rect key="frame" x="168" y="580" width="39" height="37"/>
+=======
+                                <rect key="frame" x="168" y="600" width="39" height="17"/>
+>>>>>>> dev-releases/dev-release-10-12-2019
                                 <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
@@ -14531,7 +14562,7 @@
         <image name="arrow-sorting-8x15" width="12" height="22.5"/>
         <image name="bg1" width="414" height="710"/>
         <image name="bg_addEntry" width="375" height="667"/>
-        <image name="book" width="150" height="150"/>
+        <image name="book1" width="16" height="16"/>
         <image name="bookViewBG" width="367" height="308"/>
         <image name="bulb" width="140" height="140"/>
         <image name="circularstripe" width="325" height="324"/>

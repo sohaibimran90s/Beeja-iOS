@@ -8,6 +8,7 @@
 
 import UIKit
 import Lottie
+import CoreData
 
 class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
@@ -282,6 +283,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     
     func completeMeditationAPI() {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
 
         var param: [String: Any] = [:]
         if WWMHelperClass.selectedType == "learn"{
@@ -334,6 +340,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+                
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     print("success... moodmetervc meditationcomplete api in background")
@@ -555,6 +562,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @IBAction func btnSkipAction(_ sender: Any) {
         
         print("self.userData.type.... \(self.userData.type)")
+
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
         
         // Analytics
         if self.type == "pre" {

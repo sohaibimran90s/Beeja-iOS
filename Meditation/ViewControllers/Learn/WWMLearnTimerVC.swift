@@ -8,6 +8,7 @@
 
 import UIKit
 import Lottie
+import CoreData
 
 class WWMLearnTimerVC: WWMBaseViewController {
 
@@ -41,6 +42,11 @@ class WWMLearnTimerVC: WWMBaseViewController {
     var paidFreeUSer: String = ""
     var ismove = false
     var watched_duration: Int = 0
+    
+    //for offline meditation data parameters
+    var offlineCompleteData: [String: Any] = [:]
+    var meditationLTMPlayPercentage = 0
+    var dataAppendFlag = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -343,6 +349,50 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     @objc func updateTimer() {
+        
+        if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+            if audioPlayPercentage >= 95{
+                self.fetchStepsDataFromDB()
+            }
+        }
+        
+        //offline for meditation to insert into database
+        offlineCompleteData["type"] = "learn"
+        offlineCompleteData["step_id"] = WWMHelperClass.step_id
+        offlineCompleteData["mantra_id"] = WWMHelperClass.mantra_id
+        offlineCompleteData["category_id"] = "0"
+        offlineCompleteData["emotion_id"] = "0"
+        offlineCompleteData["audio_id"] = "0"
+        offlineCompleteData["guided_type"] = ""
+        offlineCompleteData["watched_duration"] = "\(Int(round(self.player.currentTime().seconds)))"
+        offlineCompleteData["rating"] = "0"
+        offlineCompleteData["user_id"] = self.appPreference.getUserID()
+        offlineCompleteData["meditation_type"] = "post"
+        offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
+        offlineCompleteData["tell_us_why"] = ""
+        offlineCompleteData["prep_time"] = ""
+        offlineCompleteData["meditation_time"] = Int(round(self.player.currentTime().seconds))
+        offlineCompleteData["rest_time"] = ""
+        offlineCompleteData["meditation_id"] = "0"
+        offlineCompleteData["level_id"] = "0"
+        offlineCompleteData["mood_id"] = "1"
+        offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+         
+        if !self.dataAppendFlag{
+            self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
+        }else{
+            let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+            if nintyFivePercentDB.count > 0{
+                self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
+                
+                print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+            }
+            
+            print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
+        }//offline data meditation*
+        
+        
+        
         if isPlayer {
             if self.totalAudioLength != ""{
                 print("totalaudiolength... \(self.totalDuration)")
@@ -354,9 +404,86 @@ class WWMLearnTimerVC: WWMBaseViewController {
         }
     }
     
+    //offline data for meditation
+    func addNintyFiveCompletionDataFromDB(dict: [String: Any]) {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        
+        let dbNintyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNintyFiveCompletionData") as! DBNintyFiveCompletionData
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbNintyFivePercent.data = myString
+        dbNintyFivePercent.id = "\(nintyFivePercentDB.count)"
+        WWMHelperClass.saveDb()
+        self.dataAppendFlag = true
+    }
+    
+    func updateNintyFiveCompletionDataFromDB(id: String, data: [String: Any]){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "DBNintyFiveCompletionData")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        print("id+++++ \(id) data+++++ \(data)")
+        
+        if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
+            if fetchResults?.count != 0 {
+                // update
+                let managedObject = fetchResults?[0]
+                
+                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: data, options:.prettyPrinted)
+                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                
+                managedObject?.setValue(myString, forKey: "data")
+                managedObject?.setValue(id, forKey: "id")
+                
+                WWMHelperClass.saveDb()
+            }
+        }
+    }
+    
+    //MARK: Fetch Steps Data From DB
+    func fetchStepsDataFromDB() {
+        let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+        
+        if getStepsDataDB.count > 0 {
+            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
+            //self.arrImages.removeAll()
+            
+            for dict in getStepsDataDB {
+                
+                print("dict.id... \(dict.id ?? "") WWMHelperClass.step_id... \(WWMHelperClass.step_id)")
+                if dict.id == "\(WWMHelperClass.step_id)"{
+                    
+                    dict.completed = true
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let currentDateString = dateFormatter.string(from: Date())
+                    print("faq current date string... \(currentDateString)")
+                    dict.date_completed = "\(currentDateString)"
+                    
+                    print("dict.date_completed... \(dict.date_completed ?? "nothing")")
+                    WWMHelperClass.saveDb()
+                }
+            }
+        }
+    }
+    
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         if !ismove {
+            
+            //for 95% LTM
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+                if audioPlayPercentage < 95{
+                    
+                }else if audioPlayPercentage < 98{
+                    
+                }else{
+                    
+                }
+            }
             
             ismove = true
             self.timer.invalidate()
@@ -367,12 +494,12 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
+            //for analytics
             var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
             analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
             var analyticStepTitle = WWMHelperClass.step_title.uppercased()
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
                    
-                       
             var audioPlayPercentageCompleteStatus = ""
             if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player!.currentTime().seconds)))){
                 if audioPlayPercentage >= 95{

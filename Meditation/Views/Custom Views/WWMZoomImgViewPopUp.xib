@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WWMZoomImgViewPopUp" customModule="Meditation" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kgF-Qw-F2S">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a4o-4T-z1q">
+                            <rect key="frame" x="16" y="105.5" width="288" height="357"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="a4o-4T-z1q" secondAttribute="height" multiplier="112:139" id="56n-gK-LLd"/>
+                            </constraints>
+                            <viewLayoutGuide key="safeArea" id="ElP-tY-QyW"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdp-7f-Yk7">
+                            <rect key="frame" x="304" y="105.5" width="0.0" height="0.0"/>
+                            <constraints>
+                                <constraint firstAttribute="height" id="WPs-NU-DtN"/>
+                                <constraint firstAttribute="width" id="vdp-pw-7Hu"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEU-1c-LSO">
+                            <rect key="frame" x="273" y="80.5" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="538-Ut-Pa1"/>
+                                <constraint firstAttribute="width" constant="50" id="Yrn-Rv-neh"/>
+                            </constraints>
+                            <state key="normal" image="Close_Icon"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.71462367959999995" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Pdp-7f-Yk7" firstAttribute="trailing" secondItem="a4o-4T-z1q" secondAttribute="trailing" id="Anq-2W-T8k"/>
+                        <constraint firstAttribute="trailing" secondItem="a4o-4T-z1q" secondAttribute="trailing" constant="16" id="LE7-iv-EP0"/>
+                        <constraint firstItem="Pdp-7f-Yk7" firstAttribute="top" secondItem="a4o-4T-z1q" secondAttribute="top" id="Pib-We-rhD"/>
+                        <constraint firstItem="rEU-1c-LSO" firstAttribute="centerX" secondItem="Pdp-7f-Yk7" secondAttribute="centerX" constant="-6" id="ZDy-aT-IaI"/>
+                        <constraint firstItem="a4o-4T-z1q" firstAttribute="leading" secondItem="kgF-Qw-F2S" secondAttribute="leading" constant="16" id="blc-0A-Z8z"/>
+                        <constraint firstItem="a4o-4T-z1q" firstAttribute="centerY" secondItem="kgF-Qw-F2S" secondAttribute="centerY" id="iZg-se-igv"/>
+                        <constraint firstItem="rEU-1c-LSO" firstAttribute="centerY" secondItem="Pdp-7f-Yk7" secondAttribute="centerY" id="qC8-Jv-ZgT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="kgF-Qw-F2S" secondAttribute="trailing" id="2Wc-Ul-MoN"/>
+                <constraint firstAttribute="bottom" secondItem="kgF-Qw-F2S" secondAttribute="bottom" id="8lu-rN-uwC"/>
+                <constraint firstItem="kgF-Qw-F2S" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OIR-gJ-7Ie"/>
+                <constraint firstItem="kgF-Qw-F2S" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="T7h-y1-9Ht"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="backBtn" destination="rEU-1c-LSO" id="xC5-g1-xrU"/>
+                <outlet property="backView" destination="kgF-Qw-F2S" id="hK8-Np-8KD"/>
+                <outlet property="imgView" destination="a4o-4T-z1q" id="2T4-68-2Pj"/>
+            </connections>
+            <point key="canvasLocation" x="140.57971014492756" y="124.55357142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Close_Icon" width="40" height="40"/>
+    </resources>
+</document>
