@@ -350,7 +350,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         
-        if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+        if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
             if audioPlayPercentage >= 95{
                 self.fetchStepsDataFromDB()
             }
@@ -364,19 +364,19 @@ class WWMLearnTimerVC: WWMBaseViewController {
         offlineCompleteData["emotion_id"] = "0"
         offlineCompleteData["audio_id"] = "0"
         offlineCompleteData["guided_type"] = ""
-        offlineCompleteData["watched_duration"] = "\(Int(round(self.player.currentTime().seconds)))"
+        offlineCompleteData["watched_duration"] = "\(Int(round((self.player?.currentTime().seconds)!)))"
         offlineCompleteData["rating"] = "0"
         offlineCompleteData["user_id"] = self.appPreference.getUserID()
         offlineCompleteData["meditation_type"] = "post"
         offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
         offlineCompleteData["tell_us_why"] = ""
         offlineCompleteData["prep_time"] = ""
-        offlineCompleteData["meditation_time"] = Int(round(self.player.currentTime().seconds))
+        offlineCompleteData["meditation_time"] = Int(round((self.player?.currentTime().seconds)!))
         offlineCompleteData["rest_time"] = ""
         offlineCompleteData["meditation_id"] = "0"
         offlineCompleteData["level_id"] = "0"
         offlineCompleteData["mood_id"] = "1"
-        offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds))))
+        offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
          
         if !self.dataAppendFlag{
             self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
@@ -475,7 +475,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         if !ismove {
             
             //for 95% LTM
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
                 if audioPlayPercentage < 95{
                     
                 }else if audioPlayPercentage < 98{

@@ -282,19 +282,19 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             offlineCompleteData["emotion_id"] = "\(self.emotion_Id)"
             offlineCompleteData["audio_id"] = "\(audioData.audio_Id)"
             offlineCompleteData["guided_type"] = self.appPreference.getGuideType()
-            offlineCompleteData["watched_duration"] = "\(Int(round(self.player?.currentTime().seconds)))"
+            offlineCompleteData["watched_duration"] = "\(Int(round((self.player?.currentTime().seconds)!)))"
             offlineCompleteData["rating"] = "\(self.rating)"
             offlineCompleteData["user_id"] = self.appPreference.getUserID()
             offlineCompleteData["meditation_type"] = "post"
             offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
             offlineCompleteData["tell_us_why"] = ""
             offlineCompleteData["prep_time"] = ""
-            offlineCompleteData["meditation_time"] = Int(round(self.player?.currentTime().seconds))
+            offlineCompleteData["meditation_time"] = Int(round((self.player?.currentTime().seconds)!))
             offlineCompleteData["rest_time"] = ""
             offlineCompleteData["meditation_id"] = "0"
             offlineCompleteData["level_id"] = "0"
             offlineCompleteData["mood_id"] = "0"
-            offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player?.currentTime().seconds))))
+            offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
              
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
@@ -311,7 +311,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             
             
-            let remainingTime = self.seconds - Int(self.player?.currentTime().seconds)
+            let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
             if remainingTime == 0 {
                 self.moveToFeedBack()
@@ -380,7 +380,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         if !ismove {
             
             //for 95% LTM
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player?.currentTime().seconds)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
                 if audioPlayPercentage < 95{
                     
                 }else if audioPlayPercentage < 98{
