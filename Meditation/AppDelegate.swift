@@ -131,10 +131,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func addShortCuts(application: UIApplication){
         
         let timer = UIMutableApplicationShortcutItem(type: "Timer", localizedTitle: "I know how to Meditate", localizedSubtitle: "Take me to timer", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
-        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
-        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
-        let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
-        let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "timer_3d"), userInfo: nil)
+        let guided = UIMutableApplicationShortcutItem(type: "Guided", localizedTitle: "Guide Me", localizedSubtitle: "Meditations to suit your mood", icon: UIApplicationShortcutIcon(templateImageName: "guided_3d"), userInfo: nil)
+        let learn = UIMutableApplicationShortcutItem(type: "Learn", localizedTitle: "Learn", localizedSubtitle: "Take our 12 step course", icon: UIApplicationShortcutIcon(templateImageName: "learn_3d"), userInfo: nil)
+        let login = UIMutableApplicationShortcutItem(type: "Login", localizedTitle: "Login", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "stop_3d"), userInfo: nil)
+        let signup = UIMutableApplicationShortcutItem(type: "Signup", localizedTitle: "Start Beeja", localizedSubtitle: "", icon: UIApplicationShortcutIcon(templateImageName: "stop_3d"), userInfo: nil)
         
         if self.appPreference.isProfileComplete() {
             application.shortcutItems = [timer, guided, learn]
@@ -161,6 +161,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
             if data.count > 0 {
+                
+                WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "I_KNOW_HOW", itemName: "")
                 self.dismissRootViewController()
                 print("Take me to timer")
                 handle = true
@@ -176,17 +178,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
             if data.count > 0 {
+                
                 self.dismissRootViewController()
                 print("Guided Meditation")
                 handle = true
                     
                 self.type = "guided"
                 
-                    
                 if self.appPreference.getGuideTypeFor3DTouch() == "spiritual"{
                     guided_type = "spiritual"
+                    WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "GUIDED", itemName: "SPIRITUAL")
                 }else{
                     guided_type = "practical"
+                    WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "GUIDED", itemName: "PRACTICAL")
                 }
                     
                 self.pushTimerGuidedLearnVC()
@@ -197,6 +201,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
             if data.count > 0 {
+                
+                WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "LEARN", itemName: "")
                 self.dismissRootViewController()
                 print("Learn to Meditate")
                 handle = true
@@ -212,7 +218,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         case "Login":
             print("Learn to Meditate")
             handle = true
-            
+            WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "LOG_IN", itemName: "")
             
             let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
             if moodData.count < 1 {
@@ -249,6 +255,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         case "Signup":
             print("Learn to Meditate")
             handle = true
+            
+            WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "START_BEEJA", itemName: "")
             //isProfileComplete
             let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
             if moodData.count < 1 {
