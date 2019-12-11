@@ -17,7 +17,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
     @IBOutlet weak var endTimeLbl: UILabel!
     @IBOutlet weak var lblStep: UILabel!
     
-    var player = AVPlayer()
+    var player: AVPlayer?
     var isPlayComplete: Bool = false
     var isPlay: Bool = false
     
@@ -32,6 +32,25 @@ class WWMLearnOutroVC: WWMBaseViewController {
         self.setupView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.player?.pause()
+        self.timer.invalidate()
+        self.stopPlayer()
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
+    }
+    
+    //MARK: Setup View
     func setupView(){
         self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
         self.btnStart.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
@@ -56,7 +75,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
                 
                 self.isPlay = true
                 
-                let duration = CMTimeGetSeconds((self.player.currentItem?.asset.duration)!)
+                let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
                 let duration1 = Int(round(duration))
                 let totalAudioLength = self.secondToMinuteSecond(second : duration1)
                 print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
@@ -67,7 +86,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
                 self.slider.value = 0.0
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 
-                self.player.play()
+                self.player?.play()
                 
             } catch let error as NSError {
                 print(error.localizedDescription)
@@ -76,7 +95,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
     }
     
     @objc func updateTime(_ timer: Timer) {
-        let currentTime = CMTimeGetSeconds(self.player.currentTime())
+        let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
         print("currentTime... \(currentTime)")
         self.slider.value = Float(currentTime)
         self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
@@ -101,11 +120,11 @@ class WWMLearnOutroVC: WWMBaseViewController {
             if isPlay{
                 self.btnReplay.setImage(UIImage(named: "play_Icon"), for: .normal)
                 self.isPlay = false
-                self.player.pause()
+                self.player?.pause()
             }else{
                 self.btnReplay.setImage(UIImage(named: "pauseAudio"), for: .normal)
                 self.isPlay = true
-                self.player.play()
+                self.player?.play()
             }
             
         }else{
@@ -118,7 +137,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
     }
     
     @IBAction func btnBeginClicked(_ sender: UIButton) {
-        self.player.pause()
+        self.player?.pause()
         self.timer.invalidate()
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC

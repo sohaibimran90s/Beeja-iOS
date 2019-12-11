@@ -244,6 +244,8 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         if isProfileCompleted {

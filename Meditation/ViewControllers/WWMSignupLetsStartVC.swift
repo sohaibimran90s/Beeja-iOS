@@ -56,6 +56,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "I_KNOW_HOW", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationListVC") as! WWMMeditationListVC
         vc.type = "timer"
+        WWMHelperClass.selectedType = "timer"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnGuideAction(_ sender: UIButton) {
@@ -93,12 +94,14 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     @IBAction func btnPracticalAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         guided_type = "practical"
+        WWMHelperClass.selectedType = "guided"
         self.meditationApi(type: "guided")
         
     }
     @IBAction func btnSpritualAction(_ sender: UIButton) {
         guideStart.removeFromSuperview()
         guided_type = "spiritual"
+        WWMHelperClass.selectedType = "guided"
         self.meditationApi(type: "guided")
     }
     
@@ -106,6 +109,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "LIKE_TO_LEARN", itemName: "")
         guided_type = ""
+        WWMHelperClass.selectedType = "learn"
         self.meditationApi(type: "learn")
     }
     
@@ -127,6 +131,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
                 
                 self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: self.guided_type)
+                self.appPreference.setGuideTypeFor3DTouch(value: self.guided_type)
                 
                 UIView.transition(with: self.welcomeView, duration: 1.0, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.isHidden = false

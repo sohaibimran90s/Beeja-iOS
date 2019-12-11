@@ -138,12 +138,13 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
                     Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
-                    
+                                        
                     self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
                     self.appPreference.setIsProfileCompleted(value: false)
                     self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                     self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                     self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                     self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
                     
@@ -199,11 +200,14 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
+                        //NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                        
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                        self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         self.appPreference.setUserData(value: [:])
                         
                         print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")

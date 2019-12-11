@@ -561,6 +561,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBAction func btnSkipAction(_ sender: Any) {
         
+        print("self.userData.type.... \(self.userData.type)")
+
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
         if nintyFivePercentDB.count > 0{
             WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")

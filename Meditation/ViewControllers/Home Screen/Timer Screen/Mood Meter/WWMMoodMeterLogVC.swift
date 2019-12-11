@@ -56,6 +56,23 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         self.setUpUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.player?.pause()
+        self.stopPlayer()
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
+    }
+    
     @objc func checkAction(sender : UITapGestureRecognizer) {
         self.txtViewLog.resignFirstResponder()
     }

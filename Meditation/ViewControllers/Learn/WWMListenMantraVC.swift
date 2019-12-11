@@ -12,7 +12,7 @@ class WWMListenMantraVC: WWMBaseViewController {
 
     @IBOutlet weak var playPauseBtn: UIButton!
     
-    var player = AVPlayer()
+    var player: AVPlayer?
     var mantraData: [WWMMantraData] = []
     var isPlay: Bool = false
     
@@ -24,6 +24,23 @@ class WWMListenMantraVC: WWMBaseViewController {
         
         //getMantrasAPI()
         self.fetchMantrasDataFromDB()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.player?.pause()
+        self.stopPlayer()
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
     }
     
     func fetchMantrasDataFromDB() {
@@ -99,7 +116,7 @@ class WWMListenMantraVC: WWMBaseViewController {
                 
             NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
                 
-            self.player.play()
+            self.player?.play()
             self.isPlay = true
             
         } catch let error as NSError {
@@ -109,7 +126,7 @@ class WWMListenMantraVC: WWMBaseViewController {
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraListVC") as! WWMChooseMantraListVC
-        self.player.pause()
+        self.player?.pause()
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -118,11 +135,11 @@ class WWMListenMantraVC: WWMBaseViewController {
         if isPlay{
             self.playPauseBtn.setImage(UIImage(named: "play_Icon"), for: .normal)
             self.isPlay = false
-            self.player.pause()
+            self.player?.pause()
         }else{
             self.playPauseBtn.setImage(UIImage(named: "pauseAudio"), for: .normal)
             self.isPlay = true
-            self.player.play()
+            self.player?.play()
         }
     }
 }

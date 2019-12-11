@@ -169,6 +169,21 @@ class WWMHomeTabVC: WWMBaseViewController {
             }
         }
         self.tableView.reloadData()
+        
+        self.player?.pause()
+        self.stopPlayer()
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            self.player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
     }
     
     
@@ -369,11 +384,11 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "timer"
         self.guided_type = ""
+        WWMHelperClass.selectedType = "timer"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
         self.userData.type = "timer"
         WWMHelperClass.selectedType = "timer"
         
@@ -402,7 +417,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -443,6 +457,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -468,6 +483,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()

@@ -209,16 +209,19 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        
-                        //self.appPreference.setUserID(value:"1601")
+                                                
+                        //self.appPreference.setUserID(value:"1715")
                         
                         Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                         
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                        self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
                             

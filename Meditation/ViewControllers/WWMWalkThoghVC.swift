@@ -27,7 +27,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var lat = ""
     var long = ""
     
-    var player1: AVPlayer!
+    var player1: AVPlayer?
     var videoSliderOnOff = false
     var timer = Timer()
     
@@ -55,6 +55,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
         
+            self.appPreffrence.setCheckEnterSignupLogin(value: true)
             self.btnCrossSkip.setBackgroundImage(UIImage(named: ""), for: .normal)
             
             let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -90,11 +91,26 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
+        self.player1?.pause()
+        self.stopPlayer()
+        self.timer.invalidate()
         
         btnCrossSkip.setTitle("", for: .normal)
         
        var prefersStatusBarHidden: Bool {
             return false
+        }
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player1 {
+            print("stopped")
+            play.pause()
+            self.player1 = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
         }
     }
     
@@ -143,7 +159,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             
             
             //time set with begin and end*
-            let duration = CMTimeGetSeconds((self.player1.currentItem?.asset.duration)!)
+            let duration = CMTimeGetSeconds((self.player1?.currentItem?.asset.duration)!)
             let duration1 = Int(round(duration))
             let totalAudioLength = self.secondToMinuteSecond(second : duration1)
             print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
@@ -199,7 +215,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     }
     
     @objc func updateTime(_ timer: Timer) {
-        let currentTime = CMTimeGetSeconds(self.player1.currentTime())
+        let currentTime = CMTimeGetSeconds((self.player1?.currentTime())!)
         print("currentTime... \(currentTime)")
         self.slider.value = Float(currentTime)
         self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"

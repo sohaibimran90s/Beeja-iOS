@@ -209,8 +209,10 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.restTime = Int(self.sliderRestTime.value)
         
+
+        
 //        if !self.userData.is_subscribed {
-//
+
 //            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
 //            let window = UIApplication.shared.keyWindow!
 //
@@ -224,7 +226,9 @@ class WWMTimerHomeVC: WWMBaseViewController {
 //
 //            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
 //            window.rootViewController?.view.addSubview(alertPopupView)
+//
 //        }
+
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {

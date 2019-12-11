@@ -26,6 +26,16 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if WWMHelperClass.loginSignupBool{
+            
+            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+            self.navigationController?.pushViewController(vc, animated: false)
+            
+            WWMHelperClass.loginSignupBool = false
+            return
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -225,6 +235,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
 
                         
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
@@ -232,6 +244,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setType(value: userProfile["type"] as? String ?? "")
                         self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                        self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
                             

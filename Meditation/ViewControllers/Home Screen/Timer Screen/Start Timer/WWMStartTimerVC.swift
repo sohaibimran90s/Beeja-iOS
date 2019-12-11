@@ -118,9 +118,13 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
         self.playerAmbient?.stop()
-        self.timer1.invalidate()
+        self.player?.stop()
         self.timer.invalidate()
-        //self.playerSlient?.stop()
+        self.timer1.invalidate()
+        self.updateBgTimer?.invalidate()
+        self.updateBgTimer = nil
+        self.endBackgroundTask()
+
         UIApplication.shared.isIdleTimerDisabled = false
     }
     

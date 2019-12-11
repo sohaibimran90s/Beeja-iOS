@@ -1156,6 +1156,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreffrence.setPrePostJournalBool(value: false)
                 self.appPreffrence.setExpiryDate(value: false)
                 self.appPreference.setGetProfile(value: true)
+                self.appPreffrence.setCheckEnterSignupLogin(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
@@ -1176,7 +1177,9 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.selectedType = ""
-                                
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                
                 let loginManager = FBSDKLoginManager()
                 FBSDKAccessToken.setCurrent(nil)
                 loginManager.logOut()

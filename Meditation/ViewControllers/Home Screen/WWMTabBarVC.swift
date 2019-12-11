@@ -46,6 +46,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         self.updateDiskStatus()
         
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+        
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
         let navigationVCCommunity = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCCommunity") as! UINavigationController//
@@ -238,7 +240,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }else if self.appPreffrence.getType() == "guided"{
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "guided"
+            WWMHelperClass.selectedType = "guided"            
+
         }else if self.appPreffrence.getType() == "learn"{
             WWMHelperClass.selectedType = "learn"
             self.viewControllers?.remove(at: 2)
@@ -1122,7 +1125,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         var userData = WWMUserData.sharedInstance
                         userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-
+                    
                         
                         print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
                         
