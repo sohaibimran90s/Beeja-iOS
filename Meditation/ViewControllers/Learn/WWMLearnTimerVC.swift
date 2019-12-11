@@ -356,7 +356,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         
-        self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player?.currentTime().seconds)))) ?? 0
+        self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
         
         if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
             if audioPlayPercentage >= 95{

@@ -274,7 +274,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @objc func updateTimer() {
         if isPlayer {
             
-            self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player.currentTime().seconds)))) ?? 0
+            self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
             
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
