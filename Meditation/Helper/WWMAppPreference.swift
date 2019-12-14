@@ -125,6 +125,15 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setMoodId(value: String) {
+        defaults.set(value, forKey: "mood_id")
+        defaults.synchronize()
+    }
+    
+    func getMoodId() -> String {
+        return UserDefaults.standard.string(forKey: "mood_id") ?? ""
+    }
+    
     func getIsSubscribedBool() -> Bool{
         return defaults.bool(forKey: "is_subscribed")
     }

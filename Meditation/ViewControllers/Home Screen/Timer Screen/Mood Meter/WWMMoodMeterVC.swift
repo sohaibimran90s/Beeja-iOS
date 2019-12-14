@@ -310,7 +310,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }else{
@@ -331,7 +331,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
@@ -514,14 +514,16 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         
-        print("moodIndex... \(moodIndex) self.arrMoodData... \(self.arrMoodData.count)")
+        print("moodIndex... \(selectedIndex) self.arrMoodData... \(self.arrMoodData.count) self.arrMoodData[selectedIndex].name... \(self.arrMoodData[selectedIndex].name)")
         
-        if moodIndex >= 72{
+        self.appPreference.setMoodId(value: "\(self.arrMoodData[selectedIndex].id)")
+        
+        if selectedIndex >= 72{
             self.lblMoodMeter.text = self.arrMoodData[71].name
             self.imgMoodMeter.image = UIImage(named: self.arrMoodData[71].name)
         }else{
-            self.lblMoodMeter.text = self.arrMoodData[moodIndex].name
-            self.imgMoodMeter.image = UIImage(named: self.arrMoodData[moodIndex].name)
+            self.lblMoodMeter.text = self.arrMoodData[selectedIndex].name
+            self.imgMoodMeter.image = UIImage(named: self.arrMoodData[selectedIndex].name)
         }
         
         let x = Int(self.moodView!.bounds.size.width / 2) * Int(selectedMood)
@@ -534,24 +536,14 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let selectedMood = angle / diff
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
-        let mood = self.arrMoodData[moodIndex]
+        let mood = self.arrMoodData[selectedIndex]
 
-        print("selected index slider... \(selectedIndex)")
-        self.lblMoodMeter.text = self.arrMoodData[moodIndex].name
-        self.imgMoodMeter.image = UIImage(named: self.arrMoodData[moodIndex].name)
+        print("selected index slider... \(selectedIndex) name+++ \(self.arrMoodData[selectedIndex].name) ")
+        self.lblMoodMeter.text = self.arrMoodData[selectedIndex].name
+        self.imgMoodMeter.image = UIImage(named: self.arrMoodData[selectedIndex].name)
         
-        for index in 0..<arrButton.count {
-            let button = arrButton[index]
-            if index == moodIndex {
-                button.titleLabel?.font = UIFont(name: "Maax-Bold", size: 16)
-                button.setTitleColor(UIColor.white, for: .normal)
-            }else{
-                button.titleLabel?.font = UIFont(name: "Maax-Medium", size: 13)
-                button.setTitleColor(UIColor.lightGray, for: .normal)
-            }
-        }
-        
-        print("selected mood = \(mood.name)")
+        print("selected mood = \(mood.name) selected mood id = \(mood.id)")
+        self.appPreference.setMoodId(value: "\(mood.id)")
         self.btnConfirm.isHidden = false
         self.lblMoodselect.text = KMOVEDOTSELECT
     }
@@ -562,6 +554,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @IBAction func btnSkipAction(_ sender: Any) {
         
         print("self.userData.type.... \(self.userData.type)")
+        self.appPreference.setMoodId(value: "")
 
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
         if nintyFivePercentDB.count > 0{
@@ -608,7 +601,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "rest_time": self.restTime,
                 "meditation_id": self.meditationID,
                 "level_id": self.levelID,
-                "mood_id": self.moodData.id == -1 ? "0" : self.moodData.id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
             

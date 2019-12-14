@@ -96,7 +96,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 "rest_time": rest_time,
                 "meditation_id": meditation_id,
                 "level_id": level_id,
-                "mood_id": mood_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": complete_percentage
                 ] as [String : Any]
         }else{
@@ -117,7 +117,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 "rest_time": rest_time,
                 "meditation_id": meditation_id,
                 "level_id": level_id,
-                "mood_id": mood_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": complete_percentage
                 ] as [String : Any]
         }

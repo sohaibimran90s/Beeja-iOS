@@ -265,7 +265,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }else{
@@ -286,7 +286,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id":self.moodData.id == -1 ? "0" : self.moodData.id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
