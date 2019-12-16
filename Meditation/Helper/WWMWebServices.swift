@@ -30,8 +30,11 @@ class WWMWebServices {
         
         var userData = WWMUserData()
         let appPreffrence = WWMAppPreference()
-        userData = WWMUserData.init(json:appPreffrence.getUserData())
-        print(userData)
+        
+        if (appPreffrence.getUserData() as? [String: Any]) != nil{
+            userData = WWMUserData.init(json:appPreffrence.getUserData())
+            print(userData)
+        }
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
@@ -262,8 +265,12 @@ class WWMWebServices {
         
         var userData = WWMUserData()
         let appPreffrence = WWMAppPreference()
-        userData = WWMUserData.init(json:appPreffrence.getUserData())
-        print(userData)
+        
+        if (appPreffrence.getUserData() as? [String: Any]) != nil{
+            userData = WWMUserData.init(json:appPreffrence.getUserData())
+            print(userData)
+        }
+        
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
@@ -343,8 +350,11 @@ class WWMWebServices {
         
         var userData = WWMUserData()
         let appPreffrence = WWMAppPreference()
-        userData = WWMUserData.init(json:appPreffrence.getUserData())
-        print(userData)
+        
+        if (appPreffrence.getUserData() as? [String: Any]) != nil{
+            userData = WWMUserData.init(json:appPreffrence.getUserData())
+            print(userData)
+        }
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
