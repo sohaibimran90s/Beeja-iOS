@@ -95,6 +95,10 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "expiryDate")
     }
     
+    func setEmail(value: String){
+        defaults.set(value, forKey: "email")
+    }
+    
     func setPreJournalCount(value: Int){
         defaults.set(value, forKey: "preJournalCount")
     }
@@ -129,6 +133,11 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
     }
+    
+    func getEmail() -> String{
+        return UserDefaults.standard.string(forKey: "email") ?? ""
+    }
+
     
     func getMoodId() -> String {
         return UserDefaults.standard.string(forKey: "mood_id") ?? ""

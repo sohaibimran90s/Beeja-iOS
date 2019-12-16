@@ -1157,6 +1157,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreffrence.setExpiryDate(value: false)
                 self.appPreference.setGetProfile(value: true)
                 self.appPreffrence.setCheckEnterSignupLogin(value: false)
+                self.appPreffrence.setEmail(value: "")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

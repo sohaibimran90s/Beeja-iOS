@@ -135,6 +135,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                 
                 print("signup result... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
+                    
+                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
                     Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
@@ -195,6 +198,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
+                    
+                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")

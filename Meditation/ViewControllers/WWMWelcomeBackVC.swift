@@ -239,6 +239,9 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMWelcomeBackVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 if let userProfile = result["userprofile"] as? [String:Any] {
+                    
+                    print("userProfile WWMWelcomeBackVC... \(userProfile)")
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")

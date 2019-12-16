@@ -57,10 +57,13 @@ class WWMResetPasswordVC: WWMBaseViewController {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "user_id" : self.appPreference.getUserID(),
+            "email" : self.appPreference.getEmail(),
             "oldPassword" : txtViewOldPassword.text ?? "",
             "newPassword" : txtViewNewPassword.text ?? ""
             ] as [String : Any]
+        
+        print("resetPassword param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, context: "WWMResetPasswordVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.navigationController?.popViewController(animated: true)

@@ -231,6 +231,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
             if sucess {
                 print("result.... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
+                    print("userProfile WWMLoginVC... \(userProfile)")
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")

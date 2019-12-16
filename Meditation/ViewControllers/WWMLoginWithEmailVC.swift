@@ -206,6 +206,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
+                    
+                    print("userProfile WWMLoginWithEmailVC... \(userProfile)")
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
