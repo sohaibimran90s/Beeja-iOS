@@ -41,6 +41,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationLearnSteps(notification:)), name: Notification.Name("notificationLearnSteps"), object: nil)
+        
+        self.appPreference.setMoodId(value: "")
     }
     
     

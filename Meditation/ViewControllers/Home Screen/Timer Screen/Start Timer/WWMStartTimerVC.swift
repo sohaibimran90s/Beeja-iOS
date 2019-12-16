@@ -106,6 +106,8 @@ class WWMStartTimerVC: WWMBaseViewController {
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
          notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
+        
+        self.appPreference.setMoodId(value: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -719,6 +721,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
         if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{

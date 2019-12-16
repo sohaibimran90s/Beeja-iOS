@@ -102,6 +102,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.isFavourite = true
             self.rating = 1
         }
+        
+        self.appPreference.setMoodId(value: "")
     }
     
     
