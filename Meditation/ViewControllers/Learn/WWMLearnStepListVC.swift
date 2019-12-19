@@ -102,7 +102,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 "rest_time": rest_time,
                 "meditation_id": meditation_id,
                 "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage
                 ] as [String : Any]
         }else{
@@ -123,7 +123,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 "rest_time": rest_time,
                 "meditation_id": meditation_id,
                 "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage
                 ] as [String : Any]
         }

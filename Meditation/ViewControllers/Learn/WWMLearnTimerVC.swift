@@ -47,6 +47,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
     var offlineCompleteData: [String: Any] = [:]
     var meditationLTMPlayPercentage = 0
     var dataAppendFlag = false
+    
+    let reachable = Reachabilities()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -253,9 +255,183 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
-        self.moveToFeedBack()
         alertPopupView.removeFromSuperview()
+        
+        self.pushNavigationController()
     }
+    
+    func pushNavigationController(){
+        if self.meditationLTMPlayPercentage < 95{
+            if !ismove {
+                var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
+                analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
+                var analyticStepTitle = WWMHelperClass.step_title.uppercased()
+                analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
+                    
+                var audioPlayPercentageCompleteStatus = ""
+                if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+                    if audioPlayPercentage >= 95{
+                        audioPlayPercentageCompleteStatus = "_COMPLETED"
+                    }
+                }
+                    
+                WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName: "\(self.totalAudioLengthAnalytics)\(audioPlayPercentageCompleteStatus)")
+                    
+                ismove = true
+                self.timer.invalidate()
+                self.animationView.stop()
+                self.player?.pause()
+                    
+                self.animateBool = 1
+                self.pauseAnimation()
+                self.timer1.invalidate()
+                
+                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "0", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds)!)))", watched_duration: "\(Int(round((self.player?.currentTime().seconds)!)))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "learn", guided_type: "", audio_id: "0", step_id: "\(WWMHelperClass.step_id)", mantra_id: "\(WWMHelperClass.mantra_id)")
+            }
+        }else{
+            self.moveToFeedBack()
+        }
+    }
+    
+    //meditationComplete
+    func completeMeditationAPI(mood_id: String, user_id: String, rest_time: String, emotion_id: String, tell_us_why: String, prep_time: String, meditation_time: String, watched_duration: String, level_id: String, complete_percentage: String, rating: String, meditation_type: String, category_id: String, meditation_id: String, date_time: String, type: String, guided_type: String, audio_id: String, step_id: String, mantra_id: String) {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
+
+        var param: [String: Any] = [:]
+        if type == "learn"{
+            param = [
+                "type": type,
+                "step_id": step_id,
+                "mantra_id": mantra_id,
+                "category_id" : category_id,
+                "emotion_id" : emotion_id,
+                "audio_id" : audio_id,
+                "guided_type" : guided_type,
+                "duration" : watched_duration,
+                "rating" : rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }else{
+            param = [
+                "type": type,
+                "category_id": category_id,
+                "emotion_id": emotion_id,
+                "audio_id": audio_id,
+                "guided_type": guided_type,
+                "watched_duration": watched_duration,
+                "rating": rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }
+
+        print("meter param WWMLeranTimerVC... \(param)")
+
+        //background thread meditation api*
+        DispatchQueue.global(qos: .background).async {
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    
+                    if let _ = result["success"] as? Bool {
+                        print("success... WWMLeranTimerVC meditationcomplete api in background")
+                        self.appPreference.setSessionAvailableData(value: true)
+                        self.meditationHistoryListAPI()
+                        
+                        WWMHelperClass.complete_percentage = "0"
+                        //self.navigateToDashboard()
+                    }else {
+                        self.saveToDB(param: param)
+                    }
+                }else{
+                    self.saveToDB(param: param)
+                }
+            }//background thread meditation api*
+            
+            DispatchQueue.main.async {
+                self.navigateToDashboard()
+            }
+        }
+    }
+    
+    func saveToDB(param:[String:Any]) {
+        let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        meditationDB.meditationData = myString
+        WWMHelperClass.saveDb()
+        //self.navigateToDashboard()
+    }
+    
+    //MeditationHistoryList API
+    func meditationHistoryListAPI() {
+        
+        let param = ["user_id": self.appPreference.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        
+                        let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                        if meditationHistoryData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                        }
+                        
+                        for dict in records{
+                            let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMeditationHistory.data = myString
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                }
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                print("success WWMGuidedMeditationTimerVC meditationhistoryapi in background thread")
+            }
+        }
+    }
+    
+    
+    func navigateToDashboard() {
+        
+        self.navigationController?.isNavigationBarHidden = false
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }//meditationComplete*
     
     @IBAction func btnPauseAction(_ sender: Any) {
         if !isStop {
@@ -383,7 +559,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         offlineCompleteData["rest_time"] = ""
         offlineCompleteData["meditation_id"] = "0"
         offlineCompleteData["level_id"] = "0"
-        offlineCompleteData["mood_id"] = "1"
+        offlineCompleteData["mood_id"] = "0"
         offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
          
         if !self.dataAppendFlag{

@@ -67,7 +67,6 @@ class WWMStartTimerVC: WWMBaseViewController {
     var offlineCompleteData: [String: Any] = [:]
     var meditationLTMPlayPercentage = 0
     var dataAppendFlag = false
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -633,6 +632,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         dbNintyFivePercent.data = myString
         dbNintyFivePercent.id = "\(nintyFivePercentDB.count)"
+        
         WWMHelperClass.saveDb()
         self.dataAppendFlag = true
     }
@@ -757,37 +757,193 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
          alertPopupView.removeFromSuperview()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
         
-        print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
-        
-        if flag == 1{
-            WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
+        if self.meditationLTMPlayPercentage < 95{
+            
+            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+                      
+             if self.flag == 1{
+                WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
+             }else{
+                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+              }
+            
+            print("meditation_time... \(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0) restTime... \(self.restTime) prepTime... \(self.prepTime)")
+                      
+            self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "\(self.restTime)", emotion_id: "0", tell_us_why: "", prep_time: "\(self.prepTime)", meditation_time: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", watched_duration: "0", level_id: self.levelID, complete_percentage: "\(self.meditationLTMPlayPercentage)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: self.meditationID, date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "timer", guided_type: "", audio_id: "0", step_id: "", mantra_id: "")
+            
         }else{
-            WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            
+            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            
+            if self.flag == 1{
+                WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
+            }else{
+                WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+            }
+            
+            vc.meditationMaxTime = self.meditationTime
+            vc.meditationName = self.meditationName
+            vc.levelName = self.levelName
+            vc.type = "post"
+            if self.timerType == "Prep"{
+                vc.prepTime = self.prepTime - self.seconds
+                vc.meditationTime = 0
+                vc.restTime = 0
+            }else if self.timerType == "Meditation"{
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime - self.seconds
+                vc.restTime = 0
+            }else if self.timerType == "Rest"{
+                vc.prepTime = self.prepTime
+                vc.meditationTime = self.meditationTime
+                vc.restTime = self.restTime - self.seconds
+            }
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-        vc.meditationMaxTime = self.meditationTime
-        vc.meditationName = self.meditationName
-        vc.levelName = self.levelName
-        vc.type = "post"
-        if self.timerType == "Prep"{
-            vc.prepTime = self.prepTime - self.seconds
-            vc.meditationTime = 0
-            vc.restTime = 0
-        }else if self.timerType == "Meditation"{
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime - self.seconds
-            vc.restTime = 0
-        }else if self.timerType == "Rest"{
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime
-            vc.restTime = self.restTime - self.seconds
-        }
-        vc.meditationID = self.meditationID
-        vc.levelID = self.levelID
-        self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    //meditationComplete
+    func completeMeditationAPI(mood_id: String, user_id: String, rest_time: String, emotion_id: String, tell_us_why: String, prep_time: String, meditation_time: String, watched_duration: String, level_id: String, complete_percentage: String, rating: String, meditation_type: String, category_id: String, meditation_id: String, date_time: String, type: String, guided_type: String, audio_id: String, step_id: String, mantra_id: String) {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
+
+        var param: [String: Any] = [:]
+        if type == "learn"{
+            param = [
+                "type": type,
+                "step_id": step_id,
+                "mantra_id": mantra_id,
+                "category_id" : category_id,
+                "emotion_id" : emotion_id,
+                "audio_id" : audio_id,
+                "guided_type" : guided_type,
+                "duration" : watched_duration,
+                "rating" : rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }else{
+            param = [
+                "type": type,
+                "category_id": category_id,
+                "emotion_id": emotion_id,
+                "audio_id": audio_id,
+                "guided_type": guided_type,
+                "watched_duration": watched_duration,
+                "rating": rating,
+                "user_id": user_id,
+                "meditation_type": meditation_type,
+                "date_time": date_time,
+                "tell_us_why": tell_us_why,
+                "prep_time": prep_time,
+                "meditation_time": meditation_time,
+                "rest_time": rest_time,
+                "meditation_id": meditation_id,
+                "level_id": level_id,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+                "complete_percentage": complete_percentage
+                ] as [String : Any]
+        }
+
+        print("meter param WWMStartTimerVC... \(param)")
+
+        //background thread meditation api*
+        DispatchQueue.global(qos: .background).async {
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    
+                    if let _ = result["success"] as? Bool {
+                        print("success... WWMStartTimerVC meditationcomplete api in background")
+                        self.appPreffrence.setSessionAvailableData(value: true)
+                        self.meditationHistoryListAPI()
+                        
+                        WWMHelperClass.complete_percentage = "0"
+                        //self.navigateToDashboard()
+                    }else {
+                        self.saveToDB(param: param)
+                    }
+                }else{
+                    self.saveToDB(param: param)
+                }
+            }//background thread meditation api*
+            
+            DispatchQueue.main.async {
+                self.navigateToDashboard()
+            }
+        }
+    }
+    
+    func saveToDB(param:[String:Any]) {
+        let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        meditationDB.meditationData = myString
+        WWMHelperClass.saveDb()
+        //self.navigateToDashboard()
+    }
+    
+    //MeditationHistoryList API
+    func meditationHistoryListAPI() {
+        
+        let param = ["user_id": self.appPreffrence.getUserID()]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [String: Any]{
+                    if let records = data["records"] as? [[String: Any]]{
+                        
+                        let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                        if meditationHistoryData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                        }
+                        
+                        for dict in records{
+                            let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                            let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                            let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                            dbMeditationHistory.data = myString
+                            WWMHelperClass.saveDb()
+                            
+                        }
+                    }
+                }
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
+                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                print("success WWMStartTimerVC meditationhistoryapi in background thread")
+            }
+        }
+    }
+    
+    func navigateToDashboard() {
+        
+        self.navigationController?.isNavigationBarHidden = false
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }//meditationComplete*
     
     @IBAction func btnPauseAction(_ sender: Any) {
         if !isStop {

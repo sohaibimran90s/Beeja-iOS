@@ -265,7 +265,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }else{
@@ -286,7 +286,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
@@ -423,7 +423,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
                 print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success moodmeterLogVC meditationhistoryapi in background thread")
+                print("success WWMStartTimerVC meditationhistoryapi in background thread")
             }
         }
     }

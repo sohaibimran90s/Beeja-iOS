@@ -148,7 +148,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
 
@@ -170,7 +170,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "rest_time":restTime,
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 1,
+                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage
                 ] as [String : Any]
         }
