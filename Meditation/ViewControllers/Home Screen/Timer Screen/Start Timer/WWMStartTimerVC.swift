@@ -756,8 +756,12 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     
     @IBAction func btnDoneAction(_ sender: Any) {
-         alertPopupView.removeFromSuperview()
+        alertPopupView.removeFromSuperview()
         
+        self.pushNavigationController()
+    }
+    
+    func pushNavigationController(){
         if self.meditationLTMPlayPercentage < 95{
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
