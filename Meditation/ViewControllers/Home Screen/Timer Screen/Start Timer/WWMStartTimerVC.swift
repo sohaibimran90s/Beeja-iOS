@@ -534,13 +534,15 @@ class WWMStartTimerVC: WWMBaseViewController {
             print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
             
             //for 95% LTM
-        
             
             
-            if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
-                
-                self.meditationLTMPlayPercentage = meditationPlayPercentage
+            if meditationLTMPlayPercentage < 100{
+                if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
+                    
+                    self.meditationLTMPlayPercentage = meditationPlayPercentage
+                }
             }
+            
             
             //to insert into database
             offlineCompleteData["type"] = "timer"
