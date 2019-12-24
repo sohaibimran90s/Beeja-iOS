@@ -70,6 +70,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     var player:  AVAudioPlayer?
 
+    let reachable = Reachabilities()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -488,7 +489,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                      "restTime2":"0"
             ] as [String : Any]
         
-        self.addSessionAPI(param: param)
+        if reachable.isConnectedToNetwork() {
+            self.addSessionAPI(param: param)
+        }else{
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
     }
     
     
@@ -602,10 +607,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     
     func addSessionAPI(param:[String:Any]) {
-        //WWMHelperClass.showSVHud()
-        //WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+
         print("add session params.... \(param)")
+
         addSessionView.btnDone.isUserInteractionEnabled = false
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             self.addSessionView.btnDone.isUserInteractionEnabled = true
@@ -620,11 +624,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 }
             }else {
                 self.addSessionView.btnDone.isUserInteractionEnabled = true
-                self.saveSessionDatatoDB(param: param)
+                //self.saveSessionDatatoDB(param: param)
             }
             self.addSessionView.btnDone.isUserInteractionEnabled = true
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
+             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
