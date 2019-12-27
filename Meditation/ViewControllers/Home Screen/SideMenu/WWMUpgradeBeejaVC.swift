@@ -16,7 +16,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBOutlet weak var viewMonthly: UIView!
     
     @IBOutlet weak var lblBilledText: UILabel!
-    var selectedProductIndex = 1
+    var selectedProductIndex = 2
     var transactionInProgress = false
     var productsArray = [SKProduct]()
     var productIDs = ["get_108_gbp_lifetime_sub","get_42_gbp_annual_sub","get_6_gbp_monthly_sub","get_240_gbp_lifetime_sub"]
@@ -32,11 +32,15 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var alertPopup = WWMAlertPopUp()
     var popupTitle: String = ""
     var continueRestoreValue: String = ""
+    var boolGetIndex = false
+    
+    var restoreBool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
        // WWMHelperClass.showSVHud()
+        self.boolGetIndex = true
         self.setNavigationBar(isShow: false, title: "")
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
@@ -76,7 +80,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             return
         }
         
-        
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
         let window = UIApplication.shared.keyWindow!
         
@@ -94,6 +97,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
+            
+            print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
+            
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
             self.transactionInProgress = true
@@ -108,6 +114,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     
     
     @IBAction func btnMonthlyAction(sender: AnyObject) {
+        self.boolGetIndex = false
         self.buttonIndex = 0
         self.subscriptionPlan = "Monthly"
         self.subscriptionAmount = "5.99"
@@ -119,6 +126,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             let product = self.productsArray[index]
             if product.productIdentifier == "get_6_gbp_monthly_sub" {
                 self.selectedProductIndex = index
+                self.boolGetIndex = true
+                print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -126,6 +135,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnAnnuallyAction(sender: AnyObject) {
+        self.boolGetIndex = false
         self.buttonIndex = 1
         self.subscriptionPlan = "annual"
         self.subscriptionAmount = "41.99"
@@ -137,15 +147,18 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             let product = self.productsArray[index]
             if product.productIdentifier == "get_42_gbp_annual_sub" {
                 self.selectedProductIndex = index
+                self.boolGetIndex = true
+                print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
     }
     
     @IBAction func btnLifeTimeAction(sender: AnyObject) {
-        self.buttonIndex = 2
+        self.boolGetIndex = false
+        self.buttonIndex = 3
         self.subscriptionPlan = "Lifetime"
-        self.subscriptionAmount = "108"
+        self.subscriptionAmount = "239.99"
         self.lblBilledText.text = ""
         self.viewAnnually.isHidden = true
         self.viewLifeTime.isHidden = false
@@ -154,6 +167,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             let product = self.productsArray[index]
             if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
+                self.boolGetIndex = true
+                print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -161,19 +176,22 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnContinuePaymentAction(sender: AnyObject) {
-        if self.selectedProductIndex == 0 {
-            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "MONTHLY")
-        }else if self.selectedProductIndex == 1 {
-            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "ANNUAL")
-        }else if self.selectedProductIndex == 2{
-            WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
-        }
         
-         self.continueRestoreValue = "0"
-         if reachable.isConnectedToNetwork() {
-            self.showActions()
-         }else {
-            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        if self.boolGetIndex{
+            if self.selectedProductIndex == 3 {
+                WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "MONTHLY")
+            }else if self.selectedProductIndex == 2 {
+                WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "ANNUAL")
+            }else if self.selectedProductIndex == 1{
+                WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
+            }
+            
+            self.continueRestoreValue = "0"
+            if reachable.isConnectedToNetwork() {
+                self.showActions()
+            }else {
+                WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+            }
         }
     }
     
@@ -217,7 +235,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 var plan_id: Int = 2
                 var subscriptionPlan: String = "annual"
                 
-                print("responseArray.count..... \(responseArray.count)")
+                print("responseArray.count..... \(responseArray.count) \(responseArray)")
                 if responseArray.count > buttonIndex{
                     if let dict = self.responseArray[buttonIndex] as? [String: Any]{
                         if let id = dict["id"] as? Int{
@@ -292,29 +310,18 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 if self.continueRestoreValue == "1"{
                     KUSERDEFAULTS.set("1", forKey: "restore")
                   
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
-                    
-//                    if #available(iOS 13.0, *) {
-//                        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-//                        window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//
-//                    } else {
-//                        UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//                    }
-                    
+                    if !self.restoreBool{
+                        
+                        self.restoreBool = true
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                    }
                 }else{
                     
+                    KUSERDEFAULTS.set("0", forKey: "restore")
+                    
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                     UIApplication.shared.keyWindow?.rootViewController = vc
-                    
-//                    if #available(iOS 13.0, *) {
-//                        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-//                        window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//
-//                    } else {
-//                        UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//                    }
                     
                 }
             }else {
