@@ -539,7 +539,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage < 98{
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
@@ -782,7 +782,13 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
-        self.xibCall()
+        if self.meditationLTMPlayPercentage < 98{
+            self.xibCall()
+        }else{
+            alertPopupView.removeFromSuperview()
+            
+            self.pushNavigationController()
+        }
     }
 }
 

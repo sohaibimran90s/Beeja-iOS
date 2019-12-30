@@ -41,6 +41,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var calenderHegihtConstraint: NSLayoutConstraint!
+    
     let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
     var milestoneData = WWMMilestoneData()
@@ -520,6 +522,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count)")
+        
+        if self.statsData.consecutive_days.count > 35{
+            self.calenderHegihtConstraint.constant = 330
+        }else{
+            self.calenderHegihtConstraint.constant = 280
+        }
+        
         return self.statsData.consecutive_days.count
     }
     

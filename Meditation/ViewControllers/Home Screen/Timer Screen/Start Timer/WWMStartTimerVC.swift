@@ -724,7 +724,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
-        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage < 98{
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
@@ -966,7 +966,13 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
-        self.xibCall()
+        if self.meditationLTMPlayPercentage < 98{
+            self.xibCall()
+        }else{
+            alertPopupView.removeFromSuperview()
+            
+            self.pushNavigationController()
+        }
     }
     
     func convertDurationIntoPercentage(duration:Int) -> String  {

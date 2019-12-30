@@ -208,7 +208,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage <= 98{
+        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage < 98{
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
@@ -444,7 +444,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
-        self.xibCall()
+        if self.meditationLTMPlayPercentage < 98{
+            self.xibCall()
+        }else{
+            alertPopupView.removeFromSuperview()
+            
+            self.pushNavigationController()
+        }
     }
     
     func play(url:URL) {
@@ -660,15 +666,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
             
 
             //for 95% LTM
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
-                if audioPlayPercentage < 95{
-                    
-                }else if audioPlayPercentage < 98{
-                    
-                }else{
-                    
-                }
-            }
             
             ismove = true
             self.timer.invalidate()
