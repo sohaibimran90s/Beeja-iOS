@@ -312,9 +312,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             if getPostJournalCount == 0{
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: KNOFREEJOURNAL, type: "post")
             }else{
-                
-                //self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: "\(KYOUHAVE) \(getPostJournalCount) \(KNOFREEJOURNALMSG)", type: "Post")
-                
+                                
                 if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
                     xibJournalView()
                     

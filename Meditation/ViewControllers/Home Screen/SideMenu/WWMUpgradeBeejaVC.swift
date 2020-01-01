@@ -35,6 +35,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var continueRestoreValue: String = ""
     var boolGetIndex = false
     var restoreBool = false
+    var isCallHome = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,14 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewMonthly.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewLifeTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewAnnually.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+    }
+    
+    @IBAction func btnBackClicked(_ sender: Any) {
+        if isCallHome == ""{
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            self.callHomeVC1()
+        }
     }
     
     // MARK:- Get Product Data from Itunes

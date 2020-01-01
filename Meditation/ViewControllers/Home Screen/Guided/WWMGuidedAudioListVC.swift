@@ -471,7 +471,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
     
     func getSubscriptionPlanId(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMGuidedAudioListVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
@@ -501,7 +501,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         
         //print("param.....###### \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMGuidedAudioListVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 
                 Logger.shared.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "param \(param)")

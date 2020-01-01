@@ -54,6 +54,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     var arrButton = [UIButton]()
     
     var animationView = AnimationView()
+    var isUpgradeBeeja = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,68 +166,84 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         
         self.alertPopupView1.lblTitle.text = title
         self.alertPopupView1.lblSubtitle.text = subTitle
-        self.alertPopupView1.btnClose.isHidden = true
+        self.alertPopupView1.btnClose.setTitle("no thanks", for: .normal)
+        self.alertPopupView1.btnOK.setTitle("ok", for: .normal)
         
+        self.alertPopupView1.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView1)
     }
     
-    @objc func btnAlertDoneAction(_ sender: Any){
-        if type == "pre" {
-            
-            //print("getPreJournalCount.... \(self.appPreference.getPreJournalCount()) getPreMoodCount.... \(self.appPreference.getPreMoodCount())")
-            if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
-                
-                self.view.isUserInteractionEnabled = true
-                self.alertPopupView1.removeFromSuperview()
-            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() == 0){
-                
-                self.view.isUserInteractionEnabled = false
-                self.alertPopupView1.removeFromSuperview()
-                self.navigationController?.isNavigationBarHidden = false
-                self.navigationController?.popViewController(animated: true)
-            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
-                
-                self.view.isUserInteractionEnabled = false
-                self.alertPopupView1.removeFromSuperview()
-                self.navigationController?.isNavigationBarHidden = false
-                self.navigationController?.popViewController(animated: true)
-            }else if (self.appPreference.getPreMoodCount() > 0) && (self.appPreference.getPreJournalCount() == 0){
-                
-                self.alertPopupView1.removeFromSuperview()
-                self.view.isUserInteractionEnabled = true
-            }else{
-                
-                self.alertPopupView1.removeFromSuperview()
-                self.view.isUserInteractionEnabled = false
-                self.callWWMMoodMeterLogVC()
-            }
-        }else{
-            
-            //print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
-            if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
-                self.view.isUserInteractionEnabled = true
-                self.alertPopupView1.removeFromSuperview()
-            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
-                self.view.isUserInteractionEnabled = false
-                self.alertPopupView1.removeFromSuperview()
-                
-                DispatchQueue.global(qos: .background).async {
-                    self.completeMeditationAPI()
-                }
-            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
-                self.alertPopupView1.removeFromSuperview()
-                self.view.isUserInteractionEnabled = false
-                self.callWWMMoodMeterLogVC()
-            }else if (self.appPreference.getPostMoodCount() > 0) && (self.appPreference.getPostJournalCount() == 0){
-                self.alertPopupView1.removeFromSuperview()
-                self.view.isUserInteractionEnabled = true
-            }else{
-                self.alertPopupView1.removeFromSuperview()
-                self.view.isUserInteractionEnabled = false
-                self.callWWMMoodMeterLogVC()
-            }
+    @objc func btnCloseAction(_ sender: Any){
+        DispatchQueue.global(qos: .background).async {
+            self.completeMeditationAPI()
         }
+    }
+    
+    @objc func btnAlertDoneAction(_ sender: Any){
+        self.isUpgradeBeeja = true
+        DispatchQueue.global(qos: .background).async {
+            self.completeMeditationAPI()
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+        
+        vc.isCallHome = "moodMeter"
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+//        if type == "pre" {
+//
+//            if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
+//
+//                self.view.isUserInteractionEnabled = true
+//                self.alertPopupView1.removeFromSuperview()
+//            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() == 0){
+//
+//                self.view.isUserInteractionEnabled = false
+//                self.alertPopupView1.removeFromSuperview()
+//                self.navigationController?.isNavigationBarHidden = false
+//                self.navigationController?.popViewController(animated: true)
+//            }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
+//
+//                self.view.isUserInteractionEnabled = false
+//                self.alertPopupView1.removeFromSuperview()
+//                self.navigationController?.isNavigationBarHidden = false
+//                self.navigationController?.popViewController(animated: true)
+//            }else if (self.appPreference.getPreMoodCount() > 0) && (self.appPreference.getPreJournalCount() == 0){
+//
+//                self.alertPopupView1.removeFromSuperview()
+//                self.view.isUserInteractionEnabled = true
+//            }else{
+//
+//                self.alertPopupView1.removeFromSuperview()
+//                self.view.isUserInteractionEnabled = false
+//                self.callWWMMoodMeterLogVC()
+//            }
+//        }else{
+//
+//            if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
+//                self.view.isUserInteractionEnabled = true
+//                self.alertPopupView1.removeFromSuperview()
+//            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() == 0){
+//                self.view.isUserInteractionEnabled = false
+//                self.alertPopupView1.removeFromSuperview()
+//
+//                DispatchQueue.global(qos: .background).async {
+//                    self.completeMeditationAPI()
+//                }
+//            }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
+//                self.alertPopupView1.removeFromSuperview()
+//                self.view.isUserInteractionEnabled = false
+//                self.callWWMMoodMeterLogVC()
+//            }else if (self.appPreference.getPostMoodCount() > 0) && (self.appPreference.getPostJournalCount() == 0){
+//                self.alertPopupView1.removeFromSuperview()
+//                self.view.isUserInteractionEnabled = true
+//            }else{
+//                self.alertPopupView1.removeFromSuperview()
+//                self.view.isUserInteractionEnabled = false
+//                self.callWWMMoodMeterLogVC()
+//            }
+//        }
     }
     
     func callWWMMoodMeterLogVC(){
@@ -630,6 +647,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     func navigateToDashboard() {
+        
+        if self.isUpgradeBeeja{
+            return
+        }
         
         if self.appPreference.getType() == "learn"{
             if self.appPreference.get21ChallengeName() == "30 Day Challenge"{

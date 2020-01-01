@@ -2022,7 +2022,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getSubscriptionPlanId(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMTabBarVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
@@ -2081,7 +2081,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         //print("param.....###### \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 //print("success.... upgrade beeja tab bar vc lat...\(self.lat) long... \(self.long)")
                 

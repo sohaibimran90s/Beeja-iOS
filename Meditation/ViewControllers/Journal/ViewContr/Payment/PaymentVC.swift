@@ -180,7 +180,7 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
 
     func getSubscriptionPlanId(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "PaymentVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
@@ -208,7 +208,7 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
         
         //print("param.....###### \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "PaymentVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 self.appPreference.setExpiryDate(value: true)
 

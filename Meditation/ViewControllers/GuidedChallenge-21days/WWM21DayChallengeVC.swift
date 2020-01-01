@@ -1054,7 +1054,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
     
     func getSubscriptionPlanId(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWM21DayChallengeVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
@@ -1087,7 +1087,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
         
         //print("param.....###### \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 
                     Logger.shared.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
