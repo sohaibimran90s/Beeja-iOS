@@ -54,6 +54,8 @@ let kChimes_MOON_KOSHI                          = "MOON KOSHI"
 let kChimes_BURMESE_BELL                        = "BURMESE BELL"
 let kChimes_CRYSTAL_BOWL                        = "CRYSTAL BOWL"
 let kChimes_SUN_KOSHI                           = "SUN KOSHI"
+let kChimes_CHIME2                              = "CHIME 2"
+
 
 // MARK:-   Ambient sound
 

@@ -15,7 +15,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     
    
-    let arrChimes = [kChimes_HARP,kChimes_CHIME,kChimes_CONCH,kChimes_SITAR,kChimes_THRUSH,kChimes_SPARROW,kChimes_SUN_KOSHI,kChimes_MOON_KOSHI,kChimes_BURMESE_BELL,kChimes_CRYSTAL_BOWL,kChimes_HIMALAYAN_BELL,kChimes_JaiGuruDev]
+    let arrChimes = [kChimes_HARP,kChimes_CHIME,kChimes_CHIME2,kChimes_CONCH,kChimes_SITAR,kChimes_THRUSH,kChimes_SPARROW,kChimes_SUN_KOSHI,kChimes_MOON_KOSHI,kChimes_BURMESE_BELL,kChimes_CRYSTAL_BOWL,kChimes_HIMALAYAN_BELL,kChimes_JaiGuruDev]
     
     let arrAmbientSound = [kAmbient_BIRDSONG_1,kAmbient_BIRDSONG_2,kAmbient_WAVES_ONLY,kAmbient_CHIMES_ONLY,kAmbient_WAVES_CHIMES,kAmbient_JUNGLE_AT_DAWN]
     

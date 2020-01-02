@@ -400,6 +400,7 @@
 		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
 		615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */; };
+		616AC90323BDC14900BB14BE /* CHIME 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 616AC90223BDC14900BB14BE /* CHIME 2.mp3 */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
 		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
 		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
@@ -887,6 +888,7 @@
 		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		616AC90223BDC14900BB14BE /* CHIME 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "CHIME 2.mp3"; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListVC.swift; sourceTree = "<group>"; };
 		6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListTVC.swift; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 		2E4371B522004D9900EF5D62 /* Chimes */ = {
 			isa = PBXGroup;
 			children = (
+				616AC90223BDC14900BB14BE /* CHIME 2.mp3 */,
 				2E4371B622004D9900EF5D62 /* THRUSH.mp3 */,
 				2E4371B722004D9900EF5D62 /* HARP.mp3 */,
 				2E4371B822004D9900EF5D62 /* CHIME.mp3 */,
@@ -2230,6 +2233,7 @@
 				61B6AE1B224A5F320067F2E1 /* WWMAlertController.xib in Resources */,
 				2E34A90822929526005B4091 /* final.json in Resources */,
 				2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */,
+				616AC90323BDC14900BB14BE /* CHIME 2.mp3 in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
 				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
