@@ -28,6 +28,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var isFavourite = false
     var rating = 0
     var totalDuration: Int = 0
+    var totalTime = 0
     
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
@@ -62,6 +63,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.viewLottieAnimation.isHidden = true
         spinnerImage.isHidden = true
         
+        self.totalTime = self.seconds
         
         animationView = AnimationView(name: "all_discs")
         animationView.frame = CGRect(x: self.view.frame.origin.x, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
@@ -280,6 +282,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
             
+            print("self.meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
+            
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
             offlineCompleteData["step_id"] = ""
@@ -314,7 +318,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 
                 print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
-            
             
             
             let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
@@ -366,7 +369,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     func convertDurationIntoPercentage(duration:Int) -> String  {
         if ((self.player?.currentItem?.duration) != nil) {
-            let totalTime = CMTimeGetSeconds(((self.player?.currentItem!.duration)!))
+            let totalTime = Double(self.totalTime)
+            print("totalTime...++++ \(totalTime)")
+            
             let per = (Double(duration)/totalTime)*100
             
             guard !(per.isNaN || per.isInfinite) else {
