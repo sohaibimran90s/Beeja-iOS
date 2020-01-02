@@ -59,6 +59,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+            print("... settingData... \(settingData)")
             if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
                 arrMeditationData = meditationData
             }

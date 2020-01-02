@@ -278,6 +278,8 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "group": group
             ] as [String : Any]
         
+        print("edit param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {

@@ -318,7 +318,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             settingDB.restTime = "20"
             
             
-            for  index in 0..<arrMeditationData.count {
+            for index in 0..<arrMeditationData.count {
                 let dataM = arrMeditationData[index]
                 let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationData") as! DBMeditationData
                 meditationDB.meditationId = Int32(dataM.meditationId)
@@ -326,14 +326,20 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 meditationDB.meditationName = dataM.meditationName
                 meditationDB.isMeditationSelected = dataM.isSelected
                 
-                for  index in 0..<dataM.levels.count {
+                for index in 0..<dataM.levels.count {
                     let dic = dataM.levels[index]
                     let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
                     levelDB.isLevelSelected = dic.isSelected
                     if dic.isSelected {
-                        settingDB.prepTime = "\(dic.prepTime)"
-                        settingDB.meditationTime = "\(dic.meditationTime)"
-                        settingDB.restTime = "\(dic.restTime)"
+                        if dataM.isSelected {
+                            settingDB.prepTime = "\(dic.prepTime)"
+                            settingDB.meditationTime = "\(dic.meditationTime)"
+                            settingDB.restTime = "\(dic.restTime)"
+                            print(settingDB.prepTime ?? "")
+                            print(settingDB.meditationTime ?? "")
+                            print(settingDB.restTime ?? "")
+                        }
+                        
                     }
                     levelDB.levelId = Int32(dic.levelId)
                     levelDB.levelName = dic.levelName
