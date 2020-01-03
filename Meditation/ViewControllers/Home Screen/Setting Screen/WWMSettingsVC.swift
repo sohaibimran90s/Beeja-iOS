@@ -70,7 +70,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(false)
-        
+        WWMHelperClass.saveDb()
         if self.appPreference.isLogin(){
             DispatchQueue.global(qos: .background).async {
                 let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
