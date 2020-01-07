@@ -14,6 +14,15 @@ class WWMSideMenuVC: WWMBaseViewController {
     @IBOutlet weak var lblVersion: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     
+    @IBOutlet weak var freeView: UIView!
+    @IBOutlet weak var lblFreeAccount: UILabel!
+    @IBOutlet weak var btnPremium: UIButton!
+    
+    @IBOutlet weak var premiumView: UIView!
+    @IBOutlet weak var lblDaysLeft: UILabel!
+    @IBOutlet weak var lblPremium: UILabel!
+
+
     var guideStart = WWMGuidedStart()
     var guided_type = ""
     var type = ""
@@ -23,12 +32,25 @@ class WWMSideMenuVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if self.appPreffrence.getExpiryDate(){
+            self.freeView.isHidden = true
+            self.premiumView.isHidden = false
+            
+            let daysLeft = WWMHelperClass.daysLeft(expiryDate: self.appPreffrence.getExpireDateBackend())
+            if daysLeft != -1{
+                self.lblDaysLeft.text = "\(daysLeft) days left"
+            }
+            print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
+        }else{
+            self.freeView.isHidden = false
+            self.premiumView.isHidden = true
+        }
        
         self.lblName.text = self.appPreference.getUserName()
         if self.userData.city != ""  && self.userData.country != "" {
-            self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
+            //self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
         }else {
-            self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
+            //self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
         }
         
 //        let getUserData = self.appPreffrence.getUserData()
@@ -59,6 +81,15 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     // MARK:- Button Action
+    
+    @IBAction func btnProfileAction(_ sender: Any) {
+        
+    }
+    
+    @IBAction func btnPremiumAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @IBAction func btnCloseAction(_ sender: Any) {
         self.navigationController?.isNavigationBarHidden = false

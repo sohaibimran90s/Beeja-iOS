@@ -214,6 +214,25 @@ class WWMHelperClass {
         return "b\(buildNo ?? "")"
     }
     
+    class func daysLeft(expiryDate: String) -> Int{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let currentDateString = dateFormatter.string(from: Date())
+        let currentDate = dateFormatter.date(from: currentDateString)!
+       
+        let expireDate = dateFormatter.date(from: expiryDate)!
+        
+        if expireDate > currentDate{
+            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+            print("day..... \(day)")
+            return day
+        }else{
+            return -1
+        }
+    }
     
     class func dateComparison(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()

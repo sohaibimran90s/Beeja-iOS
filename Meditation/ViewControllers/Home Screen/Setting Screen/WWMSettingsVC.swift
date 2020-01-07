@@ -1068,75 +1068,78 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func settingAPI() {
         
         var meditation_data = [[String:Any]]()
-        let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
-        for dic in meditationData!{
+        let meditationData = self.settingData.meditationData?.array as? [DBMeditationData]
+        
+        if meditationData?.count ?? 0 > 0{
+            for dic in meditationData!{
                 let levels = dic.levels?.array as? [DBLevelData]
                 var levelDic = [[String:Any]]()
                 for level in levels! {
                     let leveldata = [
-                                     "level_id": level.levelId,
-                                     "isSelected": level.isLevelSelected,
-                                     "name": level.levelName ?? "",
-                                     "prep_time": "\(level.prepTime)",
-                                     "meditation_time": "\(level.meditationTime)",
-                                     "rest_time": "\(level.restTime)",
-                                     "prep_min": "\(level.minPrep)",
-                                     "prep_max": "\(level.maxPrep)",
-                                     "med_min": "\(level.minMeditation)",
-                                     "med_max": "\(level.maxMeditation)",
-                                     "rest_min": "\(level.minRest)",
-                                     "rest_max": "\(level.maxRest)"
-                        ] as [String : Any]
-                    levelDic.append(leveldata)
+                            "level_id": level.levelId,
+                            "isSelected": level.isLevelSelected,
+                            "name": level.levelName ?? "",
+                            "prep_time": "\(level.prepTime)",
+                            "meditation_time": "\(level.meditationTime)",
+                            "rest_time": "\(level.restTime)",
+                            "prep_min": "\(level.minPrep)",
+                            "prep_max": "\(level.maxPrep)",
+                            "med_min": "\(level.minMeditation)",
+                            "med_max": "\(level.maxMeditation)",
+                            "rest_min": "\(level.minRest)",
+                            "rest_max": "\(level.maxRest)"
+                            ] as [String : Any]
+                            levelDic.append(leveldata)
                 }
-            
+                        
             let data = ["meditation_id":dic.meditationId,
                         "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
                         "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]
-            meditation_data.append(data)
-        }
-        //"IsMilestoneAndRewards"
-        let group = [
-            "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
-            "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
-            "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
-            "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
-            "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
-            "moodMeterEnable": self.settingData.moodMeterEnable,
-            "IsMorningReminder": self.settingData.isMorningReminder,
-            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-            "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
-            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
-            "MantraID":self.settingData.mantraID,
-            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
-            "IsLearnReminder":self.settingData.isLearnReminder,
-            "meditation_data" : meditation_data
-            ] as [String : Any]
-        
-        let param = [
-            "user_id": self.appPreference.getUserID(),
-            "isJson": true,
-            "group": group
-            ] as [String : Any]
-        
-        print("settings param... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    print("settingVC... \(result)")
-                    //self.tblViewSetting.reloadData()
+                    meditation_data.append(data)
                 }
-            }else {
-                if error != nil {
-//                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    //"IsMilestoneAndRewards"
+            let group = [
+                    "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
+                    "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
+                    "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
+                    "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
+                    "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
+                    "moodMeterEnable": self.settingData.moodMeterEnable,
+                    "IsMorningReminder": self.settingData.isMorningReminder,
+                    "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+                    "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
+                    "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+                    "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
+                    "MantraID":self.settingData.mantraID,
+                    "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+                    "IsLearnReminder":self.settingData.isLearnReminder,
+                    "meditation_data" : meditation_data
+                    ] as [String : Any]
+                    
+             let param = [
+                    "user_id": self.appPreference.getUserID(),
+                    "isJson": true,
+                    "group": group
+                    ] as [String : Any]
+                    
+             print("settings param... \(param)")
+                    
+             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        print(success)
+                        print("settingVC... \(result)")
+                            //self.tblViewSetting.reloadData()
+                    }
+                }else {
+                    if error != nil {
+            //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    }
                 }
-              }
             }
+        }
     }
     
     func logoutAPI() {
