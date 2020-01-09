@@ -46,7 +46,7 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
     }
     
     @objc func KeyPadTap() -> Void {
-        self.view .endEditing(true)
+        self.view.endEditing(true)
     }
     
     

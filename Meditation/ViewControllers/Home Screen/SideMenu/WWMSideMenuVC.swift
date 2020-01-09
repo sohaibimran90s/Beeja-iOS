@@ -38,7 +38,11 @@ class WWMSideMenuVC: WWMBaseViewController {
             
             let daysLeft = WWMHelperClass.daysLeft(expiryDate: self.appPreffrence.getExpireDateBackend())
             if daysLeft != -1{
-                self.lblDaysLeft.text = "\(daysLeft) days left"
+                if daysLeft > 30{
+                    self.lblDaysLeft.text = ""
+                }else{
+                    self.lblDaysLeft.text = "\(daysLeft) days left"
+                }
             }
             print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
         }else{
@@ -83,7 +87,8 @@ class WWMSideMenuVC: WWMBaseViewController {
     // MARK:- Button Action
     
     @IBAction func btnProfileAction(_ sender: Any) {
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMEditProfileVC") as! WWMEditProfileVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnPremiumAction(_ sender: Any) {
