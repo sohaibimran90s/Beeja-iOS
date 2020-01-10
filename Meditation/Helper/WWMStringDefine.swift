@@ -106,6 +106,7 @@ let URL_SUBSCRIPTIONPURCHASE    = URL_BASE + "subscriptionPurchase"//
 let URL_GETSUBSCRIPTIONPPLANS    = URL_BASE + "getSubscriptionPlans"//
 let URL_GETPROFILE                  = URL_BASE + "getProfile"
 let URL_UPLOADHASHTAG                  = URL_BASE + "uploadHashTag"//
+let URL_UPDATE_PROFILE                  = URL_BASE + "update_profile"//
 let URL_GETVIBESIMAGES                  = URL_BASE + "dictionary/vibes"//getVibesImages
 let URL_ADDSESSION                  = URL_BASE + "addSession"//
 let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//

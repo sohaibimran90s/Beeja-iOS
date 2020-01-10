@@ -81,7 +81,6 @@ class WWMEditProfileVC: WWMBaseViewController {
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
             print("%@",self.imageData)
-            //self.uploadHashtagAPI(image: image)
             print("Get Image Data")
         }
     }
@@ -95,7 +94,6 @@ class WWMEditProfileVC: WWMBaseViewController {
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
             print("%@",self.imageData)
-            //self.uploadHashtagAPI(image: image)
             print("Get Image Data")
         }
     }
@@ -126,6 +124,8 @@ class WWMEditProfileVC: WWMBaseViewController {
             print("email... \(String(describing: self.textFieldEmail.text))")
             print("gender... \(String(describing: self.textFieldGender.text))")
             print("dob... \(String(describing: self.textFieldDOB.text))")
+            
+            self.uploadProfileAPI(image: self.profileImg.image ?? UIImage(named: "editProfileImg")!)
          }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
@@ -264,5 +264,39 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
         self.textFieldGender.isUserInteractionEnabled = false
         self.textFieldGender.text = self.genderList[row]
         self.view.endEditing(true)
+    }
+    
+    func uploadProfileAPI(image: UIImage) {
+       //WWMHelperClass.showSVHud()
+       WWMHelperClass.showLoaderAnimate(on: self.view)
+       let param = [
+           "user_id":self.appPreference.getUserID(),
+           "dob": self.textFieldDOB.text ?? "",
+           "name": self.textFieldName.text?.trimmingCharacters(in: .whitespaces) ?? "You",
+           "gender": self.textFieldGender.text ?? ""
+           ] as [String : Any]
+        
+       print("param... \(param)")
+       
+       WWMWebServices.request(params: param, urlString: "https://staging.beejameditation.com/api/v2/update_profile", imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
+
+           if success {
+               print("success... \(result)")
+               WWMHelperClass.hideLoaderAnimate(on: self.view)
+            
+               //self.getCommunityAPI()
+           }else {
+               if error != nil {
+               
+                   if error?.localizedDescription == "The Internet connection appears to be offline."{
+                       WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                   }else{
+                       WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                   }
+               
+               }
+           }
+           WWMHelperClass.hideLoaderAnimate(on: self.view)
+       }
     }
 }
