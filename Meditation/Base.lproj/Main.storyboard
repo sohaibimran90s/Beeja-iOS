@@ -14057,8 +14057,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aH8-yL-FMm">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step1: The Journey Begins" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDN-iq-qak">
-                                <rect key="frame" x="37.5" y="50" width="300" height="29.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step1: The Journey Begins" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDN-iq-qak">
+                                <rect key="frame" x="20" y="50" width="335" height="29.5"/>
                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -14170,7 +14170,9 @@
                             <constraint firstItem="OVt-b6-cFt" firstAttribute="centerX" secondItem="TaN-rI-z3w" secondAttribute="centerX" id="MMv-xE-WmM"/>
                             <constraint firstItem="wWt-cm-Nf1" firstAttribute="top" secondItem="TaN-rI-z3w" secondAttribute="top" id="MNc-Ca-gsc"/>
                             <constraint firstItem="OVt-b6-cFt" firstAttribute="centerY" secondItem="TaN-rI-z3w" secondAttribute="centerY" id="P4i-dr-RmM"/>
+                            <constraint firstItem="JDN-iq-qak" firstAttribute="leading" secondItem="4jX-fu-zsa" secondAttribute="leading" constant="20" id="Z5t-PZ-erB"/>
                             <constraint firstAttribute="bottom" secondItem="aH8-yL-FMm" secondAttribute="bottom" id="gF6-Va-0fV"/>
+                            <constraint firstItem="4jX-fu-zsa" firstAttribute="trailing" secondItem="JDN-iq-qak" secondAttribute="trailing" constant="20" id="j92-zi-5Cv"/>
                             <constraint firstItem="aH8-yL-FMm" firstAttribute="trailing" secondItem="4jX-fu-zsa" secondAttribute="trailing" id="kWh-To-GLH"/>
                             <constraint firstItem="Gip-X3-ns9" firstAttribute="centerX" secondItem="TaN-rI-z3w" secondAttribute="centerX" id="lzy-68-H91"/>
                             <constraint firstItem="4jX-fu-zsa" firstAttribute="bottom" secondItem="Gip-X3-ns9" secondAttribute="bottom" constant="80" id="mRx-fy-MVM"/>

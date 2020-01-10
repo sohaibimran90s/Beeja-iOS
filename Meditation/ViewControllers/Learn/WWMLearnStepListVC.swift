@@ -368,10 +368,12 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         
         print("self.total_paid... \(self.total_paid)")
         if self.appPreffrence.getExpiryDate(){
+            cell.imgLock.isHidden = true
             cell.imgLock.image = UIImage(named: "")
             cell.isUserInteractionEnabled = true
         }else{
             if indexPath.row > 2{
+                cell.imgLock.isHidden = false
                 cell.imgLock.image = UIImage(named: "lock")
                 
                 cell.lblNoOfSteps.backgroundColor = UIColor.white.withAlphaComponent(0.3)
@@ -380,6 +382,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 cell.lblNoOfSteps.textColor = UIColor.black.withAlphaComponent(0.5)
             }else{
                 cell.imgLock.image = UIImage(named: "")
+                cell.imgLock.isHidden = true
             }
         }
         
