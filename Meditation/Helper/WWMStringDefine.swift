@@ -311,6 +311,9 @@ let KITSTIMEFORBEEJA = "It's time for Beeja."
 let KUPDATE = "Update"
 let KTIMETOLEARN = "It's time to learn Beeja"
 
+//editprofilevc
+let kPROFILEUPDATEDSUCCESS = "Your profile has been updated"
+
 // My Progress Journal
 let  Validatation_JournalOfflineMsg  =
 "Any new entries posted during no-Internet connection will be listed once it gets synced with server and device gets online."
@@ -318,7 +321,7 @@ let  Validatation_JournalOfflineMsg  =
 
 
 // If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
-let kBETA_ENABLED = true
+let kBETA_ENABLED = false
 
 /*dynamic webView URLs
  let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"

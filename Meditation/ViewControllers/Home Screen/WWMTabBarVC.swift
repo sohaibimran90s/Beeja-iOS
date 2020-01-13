@@ -1147,13 +1147,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                         
                         if let userProfile = result["user_profile"] as? [String : Any]{
+                            //setEmail
+                            self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
                             self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
+                            self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
+                            self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
+                            self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
                             
                             //this is for hide or unhide setting for paid and unpaid user
                             self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
-                            
-                            //setEmail
-                            self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
                         }
                         
                         self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)

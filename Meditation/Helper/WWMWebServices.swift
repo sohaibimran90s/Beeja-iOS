@@ -199,7 +199,6 @@ class WWMWebServices {
             data.append("Content-Disposition: form-data; name=\"file[]\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
             data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
             data.append(image!.pngData()!)
-            print("image... \(image)")
         }
         
         // End the raw http request data, note that there is 2 extra dash ("-") at the end, this is to indicate the end of the data
@@ -257,25 +256,25 @@ class WWMWebServices {
         request.httpMethod = "POST"
         
         // RSA Implementation
-//        do {
-//            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
-//            }
-//            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-//            let publicKey = try PublicKey.init(pemEncoded: keyString)
-//
-//            let clear = try ClearMessage(string:"pulse", using: .utf8)
-//            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-//            let base64String = encrypted.base64String
-//            let param = "pulse:" + base64String
-//
-//            request.addValue(param, forHTTPHeaderField: "Authorization")
-//            //Authorize
-//            //Authorization
-//
-//        } catch {
-//            print("Failed")
-//            print(error)
-//        }
+        do {
+            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+            }
+            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey.init(pemEncoded: keyString)
+
+            let clear = try ClearMessage(string:"pulse", using: .utf8)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let base64String = encrypted.base64String
+            let param = "pulse:" + base64String
+
+            request.addValue(param, forHTTPHeaderField: "Authorization")
+            //Authorize
+            //Authorization
+
+        } catch {
+            print("Failed")
+            print(error)
+        }
         // RSA Implementation end
         
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -296,8 +295,6 @@ class WWMWebServices {
             data.append("Content-Disposition: form-data; name=\"\(fileName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
             data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
             data.append(image!.pngData()!)
-            
-            print("image... \(image)")
         }
         
         // End the raw http request data, note that there is 2 extra dash ("-") at the end, this is to indicate the end of the data

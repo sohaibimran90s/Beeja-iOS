@@ -32,6 +32,8 @@ class WWMEditProfileVC: WWMBaseViewController {
     let reachable = Reachabilities()
     var tap = UITapGestureRecognizer()
     
+    var alertProfileSuccessPopup = WWMProfileUpdatedPopUp()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,8 +70,22 @@ class WWMEditProfileVC: WWMBaseViewController {
         textFieldGender.attributedPlaceholder = NSAttributedString(string: "select gender",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
-        self.textFieldName.text = self.appPreference.getUserName()
+        self.getProfileInformation()
+    }
+    
+    func getProfileInformation(){
+        
+        let profile_img = self.appPreference.getProfileImgURL()
+        if profile_img != ""{
+            self.profileImg.sd_setImage(with: URL(string: profile_img), placeholderImage: UIImage(named: "editProfileImg"))
+        }else{
+            self.profileImg.image = UIImage(named: "editProfileImg")
+        }
+        
         self.textFieldEmail.text = self.appPreference.getEmail()
+        self.textFieldName.text = self.appPreference.getUserName()
+        self.textFieldGender.text = self.appPreference.getGender()
+        self.textFieldDOB.text = self.appPreference.getDob()
     }
     
     @IBAction func btnUploadImgAction(_ sender: UIButton) {
@@ -278,13 +294,24 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
         
        print("param... \(param)")
        
-       WWMWebServices.request1(params: param, urlString: "https://staging.beejameditation.com/api/v1/update_profile", imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
+       WWMWebServices.request1(params: param, urlString: URL_UPDATE_PROFILE, imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
 
            if success {
-               print("success... \(result)")
-               WWMHelperClass.hideLoaderAnimate(on: self.view)
+                print("success... \(result)")
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                
+                self.appPreference.setGender(value: result["gender"] as? String ?? "")
+                self.appPreference.setDob(value: result["dob"] as? String ?? "")
             
-               //self.getCommunityAPI()
+                if let data = result["data"] as? [String: Any]{
+                    self.appPreference.setUserName(value: data["name"] as? String ?? "")
+                    self.appPreference.setProfileImgURL(value: data["profile_image"] as? String ?? "")
+                    self.appPreference.setEmail(value: data["email"] as? String ?? "")
+                }
+            
+                DispatchQueue.main.async{
+                    self.xibCall()
+                }
            }else {
                if error != nil {
                
@@ -298,5 +325,23 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
            }
            WWMHelperClass.hideLoaderAnimate(on: self.view)
        }
+    }
+    
+    func xibCall(){
+        alertProfileSuccessPopup = UINib(nibName: "WWMProfileUpdatedPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMProfileUpdatedPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertProfileSuccessPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        alertProfileSuccessPopup.lblTitle.text = kPROFILEUPDATEDSUCCESS
+        alertProfileSuccessPopup.btnOK.layer.borderWidth = 2.0
+        alertProfileSuccessPopup.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        alertProfileSuccessPopup.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertProfileSuccessPopup)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.alertProfileSuccessPopup.removeFromSuperview()
     }
 }

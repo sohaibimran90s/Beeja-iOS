@@ -200,6 +200,8 @@
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
 		6112C0D72339EA54004705C9 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6112C0D62339EA54004705C9 /* walkthough.mp4 */; };
 		611D6ACF2382A61D00B927C3 /* DiskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D6ACE2382A61D00B927C3 /* DiskStatus.swift */; };
+		611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */; };
+		611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */; };
 		6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
@@ -690,6 +692,8 @@
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
 		6112C0D62339EA54004705C9 /* walkthough.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = walkthough.mp4; sourceTree = "<group>"; };
 		611D6ACE2382A61D00B927C3 /* DiskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStatus.swift; sourceTree = "<group>"; };
+		611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMProfileUpdatedPopUp.xib; sourceTree = "<group>"; };
+		611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProfileUpdatedPopUp.swift; sourceTree = "<group>"; };
 		61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 2.xcdatamodel"; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
@@ -1263,6 +1267,8 @@
 				613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */,
 				61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */,
 				61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */,
+				611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */,
+				611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -2225,6 +2231,7 @@
 				2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */,
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
+				611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */,
 				613071F822D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib in Resources */,
 				61426B2322DC5304006FE825 /* float3.json in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
@@ -2579,6 +2586,7 @@
 				2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */,
 				61416E8D22BBB3B400C9339E /* PieRadarChartViewBase.swift in Sources */,
 				61416F2A22BBB53000C9339E /* IBubbleChartDataSet.swift in Sources */,
+				611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */,
 				61416EB422BBB42600C9339E /* ChartUtils.swift in Sources */,
 				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,

@@ -67,6 +67,21 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setProfileImgURL(value: String) {
+        defaults.set(value, forKey: "profile_image")
+        defaults.synchronize()
+    }
+    
+    func setDob(value: String) {
+        defaults.set(value, forKey: "dob")
+        defaults.synchronize()
+    }
+    
+    func setGender(value: String) {
+        defaults.set(value, forKey: "gender")
+        defaults.synchronize()
+    }
+    
     func setPreMoodCount(value: Int){
         defaults.set(value, forKey: "preMoodCount")
     }
@@ -132,6 +147,18 @@ class WWMAppPreference: NSObject {
     func setMoodId(value: String) {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
+    }
+    
+    func getDob() -> String{
+        return UserDefaults.standard.string(forKey: "dob") ?? ""
+    }
+    
+    func getProfileImgURL() -> String{
+        return UserDefaults.standard.string(forKey: "profile_image") ?? ""
+    }
+    
+    func getGender() -> String {
+        return UserDefaults.standard.string(forKey: "gender") ?? ""
     }
     
     func getEmail() -> String{
@@ -236,8 +263,6 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "UserName")
         defaults.synchronize()
     }
-    
-    
     
     func setConnectionType(value:String) {
         defaults.set(value, forKey: "connectionType")
