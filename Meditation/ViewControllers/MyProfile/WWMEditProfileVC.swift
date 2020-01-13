@@ -278,7 +278,7 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
         
        print("param... \(param)")
        
-       WWMWebServices.request(params: param, urlString: "https://staging.beejameditation.com/api/v2/update_profile", imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
+       WWMWebServices.request1(params: param, urlString: "https://staging.beejameditation.com/api/v1/update_profile", imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
 
            if success {
                print("success... \(result)")
