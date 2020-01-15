@@ -72,8 +72,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             print("restore.... \(restoreValue)")
             if restoreValue == "1"{
-                self.showToast(message: KRESTOREMSG)
                 KUSERDEFAULTS.set("0", forKey: "restore")
+                self.showToast(message: KRESTOREMSG)
             }
         }
         
@@ -1147,13 +1147,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                         
                         if let userProfile = result["user_profile"] as? [String : Any]{
+                            //setEmail
+                            self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
                             self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
+                            self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
+                            self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
+                            self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
                             
                             //this is for hide or unhide setting for paid and unpaid user
                             self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
-                            
-                            //setEmail
-                            self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
                         }
                         
                         self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
@@ -1161,6 +1163,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
                         
                         self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
+                        self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
+                        self.appPreffrence.setSubscriptionId(value: "\(userSubscription.subscription_id)")
 
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
 

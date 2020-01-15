@@ -240,6 +240,101 @@ class WWMWebServices {
         
     }
     
+    class func request1(params : [String:Any], urlString : String, imgData : Data?, image: UIImage?, isHeader : Bool , completionHandler: @escaping ASCompletionBlockAsDictionary) -> Void {
+        
+        let stringUrl = urlString
+        
+        // generate boundary string using a unique per-app string
+        let boundary = UUID().uuidString
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
+        guard let url = URL(string: stringUrl) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // RSA Implementation
+        do {
+            guard let path = Bundle.main.path(forResource: "public", ofType: "pem") else { return
+            }
+            let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey.init(pemEncoded: keyString)
+
+            let clear = try ClearMessage(string:"pulse", using: .utf8)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let base64String = encrypted.base64String
+            let param = "pulse:" + base64String
+
+            request.addValue(param, forHTTPHeaderField: "Authorization")
+            //Authorize
+            //Authorization
+
+        } catch {
+            print("Failed")
+            print(error)
+        }
+        // RSA Implementation end
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var data = Data()
+        
+        for(key, value) in params{
+            // Add the reqtype field and its value to the raw http request data
+            data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+            data.append("\(value)".data(using: .utf8)!)
+        }
+        
+        let fileName: String = "avatar"
+        if image != nil {
+            // Add the image data to the raw http request data
+            data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"\(fileName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+            data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+            data.append(image!.pngData()!)
+        }
+        
+        // End the raw http request data, note that there is 2 extra dash ("-") at the end, this is to indicate the end of the data
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        // Send a POST request to the URL, with the data we created earlier
+        session.uploadTask(with: request, from: data, completionHandler: { data, response, error in
+            
+            if let checkResponse = response as? HTTPURLResponse{
+                if checkResponse.statusCode == 200{
+                    guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments]) else {
+                        completionHandler([:], nil, false)
+                        return
+                    }
+                    let jsonString = String(data: data, encoding: .utf8)!
+                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    print(json)
+                    completionHandler(json as! [String:Any], nil, true)
+                    
+                }else{
+                    guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                        completionHandler([:], nil, false)
+                        return
+                    }
+                    let jsonString = String(data: data, encoding: .utf8)!
+                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    print(json)
+                    completionHandler(json as! [String:Any], nil, true)
+                }
+            }else{
+                guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                    completionHandler([:], nil, false)
+                    return
+                }
+                completionHandler([:], nil, false)
+            }
+            
+        }).resume()
+        
+    }
     
     // RSA Encryption
     

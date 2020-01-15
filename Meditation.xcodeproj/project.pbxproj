@@ -200,6 +200,8 @@
 		6112A43222DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */; };
 		6112C0D72339EA54004705C9 /* walkthough.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6112C0D62339EA54004705C9 /* walkthough.mp4 */; };
 		611D6ACF2382A61D00B927C3 /* DiskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D6ACE2382A61D00B927C3 /* DiskStatus.swift */; };
+		611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */; };
+		611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */; };
 		6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
@@ -414,6 +416,8 @@
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
+		61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */; };
+		61AC126523C6FEF600B9E9C6 /* WWMEditProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */; };
 		61B0ECB8239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */; };
 		61B0ECBA2399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */; };
 		61B66604235EF15D008660E5 /* sonicLogo.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B66603235EF15C008660E5 /* sonicLogo.json */; };
@@ -688,6 +692,8 @@
 		6112A43122DA0EF800A88C08 /* WWMLearnPlayPauseAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnPlayPauseAudioVC.swift; sourceTree = "<group>"; };
 		6112C0D62339EA54004705C9 /* walkthough.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = walkthough.mp4; sourceTree = "<group>"; };
 		611D6ACE2382A61D00B927C3 /* DiskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStatus.swift; sourceTree = "<group>"; };
+		611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMProfileUpdatedPopUp.xib; sourceTree = "<group>"; };
+		611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProfileUpdatedPopUp.swift; sourceTree = "<group>"; };
 		61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 2.xcdatamodel"; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
@@ -903,6 +909,8 @@
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
+		61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileVC.swift; sourceTree = "<group>"; };
+		61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileTVC.swift; sourceTree = "<group>"; };
 		61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMZoomImgViewPopUp.xib; sourceTree = "<group>"; };
 		61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMZoomImgViewPopUp.swift; sourceTree = "<group>"; };
 		61B66603235EF15C008660E5 /* sonicLogo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sonicLogo.json; sourceTree = "<group>"; };
@@ -1259,6 +1267,8 @@
 				613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */,
 				61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */,
 				61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */,
+				611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */,
+				611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -1439,6 +1449,7 @@
 		2EB9072621B65428009891E8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				61A1964623C5C1180085E97F /* MyProfile */,
 				E07831D4235E3BCA00B352ED /* TabBar */,
 				613071FF22D9FCA4009CBCA1 /* Learn */,
 				2EA6DB0921C3C552006A8E1D /* Home Screen */,
@@ -1980,6 +1991,15 @@
 			path = DataModule;
 			sourceTree = "<group>";
 		};
+		61A1964623C5C1180085E97F /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */,
+				61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */,
+			);
+			path = MyProfile;
+			sourceTree = "<group>";
+		};
 		694E3E18891251E63B22C887 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2211,6 +2231,7 @@
 				2E4371CB22004D9A00EF5D62 /* SUN KOSHI.mp3 in Resources */,
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
+				611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */,
 				613071F822D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib in Resources */,
 				61426B2322DC5304006FE825 /* float3.json in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
@@ -2442,6 +2463,7 @@
 				61416E2F22BBB23B00C9339E /* RadarChartRenderer.swift in Sources */,
 				61416F1222BBB4C800C9339E /* PieChartDataEntry.swift in Sources */,
 				2EB0865A22817069008BF6E4 /* WWMGuidedEmotionVC.swift in Sources */,
+				61AC126523C6FEF600B9E9C6 /* WWMEditProfileTVC.swift in Sources */,
 				2E93D2FB21F5D14900163E57 /* WWMHelperClass.swift in Sources */,
 				610D06DE234E1C560001E8A6 /* DBWisdomData+CoreDataProperties.swift in Sources */,
 				2E5EA5C421EC7E6F0076328A /* WWMSupportVC.swift in Sources */,
@@ -2564,6 +2586,7 @@
 				2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */,
 				61416E8D22BBB3B400C9339E /* PieRadarChartViewBase.swift in Sources */,
 				61416F2A22BBB53000C9339E /* IBubbleChartDataSet.swift in Sources */,
+				611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */,
 				61416EB422BBB42600C9339E /* ChartUtils.swift in Sources */,
 				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,
@@ -2693,6 +2716,7 @@
 				61416EA722BBB40300C9339E /* DefaultAxisValueFormatter.swift in Sources */,
 				2EE247EA21E6315400857C25 /* PieLineTextLayerAnimator.swift in Sources */,
 				61416E7322BBB37C00C9339E /* PieHighlighter.swift in Sources */,
+				61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */,
 				2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */,
 				61416E6322BBB31400C9339E /* XAxisRendererRadarChart.swift in Sources */,
 				61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */,
@@ -2980,6 +3004,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1.200113;
+
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3016,6 +3041,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1.200113;
+
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;

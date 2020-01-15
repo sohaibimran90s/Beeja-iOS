@@ -106,6 +106,7 @@ let URL_SUBSCRIPTIONPURCHASE    = URL_BASE + "subscriptionPurchase"//
 let URL_GETSUBSCRIPTIONPPLANS    = URL_BASE + "getSubscriptionPlans"//
 let URL_GETPROFILE                  = URL_BASE + "getProfile"
 let URL_UPLOADHASHTAG                  = URL_BASE + "uploadHashTag"//
+let URL_UPDATE_PROFILE                  = URL_BASE + "update_profile"//
 let URL_GETVIBESIMAGES                  = URL_BASE + "dictionary/vibes"//getVibesImages
 let URL_ADDSESSION                  = URL_BASE + "addSession"//
 let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
@@ -309,6 +310,9 @@ let KGOODEVENING = "Good evening!"
 let KITSTIMEFORBEEJA = "It's time for Beeja."
 let KUPDATE = "Update"
 let KTIMETOLEARN = "It's time to learn Beeja"
+
+//editprofilevc
+let kPROFILEUPDATEDSUCCESS = "Your profile has been updated"
 
 // My Progress Journal
 let  Validatation_JournalOfflineMsg  =

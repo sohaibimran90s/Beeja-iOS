@@ -57,6 +57,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setSubscriptionPlan(value: String) {
+        defaults.set(value, forKey: "subscription_plan")
+        defaults.synchronize()
+    }
+    
+    func setSubscriptionId(value: String) {
+        defaults.set(value, forKey: "subscription_id")
+        defaults.synchronize()
+    }
+    
     func setOffers(value: [String]) {
         defaults.set(value, forKey: "offers")
         defaults.synchronize()
@@ -64,6 +74,21 @@ class WWMAppPreference: NSObject {
     
     func setLearnPageURL(value: String) {
         defaults.set(value, forKey: "learn_page_url")
+        defaults.synchronize()
+    }
+    
+    func setProfileImgURL(value: String) {
+        defaults.set(value, forKey: "profile_image")
+        defaults.synchronize()
+    }
+    
+    func setDob(value: String) {
+        defaults.set(value, forKey: "dob")
+        defaults.synchronize()
+    }
+    
+    func setGender(value: String) {
+        defaults.set(value, forKey: "gender")
         defaults.synchronize()
     }
     
@@ -132,6 +157,26 @@ class WWMAppPreference: NSObject {
     func setMoodId(value: String) {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
+    }
+    
+    func getSubscriptionPlan() -> String {
+        return UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
+    }
+    
+    func getSubscriptionId() -> String {
+        return UserDefaults.standard.string(forKey: "subscription_id") ?? ""
+    }
+    
+    func getDob() -> String{
+        return UserDefaults.standard.string(forKey: "dob") ?? ""
+    }
+    
+    func getProfileImgURL() -> String{
+        return UserDefaults.standard.string(forKey: "profile_image") ?? ""
+    }
+    
+    func getGender() -> String {
+        return UserDefaults.standard.string(forKey: "gender") ?? ""
     }
     
     func getEmail() -> String{
@@ -236,8 +281,6 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "UserName")
         defaults.synchronize()
     }
-    
-    
     
     func setConnectionType(value:String) {
         defaults.set(value, forKey: "connectionType")

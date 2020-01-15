@@ -51,6 +51,8 @@ class WWMUserData: NSObject {
     var preJournal: Int = 0
     var postJournal: Int = 0
     var expiry_date: String = ""
+    var subscription_plan: String = ""
+    var subscription_id: Int = 0
     
     var meditation_id = Int()
     var level_id = Int()
@@ -113,6 +115,14 @@ class WWMUserData: NSObject {
             if let postJournal = journal["post"] as? Int{
                 self.postJournal = postJournal
             }
+        }
+        
+        if let subscription_id = subscriptionJson["subscription_id"] as? Int{
+            self.subscription_id = subscription_id
+        }
+        
+        if let subscription_plan = subscriptionJson["subscription_plan"] as? String{
+            self.subscription_plan = subscription_plan
         }
     }
 }

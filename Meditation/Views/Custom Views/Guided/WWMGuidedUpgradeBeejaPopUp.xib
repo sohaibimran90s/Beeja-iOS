@@ -11,6 +11,9 @@
         <array key="Maax-Bold.ttf">
             <string>Maax-Bold</string>
         </array>
+        <array key="Maax-Medium.otf">
+            <string>Maax-Medium</string>
+        </array>
         <array key="Maax-Regular.ttf">
             <string>Maax-Regular</string>
         </array>
@@ -23,10 +26,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ve9-e9-py6">
-                    <rect key="frame" x="30" y="92.5" width="315" height="482"/>
+                    <rect key="frame" x="30" y="90.5" width="315" height="486"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_Splash" translatesAutoresizingMaskIntoConstraints="NO" id="TXf-TZ-0jr">
-                            <rect key="frame" x="0.0" y="0.0" width="315" height="482"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guidedPopUpBg" translatesAutoresizingMaskIntoConstraints="NO" id="TXf-TZ-0jr">
+                            <rect key="frame" x="0.0" y="0.0" width="315" height="486"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                     <integer key="value" value="5"/>
@@ -40,7 +43,7 @@
                                 <constraint firstAttribute="width" constant="30" id="3ui-T9-sND"/>
                                 <constraint firstAttribute="height" constant="30" id="WPW-JN-bs8"/>
                             </constraints>
-                            <state key="normal" image="Close_Icon">
+                            <state key="normal" image="cross">
                                 <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
@@ -48,16 +51,16 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upgrade to premium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4d-LK-Xde">
-                            <rect key="frame" x="61.5" y="30" width="192" height="22.5"/>
+                            <rect key="frame" x="52" y="30" width="211.5" height="26.5"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="22.5" id="qwp-tH-4bI"/>
+                                <constraint firstAttribute="height" constant="26.5" id="qwp-tH-4bI"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
+                            <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To access this session, you must upgrade to Beeja Premium" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5m-cH-dRv">
-                            <rect key="frame" x="24" y="68.5" width="267" height="60"/>
+                            <rect key="frame" x="24" y="72.5" width="267" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="vuh-DJ-TIS"/>
                             </constraints>
@@ -66,16 +69,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Choose a plan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fs7-lh-Ia7">
-                            <rect key="frame" x="72" y="144.5" width="171.5" height="32"/>
+                            <rect key="frame" x="87" y="148.5" width="141.5" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="nHG-ve-Lhd"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="26"/>
-                            <color key="textColor" red="0.0" green="1" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="22"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9HU-Vv-Nkr">
-                            <rect key="frame" x="0.0" y="186.5" width="315" height="0.5"/>
+                            <rect key="frame" x="0.0" y="190.5" width="315" height="0.5"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="0q0-Y4-ExY"/>
@@ -85,7 +88,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-VG-hVT">
-                            <rect key="frame" x="7" y="217" width="301" height="154.5"/>
+                            <rect key="frame" x="7" y="221" width="301" height="154.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLV-0f-LTk">
                                     <rect key="frame" x="0.0" y="0.0" width="97" height="154.5"/>
@@ -401,9 +404,12 @@
                                     </constraints>
                                 </view>
                             </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="154.5" id="k7Z-Qc-5BV"/>
+                            </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="MPr-eA-w2X">
-                            <rect key="frame" x="26" y="391.5" width="263" height="40"/>
+                            <rect key="frame" x="26" y="395.5" width="263" height="40"/>
                             <subviews>
                                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4W-qG-zdh">
                                     <rect key="frame" x="0.0" y="0.0" width="128.5" height="40"/>
@@ -443,7 +449,7 @@
                             </constraints>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="*that's just £3.50 a month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR5-ZM-A3T">
-                            <rect key="frame" x="98" y="439.5" width="119.5" height="12.5"/>
+                            <rect key="frame" x="98" y="443.5" width="119.5" height="12.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="12.5" id="hcb-1V-iWl"/>
                             </constraints>
@@ -514,7 +520,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Background_Splash" width="270" height="480"/>
-        <image name="Close_Icon" width="40" height="40"/>
+        <image name="cross" width="40" height="40"/>
+        <image name="guidedPopUpBg" width="608" height="656"/>
     </resources>
 </document>
