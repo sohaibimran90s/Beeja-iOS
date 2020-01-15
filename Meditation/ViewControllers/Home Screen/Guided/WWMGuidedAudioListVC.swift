@@ -437,7 +437,9 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 
                 print("param,,,,... \(param)")
                 
-                self.subscriptionSucessAPI(param: param)
+                if !self.restoreBool{
+                    self.subscriptionSucessAPI(param: param)
+                }
                 
             case SKPaymentTransactionState.failed:
                 print("Transaction Failed");
@@ -484,21 +486,25 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 if self.continueRestoreValue == "1"{
-                    KUSERDEFAULTS.set("1", forKey: "restore")
-                  
+                    
                     if !self.restoreBool{
-                        
+                        KUSERDEFAULTS.set("1", forKey: "restore")
                         self.restoreBool = true
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                         UIApplication.shared.keyWindow?.rootViewController = vc
+                        
+                        return
                     }
                 }else{
                     
-                    KUSERDEFAULTS.set("0", forKey: "restore")
-                    
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
-                    
+                    if !self.restoreBool{
+                        KUSERDEFAULTS.set("0", forKey: "restore")
+                        self.restoreBool = true
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        UIApplication.shared.keyWindow?.rootViewController = vc
+                        
+                        return
+                    }
                 }
             }else {
                 
@@ -506,6 +512,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        return
                     }else{
                         
                         if self.continueRestoreValue == "1"{
@@ -513,6 +520,8 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                         }else{
                             WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                         }
+                        
+                        return
                     }
                 }
             }

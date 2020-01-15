@@ -1162,6 +1162,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setGetProfile(value: true)
                 self.appPreffrence.setCheckEnterSignupLogin(value: false)
                 self.appPreffrence.setEmail(value: "")
+                KUSERDEFAULTS.set("0", forKey: "restore")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

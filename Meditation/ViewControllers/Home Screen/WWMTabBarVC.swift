@@ -72,8 +72,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             print("restore.... \(restoreValue)")
             if restoreValue == "1"{
-                self.showToast(message: KRESTOREMSG)
                 KUSERDEFAULTS.set("0", forKey: "restore")
+                self.showToast(message: KRESTOREMSG)
             }
         }
         
