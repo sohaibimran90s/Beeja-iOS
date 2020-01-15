@@ -285,10 +285,16 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
     func uploadProfileAPI(image: UIImage) {
        //WWMHelperClass.showSVHud()
        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        var userName: String = self.textFieldName.text?.trimmingCharacters(in: .whitespaces) ?? "You"
+        if userName == ""{
+            userName = "You"
+        }
+        
        let param = [
            "user_id":self.appPreference.getUserID(),
            "dob": self.textFieldDOB.text ?? "",
-           "name": self.textFieldName.text?.trimmingCharacters(in: .whitespaces) ?? "You",
+           "name": userName,
            "gender": self.textFieldGender.text ?? ""
            ] as [String : Any]
         

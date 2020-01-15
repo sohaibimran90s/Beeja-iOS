@@ -1163,6 +1163,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
                         
                         self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
+                        self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
+                        self.appPreffrence.setSubscriptionId(value: "\(userSubscription.subscription_id)")
 
                         let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
 

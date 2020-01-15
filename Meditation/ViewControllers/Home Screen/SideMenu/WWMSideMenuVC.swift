@@ -32,25 +32,6 @@ class WWMSideMenuVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if self.appPreffrence.getExpiryDate(){
-            self.freeView.isHidden = true
-            self.premiumView.isHidden = false
-            
-            let daysLeft = WWMHelperClass.daysLeft(expiryDate: self.appPreffrence.getExpireDateBackend())
-            if daysLeft != -1{
-                if daysLeft > 30{
-                    self.lblDaysLeft.text = ""
-                }else{
-                    self.lblDaysLeft.text = "\(daysLeft) days left"
-                }
-            }
-            print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
-        }else{
-            self.freeView.isHidden = false
-            self.premiumView.isHidden = true
-        }
-       
-        self.lblName.text = self.appPreference.getUserName()
         if self.userData.city != ""  && self.userData.country != "" {
             //self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
         }else {
@@ -82,6 +63,27 @@ class WWMSideMenuVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.title = ""
+        
+        if self.appPreffrence.getExpiryDate(){
+             self.freeView.isHidden = true
+             self.premiumView.isHidden = false
+             
+             let daysLeft = WWMHelperClass.daysLeft(expiryDate: self.appPreffrence.getExpireDateBackend())
+             if daysLeft != -1{
+                 self.lblPremium.text = "PREMIUM MEMBER | \(self.appPreffrence.getSubscriptionPlan().uppercased())"
+                 if daysLeft > 30{
+                     self.lblDaysLeft.text = ""
+                 }else{
+                     self.lblDaysLeft.text = "\(daysLeft) days left"
+                 }
+             }
+             print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
+         }else{
+             self.freeView.isHidden = false
+             self.premiumView.isHidden = true
+         }
+        
+         self.lblName.text = self.appPreference.getUserName()
     }
     
     // MARK:- Button Action

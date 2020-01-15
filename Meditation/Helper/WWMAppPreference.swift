@@ -57,6 +57,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setSubscriptionPlan(value: String) {
+        defaults.set(value, forKey: "subscription_plan")
+        defaults.synchronize()
+    }
+    
+    func setSubscriptionId(value: String) {
+        defaults.set(value, forKey: "subscription_id")
+        defaults.synchronize()
+    }
+    
     func setOffers(value: [String]) {
         defaults.set(value, forKey: "offers")
         defaults.synchronize()
@@ -147,6 +157,14 @@ class WWMAppPreference: NSObject {
     func setMoodId(value: String) {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
+    }
+    
+    func getSubscriptionPlan() -> String {
+        return UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
+    }
+    
+    func getSubscriptionId() -> String {
+        return UserDefaults.standard.string(forKey: "subscription_id") ?? ""
     }
     
     func getDob() -> String{
