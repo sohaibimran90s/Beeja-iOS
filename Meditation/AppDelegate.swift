@@ -389,8 +389,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
-                            self.forceToUpdatePopUp()
-                            //self.syncDataWithServer()
+                            //self.forceToUpdatePopUp()
+                            self.syncDataWithServer()
                         }else {
                             self.syncDataWithServer()
                         }
