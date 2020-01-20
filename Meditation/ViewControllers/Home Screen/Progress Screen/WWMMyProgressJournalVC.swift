@@ -60,16 +60,25 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             cell.viewShadow.layer.masksToBounds = false
             
             let data = journalData[indexPath.row]
+            print("journal data... \(data)")
             
             cell.lblJournalDesc.text = data.text
+            
             if data.mood_status.lowercased() == "post" {
                 cell.lblMeditationType.text = KPOSTMEDITATION
             }else if data.mood_status.lowercased() == "pre" {
                 cell.lblMeditationType.text = KPREMEDITATION
+            }else if cell.lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
+                cell.lblMeditationType.text = "How to journal"
+            }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+                cell.lblMeditationType.text = "Why meditate"
             }else{
                 cell.lblMeditationType.text = ""
             }
             
+            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+                cell.lblMeditationType.text = "Why meditate"
+            }
             
             let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
             
