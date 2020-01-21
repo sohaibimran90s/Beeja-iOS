@@ -62,6 +62,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             let data = journalData[indexPath.row]
             print("journal data... \(data)")
             
+            cell.lblJournalDesc.adjustsFontSizeToFitWidth = false
+            cell.lblJournalDesc.lineBreakMode = .byTruncatingTail
+            
             cell.lblJournalDesc.text = data.text
             
             if data.mood_status.lowercased() == "post" {
