@@ -76,7 +76,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             let dateFormatter = DateFormatter()
             //dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
             dateFormatter.locale = NSLocale.current
-            dateFormatter.dateFormat = "EEEE, hh:mm a" //Specify your format that you want
+            dateFormatter.dateFormat = "EEEE, hh:mm a" //Spegicify your format that you want
             let strWeekDayAndtime = dateFormatter.string(from: date)
             cell.lblWeekDayAndTime.text = strWeekDayAndtime
             
