@@ -234,6 +234,7 @@
 		613ED77E22E0AE910063B10B /* WWMPodCastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613ED77D22E0AE910063B10B /* WWMPodCastData.swift */; };
 		613F081122CF324F0042515C /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081022CF324F0042515C /* register.json */; };
 		613F081322CF356E0042515C /* hand.json in Resources */ = {isa = PBXBuildFile; fileRef = 613F081222CF356E0042515C /* hand.json */; };
+		613FC56D23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FC56C23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift */; };
 		61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */; };
 		61416E1C22BBB1C600C9339E /* DataApproximator+N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1A22BBB1C600C9339E /* DataApproximator+N.swift */; };
 		61416E1D22BBB1C600C9339E /* DataApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61416E1B22BBB1C600C9339E /* DataApproximator.swift */; };
@@ -726,6 +727,7 @@
 		613ED77D22E0AE910063B10B /* WWMPodCastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMPodCastData.swift; sourceTree = "<group>"; };
 		613F081022CF324F0042515C /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
 		613F081222CF356E0042515C /* hand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hand.json; sourceTree = "<group>"; };
+		613FC56C23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressJournalDetailVC.swift; sourceTree = "<group>"; };
 		61416E1722BBB19500C9339E /* LineScatterCandleRadarRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineScatterCandleRadarRenderer.swift; sourceTree = "<group>"; };
 		61416E1A22BBB1C600C9339E /* DataApproximator+N.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataApproximator+N.swift"; sourceTree = "<group>"; };
 		61416E1B22BBB1C600C9339E /* DataApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataApproximator.swift; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				2EAE29B622326452008E4361 /* WWMMoodProgressCVC.swift */,
 				2EE247AF21E5D9FA00857C25 /* WWMMyProgressJournalVC.swift */,
 				2E7360E022159B1800D04EE4 /* Add Journal */,
+				613FC56C23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift */,
 			);
 			path = "Progress Screen";
 			sourceTree = "<group>";
@@ -2552,6 +2555,7 @@
 				2EE247E721E6315400857C25 /* CGRect.swift in Sources */,
 				2E5DF5B32271B89200CF2935 /* WWMGuidedStart.swift in Sources */,
 				2EE247F021E6315400857C25 /* PieChartLayer.swift in Sources */,
+				613FC56D23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift in Sources */,
 				61416F0522BBB4C800C9339E /* CandleChartData.swift in Sources */,
 				2E25CDC722269BB9002BDE15 /* WWMAddJournalView.swift in Sources */,
 				61416E6522BBB31400C9339E /* YAxisRendererRadarChart.swift in Sources */,

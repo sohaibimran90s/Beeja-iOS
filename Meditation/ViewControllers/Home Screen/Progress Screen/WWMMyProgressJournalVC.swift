@@ -76,12 +76,12 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
                 cell.lblMeditationType.text = "Why meditate"
             }else{
-                cell.lblMeditationType.text = ""
+                cell.lblMeditationType.text = "Journal Entry"
             }
             
-            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
-                cell.lblMeditationType.text = "Why meditate"
-            }
+//            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+//                cell.lblMeditationType.text = "Why meditate"
+//            }
             
             let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
             
@@ -106,6 +106,17 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
+        let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
+
+        vc.lblTitle = cell.lblMeditationType.text ?? ""
+        vc.lblDesc = cell.lblJournalDesc.text ?? ""
+        vc.lblDateDay1 = cell.lblDateDay.text ?? ""
+        vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
+        vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
