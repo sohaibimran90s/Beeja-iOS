@@ -13,7 +13,7 @@ import CoreLocation
 class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
     let layerGradient = CAGradientLayer()
-    var currentLocation: CLLocation!
+    var currentLocation: CLLocation?
     let locManager = CLLocationManager()
     var city = ""
     var country = ""
@@ -162,11 +162,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func getCityAndCountry() {
-        self.lat = "\(currentLocation.coordinate.latitude)"
-        self.long = "\(currentLocation.coordinate.longitude)"
+        self.lat = "\(currentLocation?.coordinate.latitude ?? 51.37661)"
+        self.long = "\(currentLocation?.coordinate.longitude ?? -0.08230)"
         let geoCoder = CLGeocoder()
         //let location = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        geoCoder.reverseGeocodeLocation(currentLocation, completionHandler:
+        let defaultLoc = CLLocation.init(latitude: 51.37661, longitude: -0.08230)
+        geoCoder.reverseGeocodeLocation(currentLocation ?? defaultLoc, completionHandler:
             {
                 placemarks, error -> Void in
                 
