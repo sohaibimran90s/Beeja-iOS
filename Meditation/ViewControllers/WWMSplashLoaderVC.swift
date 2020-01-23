@@ -119,14 +119,33 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             if let results = lookup?["results"] as? [[String:Any]] {
                 let appStoreVersion = results[0]["version"] as? String
                 let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
-                if !(appStoreVersion == currentVersion) {
-                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
-                    return true
+                
+                print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion))")
+                
+//                if !(appStoreVersion == currentVersion) {
+//                    print("Need to update [\(appStoreVersion ?? "") != \(currentVersion ?? "")]")
+//                    return true
+//                }
+                
+                if appStoreVersion != "" && currentVersion != ""{
+                    
+                    let appStoreVersionArray = (appStoreVersion?.components(separatedBy: "."))!
+                    let currentVersionArray = (currentVersion?.components(separatedBy: "."))!
+                    
+                    if appStoreVersionArray.count > 2 && currentVersionArray.count > 2{
+                        
+                        if Int(appStoreVersionArray[1])! < Int(currentVersionArray[1])!{
+                            return false
+                        }else if Int(appStoreVersionArray[0])! > Int(currentVersionArray[0])!{
+                            return true
+                        }else if Int(appStoreVersionArray[2])! > Int(currentVersionArray[2])!{
+                            return true
+                        }
+                    }
                 }
             }
-            
-            
         }
+        
         return false
     }
     
