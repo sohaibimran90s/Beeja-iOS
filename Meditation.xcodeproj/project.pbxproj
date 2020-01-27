@@ -217,7 +217,6 @@
 		613071FC22D9EF40009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */; };
 		613071FE22D9F60F009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */; };
 		6130720122D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6130720022D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift */; };
-		6130DE1322A9220600271F67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6130DE1222A9220500271F67 /* GoogleService-Info.plist */; };
 		61320868223B7D2000F0ACFF /* WWMMoodProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */; };
 		61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */; };
 		6133735223C315B600F9C866 /* WWMGuidedUpgradeBeejaPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6133735123C315B600F9C866 /* WWMGuidedUpgradeBeejaPopUp.xib */; };
@@ -416,6 +415,7 @@
 		617C284323525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284123525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift */; };
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
+		617FF95823DED75E00492D4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 617FF95723DED75D00492D4B /* GoogleService-Info.plist */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
 		61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */; };
 		61AC126523C6FEF600B9E9C6 /* WWMEditProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */; };
@@ -710,7 +710,6 @@
 		613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MM_BEEJA_LETSMEDITATE_V2.wav; sourceTree = "<group>"; };
 		613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MM_BEEJA_MEDITATION_COMPLETE_V1.wav; sourceTree = "<group>"; };
 		6130720022D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnFlightModeVC.swift; sourceTree = "<group>"; };
-		6130DE1222A9220500271F67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMoodProgressData.swift; sourceTree = "<group>"; };
 		61336721226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		6133735123C315B600F9C866 /* WWMGuidedUpgradeBeejaPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMGuidedUpgradeBeejaPopUp.xib; sourceTree = "<group>"; };
@@ -910,6 +909,7 @@
 		617C284123525D3500A3F544 /* DBGuidedEmotionsData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedEmotionsData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		617FF95723DED75D00492D4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
 		61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileVC.swift; sourceTree = "<group>"; };
 		61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileTVC.swift; sourceTree = "<group>"; };
@@ -1127,8 +1127,8 @@
 				2E4B1B9D21B5044B002F8A25 /* AppDelegate.swift */,
 				2E4B1BA121B5044B002F8A25 /* Main.storyboard */,
 				2E4B1BA621B5044D002F8A25 /* LaunchScreen.storyboard */,
+				617FF95723DED75D00492D4B /* GoogleService-Info.plist */,
 				2E4B1BA921B5044D002F8A25 /* Info.plist */,
-				6130DE1222A9220500271F67 /* GoogleService-Info.plist */,
 				2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */,
 			);
 			path = Meditation;
@@ -2252,8 +2252,8 @@
 				2E4371CA22004D9A00EF5D62 /* CRYSTAL BOWL.mp3 in Resources */,
 				2EB1F11021DF601200F98EC2 /* SplashLoader.gif in Resources */,
 				2EC81C5C21E777A7003B0EEE /* adobe.svg in Resources */,
-				6130DE1322A9220600271F67 /* GoogleService-Info.plist in Resources */,
 				2EC95861220AC1BA009D5144 /* MaaxRounded.ttf in Resources */,
+				617FF95823DED75E00492D4B /* GoogleService-Info.plist in Resources */,
 				61083F4622D37B6F001B770D /* login11.json in Resources */,
 				2EE247F121E6315400857C25 /* InfoPieChart.plist in Resources */,
 				2E4CE29122087A1000059396 /* doubleLineLeft.png in Resources */,
