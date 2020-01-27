@@ -223,10 +223,10 @@ class WWMHelperClass {
         let currentDateString = dateFormatter.string(from: Date())
         let currentDate = dateFormatter.date(from: currentDateString)!
        
-        let expireDate = dateFormatter.date(from: expiryDate)!
+        let expireDate = dateFormatter.date(from: expiryDate)
         
-        if expireDate > currentDate{
-            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+        if expireDate ?? currentDate > currentDate{
+            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ?? currentDate).day ?? 0
             print("day..... \(day)")
             return day
         }else{
