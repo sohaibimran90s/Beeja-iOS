@@ -736,6 +736,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
            WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
             
             if selectedAudio == "0"{
+                data.currentTimePlay = 0
                 do {
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                     try AVAudioSession.sharedInstance().setActive(true)
