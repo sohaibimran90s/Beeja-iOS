@@ -54,6 +54,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     let reachable = Reachabilities()
     
     var timerCount = 0
+    var selectedAudio = "0"
     
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
@@ -148,6 +149,8 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.alpha = 0
         self.imgGiftIcon.alpha = 0
         
+        self.selectedAudio = "0"
+        
         //self.animatedImg()
         self.animatedlblName()
     }
@@ -164,12 +167,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.introView.isHidden = false
         for data in self.podData {
             if data.isPlay {
-                data.player.pause()
+                self.player?.pause()
                 data.isPlay = false
+                data.currentTimePlay = 0
             }
         }
-        self.tableView.reloadData()
         
+        self.tableView.reloadData()
         self.player?.pause()
         self.stopPlayer()
     }
@@ -185,7 +189,6 @@ class WWMHomeTabVC: WWMBaseViewController {
             print("player was already deallocated")
         }
     }
-    
     
     //MARK: get screen size for setting video according to device
     func getScreenSize(){
@@ -364,10 +367,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func podcastData(){
-       let podcast1 = WWMPodCastData.init(id: 1, title: KPODCAST1, duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME1)
-        let podcast2 = WWMPodCastData.init(id: 1, title: KPODCAST2, duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME2)
-        let podcast3 = WWMPodCastData.init(id: 1, title: KPODCAST3, duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME3)
-        let podcast4 = WWMPodCastData.init(id: 1, title: KPODCAST4, duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false, analyticsName: KPODCASTNAME4)
+        let podcast1 = WWMPodCastData.init(id: 1, title: KPODCAST1, duration: 4144, url_link: "https://mcdn.podbean.com/mf/play/h38jdi/Podcast_with_Howard_Donald_6th_November_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME1, currentTimePlay: 0)
+        let podcast2 = WWMPodCastData.init(id: 1, title: KPODCAST2, duration: 3000, url_link: "https://mcdn.podbean.com/mf/play/35czi8/Podcast_with_Jasmine_Hemsley_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME2, currentTimePlay: 0)
+        let podcast3 = WWMPodCastData.init(id: 1, title: KPODCAST3, duration: 3947, url_link: "https://mcdn.podbean.com/mf/play/pxueh7/Podcast_Sam_Branson_11th_July_2017_MP3_Master.mp3", isPlay: false, analyticsName: KPODCASTNAME3, currentTimePlay: 0)
+        let podcast4 = WWMPodCastData.init(id: 1, title: KPODCAST4, duration: 1564, url_link: "https://mcdn.podbean.com/mf/player-preload/38pjwx/Podcast_with_Maddie_4th_July_2017_1_.mp3", isPlay: false, analyticsName: KPODCASTNAME4, currentTimePlay: 0)
         
         self.podData.append(podcast1)
         self.podData.append(podcast2)
@@ -711,25 +714,12 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             cell.lineLbl.isHidden = false
         }
         
+        cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
         cell.lblTitle.text = self.podData[indexPath.row].title
         let data = self.podData[indexPath.row]
         let duration = secondsToMinutesSeconds(second: data.duration)
         cell.lblTime.text = "\(duration)"
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
-            data.player = AVPlayer(playerItem:playerItem)
-            
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
         
-        if !data.isPlay {
-            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-        }else{
-            cell.playPauseImg.image = UIImage(named: "pauseAudio")
-        }
         return cell
     }
     
@@ -741,15 +731,48 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         if reachable.isConnectedToNetwork() {
            let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
            let data = self.podData[indexPath.row]
-        // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
+
+            // Analytics
+           WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
+            
+            if selectedAudio == "0"{
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                    let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
+                    self.player = AVPlayer(playerItem:playerItem)
+                    
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+                
+                self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
+                    if self.player?.currentItem?.status == .readyToPlay {
+                        let currentTime = CMTimeGetSeconds(self.player!.currentTime())
+                        print("currentTime... \(currentTime)")
+                        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+                        print("totalDuration... \(Int(duration) - Int(currentTime))")
+                            
+                        data.currentTimePlay = Int(duration) - Int(currentTime)
+                        if data.currentTimePlay != 0{
+                            let remainingDuration = self.secondsToMinutesSeconds(second: data.currentTimePlay)
+                            cell.lblTime.text = "\(remainingDuration)"
+                            print("remainingDuration... \(remainingDuration)")
+                            print("indexPath... \(indexPath.row)")
+                        }
+                    }
+                })
+                
+                self.selectedAudio = "1"
+            }
+                
            if !data.isPlay {
                cell.playPauseImg.image = UIImage(named: "pauseAudio")
-               data.player.play()
+               self.player?.play()
                data.isPlay = true
            }else{
                cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-               data.player.pause()
+               self.player?.pause()
                data.isPlay = false
            }
          }else {
@@ -761,11 +784,17 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
         let data = self.podData[indexPath.row]
+        data.currentTimePlay = 0
+        
+        let duration = secondsToMinutesSeconds(second: data.duration)
+        cell.lblTime.text = "\(duration)"
         
         if data.isPlay {
             cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-            data.player.pause()
+            self.player?.pause()
             data.isPlay = false
         }
+        
+        self.selectedAudio = "0"
     }
 }
