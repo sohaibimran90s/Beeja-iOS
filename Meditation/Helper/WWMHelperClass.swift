@@ -243,12 +243,12 @@ class WWMHelperClass {
         let currentDateString = dateFormatter.string(from: Date())
         let currentDate = dateFormatter.date(from: currentDateString)!
        
-        let expireDate = dateFormatter.date(from: expiryDate)!
+        let expireDate = dateFormatter.date(from: expiryDate)
        
-        let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+        let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ?? currentDate).day ?? 0
         print("day..... \(day)")
         
-        if currentDate > expireDate{
+        if currentDate > expireDate ?? currentDate{
             KUSERDEFAULTS.set(true, forKey: "getPrePostMoodBool")
             return 1
         }else{
@@ -285,7 +285,7 @@ class WWMHelperClass {
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
-            let expirDate = dateFormatter.date(from: expiryDate)!
+            let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate
             
             let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
             let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0

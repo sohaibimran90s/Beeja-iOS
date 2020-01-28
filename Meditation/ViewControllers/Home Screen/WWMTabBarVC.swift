@@ -1121,9 +1121,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "country":country
             ] as [String : Any]
             
-        print("param... \(param)")
+            print("param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {
@@ -1298,11 +1300,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             }else {
                 self.getDataFromDatabase()
             }
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
-                DispatchQueue.global(qos: .background).async {
-                    self.getDictionaryAPI()
-                    self.meditationHistoryListAPI()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
                 }
             }
         }
