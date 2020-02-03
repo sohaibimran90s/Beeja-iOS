@@ -61,7 +61,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Crashlytics.sharedInstance().crash()
+        //Crashlytics.sharedInstance().crash()
         self.podData = []
         self.podcastData()
         
