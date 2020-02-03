@@ -431,6 +431,8 @@
 		61BBC36D2350D184000B5617 /* DBSteps+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */; };
 		61BBC36E2350D184000B5617 /* DBSteps+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */; };
 		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
+		61E0FDD323E85D2D0061B9F4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */; };
+		61E0FDD423E85D2D0061B9F4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E0FDD223E85D2C0061B9F4 /* Fabric.framework */; };
 		61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */; };
 		61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
@@ -926,6 +928,8 @@
 		61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
+		61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		61E0FDD223E85D2C0061B9F4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
@@ -969,10 +973,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61E0FDD423E85D2D0061B9F4 /* Fabric.framework in Frameworks */,
 				2E9CCCBB225C978B001465AD /* SpotifyMetadata.framework in Frameworks */,
 				57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */,
 				2E9CCCBA225C978B001465AD /* SpotifyAuthentication.framework in Frameworks */,
 				2E49661D22182DCC00BC6219 /* StoreKit.framework in Frameworks */,
+				61E0FDD323E85D2D0061B9F4 /* Crashlytics.framework in Frameworks */,
 				2E9CCCBC225C978B001465AD /* SpotifyAudioPlayback.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1092,6 +1098,8 @@
 		2E4B1B9121B5044B002F8A25 = {
 			isa = PBXGroup;
 			children = (
+				61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */,
+				61E0FDD223E85D2C0061B9F4 /* Fabric.framework */,
 				2E4B1B9C21B5044B002F8A25 /* Meditation */,
 				2E4B1BB121B5044D002F8A25 /* MeditationTests */,
 				2E4B1BBC21B5044D002F8A25 /* MeditationUITests */,
@@ -2373,6 +2381,7 @@
 			inputPaths = (
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputFileListPaths = (
 			);
@@ -2380,7 +2389,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n";
 		};
 		62871A6CD405C6D1A742A969 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3005,6 +3014,7 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3012,7 +3022,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.200129;
+				MARKETING_VERSION = 3.2.200203;
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3041,6 +3051,7 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3048,7 +3059,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.200129;
+				MARKETING_VERSION = 3.2.200203;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;

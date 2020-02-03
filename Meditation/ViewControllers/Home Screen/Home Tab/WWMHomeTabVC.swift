@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVKit
+import Crashlytics
 
 class WWMHomeTabVC: WWMBaseViewController {
 
@@ -60,6 +61,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Crashlytics.sharedInstance().crash()
         self.podData = []
         self.podcastData()
         
