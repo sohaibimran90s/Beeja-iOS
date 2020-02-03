@@ -31,6 +31,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var videoSliderOnOff = false
     var timer = Timer()
     
+    var playerLayer = AVPlayerLayer()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("watched walk... \(self.watched_duration)")
@@ -151,7 +154,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             
             player1 = AVPlayer(url: URL(fileURLWithPath: path))
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
-            let playerLayer = AVPlayerLayer(player: player1)
+            self.playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
             playerLayer.videoGravity = AVLayerVideoGravity.resize
             self.viewVideo.layer.addSublayer(playerLayer)
@@ -186,7 +189,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             
             player1 = AVPlayer(url: URL(fileURLWithPath: path))
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
-            let playerLayer = AVPlayerLayer(player: player1)
+            self.playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
             playerLayer.videoGravity = AVLayerVideoGravity.resize
             self.viewVideo.layer.addSublayer(playerLayer)
@@ -205,13 +208,13 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         print("walkthough videoURL... \(videoURL)")
         
-//        if videoURL != "" {
-//            print("videourl... \(videoURL)")
-//            viewVideo.configure(url: "\(videoURL)")
-//            viewVideo.isLoop = true
-//            viewVideo.play()
-//            self.videoCompleted = 1
-//        }
+        if videoURL != "" {
+            print("videourl... \(videoURL)")
+            viewVideo.configure(url: "\(videoURL)")
+            viewVideo.isLoop = true
+            viewVideo.play()
+            self.videoCompleted = 1
+        }
     }
     
     @objc func updateTime(_ timer: Timer) {
@@ -261,7 +264,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.navigationController?.popViewController(animated: true)
                 return
             }
-            if value == "help"{
+            if value == "help"  || value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
             }else{
                 // Analytics

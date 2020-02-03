@@ -33,14 +33,14 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = WWMCommunityCollectionViewCell()
+        var cell = WWMGuidedEmotionCVC()
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         
         if data.tile_type == "1" {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMGuidedEmotionCVC
             cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         }else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell2", for: indexPath) as! WWMCommunityCollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell2", for: indexPath) as! WWMGuidedEmotionCVC
         }
         cell.lblTitle.text = data.emotion_Name
         

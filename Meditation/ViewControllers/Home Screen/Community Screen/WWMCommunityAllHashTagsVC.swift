@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
 class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
@@ -14,6 +16,7 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
     
     var titleMAW: String = ""
     var alertZoomImgPopup = WWMZoomImgViewPopUp()
+    var playerViewController = AVPlayerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +27,10 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
     @IBAction func btnBackClicked(_ sender: UIButton) {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     
@@ -38,9 +45,13 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "#TagCell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.arrAllHashTag[indexPath.row]
-        
-        cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-        
+        if data.type == "image" || data.type == "Image"{
+            cell.thumbImg.isHidden = true
+            cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        }else{
+            cell.thumbImg.isHidden = false
+            cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        }
         
         return cell
     }
@@ -52,13 +63,21 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        self.xibCall(imgURL: self.arrAllHashTag[indexPath.row].url)
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMZoomImgVC") as! WWMZoomImgVC
-//
-//        vc.imgURL = self.arrAllHashTag[indexPath.row].url
-//
-//        vc.modalPresentationStyle = .overCurrentContext
-//        self.present(vc, animated: false, completion: nil)
+        let data = self.arrAllHashTag[indexPath.row]
+        if data.type == "image" || data.type == "Image"{
+            self.xibCall(imgURL: data.url)
+        }else{
+            self.playVideoURL(url: data.url)
+        }
+    }
+    
+    func playVideoURL(url: String){
+        let videoURL = URL(string: url)
+        let player = AVPlayer(url: videoURL!)
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            self.playerViewController.player!.play()
+        }
     }
     
     func xibCall(imgURL: String){
@@ -80,4 +99,8 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         alertZoomImgPopup.removeFromSuperview()
     }
     
+    @objc func reachTheEndOfTheVideo(_ notification: Notification) {
+        self.playerViewController.dismiss(animated: true)
+        NotificationCenter.default.removeObserver(self)
+    }
 }

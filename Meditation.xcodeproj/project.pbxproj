@@ -430,6 +430,7 @@
 		61BBC36623507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36423507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift */; };
 		61BBC36D2350D184000B5617 /* DBSteps+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */; };
 		61BBC36E2350D184000B5617 /* DBSteps+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */; };
+		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
 		61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */; };
 		61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
@@ -924,6 +925,7 @@
 		61BBC36423507DA6000B5617 /* DBGetVibesImages+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGetVibesImages+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
@@ -1295,6 +1297,7 @@
 				2EB0865522817067008BF6E4 /* WWMGuidedEmotionVC.swift */,
 				2EB0865622817068008BF6E4 /* WWMGuidedNavVC.swift */,
 				2EB0865922817068008BF6E4 /* WWMGuidedMeditationTimerVC.swift */,
+				61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */,
 			);
 			path = Guided;
 			sourceTree = "<group>";
@@ -2369,6 +2372,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"$(SRCROOT)/GoogleService-Info.plist",
 			);
 			outputFileListPaths = (
 			);
@@ -2761,6 +2765,7 @@
 				61416E4C22BBB29500C9339E /* ChevronDownShapeRenderer.swift in Sources */,
 				61416F4122BBB56900C9339E /* CandleChartDataProvider.swift in Sources */,
 				61416F1422BBB4C800C9339E /* RadarChartDataSet.swift in Sources */,
+				61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */,
 				2EEF9AE2221AEC900016A77C /* DBContactUs+CoreDataClass.swift in Sources */,
 				2E316FD82228080F00018538 /* WWMAddSessionView.swift in Sources */,
 				61B6AE19224A3E520067F2E1 /* WWMTimerPresetVC.swift in Sources */,

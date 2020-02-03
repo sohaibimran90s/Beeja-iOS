@@ -58,11 +58,11 @@ class WWMCommunityHashtagsData: NSObject {
     
     var type = String()
     var url = String()
-    
+    var thumbnail = String()
     
     init(json:[String:Any]) {
         type = json["type"] as? String ?? ""
         url = json["url"] as? String ?? ""
+        thumbnail = json["thumbnail"] as? String ?? ""
     }
-    
 }

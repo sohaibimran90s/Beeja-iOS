@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 import WebKit
-
+import AVKit
 import SafariServices
 @_exported import AVFoundation
 
@@ -29,6 +29,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     var observers = [NSKeyValueObservation]()
     
     var boolConnectSpotify: Bool = false
+    var playerViewController = AVPlayerViewController()
     
     //var flagFirst = false
     @IBOutlet weak var tblViewCommunity: UITableView!
@@ -65,6 +66,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         self.setUpNavigationBarForDashboard(title: "Community")
         self.fetchCommunityDataFromDB()
     }
@@ -79,6 +82,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         self.fetchCommunityDataFromDB()
     }
     
+
     
     func CallingFuncs()
     {
@@ -294,7 +298,13 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "#TagCell", for: indexPath) as! WWMCommunityCollectionViewCell
                 let data = self.communityData.hashtags[indexPath.row]
-                cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                if data.type == "image" || data.type == "Image"{
+                    cell.thumbImg.isHidden = true
+                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                }else{
+                    cell.thumbImg.isHidden = false
+                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                }
             }
         }else {
             if collectionView.tag == 0 {
@@ -316,9 +326,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 cell.lblTitle.text = data.eventTitle
-                
-                
-                
+        
             }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {
                     cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellMore", for: indexPath) as! WWMCommunityCollectionViewCell
@@ -326,7 +334,14 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "#TagCell", for: indexPath) as! WWMCommunityCollectionViewCell
                 let data = self.communityData.hashtags[indexPath.row]
-                cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                
+                if data.type == "image" || data.type == "Image"{
+                    cell.thumbImg.isHidden = true
+                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                }else{
+                    cell.thumbImg.isHidden = false
+                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                }
             }
         }
         
@@ -381,7 +396,11 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }else{
                     
                     let data = self.communityData.hashtags[indexPath.row]
-                    self.xibCall(imgURL: data.url)
+                    if data.type == "image" || data.type == "Image"{
+                        self.xibCall(imgURL: data.url)
+                    }else{
+                        self.playVideoURL(url: data.url)
+                    }
     
                 }
             }
@@ -445,7 +464,11 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 }else{
                     
                     let data = self.communityData.hashtags[indexPath.row]
-                    self.xibCall(imgURL: data.url)
+                    if data.type == "image" || data.type == "Image"{
+                        self.xibCall(imgURL: data.url)
+                    }else{
+                        self.playVideoURL(url: data.url)
+                    }
             
                 }
                 
@@ -477,6 +500,15 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
 //             application.open(spotifyUrl!, options: [:], completionHandler: nil)
 //        }
 //    }
+    
+    func playVideoURL(url: String){
+        let videoURL = URL(string: url)
+        let player = AVPlayer(url: videoURL!)
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            self.playerViewController.player!.play()
+        }
+    }
     
     func xibCall(imgURL: String){
         alertZoomImgPopup = UINib(nibName: "WWMZoomImgViewPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMZoomImgViewPopUp
@@ -753,6 +785,11 @@ extension WWMCommunityVC {
         //WWMHelperClass.hideActivity(fromView: self.view)
         WWMHelperClass.hideLoaderAnimate(on: self.view)
         
+    }
+    
+    @objc func reachTheEndOfTheVideo(_ notification: Notification) {
+        self.playerViewController.dismiss(animated: true)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

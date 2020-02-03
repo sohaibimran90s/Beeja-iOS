@@ -51,7 +51,6 @@ class WWMLearnStepListVC: WWMBaseViewController {
         
         self.navigationController?.isNavigationBarHidden = true
         self.fetchStepsDataFromDB()
-        
     }
     
     @objc func notificationLearnSteps(notification: Notification) {

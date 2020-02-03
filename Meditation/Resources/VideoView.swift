@@ -26,7 +26,7 @@ class VideoView: UIView {
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.frame = bounds
             playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspect
-            playerLayer?.goFullscreen()
+            //playerLayer?.goFullscreen()
             
             if let playerLayer = self.playerLayer {
                 layer.addSublayer(playerLayer)
