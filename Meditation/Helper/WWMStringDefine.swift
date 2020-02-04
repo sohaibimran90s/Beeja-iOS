@@ -34,7 +34,7 @@ let  KFORCETOUPDATETITLE : String = "titleForceToUpdate"
 let  KFORCETOUPDATEDES : String = "desForceToUpdate"
 let  KBASEURL = "baseURL"
 let  KUPGRADEBUTTON = "upgrade"
-
+let  kVERSION_NAME = "version_name"
 
 /************************************************/
 let themeColor : UIColor! = UIColor.init(hexString: "#e21921")

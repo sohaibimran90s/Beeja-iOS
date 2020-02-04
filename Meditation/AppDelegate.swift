@@ -386,6 +386,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     KUSERDEFAULTS.set(button, forKey: KUPGRADEBUTTON)
                 }
                 
+                if let version_name = result["version_name"] as? String{
+                    KUSERDEFAULTS.set(version_name, forKey: kVERSION_NAME)
+                }
+                
                 if let force_update = result["force_update"] as? Bool{
                     if force_update{
                         if self.needsUpdate(){
@@ -430,20 +434,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let appStoreVersion = results[0]["version"] as? String
                 let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
                 
-                print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion))")
+                print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion)) AWS appVersion... \(KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "")")
                 
-                if appStoreVersion != "" && currentVersion != ""{
+                if KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "" != "" && currentVersion != ""{
                     
-                    let appStoreVersionArray = (appStoreVersion?.components(separatedBy: "."))!
+                    let awsVersionArray = (KUSERDEFAULTS.string(forKey: kVERSION_NAME)?.components(separatedBy: "."))!
                     let currentVersionArray = (currentVersion?.components(separatedBy: "."))!
                     
-                    if appStoreVersionArray.count > 2 && currentVersionArray.count > 2{
+                    if awsVersionArray.count > 2 && currentVersionArray.count > 2{
                         
-                        if Int(appStoreVersionArray[1])! < Int(currentVersionArray[1])!{
+                        if Int(awsVersionArray[1])! < Int(currentVersionArray[1])!{
                             return false
-                        }else if Int(appStoreVersionArray[0])! > Int(currentVersionArray[0])!{
+                        }else if Int(awsVersionArray[0])! > Int(currentVersionArray[0])!{
                             return true
-                        }else if Int(appStoreVersionArray[2])! > Int(currentVersionArray[2])!{
+                        }else if Int(awsVersionArray[0])! < Int(currentVersionArray[0])!{
+                            return false
+                        }else if Int(awsVersionArray[2])! > Int(currentVersionArray[2])!{
                             return true
                         }
                     }
