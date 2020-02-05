@@ -49,6 +49,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = UIColor.init(white: 0.8, alpha: 1.0)
             newCell?.label.textColor = UIColor.white
+            
+            newCell?.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            oldCell?.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         }
     }
     
@@ -61,7 +64,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         
         for data in self.arrGuidedList {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
-            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+            
+            print("data.cat_name... \(data.cat_Name)")
+            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
             vc.guidedData = data
             vc.type = self.type
         
