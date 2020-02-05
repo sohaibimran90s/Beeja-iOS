@@ -46,6 +46,8 @@
             <connections>
                 <outlet property="imageView" destination="tFG-yJ-6Th" id="Odb-dR-tf4"/>
                 <outlet property="label" destination="s7f-rk-sQl" id="4gU-tb-BMB"/>
+                <outlet property="layoutImgWidth" destination="VRw-5F-5WY" id="nIa-9Q-Phs"/>
+                <outlet property="layoutLblLeading" destination="VIb-LT-iqZ" id="tgf-7o-3z3"/>
             </connections>
             <point key="canvasLocation" x="383.19999999999999" y="539.73013493253382"/>
         </collectionViewCell>

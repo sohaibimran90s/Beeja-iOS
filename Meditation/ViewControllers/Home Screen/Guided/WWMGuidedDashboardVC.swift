@@ -66,7 +66,12 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
             
             print("data.cat_name... \(data.cat_Name)")
-            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+            if data.cat_Name == "Voice"{
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+            }else{
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+            }
+            
             vc.guidedData = data
             vc.type = self.type
         
