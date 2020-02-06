@@ -1274,17 +1274,30 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 
                                 print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
                                 
-                                let expireDate = formatter.date(from: expiryDate)!
-                                
                                 let currentDateString = formatter.string(from: Date())
-                                let currentDate = formatter.date(from: currentDateString)!
+
+                                //let expireDate = formatter.date(from: expiryDate)!
+                                //let currentDate = formatter.date(from: currentDateString)!
+
+                                var expireDate: Date = Date()
+                                var currentDate: Date = Date()
                                 
-                                if currentDate > expireDate{
-                                    print("currentDate is greater than expireDate")
-                                    if self.appPreffrence.isLogin(){
-                                        DispatchQueue.global(qos: .background).async {
-                                            self.receiptValidation()
+                                if let currentDate1: Date = formatter.date(from: currentDateString){
+                                    currentDate = currentDate1
+                                }
+                                
+                                if let expireDate1: Date = formatter.date(from: expiryDate){
+                                    expireDate = expireDate1
+                                    
+                                    if currentDate > expireDate{
+                                        print("currentDate is greater than expireDate")
+                                        if self.appPreffrence.isLogin(){
+                                            DispatchQueue.global(qos: .background).async {
+                                                self.receiptValidation()
+                                            }
                                         }
+                                    }else{
+                                        print("currentDate is smaller than expireDate")
                                     }
                                 }
                             }

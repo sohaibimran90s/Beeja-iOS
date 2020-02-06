@@ -835,45 +835,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 strDate = strDate + " \(settingData.morningReminderTime!)"
                 dateFormate.dateFormat = "dd:MM:yyyy HH:mm"
                 print(settingData.morningReminderTime!)
-                let date = dateFormate.date(from: strDate)
-                let arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
-                var str = KGOODMORNING
-                if arrTemp?.count == 2 {
-                    let hours = Int(arrTemp?[0] ?? "0") ?? 0
-                    let minutes = Int(arrTemp?[1] ?? "0") ?? 0
-                    let seconds = hours*60 + minutes
-                    if seconds < 720 {
-                        str = KGOODMORNING
-                    }else if 720 <= seconds && seconds < 1080 {
-                        str = KGOODAFTERNOON
-                    }else {
-                        str = KGOODEVENING
+                
+                //let date = dateFormate.date(from: strDate)
+                var date: Date = Date()
+                if let date1 = dateFormate.date(from: strDate){
+                    date = date1
+                    
+                    let arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
+                    var str = KGOODMORNING
+                    if arrTemp?.count == 2 {
+                        let hours = Int(arrTemp?[0] ?? "0") ?? 0
+                        let minutes = Int(arrTemp?[1] ?? "0") ?? 0
+                        let seconds = hours*60 + minutes
+                        if seconds < 720 {
+                            str = KGOODMORNING
+                        }else if 720 <= seconds && seconds < 1080 {
+                            str = KGOODAFTERNOON
+                        }else {
+                            str = KGOODEVENING
+                        }
+                    }
+                    
+                    // let timeStemp = Int(date!.timeIntervalSince1970)
+                    let content = UNMutableNotificationContent()
+                    content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
+                    content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
+                    content.sound = UNNotificationSound.default
+                    content.threadIdentifier = "local-notifications-MorningReminder"
+                    //print(Int(Date().timeIntervalSince1970))
+                    //print(timeStemp)
+                    //let time =  timeStemp - Int(Date().timeIntervalSince1970)
+                    // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
+                    // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
+                    let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
+                    let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+                                   
+                    //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
+                    let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
+                    center.add(request){ (error) in
+                        if error == nil {
+                            print("schedule push succeed")
+                        }
                     }
                 }
- 
-                // let timeStemp = Int(date!.timeIntervalSince1970)
-                let content = UNMutableNotificationContent()
-                content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
-                content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
-                content.sound = UNNotificationSound.default
-                content.threadIdentifier = "local-notifications-MorningReminder"
-                //print(Int(Date().timeIntervalSince1970))
-                //print(timeStemp)
-                //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-                // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
-                // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
-                let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date!)
-                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                
-                //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
-                let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
-                center.add(request){ (error) in
-                    if error == nil {
-                        print("schedule push succeed")
-                    }
-                }
-                
-                }
+                }//isMorningReminder not nil****
             }else {
                 center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
             }
