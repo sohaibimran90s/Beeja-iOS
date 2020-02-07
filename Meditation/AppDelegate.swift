@@ -928,9 +928,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 if formatter.contains("a") {
                     print("phone is set to 12 hours")
                     //phone is set to 12 hours
-                    
-                    strDate = strDate + " \(settingData.afterNoonReminderTime!)"
-                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
+                    dateFormate.locale = Locale(identifier: "en_GB")
+                    dateFormate.timeZone = TimeZone(abbreviation: "UTC")
+                    strDate = strDate + " \(settingData.afterNoonReminderTime!):00"
+                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
                 } else {
                     //phone is set to 24 hours
                     print("phone is set to 24 hours")
@@ -956,6 +957,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         
                 }//phone is set to 24 hours end***
                     
+                    print("strDate afternoon... \(strDate)")
                     print(settingData.afterNoonReminderTime ?? "")
                     var date: Date = Date()
                     if let date1 = dateFormate.date(from: strDate){
