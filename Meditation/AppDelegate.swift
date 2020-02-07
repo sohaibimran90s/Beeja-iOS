@@ -904,12 +904,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     
                 if formatter.contains("a") {
                     print("phone is set to 12 hours")
-
-                    dateFormate.dateFormat = "dd-MM-yyyy"
-                    strDate = dateFormate.string(from: Date())
-                    strDate = strDate + " \(settingData.afterNoonReminderTime!)"
                     
-                    date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
+                    let afterNoonReminderArray = settingData.afterNoonReminderTime?.components(separatedBy: ":")
+                    if afterNoonReminderArray?.count ?? 0 > 0{
+                        if Int(afterNoonReminderArray?[0] ?? "0") ?? 0 > 11{
+                            dateFormate.dateFormat = "dd-MM-yyyy"
+                            strDate = dateFormate.string(from: Date())
+                            strDate = strDate + " \(settingData.afterNoonReminderTime!)"
+                            
+                            date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
+                        }else{
+                            strDate = dateFormate.string(from: Date())
+                            strDate = strDate + " \(settingData.afterNoonReminderTime!)"
+                            dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
+                            
+                            date = dateFormate.date(from: strDate)!
+                        }
+                    }
                                         
                 } else {
                     //phone is set to 24 hours
@@ -1025,8 +1036,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
         let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat)!
         print(date)
-        let dateString: String = dateFormatter.string(from: date)
-        print(dateString)
         return date
     }
     

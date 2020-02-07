@@ -1289,7 +1289,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         currentDate = currentDate1
                                     }
                                     
-                                    expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                                    expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
                                     
                                 }else{
                                     print("phone is set to 24 hours")
@@ -1323,6 +1323,26 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
+    func getExpireDate12hour(expiryDate: String, formatter: DateFormatter) -> Date{
+        var expireDate = Date()
+        let expiryDateArray = expiryDate.components(separatedBy: " ")
+        if expiryDateArray.count > 1{
+        let getHourMinSec = expiryDateArray[1]
+        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
+        if getHourMinSecArray.count > 0{
+            if Int(getHourMinSecArray[0]) ?? 0 > 11{
+                
+                    formatter.dateFormat = "yyyy-MM-dd"
+                    //let date11 = formatter.date(from: expiryDate)
+                    expireDate = self.getRequiredFormat(dateStrInTwentyFourHourFomat: expiryDate)
+                }else{
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                    expireDate = formatter.date(from: expiryDate)!
+                }
+            }
+        }
+        return expireDate
+    }
     
     func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
         var expireDate = Date()
@@ -1350,13 +1370,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     func getRequiredFormat(dateStrInTwentyFourHourFomat: String) -> Date{
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat)!
         print(date)
-        let dateString: String = dateFormatter.string(from: date)
-        print(dateString)
         return date
     }
     
