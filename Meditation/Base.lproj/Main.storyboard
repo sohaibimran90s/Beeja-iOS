@@ -1621,11 +1621,9 @@
                                                             <rect key="frame" x="346.5" y="23" width="8.5" height="4.5"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="3nd-fO-4b2">
-<<<<<<< HEAD
-                                                            <rect key="frame" x="287.5" y="12.5" width="51" height="25"/>
-=======
+
                                                             <rect key="frame" x="279" y="12.5" width="51" height="25"/>
->>>>>>> dev-PN1
+
                                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                             <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2034,11 +2032,9 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucq-c7-Wf5">
-<<<<<<< HEAD
-                                <rect key="frame" x="0.0" y="111" width="375" height="63"/>
-=======
+
                                 <rect key="frame" x="0.0" y="111" width="375" height="112"/>
->>>>>>> dev-PN1
+
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backStrip" translatesAutoresizingMaskIntoConstraints="NO" id="xuM-Da-lwh">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
@@ -3035,11 +3031,8 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-pG-gFE">
-<<<<<<< HEAD
-                                        <rect key="frame" x="93" y="100" width="189.5" height="30"/>
-=======
+
                                         <rect key="frame" x="88.5" y="100" width="198" height="30"/>
->>>>>>> dev-PN1
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Preset  - " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcz-TM-OiW">
                                                 <rect key="frame" x="0.0" y="0.0" width="111" height="30"/>
@@ -3051,11 +3044,7 @@
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrT-y8-WeN">
-<<<<<<< HEAD
-                                                <rect key="frame" x="115" y="0.0" width="74.5" height="30"/>
-=======
                                                 <rect key="frame" x="115" y="0.0" width="83" height="30"/>
->>>>>>> dev-PN1
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="1TU-Cu-ppj"/>
                                                 </constraints>
@@ -7828,11 +7817,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="4rH-DK-vmz">
-<<<<<<< HEAD
-                                <rect key="frame" x="169.5" y="176.5" width="36" height="32.5"/>
-=======
+
                                 <rect key="frame" x="151.5" y="144" width="72" height="65"/>
->>>>>>> dev-PN1
+
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Qp-15-fTs">
                                 <rect key="frame" x="37.5" y="259" width="300" height="149.5"/>
@@ -14501,11 +14488,9 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set your password!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIo-7I-vFW">
-<<<<<<< HEAD
-                                <rect key="frame" x="80.5" y="243.5" width="214.5" height="29.5"/>
-=======
+
                                 <rect key="frame" x="80.5" y="276" width="214.5" height="29.5"/>
->>>>>>> dev-PN1
+
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29.5" id="BRe-LP-hzj"/>
                                 </constraints>

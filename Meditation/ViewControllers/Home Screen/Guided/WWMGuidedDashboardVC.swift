@@ -36,7 +36,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
         }
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 14)!
+        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 15)!
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 15
         settings.style.buttonBarItemTitleColor = UIColor.white
