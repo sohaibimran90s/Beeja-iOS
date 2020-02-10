@@ -373,7 +373,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             if indexPath.row > 2{
                 cell.imgLock.isHidden = false
-                cell.imgLock.image = UIImage(named: "lock")
+                cell.imgLock.image = UIImage(named: "lock1")
                 
                 cell.lblNoOfSteps.backgroundColor = UIColor.white.withAlphaComponent(0.3)
                 cell.lblUprLine.backgroundColor = UIColor.white.withAlphaComponent(0.3)

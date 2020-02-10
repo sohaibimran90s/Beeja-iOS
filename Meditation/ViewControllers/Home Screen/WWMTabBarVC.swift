@@ -423,7 +423,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             for dict in getGuidedDataDB {
                                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                 let currentDateString = dateFormatter.string(from: Date())
                 let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -585,7 +585,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                for dict in getStepsDataDB {
                                    
                    let dateFormatter = DateFormatter()
-                   dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                   dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                    let currentDateString = dateFormatter.string(from: Date())
                    let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -696,7 +696,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             for dict in getVibesDataDB {
                                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                 let currentDateString = dateFormatter.string(from: Date())
                 let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -775,7 +775,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 //let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                 let currentDateString = dateFormatter.string(from: Date())
                 let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -859,7 +859,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 for dict in mantrasDataDB {
                                 
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                     let currentDateString = dateFormatter.string(from: Date())
                     let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -926,7 +926,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             for dict in wisdomDataDB {
                             
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
                 let currentDateString = dateFormatter.string(from: Date())
                 let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
@@ -1262,33 +1262,48 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         //*receiptValidation
                         let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        
+                        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                        formatter.locale = NSLocale.current
                         
                         if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
                             if expiryDate != ""{
                                 print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                 
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                
                                 print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
                                 
-                                let expireDate = formatter.date(from: expiryDate)!
-                                
                                 let currentDateString = formatter.string(from: Date())
-                                let currentDate = formatter.date(from: currentDateString)!
+
+                                //let expireDate = formatter.date(from: expiryDate)!
+                                //let currentDate = formatter.date(from: currentDateString)!
+
+                                var expireDate: Date = Date()
+                                var currentDate: Date = Date()
                                 
-                                if currentDate > expireDate{
-                                    print("currentDate is greater than expireDate")
-                                    if self.appPreffrence.isLogin(){
-                                        DispatchQueue.global(qos: .background).async {
-                                            self.receiptValidation()
-                                        }
+                                let locale = NSLocale.current
+                                let formatter1: String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
+                                if formatter1.contains("a") {
+                                    print("phone is set to 12 hours")
+                                    //phone is set to 12 hours
+                                    
+                                    if let currentDate1: Date = formatter.date(from: currentDateString){
+                                        currentDate = currentDate1
                                     }
-                                }
-                            }
+                                    
+                                    expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
+                                    
+                                }else{
+                                    print("phone is set to 24 hours")
+                                    //phone is set to 12 hours
+                                    if let currentDate1: Date = formatter.date(from: currentDateString){
+                                        currentDate = currentDate1
+                                    }
+                                    
+                                    expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                                           
+                                }//phone is set to 12 hours*
+                                self.checkExpireFunc(currentDate: currentDate, expireDate: expireDate)
                         }
+                    }
                         //receiptValidation*
                         
                     }else {
@@ -1308,6 +1323,75 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
+    func getExpireDate12hour(expiryDate: String, formatter: DateFormatter) -> Date{
+        var expireDate = Date()
+        let expiryDateArray = expiryDate.components(separatedBy: " ")
+        if expiryDateArray.count > 1{
+        let getHourMinSec = expiryDateArray[1]
+        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
+        if getHourMinSecArray.count > 0{
+            if Int(getHourMinSecArray[0]) ?? 0 > 11{
+                
+                    formatter.dateFormat = "yyyy-MM-dd"
+                    //let date11 = formatter.date(from: expiryDate)
+                    expireDate = self.getRequiredFormat(dateStrInTwentyFourHourFomat: expiryDate)
+                }else{
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                    expireDate = formatter.date(from: expiryDate)!
+                }
+            }
+        }
+        return expireDate
+    }
+    
+    func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
+        var expireDate = Date()
+        let expiryDateArray = expiryDate.components(separatedBy: " ")
+        if expiryDateArray.count > 1{
+        let getHourMinSec = expiryDateArray[1]
+        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
+        if getHourMinSecArray.count > 0{
+            if Int(getHourMinSecArray[0]) ?? 0 > 11{
+                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let date11 = formatter.date(from: expiryDate)
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
+                    let Date12 = formatter.string(from: date11!)
+                    print("date12... \(Date12)")
+                    expireDate = formatter.date(from: Date12)!
+                }else{
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                    expireDate = formatter.date(from: expiryDate)!
+                }
+            }
+        }
+        return expireDate
+    }
+    
+    func getRequiredFormat(dateStrInTwentyFourHourFomat: String) -> Date{
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat)!
+        print(date)
+        return date
+    }
+    
+    func checkExpireFunc(currentDate: Date, expireDate: Date){
+        if let expireDate1 = expireDate as? Date{
+            if currentDate > expireDate1{
+                print("currentDate is greater than expireDate")
+                if self.appPreffrence.isLogin(){
+                    DispatchQueue.global(qos: .background).async {
+                        self.receiptValidation()
+                    }
+                }
+            }else{
+                print("currentDate is smaller than expireDate")
+            }
+        }
+    }
     
     
     func receiptValidation() {
@@ -1339,7 +1423,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                     
                                     let formatter = DateFormatter()
-                                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
                                     
                                     print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
                                     
@@ -1372,7 +1456,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
               
             let lastReceipt = receiptInfo.lastObject as! NSDictionary
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+            formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
              
             if let product_id = lastReceipt["product_id"] as? String {
                 self.product_id = product_id
