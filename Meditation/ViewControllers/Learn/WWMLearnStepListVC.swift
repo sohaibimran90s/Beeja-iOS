@@ -216,8 +216,9 @@ class WWMLearnStepListVC: WWMBaseViewController {
     }
     
     @IBAction func btnIntroClicked(_ sender: UIButton) {
+
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-        
+
         vc.value = "learnStepList"
         self.navigationController?.pushViewController(vc, animated: false)
     }

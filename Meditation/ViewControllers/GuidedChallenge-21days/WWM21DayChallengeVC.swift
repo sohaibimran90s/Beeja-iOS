@@ -36,6 +36,14 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WWM21DayChallengeTVC") as! WWM21DayChallengeTVC
         
+        if indexPath.row == 0{
+            cell.upperLineLbl.isHidden = true
+        }else{
+            cell.upperLineLbl.isHidden = false
+        }
+        
+        cell.stepLbl.layer.cornerRadius = 12
+        
         if selectedIndex == indexPath.row{
             cell.descLbl.isHidden = false
             
@@ -43,11 +51,13 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.backImg2.isHidden = false
             cell.backImg1.isHidden = true
             cell.arrowImg.image = UIImage(named: "upArrow")
+            cell.collectionView.isHidden = false
         }else{
             cell.descLbl.isHidden = true
             cell.backImg1.isHidden = false
             cell.backImg2.isHidden = true
             cell.arrowImg.image = UIImage(named: "downArrow")
+            cell.collectionView.isHidden = true
         }
         
         return cell
@@ -68,18 +78,22 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSource{
+extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "", for: indexPath) as! WWM21DayChallengeCVC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WWM21DayChallengeCVC", for: indexPath) as! WWM21DayChallengeCVC
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 106)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
