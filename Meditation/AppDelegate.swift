@@ -327,10 +327,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             "type"          : self.type,
             "guided_type"   : self.guided_type
             ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
+                print("result appdelegate meditation data... \(result)")
                 print("success meditationdata api WWMHomeTabVC background thread")
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
              }
 
         }

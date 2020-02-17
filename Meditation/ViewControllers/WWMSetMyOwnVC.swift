@@ -279,6 +279,17 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             if sucess {
                 if let sucessAPI = result["success"] as? Bool {
                     if sucessAPI {
+                        
+                        print("result setmyownvc meditation data... \(result)")
+                        
+                        if let userProfile = result["userprofile"] as? [String:Any] {
+                            if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                                self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                                self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                                self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                                self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                            }
+                        }
                         self.appPreference.setIsProfileCompleted(value: true)
                         self.appPreference.setGuideType(value: "")
                         self.appPreference.setType(value: "timer")

@@ -41,7 +41,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
             settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size:  18)!
         }
        
-        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 18)
+        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 16)
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white

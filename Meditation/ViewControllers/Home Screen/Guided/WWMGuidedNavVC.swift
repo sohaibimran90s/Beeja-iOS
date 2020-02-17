@@ -262,7 +262,17 @@ class WWMGuidedNavVC: WWMBaseViewController {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+                print("result guidednavvc meditation data... \(result)")
                 print("meditation api in guidednav in background...")
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
             }
         }
     }

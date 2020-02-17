@@ -127,8 +127,20 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                self.appPreference.setIsProfileCompleted(value: true)
                 
+                print("result signupletsstartvc meditation data... \(result)")
+                
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
+                
+                self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: self.guided_type)
                 self.appPreference.setGuideTypeFor3DTouch(value: self.guided_type)

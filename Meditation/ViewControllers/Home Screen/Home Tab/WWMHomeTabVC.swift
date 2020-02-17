@@ -525,9 +525,19 @@ class WWMHomeTabVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
+                print("result hometabvc meditation data... \(result)")
                 print("success meditationdata api WWMHomeTabVC background thread")
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
              }
-
         }
     }
     

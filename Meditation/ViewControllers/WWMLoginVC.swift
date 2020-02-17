@@ -240,7 +240,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
 
-                        
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "Unauthorized request")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)

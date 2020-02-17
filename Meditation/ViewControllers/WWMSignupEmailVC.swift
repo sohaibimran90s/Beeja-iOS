@@ -208,6 +208,7 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         
                         //NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                         
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
