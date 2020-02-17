@@ -1115,6 +1115,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             isGetProfileCall = true
         let param = [
             "user_id":self.appPreffrence.getUserID(),
+            "email":self.appPreffrence.getEmail(),
             "lat": lat,
             "long": long,
             "city":city,
@@ -1156,7 +1157,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
                             self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
                             self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
-                            
+                            self.appPreffrence.setUserID(value:"\(userProfile["id"] as? Int ?? 0)")
+
                             //this is for hide or unhide setting for paid and unpaid user
                             self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
                         }
