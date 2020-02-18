@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Maax-Bold.ttf">
+            <string>Maax-Bold</string>
+        </array>
+        <array key="Maax-Regular.ttf">
+            <string>Maax-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="0B7-7L-cEV" customClass="WWWMPodCastPlayerView" customModule="Meditation" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4P-hS-WBk" userLabel="View">
+                    <rect key="frame" x="8" y="93.5" width="359" height="480"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcast_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Hjm-g4-Ba7">
+                            <rect key="frame" x="0.0" y="0.0" width="359" height="480.00000000000011"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pnp-4f-YJ4">
+                            <rect key="frame" x="307" y="15" width="37" height="37"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="37" id="aY2-kR-UJo"/>
+                                <constraint firstAttribute="width" constant="37" id="tCA-00-baM"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="white_cross"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-3t-SnL">
+                            <rect key="frame" x="33" y="83" width="293" height="44.5"/>
+                            <string key="text">Will Williams Podcast with HowardDonald from Take That</string>
+                            <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="big_logo" translatesAutoresizingMaskIntoConstraints="NO" id="lSD-4M-iLn">
+                            <rect key="frame" x="109.5" y="156.5" width="140" height="131"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="140" id="67F-Fy-MLF"/>
+                                <constraint firstAttribute="height" constant="131" id="loH-6m-cj6"/>
+                            </constraints>
+                        </imageView>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kxx-ms-ili">
+                            <rect key="frame" x="17" y="324.5" width="325" height="31"/>
+                            <color key="tintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="thumbTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:39" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-yA-U5t">
+                            <rect key="frame" x="19" y="354.5" width="32.5" height="19.5"/>
+                            <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69:04" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6p-Du-EEx">
+                            <rect key="frame" x="297" y="354.5" width="43" height="19.5"/>
+                            <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LMd-te-4FU">
+                            <rect key="frame" x="19" y="399.5" width="321" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C9-fe-4ow">
+                                    <rect key="frame" x="0.0" y="0.0" width="58" height="50"/>
+                                    <state key="normal" image="previous_img"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dB-lN-Ptm">
+                                    <rect key="frame" x="66" y="0.0" width="57.5" height="50"/>
+                                    <state key="normal" image="backward_img"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOt-vT-6F1">
+                                    <rect key="frame" x="131.5" y="0.0" width="58" height="50"/>
+                                    <state key="normal" image="white_pause"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJc-7E-iie">
+                                    <rect key="frame" x="197.5" y="0.0" width="57.5" height="50"/>
+                                    <state key="normal" image="forward_img"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUM-ES-Aif">
+                                    <rect key="frame" x="263" y="0.0" width="58" height="50"/>
+                                    <state key="normal" image="next_img"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="wo9-ww-Chz"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="LMd-te-4FU" secondAttribute="trailing" constant="19" id="1fB-tK-EJK"/>
+                        <constraint firstAttribute="trailing" secondItem="kxx-ms-ili" secondAttribute="trailing" constant="19" id="2HB-SQ-wa5"/>
+                        <constraint firstItem="X6p-Du-EEx" firstAttribute="trailing" secondItem="kxx-ms-ili" secondAttribute="trailing" id="6G9-wj-OoM"/>
+                        <constraint firstItem="LMd-te-4FU" firstAttribute="top" secondItem="kxx-ms-ili" secondAttribute="bottom" constant="45" id="7db-2M-UhD"/>
+                        <constraint firstItem="fVz-3t-SnL" firstAttribute="top" secondItem="Pnp-4f-YJ4" secondAttribute="bottom" constant="31" id="EsD-46-7Ki"/>
+                        <constraint firstItem="kxx-ms-ili" firstAttribute="leading" secondItem="r4P-hS-WBk" secondAttribute="leading" constant="19" id="FjH-PL-uNp"/>
+                        <constraint firstItem="LMd-te-4FU" firstAttribute="leading" secondItem="r4P-hS-WBk" secondAttribute="leading" constant="19" id="G41-WO-6td"/>
+                        <constraint firstAttribute="bottom" secondItem="Hjm-g4-Ba7" secondAttribute="bottom" id="KAw-VZ-emm"/>
+                        <constraint firstItem="kxx-ms-ili" firstAttribute="top" secondItem="lSD-4M-iLn" secondAttribute="bottom" constant="37" id="LG7-mk-h3a"/>
+                        <constraint firstItem="fVz-3t-SnL" firstAttribute="leading" secondItem="r4P-hS-WBk" secondAttribute="leading" constant="33" id="R7V-10-1cN"/>
+                        <constraint firstAttribute="trailing" secondItem="Pnp-4f-YJ4" secondAttribute="trailing" constant="15" id="TO8-eg-tJB"/>
+                        <constraint firstAttribute="trailing" secondItem="fVz-3t-SnL" secondAttribute="trailing" constant="33" id="ZfZ-hU-FHX"/>
+                        <constraint firstItem="Pnp-4f-YJ4" firstAttribute="top" secondItem="r4P-hS-WBk" secondAttribute="top" constant="15" id="aIY-Bu-U2s"/>
+                        <constraint firstAttribute="height" constant="480" id="ahX-ER-heQ"/>
+                        <constraint firstItem="2Oj-yA-U5t" firstAttribute="leading" secondItem="kxx-ms-ili" secondAttribute="leading" id="fGh-Ep-KbO"/>
+                        <constraint firstItem="lSD-4M-iLn" firstAttribute="top" secondItem="fVz-3t-SnL" secondAttribute="bottom" constant="29" id="ixZ-ht-0GQ"/>
+                        <constraint firstAttribute="trailing" secondItem="Hjm-g4-Ba7" secondAttribute="trailing" id="jG7-ln-YPJ"/>
+                        <constraint firstItem="X6p-Du-EEx" firstAttribute="top" secondItem="2Oj-yA-U5t" secondAttribute="top" id="liy-EW-wmY"/>
+                        <constraint firstItem="lSD-4M-iLn" firstAttribute="centerX" secondItem="r4P-hS-WBk" secondAttribute="centerX" id="oDq-LJ-4ir"/>
+                        <constraint firstItem="2Oj-yA-U5t" firstAttribute="top" secondItem="kxx-ms-ili" secondAttribute="bottom" id="p22-fy-it7"/>
+                        <constraint firstItem="Hjm-g4-Ba7" firstAttribute="leading" secondItem="r4P-hS-WBk" secondAttribute="leading" id="sxe-8j-fbJ"/>
+                        <constraint firstItem="Hjm-g4-Ba7" firstAttribute="top" secondItem="r4P-hS-WBk" secondAttribute="top" id="yfW-J8-nyr"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="r4P-hS-WBk" firstAttribute="centerY" secondItem="0B7-7L-cEV" secondAttribute="centerY" id="C4p-Sc-gyY"/>
+                <constraint firstItem="r4P-hS-WBk" firstAttribute="leading" secondItem="wja-XC-X5u" secondAttribute="leading" constant="8" id="JNo-Rz-8Sb"/>
+                <constraint firstItem="r4P-hS-WBk" firstAttribute="centerX" secondItem="0B7-7L-cEV" secondAttribute="centerX" id="WOh-X0-0qt"/>
+                <constraint firstItem="wja-XC-X5u" firstAttribute="trailing" secondItem="r4P-hS-WBk" secondAttribute="trailing" constant="8" id="zuz-k7-XpZ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="wja-XC-X5u"/>
+            <connections>
+                <outlet property="btnBackword" destination="1dB-lN-Ptm" id="O1b-RA-L5F"/>
+                <outlet property="btnCross" destination="Pnp-4f-YJ4" id="gcH-fY-dG2"/>
+                <outlet property="btnForward" destination="VJc-7E-iie" id="xRM-if-pp5"/>
+                <outlet property="btnNext" destination="SUM-ES-Aif" id="Uui-Cw-VDS"/>
+                <outlet property="btnPlayPause" destination="lOt-vT-6F1" id="hnr-2x-4ta"/>
+                <outlet property="btnPrevious" destination="7C9-fe-4ow" id="xAN-sY-rMm"/>
+                <outlet property="lblEndTime" destination="X6p-Du-EEx" id="LDl-Hd-oF7"/>
+                <outlet property="lblStartTime" destination="2Oj-yA-U5t" id="KUf-pq-17R"/>
+                <outlet property="lblTitle" destination="fVz-3t-SnL" id="kbX-74-kxu"/>
+                <outlet property="slider" destination="kxx-ms-ili" id="qjP-jW-402"/>
+            </connections>
+            <point key="canvasLocation" x="157.59999999999999" y="139.880059970015"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="backward_img" width="33" height="28"/>
+        <image name="big_logo" width="146" height="131"/>
+        <image name="forward_img" width="33" height="28"/>
+        <image name="next_img" width="24" height="26"/>
+        <image name="podcast_bg" width="359" height="443"/>
+        <image name="previous_img" width="24" height="26"/>
+        <image name="white_cross" width="37" height="37"/>
+        <image name="white_pause" width="39" height="40"/>
+    </resources>
+</document>

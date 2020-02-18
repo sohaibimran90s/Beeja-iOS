@@ -57,6 +57,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     var timerCount = 0
     var selectedAudio = "0"
     
+    var podcastMusicPlayerPopUp = WWWMPodCastPlayerView()
+    
+    
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -809,5 +812,47 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         self.selectedAudio = "0"
+    }
+    
+    func podCastXib(index: Int){
+        podcastMusicPlayerPopUp = UINib(nibName: "WWWMPodCastPlayerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWWMPodCastPlayerView
+        let window = UIApplication.shared.keyWindow!
+        
+        podcastMusicPlayerPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        //podcastMusicPlayerPopUp.lblTitle.text = "Toggle Airplane mode"
+        //podcastMusicPlayerPopUp.btnOK.layer.borderWidth = 2.0
+        //podcastMusicPlayerPopUp.btnCross.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        podcastMusicPlayerPopUp.btnCross.addTarget(self, action: #selector(btnCrossAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnPrevious.addTarget(self, action: #selector(btnPreviousAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnBackword.addTarget(self, action: #selector(btnBackwordAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnPlayPause.addTarget(self, action: #selector(btnPlayPauseAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnForward.addTarget(self, action: #selector(btnForwardAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnNext.addTarget(self, action: #selector(btnNextAction(_:)), for: .touchUpInside)
+        
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnCrossAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
+    }
+    
+    @IBAction func btnPreviousAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
+    }
+    
+    @IBAction func btnBackwordAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
+    }
+    
+    @IBAction func btnPlayPauseAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
+    }
+    
+    @IBAction func btnForwardAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
+    }
+    
+    @IBAction func btnNextAction(_ sender: Any) {
+        podcastMusicPlayerPopUp.removeFromSuperview()
     }
 }

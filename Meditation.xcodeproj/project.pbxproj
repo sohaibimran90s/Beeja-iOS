@@ -412,6 +412,8 @@
 		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
 		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
 		6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */; };
+		61793D0A23FBFFFC0077E3B7 /* WWWMPodCastPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61793D0923FBFFFC0077E3B7 /* WWWMPodCastPlayerView.xib */; };
+		61793D0C23FC00340077E3B7 /* WWWMPodCastPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61793D0B23FC00340077E3B7 /* WWWMPodCastPlayerView.swift */; };
 		617C283E23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283C23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift */; };
 		617C283F23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283D23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift */; };
 		617C284223525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */; };
@@ -912,6 +914,8 @@
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListVC.swift; sourceTree = "<group>"; };
 		6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListTVC.swift; sourceTree = "<group>"; };
+		61793D0923FBFFFC0077E3B7 /* WWWMPodCastPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWWMPodCastPlayerView.xib; sourceTree = "<group>"; };
+		61793D0B23FC00340077E3B7 /* WWWMPodCastPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWWMPodCastPlayerView.swift; sourceTree = "<group>"; };
 		617C283C23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C283D23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedEmotionsData+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1288,6 +1292,8 @@
 				61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */,
 				611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */,
 				611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */,
+				61793D0923FBFFFC0077E3B7 /* WWWMPodCastPlayerView.xib */,
+				61793D0B23FC00340077E3B7 /* WWWMPodCastPlayerView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -2274,6 +2280,7 @@
 				2EC95860220AC1BA009D5144 /* Maax-MediumItalic.otf in Resources */,
 				2E43717B21FF1DDA00EF5D62 /* vibe_images.jpg in Resources */,
 				2E34A90A2292D926005B4091 /* final1.json in Resources */,
+				61793D0A23FBFFFC0077E3B7 /* WWWMPodCastPlayerView.xib in Resources */,
 				2EC9585F220AC1BA009D5144 /* Maax.ttf in Resources */,
 				61416F4822BBB5A400C9339E /* moodData.json in Resources */,
 				2EC95863220AC1BA009D5144 /* Maax-Bold.ttf in Resources */,
@@ -2633,6 +2640,7 @@
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				61416F0E22BBB4C800C9339E /* RadarChartDataEntry.swift in Sources */,
 				2E5CCE9721C7AA1C0085224B /* WWMSlider.swift in Sources */,
+				61793D0C23FC00340077E3B7 /* WWWMPodCastPlayerView.swift in Sources */,
 				61416F3F22BBB56900C9339E /* LineChartDataProvider.swift in Sources */,
 				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */,
