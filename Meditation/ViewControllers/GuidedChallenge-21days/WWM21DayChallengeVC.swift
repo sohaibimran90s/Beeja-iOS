@@ -21,6 +21,9 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+
+        self.navigationController?.pushViewController(vc, animated: false)
     }
 }
 

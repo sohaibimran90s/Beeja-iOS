@@ -412,6 +412,8 @@
 		6174A94E22DDF12E00D29F1D /* WWMLearnStepListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */; };
 		6174A95022DDFB3A00D29F1D /* WWMLearnStepListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */; };
 		6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */; };
+		61793D0623FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61793D0523FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift */; };
+		61793D0823FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61793D0723FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift */; };
 		617C283E23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283C23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift */; };
 		617C283F23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C283D23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift */; };
 		617C284223525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */; };
@@ -912,6 +914,8 @@
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
 		6174A94D22DDF12E00D29F1D /* WWMLearnStepListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListVC.swift; sourceTree = "<group>"; };
 		6174A94F22DDFB3A00D29F1D /* WWMLearnStepListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepListTVC.swift; sourceTree = "<group>"; };
+		61793D0523FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWM21DaySetReminderVC.swift; sourceTree = "<group>"; };
+		61793D0723FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWM21DaySetReminder1VC.swift; sourceTree = "<group>"; };
 		617C283C23525CE800A3F544 /* DBGuidedData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C283D23525CE800A3F544 /* DBGuidedData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		617C284023525D3500A3F544 /* DBGuidedEmotionsData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedEmotionsData+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1730,6 +1734,8 @@
 				613AB06C23F2ACA600064B99 /* WWM21DayChallengeVC.swift */,
 				613AB06D23F2ACA600064B99 /* WWM21DayChallengeCVC.swift */,
 				613AB06E23F2ACA600064B99 /* WWM21DayChallengeTVC.swift */,
+				61793D0523FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift */,
+				61793D0723FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift */,
 			);
 			path = "GuidedChallenge-21days";
 			sourceTree = "<group>";
@@ -2590,6 +2596,7 @@
 				613FC56D23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift in Sources */,
 				61416F0522BBB4C800C9339E /* CandleChartData.swift in Sources */,
 				2E25CDC722269BB9002BDE15 /* WWMAddJournalView.swift in Sources */,
+				61793D0823FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift in Sources */,
 				61416E6522BBB31400C9339E /* YAxisRendererRadarChart.swift in Sources */,
 				613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */,
 				2EE247E621E6315400857C25 /* CGPoint.swift in Sources */,
@@ -2614,6 +2621,7 @@
 				61416E1822BBB19500C9339E /* LineScatterCandleRadarRenderer.swift in Sources */,
 				61416F0422BBB4C800C9339E /* CandleChartDataSet.swift in Sources */,
 				2EEF9AE9221AEC900016A77C /* DBJournalList+CoreDataProperties.swift in Sources */,
+				61793D0623FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift in Sources */,
 				61336722226DC9D1002F13A9 /* WWMWisdomFeedbackVC.swift in Sources */,
 				61416EDC22BBB47A00C9339E /* AnimatedZoomViewJob.swift in Sources */,
 				2EEF9AEE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift in Sources */,

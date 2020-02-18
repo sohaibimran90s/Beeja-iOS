@@ -48,7 +48,6 @@ class WWMLearnReminderVC: WWMBaseViewController {
         if data.count > 0 {
             settingData = data[0]
         }
-        
     }
     
     @IBAction func btnTommClicked(_ sender: UIButton) {
