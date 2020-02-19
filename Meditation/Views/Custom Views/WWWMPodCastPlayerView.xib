@@ -43,7 +43,8 @@
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-3t-SnL">
                             <rect key="frame" x="33" y="83" width="293" height="44.5"/>
-                            <string key="text">Will Williams Podcast with HowardDonald from Take That</string>
+                            <string key="text">Will Williams Podcast with Howard
+Donald from Take That</string>
                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -55,13 +56,13 @@
                                 <constraint firstAttribute="height" constant="131" id="loH-6m-cj6"/>
                             </constraints>
                         </imageView>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kxx-ms-ili">
+                        <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kxx-ms-ili">
                             <rect key="frame" x="17" y="324.5" width="325" height="31"/>
                             <color key="tintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="thumbTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                         </slider>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:39" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-yA-U5t">
-                            <rect key="frame" x="19" y="354.5" width="32.5" height="19.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-yA-U5t">
+                            <rect key="frame" x="19" y="354.5" width="44.5" height="19.5"/>
                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -85,7 +86,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOt-vT-6F1">
                                     <rect key="frame" x="131.5" y="0.0" width="58" height="50"/>
-                                    <state key="normal" image="white_pause"/>
+                                    <state key="normal" image="play_Icon"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJc-7E-iie">
                                     <rect key="frame" x="197.5" y="0.0" width="57.5" height="50"/>
@@ -93,7 +94,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUM-ES-Aif">
                                     <rect key="frame" x="263" y="0.0" width="58" height="50"/>
-                                    <state key="normal" image="next_img"/>
+                                    <state key="normal" image="next_img1"/>
                                 </button>
                             </subviews>
                             <constraints>
@@ -160,10 +161,10 @@
         <image name="backward_img" width="33" height="28"/>
         <image name="big_logo" width="146" height="131"/>
         <image name="forward_img" width="33" height="28"/>
-        <image name="next_img" width="24" height="26"/>
+        <image name="next_img1" width="24" height="26"/>
+        <image name="play_Icon" width="46" height="46"/>
         <image name="podcast_bg" width="359" height="443"/>
         <image name="previous_img" width="24" height="26"/>
         <image name="white_cross" width="37" height="37"/>
-        <image name="white_pause" width="39" height="40"/>
     </resources>
 </document>
