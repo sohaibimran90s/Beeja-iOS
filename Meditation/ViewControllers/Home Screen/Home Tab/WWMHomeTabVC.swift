@@ -973,12 +973,12 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img"), for: .normal)
                                 self.selectedAudioIndex = self.podData.count - 2
                                 self.playPauseAudio(index: self.selectedAudioIndex)
-                                //self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "play_Icon"), for: .normal)
+                                //self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
                             }else if self.selectedAudioIndex > self.podData.count - 2{
                                 self.selectedAudioIndex = self.podData.count - 2
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img"), for: .normal)
-                                self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "play_Icon"), for: .normal)
+                                self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnPrevious.isUserInteractionEnabled = true
                                 self.podcastMusicPlayerPopUp.btnPrevious.setImage(UIImage(named: "previous_img1"), for: .normal)
                             }else{
@@ -1001,7 +1001,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             self.player?.play()
             audioBool = true
         }else{
-            podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "play_Icon"), for: .normal)
+            podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
             self.player?.pause()
             audioBool = false
         }
