@@ -55,10 +55,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     let reachable = Reachabilities()
     
     var timerCount = 0
+    
     var selectedAudio = "0"
-    
     var podcastMusicPlayerPopUp = WWWMPodCastPlayerView()
-    
     var selectedAudioIndex: Int = 0
     var currentValue: Int = 0
     var audioBool = false
@@ -175,17 +174,17 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.imgPlayIcon.center.y = self.imgPlayIcon.center.y + 24
         
         self.introView.isHidden = false
-        for data in self.podData {
-            if data.isPlay {
-                self.player?.pause()
-                data.isPlay = false
-                data.currentTimePlay = 0
-            }
+        
+        if audioBool{
+            self.player?.pause()
+            audioBool = false
+            self.currentTimePlay = 0
         }
         
-        self.tableView.reloadData()
         self.player?.pause()
         self.stopPlayer()
+        self.selectedAudio = "0"
+        podcastMusicPlayerPopUp.removeFromSuperview()
     }
     
     //MARK: Stop Payer
@@ -749,54 +748,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
-           //let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
            let data = self.podData[indexPath.row]
 
             // Analytics
            WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
-            
-//            if selectedAudio == "0"{
-//                data.currentTimePlay = 0
-//                do {
-//                    try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-//                    try AVAudioSession.sharedInstance().setActive(true)
-//                    let playerItem = AVPlayerItem.init(url:URL.init(string: data.url_link)!)
-//                    self.player = AVPlayer(playerItem:playerItem)
-//
-//                } catch let error as NSError {
-//                    print(error.localizedDescription)
-//                }
-//
-//                self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
-//                    if self.player?.currentItem?.status == .readyToPlay {
-//                        let currentTime = CMTimeGetSeconds(self.player!.currentTime())
-//                        print("currentTime... \(currentTime)")
-//                        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-//                        print("totalDuration... \(Int(duration) - Int(currentTime))")
-//
-//                        data.currentTimePlay = Int(duration) - Int(currentTime)
-//                        if data.currentTimePlay != 0{
-//                            let remainingDuration = self.secondsToMinutesSeconds(second: data.currentTimePlay)
-//                            cell.lblTime.text = "\(remainingDuration)"
-//                            print("remainingDuration... \(remainingDuration)")
-//                            print("indexPath... \(indexPath.row)")
-//                        }
-//                    }
-//                })
-//
-//                self.selectedAudio = "1"
-//            }
-//
-//           if !data.isPlay {
-//               cell.playPauseImg.image = UIImage(named: "pauseAudio")
-//               self.player?.play()
-//               data.isPlay = true
-//           }else{
-//               cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-//               self.player?.pause()
-//               data.isPlay = false
-//           }
-            
             
             self.selectedAudioIndex = indexPath.row
             self.podCastXib(index: self.selectedAudioIndex)
@@ -804,24 +759,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-//        let cell = self.tableView.cellForRow(at: indexPath) as! WWMHomePodcastTVC
-//        let data = self.podData[indexPath.row]
-//        data.currentTimePlay = 0
-//
-//        let duration = secondsToMinutesSeconds(second: data.duration)
-//        cell.lblTime.text = "\(duration)"
-//
-//        if data.isPlay {
-//            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-//            self.player?.pause()
-//            data.isPlay = false
-//        }
-//
-//        self.selectedAudio = "0"
-    }
+
     
     func podCastXib(index: Int){
         podcastMusicPlayerPopUp = UINib(nibName: "WWWMPodCastPlayerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWWMPodCastPlayerView
