@@ -26,7 +26,7 @@
                     <rect key="frame" x="8" y="93.5" width="359" height="480"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcast_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Hjm-g4-Ba7">
-                            <rect key="frame" x="0.0" y="0.0" width="359" height="480.00000000000011"/>
+                            <rect key="frame" x="0.0" y="0.0" width="359" height="480"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                     <integer key="value" value="5"/>
@@ -42,7 +42,7 @@
                             <state key="normal" backgroundImage="white_cross"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-3t-SnL">
-                            <rect key="frame" x="33" y="83" width="293" height="44.5"/>
+                            <rect key="frame" x="33" y="83" width="293" height="42"/>
                             <string key="text">Will Williams Podcast with Howard
 Donald from Take That</string>
                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
@@ -50,31 +50,31 @@ Donald from Take That</string>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="big_logo" translatesAutoresizingMaskIntoConstraints="NO" id="lSD-4M-iLn">
-                            <rect key="frame" x="109.5" y="156.5" width="140" height="131"/>
+                            <rect key="frame" x="109.5" y="154" width="140" height="131"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="140" id="67F-Fy-MLF"/>
                                 <constraint firstAttribute="height" constant="131" id="loH-6m-cj6"/>
                             </constraints>
                         </imageView>
                         <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kxx-ms-ili">
-                            <rect key="frame" x="17" y="324.5" width="325" height="31"/>
+                            <rect key="frame" x="17" y="322" width="325" height="31"/>
                             <color key="tintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="thumbTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                         </slider>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Oj-yA-U5t">
-                            <rect key="frame" x="19" y="354.5" width="44.5" height="19.5"/>
+                            <rect key="frame" x="19" y="352" width="40.5" height="19"/>
                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69:04" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6p-Du-EEx">
-                            <rect key="frame" x="297" y="354.5" width="43" height="19.5"/>
+                            <rect key="frame" x="299.5" y="352" width="40.5" height="19"/>
                             <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LMd-te-4FU">
-                            <rect key="frame" x="19" y="399.5" width="321" height="50"/>
+                            <rect key="frame" x="19" y="397" width="321" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C9-fe-4ow">
                                     <rect key="frame" x="0.0" y="0.0" width="58" height="50"/>

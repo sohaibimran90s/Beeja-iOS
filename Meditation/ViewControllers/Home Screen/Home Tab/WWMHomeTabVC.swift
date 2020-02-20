@@ -839,6 +839,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         podcastMusicPlayerPopUp.btnBackword.addTarget(self, action: #selector(btnBackwordAction(_:)), for: .touchUpInside)
         podcastMusicPlayerPopUp.btnPlayPause.addTarget(self, action: #selector(btnPlayPauseAction(_:)), for: .touchUpInside)
         podcastMusicPlayerPopUp.btnForward.addTarget(self, action: #selector(btnForwardAction(_:)), for: .touchUpInside)
+        podcastMusicPlayerPopUp.btnPrevious.addTarget(self, action: #selector(btnPreviousAction(_:)), for: .touchUpInside)
         podcastMusicPlayerPopUp.slider.setThumbImage(UIImage(named: "spinCircle"), for: .highlighted)
         podcastMusicPlayerPopUp.slider.addTarget(self, action: #selector(sliderAction(_:)), for: .touchUpInside)
         podcastMusicPlayerPopUp.btnNext.addTarget(self, action: #selector(btnNextAction(_:)), for: .touchUpInside)
@@ -876,8 +877,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         let seconds1: Int64 = Int64(podcastMusicPlayerPopUp.slider.value)
         let targetTime:CMTime = CMTimeMake(value: seconds1, timescale: 1)
         
+        player?.pause()
         DispatchQueue.main.async {
             self.player!.seek(to: targetTime)
+            self.player?.play()
         }
     }
     
@@ -890,6 +893,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         self.player?.pause()
         self.stopPlayer()
+        self.selectedAudio = "0"
         podcastMusicPlayerPopUp.removeFromSuperview()
     }
     
@@ -900,6 +904,8 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         self.selectedAudioIndex = self.selectedAudioIndex - 1
         self.audioBool = false
+        self.selectedAudio = "0"
+        self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
         
         if self.selectedAudioIndex <= 0{
             podcastMusicPlayerPopUp.btnPrevious.isUserInteractionEnabled = false
@@ -926,6 +932,8 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         self.audioBool = false
         self.selectedAudioIndex = self.selectedAudioIndex + 1
         print("self.selectedAudioIndex next... \(self.selectedAudioIndex) self.podData.count... \(self.podData.count - 2)")
+        self.selectedAudio = "0"
+        self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
         if self.selectedAudioIndex == self.podData.count - 2{
             podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
             podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img"), for: .normal)
@@ -935,11 +943,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             self.currentTimePlay = 0
             podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
             self.podcastMusicPlayerPopUp.slider.value = Float(currentTimePlay)
-            self.selectedAudio = "0"
             podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img1"), for: .normal)
             podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = true
             self.playPauseAudio(index: self.selectedAudioIndex)
         }
+        
         podcastMusicPlayerPopUp.lblTitle.text = self.podData[self.selectedAudioIndex].title
     }
     
@@ -980,7 +988,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func playPauseAudio(index: Int){
         if selectedAudio == "0"{
+            self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
             currentTimePlay = 0
+            self.podcastMusicPlayerPopUp.lblTitle.text = self.podData[index].title
+            self.podcastMusicPlayerPopUp.slider.value = Float(currentTimePlay)
+            
                 do {
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                     try AVAudioSession.sharedInstance().setActive(true)
@@ -1007,23 +1019,38 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         print("indexPath... \(index)")
                         
                         if self.podcastMusicPlayerPopUp.lblStartTime.text == self.podcastMusicPlayerPopUp.lblEndTime.text{
-                            
+                            self.selectedAudio = "0"
+                            self.audioBool = false
+                            self.selectedAudioIndex = self.selectedAudioIndex + 1
                             if self.selectedAudioIndex < self.podData.count - 2{
+                                self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
                                 self.podcastMusicPlayerPopUp.btnPrevious.isUserInteractionEnabled = true
                                 self.podcastMusicPlayerPopUp.btnPrevious.setImage(UIImage(named: "previous_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = true
-                                self.audioBool = false
-                                self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
-                                self.selectedAudio = "0"
-                                self.selectedAudioIndex = self.selectedAudioIndex + 1
                                 self.playPauseAudio(index: self.selectedAudioIndex)
+                            }else if self.selectedAudioIndex == self.podData.count - 2{
+                                self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
+                                self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
+                                self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img"), for: .normal)
+                                self.selectedAudioIndex = self.podData.count - 2
+                                self.playPauseAudio(index: self.selectedAudioIndex)
+                                //self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "play_Icon"), for: .normal)
+                            }else if self.selectedAudioIndex > self.podData.count - 2{
+                                self.selectedAudioIndex = self.podData.count - 2
+                                self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
+                                self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img"), for: .normal)
+                                self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "play_Icon"), for: .normal)
+                                self.podcastMusicPlayerPopUp.btnPrevious.isUserInteractionEnabled = true
+                                self.podcastMusicPlayerPopUp.btnPrevious.setImage(UIImage(named: "previous_img1"), for: .normal)
                             }else{
                                 self.podcastMusicPlayerPopUp.btnPrevious.isUserInteractionEnabled = true
                                 self.podcastMusicPlayerPopUp.btnPrevious.setImage(UIImage(named: "previous_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
                             }
+                            print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
+
                         }
                     }
                 }
