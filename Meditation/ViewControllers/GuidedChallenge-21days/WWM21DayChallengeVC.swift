@@ -43,7 +43,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.guidedData.cat_EmotionList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,9 +71,10 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.backImg2.isHidden = true
             cell.arrowImg.image = UIImage(named: "downArrow")
             cell.collectionView.isHidden = true
-            cell.collectionView.reloadData()
+            
         }
-        
+        cell.collectionView.tag = indexPath.row
+        cell.collectionView.reloadData()
         return cell
     }
     
@@ -98,7 +99,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.guidedData.cat_EmotionList[collectionView.tag].audio_list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

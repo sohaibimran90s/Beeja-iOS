@@ -12,12 +12,11 @@ class WWMGuidedData: NSObject {
 
     var cat_Id = Int()
     var cat_Name = String()
-    
     var cat_EmotionList   = [WWMGuidedEmotionData]()
     
     override init() {
-        
     }
+    
     init(json:[String:Any]) {
         cat_Id = json["id"] as? Int ?? 1
         cat_Name = json["name"] as? String ?? ""
@@ -36,15 +35,22 @@ class WWMGuidedEmotionData: NSObject {
     var emotion_Name = String()
     var emotion_Image = String()
     var tile_type = String()
+    var audio_list = [WWMGuidedAudioData]()
+    
     override init() {
-        
     }
+
     init(json:[String:Any]) {
         emotion_Id = json["emotion_id"] as? Int ?? 1
         emotion_Name = json["emotion_name"] as? String ?? ""
         emotion_Image = json["emotion_image"] as? String ?? ""
         tile_type = json["tile_type"] as? String ?? ""
-        
+        if let arrLevels = json["audio_list"] as? [[String:Any]]{
+            for dict in arrLevels {
+                let video = WWMGuidedAudioData.init(json: dict)
+                audio_list.append(video)
+            }
+        }
     }
 }
 

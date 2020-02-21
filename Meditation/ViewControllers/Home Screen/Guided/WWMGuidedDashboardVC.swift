@@ -62,7 +62,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         
         for data in self.arrGuidedList {
             if data.cat_Name.contains("21") || data.cat_Name.contains("7"){
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
                 print("data.cat_name... \(data.cat_Name)")
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
@@ -71,7 +71,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                         
                 arrVC.add(vc)
             }else{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
                             
                 print("data.cat_name... \(data.cat_Name)")
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
