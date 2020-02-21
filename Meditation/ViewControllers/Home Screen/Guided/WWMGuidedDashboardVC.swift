@@ -57,29 +57,31 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     
     
     // MARK: - PagerTabStripDataSource
-    
-    
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
         
         for data in self.arrGuidedList {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
-            
-            print("data.cat_name... \(data.cat_Name)")
-//            if data.cat_Name == "Voice"{
-//                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
-//            }else{
+            if data.cat_Name.contains("21") || data.cat_Name.contains("7"){
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
+                            
+                print("data.cat_name... \(data.cat_Name)")
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+                vc.guidedData = data
+                vc.type = self.type
+                        
+                arrVC.add(vc)
+            }else{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                            
+                print("data.cat_name... \(data.cat_Name)")
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-//            }
-            
-            vc.guidedData = data
-            vc.type = self.type
-        
-            arrVC.add(vc)
+                vc.guidedData = data
+                vc.type = self.type
+                        
+                arrVC.add(vc)
+            }
         }
         return arrVC as! [UIViewController]
         // return [UIViewController]
     }
-    
-
 }

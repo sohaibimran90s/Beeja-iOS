@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class WWM21DayChallengeVC: WWMBaseViewController {
+class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introBtn: UIButton!
     
     var selectedIndex = 0
+    var itemInfo: IndicatorInfo = "View"
+    var guidedData = WWMGuidedData()
+    var type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,12 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
 
         self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    // MARK: - IndicatorInfoProvider
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return itemInfo
     }
 }
 
