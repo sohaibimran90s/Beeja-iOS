@@ -940,6 +940,7 @@
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
 		61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		61E0FDD223E85D2C0061B9F4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		61F0BF9823FFE4BF0067B660 /* WWMDatabase 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 4.xcdatamodel"; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
@@ -3225,11 +3226,12 @@
 		2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				61F0BF9823FFE4BF0067B660 /* WWMDatabase 4.xcdatamodel */,
 				615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */,
 				61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */,
 				2E93D2FE21F5FFC300163E57 /* WWMDatabase.xcdatamodel */,
 			);
-			currentVersion = 615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */;
+			currentVersion = 61F0BF9823FFE4BF0067B660 /* WWMDatabase 4.xcdatamodel */;
 			path = WWMDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

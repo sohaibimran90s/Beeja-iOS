@@ -8,6 +8,7 @@
 
 import UIKit
 import XLPagerTabStrip
+import CoreData
 
 class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
 
@@ -18,6 +19,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
     var type = ""
+    var arrAudioList = [WWMGuidedAudioData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,46 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
+    }
+    
+    //MARK: Fetch Guided Audio Data From DB
+    
+    func fetchGuidedAudioDataFromDB(emotion_id: Int) {
+        
+        let guidedAudioDataDB = self.fetchGuidedAudioFilterDB(emotion_id: "\(emotion_id)", dbName: "DBGuidedAudioData")
+        if guidedAudioDataDB.count > 0{
+            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
+            
+            self.arrAudioList.removeAll()
+            
+            var jsonString: [String: Any] = [:]
+            for dict in guidedAudioDataDB {
+                
+                jsonString["id"] = Int((dict as AnyObject).audio_id ?? "0")
+                jsonString["duration"] = Int((dict as AnyObject).duration ?? "0")
+                jsonString["audio_name"] = (dict as AnyObject).audio_name as? String
+                jsonString["audio_image"] = (dict as AnyObject).audio_image as? String
+                jsonString["audio_url"] = (dict as AnyObject).audio_url as? String
+                jsonString["author_name"] = (dict as AnyObject).author_name as? String
+                jsonString["vote"] = (dict as AnyObject).vote
+                jsonString["paid"] = (dict as AnyObject).paid
+                
+                let audioData = WWMGuidedAudioData.init(json: jsonString)
+                self.arrAudioList.append(audioData)
+            }
+                        
+        }
+    }
+    
+    func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
     }
 }
 
@@ -73,7 +115,9 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.collectionView.isHidden = true
             
         }
-        cell.collectionView.tag = indexPath.row
+        
+        self.fetchGuidedAudioDataFromDB(emotion_id: self.guidedData.cat_EmotionList[selectedIndex].emotion_Id)
+        //cell.collectionView.tag = indexPath.row
         cell.collectionView.reloadData()
         return cell
     }
@@ -99,11 +143,17 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.guidedData.cat_EmotionList[collectionView.tag].audio_list.count
+        return self.arrAudioList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WWM21DayChallengeCVC", for: indexPath) as! WWM21DayChallengeCVC
+        
+        DispatchQueue.main.async {
+            cell.backImg.sd_setImage(with: URL.init(string: "\(self.arrAudioList[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            cell.lblAudioTime.text = "\(self.arrAudioList[indexPath.item].audio_Duration)"
+        }
+        
         return cell
     }
     
