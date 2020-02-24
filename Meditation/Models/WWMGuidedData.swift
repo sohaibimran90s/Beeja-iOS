@@ -22,6 +22,7 @@ class WWMGuidedData: NSObject {
         cat_Name = json["name"] as? String ?? ""
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
+                print("dictkdjsfkdsjfl...... \(dict)")
                 let video = WWMGuidedEmotionData.init(json: dict)
                 cat_EmotionList.append(video)
             }

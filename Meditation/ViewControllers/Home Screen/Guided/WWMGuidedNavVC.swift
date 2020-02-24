@@ -307,6 +307,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonString: [String: Any] = [:]
             var jsonEmotionsString: [String: Any] = [:]
             var jsonEmotions: [[String: Any]] = []
+            var jsonAudiosString: [String: Any] = [:]
+            
             for dict in guidedDataDB {
                 
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
@@ -318,10 +320,22 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 
                 for dict1 in guidedEmotionsDataDB{
                     
+                    print("guidedEmotionsDataDB dict.... \(dict)")
+                    
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
                     jsonEmotionsString["tile_type"] = (dict1 as AnyObject).tile_type ?? ""
+                    
+                    let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
+                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
+                    
+                    for dict2 in guidedAudiosDataDB{
+                        jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
+                        jsonAudiosString["id"] = (dict2 as AnyObject).id ?? ""
+                        jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
+                        jsonAudiosString["duration"] = (dict2 as AnyObject).duration ?? ""
+                    }
                     
                     jsonEmotions.append(jsonEmotionsString)
                 }
@@ -359,6 +373,17 @@ class WWMGuidedNavVC: WWMBaseViewController {
     func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String) -> [Any]{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
         fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", guided_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+    
+    func fetchGuidedFilterAudiosDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", emotion_id)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)

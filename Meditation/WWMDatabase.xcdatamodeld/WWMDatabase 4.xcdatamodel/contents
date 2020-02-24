@@ -167,12 +167,12 @@
         <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="120"/>
         <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
         <element name="DBSteps" positionX="9" positionY="162" width="128" height="193"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>
-        <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
     </elements>
 </model>
