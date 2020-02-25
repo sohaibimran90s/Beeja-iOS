@@ -332,10 +332,14 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                     for dict2 in guidedAudiosDataDB{
                         jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
-                        jsonAudiosString["id"] = (dict2 as AnyObject).id ?? ""
+                        jsonAudiosString["id"] = Int((dict2 as AnyObject).id ?? "0")
                         jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
-                        jsonAudiosString["duration"] = (dict2 as AnyObject).duration ?? ""
+                        jsonAudiosString["duration"] = Int((dict2 as AnyObject).duration ?? "0")
+                        
+                        jsonEmotions.append(jsonAudiosString)
                     }
+                    
+                    jsonEmotionsString["audio_list"] = jsonAudiosString
                     
                     jsonEmotions.append(jsonEmotionsString)
                 }
