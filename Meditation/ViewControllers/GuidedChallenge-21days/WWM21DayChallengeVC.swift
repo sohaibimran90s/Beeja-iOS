@@ -116,8 +116,8 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             
         }
         
-        self.fetchGuidedAudioDataFromDB(emotion_id: self.guidedData.cat_EmotionList[selectedIndex].emotion_Id)
-        //cell.collectionView.tag = indexPath.row
+        //self.fetchGuidedAudioDataFromDB(emotion_id: self.guidedData.cat_EmotionList[selectedIndex].emotion_Id)
+        cell.collectionView.tag = indexPath.row
         cell.collectionView.reloadData()
         return cell
     }
@@ -143,15 +143,18 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.arrAudioList.count
+        return self.guidedData.cat_EmotionList[collectionView.tag].audio_list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WWM21DayChallengeCVC", for: indexPath) as! WWM21DayChallengeCVC
         
+        let data = self.guidedData.cat_EmotionList[collectionView.tag]
+        
         DispatchQueue.main.async {
-            cell.backImg.sd_setImage(with: URL.init(string: "\(self.arrAudioList[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
-            cell.lblAudioTime.text = "\(self.arrAudioList[indexPath.item].audio_Duration)"
+            cell.backImg.sd_setImage(with: URL.init(string: "\(data.audio_list[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            cell.lblAudioTime.text = "\(self.secondToMinuteSecond(second: data.audio_list[indexPath.item].audio_Duration))"
+            //"\(self.arrAudioList[indexPath.item].audio_Duration)"
         }
         
         return cell

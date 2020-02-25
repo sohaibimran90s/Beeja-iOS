@@ -308,6 +308,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonEmotionsString: [String: Any] = [:]
             var jsonEmotions: [[String: Any]] = []
             var jsonAudiosString: [String: Any] = [:]
+            var jsonAudios: [[String: Any]] = []
             
             for dict in guidedDataDB {
                 
@@ -331,17 +332,24 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
                     
                     for dict2 in guidedAudiosDataDB{
+                        
+                        print("dict2.... \(dict2)")
                         jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
-                        jsonAudiosString["id"] = Int((dict2 as AnyObject).id ?? "0")
+                        jsonAudiosString["id"] = Int((dict2 as AnyObject).audio_id ?? "0")
                         jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
                         jsonAudiosString["duration"] = Int((dict2 as AnyObject).duration ?? "0")
-                        
-                        jsonEmotions.append(jsonAudiosString)
+                        jsonAudiosString["paid"] = (dict2 as AnyObject).paid ?? false
+                        jsonAudiosString["audio_image"] = (dict2 as AnyObject).audio_image ?? ""
+                        jsonAudiosString["audio_url"] = (dict2 as AnyObject).audio_url ?? ""
+                        jsonAudiosString["author_name"] = (dict2 as AnyObject).author_name ?? ""
+                        jsonAudiosString["vote"] = (dict2 as AnyObject).vote ?? false
+
+                        jsonAudios.append(jsonAudiosString)
                     }
                     
-                    jsonEmotionsString["audio_list"] = jsonAudiosString
-                    
+                    jsonEmotionsString["audio_list"] = jsonAudios
                     jsonEmotions.append(jsonEmotionsString)
+                    jsonAudios.removeAll()
                 }
                 
                 jsonString["emotion_list"] = jsonEmotions
@@ -387,7 +395,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
     
     func fetchGuidedFilterAudiosDB(emotion_id: String, dbName: String) -> [Any]{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", emotion_id)
+        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)

@@ -60,6 +60,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
         
+        print("arrGuidedList.count... \(arrGuidedList.count)")
         for data in self.arrGuidedList {
             if data.cat_Name.contains("21") || data.cat_Name.contains("7"){
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
