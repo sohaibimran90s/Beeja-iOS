@@ -24,7 +24,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-     let arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
+    let arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
+    let arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
@@ -244,11 +245,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         if self.appPreffrence.getType() == "timer" {
             return 3
         }else if self.appPreffrence.getType() == "learn" {
-            if self.appPreffrence.getIsSubscribedBool(){
-                return 2
-            }else{
-                return 1
-            }
+            return 2
         }else {
             return 1
         }
@@ -286,7 +283,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     return arrSettings.count+1
                 }
             }else{
-                 return arrSettings.count+1
+                if section == 0 {
+                    return arrLearn1.count+1
+                }else {
+                    return arrSettings.count+1
+                }
             }
             
         }else {
@@ -523,8 +524,33 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }
             }else{
-               
-                if indexPath.row == 0 {
+                
+                if indexPath.section == 0 {
+                    if indexPath.row == 0 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = KLEARNTOMEDITATE
+                        cell.lblDropDown.isHidden = true
+                        cell.imgViewDropDown.isHidden = true
+                    }else if indexPath.row == 1 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 101
+                        cell.btnSwitch.isOn = settingData.isLearnReminder
+                    }else if indexPath.row == 2 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.learnReminderTime
+                        
+                        if !settingData.isLearnReminder {
+                            cell.lblTime.isHidden = true
+                        }
+                    }
+                }else if indexPath.section == 1 {
+                    
+                    if indexPath.row == 0 {
                         cell = tableView.dequeueReusableCell(withIdentifier: "CellHeader") as! WWMSettingTableViewCell
                         cell.lblTitle.text = KREMINDERS
                         cell.lblDropDown.isHidden = true
@@ -582,10 +608,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! WWMSettingTableViewCell
                         cell.lblTitle.text = self.arrSettings[indexPath.row-1]
                     }
-                
+                }
             }
-            
-            
         }else {
             if indexPath.section == 0{
                 if indexPath.row == 0 {
@@ -773,46 +797,52 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }
             }else{
-                if indexPath.row == 7 {
-                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
-                    
-                    let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
-                    //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
-                    
-                    let url = URL.init(string: iOSAppStoreURLFormat)
-                    
-                    if UIApplication.shared.canOpenURL(url!){
-                        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                if indexPath.section == 0{
+                    if indexPath.row == 2{
+                        if settingData.isLearnReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
                     }
-                }else if indexPath.row == 8 {
-                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
-                    let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                    let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
-                    let imageToShare = [textToShare] as [Any]
-                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                    activityViewController.popoverPresentationController?.sourceView = self.view
-                    self.present(activityViewController, animated: true, completion: nil)
-                }else if indexPath.row == 9 {
-                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else if indexPath.row == 10{
-                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                    print("help...")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                    
-                    vc.value = "help"
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else if indexPath.row == 11 || indexPath.row == 12 {
-                    self.openWebView(index: indexPath.row)
-                    
-                }else if indexPath.row == 13{
-                    self.logout()
+                }else if indexPath.section == 1{
+                    if indexPath.row == 7 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
+                        
+                        let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
+                        //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                        
+                        let url = URL.init(string: iOSAppStoreURLFormat)
+                        
+                        if UIApplication.shared.canOpenURL(url!){
+                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                        }
+                    }else if indexPath.row == 8 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
+                        let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                        let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
+                        let imageToShare = [textToShare] as [Any]
+                        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                        activityViewController.popoverPresentationController?.sourceView = self.view
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }else if indexPath.row == 9 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if indexPath.row == 10{
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
+                        print("help...")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                        
+                        vc.value = "help"
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if indexPath.row == 11 || indexPath.row == 12 {
+                        self.openWebView(index: indexPath.row)
+                        
+                    }else if indexPath.row == 13{
+                        self.logout()
+                    }
                 }
             }
-            
-            
-            
         }else {
             if indexPath.section == 0 {
                 if indexPath.row == 7 {
