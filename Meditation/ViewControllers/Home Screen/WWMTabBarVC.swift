@@ -492,6 +492,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 dbGuidedData.meditation_type = meditation_type
                             }
                             
+                            if let guided_mode = guidedDict["mode"] as? String{
+                                dbGuidedData.guided_mode = guided_mode
+                            }
+                            
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
                                 for emotionsDict in emotion_list {
                                     
@@ -503,6 +507,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     if let emotion_id = emotionsDict["emotion_id"]{
                                         dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
+                                    }
+                                    
+                                    if let author_name = emotionsDict["author_name"]{
+                                        dbGuidedEmotionsData.author_name = "\(author_name)"
                                     }
                                     
                                     if let emotion_image = emotionsDict["emotion_image"] as? String{

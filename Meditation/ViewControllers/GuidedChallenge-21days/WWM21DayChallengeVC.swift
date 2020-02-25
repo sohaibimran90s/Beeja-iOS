@@ -19,11 +19,9 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
     var type = ""
-    var arrAudioList = [WWMGuidedAudioData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
@@ -33,38 +31,8 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     }
     
     // MARK: - IndicatorInfoProvider
-    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
-    }
-    
-    //MARK: Fetch Guided Audio Data From DB
-    
-    func fetchGuidedAudioDataFromDB(emotion_id: Int) {
-        
-        let guidedAudioDataDB = self.fetchGuidedAudioFilterDB(emotion_id: "\(emotion_id)", dbName: "DBGuidedAudioData")
-        if guidedAudioDataDB.count > 0{
-            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
-            
-            self.arrAudioList.removeAll()
-            
-            var jsonString: [String: Any] = [:]
-            for dict in guidedAudioDataDB {
-                
-                jsonString["id"] = Int((dict as AnyObject).audio_id ?? "0")
-                jsonString["duration"] = Int((dict as AnyObject).duration ?? "0")
-                jsonString["audio_name"] = (dict as AnyObject).audio_name as? String
-                jsonString["audio_image"] = (dict as AnyObject).audio_image as? String
-                jsonString["audio_url"] = (dict as AnyObject).audio_url as? String
-                jsonString["author_name"] = (dict as AnyObject).author_name as? String
-                jsonString["vote"] = (dict as AnyObject).vote
-                jsonString["paid"] = (dict as AnyObject).paid
-                
-                let audioData = WWMGuidedAudioData.init(json: jsonString)
-                self.arrAudioList.append(audioData)
-            }
-                        
-        }
     }
     
     func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
@@ -98,7 +66,11 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.stepLbl.layer.cornerRadius = 12
-        
+        cell.daysLbl.text = "Day \(indexPath.row + 1)"
+        cell.stepLbl.text = "\(indexPath.row + 1)"
+        cell.titleLbl.text = self.guidedData.cat_EmotionList[indexPath.row].emotion_Name
+        cell.authorLbl.text = "Guided by \(self.guidedData.cat_EmotionList[indexPath.row].author_name)"
+
         if selectedIndex == indexPath.row{
             cell.descLbl.isHidden = false
             
@@ -116,7 +88,6 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             
         }
         
-        //self.fetchGuidedAudioDataFromDB(emotion_id: self.guidedData.cat_EmotionList[selectedIndex].emotion_Id)
         cell.collectionView.tag = indexPath.row
         cell.collectionView.reloadData()
         return cell
@@ -154,7 +125,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         DispatchQueue.main.async {
             cell.backImg.sd_setImage(with: URL.init(string: "\(data.audio_list[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
             cell.lblAudioTime.text = "\(self.secondToMinuteSecond(second: data.audio_list[indexPath.item].audio_Duration))"
-            //"\(self.arrAudioList[indexPath.item].audio_Duration)"
+            
         }
         
         return cell

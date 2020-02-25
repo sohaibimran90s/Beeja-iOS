@@ -12,6 +12,8 @@ class WWMGuidedData: NSObject {
 
     var cat_Id = Int()
     var cat_Name = String()
+    var cat_mode = String()
+    var cat_meditation_type = String()
     var cat_EmotionList   = [WWMGuidedEmotionData]()
     
     override init() {
@@ -20,6 +22,9 @@ class WWMGuidedData: NSObject {
     init(json:[String:Any]) {
         cat_Id = json["id"] as? Int ?? 1
         cat_Name = json["name"] as? String ?? ""
+        cat_mode = json["mode"] as? String ?? ""
+        cat_meditation_type = json["meditation_type"] as? String ?? ""
+        
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 print("dictkdjsfkdsjfl...... \(dict)")
@@ -36,6 +41,7 @@ class WWMGuidedEmotionData: NSObject {
     var emotion_Name = String()
     var emotion_Image = String()
     var tile_type = String()
+    var author_name = String()
     var audio_list = [WWMGuidedAudioData]()
     
     override init() {
@@ -46,6 +52,7 @@ class WWMGuidedEmotionData: NSObject {
         emotion_Name = json["emotion_name"] as? String ?? ""
         emotion_Image = json["emotion_image"] as? String ?? ""
         tile_type = json["tile_type"] as? String ?? ""
+        author_name = json["author_name"] as? String ?? ""
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 let video = WWMGuidedAudioData.init(json: dict)

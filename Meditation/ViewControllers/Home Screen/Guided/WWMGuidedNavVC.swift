@@ -314,7 +314,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
-                
+                jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
+                jsonString["mode"] = (dict as AnyObject).guided_mode as? String
                 
                 let guidedEmotionsDataDB = self.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
@@ -327,6 +328,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
                     jsonEmotionsString["tile_type"] = (dict1 as AnyObject).tile_type ?? ""
+                    jsonEmotionsString["author_name"] = (dict1 as AnyObject).author_name ?? ""
                     
                     let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
@@ -341,7 +343,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
                         jsonAudiosString["paid"] = (dict2 as AnyObject).paid ?? false
                         jsonAudiosString["audio_image"] = (dict2 as AnyObject).audio_image ?? ""
                         jsonAudiosString["audio_url"] = (dict2 as AnyObject).audio_url ?? ""
-                        jsonAudiosString["author_name"] = (dict2 as AnyObject).author_name ?? ""
                         jsonAudiosString["vote"] = (dict2 as AnyObject).vote ?? false
 
                         jsonAudios.append(jsonAudiosString)

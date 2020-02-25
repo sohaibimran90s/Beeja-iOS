@@ -21,5 +21,5 @@ extension DBGuidedData {
     @NSManaged public var guided_name: String?
     @NSManaged public var last_time_stamp: String?
     @NSManaged public var meditation_type: String?
-
+    @NSManaged public var guided_mode: String?
 }

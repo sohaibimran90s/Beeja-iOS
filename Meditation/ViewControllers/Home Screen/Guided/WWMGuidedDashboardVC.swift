@@ -62,7 +62,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         
         print("arrGuidedList.count... \(arrGuidedList.count)")
         for data in self.arrGuidedList {
-            if data.cat_Name.contains("21") || data.cat_Name.contains("7"){
+            if data.cat_mode == "challenge"{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
                 print("data.cat_name... \(data.cat_Name)")

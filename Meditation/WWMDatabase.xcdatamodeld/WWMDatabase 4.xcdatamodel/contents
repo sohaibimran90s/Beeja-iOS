@@ -1,154 +1,364 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DBAddSession" representedClassName="DBAddSession" syncable="YES">
-        <attribute name="addSession" optional="YES" attributeType="String"/>
+        <attribute name="addSession" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBAllMeditationData" representedClassName="DBAllMeditationData" syncable="YES">
-        <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="meditationName" optional="YES" attributeType="String"/>
-        <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData"/>
+        <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationName" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData">
+            <userInfo/>
+        </relationship>
     </entity>
     <entity name="DBCommunityData" representedClassName="DBCommunityData" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBGetVibesImages" representedClassName="DBGetVibesImages" syncable="YES">
-        <attribute name="images" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
-        <attribute name="mood_id" optional="YES" attributeType="String"/>
+        <attribute name="images" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="mood_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBGuidedAudioData" representedClassName="DBGuidedAudioData" syncable="YES">
-        <attribute name="audio_id" optional="YES" attributeType="String"/>
-        <attribute name="audio_image" optional="YES" attributeType="String"/>
-        <attribute name="audio_name" optional="YES" attributeType="String"/>
-        <attribute name="audio_url" optional="YES" attributeType="String"/>
-        <attribute name="author_name" optional="YES" attributeType="String"/>
-        <attribute name="duration" optional="YES" attributeType="String"/>
-        <attribute name="emotion_id" optional="YES" attributeType="String"/>
-        <attribute name="paid" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="vote" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="audio_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="audio_image" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="audio_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="audio_url" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="author_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="duration" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="emotion_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="paid" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="vote" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBGuidedData" representedClassName="DBGuidedData" syncable="YES">
-        <attribute name="guided_id" optional="YES" attributeType="String"/>
-        <attribute name="guided_name" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
-        <attribute name="meditation_type" optional="YES" attributeType="String"/>
+        <attribute name="guided_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="guided_mode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="guided_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditation_type" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBGuidedEmotionsData" representedClassName="DBGuidedEmotionsData" syncable="YES">
-        <attribute name="emotion_id" optional="YES" attributeType="String"/>
-        <attribute name="emotion_image" optional="YES" attributeType="String"/>
-        <attribute name="emotion_name" optional="YES" attributeType="String"/>
-        <attribute name="guided_id" optional="YES" attributeType="String"/>
-        <attribute name="tile_type" optional="YES" attributeType="String"/>
+        <attribute name="author_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emotion_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="emotion_image" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="emotion_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="guided_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="tile_type" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBJournalData" representedClassName="DBJournalData" syncable="YES">
-        <attribute name="journalData" optional="YES" attributeType="String"/>
+        <attribute name="journalData" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBJournalList" representedClassName="DBJournalList" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
-        <attribute name="meditation_type" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditation_type" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBLevelData" representedClassName="DBLevelData" syncable="YES">
-        <attribute name="isLevelSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="levelId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="levelName" optional="YES" attributeType="String"/>
-        <attribute name="maxMeditation" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="maxPrep" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="maxRest" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="meditationTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="minMeditation" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="minPrep" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="minRest" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="prepTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="restTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isLevelSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="levelId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="levelName" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="maxMeditation" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="maxPrep" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="maxRest" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="minMeditation" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="minPrep" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="minRest" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="prepTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="restTime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBMantras" representedClassName="DBMantras" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBMeditationComplete" representedClassName="DBMeditationComplete" syncable="YES">
-        <attribute name="meditationData" optional="YES" attributeType="String"/>
+        <attribute name="meditationData" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBMeditationData" representedClassName="DBMeditationData" syncable="YES">
-        <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="meditationName" optional="YES" attributeType="String"/>
-        <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData"/>
+        <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationName" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData">
+            <userInfo/>
+        </relationship>
     </entity>
     <entity name="DBMeditationHistory" representedClassName="DBMeditationHistory" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBMoodMeter" representedClassName="DBMoodMeter" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBNintyFiveCompletionData" representedClassName="DBNintyFiveCompletionData" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBSettings" representedClassName="DBSettings" syncable="YES">
-        <attribute name="afterNoonReminderTime" optional="YES" attributeType="String"/>
-        <attribute name="ambientChime" optional="YES" attributeType="String"/>
-        <attribute name="endChime" optional="YES" attributeType="String"/>
-        <attribute name="finishChime" optional="YES" attributeType="String"/>
-        <attribute name="intervalChime" optional="YES" attributeType="String"/>
-        <attribute name="isAfterNoonReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isLearnReminder" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="isMilestoneAndRewards" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isMorningReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="learnReminderTime" optional="YES" attributeType="String"/>
-        <attribute name="mantraID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="meditationTime" optional="YES" attributeType="String"/>
-        <attribute name="moodMeterEnable" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="morningReminderTime" optional="YES" attributeType="String"/>
-        <attribute name="prepTime" optional="YES" attributeType="String"/>
-        <attribute name="restTime" optional="YES" attributeType="String"/>
-        <attribute name="startChime" optional="YES" attributeType="String"/>
-        <relationship name="meditationData" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBMeditationData"/>
+        <attribute name="afterNoonReminderTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="ambientChime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="endChime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="finishChime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="intervalChime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="isAfterNoonReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="isLearnReminder" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="isMilestoneAndRewards" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="isMorningReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="learnReminderTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="mantraID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="moodMeterEnable" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="morningReminderTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="prepTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="restTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="startChime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <relationship name="meditationData" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBMeditationData">
+            <userInfo/>
+        </relationship>
     </entity>
     <entity name="DBStepFaq" representedClassName="DBStepFaq" syncable="YES">
-        <attribute name="answers" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
-        <attribute name="question" optional="YES" attributeType="String"/>
-        <attribute name="step_id" optional="YES" attributeType="String"/>
+        <attribute name="answers" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="question" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="step_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBSteps" representedClassName="DBSteps" syncable="YES">
-        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="date_completed" optional="YES" attributeType="String"/>
-        <attribute name="description1" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
-        <attribute name="outro_audio" optional="YES" attributeType="String"/>
-        <attribute name="step_audio" optional="YES" attributeType="String"/>
-        <attribute name="step_name" optional="YES" attributeType="String"/>
-        <attribute name="timer_audio" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="date_completed" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="description1" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="outro_audio" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="step_audio" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="step_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="timer_audio" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="title" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBTimerData" representedClassName="DBTimerData" syncable="YES">
-        <attribute name="levelId" optional="YES" attributeType="String"/>
-        <attribute name="levelName" optional="YES" attributeType="String"/>
-        <attribute name="meditationTime" optional="YES" attributeType="String"/>
-        <attribute name="prepTime" optional="YES" attributeType="String"/>
-        <attribute name="restTime" optional="YES" attributeType="String"/>
+        <attribute name="levelId" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="levelName" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="meditationTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="prepTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="restTime" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBWisdomData" representedClassName="DBWisdomData" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <entity name="DBWisdomVideoData" representedClassName="DBWisdomVideoData" syncable="YES">
-        <attribute name="video_duration" optional="YES" attributeType="String"/>
-        <attribute name="video_id" optional="YES" attributeType="String"/>
-        <attribute name="video_img" optional="YES" attributeType="String"/>
-        <attribute name="video_name" optional="YES" attributeType="String"/>
-        <attribute name="video_url" optional="YES" attributeType="String"/>
-        <attribute name="video_vote" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="wisdom_id" optional="YES" attributeType="String"/>
+        <attribute name="video_duration" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="video_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="video_img" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="video_name" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="video_url" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <attribute name="video_vote" optional="YES" attributeType="Boolean" usesScalarValueType="YES">
+            <userInfo/>
+        </attribute>
+        <attribute name="wisdom_id" optional="YES" attributeType="String">
+            <userInfo/>
+        </attribute>
     </entity>
     <elements>
         <element name="DBAddSession" positionX="-18" positionY="135" width="128" height="60"/>
@@ -157,8 +367,8 @@
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>
         <element name="DBGuidedAudioData" positionX="0" positionY="153" width="128" height="178"/>
-        <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="103"/>
-        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="118"/>
+        <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="120"/>
+        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="135"/>
         <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
         <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="73"/>
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
