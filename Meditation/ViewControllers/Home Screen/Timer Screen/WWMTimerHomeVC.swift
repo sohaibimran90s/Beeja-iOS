@@ -345,6 +345,13 @@ class WWMTimerHomeVC: WWMBaseViewController {
         if data.count < 1{
             return
         }
+        
+        if self.prepTime == 0 && self.meditationTime == 0 && self.restTime == 0{
+            self.setUpSliderTimesAccordingToLevels()
+            return
+        }
+        
+        print("prepTime... \(self.prepTime) meditationTime... \(self.meditationTime) restTime... \(self.restTime)")
         self.btnStartTimer.isUserInteractionEnabled = true
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
         vc.prepTime = self.prepTime

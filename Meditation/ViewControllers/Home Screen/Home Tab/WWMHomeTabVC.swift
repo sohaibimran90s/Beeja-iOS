@@ -818,7 +818,14 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         player?.pause()
         DispatchQueue.main.async {
             self.player!.seek(to: targetTime)
-            self.player?.play()
+            
+            if !self.audioBool {
+                self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
+                self.player?.pause()
+            }else{
+                self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_pause"), for: .normal)
+                self.player?.play()
+            }
         }
     }
     
@@ -905,7 +912,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             player!.seek(to: selectedTime)
         }
         player?.pause()
-        player?.play()
+        if !self.audioBool {
+            self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
+            self.player?.pause()
+        }else{
+            self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_pause"), for: .normal)
+            self.player?.play()
+        }
         }
     }
 
@@ -921,7 +934,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         player?.pause()
         let selectedTime: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         player?.seek(to: selectedTime)
-        player?.play()
+        if !self.audioBool {
+            self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_play"), for: .normal)
+            self.player?.pause()
+        }else{
+            self.podcastMusicPlayerPopUp.btnPlayPause.setImage(UIImage(named: "white_pause"), for: .normal)
+            self.player?.play()
+        }
     }
     
     func playPauseAudio(index: Int){
