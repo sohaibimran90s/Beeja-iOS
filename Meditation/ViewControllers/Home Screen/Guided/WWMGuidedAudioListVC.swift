@@ -100,8 +100,6 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 }else{
                     if data.audio_Duration > 900{
                         xibCall()
-                        //self.getFreeMoodMeterAlert(title: KSUBSPLANEXP, subTitle: KSUBSPLANEXPDES)
-                        //self.view.isUserInteractionEnabled = false
                     }else{
                         vc.seconds = 900
                         self.navigationController?.pushViewController(vc, animated: true)

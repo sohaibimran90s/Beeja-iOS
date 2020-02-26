@@ -52,7 +52,7 @@ class WWMGuidedEmotionData: NSObject {
         emotion_Name = json["emotion_name"] as? String ?? ""
         emotion_Image = json["emotion_image"] as? String ?? ""
         tile_type = json["tile_type"] as? String ?? ""
-        author_name = json["a1uthor_name"] as? String ?? ""
+        author_name = json["author_name"] as? String ?? ""
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 let video = WWMGuidedAudioData.init(json: dict)

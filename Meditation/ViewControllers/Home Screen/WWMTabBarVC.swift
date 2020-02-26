@@ -493,8 +493,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             
                             if let guided_mode = guidedDict["mode"] as? String{
-                                dbGuidedData.guided_mode = guided_2
-                                mode
+                                dbGuidedData.guided_mode = guided_mode
                             }
                             
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{

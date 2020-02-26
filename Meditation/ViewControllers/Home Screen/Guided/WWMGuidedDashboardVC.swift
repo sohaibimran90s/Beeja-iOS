@@ -69,7 +69,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
                 vc.guidedData = data
                 vc.type = self.type
-                        
+                vc.cat_name = data.cat_Name
+                vc.cat_id = data.cat_Id
+                
                 arrVC.add(vc)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
