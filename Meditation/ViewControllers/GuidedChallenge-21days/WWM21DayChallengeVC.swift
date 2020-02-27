@@ -45,6 +45,10 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     @IBAction func introBtnAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
 

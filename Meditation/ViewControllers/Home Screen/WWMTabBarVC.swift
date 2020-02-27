@@ -525,6 +525,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         dbGuidedEmotionsData.tile_type = tile_type
                                     }
                                     
+                                    if let emotion_key = emotionsDict["emotion_key"] as? String{
+                                        dbGuidedEmotionsData.emotion_key = emotion_key
+                                    }
+                                    
+                                    if let emotion_body = emotionsDict["emotion_body"] as? String{
+                                        dbGuidedEmotionsData.emotion_body = emotion_body
+                                    }
+                                    
                                     if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                         for audioDict in audio_list {
                                             

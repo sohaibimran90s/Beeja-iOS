@@ -33,6 +33,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     var playerLayer = AVPlayerLayer()
 
+    //21day challenge variables
+    var emotionKey: String = ""
+    var user_id: Int = 0
+    var emotionId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +57,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.btnCrossSkip.isHidden = false
         
-        if (value == "help" || value == "learnStepList"){
+        if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
@@ -128,7 +132,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
     }
     
-    
     //MARK:- video function
     func playVideo() {
         
@@ -202,6 +205,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         }else if value == "learnStepList"{
             videoURL = self.appPreffrence.getLearnPageURL()
+        }else if value == "curatedCards"{
+            videoURL = self.appPreffrence.getLearnPageURL()
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
@@ -233,8 +238,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.player1?.pause()
         self.timer.invalidate()
         
-        if (value == "help" || value == "learnStepList"){
-            self.navigationController?.popViewController(animated: true)
+        if (value == "help" || value == "learnStepList" || value == "curatedCards"){
+            self.navigateToDashboard()
         }else{
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_SKIPPED", itemName: "")
@@ -266,6 +271,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }
             if value == "help"  || value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
+            }else if value == "curatedCards"{
+                self.challengeIntroVideoCompleted()
             }else{
                 // Analytics
                 WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_COMPLETED", itemName: "")
@@ -274,6 +281,55 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }
         }
     }
+    
+    func challengeIntroVideoCompleted() {
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        let param = [
+            "user_id": self.user_id,
+            "emotion_id": self.emotionId,
+            "emotion_key": self.emotionKey
+            ] as [String : Any]
+        
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_Challenge, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
+            
+            if success {
+                print("success... \(result)")
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                self.navigateToDashboard()
+            }else {
+                if error != nil {
+                    
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                    }
+                    
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    func navigateToDashboard() {
+        
+        self.navigationController?.isNavigationBarHidden = false
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+
     
     //App enter in forground.
     @objc func applicationWillEnterForeground(_ notification: Notification) {

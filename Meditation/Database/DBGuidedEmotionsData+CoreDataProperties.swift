@@ -23,4 +23,6 @@ extension DBGuidedEmotionsData {
     @NSManaged public var guided_id: String?
     @NSManaged public var tile_type: String?
     @NSManaged public var author_name: String?
+    @NSManaged public var emotion_key: String?
+    @NSManaged public var emotion_body: String?
 }

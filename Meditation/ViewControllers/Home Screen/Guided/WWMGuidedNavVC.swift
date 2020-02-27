@@ -329,6 +329,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
                     jsonEmotionsString["tile_type"] = (dict1 as AnyObject).tile_type ?? ""
                     jsonEmotionsString["author_name"] = (dict1 as AnyObject).author_name ?? ""
+                    jsonEmotionsString["emotion_body"] = (dict1 as AnyObject).emotion_body ?? ""
+                    jsonEmotionsString["emotion_key"] = (dict1 as AnyObject).emotion_key ?? ""
                     
                     let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")

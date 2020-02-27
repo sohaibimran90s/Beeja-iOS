@@ -223,6 +223,7 @@
 		6133735423C315F100F9C866 /* WWMGuidedUpgradeBeejaPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6133735323C315F100F9C866 /* WWMGuidedUpgradeBeejaPopUp.swift */; };
 		613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */; };
 		613528B9225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */; };
+		6137D589240794120002BD2F /* WWMGuidedEmotion21DaysCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6137D588240794120002BD2F /* WWMGuidedEmotion21DaysCVC.swift */; };
 		613AB06F23F2ACA700064B99 /* WWM21DayChallengeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AB06C23F2ACA600064B99 /* WWM21DayChallengeVC.swift */; };
 		613AB07023F2ACA700064B99 /* WWM21DayChallengeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AB06D23F2ACA600064B99 /* WWM21DayChallengeCVC.swift */; };
 		613AB07123F2ACA700064B99 /* WWM21DayChallengeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AB06E23F2ACA600064B99 /* WWM21DayChallengeTVC.swift */; };
@@ -726,6 +727,7 @@
 		6133735323C315F100F9C866 /* WWMGuidedUpgradeBeejaPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedUpgradeBeejaPopUp.swift; sourceTree = "<group>"; };
 		613528B6225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllEventsVC.swift; sourceTree = "<group>"; };
 		613528B8225DF36F00CE68D9 /* WWMCommunityAllHashTagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMCommunityAllHashTagsVC.swift; sourceTree = "<group>"; };
+		6137D588240794120002BD2F /* WWMGuidedEmotion21DaysCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotion21DaysCVC.swift; sourceTree = "<group>"; };
 		613AB06C23F2ACA600064B99 /* WWM21DayChallengeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM21DayChallengeVC.swift; sourceTree = "<group>"; };
 		613AB06D23F2ACA600064B99 /* WWM21DayChallengeCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM21DayChallengeCVC.swift; sourceTree = "<group>"; };
 		613AB06E23F2ACA600064B99 /* WWM21DayChallengeTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM21DayChallengeTVC.swift; sourceTree = "<group>"; };
@@ -1323,6 +1325,7 @@
 				2EB0865622817068008BF6E4 /* WWMGuidedNavVC.swift */,
 				2EB0865922817068008BF6E4 /* WWMGuidedMeditationTimerVC.swift */,
 				61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */,
+				6137D588240794120002BD2F /* WWMGuidedEmotion21DaysCVC.swift */,
 			);
 			path = Guided;
 			sourceTree = "<group>";
@@ -2743,6 +2746,7 @@
 				E07831F5235E3BCA00B352ED /* ESTabBarItem.swift in Sources */,
 				61416EB222BBB42600C9339E /* ViewPortHandler.swift in Sources */,
 				61416E6122BBB31400C9339E /* HorizontalBarChartRenderer.swift in Sources */,
+				6137D589240794120002BD2F /* WWMGuidedEmotion21DaysCVC.swift in Sources */,
 				2E99BAF121E48605009F0909 /* WWMWelcomeBackVC.swift in Sources */,
 				61416E7922BBB37C00C9339E /* IHighlighter.swift in Sources */,
 				61416EA522BBB40300C9339E /* DefaultValueFormatter.swift in Sources */,
