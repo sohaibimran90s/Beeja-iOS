@@ -133,6 +133,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 print("Location services are not enabled")
             }
         }
+        
     }
     
     
@@ -519,6 +520,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     if let emotion_name = emotionsDict["emotion_name"] as? String{
                                         dbGuidedEmotionsData.emotion_name = emotion_name
+                                    }
+                                    
+                                    if let intro_completed = emotionsDict["intro_completed"] as? Bool{
+                                        dbGuidedEmotionsData.intro_completed = intro_completed
+                                    }else{
+                                        dbGuidedEmotionsData.intro_completed = false
                                     }
                                     
                                     if let tile_type = emotionsDict["tile_type"] as? String{

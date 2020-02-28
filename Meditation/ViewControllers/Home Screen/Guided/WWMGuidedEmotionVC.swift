@@ -9,13 +9,21 @@
 import UIKit
 import XLPagerTabStrip
 
+protocol WWMGuidedDashboardDelegate {
+    func guidedEmotionReload(isTrue: Bool, vcName: String, tile_type: Int)
+}
+
 class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
     var type = ""
+    
+    var delegate: WWMGuidedDashboardDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         print(guidedData.cat_EmotionList.count)
     }
@@ -73,14 +81,27 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             vc.type = self.type
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
             
-            print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID())")
-            vc.value = "curatedCards"
-            vc.emotionId = data.emotion_Id
-            vc.emotionKey = data.emotion_key
-            vc.user_id = Int(self.appPreference.getUserID()) ?? 0
-            self.navigationController?.pushViewController(vc, animated: false)
+            if !data.intro_completed{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+
+                print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID())")
+                vc.value = "curatedCards"
+                vc.emotionId = data.emotion_Id
+                vc.emotionKey = data.emotion_key
+                vc.user_id = Int(self.appPreference.getUserID()) ?? 0
+                self.navigationController?.pushViewController(vc, animated: false)
+            }else{
+                if data.tile_type == "2" {
+                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 2)
+                    self.reloadTabs21DaysController()
+
+                }else{
+                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 3)
+                    self.reloadTabs21DaysController()
+
+                }
+            }
         }
     }
     
@@ -112,5 +133,23 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         
         return footerView
         
+    }
+    
+    func reloadTabs21DaysController(){
+        self.navigationController?.isNavigationBarHidden = false
+        
+         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationReloadGuidedTabs"), object: nil)
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
 }

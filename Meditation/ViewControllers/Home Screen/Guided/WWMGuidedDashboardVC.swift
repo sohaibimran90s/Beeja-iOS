@@ -21,6 +21,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         self.setUpUI()
     }
     
+    
     func setUpUI() {
         
         buttonBarView.frame.origin.y = -18
@@ -36,7 +37,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
         }
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 15)!
+        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 18)!
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 15
         settings.style.buttonBarItemTitleColor = UIColor.white
@@ -72,11 +73,13 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.cat_name = data.cat_Name
                 vc.cat_id = data.cat_Id
                 
+                
                 arrVC.add(vc)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
                             
                 print("data.cat_name... \(data.cat_Name)")
+                vc.delegate = self
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                 vc.guidedData = data
                 vc.type = self.type
@@ -86,5 +89,16 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         }
         return arrVC as! [UIViewController]
         // return [UIViewController]
+    }
+}
+
+extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
+    func guidedEmotionReload(isTrue: Bool, vcName: String, tile_type: Int) {
+        print("vcnamce.... \(vcName)")
+        if (vcName == "WWMGuidedEmotionVC") && isTrue && tile_type == 2{
+            self.moveToViewController(at: 3, animated: true)
+        }else if (vcName == "WWMGuidedEmotionVC") && isTrue && tile_type == 3{
+            self.moveToViewController(at: 2, animated: true)
+        }
     }
 }

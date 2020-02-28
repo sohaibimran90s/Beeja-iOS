@@ -44,6 +44,7 @@ class WWMGuidedEmotionData: NSObject {
     var author_name = String()
     var emotion_body = String()
     var emotion_key = String()
+    var intro_completed = Bool()
     var audio_list = [WWMGuidedAudioData]()
     
     override init() {
@@ -57,6 +58,8 @@ class WWMGuidedEmotionData: NSObject {
         author_name = json["author_name"] as? String ?? ""
         emotion_body = json["emotion_body"] as? String ?? ""
         emotion_key = json["emotion_key"] as? String ?? ""
+        intro_completed = json["intro_completed"] as? Bool ?? false
+        
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 let video = WWMGuidedAudioData.init(json: dict)

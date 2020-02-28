@@ -66,6 +66,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.setAnimationForExpressMood()
         }
         
+        //self.fetchGuidedDataFromDB()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
     }
     
@@ -331,6 +333,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["author_name"] = (dict1 as AnyObject).author_name ?? ""
                     jsonEmotionsString["emotion_body"] = (dict1 as AnyObject).emotion_body ?? ""
                     jsonEmotionsString["emotion_key"] = (dict1 as AnyObject).emotion_key ?? ""
+                    jsonEmotionsString["intro_completed"] = (dict1 as AnyObject).intro_completed ?? false
                     
                     let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
@@ -359,6 +362,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonEmotions.removeAll()
                 let guidedData = WWMGuidedData.init(json: jsonString)
                 self.arrGuidedList.append(guidedData)
+            }
+            
+            //if let view = self.containerView.cont
+            for view in self.containerView.subviews{
+                view.removeFromSuperview()
             }
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC

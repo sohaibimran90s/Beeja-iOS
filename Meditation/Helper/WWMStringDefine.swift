@@ -112,7 +112,7 @@ let URL_ADDSESSION                  = URL_BASE + "addSession"//
 let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
 let URL_SETTINGS                  = URL_BASE + "settings"//
 let URL_MILESTONE                  = URL_BASE + "milestone"//
-let URL_Challenge                 = URL_BASE + "challenge"
+let URL_ACCEPT_CHALLENGE                 = URL_BASE + "accept/challenge"
 
 let URL_HANDSHAKE                  = URL_BASE + "handshake"//
 
