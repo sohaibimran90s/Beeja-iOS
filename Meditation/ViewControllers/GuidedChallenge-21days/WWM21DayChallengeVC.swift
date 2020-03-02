@@ -40,6 +40,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var alertPopupView1 = WWMAlertController()
     let reachable = Reachabilities()
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
+    //var alertPopup = WWMAlertPopUp()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,29 +182,110 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         let data = self.guidedData.cat_EmotionList[collectionView.tag]
         
         if self.appPreference.getIsSubscribedBool(){
+            
+            self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+//            vc.audioData = data.audio_list[indexPath.item]
+//            vc.cat_id = "\(self.cat_id)"
+//            vc.cat_Name = self.cat_name
+//            vc.emotion_Id = "\(data.emotion_Id)"
+//            vc.emotion_Name = data.emotion_Name
+//            vc.seconds = data.audio_list[indexPath.item].audio_Duration
+//
+//            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            if data.audio_list[indexPath.item].audio_Duration <= 900{
+                self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+//
+//                vc.audioData = data.audio_list[indexPath.item]
+//                vc.cat_id = "\(self.cat_id)"
+//                vc.cat_Name = self.cat_name
+//                vc.emotion_Id = "\(data.emotion_Id)"
+//                vc.emotion_Name = data.emotion_Name
+//                vc.seconds = data.audio_list[indexPath.item].audio_Duration
+//
+//                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                xibCall()
+            }
+        }
+    }
+    
+    func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
+        
+        var flag = 0
+        var position = 0
+        
+        let data = self.guidedData.cat_EmotionList[table_cell_tag]
+        if data.completed{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-            vc.audioData = data.audio_list[indexPath.item]
+            vc.audioData = data.audio_list[collection_cell_tag]
             vc.cat_id = "\(self.cat_id)"
             vc.cat_Name = self.cat_name
             vc.emotion_Id = "\(data.emotion_Id)"
             vc.emotion_Name = data.emotion_Name
-            vc.seconds = data.audio_list[indexPath.item].audio_Duration
+            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
             
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            return
         }else{
-            if data.audio_list[indexPath.item].audio_Duration <= 900{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                
-                vc.audioData = data.audio_list[indexPath.item]
-                vc.cat_id = "\(self.cat_id)"
-                vc.cat_Name = self.cat_name
-                vc.emotion_Id = "\(data.emotion_Id)"
-                vc.emotion_Name = data.emotion_Name
-                vc.seconds = data.audio_list[indexPath.item].audio_Duration
-                
-                self.navigationController?.pushViewController(vc, animated: true)
-            }else{
-                xibCall()
+            for i in 0..<table_cell_tag{
+                let date_completed = self.guidedData.cat_EmotionList[i].completed_date
+                if date_completed != ""{
+                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                    if dateCompare.0 == 1{
+                        flag = 1
+                        break
+                    }
+                }
+            }
+        }
+        
+        if flag == 1{
+            self.xibCall1(title1: KLEARNONESTEP)
+            return
+        }
+        
+        for i in 0..<table_cell_tag{
+            if !self.guidedData.cat_EmotionList[i].completed{
+                flag = 2
+                position = i
+                break
+            }
+        }
+        
+        if flag == 2{
+            
+            print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name)")
+            
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.guidedData.cat_EmotionList[position].emotion_Name) \(KLEARNJUMPSTEP1)")
+        }else{
+            WWMHelperClass.selectedType = "guided"
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+            vc.audioData = data.audio_list[collection_cell_tag]
+            vc.cat_id = "\(self.cat_id)"
+            vc.cat_Name = self.cat_name
+            vc.emotion_Id = "\(data.emotion_Id)"
+            vc.emotion_Name = data.emotion_Name
+            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func xibCall1(title1: String){
+        alertPopup = UINib(nibName: "WWMAlertPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertPopUp
+        let window = UIApplication.shared.keyWindow!
+        
+        alertPopup.lblTitle.text = title1
+        alertPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        UIView.transition(with: alertPopup, duration: 1.0, options: .transitionCrossDissolve, animations: {
+            window.rootViewController?.view.addSubview(self.alertPopup)
+        }) { (Bool) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.alertPopup.removeFromSuperview()
             }
         }
     }

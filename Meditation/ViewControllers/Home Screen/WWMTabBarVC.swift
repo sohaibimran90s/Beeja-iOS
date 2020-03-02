@@ -540,6 +540,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         dbGuidedEmotionsData.emotion_body = emotion_body
                                     }
                                     
+                                    if let completed = emotionsDict["completed"] as? Bool{
+                                        dbGuidedEmotionsData.completed = completed
+                                    }
+                                    
+                                    if let completed_date = emotionsDict["completed_date"] as? String{
+                                        dbGuidedEmotionsData.completed_date = completed_date
+                                    }
+                                    
                                     if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                         for audioDict in audio_list {
                                             

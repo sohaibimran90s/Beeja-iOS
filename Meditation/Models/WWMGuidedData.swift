@@ -45,6 +45,8 @@ class WWMGuidedEmotionData: NSObject {
     var emotion_body = String()
     var emotion_key = String()
     var intro_completed = Bool()
+    var completed = Bool()
+    var completed_date = String()
     var audio_list = [WWMGuidedAudioData]()
     
     override init() {
