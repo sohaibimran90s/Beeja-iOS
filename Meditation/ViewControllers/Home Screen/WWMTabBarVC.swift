@@ -44,7 +44,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
         
         self.updateDiskStatus()
         
@@ -452,6 +451,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         let param = ["user_id":self.appPreffrence.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
+                
+                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if let _ = result["success"] as? Bool {
                     print("success result... \(result)")
                     
@@ -606,6 +607,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     }
                 }
             }
+             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }//end guided api*
     
@@ -1715,11 +1717,4 @@ extension WWMTabBarVC{
         return nil
     }
     
-    //
-    @objc func notificationGuided(notification: Notification) {
-        print("dfkdsajfklsdajflkadsjfkljsdfkljdfskl======")
-        self.getGuidedListAPI()
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)        
-    }
 }

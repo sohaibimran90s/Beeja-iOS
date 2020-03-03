@@ -64,10 +64,23 @@ class WWMGuidedEmotionData: NSObject {
         completed = json["completed"] as? Bool ?? false
         completed_date = json["completed_date"] as? String ?? ""
         
+        var isSaveAudioData = 0
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
             for dict in arrLevels {
-                let video = WWMGuidedAudioData.init(json: dict)
-                audio_list.append(video)
+                
+                if self.audio_list.count > 0{
+                    for i in 0..<self.audio_list.count{
+                        let id = self.audio_list[i].audio_Id
+                        if dict["id"] as? Int == id{
+                            isSaveAudioData = 1
+                        }
+                    }
+                }
+                
+                if isSaveAudioData == 0{
+                    let video = WWMGuidedAudioData.init(json: dict)
+                    audio_list.append(video)
+                }
             }
         }
     }

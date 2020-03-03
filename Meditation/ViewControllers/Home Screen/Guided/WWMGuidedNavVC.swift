@@ -376,9 +376,176 @@ class WWMGuidedNavVC: WWMBaseViewController {
             vc.didMove(toParent: self)
             
             //NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)
+        }else{
+            self.getGuidedListAPI()
         }
        
     }
+    
+    func getGuidedListAPI() {
+        
+        let param = ["user_id":self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let _ = result["success"] as? Bool {
+                    print("success result... \(result)")
+                    
+                    if let audioList = result["result"] as? [[String:Any]] {
+                        
+                        print("audioList... \(audioList)")
+                        
+                        let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
+                        if guidedData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
+                        }
+                        
+                        let guidedEmotionsData = WWMHelperClass.fetchDB(dbName: "DBGuidedEmotionsData") as! [DBGuidedEmotionsData]
+                        if guidedEmotionsData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
+                        }
+                        
+                        let guidedAudioData = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
+                        if guidedAudioData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
+                        }
+                        
+                        for guidedDict in audioList {
+                            
+                            let dbGuidedData = WWMHelperClass.fetchEntity(dbName: "DBGuidedData") as! DBGuidedData
+                            
+                            let timeInterval = Int(Date().timeIntervalSince1970)
+                            print("timeInterval.... \(timeInterval)")
+                            
+                            dbGuidedData.last_time_stamp = "\(timeInterval)"
+                            
+                            if let id = guidedDict["id"]{
+                                dbGuidedData.guided_id = "\(id)"
+                            }
+                            
+                            if let name = guidedDict["name"] as? String{
+                                dbGuidedData.guided_name = name
+                            }
+                            
+                            if let meditation_type = guidedDict["meditation_type"] as? String{
+                                dbGuidedData.meditation_type = meditation_type
+                            }
+                            
+                            if let guided_mode = guidedDict["mode"] as? String{
+                                dbGuidedData.guided_mode = guided_mode
+                            }
+                            
+                            if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
+                                for emotionsDict in emotion_list {
+                                    
+                                    let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
+                                    
+                                    if let id = guidedDict["id"]{
+                                        dbGuidedEmotionsData.guided_id = "\(id)"
+                                    }
+                                    
+                                    if let emotion_id = emotionsDict["emotion_id"]{
+                                        dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
+                                    }
+                                    
+                                    if let author_name = emotionsDict["author_name"]{
+                                        dbGuidedEmotionsData.author_name = "\(author_name)"
+                                    }
+                                    
+                                    if let emotion_image = emotionsDict["emotion_image"] as? String{
+                                        dbGuidedEmotionsData.emotion_image = emotion_image
+                                    }
+                                    
+                                    if let emotion_name = emotionsDict["emotion_name"] as? String{
+                                        dbGuidedEmotionsData.emotion_name = emotion_name
+                                    }
+                                    
+                                    if let intro_completed = emotionsDict["intro_completed"] as? Bool{
+                                        dbGuidedEmotionsData.intro_completed = intro_completed
+                                    }else{
+                                        dbGuidedEmotionsData.intro_completed = false
+                                    }
+                                    
+                                    if let tile_type = emotionsDict["tile_type"] as? String{
+                                        dbGuidedEmotionsData.tile_type = tile_type
+                                    }
+                                    
+                                    if let emotion_key = emotionsDict["emotion_key"] as? String{
+                                        dbGuidedEmotionsData.emotion_key = emotion_key
+                                    }
+                                    
+                                    if let emotion_body = emotionsDict["emotion_body"] as? String{
+                                        dbGuidedEmotionsData.emotion_body = emotion_body
+                                    }
+                                    
+                                    if let completed = emotionsDict["completed"] as? Bool{
+                                        dbGuidedEmotionsData.completed = completed
+                                    }
+                                    
+                                    if let completed_date = emotionsDict["completed_date"] as? String{
+                                        dbGuidedEmotionsData.completed_date = completed_date
+                                    }
+                                    
+                                    if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
+                                        for audioDict in audio_list {
+                                            
+                                            let dbGuidedAudioData = WWMHelperClass.fetchEntity(dbName: "DBGuidedAudioData") as! DBGuidedAudioData
+                                            
+                                            if let emotion_id = emotionsDict["emotion_id"]{
+                                                dbGuidedAudioData.emotion_id = "\(emotion_id)"
+                                            }
+                                            
+                                            if let audio_id = audioDict["id"]{
+                                                dbGuidedAudioData.audio_id = "\(audio_id)"
+                                            }
+                                            
+                                            if let audio_image = audioDict["audio_image"] as? String{
+                                                dbGuidedAudioData.audio_image = audio_image
+                                            }
+                                            
+                                            if let audio_name = audioDict["audio_name"] as? String{
+                                                dbGuidedAudioData.audio_name = audio_name
+                                            }
+                                            
+                                            if let audio_url = audioDict["audio_url"] as? String{
+                                                dbGuidedAudioData.audio_url = audio_url
+                                            }
+                                            
+                                            if let author_name = audioDict["author_name"] as? String{
+                                                dbGuidedAudioData.author_name = author_name
+                                            }
+                                            
+                                            if let duration = audioDict["duration"]{
+                                                dbGuidedAudioData.duration = "\(duration)"
+                                            }
+                                            
+                                            if let paid = audioDict["paid"] as? Bool{
+                                                dbGuidedAudioData.paid = paid
+                                            }
+                                            
+                                            if let vote = audioDict["vote"] as? Bool{
+                                                dbGuidedAudioData.vote = vote
+                                            }
+                                            
+                                            WWMHelperClass.saveDb()
+                                        }
+                                    }
+                                    
+                                    WWMHelperClass.saveDb()
+                                }
+                            }
+                            
+                            WWMHelperClass.saveDb()
+                            
+                            self.fetchGuidedDataFromDB()
+                        }
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
+                        print("guided data tabbarvc in background thread...")
+                    }
+                }
+            }
+        }
+    }//end guided api*
+
     
     func fetchGuidedFilterDB(type: String, dbName: String) -> [Any]{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)

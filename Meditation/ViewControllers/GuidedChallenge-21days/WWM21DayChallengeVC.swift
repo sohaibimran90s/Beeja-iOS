@@ -41,7 +41,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     let reachable = Reachabilities()
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
     //var alertPopup = WWMAlertPopUp()
-    var abc = 0
+    var stepToComplete = 0
 
     
     override func viewDidLoad() {
@@ -125,8 +125,8 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.upperLineLbl.backgroundColor = UIColor.white
             cell.belowLineLbl.backgroundColor = UIColor.white
             
-            abc = indexPath.row + 1
-        }else if abc == indexPath.row{
+            stepToComplete = indexPath.row + 1
+        }else if stepToComplete == indexPath.row{
             cell.stepLbl.layer.cornerRadius = 12
             cell.stepLbl.text = "\(indexPath.row + 1)"
             cell.imgTick.isHidden = true
@@ -235,28 +235,9 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         if self.appPreference.getIsSubscribedBool(){
             
             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//            vc.audioData = data.audio_list[indexPath.item]
-//            vc.cat_id = "\(self.cat_id)"
-//            vc.cat_Name = self.cat_name
-//            vc.emotion_Id = "\(data.emotion_Id)"
-//            vc.emotion_Name = data.emotion_Name
-//            vc.seconds = data.audio_list[indexPath.item].audio_Duration
-//
-//            self.navigationController?.pushViewController(vc, animated: true)
         }else{
             if data.audio_list[indexPath.item].audio_Duration <= 900{
                 self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-//                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//
-//                vc.audioData = data.audio_list[indexPath.item]
-//                vc.cat_id = "\(self.cat_id)"
-//                vc.cat_Name = self.cat_name
-//                vc.emotion_Id = "\(data.emotion_Id)"
-//                vc.emotion_Name = data.emotion_Name
-//                vc.seconds = data.audio_list[indexPath.item].audio_Duration
-//
-//                self.navigationController?.pushViewController(vc, animated: true)
             }else{
                 xibCall()
             }
@@ -311,7 +292,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name)")
             
-            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(table_cell_tag + 1) \(KLEARNJUMPSTEP1)")
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(stepToComplete + 1) \(KLEARNJUMPSTEP1)")
         }else{
             WWMHelperClass.selectedType = "guided"
             
