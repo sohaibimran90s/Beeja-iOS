@@ -68,7 +68,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
         
         //self.fetchGuidedDataFromDB()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
     }
     
     //insert offline data to server
@@ -152,10 +151,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         }
     }//insert offline data to server*
 
-    
-    @objc func notificationGuided(notification: Notification) {
-        self.fetchGuidedDataFromDB()
-    }
+
     
     @objc func handleDropDownTap(_ sender: UITapGestureRecognizer) {
         self.dropDownView.isHidden = true
@@ -324,7 +320,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 
                 for dict1 in guidedEmotionsDataDB{
                     
-                    print("guidedEmotionsDataDB dict.... \(dict)")
+                    print("guidedEmotionsDataDB dict.... \(Int((dict1 as AnyObject).emotion_id ?? "0")) \((dict1 as AnyObject).completed ?? false)  \((dict1 as AnyObject).completed_date ?? ""))")
                     
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
@@ -379,7 +375,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.containerView.addSubview((vc.view)!)
             vc.didMove(toParent: self)
             
-            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)
+            //NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)
         }
        
     }

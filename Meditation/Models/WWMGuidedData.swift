@@ -61,6 +61,8 @@ class WWMGuidedEmotionData: NSObject {
         emotion_body = json["emotion_body"] as? String ?? ""
         emotion_key = json["emotion_key"] as? String ?? ""
         intro_completed = json["intro_completed"] as? Bool ?? false
+        completed = json["completed"] as? Bool ?? false
+        completed_date = json["completed_date"] as? String ?? ""
         
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
             for dict in arrLevels {

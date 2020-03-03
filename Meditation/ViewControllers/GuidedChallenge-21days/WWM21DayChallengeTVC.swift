@@ -20,6 +20,7 @@ class WWM21DayChallengeTVC: UITableViewCell {
     @IBOutlet weak var backImg1: UIImageView!
     @IBOutlet weak var backImg2: UIImageView!
     @IBOutlet weak var arrowImg: UIImageView!
+    @IBOutlet weak var imgTick: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
 
 

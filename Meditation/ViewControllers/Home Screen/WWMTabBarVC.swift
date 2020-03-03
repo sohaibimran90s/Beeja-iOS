@@ -44,6 +44,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuided(notification:)), name: Notification.Name("notificationGuided"), object: nil)
+        
         self.updateDiskStatus()
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
@@ -1711,5 +1713,13 @@ extension WWMTabBarVC{
             }
         }
         return nil
+    }
+    
+    //
+    @objc func notificationGuided(notification: Notification) {
+        print("dfkdsajfklsdajflkadsjfkljsdfkljdfskl======")
+        self.getGuidedListAPI()
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)        
     }
 }

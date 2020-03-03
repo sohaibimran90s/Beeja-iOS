@@ -41,9 +41,31 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     let reachable = Reachabilities()
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
     //var alertPopup = WWMAlertPopUp()
+    var abc = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //* logic for expanding the cell which we have to play
+        var flag = 0
+        
+        for i in 0..<self.guidedData.cat_EmotionList.count{
+            print("date_completed... \(self.guidedData.cat_EmotionList[i].completed_date)")
+            print("completed... \(self.guidedData.cat_EmotionList[i].completed)")
+            
+            if i !=  self.guidedData.cat_EmotionList.count - 1{
+                if self.guidedData.cat_EmotionList[i].completed == true{
+                    self.selectedIndex = i + 1
+                    flag = 1
+                }
+            }
+        }
+        
+        if flag == 0{
+            self.selectedIndex = 0
+        }
+        //*end here
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,15 +115,42 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.upperLineLbl.isHidden = false
         }
         
-        cell.stepLbl.layer.cornerRadius = 12
         cell.daysLbl.text = "Day \(indexPath.row + 1)"
-        cell.stepLbl.text = "\(indexPath.row + 1)"
         cell.titleLbl.text = data.emotion_Name
         cell.authorLbl.text = "Guided by \(data.author_name)"
+        
+        if data.completed{
+            cell.imgTick.isHidden = false
+            cell.stepLbl.isHidden = true
+            cell.upperLineLbl.backgroundColor = UIColor.white
+            cell.belowLineLbl.backgroundColor = UIColor.white
+            
+            abc = indexPath.row + 1
+        }else if abc == indexPath.row{
+            cell.stepLbl.layer.cornerRadius = 12
+            cell.stepLbl.text = "\(indexPath.row + 1)"
+            cell.imgTick.isHidden = true
+            cell.stepLbl.isHidden = false
+            
+            cell.upperLineLbl.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+            cell.belowLineLbl.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+            cell.stepLbl.textColor = UIColor.black
+            cell.stepLbl.backgroundColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+        }else{
+            
+            cell.stepLbl.layer.cornerRadius = 12
+            cell.stepLbl.text = "\(indexPath.row + 1)"
+            cell.imgTick.isHidden = true
+            cell.stepLbl.isHidden = false
+            
+            cell.stepLbl.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            cell.upperLineLbl.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            cell.belowLineLbl.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            cell.stepLbl.textColor = UIColor.black.withAlphaComponent(0.5)
+        }
 
         if selectedIndex == indexPath.row{
             cell.descLbl.isHidden = false
-            
             cell.backImg1.backgroundColor = UIColor(red: 14.0/255.0, green: 31.0/255.0, blue: 104.0/255.0, alpha: 0.7)
             cell.backImg2.isHidden = false
             cell.backImg1.isHidden = true
@@ -132,6 +181,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedIndex = indexPath.row
+        print(self.guidedData.cat_EmotionList[selectedIndex].completed)
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.tableView.reloadData()
     }
@@ -180,6 +230,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
         let data = self.guidedData.cat_EmotionList[collectionView.tag]
+        print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date)")
         
         if self.appPreference.getIsSubscribedBool(){
             
@@ -260,7 +311,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name)")
             
-            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.guidedData.cat_EmotionList[position].emotion_Name) \(KLEARNJUMPSTEP1)")
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(table_cell_tag + 1) \(KLEARNJUMPSTEP1)")
         }else{
             WWMHelperClass.selectedType = "guided"
             
