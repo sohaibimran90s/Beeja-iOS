@@ -42,12 +42,30 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
     //var alertPopup = WWMAlertPopUp()
     var stepToComplete = 0
-
+    var isIntroCompleted = false
+    var tile_type = ""
+    var emotionId = 0
+    var emotionKey = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !isIntroCompleted{
+
+            print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+            
+            print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
+            vc.value = "curatedCards"
+            vc.emotionId = self.emotionId
+            vc.emotionKey = self.emotionKey
+            vc.user_id = Int(self.appPreference.getUserID()) ?? 0
+            self.navigationController?.pushViewController(vc, animated: false)
+            return
+        }
         //* logic for expanding the cell which we have to play
+        
+        self.navigationController?.isNavigationBarHidden = false
         var flag = 0
         
         for i in 0..<self.guidedData.cat_EmotionList.count{
@@ -69,7 +87,11 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        
+        
+       
+        
+        print("tile_type 21_days++++ \(self.tile_type)")
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
@@ -166,6 +188,9 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.collectionView.tag = indexPath.row
+        let layout = UICollectionViewFlowLayout()
+        cell.collectionView.collectionViewLayout = layout
+        layout.scrollDirection = .horizontal
         cell.collectionView.reloadData()
         return cell
     }
@@ -182,7 +207,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         
         selectedIndex = indexPath.row
         print(self.guidedData.cat_EmotionList[selectedIndex].completed)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        //tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.tableView.reloadData()
     }
 }
@@ -230,17 +255,34 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
         let data = self.guidedData.cat_EmotionList[collectionView.tag]
-        print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date)")
-        
-        if self.appPreference.getIsSubscribedBool(){
+
+        if self.isIntroCompleted{
             
-            self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-        }else{
-            if data.audio_list[indexPath.item].audio_Duration <= 900{
+//            if self.tile_type == data.tile_type{
+//
+//            }
+            print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date)")
+            
+            if self.appPreference.getIsSubscribedBool(){
+                
                 self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
             }else{
-                xibCall()
+                if data.audio_list[indexPath.item].audio_Duration <= 900{
+                    self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                }else{
+                    xibCall()
+                }
             }
+        }else{
+            print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+            
+            print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
+            vc.value = "curatedCards"
+            vc.emotionId = self.emotionId
+            vc.emotionKey = self.emotionKey
+            vc.user_id = Int(self.appPreference.getUserID()) ?? 0
+            self.navigationController?.pushViewController(vc, animated: false)
         }
     }
     

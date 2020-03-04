@@ -66,7 +66,6 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             cell.lblTitle.text = data.emotion_Name
         }
         
-        
         return cell
     }
     

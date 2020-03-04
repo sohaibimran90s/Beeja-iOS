@@ -62,12 +62,47 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         let arrVC = NSMutableArray()
         
         print("arrGuidedList.count... \(arrGuidedList.count)")
+        var isIntroCompleted = false
+        var emotionId = 0
+        var emotionKey = ""
+        var tile_type = ""
         for data in self.arrGuidedList {
+            
+            for i in 0..<data.cat_EmotionList.count{
+                print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
+                if data.cat_EmotionList[i].intro_completed{
+                    isIntroCompleted = true
+                    tile_type = data.cat_EmotionList[i].tile_type
+                    print("title_type.... \(data.cat_EmotionList[i].tile_type)")
+                }
+                
+                if data.cat_EmotionList[i].tile_type == "3"{
+                    print("emotionId+++ \(data.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data.cat_EmotionList[i].emotion_key)")
+                    emotionId = data.cat_EmotionList[i].emotion_Id
+                    emotionKey = data.cat_EmotionList[i].emotion_key
+                    
+                }
+            }
+            
             if data.cat_mode == "challenge"{
+                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
                 print("data.cat_name... \(data.cat_Name)")
-                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+                if data.cat_Name.contains("21"){
+                    if isIntroCompleted{
+                         vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+                    }else{
+                         vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
+                    }
+                }else{
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                }
+                
+                vc.tile_type = tile_type
+                vc.emotionId = emotionId
+                vc.emotionKey = emotionKey
+                vc.isIntroCompleted = isIntroCompleted
                 vc.guidedData = data
                 vc.type = self.type
                 vc.cat_name = data.cat_Name
