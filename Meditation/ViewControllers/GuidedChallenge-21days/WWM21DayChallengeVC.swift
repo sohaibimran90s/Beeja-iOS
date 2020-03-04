@@ -46,6 +46,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var tile_type = ""
     var emotionId = 0
     var emotionKey = ""
+    var guideTitleCount = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,11 +91,8 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        
-       
-        
-        print("tile_type 21_days++++ \(self.tile_type)")
+        print("guideTitleCount+++++++ \(guideTitleCount)")
+
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
@@ -261,31 +259,24 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
 
         if self.isIntroCompleted{
             
-//            if self.tile_type == data.tile_type{
-//
-//            }
-            print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date)")
-            
-            if self.appPreference.getIsSubscribedBool(){
+            if self.guideTitleCount > 3 && self.cat_name.contains("21"){
                 
-                self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
             }else{
-                if data.audio_list[indexPath.item].audio_Duration <= 900{
+                if self.appPreference.getIsSubscribedBool(){
+                    
                     self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                 }else{
-                    xibCall()
+                    if data.audio_list[indexPath.item].audio_Duration <= 900{
+                        self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                    }else{
+                        xibCall()
+                    }
                 }
             }
-        }else{
-            print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
             
-            print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
-            vc.value = "curatedCards"
-            vc.emotionId = self.emotionId
-            vc.emotionKey = self.emotionKey
-            vc.user_id = Int(self.appPreference.getUserID()) ?? 0
-            self.navigationController?.pushViewController(vc, animated: false)
+            print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
+            
+            
         }
     }
     

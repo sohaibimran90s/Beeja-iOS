@@ -107,7 +107,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.type = self.type
                 vc.cat_name = data.cat_Name
                 vc.cat_id = data.cat_Id
-                
+                vc.guideTitleCount = arrGuidedList.count
                 
                 arrVC.add(vc)
             }else{
