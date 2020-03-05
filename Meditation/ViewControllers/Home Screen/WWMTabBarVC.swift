@@ -373,41 +373,62 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 print("get dictionary result... \(result)")
                 
+                let systemDate = Int(Date().timeIntervalSince1970)
+                
+                //let result = ["getVibesImages": 1569801600, "getSubscriptionPlans": 1572393600, "wisdom": 1583366400, "getProfile": 1583366400, "community": nil, "guidedData": 1583366400, "mantras": 1569801600, "getmoods": 1569801600, "combinedMantra": 1569801600, "steps": 1569801600, "getMeditationData": 1583366400, "stepFaq": 1569801600]
                 //community data*
-                if let communtiyTimeStamp = result["community"]{
+                if let communtiyTimeStamp = result["community"] as? Int{
+                    print("communtiyTimeStamp.....++ \(communtiyTimeStamp) systemDate...++ \(systemDate)")
+                    
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
+                }else{
+                    self.getCommunityAPI()
                 }
                 
                 //wisdom data*
-                if let combinedMantra = result["wisdom"]{
-                    self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
+                if let combinedMantra = result["wisdom"] as? Int{
                     
+                    self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
+                }else{
+                    self.getWisdomAPI()
                 }
                 
                 //guided data*
-                if let guidedData = result["guidedData"]{
+                if let guidedData = result["guidedData"] as? Int{
+                    
                     self.fetchGuidedDataFromDB(time_stamp: guidedData)
+                }else{
+                    self.getGuidedListAPI()
                 }
                 
                 //steps data*
-                if let steps = result["steps"]{
+                if let steps = result["steps"] as? Int{
+                    
                     self.fetchStepsDataFromDB(time_stamp: steps)
+                }else{
+                    self.getLearnSetpsAPI()
                 }
                 
                 //mantras data*
-                 if let mantras = result["mantras"]{
+                 if let mantras = result["mantras"] as? Int{
                     self.fetchMantrasDataFromDB(time_stamp: mantras)
+                 }else{
+                    self.getMantrasAPI()
                 }
                 
                 //getVibesImages data*
-                if let getVibesImages = result["getVibesImages"]{
+                if let getVibesImages = result["getVibesImages"] as? Int{
                     self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
+                }else{
+                    self.getVibesAPI()
                 }
                 
                 //stepFaq*
-                if let stepFaq = result["stepFaq"]{
+                if let stepFaq = result["stepFaq"] as? Int{
                     self.appPreffrence.setStepFAQTimeStamp(value: stepFaq)
                     
+                }else{
+                    self.appPreffrence.setStepFAQTimeStamp(value: systemDate)
                 }
                 
                 print("success tabbarVC getdictionaryapi in background thread")
@@ -425,11 +446,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.getGuidedListAPI()
+                    return
+                }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -587,11 +610,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                    let dateFormatter = DateFormatter()
                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                   let currentDateString = dateFormatter.string(from: Date())
-                   let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                   let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                    let apiTimeStamp: String = "\(time_stamp)"
 
-                    print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                    if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                        self.getLearnSetpsAPI()
+                        return
+                    }
                    
                    let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                    let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -698,11 +723,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                     self.getVibesAPI()
+                     return
+                 }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -767,24 +794,25 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     //MARK: Fetch Community Data From DB
     
     func fetchCommunityDataFromDB(time_stamp: Any) {
+        
+        print("time_stamp....+++ \(time_stamp)")
+        
         let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
         if comunityDataDB.count > 0 {
             
             for dict in comunityDataDB {
                 
-                //let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
-                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                print("dict... \(dict)")
-                
-                print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
-                
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.getCommunityAPI()
+                    return
+                }
+                                
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
@@ -861,11 +889,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                    let currentDateString = dateFormatter.string(from: Date())
-                    let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                    let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                     let apiTimeStamp: String = "\(time_stamp)"
 
-                     print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                    if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                         self.getMantrasAPI()
+                         return
+                     }
                     
                     let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                     let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -928,11 +958,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                 if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                     self.getWisdomAPI()
+                     return
+                 }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)

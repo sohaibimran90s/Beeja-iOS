@@ -254,11 +254,13 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.stepFaqAPI()
+                    return
+                }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
