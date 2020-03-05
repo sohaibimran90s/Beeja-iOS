@@ -1397,59 +1397,54 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     
     func receiptValidation() {
-          
-          let receiptFileURL = Bundle.main.appStoreReceiptURL
-          let receiptData = try? Data(contentsOf: receiptFileURL!)
-          if let recieptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)){
-              let jsonDict: [String: AnyObject] = ["receipt-data" : recieptString as AnyObject, "password" : "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject]
-              
-              do {
-                  let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
-                  let verifyReceiptURL = kURL_INAPPS_RECEIPT
-                  let storeURL = URL(string: verifyReceiptURL)!
-                  var storeRequest = URLRequest(url: storeURL)
-                  storeRequest.httpMethod = "POST"
-                  storeRequest.httpBody = requestData
-                  
-                  let session = URLSession(configuration: URLSessionConfiguration.default)
-                  let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
-                      
-                      do {
-                          let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-                          print("=======>",jsonResponse)
-                          if let date = self?.getExpirationDateFromResponse(jsonResponse as! NSDictionary) {
-                            print("date... \(date)")
-                            
-                            if let expiryDate = self?.appPreffrence.getExpireDateBackend(){
-                                if expiryDate != ""{
-                                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
-                                    
-                                    let formatter = DateFormatter()
-                                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                                    
-                                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
-                                    
-                                    let expireDate = formatter.date(from: expiryDate)!
-                                    
-                                    if date > expireDate{
-                                        print("product_id... \(self?.product_id ?? "")")
-                                        print("repurchased")
-                                        self?.getSubscriptionPlanId()
-                                    }else{
-                                        print("expired")
+        let appsToreUrlString = kURL_INAPPS_RECEIPT
+        let receiptUrl = Bundle.main.appStoreReceiptURL
+        do {
+            let receipt = try Data(contentsOf: receiptUrl!)
+            let encodedString = receipt.base64EncodedString()
+            let requestContents = ["receipt-data" : encodedString  as AnyObject, "password": "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject] as [String : Any]
+            do {
+                let requestJsonData = try JSONSerialization.data(withJSONObject: requestContents, options: [])
+                let session = URLSession.shared
+                let request = NSMutableURLRequest(url: URL(string: appsToreUrlString)!)
+                request.httpMethod = "POST"
+                request.httpBody = requestJsonData
+                let dataTask = session.dataTask(with: request as URLRequest) { (data, response, err) in
+                    if data != nil{
+                        let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                        print(json ?? "")
+                        
+                        if json != nil{
+                            if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
+                                print("date...+++++ \(date)")
+                                if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                                    if expiryDate != ""{
+                                        print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                        
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                                        
+                                        print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                                        
+                                        let expireDate = formatter.date(from: expiryDate)!
+                                        
+                                        if date > expireDate{
+                                            print("product_id... \(self.product_id ?? "")")
+                                            print("repurchased")
+                                            self.getSubscriptionPlanId()
+                                        }else{
+                                            print("expired")
+                                        }
                                     }
                                 }
                             }
                         }
-                      } catch let parseError {
-                          print(parseError)
-                      }
-                  })
-                  task.resume()
-              } catch let parseError {
-                  print(parseError)
-              }
-        }
+                    }
+                }
+                dataTask.resume()
+                
+            } catch { return }
+        } catch { return }
     }
       
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
