@@ -1162,7 +1162,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {
-                        
+                                                
                         WWMHelperClass.hideLoaderAnimate(on: self.view)
                         
                         var userData = WWMUserData.sharedInstance
@@ -1455,18 +1455,21 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         
                                         let formatter = DateFormatter()
                                         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                                                                                
+                                        let expireDate = self.getExpireFunc(expiryDate: expiryDate)
+                                        print("dkfjkdfksd+++++= \(expireDate.0)")
                                         
-                                        print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
-                                        
-                                        let expireDate = formatter.date(from: expiryDate)!
-                                        
-                                        if date > expireDate{
-                                            print("product_id... \(self.product_id ?? "")")
-                                            print("repurchased")
-                                            self.getSubscriptionPlanId()
-                                        }else{
-                                            print("expired")
+                                        if expireDate.1 == 1{
+                                            
+                                            if date > expireDate.0{
+                                                print("product_id... \(self.product_id ?? "")")
+                                                print("repurchased")
+                                                self.getSubscriptionPlanId()
+                                            }else{
+                                                print("expired")
+                                            }
                                         }
+                                        
                                     }
                                 }
                             }
@@ -1477,6 +1480,43 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
             } catch { return }
         } catch { return }
+    }
+    
+    
+    
+    func getExpireFunc(expiryDate: String) -> (Date, Int){
+        if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                if expiryDate != ""{
+                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                    formatter.locale = NSLocale.current
+                    
+                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                    
+                    var expireDate: Date = Date()
+                    
+                    let locale = NSLocale.current
+                    let formatter1: String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
+                    if formatter1.contains("a") {
+                        print("phone is set to 12 hours")
+                        //phone is set to 12 hours
+                        
+                        expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
+                        return (expireDate, 1)
+                        
+                    }else{
+                        print("phone is set to 24 hours")
+                        //phone is set to 12 hours
+
+                        expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                        return (expireDate, 1)
+                               
+                    }//phone is set to 12 hours*
+            }
+        }
+        return (Date(), 0)
     }
       
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
