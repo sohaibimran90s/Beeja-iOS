@@ -48,6 +48,7 @@ class WWMGuidedEmotionData: NSObject {
     var completed = Bool()
     var completed_date = String()
     var audio_list = [WWMGuidedAudioData]()
+    var stepNo = Int()
     
     override init() {
     }
@@ -63,6 +64,7 @@ class WWMGuidedEmotionData: NSObject {
         intro_completed = json["intro_completed"] as? Bool ?? false
         completed = json["completed"] as? Bool ?? false
         completed_date = json["completed_date"] as? String ?? ""
+        stepNo = json["stepNo"] as? Int ?? 1
         
         var isSaveAudioData = 0
         if let arrLevels = json["audio_list"] as? [[String:Any]]{

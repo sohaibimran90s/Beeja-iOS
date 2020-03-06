@@ -37,16 +37,18 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var boolGetIndex = false
     var restoreBool = false
     
+    //21days
     var alertPopupView1 = WWMAlertController()
     let reachable = Reachabilities()
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
-    //var alertPopup = WWMAlertPopUp()
     var stepToComplete = 0
     var isIntroCompleted = false
     var tile_type = ""
     var emotionId = 0
     var emotionKey = ""
     var guideTitleCount = 3
+    
+    var abc: [[String: Any]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +70,9 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
             }
         }
         //* logic for expanding the cell which we have to play
+        
+        
+       /// for i in 0..<
         
         self.navigationController?.isNavigationBarHidden = false
         var flag = 0
@@ -124,7 +129,12 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.guidedData.cat_EmotionList.count
+        
+        if self.cat_name.contains("21"){
+            return self.guidedData.cat_EmotionList.count
+        }else{
+            return self.guidedData.cat_EmotionList.count/3
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,7 +148,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.upperLineLbl.isHidden = false
         }
         
-        cell.daysLbl.text = "Day \(indexPath.row + 1)"
+        cell.daysLbl.text = "Day \(data.stepNo)"
         cell.titleLbl.text = data.emotion_Name
         cell.authorLbl.text = "Guided by \(data.author_name)"
         

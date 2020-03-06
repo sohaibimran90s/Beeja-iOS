@@ -308,6 +308,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonAudiosString: [String: Any] = [:]
             var jsonAudios: [[String: Any]] = []
             
+            var stepNo: Int = 0
+            
             for dict in guidedDataDB {
                 
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
@@ -322,6 +324,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                     print("guidedEmotionsDataDB dict.... \(Int((dict1 as AnyObject).emotion_id ?? "0")) \((dict1 as AnyObject).completed ?? false)  \((dict1 as AnyObject).completed_date ?? ""))")
                     
+                    stepNo = stepNo + 1
+                    
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
@@ -332,6 +336,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["intro_completed"] = (dict1 as AnyObject).intro_completed ?? false
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
+                    jsonEmotionsString["stepNo"] = stepNo
                     
                     let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
