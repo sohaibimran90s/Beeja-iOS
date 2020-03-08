@@ -130,11 +130,11 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.cat_name.contains("21"){
+        //if self.cat_name.contains("21"){
             return self.guidedData.cat_EmotionList.count
-        }else{
-            return self.guidedData.cat_EmotionList.count/3
-        }
+        //}else{
+          //  return self.guidedData.cat_EmotionList.count/3
+        //}
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -203,6 +203,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         cell.collectionView.collectionViewLayout = layout
         layout.scrollDirection = .horizontal
         cell.collectionView.reloadData()
+        
         return cell
     }
     

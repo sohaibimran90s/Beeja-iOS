@@ -15,6 +15,7 @@ class WWMGuidedData: NSObject {
     var cat_mode = String()
     var cat_meditation_type = String()
     var cat_EmotionList   = [WWMGuidedEmotionData]()
+    var step_no = 0
     
     override init() {
     }
@@ -28,8 +29,22 @@ class WWMGuidedData: NSObject {
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 print("dictkdjsfkdsjfl...... \(dict)")
+                
+                
                 let video = WWMGuidedEmotionData.init(json: dict)
                 cat_EmotionList.append(video)
+                
+                if cat_Name.contains("7"){
+                    step_no = step_no + 1
+                    print("step_no+++ \(step_no)")
+                    let com = dict["completed_date"] as? Bool ?? false
+                    if step_no == 7 && com == false{
+                        return
+                    }else if step_no == 14 && com == false{
+                        return
+                    }
+                }
+                
             }
         }
     }
