@@ -21,9 +21,29 @@ class WWM21DaySetReminderVC: WWMBaseViewController {
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+        self.callHomeController()
+    }
+    
+    @IBAction func btnReminderClicked(_ sender: UIButton) {
+           let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
 
-        self.navigationController?.pushViewController(vc, animated: false)
+           self.navigationController?.pushViewController(vc, animated: false)
+       }
+    
+    func callHomeController(){
+        self.navigationController?.isNavigationBarHidden = false
+    
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 4
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 4 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                    }
+                }
+            }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     func setupView(){

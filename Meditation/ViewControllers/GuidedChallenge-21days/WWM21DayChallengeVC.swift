@@ -342,6 +342,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(stepToComplete + 1) \(KLEARNJUMPSTEP1)")
         }else{
             WWMHelperClass.selectedType = "guided"
+            WWMHelperClass.days21StepNo = "Step \(data.stepNo)"
             print("data.stepNo*** \(data.stepNo) data.emotion_Id*** \(data.emotion_Id)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC

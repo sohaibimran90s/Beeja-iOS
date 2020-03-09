@@ -65,7 +65,14 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func btnSkipAction(_ sender: Any) {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "SKIPPED", itemName: "IOS")
-        self.movetoDashboard()
+        
+        if WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"{
+            WWMHelperClass.days21StepNo = ""
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            self.movetoDashboard()
+        }
     }
     
     func movetoDashboard() {

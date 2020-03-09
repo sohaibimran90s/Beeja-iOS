@@ -649,19 +649,28 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            self.navigationController?.isNavigationBarHidden = false
             
-            if let tabController = self.tabBarController as? WWMTabBarVC {
-                tabController.selectedIndex = 4
-                for index in 0..<tabController.tabBar.items!.count {
-                    let item = tabController.tabBar.items![index]
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                    if index == 4 {
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+            if WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"{
+                
+                WWMHelperClass.days21StepNo = ""
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }else{
+                self.navigationController?.isNavigationBarHidden = false
+                
+                if let tabController = self.tabBarController as? WWMTabBarVC {
+                    tabController.selectedIndex = 4
+                    for index in 0..<tabController.tabBar.items!.count {
+                        let item = tabController.tabBar.items![index]
+                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                        if index == 4 {
+                            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                        }
                     }
                 }
+                self.navigationController?.popToRootViewController(animated: false)
             }
-            self.navigationController?.popToRootViewController(animated: false)
         }
     }
     
