@@ -108,8 +108,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     
     @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
-        let loginManager = FBSDKLoginManager()
-        loginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (loginResult, error) in
+        let loginManager = LoginManager()
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (loginResult, error) in
 
             if error != nil {
                 print(error?.localizedDescription ?? "")
@@ -117,13 +117,13 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                 if (loginResult?.isCancelled)! {
                     print("User Cancellled To login with fb")
                 }else {
-                let req = FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token.tokenString , version: nil, httpMethod: "GET")
-                req?.start(completionHandler: { (connection, result, error) in
+                    let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+                    req.start(completionHandler: { (connection, result, error) in
                     if error == nil {
                         print(result!)
                         if let fbData = result as? [String:Any] {
                             if let fbEmail = fbData["email"] as? String {
-                                
+
                                 let param = [
                                     "email": fbEmail,
                                     "password":"",
@@ -137,9 +137,9 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                                     "model": UIDevice.current.model,
                                     "version": UIDevice.current.systemVersion
                                 ]
-                                
+
                                 print("param facebook... \(param)")
-                                
+
                                 self.loginWithSocial(param: param as Dictionary<String, Any>)
                             }else {
                                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC

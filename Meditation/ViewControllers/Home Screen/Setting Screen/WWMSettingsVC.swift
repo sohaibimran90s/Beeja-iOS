@@ -1216,8 +1216,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 
-                let loginManager = FBSDKLoginManager()
-                FBSDKAccessToken.setCurrent(nil)
+                let loginManager = LoginManager()
+                AccessToken.current = nil
                 loginManager.logOut()
                 GIDSignIn.sharedInstance()?.signOut()
                 GIDSignIn.sharedInstance()?.disconnect()
