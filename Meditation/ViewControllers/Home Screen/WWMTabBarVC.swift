@@ -375,41 +375,62 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 print("get dictionary result... \(result)")
                 
+                let systemDate = Int(Date().timeIntervalSince1970)
+                
+                //let result = ["getVibesImages": 1569801600, "getSubscriptionPlans": 1572393600, "wisdom": 1583366400, "getProfile": 1583366400, "community": nil, "guidedData": 1583366400, "mantras": 1569801600, "getmoods": 1569801600, "combinedMantra": 1569801600, "steps": 1569801600, "getMeditationData": 1583366400, "stepFaq": 1569801600]
                 //community data*
-                if let communtiyTimeStamp = result["community"]{
+                if let communtiyTimeStamp = result["community"] as? Int{
+                    print("communtiyTimeStamp.....++ \(communtiyTimeStamp) systemDate...++ \(systemDate)")
+                    
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
+                }else{
+                    self.getCommunityAPI()
                 }
                 
                 //wisdom data*
-                if let combinedMantra = result["wisdom"]{
-                    self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
+                if let combinedMantra = result["wisdom"] as? Int{
                     
+                    self.fetchWisdomDataFromDB(time_stamp: combinedMantra)
+                }else{
+                    self.getWisdomAPI()
                 }
                 
                 //guided data*
-                if let guidedData = result["guidedData"]{
+                if let guidedData = result["guidedData"] as? Int{
+                    
                     self.fetchGuidedDataFromDB(time_stamp: guidedData)
+                }else{
+                    self.getGuidedListAPI()
                 }
                 
                 //steps data*
-                if let steps = result["steps"]{
+                if let steps = result["steps"] as? Int{
+                    
                     self.fetchStepsDataFromDB(time_stamp: steps)
+                }else{
+                    self.getLearnSetpsAPI()
                 }
                 
                 //mantras data*
-                 if let mantras = result["mantras"]{
+                 if let mantras = result["mantras"] as? Int{
                     self.fetchMantrasDataFromDB(time_stamp: mantras)
+                 }else{
+                    self.getMantrasAPI()
                 }
                 
                 //getVibesImages data*
-                if let getVibesImages = result["getVibesImages"]{
+                if let getVibesImages = result["getVibesImages"] as? Int{
                     self.fetchGetVibesDataFromDB(time_stamp: getVibesImages)
+                }else{
+                    self.getVibesAPI()
                 }
                 
                 //stepFaq*
-                if let stepFaq = result["stepFaq"]{
+                if let stepFaq = result["stepFaq"] as? Int{
                     self.appPreffrence.setStepFAQTimeStamp(value: stepFaq)
                     
+                }else{
+                    self.appPreffrence.setStepFAQTimeStamp(value: systemDate)
                 }
                 
                 print("success tabbarVC getdictionaryapi in background thread")
@@ -427,11 +448,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.getGuidedListAPI()
+                    return
+                }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -622,11 +645,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                    let dateFormatter = DateFormatter()
                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                   let currentDateString = dateFormatter.string(from: Date())
-                   let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                   let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                    let apiTimeStamp: String = "\(time_stamp)"
 
-                    print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                    if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                        self.getLearnSetpsAPI()
+                        return
+                    }
                    
                    let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                    let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -733,11 +758,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                     self.getVibesAPI()
+                     return
+                 }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -802,24 +829,25 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     //MARK: Fetch Community Data From DB
     
     func fetchCommunityDataFromDB(time_stamp: Any) {
+        
+        print("time_stamp....+++ \(time_stamp)")
+        
         let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
         if comunityDataDB.count > 0 {
             
             for dict in comunityDataDB {
                 
-                //let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
-                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                print("dict... \(dict)")
-                
-                print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
-                
+                if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.getCommunityAPI()
+                    return
+                }
+                                
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
@@ -896,11 +924,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                    let currentDateString = dateFormatter.string(from: Date())
-                    let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                    let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                     let apiTimeStamp: String = "\(time_stamp)"
 
-                     print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                    if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                         self.getMantrasAPI()
+                         return
+                     }
                     
                     let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                     let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -963,11 +993,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
 
-                let currentDateString = dateFormatter.string(from: Date())
-                let systemTimeStamp: String = dict.last_time_stamp ?? currentDateString
+                let systemTimeStamp: String = dict.last_time_stamp ?? "\(Int(Date().timeIntervalSince1970))"
                 let apiTimeStamp: String = "\(time_stamp)"
 
-                 print("dict.last_time_stamp... \(dict.last_time_stamp!) systemTimeStamp.... \(systemTimeStamp) apiTimeStamp... \(apiTimeStamp)")
+                 if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                     self.getWisdomAPI()
+                     return
+                 }
                 
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
@@ -1165,7 +1197,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 if let success = result["success"] as? Bool {
                     if success {
-                        
+
                         WWMHelperClass.hideLoaderAnimate(on: self.view)
                         
                         var userData = WWMUserData.sharedInstance
@@ -1432,59 +1464,94 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     
     func receiptValidation() {
-          
-          let receiptFileURL = Bundle.main.appStoreReceiptURL
-          let receiptData = try? Data(contentsOf: receiptFileURL!)
-          if let recieptString = receiptData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)){
-              let jsonDict: [String: AnyObject] = ["receipt-data" : recieptString as AnyObject, "password" : "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject]
-              
-              do {
-                  let requestData = try JSONSerialization.data(withJSONObject: jsonDict, options: JSONSerialization.WritingOptions.prettyPrinted)
-                  let verifyReceiptURL = kURL_INAPPS_RECEIPT
-                  let storeURL = URL(string: verifyReceiptURL)!
-                  var storeRequest = URLRequest(url: storeURL)
-                  storeRequest.httpMethod = "POST"
-                  storeRequest.httpBody = requestData
-                  
-                  let session = URLSession(configuration: URLSessionConfiguration.default)
-                  let task = session.dataTask(with: storeRequest, completionHandler: { [weak self] (data, response, error) in
-                      
-                      do {
-                          let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-                          print("=======>",jsonResponse)
-                          if let date = self?.getExpirationDateFromResponse(jsonResponse as! NSDictionary) {
-                            print("date... \(date)")
-                            
-                            if let expiryDate = self?.appPreffrence.getExpireDateBackend(){
-                                if expiryDate != ""{
-                                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
-                                    
-                                    let formatter = DateFormatter()
-                                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                                    
-                                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
-                                    
-                                    let expireDate = formatter.date(from: expiryDate)!
-                                    
-                                    if date > expireDate{
-                                        print("product_id... \(self?.product_id ?? "")")
-                                        print("repurchased")
-                                        self?.getSubscriptionPlanId()
-                                    }else{
-                                        print("expired")
+        let appsToreUrlString = kURL_INAPPS_RECEIPT
+        let receiptUrl = Bundle.main.appStoreReceiptURL
+        do {
+            let receipt = try Data(contentsOf: receiptUrl!)
+            let encodedString = receipt.base64EncodedString()
+            let requestContents = ["receipt-data" : encodedString  as AnyObject, "password": "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject] as [String : Any]
+            do {
+                let requestJsonData = try JSONSerialization.data(withJSONObject: requestContents, options: [])
+                let session = URLSession.shared
+                let request = NSMutableURLRequest(url: URL(string: appsToreUrlString)!)
+                request.httpMethod = "POST"
+                request.httpBody = requestJsonData
+                let dataTask = session.dataTask(with: request as URLRequest) { (data, response, err) in
+                    if data != nil{
+                        let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                        print(json ?? "")
+                        
+                        if json != nil{
+                            if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
+                                print("date...+++++ \(date)")
+                                if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                                    if expiryDate != ""{
+                                        print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                        
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                                                                                
+                                        let expireDate = self.getExpireFunc(expiryDate: expiryDate)
+                                        print("dkfjkdfksd+++++= \(expireDate.0)")
+                                        
+                                        if expireDate.1 == 1{
+                                            
+                                            if date > expireDate.0{
+                                                print("product_id... \(self.product_id ?? "")")
+                                                print("repurchased")
+                                                self.getSubscriptionPlanId()
+                                            }else{
+                                                print("expired")
+                                            }
+                                        }
+                                        
                                     }
                                 }
                             }
                         }
-                      } catch let parseError {
-                          print(parseError)
-                      }
-                  })
-                  task.resume()
-              } catch let parseError {
-                  print(parseError)
-              }
+                    }
+                }
+                dataTask.resume()
+                
+            } catch { return }
+        } catch { return }
+    }
+    
+    
+    
+    func getExpireFunc(expiryDate: String) -> (Date, Int){
+        if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                if expiryDate != ""{
+                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                    formatter.locale = NSLocale.current
+                    
+                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                    
+                    var expireDate: Date = Date()
+                    
+                    let locale = NSLocale.current
+                    let formatter1: String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
+                    if formatter1.contains("a") {
+                        print("phone is set to 12 hours")
+                        //phone is set to 12 hours
+                        
+                        expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
+                        return (expireDate, 1)
+                        
+                    }else{
+                        print("phone is set to 24 hours")
+                        //phone is set to 12 hours
+
+                        expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                        return (expireDate, 1)
+                               
+                    }//phone is set to 12 hours*
+            }
         }
+        return (Date(), 0)
     }
       
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {

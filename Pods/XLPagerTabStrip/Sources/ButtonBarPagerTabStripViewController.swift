@@ -49,21 +49,13 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarRightContentInset: CGFloat?
 
         public var selectedBarBackgroundColor = UIColor.black
-        public var selectedBarHeight: CGFloat = 2.0
+        public var selectedBarHeight: CGFloat = 5
         public var selectedBarVerticalAlignment: SelectedBarVerticalAlignment = .bottom
 
         public var buttonBarItemBackgroundColor: UIColor?
         public var buttonBarItemFont = UIFont.systemFont(ofSize: 18)
         public var buttonBarItemLeftRightMargin: CGFloat = 8
         public var buttonBarItemTitleColor: UIColor?
-        @available(*, deprecated: 7.0.0) public var buttonBarItemsShouldFillAvailiableWidth: Bool {
-            set {
-                buttonBarItemsShouldFillAvailableWidth = newValue
-            }
-            get {
-                return buttonBarItemsShouldFillAvailableWidth
-            }
-        }
         public var buttonBarItemsShouldFillAvailableWidth = true
         // only used if button bar is created programaticaly and not using storyboards or nib files
         public var buttonBarHeight: CGFloat?
