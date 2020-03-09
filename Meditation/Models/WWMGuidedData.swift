@@ -40,11 +40,14 @@ class WWMGuidedData: NSObject {
                     let com = dict["completed_date"] as? Bool ?? false
                     if step_no == 7 && com == false{
                         return
+                    }else if step_no == 7 && com == true{
+                        cat_EmotionList.removeAll()
                     }else if step_no == 14 && com == false{
                         return
+                    }else if step_no == 14 && com == true{
+                        cat_EmotionList.removeAll()
                     }
                 }
-                
             }
         }
     }
