@@ -332,6 +332,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 self.arrGuidedList.append(guidedData)
             }
             
+            for view in self.containerView.subviews{
+                view.removeFromSuperview()
+             }
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
             vc.arrGuidedList = self.arrGuidedList
             vc.type = self.typeTitle

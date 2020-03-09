@@ -14,12 +14,11 @@ extension Gauge {
         
         let refreshRate: Double = 0.1
         let rateSpeed: CGFloat = CGFloat(refreshRate) * ((newValue - self.rate) / CGFloat(duration))
-        print(rateSpeed)
         
         animationTimer = Timer.scheduledTimer(
             timeInterval: refreshRate,
             target: self,
-            selector: #selector(updateProgress),
+            selector: #selector(updateProgress(_:)),
             userInfo: [newValue, rateSpeed],
             repeats: true
         )

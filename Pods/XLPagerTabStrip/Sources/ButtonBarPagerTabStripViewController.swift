@@ -49,21 +49,13 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarRightContentInset: CGFloat?
 
         public var selectedBarBackgroundColor = UIColor.black
-        public var selectedBarHeight: CGFloat = 2.0
+        public var selectedBarHeight: CGFloat = 5
         public var selectedBarVerticalAlignment: SelectedBarVerticalAlignment = .bottom
 
         public var buttonBarItemBackgroundColor: UIColor?
         public var buttonBarItemFont = UIFont.systemFont(ofSize: 18)
         public var buttonBarItemLeftRightMargin: CGFloat = 8
         public var buttonBarItemTitleColor: UIColor?
-        @available(*, deprecated: 7.0.0) public var buttonBarItemsShouldFillAvailiableWidth: Bool {
-            set {
-                buttonBarItemsShouldFillAvailableWidth = newValue
-            }
-            get {
-                return buttonBarItemsShouldFillAvailableWidth
-            }
-        }
         public var buttonBarItemsShouldFillAvailableWidth = true
         // only used if button bar is created programaticaly and not using storyboards or nib files
         public var buttonBarHeight: CGFloat?
@@ -330,13 +322,6 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         cell.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.backgroundColor
         if let image = indicatorInfo.image {
             cell.imageView.image = image
-            cell.layoutImgWidth.constant = 25
-            cell.layoutLblLeading.constant = 10
-            cell.layoutLblTrailing.constant = 0
-        }else {
-            cell.layoutImgWidth.constant = 0
-            cell.layoutLblLeading.constant = 0
-            cell.layoutLblLeading.constant = 10
         }
         if let highlightedImage = indicatorInfo.highlightedImage {
             cell.imageView.highlightedImage = highlightedImage
