@@ -161,7 +161,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             stepToComplete = indexPath.row + 1
         }else if stepToComplete == indexPath.row{
             cell.stepLbl.layer.cornerRadius = 12
-            cell.stepLbl.text = "\(indexPath.row + 1)"
+            cell.stepLbl.text = "\(data.stepNo)"
             cell.imgTick.isHidden = true
             cell.stepLbl.isHidden = false
             
@@ -172,7 +172,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             
             cell.stepLbl.layer.cornerRadius = 12
-            cell.stepLbl.text = "\(indexPath.row + 1)"
+            cell.stepLbl.text = "\(data.stepNo)"
             cell.imgTick.isHidden = true
             cell.stepLbl.isHidden = false
             
@@ -342,6 +342,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(stepToComplete + 1) \(KLEARNJUMPSTEP1)")
         }else{
             WWMHelperClass.selectedType = "guided"
+            print("data.stepNo*** \(data.stepNo) data.emotion_Id*** \(data.emotion_Id)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             vc.audioData = data.audio_list[collection_cell_tag]

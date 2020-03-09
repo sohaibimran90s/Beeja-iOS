@@ -309,8 +309,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonAudios: [[String: Any]] = []
             
             var stepNo: Int = 0
+            var cat_name = String()
             
             for dict in guidedDataDB {
+                
+                cat_name = (dict as AnyObject).guided_name as? String ?? ""
                 
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
@@ -324,7 +327,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                     print("guidedEmotionsDataDB dict.... \(Int((dict1 as AnyObject).emotion_id ?? "0")) \((dict1 as AnyObject).completed ?? false)  \((dict1 as AnyObject).completed_date ?? ""))")
                     
-                    stepNo = stepNo + 1
+                    if cat_name.contains("21"){
+                         stepNo = stepNo + 1
+                    }
                     
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
@@ -393,7 +398,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result... \(result)")
+                    print("success result... getGuidedListAPI \(result)")
                     
                     if let audioList = result["result"] as? [[String:Any]] {
                         
