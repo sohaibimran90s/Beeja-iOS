@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 class WWMSideMenuVC: WWMBaseViewController {
 
@@ -29,6 +30,12 @@ class WWMSideMenuVC: WWMBaseViewController {
     
     let appPreffrence = WWMAppPreference()
     
+    var city = ""
+    var country = ""
+    var lat = ""
+    var long = ""
+    let reachable = Reachabilities()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,32 +44,20 @@ class WWMSideMenuVC: WWMBaseViewController {
         }else {
             //self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
         }
-        
-//        let getUserData = self.appPreffrence.getUserData()
-//
-//        if let name = getUserData["name"] as? String{
-//            self.lblName.text = name
-//        }
-//
-//        let cityName = getUserData["city"] as? String ?? ""
-//        let countryName = getUserData["country"] as? String ?? ""
-//
-//        if cityName != ""  && countryName != "" {
-//            self.lblLocation.text = "\(cityName), \(countryName)"
-//        }else {
-//            self.lblLocation.text = "\(cityName) \(countryName)"
-//        }
-        
+
         print(WWMHelperClass.getVersion())
         self.lblVersion.text = WWMHelperClass.getVersion()
         
-        // Do any additional setup after loading the view.
     }
     
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.title = ""
+        
+        DispatchQueue.global(qos: .background).async {
+            self.getProfileApiCalled()
+        }
         
         if self.appPreffrence.getExpiryDate(){
              self.freeView.isHidden = true
@@ -85,6 +80,63 @@ class WWMSideMenuVC: WWMBaseViewController {
         
          self.lblName.text = self.appPreference.getUserName()
     }
+    
+    func getProfileApiCalled(){
+        if reachable.isConnectedToNetwork() {
+                
+                var userData = WWMUserData()
+                userData = WWMUserData.init(json: self.appPreffrence.getUserData())
+                print(userData)
+                
+                let userData1 = self.appPreffrence.getUserData()
+            
+                self.lat = userData1["latitude"] as? String ?? ""
+                self.long = userData1["longitude"] as? String ?? ""
+                self.city = userData1["city"] as? String ?? ""
+                self.country = userData1["country"] as? String ?? ""
+            
+                print("self.lat+++ \(self.lat) self.long+++ \(self.long) self.city+++ \(self.city) self.country+++ \(self.country)")
+                
+                self.getProfileDataInBackground(lat: self.lat, long: self.long)
+        }
+    }
+    
+        func getProfileDataInBackground(lat: String, long: String){
+            let param = [
+                "user_id":self.appPreffrence.getUserID(),
+                "email":self.appPreffrence.getEmail(),
+                "lat": lat,
+                "long": long,
+                "city":city,
+                "country":country
+                ] as [String : Any]
+                
+                print("param... \(param)")
+                
+                WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMSideMenuVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                    
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        if success {
+                            if let userProfile = result["user_profile"] as? [String : Any]{
+                                //setEmail
+                                
+                                print("userProfile+++### \(userProfile)")
+                                self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
+                                self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
+                                self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
+                                self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
+                                self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
+                                self.appPreffrence.setUserID(value:"\(userProfile["id"] as? Int ?? 0)")
+
+                                //this is for hide or unhide setting for paid and unpaid user
+                                self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     
     // MARK:- Button Action
     
