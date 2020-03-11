@@ -9,42 +9,52 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zg4-fX-zUF" customClass="ButtonBarViewCell" customModule="XLPagerTabStrip" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="BE5-bO-TKj" customClass="ButtonBarViewCell" customModule="XLPagerTabStrip" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="177" height="38"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
+                <rect key="frame" x="0.0" y="0.0" width="177" height="38"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7f-rk-sQl">
-                        <rect key="frame" x="21.5" y="11.5" width="37.5" height="17"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFZ-03-RbY">
+                        <rect key="frame" x="51" y="9.5" width="110" height="19.5"/>
+                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="14"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="16"/>
+                        </variation>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tFG-yJ-6Th">
-                        <rect key="frame" x="22.5" y="2.5" width="35" height="35"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cross" translatesAutoresizingMaskIntoConstraints="NO" id="hq7-nH-6lJ">
+                        <rect key="frame" x="16" y="6.5" width="25" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="35" id="VRw-5F-5WY"/>
-                            <constraint firstAttribute="height" constant="35" id="ojk-Ug-Lgh"/>
+                            <constraint firstAttribute="width" constant="25" id="F1Y-Et-hji"/>
+                            <constraint firstAttribute="height" constant="25" id="gOw-X5-s1S"/>
                         </constraints>
                     </imageView>
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.027450980390000001" green="0.72549019609999998" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="tFG-yJ-6Th" firstAttribute="centerY" secondItem="zg4-fX-zUF" secondAttribute="centerY" id="5so-ZP-gRs"/>
-                <constraint firstItem="tFG-yJ-6Th" firstAttribute="centerX" secondItem="zg4-fX-zUF" secondAttribute="centerX" id="9em-NR-hoa"/>
-                <constraint firstItem="s7f-rk-sQl" firstAttribute="centerY" secondItem="zg4-fX-zUF" secondAttribute="centerY" id="ZeP-6I-AXE"/>
-                <constraint firstItem="s7f-rk-sQl" firstAttribute="centerX" secondItem="zg4-fX-zUF" secondAttribute="centerX" id="c15-bZ-hPG"/>
+                <constraint firstItem="WFZ-03-RbY" firstAttribute="leading" secondItem="hq7-nH-6lJ" secondAttribute="trailing" constant="10" id="56p-Yt-jfs"/>
+                <constraint firstItem="WFZ-03-RbY" firstAttribute="centerY" secondItem="hq7-nH-6lJ" secondAttribute="centerY" id="65Y-A6-zaU"/>
+                <constraint firstItem="hq7-nH-6lJ" firstAttribute="centerY" secondItem="BE5-bO-TKj" secondAttribute="centerY" id="8E8-X1-36L"/>
+                <constraint firstAttribute="trailing" secondItem="WFZ-03-RbY" secondAttribute="trailing" constant="16" id="Zh0-qg-c0l"/>
+                <constraint firstItem="hq7-nH-6lJ" firstAttribute="leading" secondItem="BE5-bO-TKj" secondAttribute="leading" constant="16" id="p7P-iS-vPE"/>
             </constraints>
+            <size key="customSize" width="177" height="38"/>
             <connections>
-                <outlet property="imageView" destination="tFG-yJ-6Th" id="Odb-dR-tf4"/>
-                <outlet property="label" destination="s7f-rk-sQl" id="4gU-tb-BMB"/>
-                <outlet property="layoutImgHeight" destination="ojk-Ug-Lgh" id="Q1S-mQ-Gx6"/>
-                <outlet property="layoutImgWidth" destination="VRw-5F-5WY" id="nIa-9Q-Phs"/>
+                <outlet property="imageView" destination="hq7-nH-6lJ" id="3iH-P4-WPV"/>
+                <outlet property="label" destination="WFZ-03-RbY" id="yHx-pQ-bJP"/>
+                <outlet property="layoutImgHeight" destination="gOw-X5-s1S" id="qnn-LC-vZL"/>
+                <outlet property="layoutImgWidth" destination="F1Y-Et-hji" id="FTH-ie-mY6"/>
+                <outlet property="layoutLblLeading" destination="56p-Yt-jfs" id="Ur8-Z1-4EE"/>
+                <outlet property="layoutLblTrailing" destination="Zh0-qg-c0l" id="h0w-3u-ssk"/>
             </connections>
-            <point key="canvasLocation" x="307" y="541"/>
+            <point key="canvasLocation" x="383.19999999999999" y="539.73013493253382"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="cross" width="40" height="40"/>
+    </resources>
 </document>
