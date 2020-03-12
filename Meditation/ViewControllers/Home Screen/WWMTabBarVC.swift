@@ -1362,7 +1362,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                 }else{
                                     print("phone is set to 24 hours")
-                                    //phone is set to 12 hours
+                                    //phone is set to 24 hours
                                     if let currentDate1: Date = formatter.date(from: currentDateString){
                                         currentDate = currentDate1
                                     }

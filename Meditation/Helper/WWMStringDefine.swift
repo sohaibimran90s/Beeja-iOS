@@ -309,6 +309,7 @@ let KGOODMORNING = "Good morning!"
 let KGOODAFTERNOON = "Good afternoon!"
 let KGOODEVENING = "Good evening!"
 let KITSTIMEFORBEEJA = "It's time for Beeja."
+let KCHALLENGEREMINDER = "It’s time to start 7-Days challenge"
 let KUPDATE = "Update"
 let KTIMETOLEARN = "It's time to learn Beeja"
 

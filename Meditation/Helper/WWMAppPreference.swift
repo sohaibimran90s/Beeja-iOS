@@ -36,7 +36,7 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "lastLoginDate")
         defaults.synchronize()
     }
-    
+        
     func setSessionAvailableData(value: Bool) {
         defaults.set(value, forKey: "session_available")
         defaults.synchronize()
@@ -303,6 +303,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setReminder21DaysDate(value:Date) {
+        defaults.set(value, forKey: "reminder21DaysDate")
+        defaults.synchronize()
+    }
+
+    func setReminder21DaysTime(value:String) {
+        defaults.set(value, forKey: "reminder21DaysTime")
+        defaults.synchronize()
+    }
+    
     func getCheckEnterSignupLogin() -> Bool {
         return UserDefaults.standard.bool(forKey: "checkEnterSignupLogin")
     }
@@ -367,4 +377,13 @@ class WWMAppPreference: NSObject {
     func lastLoginDate() -> Date {
         return UserDefaults.standard.object(forKey: "lastLoginDate") as? Date ?? Date()
     }
+    
+    func getReminder21DaysDate() -> Date {
+        return UserDefaults.standard.object(forKey: "reminder21DaysDate") as? Date ?? Date()
+    }
+    
+    func getReminder21DaysTime() -> String {
+        return UserDefaults.standard.string(forKey: "reminder21DaysTime") ?? ""
+    }
+    
 }

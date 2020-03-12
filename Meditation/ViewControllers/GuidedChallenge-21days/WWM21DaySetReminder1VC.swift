@@ -25,6 +25,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     
     var settingData = DBSettings()
     var flag = 0
+    
+    let appPreffrence = WWMAppPreference()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +48,38 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         if data.count > 0 {
             settingData = data[0]
         }
+        
+        self.dateToAddInCurrent()
+    }
+    
+    func dateToAddInCurrent(){
+        
+        let dateFormate = DateFormatter()
+        dateFormate.locale = NSLocale.current
+        dateFormate.dateFormat = "yyyy-MM-dd"
+        
+        let daysToAdd = 0
+        let currentDate = getCurrentDate()
+        
+        var dateComponent = DateComponents()
+        dateComponent.day = daysToAdd
+               
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)
+        let futureDate1 = dateFormate.string(from: futureDate ?? currentDate)
+        let futureDate2 = dateFormate.date(from: futureDate1)
+        print("currentDate+++ \(currentDate) futureDate2+++ \(futureDate2 ?? currentDate)")
+        self.appPreffrence.setReminder21DaysDate(value: futureDate2 ?? currentDate)
+
+        print("futureDate*** \(self.appPreffrence.getReminder21DaysDate())")
     }
     
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+         self.callPushNotification()
+         self.callHomeController()
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton){
+        self.appPreffrence.setReminder21DaysTime(value: "")
         self.callHomeController()
     }
     
@@ -76,11 +103,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
     }
-    
-    func callPushNotification() {
-        AppDelegate.sharedDelegate().setLocalPush()
-    }
-    
+        
     @IBAction func btnPickerViewAction(_ sender: UIButton){
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .time
@@ -91,15 +114,12 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     
     @objc func handleDatePicker(sender: UIDatePicker) {
         dateFormatter.dateFormat = "HH:mm"
-        settingData.learnReminderTime = dateFormatter.string(from: sender.date)
+        self.appPreffrence.setReminder21DaysTime(value: dateFormatter.string(from: sender.date))
         
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
+        print("datePicker.date.... \(dateFormatter.string(from: sender.date)) getReminder21DaysTime+++ \(self.appPreffrence.getReminder21DaysTime())")
         
         let date1 = dateFormatter.string(from: sender.date)
-        let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
-        let hour = components.hour!
-        let minute = components.minute!
         
         if date1.contains("PM") || date1.contains("pm"){
             self.amPmBtn.setTitle("pm", for: .normal)
@@ -107,8 +127,23 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             self.amPmBtn.setTitle("am", for: .normal)
         }
         
-        self.hourBtn.setTitle("\(hour)", for: .normal)
-        self.minBtn.setTitle("\(minute)", for: .normal)
+        let getTime = self.appPreffrence.getReminder21DaysTime()
+        if getTime.contains("am"){
+            let getTimeArray = getTime.components(separatedBy: " ")
+            let getTimeArray1 = getTimeArray[0].components(separatedBy: ":")
+            
+            self.hourBtn.setTitle("\(getTimeArray1[0])", for: .normal)
+            self.minBtn.setTitle("\(getTimeArray1[1])", for: .normal)
+        }else{
+            let getTimeArray = getTime.components(separatedBy: ":")
+            
+            self.hourBtn.setTitle("\(getTimeArray[0])", for: .normal)
+            self.minBtn.setTitle("\(getTimeArray[1])", for: .normal)
+        }
+    }
+    
+    func callPushNotification() {
+        AppDelegate.sharedDelegate().setLocalPush()
     }
     
     func showDatePicker(){
@@ -126,14 +161,16 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         txtView.inputView = datePicker
     }
     
+    
+    
     @objc func donedatePicker(){
         dateFormatter.dateFormat = "HH:mm a"
         print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
         
         let date1 = dateFormatter.string(from: datePicker.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  datePicker.date)
-        let hour = components.hour!
-        let minute = components.minute!
+        let hour = components.hour ?? 04
+        let minute = components.minute ?? 00
         
         if date1.contains("PM") || date1.contains("pm"){
             self.amPmBtn.setTitle("pm", for: .normal)
@@ -153,4 +190,20 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     func cancelDatePicker(){
         self.view.endEditing(true)
     }
+    
+    func getCurrentDate()-> Date {
+           var now = Date()
+           var nowComponents = DateComponents()
+           let calendar = Calendar.current
+           nowComponents.year = Calendar.current.component(.year, from: now)
+           nowComponents.month = Calendar.current.component(.month, from: now)
+           nowComponents.day = Calendar.current.component(.day, from: now)
+           nowComponents.hour = Calendar.current.component(.hour, from: now)
+           nowComponents.minute = Calendar.current.component(.minute, from: now)
+           nowComponents.second = Calendar.current.component(.second, from: now)
+           nowComponents.timeZone = NSTimeZone.local
+           now = calendar.date(from: nowComponents)!
+           return now as Date
+       }
+
 }

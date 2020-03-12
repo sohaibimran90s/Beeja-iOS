@@ -276,9 +276,16 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 if self.appPreference.getIsSubscribedBool(){
                     
                     self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                    
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+//
+//                    self.navigationController?.pushViewController(vc, animated: true)
                 }else{
                     if data.audio_list[indexPath.item].audio_Duration <= 900{
                         self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                        
+//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+//                        self.navigationController?.pushViewController(vc, animated: true)
                     }else{
                         xibCall()
                     }
