@@ -43,8 +43,6 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyyMM"

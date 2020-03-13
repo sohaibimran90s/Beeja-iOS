@@ -120,6 +120,9 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         print("datePicker.date.... \(dateFormatter.string(from: sender.date)) getReminder21DaysTime+++ \(self.appPreffrence.getReminder21DaysTime())")
         
         let date1 = dateFormatter.string(from: sender.date)
+        let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
+        let hour = components.hour!
+        let minute = components.minute!
         
         if date1.contains("PM") || date1.contains("pm"){
             self.amPmBtn.setTitle("pm", for: .normal)
@@ -127,19 +130,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             self.amPmBtn.setTitle("am", for: .normal)
         }
         
-        let getTime = self.appPreffrence.getReminder21DaysTime()
-        if getTime.contains("am"){
-            let getTimeArray = getTime.components(separatedBy: " ")
-            let getTimeArray1 = getTimeArray[0].components(separatedBy: ":")
-            
-            self.hourBtn.setTitle("\(getTimeArray1[0])", for: .normal)
-            self.minBtn.setTitle("\(getTimeArray1[1])", for: .normal)
-        }else{
-            let getTimeArray = getTime.components(separatedBy: ":")
-            
-            self.hourBtn.setTitle("\(getTimeArray[0])", for: .normal)
-            self.minBtn.setTitle("\(getTimeArray[1])", for: .normal)
-        }
+        self.hourBtn.setTitle("\(hour)", for: .normal)
+        self.minBtn.setTitle("\(minute)", for: .normal)
     }
     
     func callPushNotification() {

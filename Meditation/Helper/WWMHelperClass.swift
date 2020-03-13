@@ -218,17 +218,20 @@ class WWMHelperClass {
     class func daysLeft(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        if let _ = dateFormatter.date(from: expiryDate){
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        }else{
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        }
         
         let currentDateString = dateFormatter.string(from: Date())
-        let currentDate = dateFormatter.date(from: currentDateString)!
-       
-        let expireDate = dateFormatter.date(from: expiryDate)
+        let currentDate = self.getExpireDate(expiryDate: currentDateString, formatter: dateFormatter)
+        let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
         
-        if expireDate ?? currentDate > currentDate{
-            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ?? currentDate).day ?? 0
-            print("day..... \(day)")
+        if expireDate > currentDate{
+            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ).day ?? 0
+            print("day..... \(day) currentDate++ \(currentDate) expireDate... \(expireDate)")
             return day
         }else{
             return -1
@@ -238,26 +241,18 @@ class WWMHelperClass {
     class func dateComparison(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        let currentDateString = dateFormatter.string(from: Date())
-        let currentDate = dateFormatter.date(from: currentDateString)!
-        var expireDate = Date()
-       
-        let locale = NSLocale.current
-        let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-
-        if formatter.contains("a") {
-            //12 hour
-            expireDate = getExpireDate12hour(expiryDate: expiryDate, formatter: dateFormatter)
+        if let _ = dateFormatter.date(from: expiryDate){
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         }else{
-            //24 hour
-            expireDate = dateFormatter.date(from: expiryDate) ?? currentDate
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         }
         
-        let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ).day ?? 0
-        print("day..... \(day)")
+        let currentDateString = dateFormatter.string(from: Date())
+        let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
+        let currentDate = self.getExpireDate(expiryDate: currentDateString, formatter: dateFormatter)
+      
+        print("currentDate..... \(currentDate) expireDate---- \(expireDate)")
         if currentDate > expireDate {
             KUSERDEFAULTS.set(true, forKey: "getPrePostMoodBool")
             return 1
@@ -267,36 +262,19 @@ class WWMHelperClass {
         }
     }
     
-    class func getExpireDate12hour(expiryDate: String, formatter: DateFormatter) -> Date{
-        var expireDate = Date()
-        let expiryDateArray = expiryDate.components(separatedBy: " ")
-        if expiryDateArray.count > 1{
-        let getHourMinSec = expiryDateArray[1]
-        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
-        if getHourMinSecArray.count > 0{
-            if Int(getHourMinSecArray[0]) ?? 0 > 11{
-                
-                    formatter.dateFormat = "yyyy-MM-dd"
-                    //let date11 = formatter.date(from: expiryDate)
-                    expireDate = self.getRequiredFormat(dateStrInTwentyFourHourFomat: expiryDate)
-                }else{
-                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                    expireDate = formatter.date(from: expiryDate)!
-                }
-            }
+    class func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let expireDate = formatter.date(from: expiryDate)
+            else {
+                formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                let newExpireDate = formatter.date(from: expiryDate)
+                print("12 Hour - \(newExpireDate ?? Date())")
+                return newExpireDate!
         }
+        
+        print("24 Hour - \(expireDate)")
         return expireDate
-    }
-    
-    class func getRequiredFormat(dateStrInTwentyFourHourFomat: String) -> Date{
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-
-        let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat) ?? Date()
-        print(date)
-        return date
     }
     
     class func dateComparison1(expiryDate: String) -> (Int, Int, Int){
@@ -306,32 +284,30 @@ class WWMHelperClass {
            let date1 = expiryDate.components(separatedBy: " ")
             date_completed = date1[0]
         }
-        
-        print("date_completed... \(date_completed)")
-
-        
+                
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDateString = dateFormatter.string(from: Date())
         var currentDate = dateFormatter.date(from: currentDateString)!
-        
         let expireDate = dateFormatter.date(from: date_completed) ?? currentDate
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
         let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
         
         if currentDate == expireDate{
-            //yyyy-MM-dd HH:mm:ss
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            if let _ = dateFormatter.date(from: expiryDate){
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            }else{
+                dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+            }
+            
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
             let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate
             
             let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
             let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
-            print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min)")
+            print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min) date_completed... \(date_completed)")
             return (1, day, second)
         }else{
             return (0, day, 0)

@@ -831,95 +831,93 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             dateFormate.dateFormat = "yyyy-MM-dd"
             
             let reminder21DaysDate = self.appPreffrence.getReminder21DaysDate()
-            if reminder21DaysDate != nil{
-                let currentDate = self.getCurrentDate()
-                let currentDate1 = dateFormate.string(from: currentDate)
-                let currentDate2 = dateFormate.date(from: currentDate1)
+            let currentDate = self.getCurrentDate()
+            let currentDate1 = dateFormate.string(from: currentDate)
+            let currentDate2 = dateFormate.date(from: currentDate1)
+            
+            print("appdelegate*** reminder21DaysDate \(reminder21DaysDate) currentDate*** \(currentDate2 ?? Date())")
+            if reminder21DaysDate == currentDate2{
+                let dateFormate = DateFormatter()
+                dateFormate.locale = NSLocale.current
+                dateFormate.dateFormat = "dd:MM:yyyy"
                 
-                print("appdelegate*** reminder21DaysDate \(reminder21DaysDate) currentDate*** \(currentDate2 ?? Date())")
-                if reminder21DaysDate == currentDate2{
-                    let dateFormate = DateFormatter()
-                    dateFormate.locale = NSLocale.current
-                    dateFormate.dateFormat = "dd:MM:yyyy"
-                        
-                    let locale = NSLocale.current
-                    let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                    var date: Date = Date()
-                    var strDate = dateFormate.string(from: Date())
-
-                    if formatter.contains("a") {
-                        print("phone is set to 12 hours")
-                        //phone is set to 12 hours
-                        
-                        let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
-                        if morningReminderArray.count > 0{
-                            if Int(morningReminderArray[0]) ?? 0 > 11{
-                                dateFormate.dateFormat = "dd-MM-yyyy"
-                                strDate = dateFormate.string(from: Date())
-                                let reminder21DaysTime1 = reminder21DaysTime.components(separatedBy: " ")
-                                strDate = strDate + " \(reminder21DaysTime1[0])"
-                                
-                                print("strDate 12 pm+++ \(strDate)")
-                                date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
-                            }else{
-                                strDate = dateFormate.string(from: Date())
-                                
-                                if reminder21DaysTime.contains("AM") || reminder21DaysTime.contains("am"){
-                                    strDate = strDate + " \(reminder21DaysTime)"
-                                }else{
-                                    strDate = strDate + " \(reminder21DaysTime) AM"
-                                }
-                                
-                                dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
-                                
-                                print("strDate+++ \(strDate)")
-                                date = dateFormate.date(from: strDate)!
-                            }
-                        }
-                    } else {
-                        //phone is set to 24 hours
-                        print("phone is set to 24 hours")
-                        //strDate = strDate + " \(settingData.morningReminderTime!)"
+                let locale = NSLocale.current
+                let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
+                var date: Date = Date()
+                var strDate = dateFormate.string(from: Date())
+                
+                if formatter.contains("a") {
+                    print("phone is set to 12 hours")
+                    //phone is set to 12 hours
+                    
+                    let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
+                    if morningReminderArray.count > 0{
+                        if Int(morningReminderArray[0]) ?? 0 > 11{
+                            dateFormate.dateFormat = "dd-MM-yyyy"
+                            strDate = dateFormate.string(from: Date())
+                            let reminder21DaysTime1 = reminder21DaysTime.components(separatedBy: " ")
+                            strDate = strDate + " \(reminder21DaysTime1[0])"
                             
-                        let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
-                        if morningReminderArray.count > 0{
-                            if Int(morningReminderArray[0]) ?? 0 > 11{
-                                
-                                if reminder21DaysTime.contains("p"){
-                                    dateFormate.dateFormat = "hh:mm a"
-                                }else{
-                                    dateFormate.dateFormat = "HH:mm"
-                                }
-                                
-                                let date11 = dateFormate.date(from: reminder21DaysTime)
-                                dateFormate.dateFormat = "hh:mm"
-                                let Date12 = dateFormate.string(from: date11!)
-                                print("date12... \(Date12)")
-                                strDate = strDate + " " + Date12
-                                print("strDate... \(strDate)")
-                            }else{
+                            print("strDate 12 pm+++ \(strDate)")
+                            date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
+                        }else{
+                            strDate = dateFormate.string(from: Date())
+                            
+                            if reminder21DaysTime.contains("AM") || reminder21DaysTime.contains("am"){
                                 strDate = strDate + " \(reminder21DaysTime)"
+                            }else{
+                                strDate = strDate + " \(reminder21DaysTime) AM"
                             }
-                        }
                             
-                        dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
-                        print(reminder21DaysTime )
-                        
-                        date = dateFormate.date(from: strDate)!
-                        
-                    }//phone is set to 24 hours end***
+                            dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
+                            
+                            print("strDate+++ \(strDate)")
+                            date = dateFormate.date(from: strDate)!
+                        }
+                    }
+                } else {
+                    //phone is set to 24 hours
+                    print("phone is set to 24 hours")
+                    //strDate = strDate + " \(settingData.morningReminderTime!)"
+                    
+                    let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
+                    if morningReminderArray.count > 0{
+                        if Int(morningReminderArray[0]) ?? 0 > 11{
+                            
+                            if reminder21DaysTime.contains("p"){
+                                dateFormate.dateFormat = "hh:mm a"
+                            }else{
+                                dateFormate.dateFormat = "HH:mm"
+                            }
+                            
+                            let date11 = dateFormate.date(from: reminder21DaysTime)
+                            dateFormate.dateFormat = "hh:mm"
+                            let Date12 = dateFormate.string(from: date11!)
+                            print("date12... \(Date12)")
+                            strDate = strDate + " " + Date12
+                            print("strDate... \(strDate)")
+                        }else{
+                            strDate = strDate + " \(reminder21DaysTime)"
+                        }
+                    }
+                    
+                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
                     print(reminder21DaysTime )
                     
+                    date = dateFormate.date(from: strDate)!
                     
-                    var settingData = DBSettings()
-                    if data.count > 0 {
-                     settingData = data[0]
-                    }
-                        
-                    self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: "challenge21days")
-                    
-                    self.appPreffrence.setReminder21DaysTime(value: "")
+                }//phone is set to 24 hours end***
+                print(reminder21DaysTime )
+                
+                
+                var settingData = DBSettings()
+                if data.count > 0 {
+                    settingData = data[0]
                 }
+                
+                self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: "challenge21days")
+                
+                self.appPreffrence.setReminder21DaysTime(value: "")
             }
         }else{
             center.removePendingNotificationRequests(withIdentifiers: ["ChallengeReminder"])
