@@ -24,7 +24,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         print("frame width.... \(self.view.frame.size.width/2)")
         buttonBarView.frame.origin.y = -18
         if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 51
+            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 70
             //60
         }
     
@@ -47,8 +47,8 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemTitleColor = UIColor.white
         settings.style.buttonBarItemsShouldFillAvailableWidth = false
         settings.style.buttonBarLeftContentInset = 20
-        settings.style.buttonBarRightContentInset = 20
-        settings.style.buttonBarMinimumInteritemSpacing = 20
+        settings.style.buttonBarRightContentInset = 30
+        settings.style.buttonBarMinimumInteritemSpacing = 0
         settings.style.buttonBarItemLeftRightMargin = 20
         
         

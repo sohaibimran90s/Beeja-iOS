@@ -626,7 +626,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             let data = statsData.days_21_Challenge[indexPath.row]
             cell.lblDate.text = "\(data.day_id)"
             
-
+            if indexPath.item == 0{
+                cell.imgViewLeft.isHidden = true
+            }
+            
+            if indexPath.item == statsData.days_21_Challenge.count - 1{
+                cell.imgViewRight.isHidden = true
+            }
             
             if data.status{
                 

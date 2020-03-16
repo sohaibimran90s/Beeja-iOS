@@ -35,6 +35,8 @@ class WWMHelperClass {
     static var value: String = ""
     static var timerCount: Int = 0
     
+    static var xlpager = ""
+    
     //Analytic %age
     static var complete_percentage: String = "0"
     

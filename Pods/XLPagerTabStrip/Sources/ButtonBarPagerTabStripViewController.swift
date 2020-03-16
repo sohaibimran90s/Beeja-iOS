@@ -64,7 +64,9 @@ public struct ButtonBarPagerTabStripSettings {
     public var style = Style()
 }
 
-open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource,
+PagerTabStripIsProgressiveDelegate, UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout {
 
     public var settings = ButtonBarPagerTabStripSettings()
 
@@ -269,11 +271,17 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
 
     // MARK: - UICollectionViewDelegateFlowLayut
 
-    @objc open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
-            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
+    @objc open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
+//            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
+//        }
+        print("data.tile_type...")
+        if indexPath.item > 1{
+            return CGSize(width: 200, height: collectionView.frame.size.height)
+        }else{
+            return CGSize(width: 130, height: collectionView.frame.size.height)
         }
-        return CGSize(width: cellWidthValue, height: collectionView.frame.size.height)
+        
     }
 
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
