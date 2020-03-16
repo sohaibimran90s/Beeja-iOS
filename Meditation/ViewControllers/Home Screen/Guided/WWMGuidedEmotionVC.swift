@@ -91,11 +91,14 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 vc.user_id = Int(self.appPreference.getUserID()) ?? 0
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
+                print("data.tile_type*** \(data.tile_type)")
                 if data.tile_type == "2" {
+                    appPreference.set21ChallengeName(value: "7_days")
                     delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 2)
                     self.reloadTabs21DaysController()
 
                 }else{
+                    appPreference.set21ChallengeName(value: "")
                     delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 3)
                     self.reloadTabs21DaysController()
 

@@ -380,7 +380,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                     
-                    if WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"{
+                    if (self.appPreference.get21ChallengeName() == "7_days") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"){
                         
                         WWMHelperClass.days21StepNo = ""
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC

@@ -313,6 +313,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func set21ChallengeName(value:String) {
+        defaults.set(value, forKey: "21ChallengeName")
+        defaults.synchronize()
+    }
+    
     func getCheckEnterSignupLogin() -> Bool {
         return UserDefaults.standard.bool(forKey: "checkEnterSignupLogin")
     }
@@ -386,4 +391,7 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: "reminder21DaysTime") ?? ""
     }
     
+    func get21ChallengeName() -> String {
+        return UserDefaults.standard.string(forKey: "21ChallengeName") ?? ""
+    }
 }

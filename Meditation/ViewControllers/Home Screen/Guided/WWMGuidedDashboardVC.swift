@@ -14,6 +14,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrGuidedList = [WWMGuidedData]()
     var type = ""
+    let appPreference = WWMAppPreference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,8 +132,10 @@ extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
     func guidedEmotionReload(isTrue: Bool, vcName: String, tile_type: Int) {
         print("vcnamce.... \(vcName)")
         if (vcName == "WWMGuidedEmotionVC") && isTrue && tile_type == 2{
+            appPreference.set21ChallengeName(value: "7_days")
             self.moveToViewController(at: 3, animated: true)
         }else if (vcName == "WWMGuidedEmotionVC") && isTrue && tile_type == 3{
+            appPreference.set21ChallengeName(value: "")
             self.moveToViewController(at: 2, animated: true)
         }
     }

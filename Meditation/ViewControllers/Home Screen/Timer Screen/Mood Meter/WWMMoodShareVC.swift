@@ -21,6 +21,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet weak var btnSkip: UIButton!
     
     var alertJournalPopup = WWMJouranlPopUp()
+    let appPreference = WWMAppPreference()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,9 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "SKIPPED", itemName: "IOS")
         
-        if WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"{
+        appPreference.set21ChallengeName(value: "7_days")
+        
+        if (self.appPreference.get21ChallengeName() == "7_days") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21"){
             WWMHelperClass.days21StepNo = ""
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
             self.navigationController?.pushViewController(vc, animated: true)
