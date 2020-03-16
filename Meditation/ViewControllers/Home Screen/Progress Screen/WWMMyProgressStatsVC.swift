@@ -25,6 +25,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var btnAddSessionTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionViewCal: UICollectionView!
+    @IBOutlet weak var collectionView21Chall: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UICircularProgressRing!
     @IBOutlet weak var lblMeditate: EFCountingLabel!
     @IBOutlet weak var lblNameMeditate: UILabel!
@@ -45,6 +46,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
+    var WWMProgress21DaysChallengeData: [WWMSatsProgress21DaysChallengeData] = []
     var milestoneData = WWMMilestoneData()
     var dayAdded = 0
     var monthValue = 0
@@ -529,90 +531,119 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count)")
+        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days_21_Challenge.count)")
         
-        if self.statsData.consecutive_days.count > 35{
-            self.calenderHegihtConstraint.constant = 330
+        if collectionView == collectionViewCal{
+            if self.statsData.consecutive_days.count > 35{
+                self.calenderHegihtConstraint.constant = 330
+            }else{
+                self.calenderHegihtConstraint.constant = 280
+            }
+            
+            return self.statsData.consecutive_days.count
         }else{
-            self.calenderHegihtConstraint.constant = 280
+            return self.statsData.days_21_Challenge.count
         }
-        
-        return self.statsData.consecutive_days.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let data = statsData.consecutive_days[indexPath.row]
-        if data.date == ""{
-            let blankCell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath)
-            return blankCell
-        }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
-        //cell.viewDateCircle.layer.cornerRadius = cell.viewDateCircle.frame.size.width/2
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let monthDate = dateFormatter.date(from:data.date)!
-        dateFormatter.dateFormat = "d"
-        cell.lblDate.text = dateFormatter.string(from: monthDate)
-        
-        cell.viewDateCircle.alpha = 0.0
-        cell.imgViewLeft.alpha = 0.0
-        cell.imgViewRight.alpha = 0.0
-        
-        cell.imgViewLeft.isHidden = true
-        cell.imgViewRight.isHidden = true
-        cell.viewDateCircle.backgroundColor = UIColor.clear
-        cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
-        cell.lblDate.textColor = UIColor.white
-        if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
-            cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-            cell.lblDate.textColor = UIColor.white
-        }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
+     
+        if collectionView == collectionViewCal{
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
+            
+            let data = statsData.consecutive_days[indexPath.row]
+            if data.date == ""{
+                let blankCell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath)
+                return blankCell
+            }
+            
+            //cell.viewDateCircle.layer.cornerRadius = cell.viewDateCircle.frame.size.width/2
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let monthDate = dateFormatter.date(from:data.date)!
+            dateFormatter.dateFormat = "d"
+            cell.lblDate.text = dateFormatter.string(from: monthDate)
+            
+            cell.viewDateCircle.alpha = 0.0
+            cell.imgViewLeft.alpha = 0.0
+            cell.imgViewRight.alpha = 0.0
+            
+            cell.imgViewLeft.isHidden = true
+            cell.imgViewRight.isHidden = true
             cell.viewDateCircle.backgroundColor = UIColor.clear
             cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
-        }else {
-            cell.viewDateCircle.layer.borderWidth = 2.0
-            cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        }
-        
-        UIView.animate(withDuration: 0.2, delay: 0.1*Double(indexPath.item), options: [.curveEaseInOut], animations: {
-            cell.viewDateCircle.transform = CGAffineTransform(translationX: 0, y: 0)
-            cell.viewDateCircle.alpha = 1
-            cell.imgViewLeft.transform = CGAffineTransform(translationX: 0, y: 0)
-            cell.imgViewLeft.alpha = 1
-            cell.imgViewRight.transform = CGAffineTransform(translationX: 0, y: 0)
-            cell.imgViewRight.alpha = 1
-            
-        }, completion: {
-            _ in
+            cell.lblDate.textColor = UIColor.white
             if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
-                cell.lblDate.textColor = UIColor.black
+                cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
+                cell.lblDate.textColor = UIColor.white
+            }else if (data.meditation_status == 0 && data.meditation_status2 == 0) {
+                cell.viewDateCircle.backgroundColor = UIColor.clear
+                cell.viewDateCircle.layer.borderColor = UIColor.clear.cgColor
+            }else {
+                cell.viewDateCircle.layer.borderWidth = 2.0
+                cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
             }
-        })
-        
-        
-        if indexPath.row == dayAdded {
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
-                cell.imgViewRight.isHidden = false
+            
+            UIView.animate(withDuration: 0.2, delay: 0.1*Double(indexPath.item), options: [.curveEaseInOut], animations: {
+                cell.viewDateCircle.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.viewDateCircle.alpha = 1
+                cell.imgViewLeft.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.imgViewLeft.alpha = 1
+                cell.imgViewRight.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.imgViewRight.alpha = 1
+                
+            }, completion: {
+                _ in
+                if (data.meditation_status == 1 && data.meditation_status2 == 1) || (data.meditation_status == 1 && data.meditation_status2 == -1){
+                    cell.lblDate.textColor = UIColor.black
+                }
+            })
+            
+            
+            if indexPath.row == dayAdded {
+                if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
+                    cell.imgViewRight.isHidden = false
+                }
+            }else if indexPath.row == self.statsData.consecutive_days.count-1 {
+                if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
+                    cell.imgViewLeft.isHidden = false
+                }
+            }else {
+                if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
+                    cell.imgViewLeft.isHidden = false
+                }
+                if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
+                    cell.imgViewRight.isHidden = false
+                }
             }
-        }else if indexPath.row == self.statsData.consecutive_days.count-1 {
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
+            
+            return cell
+        }else{
+            //
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
+            let data = statsData.days_21_Challenge[indexPath.row]
+            cell.lblDate.text = "\(data.day_id)"
+            
+            if data.status{
+                
+                cell.viewDateCircle.layer.borderWidth = 2.0
+                cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+                
                 cell.imgViewLeft.isHidden = false
-            }
-        }else {
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row-1].meditation_status == 0 && statsData.consecutive_days[indexPath.row-1].meditation_status2 == 0) {
-                cell.imgViewLeft.isHidden = false
-            }
-            if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
                 cell.imgViewRight.isHidden = false
+            }else{
+                
+                cell.viewDateCircle.layer.borderWidth = 2.0
+                cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
+                
+                cell.imgViewLeft.isHidden = true
+                cell.imgViewRight.isHidden = true
             }
+            
+            return cell
         }
-
-        
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -719,11 +750,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
+                    
+                    print("data stats++++ \(data)")
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
-                    self.isLeft = false
-                    self.setData()
-                    self.collectionViewCal.reloadData()
+                self.isLeft = false
+                self.setData()
+                self.collectionViewCal.reloadData()
+                self.collectionView21Chall.reloadData()
                 
                 self.getMilestoneData()
             }else {

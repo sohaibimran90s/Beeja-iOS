@@ -17,6 +17,7 @@ class WWMSatsProgressData: NSObject {
     var weekly_session:Int?
     var longest_session :Int?
     var consecutive_days = [WWMConsecutiveDaysData]()
+    var days_21_Challenge = [WWMSatsProgress21DaysChallengeData]()
     
     override init() {
         cons_days = 0
@@ -47,6 +48,13 @@ class WWMSatsProgressData: NSObject {
             for dict in arrLevels {
                 let levelData = WWMConsecutiveDaysData.init(json: dict)
                 consecutive_days.append(levelData)
+            }
+        }
+        
+        if let days_21 = json["21days_challenge"] as? [[String:Any]]{
+            for dict in days_21 {
+                let days21Data = WWMSatsProgress21DaysChallengeData.init(json: dict)
+                days_21_Challenge.append(days21Data)
             }
         }
     }
@@ -102,6 +110,23 @@ class WWMConsecutiveDaysData: NSObject {
     
 }
 
+class WWMSatsProgress21DaysChallengeData: NSObject {
+    
+    var completed_date = ""
+    var day_id = 1
+    var emotion_id = ""
+    var status = false
+    
+    override init() {
+    }
+    
+    init(json:[String:Any]) {
+        completed_date = json["completed_date"] as? String ?? ""
+        day_id = json["day_id"] as? Int ?? 1
+        emotion_id = json["emotion_id"] as? String ?? ""
+        status = json["status"] as? Bool ?? false
+    }
+}
 
 
 
