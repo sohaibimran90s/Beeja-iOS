@@ -441,6 +441,8 @@
 		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
 		61E0FDD323E85D2D0061B9F4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */; };
 		61E0FDD423E85D2D0061B9F4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E0FDD223E85D2C0061B9F4 /* Fabric.framework */; };
+		61E618E7241F87F900CC7247 /* singleLineLeft1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E618E6241F87F800CC7247 /* singleLineLeft1.png */; };
+		61E618E9241F880700CC7247 /* singleLineRight1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E618E8241F880600CC7247 /* singleLineRight1.png */; };
 		61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */; };
 		61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
@@ -973,6 +975,8 @@
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
 		61E0FDD123E85D2B0061B9F4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		61E0FDD223E85D2C0061B9F4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		61E618E6241F87F800CC7247 /* singleLineLeft1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = singleLineLeft1.png; sourceTree = "<group>"; };
+		61E618E8241F880600CC7247 /* singleLineRight1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = singleLineRight1.png; sourceTree = "<group>"; };
 		61F0BF9823FFE4BF0067B660 /* WWMDatabase 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 4.xcdatamodel"; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1458,6 +1462,7 @@
 		2EB9072421B653DD009891E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				61E618E8241F880600CC7247 /* singleLineRight1.png */,
 				6197CD5023574A26001E5E4B /* Burn.mov */,
 				614259F42386A4F400DE7CE5 /* AMBIENTADAPTATIONLOOP.wav */,
 				614259F82386B29900DE7CE5 /* LOADERSOUND.wav */,
@@ -1481,6 +1486,7 @@
 				2E4CE29E2209A03400059396 /* dataClock.json */,
 				2E4CE28D22087A0F00059396 /* doubleLineLeft.png */,
 				2E4CE28F22087A1000059396 /* doubleLineRight.png */,
+				61E618E6241F87F800CC7247 /* singleLineLeft1.png */,
 				2E4CE28E22087A0F00059396 /* singleLineLeft.png */,
 				2E4CE28C22087A0E00059396 /* singleLineRight.png */,
 				2E4CE2812205A4EB00059396 /* Font */,
@@ -2321,6 +2327,7 @@
 				2E4CE29F2209A03400059396 /* dataClock.json in Resources */,
 				E81E3EE12416427000E6C3DA /* EAE568B5-B76C-3544-94FE-96716613C49F.bcsymbolmap in Resources */,
 				E0783206235E3BCA00B352ED /* guided.json in Resources */,
+				61E618E9241F880700CC7247 /* singleLineRight1.png in Resources */,
 				E0783200235E3BCA00B352ED /* clock.json in Resources */,
 				E07831F1235E3BCA00B352ED /* Localizable.strings in Resources */,
 				613F081322CF356E0042515C /* hand.json in Resources */,
@@ -2381,6 +2388,7 @@
 				61426B2222DC5304006FE825 /* loop2.json in Resources */,
 				613F081122CF324F0042515C /* register.json in Resources */,
 				2E4371C622004D9A00EF5D62 /* HIMALAYAN BELL.mp3 in Resources */,
+				61E618E7241F87F900CC7247 /* singleLineLeft1.png in Resources */,
 				2E65FB90238FAEA900576120 /* slient.mp3 in Resources */,
 				6133735223C315B600F9C866 /* WWMGuidedUpgradeBeejaPopUp.xib in Resources */,
 				E0783203235E3BCA00B352ED /* globe.json in Resources */,

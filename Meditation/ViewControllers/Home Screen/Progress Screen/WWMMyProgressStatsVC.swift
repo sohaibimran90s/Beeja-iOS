@@ -626,20 +626,24 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             let data = statsData.days_21_Challenge[indexPath.row]
             cell.lblDate.text = "\(data.day_id)"
             
+
+            
             if data.status{
                 
                 cell.viewDateCircle.layer.borderWidth = 2.0
                 cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
                 
-                cell.imgViewLeft.isHidden = false
-                cell.imgViewRight.isHidden = false
+                cell.imgViewLeft.image = UIImage(named: "singleLineLeft")
+                //cell.imgViewRight.image = UIImage(named: "")
+                //cell.imgViewLeft.isHidden = false
+                //cell.imgViewRight.isHidden = false
             }else{
                 
                 cell.viewDateCircle.layer.borderWidth = 2.0
                 cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
                 
-                cell.imgViewLeft.isHidden = true
-                cell.imgViewRight.isHidden = true
+                cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
+                cell.imgViewRight.image = UIImage(named: "singleLineRight1")
             }
             
             return cell
