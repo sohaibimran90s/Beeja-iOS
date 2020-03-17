@@ -216,7 +216,7 @@ class WWMHelperClass {
     
     class func daysLeft(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -239,7 +239,7 @@ class WWMHelperClass {
     
     class func dateComparison(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -262,6 +262,7 @@ class WWMHelperClass {
     }
     
     class func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         guard let expireDate = formatter.date(from: expiryDate)
@@ -285,7 +286,7 @@ class WWMHelperClass {
         }
                 
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDateString = dateFormatter.string(from: Date())

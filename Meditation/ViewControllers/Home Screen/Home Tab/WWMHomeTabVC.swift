@@ -72,7 +72,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.podData = []
         self.podcastData()
         
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         

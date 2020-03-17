@@ -648,6 +648,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                     dict.completed = true
                     
                     let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     let currentDateString = dateFormatter.string(from: Date())
                     print("faq current date string... \(currentDateString)")

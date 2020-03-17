@@ -79,7 +79,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         //community
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
         
@@ -1292,7 +1292,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             //*receiptValidation
                             let formatter = DateFormatter()
                             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            formatter.locale = NSLocale.current
+                            formatter.locale = Locale(identifier: "en_US_POSIX")
                             
                             let expiryDate = self.appPreffrence.getExpireDateBackend()
                             if expiryDate != ""{
@@ -1374,6 +1374,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                     
                                     let formatter = DateFormatter()
+                                    formatter.locale = Locale(identifier: "en_US_POSIX")
                                     if let _ = formatter.date(from: expiryDate){
                                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     }else{

@@ -55,6 +55,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         self.btnTomm.setBackgroundImage(UIImage(named: "onRadio"), for: .normal)
         self.btnEveryday.setBackgroundImage(UIImage(named: "offRadio"), for: .normal)
         
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
         let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
         AppDelegate.sharedDelegate().date = tommDate!
@@ -67,6 +68,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         self.btnTomm.setBackgroundImage(UIImage(named: "offRadio"), for: .normal)
         self.btnEveryday.setBackgroundImage(UIImage(named: "onRadio"), for: .normal)
         
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
         let afterThirtyDate = Calendar.current.date(byAdding: .day, value: 30, to: date)
         AppDelegate.sharedDelegate().date = afterThirtyDate!
@@ -78,6 +80,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
     
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
         if flag == 0{
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             dateFormatter.dateFormat = "dd:MM:yyyy HH:mm"
             let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
             AppDelegate.sharedDelegate().date = tommDate!
