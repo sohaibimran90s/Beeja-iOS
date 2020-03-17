@@ -884,7 +884,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if morningReminderArray?.count ?? 0 > 0{
                         if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.morningReminderTime!.contains("p"){
+                            if settingData.morningReminderTime!.contains("p") || settingData.morningReminderTime!.contains("a") || settingData.morningReminderTime!.contains("A") || settingData.morningReminderTime!.contains("P"){
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -971,7 +971,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if afterNoonReminderArray?.count ?? 0 > 0{
                         if Int(afterNoonReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.afterNoonReminderTime!.contains("p"){
+                            if settingData.afterNoonReminderTime!.contains("p") || settingData.afterNoonReminderTime!.contains("a") || settingData.afterNoonReminderTime!.contains("A") || settingData.afterNoonReminderTime!.contains("P"){
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -1061,7 +1061,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if afterLearnReminderArray?.count ?? 0 > 0{
                         if Int(afterLearnReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.learnReminderTime!.contains("p"){
+                            if settingData.learnReminderTime!.contains("p") || settingData.learnReminderTime!.contains("a") || settingData.learnReminderTime!.contains("A") || settingData.learnReminderTime!.contains("P"){
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
