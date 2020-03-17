@@ -919,13 +919,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
                     }
                 }else{
-                    if sender.indexPath.section == 0{
+                    //if sender.indexPath.section == 0{
                         let datePickerView = UIDatePicker()
                         datePickerView.datePickerMode = .time
                         cell.txtView.inputView = datePickerView
                         datePickerView.tag = sender.indexPath.row
                         datePickerView.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
-                    }
+                    //}
                 }
                 
             }else {
