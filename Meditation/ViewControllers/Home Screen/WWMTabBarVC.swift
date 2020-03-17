@@ -1158,197 +1158,174 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    if success {
-
-                        WWMHelperClass.hideLoaderAnimate(on: self.view)
-                        
-                        var userData = WWMUserData.sharedInstance
-                        userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                    
-                        
-                        print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
-                        
-                        var userSubscription = WWMUserData.sharedInstance
-                        userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
-                        
-                        self.appPreffrence.setGetProfile(value: false)
-                        self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
-                        self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
-                        self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
-                        self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
-                        self.appPreffrence.setOffers(value: result["offers"] as! [String])
-                
-                        
-                        if let userProfile = result["user_profile"] as? [String : Any]{
-                            //setEmail
-                            self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
-                            self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
-                            self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
-                            self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
-                            self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
-                            self.appPreffrence.setUserID(value:"\(userProfile["id"] as? Int ?? 0)")
-
-                            //this is for hide or unhide setting for paid and unpaid user
-                            self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
-                        }
-                        
-                        self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
-                        
-                        print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
-                        
-                        self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
-                        self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
-                        self.appPreffrence.setSubscriptionId(value: "\(userSubscription.subscription_id)")
-
-                        let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
-
-                        self.appPreffrence.setExpiryDate(value: false)
-                        
-                        if let subscription = result["subscription"] as? [String : Any]{
-                            if let journal = subscription["journal"] as? [String : Any]{
-                                if let post = journal["post"] as? Int{
-                                    if post >= 6{
-                                        self.appPreffrence.setPostJournalCount(value: 0)
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        if success {
+                            
+                            WWMHelperClass.hideLoaderAnimate(on: self.view)
+                            
+                            var userData = WWMUserData.sharedInstance
+                            userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
+                            
+                            
+                            print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
+                            
+                            var userSubscription = WWMUserData.sharedInstance
+                            userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
+                            
+                            self.appPreffrence.setGetProfile(value: false)
+                            self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
+                            self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
+                            self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                            self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
+                            self.appPreffrence.setOffers(value: result["offers"] as! [String])
+                            
+                            
+                            if let userProfile = result["user_profile"] as? [String : Any]{
+                                //setEmail
+                                self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
+                                self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
+                                self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")
+                                self.appPreffrence.setGender(value: userProfile["gender"] as? String ?? "")
+                                self.appPreffrence.setDob(value: userProfile["dob"] as? String ?? "")
+                                self.appPreffrence.setUserID(value:"\(userProfile["id"] as? Int ?? 0)")
+                                
+                                //this is for hide or unhide setting for paid and unpaid user
+                                self.appPreffrence.setIsSubscribedBool(value: userProfile["is_subscribed"] as? Bool ?? false)
+                            }
+                            
+                            self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
+                            
+                            print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
+                            
+                            self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
+                            self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
+                            self.appPreffrence.setSubscriptionId(value: "\(userSubscription.subscription_id)")
+                            
+                            let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
+                            
+                            self.appPreffrence.setExpiryDate(value: false)
+                            
+                            if let subscription = result["subscription"] as? [String : Any]{
+                                if let journal = subscription["journal"] as? [String : Any]{
+                                    if let post = journal["post"] as? Int{
+                                        if post >= 6{
+                                            self.appPreffrence.setPostJournalCount(value: 0)
+                                        }
+                                    }
+                                    
+                                    if let pre = journal["pre"] as? Int{
+                                        if pre >= 6{
+                                            self.appPreffrence.setPreJournalCount(value: 0)
+                                        }
                                     }
                                 }
-                                
-                                if let pre = journal["pre"] as? Int{
-                                    if pre >= 6{
-                                        self.appPreffrence.setPreJournalCount(value: 0)
+                                if let mood = subscription["mood"] as? [String : Any]{
+                                    if let post = mood["post"] as? Int{
+                                        if post >= 6{
+                                            self.appPreffrence.setPostMoodCount(value: 0)
+                                        }
+                                    }
+                                    
+                                    if let pre = mood["pre"] as? Int{
+                                        if pre >= 6{
+                                            self.appPreffrence.setPreMoodCount(value: 0)
+                                        }
                                     }
                                 }
                             }
-                            if let mood = subscription["mood"] as? [String : Any]{
-                                if let post = mood["post"] as? Int{
-                                    if post >= 6{
-                                        self.appPreffrence.setPostMoodCount(value: 0)
+                            
+                            if difference == 1{
+                                if !self.appPreffrence.getPrePostJournalBool(){
+                                    
+                                    self.appPreffrence.setPrePostJournalBool(value: true)
+                                    
+                                    print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
+                                    
+                                    
+                                    if let subscription = result["subscription"] as? [String : Any]{
+                                        if let journal = subscription["journal"] as? [String : Any]{
+                                            if let post = journal["post"] as? Int{
+                                                if post >= 6{
+                                                    self.appPreffrence.setPostJournalCount(value: 0)
+                                                }else{
+                                                    self.appPreffrence.setPostJournalCount(value: 6)
+                                                }
+                                            }
+                                            
+                                            if let pre = journal["pre"] as? Int{
+                                                if pre >= 6{
+                                                    self.appPreffrence.setPreJournalCount(value: 0)
+                                                }else{
+                                                    self.appPreffrence.setPreJournalCount(value: 6)
+                                                }
+                                            }
+                                        }
+                                        if let mood = subscription["mood"] as? [String : Any]{
+                                            if let post = mood["post"] as? Int{
+                                                if post >= 6{
+                                                    self.appPreffrence.setPostMoodCount(value: 0)
+                                                }else{
+                                                    self.appPreffrence.setPostMoodCount(value: 6)
+                                                }
+                                            }
+                                            
+                                            if let pre = mood["pre"] as? Int{
+                                                if pre >= 6{
+                                                    self.appPreffrence.setPreMoodCount(value: 0)
+                                                }else{
+                                                    self.appPreffrence.setPreMoodCount(value: 6)
+                                                }
+                                            }
+                                        }
                                     }
+                                    
                                 }
-                                
-                                if let pre = mood["pre"] as? Int{
-                                    if pre >= 6{
-                                        self.appPreffrence.setPreMoodCount(value: 0)
-                                    }
-                                }
+                            }else{
+                                self.appPreffrence.setExpiryDate(value: true)
                             }
-                        }
-                        
-                        if difference == 1{
-                            if !self.appPreffrence.getPrePostJournalBool(){
-                                
-                                self.appPreffrence.setPrePostJournalBool(value: true)
-                                
-                                print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
-                                
-                                
-                                if let subscription = result["subscription"] as? [String : Any]{
-                                    if let journal = subscription["journal"] as? [String : Any]{
-                                        if let post = journal["post"] as? Int{
-                                            if post >= 6{
-                                                self.appPreffrence.setPostJournalCount(value: 0)
-                                            }else{
-                                                self.appPreffrence.setPostJournalCount(value: 6)
-                                            }
-                                        }
-                                        
-                                        if let pre = journal["pre"] as? Int{
-                                            if pre >= 6{
-                                                self.appPreffrence.setPreJournalCount(value: 0)
-                                            }else{
-                                                self.appPreffrence.setPreJournalCount(value: 6)
-                                            }
-                                        }
-                                    }
-                                    if let mood = subscription["mood"] as? [String : Any]{
-                                        if let post = mood["post"] as? Int{
-                                            if post >= 6{
-                                                self.appPreffrence.setPostMoodCount(value: 0)
-                                            }else{
-                                                self.appPreffrence.setPostMoodCount(value: 6)
-                                            }
-                                        }
-                                        
-                                        if let pre = mood["pre"] as? Int{
-                                            if pre >= 6{
-                                                self.appPreffrence.setPreMoodCount(value: 0)
-                                            }else{
-                                                self.appPreffrence.setPreMoodCount(value: 6)
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                
-//                                self.appPreffrence.setPostMoodCount(value: 6)
-//                                self.appPreffrence.setPreMoodCount(value: 6)
-//                                self.appPreffrence.setPreJournalCount(value: 6)
-//                                self.appPreffrence.setPostJournalCount(value: 6)
-                            }
-                        }else{
-                            self.appPreffrence.setExpiryDate(value: true)
-                        }
-                        
-                        self.setDataToDb(json: result["settings"] as! [String:Any])
-                        print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
-                        
-                        //*receiptValidation
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                        formatter.locale = NSLocale.current
-                        
-                        if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
+                                                        
+                            self.setDataToDb(json: result["settings"] as! [String:Any])
+                            print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
+                            
+                            //*receiptValidation
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            formatter.locale = NSLocale.current
+                            
+                            let expiryDate = self.appPreffrence.getExpireDateBackend()
                             if expiryDate != ""{
-                                print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                 
-                                print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
+                                if let _ = formatter.date(from: expiryDate){
+                                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                }else{
+                                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                                }
                                 
                                 let currentDateString = formatter.string(from: Date())
-
-                                //let expireDate = formatter.date(from: expiryDate)!
-                                //let currentDate = formatter.date(from: currentDateString)!
-
                                 var expireDate: Date = Date()
                                 var currentDate: Date = Date()
                                 
-                                let locale = NSLocale.current
-                                let formatter1: String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                                if formatter1.contains("a") {
-                                    print("phone is set to 12 hours")
-                                    //phone is set to 12 hours
-                                    
-                                    if let currentDate1: Date = formatter.date(from: currentDateString){
-                                        currentDate = currentDate1
-                                    }
-                                    
-                                    expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
-                                    
-                                }else{
-                                    print("phone is set to 24 hours")
-                                    //phone is set to 12 hours
-                                    if let currentDate1: Date = formatter.date(from: currentDateString){
-                                        currentDate = currentDate1
-                                    }
-                                    
-                                    expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
-                                           
-                                }//phone is set to 12 hours*
+                                currentDate = formatter.date(from: currentDateString)!
+                                expireDate = WWMHelperClass.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                                
+                                print("self.appPreffrence.getExpiryDate... \(expiryDate) formatter.date... \(String(describing: formatter.date(from: expiryDate))) currentDate+++ \(currentDate) expireDate++ \(expireDate)")
+                                
+                                
                                 self.checkExpireFunc(currentDate: currentDate, expireDate: expireDate)
+                            }
+                            //receiptValidation*
+                            
+                        }else {
+                            self.getDataFromDatabase()
                         }
-                    }
-                        //receiptValidation*
-                        
                     }else {
                         self.getDataFromDatabase()
                     }
                 }else {
                     self.getDataFromDatabase()
                 }
-            }else {
-                self.getDataFromDatabase()
-            }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -1357,73 +1334,16 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    func getExpireDate12hour(expiryDate: String, formatter: DateFormatter) -> Date{
-        var expireDate = Date()
-        let expiryDateArray = expiryDate.components(separatedBy: " ")
-        if expiryDateArray.count > 1{
-        let getHourMinSec = expiryDateArray[1]
-        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
-        if getHourMinSecArray.count > 0{
-            if Int(getHourMinSecArray[0]) ?? 0 > 11{
-                
-                    formatter.dateFormat = "yyyy-MM-dd"
-                    //let date11 = formatter.date(from: expiryDate)
-                    expireDate = self.getRequiredFormat(dateStrInTwentyFourHourFomat: expiryDate)
-                }else{
-                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                    expireDate = formatter.date(from: expiryDate)!
-                }
-            }
-        }
-        return expireDate
-    }
-    
-    func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
-        var expireDate = Date()
-        let expiryDateArray = expiryDate.components(separatedBy: " ")
-        if expiryDateArray.count > 1{
-        let getHourMinSec = expiryDateArray[1]
-        let getHourMinSecArray = getHourMinSec.components(separatedBy: ":")
-        if getHourMinSecArray.count > 0{
-            if Int(getHourMinSecArray[0]) ?? 0 > 11{
-                    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let date11 = formatter.date(from: expiryDate)
-                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-                    let Date12 = formatter.string(from: date11!)
-                    print("date12... \(Date12)")
-                    expireDate = formatter.date(from: Date12)!
-                }else{
-                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                    expireDate = formatter.date(from: expiryDate)!
-                }
-            }
-        }
-        return expireDate
-    }
-    
-    func getRequiredFormat(dateStrInTwentyFourHourFomat: String) -> Date{
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-
-        let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat)!
-        print(date)
-        return date
-    }
-    
     func checkExpireFunc(currentDate: Date, expireDate: Date){
-        if let expireDate1 = expireDate as? Date{
-            if currentDate > expireDate1{
-                print("currentDate is greater than expireDate")
-                if self.appPreffrence.isLogin(){
-                    DispatchQueue.global(qos: .background).async {
-                        self.receiptValidation()
-                    }
+        if currentDate > expireDate{
+            print("currentDate is greater than expireDate")
+            if self.appPreffrence.isLogin(){
+                DispatchQueue.global(qos: .background).async {
+                    self.receiptValidation()
                 }
-            }else{
-                print("currentDate is smaller than expireDate")
             }
+        }else{
+            print("currentDate is smaller than expireDate")
         }
     }
     
@@ -1449,27 +1369,26 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if json != nil{
                             if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
                                 print("date...+++++ \(date)")
-                                if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
-                                    if expiryDate != ""{
-                                        print("self.appPreffrence.getExpiryDate... \(expiryDate)")
-                                        
-                                        let formatter = DateFormatter()
+                                let expiryDate = self.appPreffrence.getExpireDateBackend()
+                                if expiryDate != ""{
+                                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                    
+                                    let formatter = DateFormatter()
+                                    if let _ = formatter.date(from: expiryDate){
+                                        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    }else{
                                         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                                                                                
-                                        let expireDate = self.getExpireFunc(expiryDate: expiryDate)
-                                        print("dkfjkdfksd+++++= \(expireDate.0)")
-                                        
-                                        if expireDate.1 == 1{
-                                            
-                                            if date > expireDate.0{
-                                                print("product_id... \(self.product_id ?? "")")
-                                                print("repurchased")
-                                                self.getSubscriptionPlanId()
-                                            }else{
-                                                print("expired")
-                                            }
-                                        }
-                                        
+                                    }
+                                    
+                                    let expireDate = WWMHelperClass.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                                    let serverDate = WWMHelperClass.getExpireDate(expiryDate: formatter.string(from: date), formatter: formatter)
+                                    print("dkfjkdfksd+++++= \(expireDate) serverDate++++ \(serverDate)")
+                                    
+                                    if serverDate > expireDate{
+                                        print("product_id... \(self.product_id) repurchased")
+                                        self.getSubscriptionPlanId()
+                                    }else{
+                                        print("expired")
                                     }
                                 }
                             }
@@ -1482,73 +1401,37 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         } catch { return }
     }
     
-    
-    
-    func getExpireFunc(expiryDate: String) -> (Date, Int){
-        if let expiryDate = self.appPreffrence.getExpireDateBackend() as? String{
-                if expiryDate != ""{
-                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
-                    
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                    formatter.locale = NSLocale.current
-                    
-                    print("formatter.date... \(String(describing: formatter.date(from: expiryDate)))")
-                    
-                    var expireDate: Date = Date()
-                    
-                    let locale = NSLocale.current
-                    let formatter1: String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                    if formatter1.contains("a") {
-                        print("phone is set to 12 hours")
-                        //phone is set to 12 hours
-                        
-                        expireDate = self.getExpireDate12hour(expiryDate: expiryDate, formatter: formatter)
-                        return (expireDate, 1)
-                        
-                    }else{
-                        print("phone is set to 24 hours")
-                        //phone is set to 12 hours
-
-                        expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: formatter)
-                        return (expireDate, 1)
-                               
-                    }//phone is set to 12 hours*
-            }
-        }
-        return (Date(), 0)
-    }
       
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
+        
+        if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
+            
+          let lastReceipt = receiptInfo.lastObject as! NSDictionary
+          let formatter = DateFormatter()
+          formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
+           
+          if let product_id = lastReceipt["product_id"] as? String {
+              self.product_id = product_id
+          }
           
-          if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
-              
-            let lastReceipt = receiptInfo.lastObject as! NSDictionary
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
-             
-            if let product_id = lastReceipt["product_id"] as? String {
-                self.product_id = product_id
-            }
-            
-            if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
-                self.date_time = purchase_date_ms
-            }
-            
-            if let transaction_id = lastReceipt["transaction_id"]{
-                self.transaction_id = transaction_id
-            }
-            
-            if let expiresDate = lastReceipt["purchase_date"] as? String {
-                return formatter.date(from: expiresDate)
-            }
-              
-              return nil
+          if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
+              self.date_time = purchase_date_ms
           }
-          else {
-              return nil
+          
+          if let transaction_id = lastReceipt["transaction_id"]{
+              self.transaction_id = transaction_id
           }
-      }
+          
+          if let expiresDate = lastReceipt["purchase_date"] as? String {
+              return formatter.date(from: expiresDate)
+          }
+            
+            return nil
+        }
+        else {
+            return nil
+        }
+    }
     
     
     func getSubscriptionPlanId(){
