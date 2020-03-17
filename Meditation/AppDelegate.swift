@@ -865,7 +865,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                                                         
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am"){
+                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM"){
                                 strDate = strDate + " \(settingData.morningReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.morningReminderTime!) AM"
@@ -898,7 +898,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am"){
+                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM") {
                                 
                             let morningReminderTime1 = settingData.morningReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(morningReminderTime1![0])"
@@ -951,7 +951,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                                                         
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am"){
+                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
                                 strDate = strDate + " \(settingData.afterNoonReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.afterNoonReminderTime!) AM"
@@ -985,7 +985,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am"){
+                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
                                 
                             let afterNoonReminderTime1 = settingData.afterNoonReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(afterNoonReminderTime1![0])"
@@ -1041,7 +1041,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                             
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am"){
+                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
                                 strDate = strDate + " \(settingData.learnReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.learnReminderTime!) AM"
@@ -1075,7 +1075,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am"){
+                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
                                 
                             let learnReminderTime1 = settingData.learnReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(learnReminderTime1![0])"
