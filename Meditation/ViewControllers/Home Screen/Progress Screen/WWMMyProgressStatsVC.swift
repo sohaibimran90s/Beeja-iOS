@@ -75,6 +75,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var player:  AVAudioPlayer?
 
     let reachable = Reachabilities()
+    
+    //challenge21Progress
+    @IBOutlet weak var viewChallenge21Days: UIView!
+    @IBOutlet weak var viewChallenge21DaysHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnChallenge21Days: UIButton!
+    @IBOutlet weak var calenderTopConstraint: NSLayoutConstraint!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,8 +103,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }else if WWMHelperClass.milestoneType == "sessions"{
             self.notificationPopUp(titles: "Meditated Twice in 1 Day", titleDescript: "You have just meditated twice in one day", textNextMileStone: "Meditate Twice a Day for a Week", imgLogo: "session", imgLogo1: "session1", redC: 177, greenC: 56, blueC: 211)
         }
-        
-        
     }
     
     func notificationPopUp(titles: String, titleDescript: String, textNextMileStone: String, imgLogo: String, imgLogo1: String, redC: CGFloat, greenC: CGFloat, blueC: CGFloat) {
@@ -131,12 +136,18 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        self.btnChallenge21Days.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.btnChallenge21Days.layer.borderWidth = 2
+        self.viewChallenge21Days.isHidden = true
+        self.viewChallenge21DaysHeightConstraint.constant = 0
+        self.btnChallenge21Days.isHidden = true
+        self.calenderTopConstraint.constant = 0
+        
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100
         self.viewDays.maxValue = 100
         
         scrollView.setContentOffset(.zero, animated: true)
-        
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
         print("self.appPreffrence.getType().... \(self.appPreffrence.getType())")
@@ -652,6 +663,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 cell.imgViewRight.image = UIImage(named: "singleLineRight1")
             }
             
+            
+            UIView.animate(withDuration: 0.2, delay: 0.1*Double(indexPath.item), options: [.curveEaseInOut], animations: {
+                cell.viewDateCircle.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.viewDateCircle.alpha = 1
+                cell.imgViewLeft.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.imgViewLeft.alpha = 1
+                cell.imgViewRight.transform = CGAffineTransform(translationX: 0, y: 0)
+                cell.imgViewRight.alpha = 1
+                
+            }, completion: nil)
+            
             return cell
         }
     }
@@ -766,9 +788,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 }
                 self.isLeft = false
                 self.setData()
-                self.collectionViewCal.reloadData()
-                self.collectionView21Chall.reloadData()
                 
+                if WWMHelperClass.selectedType == "guided"{
+                    self.viewChallenge21Days.isHidden = false
+                    self.viewChallenge21DaysHeightConstraint.constant = 346
+                    self.btnChallenge21Days.isHidden = false
+                    self.calenderTopConstraint.constant = 12
+                    
+                    self.collectionView21Chall.reloadData()
+                }
+                
+                self.collectionViewCal.reloadData()
                 self.getMilestoneData()
             }else {
                 if error != nil {
