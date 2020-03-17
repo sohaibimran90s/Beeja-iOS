@@ -1270,7 +1270,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 //    }
     
     func afterNoonMorningReminderFunc(settingData: DBSettings, date: Date, type: String){
-        if date != nil{
             //let date = dateFormate.date(from: strDate)
             //print(date!)
             let arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
@@ -1348,11 +1347,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 }
             }
-        }
     }
     
     func learnReminderFunc(settingData: DBSettings, date: Date){
-        if date != nil{
             let str = KLEARNTOMEDITATE1
             
             // let timeStemp = Int(date!.timeIntervalSince1970)
@@ -1402,7 +1399,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 }
             }
-        }
     }
     
     // Receive displayed notifications for iOS 10 devices.
