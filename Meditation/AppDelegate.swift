@@ -863,7 +863,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                             
-                            if reminder21DaysTime.contains("AM") || reminder21DaysTime.contains("am"){
+                            if reminder21DaysTime.contains("AM") || reminder21DaysTime.contains("am") || reminder21DaysTime.contains("pm") || reminder21DaysTime.contains("PM"){
                                 strDate = strDate + " \(reminder21DaysTime)"
                             }else{
                                 strDate = strDate + " \(reminder21DaysTime) AM"
@@ -884,7 +884,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if morningReminderArray.count > 0{
                         if Int(morningReminderArray[0]) ?? 0 > 11{
                             
-                            if reminder21DaysTime.contains("p"){
+                            if reminder21DaysTime.contains("p") || reminder21DaysTime.contains("a") || reminder21DaysTime.contains("A") || reminder21DaysTime.contains("P"){
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -922,7 +922,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }else{
             center.removePendingNotificationRequests(withIdentifiers: ["ChallengeReminder"])
         }
-        
         
         //local_pushnotification_learn_timer_guided
         if self.value == 1{
@@ -966,7 +965,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                                                         
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am"){
+                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM"){
+
                                 strDate = strDate + " \(settingData.morningReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.morningReminderTime!) AM"
@@ -985,7 +985,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if morningReminderArray?.count ?? 0 > 0{
                         if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.morningReminderTime!.contains("p"){
+                            if settingData.morningReminderTime!.contains("p") || settingData.morningReminderTime!.contains("a") || settingData.morningReminderTime!.contains("A") || settingData.morningReminderTime!.contains("P"){
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -999,7 +999,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am"){
+                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM") {
                                 
                             let morningReminderTime1 = settingData.morningReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(morningReminderTime1![0])"
@@ -1052,7 +1052,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                                                         
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am"){
+                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
+
                                 strDate = strDate + " \(settingData.afterNoonReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.afterNoonReminderTime!) AM"
@@ -1072,7 +1073,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if afterNoonReminderArray?.count ?? 0 > 0{
                         if Int(afterNoonReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.afterNoonReminderTime!.contains("p"){
+                            if settingData.afterNoonReminderTime!.contains("p") || settingData.afterNoonReminderTime!.contains("a") || settingData.afterNoonReminderTime!.contains("A") || settingData.afterNoonReminderTime!.contains("P"){
+
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -1086,7 +1088,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am"){
+                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
                                 
                             let afterNoonReminderTime1 = settingData.afterNoonReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(afterNoonReminderTime1![0])"
@@ -1142,7 +1144,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }else{
                             strDate = dateFormate.string(from: Date())
                             
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am"){
+
+                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
+
                                 strDate = strDate + " \(settingData.learnReminderTime!)"
                             }else{
                                 strDate = strDate + " \(settingData.learnReminderTime!) AM"
@@ -1155,14 +1159,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     
                 }else{
                     //phone is set to 24 hours
-                    print("phone is set to 24 hours \(settingData.learnReminderTime)")
+
+                    print("phone is set to 24 hours \(settingData.learnReminderTime ?? "")")
                 
                     //strDate = strDate + " \(settingData.learnReminderTime ?? "14:00")"
                     let afterLearnReminderArray = settingData.learnReminderTime?.components(separatedBy: ":")
                     if afterLearnReminderArray?.count ?? 0 > 0{
                         if Int(afterLearnReminderArray?[0] ?? "0") ?? 0 > 11{
                             
-                            if settingData.learnReminderTime!.contains("p"){
+
+                            if settingData.learnReminderTime!.contains("p") || settingData.learnReminderTime!.contains("a") || settingData.learnReminderTime!.contains("A") || settingData.learnReminderTime!.contains("P"){
+
                                 dateFormate.dateFormat = "hh:mm a"
                             }else{
                                 dateFormate.dateFormat = "HH:mm"
@@ -1176,7 +1183,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             print("strDate... \(strDate)")
                         }else{
                             
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am"){
+
+                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
                                 
                             let learnReminderTime1 = settingData.learnReminderTime?.components(separatedBy: " ")
                                 strDate = strDate + " \(learnReminderTime1![0])"
@@ -1227,47 +1235,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         print(date)
         return date
     }
-    
-//    func morningReminderFunc(settingData: DBSettings, date: Date){
-//        if date != nil{
-//            let arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
-//            var str = KGOODMORNING
-//            if arrTemp?.count == 2 {
-//                let hours = Int(arrTemp?[0] ?? "0") ?? 0
-//                let minutes = Int(arrTemp?[1] ?? "0") ?? 0
-//                let seconds = hours*60 + minutes
-//                if seconds < 720 {
-//                    str = KGOODMORNING
-//                }else if 720 <= seconds && seconds < 1080 {
-//                    str = KGOODAFTERNOON
-//                }else {
-//                    str = KGOODEVENING
-//                }
-//            }
-//
-//            // let timeStemp = Int(date!.timeIntervalSince1970)
-//            let content = UNMutableNotificationContent()
-//            content.title = NSString.localizedUserNotificationString(forKey:str, arguments: nil)
-//            content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
-//            content.sound = UNNotificationSound.default
-//            content.threadIdentifier = "local-notifications-MorningReminder"
-//            //print(Int(Date().timeIntervalSince1970))
-//            //print(timeStemp)
-//            //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-//            // let toDateComponents = NSCalendar.currentCalendar.components([.Hour, .Minute], fromDate: timeStemp!)
-//            // let toDateComponents = Calendar.current.component([.hour, .minute], from: timeStemp!)
-//            let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
-//            let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-//
-//            //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
-//            let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
-//            center.add(request){ (error) in
-//                if error == nil {
-//                    print("schedule push succeed")
-//                }
-//            }
-//        }
-//    }
     
     func afterNoonMorningReminderFunc(settingData: DBSettings, date: Date, type: String){
             //let date = dateFormate.date(from: strDate)
@@ -1348,6 +1315,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
             }
     }
+    
     
     func learnReminderFunc(settingData: DBSettings, date: Date){
             let str = KLEARNTOMEDITATE1

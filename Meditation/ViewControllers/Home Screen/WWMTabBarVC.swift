@@ -80,7 +80,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         //community
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
         
@@ -1327,7 +1327,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             //*receiptValidation
                             let formatter = DateFormatter()
                             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            formatter.locale = NSLocale.current
+                            formatter.locale = Locale(identifier: "en_US_POSIX")
                             
                             let expiryDate = self.appPreffrence.getExpireDateBackend()
                             if expiryDate != ""{
@@ -1369,7 +1369,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    
     func checkExpireFunc(currentDate: Date, expireDate: Date){
         if currentDate > expireDate{
             print("currentDate is greater than expireDate")
@@ -1381,7 +1380,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }else{
             print("currentDate is smaller than expireDate \(currentDate) \(expireDate)")
         }
-        
     }
     
     
@@ -1411,6 +1409,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                     
                                     let formatter = DateFormatter()
+                                    formatter.locale = Locale(identifier: "en_US_POSIX")
                                     if let _ = formatter.date(from: expiryDate){
                                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     }else{
@@ -1439,35 +1438,35 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
       
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
+        
+        if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
+            
+          let lastReceipt = receiptInfo.lastObject as! NSDictionary
+          let formatter = DateFormatter()
+          formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
+           
+          if let product_id = lastReceipt["product_id"] as? String {
+              self.product_id = product_id
+          }
           
-          if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
-              
-            let lastReceipt = receiptInfo.lastObject as! NSDictionary
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
-             
-            if let product_id = lastReceipt["product_id"] as? String {
-                self.product_id = product_id
-            }
-            
-            if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
-                self.date_time = purchase_date_ms
-            }
-            
-            if let transaction_id = lastReceipt["transaction_id"]{
-                self.transaction_id = transaction_id
-            }
-            
-            if let expiresDate = lastReceipt["purchase_date"] as? String {
-                return formatter.date(from: expiresDate)
-            }
-              
-              return nil
+          if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
+              self.date_time = purchase_date_ms
           }
-          else {
-              return nil
+          
+          if let transaction_id = lastReceipt["transaction_id"]{
+              self.transaction_id = transaction_id
           }
-      }
+          
+          if let expiresDate = lastReceipt["purchase_date"] as? String {
+              return formatter.date(from: expiresDate)
+          }
+            
+            return nil
+        }
+        else {
+            return nil
+        }
+    }
     
     
     func getSubscriptionPlanId(){
