@@ -38,11 +38,14 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var user_id: Int = 0
     var emotionId: Int = 0
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("watched walk... \(self.watched_duration)")
         
+        var prefersStatusBarHidden: Bool {
+            return true
+        }
+                
         self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
         self.sliderBackView.isHidden = true
         self.sliderBackView.isUserInteractionEnabled = false
@@ -90,10 +93,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        var prefersStatusBarHidden: Bool {
-            return true
-        }
-       // player1?.play()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -160,7 +159,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
             self.playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
-            playerLayer.videoGravity = AVLayerVideoGravity.resize
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
             self.viewVideo.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
             
@@ -195,7 +194,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
             self.playerLayer = AVPlayerLayer(player: player1)
             playerLayer.frame = self.view.frame
-            playerLayer.videoGravity = AVLayerVideoGravity.resize
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
             self.viewVideo.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
             
@@ -370,11 +369,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
                                 dbGuidedData.guided_mode = guided_mode
                             }
                             
+                            
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
                                 for emotionsDict in emotion_list {
-                                    
+                                                                        
                                     let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
-                                    
+                                                                        
                                     if let id = guidedDict["id"]{
                                         dbGuidedEmotionsData.guided_id = "\(id)"
                                     }

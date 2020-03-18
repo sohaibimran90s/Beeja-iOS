@@ -47,9 +47,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var emotionId = 0
     var emotionKey = ""
     var guideTitleCount = 3
-    
-    var abc: [[String: Any]] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,7 +146,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.upperLineLbl.isHidden = false
         }
         
-        cell.daysLbl.text = "Day \(data.stepNo)"
+        cell.daysLbl.text = "Day \(data.step_id)"
         cell.titleLbl.text = data.emotion_Name
         cell.authorLbl.text = "Guided by \(data.author_name)"
         
@@ -161,7 +159,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             stepToComplete = indexPath.row + 1
         }else if stepToComplete == indexPath.row{
             cell.stepLbl.layer.cornerRadius = 12
-            cell.stepLbl.text = "\(data.stepNo)"
+            cell.stepLbl.text = "\(data.step_id)"
             cell.imgTick.isHidden = true
             cell.stepLbl.isHidden = false
             
@@ -172,7 +170,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             
             cell.stepLbl.layer.cornerRadius = 12
-            cell.stepLbl.text = "\(data.stepNo)"
+            cell.stepLbl.text = "\(data.step_id)"
             cell.imgTick.isHidden = true
             cell.stepLbl.isHidden = false
             
@@ -278,8 +276,8 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     //self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                     
                     WWMHelperClass.selectedType = "guided"
-                    WWMHelperClass.days21StepNo = "Step \(data.stepNo)"
-                    print("data.stepNo*** \(data.stepNo) data.emotion_Id*** \(data.emotion_Id)")
+                    WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+                    print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                     vc.audioData = data.audio_list[indexPath.item]
@@ -295,8 +293,8 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                         
                         
                         WWMHelperClass.selectedType = "guided"
-                        WWMHelperClass.days21StepNo = "Step \(data.stepNo)"
-                        print("data.stepNo*** \(data.stepNo) data.emotion_Id*** \(data.emotion_Id)")
+                        WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+                        print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                         vc.audioData = data.audio_list[indexPath.item]
@@ -376,8 +374,8 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(stepToComplete + 1) \(KLEARNJUMPSTEP1)")
         }else{
             WWMHelperClass.selectedType = "guided"
-            WWMHelperClass.days21StepNo = "Step \(data.stepNo)"
-            print("data.stepNo*** \(data.stepNo) data.emotion_Id*** \(data.emotion_Id)")
+            WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             vc.audioData = data.audio_list[collection_cell_tag]

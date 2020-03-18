@@ -82,7 +82,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var btnChallenge21Days: UIButton!
     @IBOutlet weak var calenderTopConstraint: NSLayoutConstraint!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -1179,9 +1178,10 @@ extension WWMMyProgressStatsVC{
                                 dbGuidedData.guided_mode = guided_mode
                             }
                             
+                            
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
                                 for emotionsDict in emotion_list {
-                                    
+                                                                        
                                     let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
                                     
                                     if let id = guidedDict["id"]{

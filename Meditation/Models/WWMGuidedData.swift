@@ -15,7 +15,7 @@ class WWMGuidedData: NSObject {
     var cat_mode = String()
     var cat_meditation_type = String()
     var cat_EmotionList   = [WWMGuidedEmotionData]()
-    var step_no = 0
+    var step_id = 0
     
     override init() {
     }
@@ -26,25 +26,37 @@ class WWMGuidedData: NSObject {
         cat_mode = json["mode"] as? String ?? ""
         cat_meditation_type = json["meditation_type"] as? String ?? ""
         
+        
+        
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
-                print("dictkdjsfkdsjfl...... \(dict)")
                 
+                if cat_Name.contains("21"){
+                    self.step_id = self.step_id + 1
+                    
+                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id)")
+                }
                 
-                let video = WWMGuidedEmotionData.init(json: dict)
+                if cat_Name.contains("7"){
+                    self.step_id = self.step_id + 1
+                    
+                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id)")
+                }
+                
+                let video = WWMGuidedEmotionData.init(json: dict, stepId: self.step_id)
                 cat_EmotionList.append(video)
                 
                 if cat_Name.contains("7"){
-                    step_no = step_no + 1
-                    print("step_no+++ \(step_no)")
+                    
+                    print("step_no+++ \(self.step_id)")
                     let com = dict["completed_date"] as? Bool ?? false
-                    if step_no == 7 && com == false{
+                    if self.step_id == 7 && com == false{
                         return
-                    }else if step_no == 7 && com == true{
+                    }else if self.step_id == 7 && com == true{
                         cat_EmotionList.removeAll()
-                    }else if step_no == 14 && com == false{
+                    }else if self.step_id == 14 && com == false{
                         return
-                    }else if step_no == 14 && com == true{
+                    }else if self.step_id == 14 && com == true{
                         cat_EmotionList.removeAll()
                     }
                 }
@@ -66,12 +78,12 @@ class WWMGuidedEmotionData: NSObject {
     var completed = Bool()
     var completed_date = String()
     var audio_list = [WWMGuidedAudioData]()
-    var stepNo = Int()
+    var step_id = String()
     
     override init() {
     }
 
-    init(json:[String:Any]) {
+    init(json:[String:Any], stepId: Int) {
         emotion_Id = json["emotion_id"] as? Int ?? 1
         emotion_Name = json["emotion_name"] as? String ?? ""
         emotion_Image = json["emotion_image"] as? String ?? ""
@@ -82,7 +94,7 @@ class WWMGuidedEmotionData: NSObject {
         intro_completed = json["intro_completed"] as? Bool ?? false
         completed = json["completed"] as? Bool ?? false
         completed_date = json["completed_date"] as? String ?? ""
-        stepNo = json["stepNo"] as? Int ?? 1
+        step_id = "\(stepId)"
         
         var isSaveAudioData = 0
         if let arrLevels = json["audio_list"] as? [[String:Any]]{

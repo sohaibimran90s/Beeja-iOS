@@ -308,13 +308,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonAudiosString: [String: Any] = [:]
             var jsonAudios: [[String: Any]] = []
             
-            var stepNo: Int = 0
-            var cat_name = String()
-            
             for dict in guidedDataDB {
-                
-                cat_name = (dict as AnyObject).guided_name as? String ?? ""
-                
+                                
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
@@ -324,13 +319,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
-                    
-                    print("guidedEmotionsDataDB dict.... \(Int((dict1 as AnyObject).emotion_id ?? "0")) \((dict1 as AnyObject).completed ?? false)  \((dict1 as AnyObject).completed_date ?? ""))")
-                    
-                    if cat_name.contains("21"){
-                         stepNo = stepNo + 1
-                    }
-                    
+                                        
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
@@ -341,7 +330,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["intro_completed"] = (dict1 as AnyObject).intro_completed ?? false
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
-                    jsonEmotionsString["stepNo"] = stepNo
                     
                     let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
@@ -445,10 +433,13 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                 dbGuidedData.guided_mode = guided_mode
                             }
                             
+                            
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
                                 for emotionsDict in emotion_list {
                                     
+                                    
                                     let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
+                                    
                                     
                                     if let id = guidedDict["id"]{
                                         dbGuidedEmotionsData.guided_id = "\(id)"
