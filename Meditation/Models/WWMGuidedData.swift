@@ -40,7 +40,7 @@ class WWMGuidedData: NSObject {
                 if cat_Name.contains("7"){
                     self.step_id = self.step_id + 1
                     
-                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id)")
+                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id) completed+++ \(dict["completed"] as? Bool ?? false)")
                 }
                 
                 let video = WWMGuidedEmotionData.init(json: dict, stepId: self.step_id)
@@ -49,7 +49,7 @@ class WWMGuidedData: NSObject {
                 if cat_Name.contains("7"){
                     
                     print("step_no+++ \(self.step_id)")
-                    let com = dict["completed_date"] as? Bool ?? false
+                    let com = dict["completed"] as? Bool ?? false
                     if self.step_id == 7 && com == false{
                         return
                     }else if self.step_id == 7 && com == true{

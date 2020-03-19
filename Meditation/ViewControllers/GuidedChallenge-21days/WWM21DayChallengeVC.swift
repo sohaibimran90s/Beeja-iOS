@@ -99,8 +99,9 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
+        vc.value = "learnStepList"
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -273,41 +274,41 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             }else{
                 if self.appPreference.getIsSubscribedBool(){
                     
-                    //self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                    self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                     
-                    WWMHelperClass.selectedType = "guided"
-                    WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-                    print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
-                    
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                    vc.audioData = data.audio_list[indexPath.item]
-                    vc.cat_id = "\(self.cat_id)"
-                    vc.cat_Name = self.cat_name
-                    vc.emotion_Id = "\(data.emotion_Id)"
-                    vc.emotion_Name = data.emotion_Name
-                    vc.seconds = data.audio_list[indexPath.item].audio_Duration
-                    self.navigationController?.pushViewController(vc, animated: true)
+//                    WWMHelperClass.selectedType = "guided"
+//                    WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+//                    print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
+//
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+//                    vc.audioData = data.audio_list[indexPath.item]
+//                    vc.cat_id = "\(self.cat_id)"
+//                    vc.cat_Name = self.cat_name
+//                    vc.emotion_Id = "\(data.emotion_Id)"
+//                    vc.emotion_Name = data.emotion_Name
+//                    vc.seconds = data.audio_list[indexPath.item].audio_Duration
+//                    self.navigationController?.pushViewController(vc, animated: true)
                     
                 }else{
                     if data.audio_list[indexPath.item].audio_Duration <= 900{
                         
                         
-                        WWMHelperClass.selectedType = "guided"
-                        WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-                        print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
+//                        WWMHelperClass.selectedType = "guided"
+//                        WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+//                        print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
+//
+//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+//                        vc.audioData = data.audio_list[indexPath.item]
+//                        vc.cat_id = "\(self.cat_id)"
+//                        vc.cat_Name = self.cat_name
+//                        vc.emotion_Id = "\(data.emotion_Id)"
+//                        vc.emotion_Name = data.emotion_Name
+//                        vc.seconds = data.audio_list[indexPath.item].audio_Duration
+//                        self.navigationController?.pushViewController(vc, animated: true)
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                        vc.audioData = data.audio_list[indexPath.item]
-                        vc.cat_id = "\(self.cat_id)"
-                        vc.cat_Name = self.cat_name
-                        vc.emotion_Id = "\(data.emotion_Id)"
-                        vc.emotion_Name = data.emotion_Name
-                        vc.seconds = data.audio_list[indexPath.item].audio_Duration
-                        self.navigationController?.pushViewController(vc, animated: true)
                         
                         
-                        
-                        //self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                        self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         
 //                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
 //                        self.navigationController?.pushViewController(vc, animated: true)
@@ -369,9 +370,9 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         if flag == 2{
             
-            print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name)")
+            print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name) position+++ \(position)")
             
-            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(stepToComplete + 1) \(KLEARNJUMPSTEP1)")
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.guidedData.cat_EmotionList[position].step_id)")
         }else{
             WWMHelperClass.selectedType = "guided"
             WWMHelperClass.days21StepNo = "Step \(data.step_id)"
