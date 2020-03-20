@@ -11,6 +11,6 @@ import UIKit
 class WWMGuidedEmotion21DaysCVC: UICollectionViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblSubTitle: UILabel!
+    //@IBOutlet weak var lblSubTitle: UILabel!
 
 }

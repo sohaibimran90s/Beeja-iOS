@@ -147,9 +147,9 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
             cell.upperLineLbl.isHidden = false
         }
         
-        cell.daysLbl.text = "Day \(data.step_id)"
+        cell.daysLbl.text = "DAY \(data.step_id)"
         cell.titleLbl.text = data.emotion_Name
-        cell.authorLbl.text = "Guided by \(data.author_name)"
+        cell.authorLbl.text = "Guided Meditation By \(data.author_name)"
         
         if data.completed{
             cell.imgTick.isHidden = false
@@ -183,24 +183,28 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
 
         if selectedIndex == indexPath.row{
             cell.descLbl.isHidden = false
-            cell.backImg1.backgroundColor = UIColor(red: 14.0/255.0, green: 31.0/255.0, blue: 104.0/255.0, alpha: 0.7)
-            cell.backImg2.isHidden = false
-            cell.backImg1.isHidden = true
+            cell.imgIcon.isHidden = false
+            cell.imgBackView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 0.8)
             cell.arrowImg.image = UIImage(named: "upArrow")
             cell.collectionView.isHidden = false
         }else{
             cell.descLbl.isHidden = true
-            cell.backImg1.isHidden = false
-            cell.backImg2.isHidden = true
+            cell.imgIcon.isHidden = true
+            cell.imgBackView.backgroundColor = UIColor.init(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
             cell.arrowImg.image = UIImage(named: "downArrow")
             cell.collectionView.isHidden = true
             
         }
         
+        //let collHeight = (44 * data.audio_list.count)
+        let collHeight = (46 *  data.audio_list.count) + (10 * (data.audio_list.count - 1))
+        cell.collectionViewHeightConstraint.constant = CGFloat(collHeight)
+        
+        print("collHeight**** \(collHeight) self.guidedData.cat_EmotionList.count*** \(data.audio_list.count)")
         cell.collectionView.tag = indexPath.row
         let layout = UICollectionViewFlowLayout()
         cell.collectionView.collectionViewLayout = layout
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         cell.collectionView.reloadData()
         
         return cell
@@ -237,8 +241,12 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         let data = self.guidedData.cat_EmotionList[collectionView.tag]
         
+        cell.layer.cornerRadius = 20
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
         DispatchQueue.main.async {
-            cell.backImg.sd_setImage(with: URL.init(string: "\(data.audio_list[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            //cell.backImg.sd_setImage(with: URL.init(string: "\(data.audio_list[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
             cell.lblAudioTime.text = "\(self.secondToMinuteSecond(second: data.audio_list[indexPath.item].audio_Duration))"
             
             if self.appPreference.getIsSubscribedBool(){
@@ -260,7 +268,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: collectionView.frame.size.width, height: 44)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

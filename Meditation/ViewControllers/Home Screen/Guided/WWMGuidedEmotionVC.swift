@@ -45,6 +45,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         
         print("data.tile_type... \(data.tile_type)")
+        var myMutableString = NSMutableAttributedString()
         
         if data.tile_type == "1" {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMGuidedEmotionCVC
@@ -54,16 +55,29 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         }else if data.tile_type == "3" {
            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell3", for: indexPath) as! WWMGuidedEmotion21DaysCVC
             
-            cell.lblTitle.text = data.emotion_Name
+            let lblText = "21 Day Challenge: " + data.emotion_Name
             
-            cell.lblSubTitle.numberOfLines = 3
-            cell.lblSubTitle.sizeToFit()
-            cell.lblSubTitle.text = data.emotion_body
+            myMutableString = NSMutableAttributedString(string: lblText, attributes: [NSAttributedString.Key.font:UIFont(name: "Maax-Bold", size: 18.0)!])
+            myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hexString: "#00eba9")!, range: NSRange(location:0,length:17))
+            // set label Attribute
+            cell.lblTitle.attributedText = myMutableString
+            //cell.lblTitle.text = data.emotion_Name
+            
+            //cell.lblSubTitle.numberOfLines = 3
+            //cell.lblSubTitle.sizeToFit()
+            //cell.lblSubTitle.text = data.emotion_body
             return cell
             
         }else{
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell2", for: indexPath) as! WWMGuidedEmotionCVC
-            cell.lblTitle.text = data.emotion_Name
+            
+            cell.layer.cornerRadius = 5
+            let lblText = "7 Day Challenge: " + data.emotion_Name
+            myMutableString = NSMutableAttributedString(string: lblText, attributes: [NSAttributedString.Key.font:UIFont(name: "Maax-Bold", size: 18.0)!])
+            myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hexString: "#00eba9")!, range: NSRange(location:0,length:16))
+            // set label Attribute
+            cell.lblTitle.attributedText = myMutableString
+            //cell.lblTitle.text = data.emotion_Name
         }
         
         return cell
@@ -114,13 +128,15 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             
         let width = (self.view.frame.size.width-19)/2
             return CGSize.init(width: width, height: width)
-        }else if data.tile_type == "3" {
-            let width = (self.view.frame.size.width-16)
-            return CGSize.init(width: width, height: 190)
         }else {
             let width = (self.view.frame.size.width-16)
             return CGSize.init(width: width, height: 160)
         }
+        
+        //else if data.tile_type == "3" {
+          //  let width = (self.view.frame.size.width-16)
+            //return CGSize.init(width: width, height: 190)
+        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

@@ -17,11 +17,12 @@ class WWM21DayChallengeTVC: UITableViewCell {
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var authorLbl: UILabel!
     @IBOutlet weak var descLbl: UILabel!
-    @IBOutlet weak var backImg1: UIImageView!
-    @IBOutlet weak var backImg2: UIImageView!
+    @IBOutlet weak var imgBackView: UIImageView!
+    @IBOutlet weak var imgIcon: UIImageView!
     @IBOutlet weak var arrowImg: UIImageView!
     @IBOutlet weak var imgTick: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
 
 
     override func awakeFromNib() {

@@ -77,6 +77,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     let reachable = Reachabilities()
     
     //challenge21Progress
+    @IBOutlet weak var viewSuperChallenge21Days: UIView!
+    @IBOutlet weak var imgBg21Days: UIImageView!
+    @IBOutlet weak var constraintSuperView21Days: NSLayoutConstraint!
     @IBOutlet weak var viewChallenge21Days: UIView!
     @IBOutlet weak var viewChallenge21DaysHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnChallenge21Days: UIButton!
@@ -141,6 +144,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewChallenge21DaysHeightConstraint.constant = 0
         self.btnChallenge21Days.isHidden = true
         self.calenderTopConstraint.constant = 0
+        self.viewSuperChallenge21Days.isHidden = true
+        self.constraintSuperView21Days.constant = 0
         
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100
@@ -790,9 +795,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 
                 if WWMHelperClass.selectedType == "guided"{
                     self.viewChallenge21Days.isHidden = false
-                    self.viewChallenge21DaysHeightConstraint.constant = 346
+                    self.viewChallenge21DaysHeightConstraint.constant = 355
                     self.btnChallenge21Days.isHidden = false
-                    self.calenderTopConstraint.constant = 12
+                    self.calenderTopConstraint.constant = 0
+                    self.viewSuperChallenge21Days.isHidden = false
+                    self.constraintSuperView21Days.constant = 485
                     
                     self.collectionView21Chall.reloadData()
                 }
