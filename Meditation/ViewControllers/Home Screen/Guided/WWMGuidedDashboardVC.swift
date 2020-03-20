@@ -25,7 +25,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     
     func setUpUI() {
         
-        buttonBarView.frame.origin.y = -18
+        buttonBarView.frame.origin.y = -4
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
@@ -36,9 +36,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarBackgroundColor = .clear
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
+            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 24)!
         }
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Bold", size: 16)!
+        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 26)!
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white

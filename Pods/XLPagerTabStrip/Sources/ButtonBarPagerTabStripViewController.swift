@@ -277,9 +277,9 @@ UICollectionViewDelegateFlowLayout {
 //        }
         print("data.tile_type...")
         if indexPath.item > 1{
-            return CGSize(width: 200, height: collectionView.frame.size.height)
+            return CGSize(width: 320, height: collectionView.frame.size.height)
         }else{
-            return CGSize(width: 130, height: collectionView.frame.size.height)
+            return CGSize(width: 120, height: collectionView.frame.size.height)
         }
         
     }
@@ -332,13 +332,13 @@ UICollectionViewDelegateFlowLayout {
             cell.imageView.image = image
             cell.layoutImgWidth.constant = 20
             cell.layoutImgHeight.constant = 20
-            cell.layoutLblLeading.constant = 6
+            cell.layoutLblLeading.constant = 4
             cell.layoutLblTrailing.constant = 0
         }else {
             cell.layoutImgWidth.constant = 0
             cell.layoutImgHeight.constant = 0
             cell.layoutLblLeading.constant = 0
-            cell.layoutLblLeading.constant = 10
+            cell.layoutLblTrailing.constant = 0
         }
         if let highlightedImage = indicatorInfo.highlightedImage {
             cell.imageView.highlightedImage = highlightedImage
