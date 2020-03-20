@@ -276,8 +276,10 @@ UICollectionViewDelegateFlowLayout {
 //            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
 //        }
         print("data.tile_type...")
-        if indexPath.item > 1{
-            return CGSize(width: 320, height: collectionView.frame.size.height)
+        if indexPath.item == 2{
+            return CGSize(width: 290, height: collectionView.frame.size.height)
+        }else if indexPath.item == 3{
+            return CGSize(width: 220, height: collectionView.frame.size.height)
         }else{
             return CGSize(width: 120, height: collectionView.frame.size.height)
         }
