@@ -319,6 +319,11 @@ let kPROFILEUPDATEDSUCCESS = "Your profile has been updated"
 // My Progress Journal
 let  Validatation_JournalOfflineMsg  =
 "Any new entries posted during no-Internet connection will be listed once it gets synced with server and device gets online."
+
+// 21 days challenge
+let kCHALLENGEALERT = "Do you accept the 21-Day challenge?"
+let kYES = "YES"
+let kNO = "NO"
 /**/
 
 

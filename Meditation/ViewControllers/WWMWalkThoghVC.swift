@@ -38,6 +38,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var user_id: Int = 0
     var emotionId: Int = 0
     
+    var challengePopupView = WWMAlertController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("watched walk... \(self.watched_duration)")
@@ -272,7 +274,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             if value == "help"  || value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
             }else if value == "curatedCards"{
-                self.challengeIntroVideoCompleted()
+                self.challengePopup()
             }else{
                 // Analytics
                 WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_COMPLETED", itemName: "")
@@ -280,6 +282,36 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+    }
+    
+    func challengePopup() {
+        
+        challengePopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        challengePopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        challengePopupView.btnOK.layer.borderWidth = 2.0
+        challengePopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        challengePopupView.lblTitle.text = kCHALLENGEALERT
+        challengePopupView.lblSubtitle.numberOfLines = 0
+        challengePopupView.lblSubtitle.text = ""
+        challengePopupView.lblSubtitle.isHidden = true
+        challengePopupView.btnOK.setTitle(kYES, for: .normal)
+        challengePopupView.btnClose.setTitle(kNO, for: .normal)
+        
+        challengePopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        challengePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(challengePopupView)
+    }
+    
+    @IBAction func btnDoneAction(_ sender: Any) {
+        self.challengeIntroVideoCompleted()
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any){
+        self.challengePopupView.removeFromSuperview()
+        self.navigateToDashboard()
     }
     
     func challengeIntroVideoCompleted() {
