@@ -109,6 +109,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }else if WWMHelperClass.milestoneType == "sessions"{
             self.notificationPopUp(titles: "Meditated Twice in 1 Day", titleDescript: "You have just meditated twice in one day", textNextMileStone: "Meditate Twice a Day for a Week", imgLogo: "session", imgLogo1: "session1", redC: 177, greenC: 56, blueC: 211)
         }
+        
+        KNOTIFICATIONCENTER.addObserver(self, selector: #selector(self.notificationProgressMoodMeter(notification:)), name: Notification.Name("notificationProgressMoodMeter"), object: nil)
+    }
+    
+    @objc func notificationProgressMoodMeter(notification: Notification) {
+        self.collectionView21Chall.reloadData()
+        self.collectionViewCal.reloadData()
+        KNOTIFICATIONCENTER.removeObserver(self, name: Notification.Name("notificationProgressMoodMeter"), object: nil)
     }
     
     func notificationPopUp(titles: String, titleDescript: String, textNextMileStone: String, imgLogo: String, imgLogo1: String, redC: CGFloat, greenC: CGFloat, blueC: CGFloat) {

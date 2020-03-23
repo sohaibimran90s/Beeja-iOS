@@ -68,7 +68,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
         
         self.lblTimer.text = self.secondToMinuteSecond(second: self.seconds)
         animationView.play()
@@ -357,6 +356,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                     
                     if let _ = result["success"] as? Bool {
                         print("success... WWMLeranTimerVC meditationcomplete api in background")
+                        
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
                         

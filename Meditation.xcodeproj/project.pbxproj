@@ -2204,6 +2204,8 @@
 				1FE6B0E5715D10E9CF321A8A /* [CP] Embed Pods Frameworks */,
 				1F7E5053179BCEF04AD2D59F /* [CP] Copy Pods Resources */,
 				E8E6971F2416475F0021F5D8 /* Embed Frameworks */,
+				6134ABFB2428EAAA005150AB /* ShellScript */,
+				6134ABFC2428EAB8005150AB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2510,6 +2512,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n";
+		};
+		6134ABFB2428EAAA005150AB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Fabric/run cf8a914070962839333227b1c8251f76a5ae404f\n/path/to/pods/directory/Fabric/upload-symbols",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+		6134ABFC2428EAB8005150AB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -284,6 +284,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func completeMeditationAPI() {
         
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+        }
+        
         var param: [String: Any] = [:]
         if WWMHelperClass.selectedType == "learn"{
             param = [
@@ -939,6 +944,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             }
                             
                             WWMHelperClass.saveDb()
+                            
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationProgressMoodMeter"), object: nil)
                         }
                         print("guided data moodmeter tabbarvc in background thread...")
                     }
