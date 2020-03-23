@@ -51,22 +51,26 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !isIntroCompleted{
+        
+        if self.appPreference.getGuideType() == "practical"{
+            if !isIntroCompleted{
 
-            print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
-            
-            DispatchQueue.main.async {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
                 
-                print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
-                vc.value = "curatedCards"
-                vc.emotionId = self.emotionId
-                vc.emotionKey = self.emotionKey
-                vc.user_id = Int(self.appPreference.getUserID()) ?? 0
-                self.navigationController?.pushViewController(vc, animated: false)
-                return
+                DispatchQueue.main.async {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                    
+                    print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
+                    vc.value = "curatedCards"
+                    vc.emotionId = self.emotionId
+                    vc.emotionKey = self.emotionKey
+                    vc.user_id = Int(self.appPreference.getUserID()) ?? 0
+                    self.navigationController?.pushViewController(vc, animated: false)
+                    return
+                }
             }
-        }
+        }else{}
+        
         //* logic for expanding the cell which we have to play
         
         

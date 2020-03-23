@@ -256,17 +256,18 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             WWMHelperClass.selectedType = "timer"
         }
         
-        if self.milestoneType == "hours_meditate"{
-            WWMHelperClass.milestoneType = "hours_meditate"
+        if WWMHelperClass.milestoneType == "hours_meditate"{
             self.selectedIndex = 4
-        }else if self.milestoneType == "consecutive_days"{
-            WWMHelperClass.milestoneType = "consecutive_days"
+        }else if WWMHelperClass.milestoneType == "consecutive_days"{
             self.selectedIndex = 4
-        }else if self.milestoneType == "sessions"{
-            WWMHelperClass.milestoneType = "sessions"
+        }else if WWMHelperClass.milestoneType == "sessions"{
             self.selectedIndex = 4
         }else{
             self.selectedIndex = 2
+        }
+        
+        if self.appPreffrence.getForceLogout() == "force_logout_true"{
+            self.selectedIndex = 4
         }
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]

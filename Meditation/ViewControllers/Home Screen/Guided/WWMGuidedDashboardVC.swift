@@ -68,6 +68,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         var emotionId = 0
         var emotionKey = ""
         var tile_type = ""
+        
         for data in self.arrGuidedList {
             
             for i in 0..<data.cat_EmotionList.count{

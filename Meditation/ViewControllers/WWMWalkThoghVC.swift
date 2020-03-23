@@ -281,6 +281,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }
+            
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         }
     }
     

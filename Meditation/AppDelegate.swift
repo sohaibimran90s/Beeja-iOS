@@ -1401,6 +1401,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         // Print full message.
         print("userNotificationCenter .. \(userInfo)")
         
+        if let type = userInfo["type"] as? String{
+            if type == "force_logout"{
+                print("force_logout_status+++ type \(type)")
+                self.appPreference.setForceLogout(value: "force_logout_true")
+                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+            }
+        }
+        
         if let milestoneType = userInfo["milestoneType"] as? String{
             if milestoneType == "hours_meditate"{
    
@@ -1409,6 +1417,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 vc.milestoneType = "hours_meditate"
                 UIApplication.shared.keyWindow?.rootViewController = vc*/
+                
+                WWMHelperClass.milestoneType = "hours_meditate"
                 
                 UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
                 
@@ -1419,6 +1429,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 vc.milestoneType = "consecutive_days"
                 UIApplication.shared.keyWindow?.rootViewController = vc*/
+                
+                WWMHelperClass.milestoneType = "consecutive_days"
                 UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
             }else{
                 
@@ -1427,6 +1439,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 vc.milestoneType = "sessions"
                 UIApplication.shared.keyWindow?.rootViewController = vc*/
+                
+                WWMHelperClass.milestoneType = "sessions"
                 UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
             }
         }

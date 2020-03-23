@@ -57,6 +57,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setForceLogout(value: String) {
+        defaults.set(value, forKey: "force_logout")
+        defaults.synchronize()
+    }
+    
     func setSubscriptionPlan(value: String) {
         defaults.set(value, forKey: "subscription_plan")
         defaults.synchronize()
@@ -393,5 +398,9 @@ class WWMAppPreference: NSObject {
     
     func get21ChallengeName() -> String {
         return UserDefaults.standard.string(forKey: "21ChallengeName") ?? ""
+    }
+    
+    func getForceLogout() -> String {
+        return UserDefaults.standard.string(forKey: "force_logout") ?? ""
     }
 }
