@@ -64,7 +64,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         let arrVC = NSMutableArray()
         
         print("arrGuidedList.count... \(arrGuidedList.count)")
-        var isIntroCompleted = false
+        var isIntroCompleted: Bool?
         var emotionId = 0
         var emotionKey = ""
         var tile_type = ""
@@ -94,7 +94,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 WWMHelperClass.xlpager = "challenge"
                 print("data.cat_name... \(data.cat_Name)")
                 if data.cat_Name.contains("21"){
-                    if isIntroCompleted{
+                    if isIntroCompleted ?? false{
                         
                         if arrGuidedList.count > 3{
                             vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
@@ -112,7 +112,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.tile_type = tile_type
                 vc.emotionId = emotionId
                 vc.emotionKey = emotionKey
-                vc.isIntroCompleted = isIntroCompleted
+                vc.isIntroCompleted = isIntroCompleted ?? false
                 vc.guidedData = data
                 vc.type = self.type
                 vc.cat_name = data.cat_Name
