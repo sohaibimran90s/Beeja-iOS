@@ -136,6 +136,8 @@ let URL_STEPFAQ         = URL_BASE + "dictionary/setp_faqs"
 
 let URL_DICTIONARY  = URL_BASE + "dictionary"
 
+let URL_FORCELOGOUT = URL_BASE + "check_user"//
+
 
 /************************************************/
 
@@ -281,7 +283,7 @@ let KCANCEL = "Cancel"
 //WWMMoodMeterLogVC
 let KJOURNALUPDATED = "Great job! Your journal has been updated."
 let KMOODTRACKERUPDATED = "Thanks! Your mood tracker has been updated."
-let KMEDITATIONUPDATED = "Great stuff! Your meditation experience has been logged. "
+let KMEDITATIONUPDATED = "Great stuff! Your meditation experience has been logged."
 
 //POPUP ALERTS
 let KSAYGOODBYE = "Do you really want to say goodbye?"

@@ -9,6 +9,8 @@
 import UIKit
 import Lottie
 import CoreLocation
+import FBSDKLoginKit
+import GoogleSignIn
 
 class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
@@ -40,6 +42,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     var communityData = WWMCommunityData()
     
     var flagConnAlertShow = false
+    var forceLogoutPopupView = WWMAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +88,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         self.strMonthYear = dateFormatter.string(from: Date())
         
         DispatchQueue.global(qos: .background).async {
+            
+            self.forceLogoutAPI()
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
         }
@@ -436,6 +441,132 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                 print("success tabbarVC getdictionaryapi in background thread")
             }
+        }
+    }
+    
+    func forceLogoutAPI() {
+                
+        /*
+         self.appPreffrence.getEmail(),
+         self.appPreffrence.getUserID()
+         */
+        let param = [
+            "email" : "naushad.ali@iris-worldwide.com",
+            "user_id": "632281"
+        ]
+        
+        print("param forcelogout+++ \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
+            if sucess {
+                
+                DispatchQueue.main.async {
+                    self.forceLogoutPopup(message: result["message"] as? String ?? "")
+                }
+                print("success forceLogout api in background thread")
+            }
+        }
+    }
+    
+    func forceLogoutPopup(message: String) {
+        
+        forceLogoutPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        forceLogoutPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        forceLogoutPopupView.btnOK.layer.borderWidth = 2.0
+        forceLogoutPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        forceLogoutPopupView.lblTitle.text = message
+        forceLogoutPopupView.lblSubtitle.numberOfLines = 0
+        forceLogoutPopupView.lblSubtitle.text = ""
+        forceLogoutPopupView.lblSubtitle.isHidden = true
+        forceLogoutPopupView.btnOK.setTitle(KOK, for: .normal)
+        forceLogoutPopupView.btnClose.isHidden = true
+        forceLogoutPopupView.btnClose.setTitle("", for: .normal)
+        
+        forceLogoutPopupView.btnOK.addTarget(self, action: #selector(btnForceLogoutAction(_:)), for: .touchUpInside)
+        //challengePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(forceLogoutPopupView)
+    }
+    
+    @IBAction func btnForceLogoutAction(_ sender: Any) {
+        self.forceLogoutPopupView.removeFromSuperview()
+        DispatchQueue.main.async {
+            self.logoutAPI()
+        }
+    }
+    
+    func logoutAPI() {
+
+        WWMHelperClass.sendEventAnalytics(contentType: "WWMTabBarVC", itemId: "LOGOUT", itemName: "")
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "token" : self.appPreffrence.getToken(),
+            "user_id": self.appPreffrence.getUserID()
+        ]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.appPreffrence.setIsLogin(value: false)
+                self.appPreffrence.setUserToken(value: "")
+                self.appPreffrence.setUserID(value: "")
+                self.appPreffrence.setUserName(value: "")
+                self.appPreffrence.setIsProfileCompleted(value: false)
+                self.appPreffrence.setPrePostJournalBool(value: false)
+                self.appPreffrence.setExpiryDate(value: false)
+                self.appPreffrence.setGetProfile(value: true)
+                self.appPreffrence.setCheckEnterSignupLogin(value: false)
+                self.appPreffrence.setEmail(value: "")
+                KUSERDEFAULTS.set("0", forKey: "restore")
+
+                // Delete the Database :
+                WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+                WWMHelperClass.deletefromDb(dbName: "DBContactUs")
+                WWMHelperClass.deletefromDb(dbName: "DBJournalList")
+                WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
+                WWMHelperClass.deletefromDb(dbName: "DBSettings")
+                WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+                WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                WWMHelperClass.deletefromDb(dbName: "DBWisdomData")
+                WWMHelperClass.deletefromDb(dbName: "DBWisdomVideoData")
+                WWMHelperClass.deletefromDb(dbName: "DBCommunityData")
+                WWMHelperClass.deletefromDb(dbName: "DBStepFaq")
+                WWMHelperClass.deletefromDb(dbName: "DBGetVibesImages")
+                WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
+                WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
+                WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
+                WWMHelperClass.selectedType = ""
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                
+                let loginManager = LoginManager()
+                AccessToken.current = nil
+                loginManager.logOut()
+                GIDSignIn.sharedInstance()?.signOut()
+                GIDSignIn.sharedInstance()?.disconnect()
+                
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+                let vcc = UINavigationController.init(rootViewController: vc)
+                UIApplication.shared.keyWindow?.rootViewController = vcc
+                
+                
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+                
+            }
+            
+            
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
