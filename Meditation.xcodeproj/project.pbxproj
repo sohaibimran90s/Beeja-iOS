@@ -2505,7 +2505,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\nfind /Users/prema.negi/Library/Developer/Xcode/DerivedData/Meditation-aelnizmlsowezhfkpyzompfxuscn/Build/Intermediates.noindex/Meditation.build/Debug-iphoneos/ -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp /path/to/GoogleService-Info.plist -p platform \\{\\}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
