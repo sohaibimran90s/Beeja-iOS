@@ -461,10 +461,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
             if sucess {
-                
-                DispatchQueue.main.async {
-                    self.forceLogoutPopup(message: result["message"] as? String ?? "")
+                print(result["success"] as? Bool ?? true)
+                if let sucess1 = result["success"] as? Bool{
+                    if sucess1{
+                        DispatchQueue.main.async {
+                            self.forceLogoutPopup(message: result["message"] as? String ?? "")
+                        }
+                    }
                 }
+                
                 print("success forceLogout api in background thread")
             }
         }
