@@ -446,13 +446,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func forceLogoutAPI() {
                 
-        /*
-         self.appPreffrence.getEmail(),
-         self.appPreffrence.getUserID()
-         */
+        
+//        let param = [
+//            "email" : "naushad.ali@iris-worldwide.com",
+//            "user_id": "632281"
+//        ]
+        
         let param = [
-            "email" : "naushad.ali@iris-worldwide.com",
-            "user_id": "632281"
+            "email" : self.appPreffrence.getEmail(),
+            "user_id": self.appPreffrence.getUserID()
         ]
         
         print("param forcelogout+++ \(param)")
