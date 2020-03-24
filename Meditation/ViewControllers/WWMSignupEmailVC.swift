@@ -8,7 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import Crashlytics
+import FirebaseCrashlytics
 
 class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
 
@@ -140,7 +140,9 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
-                    Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    
+                     Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                                         
                     self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
                     self.appPreference.setIsLogin(value: true)
@@ -203,8 +205,10 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
                         //NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                         

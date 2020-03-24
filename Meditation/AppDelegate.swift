@@ -14,9 +14,10 @@ import FBSDKCoreKit
 import CoreData
 import UserNotifications
 import Reachability
-import Crashlytics
-import Fabric
+import FirebaseCrashlytics
+//import Fabric
 import CallKit
+import FirebaseAnalytics
 
 
 @UIApplicationMain
@@ -70,9 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = true
-        
+        //Fabric.with([Crashlytics.self])
+        //Fabric.sharedSDK().debug = true
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
@@ -111,6 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         self.addShortCuts(application: application)
         NotificationCenter.default.addObserver(self, selector: #selector(addShortCutsRefresh), name: NSNotification.Name(rawValue: "logoutSuccessful"), object: nil)
+        
+        fatalError()
         
        // Crashlytics.sharedInstance().crash()
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [

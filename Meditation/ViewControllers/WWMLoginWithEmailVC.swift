@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 
 class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
     
@@ -215,7 +215,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController,UITextFieldDelegate {
                                                 
                         //self.appPreference.setUserID(value:"1715")
                         
-                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                         
