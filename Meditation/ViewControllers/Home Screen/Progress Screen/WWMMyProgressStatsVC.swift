@@ -98,10 +98,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewAvMinutes.value = 0
         self.viewDays.value = 0
         
-        if self.appPreffrence.getForceLogout() == "force_logout_true"{
-            self.appPreffrence.setForceLogout(value: "")
-        }
-        
         if WWMHelperClass.milestoneType == "hours_meditate"{
             self.notificationPopUp(titles: "1 Hour Meditated", titleDescript: "You have just completed a Hours Meditated Milestone", textNextMileStone: "1 more hour needed!", imgLogo: "hour", imgLogo1: "hour1", redC: 0, greenC: 255, blueC: 215)
         }else if WWMHelperClass.milestoneType == "consecutive_days"{

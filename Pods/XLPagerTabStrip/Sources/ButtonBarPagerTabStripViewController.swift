@@ -68,6 +68,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
 PagerTabStripIsProgressiveDelegate, UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout {
 
+    public var guidedCount = 2
     public var settings = ButtonBarPagerTabStripSettings()
 
     public var buttonBarItemSpec: ButtonBarItemSpec<ButtonBarViewCell>!
@@ -95,6 +96,10 @@ UICollectionViewDelegateFlowLayout {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuidedList(notification:)), name: Notification.Name("notificationGuidedListCount"), object: nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "notificationGuidedListCount"), object: nil, queue: nil, using: catchNotification)
+
         
         var bundle = Bundle(for: ButtonBarViewCell.self)
         if let resourcePath = bundle.path(forResource: "XLPagerTabStrip", ofType: "bundle") {
@@ -160,6 +165,16 @@ UICollectionViewDelegateFlowLayout {
             buttonBarView.register(ButtonBarViewCell.self, forCellWithReuseIdentifier:"Cell")
         }
         //-
+    }
+    
+    @objc func catchNotification(notification: Notification) {
+        guard let count = notification.userInfo!["guidedCount"] else { return }
+        
+        self.guidedCount = count as? Int ?? 2
+        print("guidedCount*** \(count) abdhcjd self.guidedCount*** \(self.guidedCount)")
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuidedListCount"), object: nil)
+        
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -276,14 +291,21 @@ UICollectionViewDelegateFlowLayout {
 //            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
 //        }
         print("data.tile_type...")
-        if indexPath.item == 2{
-            return CGSize(width: 290, height: collectionView.frame.size.height)
-        }else if indexPath.item == 3{
-            return CGSize(width: 220, height: collectionView.frame.size.height)
-        }else{
-            return CGSize(width: 120, height: collectionView.frame.size.height)
-        }
         
+        if self.guidedCount > 2{
+            if indexPath.item == 2{
+                return CGSize(width: 290, height: collectionView.frame.size.height)
+            }else if indexPath.item == 3{
+                return CGSize(width: 220, height: collectionView.frame.size.height)
+            }else{
+                return CGSize(width: 120, height: collectionView.frame.size.height)
+            }
+        }else{
+            guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
+                fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
+            }
+            return CGSize(width: cellWidthValue, height: collectionView.frame.size.height)
+        }
     }
 
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

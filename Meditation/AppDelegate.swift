@@ -1382,6 +1382,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             print("Message ID: \(messageID)")
         }
         
+        if self.appPreffrence.isLogin(){
+            if let type = userInfo["type"] as? String{
+                if type == "force_logout"{
+                    print("force_logout_status+++ type \(type)")
+                    self.appPreference.setForceLogout(value: "force_logout_true")
+                    UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+                }
+            }
+        }
+        
+        
+        
         // Print full message.
         print("userNotificationCenter *** .. \(userInfo)")
         
@@ -1401,49 +1413,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         // Print full message.
         print("userNotificationCenter .. \(userInfo)")
         
-        if let type = userInfo["type"] as? String{
-            if type == "force_logout"{
-                print("force_logout_status+++ type \(type)")
-                self.appPreference.setForceLogout(value: "force_logout_true")
-                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+        
+        if self.appPreffrence.isLogin(){
+            if let type = userInfo["type"] as? String{
+                if type == "force_logout"{
+                    print("force_logout_status+++ type \(type)")
+                    self.appPreference.setForceLogout(value: "force_logout_true")
+                    UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+                }
+            }
+            
+            if let milestoneType = userInfo["milestoneType"] as? String{
+                if milestoneType == "hours_meditate"{
+                    
+                    /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                     let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                     
+                     vc.milestoneType = "hours_meditate"
+                     UIApplication.shared.keyWindow?.rootViewController = vc*/
+                    
+                    WWMHelperClass.milestoneType = "hours_meditate"
+                    
+                    UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+                    
+                }else if milestoneType == "consecutive_days"{
+                    
+                    /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                     let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                     
+                     vc.milestoneType = "consecutive_days"
+                     UIApplication.shared.keyWindow?.rootViewController = vc*/
+                    
+                    WWMHelperClass.milestoneType = "consecutive_days"
+                    UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+                }else{
+                    
+                    /*   let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                     let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                     
+                     vc.milestoneType = "sessions"
+                     UIApplication.shared.keyWindow?.rootViewController = vc*/
+                    
+                    WWMHelperClass.milestoneType = "sessions"
+                    UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
+                }
             }
         }
         
-        if let milestoneType = userInfo["milestoneType"] as? String{
-            if milestoneType == "hours_meditate"{
-   
-              /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                
-                vc.milestoneType = "hours_meditate"
-                UIApplication.shared.keyWindow?.rootViewController = vc*/
-                
-                WWMHelperClass.milestoneType = "hours_meditate"
-                
-                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
-                
-            }else if milestoneType == "consecutive_days"{
-                
-              /*  let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                
-                vc.milestoneType = "consecutive_days"
-                UIApplication.shared.keyWindow?.rootViewController = vc*/
-                
-                WWMHelperClass.milestoneType = "consecutive_days"
-                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
-            }else{
-                
-             /*   let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                
-                vc.milestoneType = "sessions"
-                UIApplication.shared.keyWindow?.rootViewController = vc*/
-                
-                WWMHelperClass.milestoneType = "sessions"
-                UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
-            }
-        }
         
         completionHandler()
     }
