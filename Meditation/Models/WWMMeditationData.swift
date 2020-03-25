@@ -15,6 +15,9 @@ class WWMMeditationData: NSObject {
     var isSelected = Bool()
     var levels   = [WWMLevelData]()
     var setmyown = Int()
+    var min_limit = String()
+    var max_limit = String()
+    var meditation_key = String()
     
     override init() {
         
@@ -24,6 +27,10 @@ class WWMMeditationData: NSObject {
         setmyown = json["setmyown"] as? Int ?? 0
         meditationName = json["meditation_name"] as? String ?? ""
         isSelected = json["isSelected"] as? Bool ?? false
+        min_limit = json["min_limit"] as? String ?? ""
+        max_limit = json["max_limit"] as? String ?? ""
+        meditation_key = json["meditation_key"] as? String ?? ""
+
         if let arrLevels = json["levels"] as? [[String:Any]]{
             for dict in arrLevels {
                 let levelData = WWMLevelData.init(json: dict)

@@ -77,6 +77,8 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
                 vc.arrMeditationLevels = levels
             }
             
+            print("min_limit \(arrMeditationDataList[indexPath.row].min_limit) max_limit \(arrMeditationDataList[indexPath.row].max_limit)")
+            
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

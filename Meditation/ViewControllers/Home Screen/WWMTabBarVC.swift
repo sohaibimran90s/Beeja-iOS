@@ -1459,7 +1459,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }else{
                                 self.appPreffrence.setExpiryDate(value: true)
                             }
-                                                        
+                            
                             self.setDataToDb(json: result["settings"] as! [String:Any])
                             print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
                             

@@ -21,6 +21,9 @@ extension DBAllMeditationData {
     @NSManaged public var meditationId: Int32
     @NSManaged public var setmyown: Int32
     @NSManaged public var meditationName: String?
+    @NSManaged public var min_limit: String?
+    @NSManaged public var max_limit: String?
+    @NSManaged public var meditation_key: String?
     @NSManaged public var levels: NSOrderedSet?
 
 }

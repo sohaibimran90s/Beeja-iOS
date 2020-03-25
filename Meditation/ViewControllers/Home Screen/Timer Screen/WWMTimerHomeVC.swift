@@ -361,6 +361,8 @@ class WWMTimerHomeVC: WWMBaseViewController {
         vc.levelID = "\(self.selectedLevelData.levelId)"
         vc.meditationName = self.selectedMeditationData.meditationName ?? ""
         vc.levelName = self.selectedLevelData.levelName ?? ""
+        
+        //print("min_limit*** \(self.selectedMeditationData)")
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

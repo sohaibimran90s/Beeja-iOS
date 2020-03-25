@@ -323,6 +323,21 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setMin_limit(value:String) {
+        defaults.set(value, forKey: "min_limit")
+        defaults.synchronize()
+    }
+    
+    func setMax_limit(value:String) {
+        defaults.set(value, forKey: "max_limit")
+        defaults.synchronize()
+    }
+    
+    func setMeditation_key(value:String) {
+        defaults.set(value, forKey: "meditation_key")
+        defaults.synchronize()
+    }
+    
     func getCheckEnterSignupLogin() -> Bool {
         return UserDefaults.standard.bool(forKey: "checkEnterSignupLogin")
     }
@@ -402,5 +417,17 @@ class WWMAppPreference: NSObject {
     
     func getForceLogout() -> String {
         return UserDefaults.standard.string(forKey: "force_logout") ?? ""
+    }
+    
+    func getMin_limit() -> String {
+        return UserDefaults.standard.string(forKey: "min_limit") ?? ""
+    }
+    
+    func getMax_limit() -> String {
+        return UserDefaults.standard.string(forKey: "max_limit") ?? ""
+    }
+    
+    func getMeditation_key() -> String {
+        return UserDefaults.standard.string(forKey: "meditation_key") ?? ""
     }
 }

@@ -5,8 +5,11 @@
     </entity>
     <entity name="DBAllMeditationData" representedClassName="DBAllMeditationData" syncable="YES">
         <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="meditation_key" optional="YES" attributeType="String"/>
         <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="meditationName" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
         <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData"/>
     </entity>
@@ -159,7 +162,7 @@
     </entity>
     <elements>
         <element name="DBAddSession" positionX="-18" positionY="135" width="128" height="60"/>
-        <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="120"/>
+        <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="163"/>
         <element name="DBCommunityData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
         <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>

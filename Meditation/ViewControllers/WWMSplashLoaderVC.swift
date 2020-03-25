@@ -361,6 +361,9 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBAllMeditationData") as! DBAllMeditationData
                 meditationDB.meditationId = Int32(dataM.meditationId)
                 meditationDB.meditationName = dataM.meditationName
+                meditationDB.min_limit = dataM.min_limit
+                meditationDB.max_limit = dataM.max_limit
+                meditationDB.meditation_key = dataM.meditation_key
                 meditationDB.isMeditationSelected = false
                 for  index in 0..<dataM.levels.count {
                     let dic = dataM.levels[index]

@@ -46,9 +46,6 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
-                
-            }
         }
         self.setNavigationBar(isShow: false, title: "")
         
