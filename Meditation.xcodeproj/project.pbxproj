@@ -2505,7 +2505,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\nfind /Users/prema.negi/Library/Developer/Xcode/DerivedData/Meditation-aelnizmlsowezhfkpyzompfxuscn/Build/Intermediates.noindex/Meditation.build/Debug-iphoneos/ -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp /path/to/GoogleService-Info.plist -p platform \\{\\}\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2976,7 +2976,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3110,7 +3110,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Will Williams Meditation Limited (5QJX36A56H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
@@ -3132,7 +3132,7 @@
 				MARKETING_VERSION = 3.2.200324;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = beeja_Development_Profile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.2;

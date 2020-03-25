@@ -9,6 +9,7 @@
 import UIKit
 import Lottie
 import CoreLocation
+import Crashlytics
 
 class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
@@ -44,6 +45,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let button = UIButton(type: .roundedRect)
+        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+        button.setTitle("Crash", for: [])
+        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(button)
         
         self.updateDiskStatus()
         
@@ -137,6 +143,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
     }
     
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+        Crashlytics.sharedInstance().crash()
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
