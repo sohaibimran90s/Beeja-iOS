@@ -1,6 +1,16 @@
 PODS:
   - Alamofire (4.9.1)
   - EFCountingLabel (5.0.0)
+  - FBSDKCoreKit (6.2.0):
+    - FBSDKCoreKit/Basics (= 6.2.0)
+    - FBSDKCoreKit/Core (= 6.2.0)
+  - FBSDKCoreKit/Basics (6.2.0)
+  - FBSDKCoreKit/Core (6.2.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.2.0):
+    - FBSDKLoginKit/Login (= 6.2.0)
+  - FBSDKLoginKit/Login (6.2.0):
+    - FBSDKCoreKit (~> 6.2.0)
   - Firebase/Analytics (6.20.0):
     - Firebase/Core
   - Firebase/Auth (6.20.0):
@@ -133,6 +143,8 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.0)
   - EFCountingLabel (~> 5.0.0)
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Crashlytics
@@ -151,6 +163,8 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - EFCountingLabel
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -185,6 +199,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   EFCountingLabel: c25faa62a975f8ef9b2cb0928e8675520e8e2739
+  FBSDKCoreKit: a7bb9f5ac56c1e11d5f8ae0b90a3610f8744b43a
+  FBSDKLoginKit: 5877adb09cc249870c352d92ecc3246cb925c771
   Firebase: fe7f74012742ab403451dd283e6909b8f1fb348a
   FirebaseAnalytics: 572e467f3d977825266e8ccd52674aa3e6f47eac
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -216,6 +232,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: bff1b141106b21d7e175ad8c94af05eab9958534
+PODFILE CHECKSUM: 14520c794809abb4d1e166c9215f5315d615e314
 
 COCOAPODS: 1.9.1

@@ -12,7 +12,8 @@ target 'Meditation' do
   pod 'Firebase/Auth'
   #pod 'Firebase/Crash'
   pod 'GoogleSignIn'
-  #pod 'FBSDKLoginKit', '~> 4.39.1'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKCoreKit'
   pod 'lottie-ios', '~> 3.0.4'
   
   # update
