@@ -55,7 +55,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     func dateToAddInCurrent(){
         
         let dateFormate = DateFormatter()
-        dateFormate.locale = NSLocale.current
+        dateFormate.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         dateFormate.dateFormat = "yyyy-MM-dd"
         
         let daysToAdd = 0

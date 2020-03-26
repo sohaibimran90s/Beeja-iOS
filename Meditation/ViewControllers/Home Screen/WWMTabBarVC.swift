@@ -44,11 +44,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let button = UIButton(type: .roundedRect)
-        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-        button.setTitle("Crash", for: [])
-        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-        view.addSubview(button)
+//        let button = UIButton(type: .roundedRect)
+//        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+//        button.setTitle("Crash", for: [])
+//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+//        view.addSubview(button)
         
         self.updateDiskStatus()
         
@@ -85,7 +85,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         //community
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        
         dateFormatter.dateFormat = "yyyyMM"
         self.strMonthYear = dateFormatter.string(from: Date())
         
@@ -142,10 +145,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
     }
     
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-        let array = [String]()
-        print(array[1])
-    }
+//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+//        let array = [String]()
+//        print(array[1])
+//    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
@@ -1337,7 +1340,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             //*receiptValidation
                             let formatter = DateFormatter()
                             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            formatter.locale = Locale(identifier: "en_US_POSIX")
+//                            formatter.locale = Locale(identifier: "en_US_POSIX")
+                            formatter.locale = Locale.current
+                            formatter.locale = Locale(identifier: formatter.locale.identifier)
                             
                             let expiryDate = self.appPreffrence.getExpireDateBackend()
                             if expiryDate != ""{
@@ -1419,7 +1424,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                     
                                     let formatter = DateFormatter()
-                                    formatter.locale = Locale(identifier: "en_US_POSIX")
+//                                    formatter.locale = Locale(identifier: "en_US_POSIX")
+                                    formatter.locale = Locale.current
+                                    formatter.locale = Locale(identifier: formatter.locale.identifier)
+                                    
                                     if let _ = formatter.date(from: expiryDate){
                                         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     }else{
@@ -1492,24 +1500,20 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     var subscriptionPlan: String = "annual"
                     var subscriptionAmount: Any?
                     
-                    for i in 0..<self.responseArray.count{
+                    for i in 0..<self.responseArray.count {
                         if let dict = self.responseArray[i] as? [String: Any]{
                             if let product_id = dict["product_id"] as? String{
                                 if self.product_id == product_id{
                                     self.product_id = product_id
-                                    
                                     if let id = dict["id"] as? Int{
                                         plan_id = id
                                     }
-                                    
                                     if let name = dict["name"] as? String{
                                         subscriptionPlan = name
                                     }
-                                                                        
                                     if let cost = dict["cost"]{
                                         subscriptionAmount = cost
                                     }
-                                                                        
                                     getProductId = true
                                     break
                                 }

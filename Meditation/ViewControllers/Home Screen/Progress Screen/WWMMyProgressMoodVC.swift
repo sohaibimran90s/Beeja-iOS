@@ -171,7 +171,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     func setDateFromTooTo(){
         if self.type == "weekly"{
-            dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale.current
+            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
             dateFormatter.dateFormat = "dd MMM"
             
             var date1 = Date()
@@ -179,7 +180,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             date1 = cal.date(byAdding: .day, value: -6, to: date1)!
             self.previousDate = dateFormatter.string(from: date1)
         }else if self.type == "monthly"{
-            dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale.current
+            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
             dateFormatter.dateFormat = "dd MMM"
             
             var date1 = Date()
@@ -188,7 +190,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             date1  = cal.date(byAdding: .day, value: 1, to: date2)!
             self.previousDate = dateFormatter.string(from: date1)
         }else{
-            dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale.current
+            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
             dateFormatter.dateFormat = "MMM yyyy"
             
             var date1 = Date()
@@ -308,7 +311,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
         let currentDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         dateFormatter.dateFormat = "yyyyMMdd"
         let xData = dateFormatter.string(from: currentDate)
         print(xData)

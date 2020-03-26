@@ -219,7 +219,10 @@ class WWMHelperClass {
     
     class func daysLeft(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -242,7 +245,11 @@ class WWMHelperClass {
     
     class func dateComparison(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -266,7 +273,10 @@ class WWMHelperClass {
     
     class func getExpireDate(expiryDate: String, formatter: DateFormatter) -> Date{
 
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+//        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = Locale.current
+        formatter.locale = Locale(identifier: formatter.locale.identifier)
+        
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         guard let expireDate = formatter.date(from: expiryDate)
@@ -290,7 +300,9 @@ class WWMHelperClass {
         }
                 
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDateString = dateFormatter.string(from: Date())
@@ -305,7 +317,8 @@ class WWMHelperClass {
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
             }
             
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
             currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
             let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate
             
