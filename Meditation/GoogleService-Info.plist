@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:67011826526:ios:9eeef6ad2bd19489</string>
+	<string>1:67011826526:ios:f451685e82c42614a375cf</string>
 	<key>DATABASE_URL</key>
 	<string>https://beejameditation.firebaseio.com</string>
 </dict>

@@ -14,9 +14,10 @@ import FBSDKCoreKit
 import CoreData
 import UserNotifications
 import Reachability
-import Crashlytics
-import Fabric
+import FirebaseCrashlytics
+//import Fabric
 import CallKit
+import FirebaseAnalytics
 
 
 @UIApplicationMain
@@ -70,9 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = true
-        
+        //Fabric.with([Crashlytics.self])
+        //Fabric.sharedSDK().debug = true
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
@@ -827,7 +827,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         let reminder21DaysTime = self.appPreffrence.getReminder21DaysTime()
         if reminder21DaysTime != ""{
             let dateFormate = DateFormatter()
-            dateFormate.locale = NSLocale.current
+            dateFormate.locale = Locale.current
+            dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
             dateFormate.dateFormat = "yyyy-MM-dd"
             
             let reminder21DaysDate = self.appPreffrence.getReminder21DaysDate()
@@ -838,7 +839,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             print("appdelegate*** reminder21DaysDate \(reminder21DaysDate) currentDate*** \(currentDate2 ?? Date())")
             if reminder21DaysDate == currentDate2{
                 let dateFormate = DateFormatter()
-                dateFormate.locale = NSLocale.current
+                dateFormate.locale = Locale.current
+                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
                 dateFormate.dateFormat = "dd:MM:yyyy"
                 
                 let locale = NSLocale.current
@@ -940,7 +942,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             if settingData.isMorningReminder {
                 if settingData.morningReminderTime != "" {
                 let dateFormate = DateFormatter()
-                dateFormate.locale = NSLocale.current
+                dateFormate.locale = Locale.current
+                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
                 dateFormate.dateFormat = "dd:MM:yyyy"
                     
                 let locale = NSLocale.current
@@ -1027,7 +1030,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             if settingData.isAfterNoonReminder {
                 if settingData.afterNoonReminderTime != "" {
                 let dateFormate = DateFormatter()
-                dateFormate.locale = NSLocale.current
+                dateFormate.locale = Locale.current
+                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
                 dateFormate.dateFormat = "dd:MM:yyyy"
                     
                 let locale = NSLocale.current
@@ -1119,7 +1123,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             if settingData.isLearnReminder {
                 if settingData.learnReminderTime != "" {
                 let dateFormate = DateFormatter()
-                dateFormate.locale = NSLocale.current
+                dateFormate.locale = Locale.current
+                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
                 dateFormate.dateFormat = "dd:MM:yyyy"
                     
                 let locale = NSLocale.current
@@ -1229,7 +1234,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
 
         let date: Date = dateFormatter.date(from: dateStrInTwentyFourHourFomat)!
         print(date)

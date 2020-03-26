@@ -231,6 +231,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
         let dateFormatter = DateFormatter()
         //dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         
         dateFormatter.dateFormat = "MMM yyyy"
         self.lblMonthYear.text = dateFormatter.string(from: date)
@@ -424,9 +425,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         addSessionView.txtViewDate.text = dateFormatter.string(from: Date())
         dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         let strDate = dateFormatter.string(from: Date())
         let date = dateFormatter.date(from: strDate)
         strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
@@ -441,9 +444,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         print("sender.date.... \(sender.date)")
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         addSessionView.txtViewDate.text = dateFormatter.string(from: sender.date.convertedDate)
         
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         let strDate = dateFormatter.string(from: sender.date.convertedDate)
         let date = dateFormatter.date(from: strDate)
         self.strDateTime = "\(Int(date!.timeIntervalSince1970)*1000)"
@@ -452,7 +457,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBAction func btnDateAction(_ sender: Any) {
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
-        datePickerView.locale = NSLocale.current
+        datePickerView.locale = Locale.current
         datePickerView.maximumDate = Date()
         addSessionView.txtViewDate.isUserInteractionEnabled = true
         addSessionView.txtViewDate.inputView = datePickerView
@@ -585,6 +590,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             let dateFormatter = DateFormatter()
             dateFormatter.locale = NSLocale.current
+            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let monthDate = dateFormatter.date(from:data.date)!
             dateFormatter.dateFormat = "d"
@@ -870,8 +876,11 @@ extension Date {
         dateFormatter.dateFormat = dateFormat;
         let formattedDate = dateFormatter.string(from: self);
         
-        dateFormatter.locale = NSLocale.current;
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00");
+        dateFormatter.locale = Locale.current;
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00");
+        
         
         dateFormatter.dateFormat = dateFormat as String;
         let sourceDate = dateFormatter.date(from: formattedDate as String);
