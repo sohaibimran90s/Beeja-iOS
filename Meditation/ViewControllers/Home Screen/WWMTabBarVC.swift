@@ -141,16 +141,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 print("Location services are not enabled")
             }
         }
-        
     }
-    
-<<<<<<< HEAD
-//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-//        let array = [String]()
-//        print(array[1])
-//    }
-=======
->>>>>>> dev-crashlytics
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
