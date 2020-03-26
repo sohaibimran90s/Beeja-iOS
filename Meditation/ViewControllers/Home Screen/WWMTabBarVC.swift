@@ -47,12 +47,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let button = UIButton(type: .roundedRect)
-//        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-//        button.setTitle("Crash", for: [])
-//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-//        view.addSubview(button)
-        
         self.updateDiskStatus()
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
@@ -150,10 +144,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
     }
     
+<<<<<<< HEAD
 //    @IBAction func crashButtonTapped(_ sender: AnyObject) {
 //        let array = [String]()
 //        print(array[1])
 //    }
+=======
+>>>>>>> dev-crashlytics
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
