@@ -20,8 +20,10 @@ target 'Meditation' do
   pod 'XLPagerTabStrip', '~> 9.0.0'
   
   pod 'SDWebImage', '~> 4.4.3'
-  pod 'Fabric', '~> 1.10.2'
-  pod 'Crashlytics', '~> 3.14.0'
+  
+  #pod 'Fabric', '~> 1.10.2'
+  #pod 'Crashlytics', '~> 3.14.0'
+  
   pod 'SwiftyRSA', '~> 1.5.0'
   pod 'ReachabilitySwift', '~> 4.3.0'
   pod 'IQKeyboardManagerSwift', '~> 6.3.0'

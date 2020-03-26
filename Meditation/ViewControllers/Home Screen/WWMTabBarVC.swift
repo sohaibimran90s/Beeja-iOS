@@ -9,7 +9,6 @@
 import UIKit
 import Lottie
 import CoreLocation
-import Crashlytics
 
 class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManagerDelegate {
 
@@ -144,7 +143,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     @IBAction func crashButtonTapped(_ sender: AnyObject) {
-        Crashlytics.sharedInstance().crash()
+        let array = [String]()
+        print(array[1])
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
