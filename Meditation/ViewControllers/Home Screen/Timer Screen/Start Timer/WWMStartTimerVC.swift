@@ -67,9 +67,13 @@ class WWMStartTimerVC: WWMBaseViewController {
     var offlineCompleteData: [String: Any] = [:]
     var meditationLTMPlayPercentage = 0
     var dataAppendFlag = false
+    
+    var ninetyFiveCompletedFlag = "1"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        WWMHelperClass.addNinetyFivePercentData(type: self.appPreffrence.getType())
 
         animationViewMed = AnimationView(name: "final1")
         animationViewMed.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
@@ -128,6 +132,8 @@ class WWMStartTimerVC: WWMBaseViewController {
 
         UIApplication.shared.isIdleTimerDisabled = false
     }
+    
+
     
     //MARK: Run timer in background
     
@@ -585,7 +591,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                 if meditationPlayPercentage >= 95{
                     self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
                     self.flag = 1
+                    self.ninetyFiveCompletedFlag = "1"
                 }else{
+                    self.ninetyFiveCompletedFlag = "0"
                     self.meditationPlayPercentage = meditationPlayPercentage
                 }
             }
@@ -619,6 +627,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                 vc.levelID = self.levelID
                 self.navigationController?.pushViewController(vc, animated: true)
             }
+                self.ninetyFiveCompletedFlag = "1"
                 seconds = seconds-1
                 self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }
@@ -724,7 +733,10 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
-        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage < 98{
+        if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getMax_limit()) ?? 98{
+            
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getType())
+        
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
@@ -764,7 +776,8 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     func pushNavigationController(){
-        if self.meditationLTMPlayPercentage < 95{
+        
+        if self.ninetyFiveCompletedFlag == "0"{
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
                       
@@ -780,6 +793,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
+            
+            self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
+            self.timer.invalidate()
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
             
@@ -817,7 +833,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
         if nintyFivePercentDB.count > 0{
-            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)")
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
         }
 
         var param: [String: Any] = [:]
@@ -966,7 +982,10 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
+        print("meditationLTMPlayPercentage++++*** \(meditationLTMPlayPercentage)")
+        
         if self.meditationLTMPlayPercentage < 98{
+            self.ninetyFiveCompletedFlag = "0"
             self.xibCall()
         }else{
             alertPopupView.removeFromSuperview()

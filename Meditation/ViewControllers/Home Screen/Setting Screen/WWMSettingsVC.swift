@@ -166,50 +166,49 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.isSetMyOwn = true
             }else {
                 self.isSetMyOwn = false
-            for indexs in 0..<arrMeditationData.count {
-                if indexs == row {
-                    self.selectedMeditationData = arrMeditationData[indexs]
-                    arrMeditationData[indexs].isMeditationSelected = true
-                    if arrMeditationData[indexs].meditationName == "Beeja" || arrMeditationData[indexs].meditationName == "Vedic/Transcendental" {
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_JaiGuruDev.uppercased().replacingOccurrences(of: " ", with: "_"))
-                        settingData.endChime = kChimes_JaiGuruDev
-                    }else {
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_HIMALAYAN_BELL.uppercased().replacingOccurrences(of: " ", with: "_"))
-                        settingData.endChime = kChimes_HIMALAYAN_BELL
-                    }
-                    if let levels = arrMeditationData[indexs].levels?.array as? [DBLevelData] {
-                        for index in 0..<levels.count {
-                            if index == 0 {
-                                levels[index].isLevelSelected = true
-                                self.settingData.prepTime = "\(levels[index].prepTime)"
-                                self.settingData.meditationTime = "\(levels[index].meditationTime)"
-                                self.settingData.restTime = "\(levels[index].restTime)"
-                                
-                                // Analytics
-                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MEDITATION_TIME", itemName: "\(levels[index].meditationTime)")
-                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PREP_TIME", itemName: "\(levels[index].prepTime)")
-                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "REST_TIME", itemName: "\(levels[index].restTime)")
-                                
-                                
-                                var analyticsName = arrMeditationData[indexs].meditationName?.uppercased() ?? ""
-                                analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
-                                
-                                var levelName = levels[index].levelName?.uppercased() ?? ""
-                                levelName = levelName.replacingOccurrences(of: " ", with: "_")
-                                
-                                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PRESET_\(analyticsName)", itemName: levelName)
-                                
-                            }else {
-                                levels[index].isLevelSelected = false
+                for indexs in 0..<arrMeditationData.count {
+                    if indexs == row {
+                        self.selectedMeditationData = arrMeditationData[indexs]
+                        arrMeditationData[indexs].isMeditationSelected = true
+                        if arrMeditationData[indexs].meditationName == "Beeja" || arrMeditationData[indexs].meditationName == "Vedic/Transcendental" {
+                            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_JaiGuruDev.uppercased().replacingOccurrences(of: " ", with: "_"))
+                            settingData.endChime = kChimes_JaiGuruDev
+                        }else {
+                            WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "END_CHIME", itemName: kChimes_HIMALAYAN_BELL.uppercased().replacingOccurrences(of: " ", with: "_"))
+                            settingData.endChime = kChimes_HIMALAYAN_BELL
+                        }
+                        if let levels = arrMeditationData[indexs].levels?.array as? [DBLevelData] {
+                            for index in 0..<levels.count {
+                                if index == 0 {
+                                    levels[index].isLevelSelected = true
+                                    self.settingData.prepTime = "\(levels[index].prepTime)"
+                                    self.settingData.meditationTime = "\(levels[index].meditationTime)"
+                                    self.settingData.restTime = "\(levels[index].restTime)"
+                                    
+                                    // Analytics
+                                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MEDITATION_TIME", itemName: "\(levels[index].meditationTime)")
+                                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PREP_TIME", itemName: "\(levels[index].prepTime)")
+                                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "REST_TIME", itemName: "\(levels[index].restTime)")
+                                    
+                                    
+                                    var analyticsName = arrMeditationData[indexs].meditationName?.uppercased() ?? ""
+                                    analyticsName = analyticsName.replacingOccurrences(of: " ", with: "_")
+                                    
+                                    var levelName = levels[index].levelName?.uppercased() ?? ""
+                                    levelName = levelName.replacingOccurrences(of: " ", with: "_")
+                                    
+                                    WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "PRESET_\(analyticsName)", itemName: levelName)
+                                    
+                                }else {
+                                    levels[index].isLevelSelected = false
+                                }
                             }
                         }
+                        
+                    }else {
+                        arrMeditationData[indexs].isMeditationSelected = false
                     }
-                    
-                }else {
-                    arrMeditationData[indexs].isMeditationSelected = false
-                    
                 }
-            }
             }
             
         }else {
@@ -1212,6 +1211,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
+                WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
+                
                 WWMHelperClass.selectedType = ""
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)

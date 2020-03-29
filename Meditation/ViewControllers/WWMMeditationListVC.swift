@@ -70,18 +70,20 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
             vc.type = "timer"
             self.navigationController?.pushViewController(vc, animated: true)
         }else {
+            
+            self.appPreference.setMin_limit(value: arrMeditationDataList[indexPath.row].min_limit ?? "0")
+            self.appPreference.setMax_limit(value: arrMeditationDataList[indexPath.row].max_limit ?? "0")
+            self.appPreference.setMeditation_key(value: arrMeditationDataList[indexPath.row].meditationName ?? "0")
+            
+            print("setMin_limit++++ \(self.appPreference.getMin_limit()) setMax_limit++++ \(self.appPreference.getMax_limit()) setMeditation++++ \(self.appPreference.getMeditation_key())")
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
             vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"
             vc.type = self.type
             if let levels = arrMeditationDataList[indexPath.row].levels?.array as? [DBLevelData] {
                 vc.arrMeditationLevels = levels
             }
-            
-            self.appPreference.setMin_limit(value: arrMeditationDataList[indexPath.row].min_limit ?? "")
-            self.appPreference.setMax_limit(value: arrMeditationDataList[indexPath.row].max_limit ?? "")
-            self.appPreference.setMeditation_key(value: arrMeditationDataList[indexPath.row].max_limit ?? "")
-            print("min_limit \(arrMeditationDataList[indexPath.row].min_limit) max_limit \(arrMeditationDataList[indexPath.row].max_limit)")
-            
+    
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -146,7 +146,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             if sucess {
 
                 print("URL_MEDITATIONCOMPLETE..... success guided")
-                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id)
+                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
     }//insert offline data to server*

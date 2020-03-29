@@ -97,6 +97,10 @@
     <entity name="DBMoodMeter" representedClassName="DBMoodMeter" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="DBNinetyFivePercent" representedClassName="DBNinetyFivePercent" syncable="YES">
+        <attribute name="meditation_name" optional="YES" attributeType="String"/>
+        <attribute name="meditation_value" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DBNintyFiveCompletionData" representedClassName="DBNintyFiveCompletionData" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -177,6 +181,7 @@
         <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="120"/>
         <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="DBNinetyFivePercent" positionX="-9" positionY="144" width="128" height="73"/>
         <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>

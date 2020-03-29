@@ -42,6 +42,7 @@ class WWMHelperClass {
     
     //3D-Touch
     static var loginSignupBool = false
+    static var appPreffrence = WWMAppPreference()
     
     // Analytics
     class func sendEventAnalytics(contentType:String, itemId:String, itemName:String) {
@@ -346,9 +347,9 @@ class WWMHelperClass {
         }
     }
     
-    class func deleteRowfromDb(dbName: String, id: String) {
+    class func deleteRowfromDb(dbName: String, id: String, type: String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(type) = %@", id)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
@@ -364,6 +365,8 @@ class WWMHelperClass {
             }
         }
     }
+    
+    
     
     
     class func updateJournalfromDb(dbName: String, index: Int, data: String, meditation_type: String) {
@@ -411,7 +414,102 @@ class WWMHelperClass {
             print(error)
         }
     }
+    
+    class func fetchNinetyFivePercentFilterDB(name: String, dbName: String, type: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "\(type) == %@", name)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+    
+    class func addNinetyFivePercentData(type: String){
+        
+        var selectedMeditation: String = ""
+        if type == "Timer" || type == "timer"{
+            selectedMeditation = self.appPreffrence.getMeditation_key()
+        }else{
+            selectedMeditation = type
+        }
+        print("selectedMeditation*** \(selectedMeditation)")
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
+        if data.count > 0 {
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: selectedMeditation, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            
+            var flag = 0
+            for dict in ninetyFivePercentArray{
+                let meditation_name = (dict as AnyObject).meditation_name as? String
+                if meditation_name == selectedMeditation{
+                    flag = 1
+                    break
+                }
+            }
+            
+            if flag == 0{
+                let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+                
+                dbNinetyFivePercent.meditation_name = selectedMeditation
+                dbNinetyFivePercent.meditation_value = "0"
+            }
+            
+        }else{
+            let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+            
+            dbNinetyFivePercent.meditation_name = selectedMeditation
+            dbNinetyFivePercent.meditation_value = "0"
+        }
+        
+        WWMHelperClass.saveDb()
+    }
+    
+    class func checkNinetyFivePercentData(type: String) -> String{
+        
+        var selectedMeditation: String = ""
+        if type == "Timer" || type == "timer"{
+            selectedMeditation = self.appPreffrence.getMeditation_key()
+        }else{
+            selectedMeditation = type
+        }
+        print("selectedMeditation*** \(selectedMeditation)")
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
+        if data.count > 0 {
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: selectedMeditation, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            
+            for dict in ninetyFivePercentArray{
+                let value = (dict as AnyObject).meditation_value as? String
+                let meditation_name = (dict as AnyObject).meditation_name as? String
+                if meditation_name == selectedMeditation{
+                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
+                    if value == "0"{
+                        self.deleteRowfromDb(dbName: "DBNinetyFivePercent", id: meditation_name!, type: "meditation_name")
+                        let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+                        
+                        dbNinetyFivePercent.meditation_name = meditation_name
+                        dbNinetyFivePercent.meditation_value = "1"
+                        
+                        WWMHelperClass.saveDb()
+                        
+                        print("00000****")
+                        return "1"
+                    }else{
+                        print("11111+++****")
+                        return "0"
+                    }
+                }
+            }
+        }
+        
+        return "1"
+    }
 }
+
+
+
 
 public class Reachabilities {
      func isConnectedToNetwork() -> Bool {

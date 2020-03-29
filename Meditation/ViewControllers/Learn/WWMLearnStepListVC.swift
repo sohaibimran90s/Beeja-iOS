@@ -133,7 +133,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
             if sucess {
 
                 print("URL_MEDITATIONCOMPLETE..... success learn")
-                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id)
+                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
     }//insert offline data to server*
