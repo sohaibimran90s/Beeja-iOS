@@ -16,6 +16,9 @@ class WWMGuidedData: NSObject {
     var cat_meditation_type = String()
     var cat_EmotionList   = [WWMGuidedEmotionData]()
     var step_id = 0
+    var min_limit = String()
+    var max_limit = String()
+    var meditation_key = String()
     
     override init() {
     }
@@ -25,8 +28,9 @@ class WWMGuidedData: NSObject {
         cat_Name = json["name"] as? String ?? ""
         cat_mode = json["mode"] as? String ?? ""
         cat_meditation_type = json["meditation_type"] as? String ?? ""
-        
-        
+        min_limit = json["min_limit"] as? String ?? "95"
+        max_limit = json["max_limit"] as? String ?? "98"
+        meditation_key = json["meditation_key"] as? String ?? "practical"
         
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {

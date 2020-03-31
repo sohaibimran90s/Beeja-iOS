@@ -296,6 +296,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
     //MARK: Fetch Guided Data From DB
     func fetchGuidedDataFromDB() {
         
+        print("self.type+++ \(self.type)")
+        
         let guidedDataDB = self.fetchGuidedFilterDB(type: self.type, dbName: "DBGuidedData")
         if guidedDataDB.count > 0{
             print("guidedDataDB count... \(guidedDataDB.count)")
@@ -314,6 +316,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
                 jsonString["mode"] = (dict as AnyObject).guided_mode as? String
+                jsonString["min_limit"] = (dict as AnyObject).min_limit as? String ?? "95"
+                jsonString["max_limit"] = (dict as AnyObject).max_limit as? String ?? "98"
+                jsonString["meditation_key"] = (dict as AnyObject).meditation_key as? String ?? "practical"
                 
                 let guidedEmotionsDataDB = self.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
@@ -431,6 +436,26 @@ class WWMGuidedNavVC: WWMBaseViewController {
                             
                             if let guided_mode = guidedDict["mode"] as? String{
                                 dbGuidedData.guided_mode = guided_mode
+                            }
+                            
+                            if let min_limit = guidedDict["min_limit"] as? String{
+                                dbGuidedData.min_limit = min_limit
+                            }else{
+                                dbGuidedData.min_limit = "95"
+                            }
+                            
+                            if let max_limit = guidedDict["max_limit"] as? String{
+                                dbGuidedData.max_limit = max_limit
+                            }else{
+                                dbGuidedData.max_limit = "98"
+                            }
+                            
+                            if let meditation_key = guidedDict["meditation_key"] as? String{
+                                dbGuidedData.meditation_key = meditation_key
+                            }else{
+                                if let meditation_type = guidedDict["meditation_type"] as? String{
+                                    dbGuidedData.meditation_key = meditation_type
+                                }
                             }
                             
                             

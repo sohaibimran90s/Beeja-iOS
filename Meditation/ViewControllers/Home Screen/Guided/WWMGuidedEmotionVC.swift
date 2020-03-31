@@ -18,6 +18,9 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
     var type = ""
+    var min_limit = "94"
+    var max_limit = "97"
+    var meditation_key = "practical"
     
     var delegate: WWMGuidedDashboardDelegate?
     
@@ -92,6 +95,10 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             vc.cat_Id = "\(self.guidedData.cat_Id)"
             vc.cat_Name = self.guidedData.cat_Name
             vc.type = self.type
+            
+            vc.min_limit = self.min_limit
+            vc.max_limit = self.max_limit
+            vc.meditation_key = self.meditation_key
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             

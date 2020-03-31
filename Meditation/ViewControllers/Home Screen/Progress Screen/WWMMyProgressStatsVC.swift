@@ -1194,6 +1194,26 @@ extension WWMMyProgressStatsVC{
                                 dbGuidedData.guided_mode = guided_mode
                             }
                             
+                            if let min_limit = guidedDict["min_limit"] as? String{
+                                dbGuidedData.min_limit = min_limit
+                            }else{
+                                dbGuidedData.min_limit = "95"
+                            }
+                            
+                            if let max_limit = guidedDict["max_limit"] as? String{
+                                dbGuidedData.max_limit = max_limit
+                            }else{
+                                dbGuidedData.max_limit = "98"
+                            }
+                            
+                            if let meditation_key = guidedDict["meditation_key"] as? String{
+                                dbGuidedData.meditation_key = meditation_key
+                            }else{
+                                if let meditation_type = guidedDict["meditation_type"] as? String{
+                                    dbGuidedData.meditation_key = meditation_type
+                                }
+                            }
+                            
                             
                             if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
                                 for emotionsDict in emotion_list {

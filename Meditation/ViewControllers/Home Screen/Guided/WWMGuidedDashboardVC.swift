@@ -120,6 +120,10 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.cat_id = data.cat_Id
                 vc.guideTitleCount = arrGuidedList.count
                 
+                vc.min_limit = data.min_limit
+                vc.max_limit = data.max_limit
+                vc.meditation_key = "21_day_challenge"
+                
                 arrVC.add(vc)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
@@ -129,6 +133,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                 vc.guidedData = data
                 vc.type = self.type
+                vc.min_limit = data.min_limit
+                vc.max_limit = data.max_limit
+                vc.meditation_key = data.meditation_key
                         
                 arrVC.add(vc)
             }

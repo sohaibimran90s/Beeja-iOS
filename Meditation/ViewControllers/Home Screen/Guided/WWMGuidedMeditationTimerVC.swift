@@ -30,6 +30,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var totalDuration: Int = 0
     var totalTime = 0
     
+    var min_limit = "94"
+    var max_limit = "97"
+    var meditation_key = "practical"
+    
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblGuidedFlowType: UILabel!
@@ -44,8 +48,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var animateBool: Int = 0
     
     var animationView = AnimationView()
-    @IBOutlet weak var backView: UIView!
     
+    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var viewLottieAnimation: UIView!
     
     var nintyFivedata: [DBNintyFiveCompletionData] = []
@@ -54,11 +58,15 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var offlineCompleteData: [String: Any] = [:]
     var meditationLTMPlayPercentage = 0
     var dataAppendFlag = false
-    
     var ismove = false
+    var ninetyFiveCompletedFlag = "1"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key)")
+        
+        WWMHelperClass.addNinetyFivePercentData(type: self.meditation_key)
         
         self.viewLottieAnimation.isHidden = true
         spinnerImage.isHidden = true
@@ -319,6 +327,13 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
             
+            if meditationLTMPlayPercentage < 95{
+                self.ninetyFiveCompletedFlag = "0"
+            }
+            
+            if meditationLTMPlayPercentage >= 98{
+                self.ninetyFiveCompletedFlag = "1"
+            }
             
             let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
@@ -544,12 +559,15 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        if self.meditationLTMPlayPercentage >= 95 && self.meditationLTMPlayPercentage < 98{
+        if self.meditationLTMPlayPercentage >= Int(self.min_limit) ?? 95 && self.meditationLTMPlayPercentage < Int(self.max_limit) ?? 98{
+            
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.meditation_key)
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
+        print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -578,7 +596,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     func pushNavigationController(){
-        if self.meditationLTMPlayPercentage < 95{
+        
+        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
+        if self.ninetyFiveCompletedFlag == "0"{
             if !ismove{
                 //For analytics
                 var analyticCatName = self.cat_Name.uppercased()
@@ -643,7 +663,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         if nintyFivePercentDB.count > 0{
             WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
         }
-
+        
         var param: [String: Any] = [:]
         if type == "learn"{
             param = [
@@ -690,9 +710,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 "complete_percentage": complete_percentage
                 ] as [String : Any]
         }
-
+        
         print("meter param WWMGuidedMeditationTimerVC... \(param)")
-
+        
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -790,8 +810,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         if self.meditationLTMPlayPercentage < 98{
             self.xibCall()
         }else{
+            self.ninetyFiveCompletedFlag = "1"
             alertPopupView.removeFromSuperview()
-            
             self.pushNavigationController()
         }
     }

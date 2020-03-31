@@ -733,7 +733,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
-        if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getMax_limit()) ?? 98{
+        if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
             
             self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getType())
         

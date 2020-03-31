@@ -40,6 +40,10 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var boolGetIndex = false
     var restoreBool = false
     
+    var min_limit = "94"
+    var max_limit = "97"
+    var meditation_key = "practical"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,28 +89,32 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if reachable.isConnectedToNetwork() {
-                let data = self.arrAudioList[indexPath.row]
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                
-                vc.audioData = self.arrAudioList[indexPath.row]
-                vc.cat_id = self.cat_Id
-                vc.cat_Name = self.cat_Name
-                vc.emotion_Id = "\(self.emotionData.emotion_Id)"
-                vc.emotion_Name = self.emotionData.emotion_Name
-                
-                if self.appPreffrence.getExpiryDate(){
-                    vc.seconds = data.audio_Duration
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else{
-                    if data.audio_Duration > 900{
-                        xibCall()
-                    }else{
-                        vc.seconds = 900
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                }
+            let data = self.arrAudioList[indexPath.row]
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             
-         }else {
+            vc.audioData = self.arrAudioList[indexPath.row]
+            vc.cat_id = self.cat_Id
+            vc.cat_Name = self.cat_Name
+            vc.emotion_Id = "\(self.emotionData.emotion_Id)"
+            vc.emotion_Name = self.emotionData.emotion_Name
+            
+            vc.min_limit = self.min_limit
+            vc.max_limit = self.max_limit
+            vc.meditation_key = self.meditation_key
+            
+            if self.appPreffrence.getExpiryDate(){
+                vc.seconds = data.audio_Duration
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                if data.audio_Duration > 900{
+                    xibCall()
+                }else{
+                    vc.seconds = 900
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            
+        }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }

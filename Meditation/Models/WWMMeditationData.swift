@@ -27,8 +27,8 @@ class WWMMeditationData: NSObject {
         setmyown = json["setmyown"] as? Int ?? 0
         meditationName = json["meditation_name"] as? String ?? ""
         isSelected = json["isSelected"] as? Bool ?? false
-        min_limit = json["min_limit"] as? String ?? ""
-        max_limit = json["max_limit"] as? String ?? ""
+        min_limit = json["min_limit"] as? String ?? "94"
+        max_limit = json["max_limit"] as? String ?? "97"
         meditation_key = json["meditation_key"] as? String ?? ""
 
         if let arrLevels = json["levels"] as? [[String:Any]]{

@@ -22,4 +22,7 @@ extension DBGuidedData {
     @NSManaged public var last_time_stamp: String?
     @NSManaged public var meditation_type: String?
     @NSManaged public var guided_mode: String?
+    @NSManaged public var min_limit: String?
+    @NSManaged public var max_limit: String?
+    @NSManaged public var meditation_key: String?
 }

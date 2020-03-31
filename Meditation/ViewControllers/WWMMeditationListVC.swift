@@ -71,11 +71,11 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
             self.navigationController?.pushViewController(vc, animated: true)
         }else {
             
-            self.appPreference.setMin_limit(value: arrMeditationDataList[indexPath.row].min_limit ?? "0")
-            self.appPreference.setMax_limit(value: arrMeditationDataList[indexPath.row].max_limit ?? "0")
+            self.appPreference.setTimerMin_limit(value: arrMeditationDataList[indexPath.row].min_limit ?? "95")
+            self.appPreference.setTimerMax_limit(value: arrMeditationDataList[indexPath.row].max_limit ?? "98")
             self.appPreference.setMeditation_key(value: arrMeditationDataList[indexPath.row].meditationName ?? "0")
             
-            print("setMin_limit++++ \(self.appPreference.getMin_limit()) setMax_limit++++ \(self.appPreference.getMax_limit()) setMeditation++++ \(self.appPreference.getMeditation_key())")
+            print("setMin_limit++++ \(self.appPreference.getTimerMin_limit()) setMax_limit++++ \(self.appPreference.getTimerMax_limit()) setMeditation++++ \(self.appPreference.getMeditation_key())")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
             vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"

@@ -47,14 +47,19 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     var emotionId = 0
     var emotionKey = ""
     var guideTitleCount = 3
+    
+    var min_limit = "94"
+    var max_limit = "97"
+    var meditation_key = ""
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("min_limit++ \(min_limit) max_limit++ \(max_limit) meditation_key++ \(meditation_key)")
         
         if self.appPreference.getGuideType() == "practical"{
             if !isIntroCompleted{
-
+                
                 print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
                 
                 DispatchQueue.main.async {
@@ -74,7 +79,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
         //* logic for expanding the cell which we have to play
         
         
-       /// for i in 0..<
+        /// for i in 0..<
         
         self.navigationController?.isNavigationBarHidden = false
         var flag = 0
@@ -278,7 +283,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
         let data = self.guidedData.cat_EmotionList[collectionView.tag]
-
+        
         if self.isIntroCompleted{
             
             if self.guideTitleCount > 3 && self.cat_name.contains("21"){
@@ -287,43 +292,11 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 if self.appPreference.getIsSubscribedBool(){
                     
                     self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-                    
-//                    WWMHelperClass.selectedType = "guided"
-//                    WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-//                    print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
-//
-//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//                    vc.audioData = data.audio_list[indexPath.item]
-//                    vc.cat_id = "\(self.cat_id)"
-//                    vc.cat_Name = self.cat_name
-//                    vc.emotion_Id = "\(data.emotion_Id)"
-//                    vc.emotion_Name = data.emotion_Name
-//                    vc.seconds = data.audio_list[indexPath.item].audio_Duration
-//                    self.navigationController?.pushViewController(vc, animated: true)
-                    
                 }else{
                     if data.audio_list[indexPath.item].audio_Duration <= 900{
                         
-                        
-//                        WWMHelperClass.selectedType = "guided"
-//                        WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-//                        print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
-//
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//                        vc.audioData = data.audio_list[indexPath.item]
-//                        vc.cat_id = "\(self.cat_id)"
-//                        vc.cat_Name = self.cat_name
-//                        vc.emotion_Id = "\(data.emotion_Id)"
-//                        vc.emotion_Name = data.emotion_Name
-//                        vc.seconds = data.audio_list[indexPath.item].audio_Duration
-//                        self.navigationController?.pushViewController(vc, animated: true)
-                        
-                        
-                        
                         self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         
-//                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
-//                        self.navigationController?.pushViewController(vc, animated: true)
                     }else{
                         xibCall()
                     }
@@ -350,6 +323,10 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             vc.emotion_Id = "\(data.emotion_Id)"
             vc.emotion_Name = data.emotion_Name
             vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+            
+            vc.min_limit = self.min_limit
+            vc.max_limit = self.max_limit
+            vc.meditation_key = self.meditation_key
             
             self.navigationController?.pushViewController(vc, animated: true)
             
