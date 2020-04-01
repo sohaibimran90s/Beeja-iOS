@@ -27,5 +27,6 @@ extension DBSteps {
     @NSManaged public var timer_audio: String?
     @NSManaged public var title: String?
     @NSManaged public var completed: Bool
-
+    @NSManaged public var min_limit: String?
+    @NSManaged public var max_limit: String?
 }

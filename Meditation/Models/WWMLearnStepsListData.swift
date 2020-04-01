@@ -19,6 +19,8 @@ class LearnStepsListData: NSObject{
     var Description: String = ""
     var step_audio: String = ""
     var completed: Bool = false
+    var min_limit = "94"
+    var max_limit = "97"
     
     override init() {
     }
@@ -33,5 +35,7 @@ class LearnStepsListData: NSObject{
         self.step_audio = json["step_audio"] as? String ?? ""
         self.outro_audio = json["outro_audio"] as? String ?? ""
         self.completed = json["completed"] as? Bool ?? false
+        self.min_limit = json["min_limit"] as? String ?? "94"
+        self.max_limit = json["max_limit"] as? String ?? "97"
     }
 }

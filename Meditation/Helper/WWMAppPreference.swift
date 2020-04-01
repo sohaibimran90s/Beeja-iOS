@@ -333,6 +333,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setLearnMin_limit(value:String) {
+        defaults.set(value, forKey: "learn_min_limit")
+        defaults.synchronize()
+    }
+    
+    func setLearnMax_limit(value:String) {
+        defaults.set(value, forKey: "learn_max_limit")
+        defaults.synchronize()
+    }
+    
     func setMeditation_key(value:String) {
         defaults.set(value, forKey: "meditation_key")
         defaults.synchronize()
@@ -420,14 +430,22 @@ class WWMAppPreference: NSObject {
     }
     
     func getTimerMin_limit() -> String {
-        return UserDefaults.standard.string(forKey: "timer_min_limit") ?? "95"
+        return UserDefaults.standard.string(forKey: "timer_min_limit") ?? "94"
     }
     
     func getTimerMax_limit() -> String {
-        return UserDefaults.standard.string(forKey: "timer_max_limit") ?? "98"
+        return UserDefaults.standard.string(forKey: "timer_max_limit") ?? "97"
     }
     
     func getMeditation_key() -> String {
         return UserDefaults.standard.string(forKey: "meditation_key") ?? ""
+    }
+    
+    func getLearnMin_limit() -> String {
+        return UserDefaults.standard.string(forKey: "learn_min_limit") ?? "94"
+    }
+    
+    func getLearnMax_limit() -> String {
+        return UserDefaults.standard.string(forKey: "learn_max_limit") ?? "97"
     }
 }

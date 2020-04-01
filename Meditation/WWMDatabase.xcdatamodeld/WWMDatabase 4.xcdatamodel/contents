@@ -140,6 +140,8 @@
         <attribute name="description1" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
         <attribute name="outro_audio" optional="YES" attributeType="String"/>
         <attribute name="step_audio" optional="YES" attributeType="String"/>
         <attribute name="step_name" optional="YES" attributeType="String"/>
@@ -188,7 +190,7 @@
         <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
-        <element name="DBSteps" positionX="9" positionY="162" width="128" height="193"/>
+        <element name="DBSteps" positionX="9" positionY="162" width="128" height="223"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>

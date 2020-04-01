@@ -858,7 +858,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         let timeInterval = Int(Date().timeIntervalSince1970)
                         print("timeInterval.... \(timeInterval)")
                         
-                        
                         dbStepsData.last_time_stamp = "\(timeInterval)"
                         
                         if let completed = dict["completed"] as? Bool{
@@ -895,6 +894,18 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         if let title = dict["title"] as? String{
                             dbStepsData.title = title
+                        }
+                        
+                        if let min_limit = dict["min_limit"] as? String{
+                            dbStepsData.min_limit = min_limit
+                        }else{
+                            dbStepsData.min_limit = "95"
+                        }
+                        
+                        if let max_limit = dict["max_limit"] as? String{
+                            dbStepsData.max_limit = max_limit
+                        }else{
+                            dbStepsData.max_limit = "98"
                         }
                         
                         WWMHelperClass.saveDb()

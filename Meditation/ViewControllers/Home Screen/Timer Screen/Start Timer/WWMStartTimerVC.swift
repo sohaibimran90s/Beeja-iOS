@@ -469,7 +469,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }else{
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
-
+                    
                     
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
@@ -484,8 +484,11 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
-                seconds = seconds-1
-                self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
+            
+            self.ninetyFiveCompletedFlag = "0"
+            
+            seconds = seconds-1
+            self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
             
         }else if timerType == "Meditation"{
@@ -512,7 +515,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }else{
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
-
+                    
                     
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
@@ -540,7 +543,6 @@ class WWMStartTimerVC: WWMBaseViewController {
             print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
             
             //for 95% LTM
-            
             
             if meditationLTMPlayPercentage < 100{
                 if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
@@ -571,7 +573,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             offlineCompleteData["level_id"] = self.levelID
             offlineCompleteData["mood_id"] = "0"
             offlineCompleteData["complete_percentage"] = self.meditationLTMPlayPercentage
-             
+            
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
             }else{
@@ -580,7 +582,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
                     
                     print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
-
+                    
                 }
                 
                 print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
@@ -588,16 +590,21 @@ class WWMStartTimerVC: WWMBaseViewController {
             
             //analytics
             if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
-                if meditationPlayPercentage >= 95{
+                if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
                     self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
                     self.flag = 1
-                    self.ninetyFiveCompletedFlag = "1"
                 }else{
-                    self.ninetyFiveCompletedFlag = "0"
                     self.meditationPlayPercentage = meditationPlayPercentage
                 }
+                
+                if meditationPlayPercentage < Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
+                    self.ninetyFiveCompletedFlag = "0"
+                }
+                
+                if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
+                    self.ninetyFiveCompletedFlag = "1"
+                }
             }
-            
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
             
@@ -627,9 +634,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                 vc.levelID = self.levelID
                 self.navigationController?.pushViewController(vc, animated: true)
             }
-                self.ninetyFiveCompletedFlag = "1"
-                seconds = seconds-1
-                self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
+            self.ninetyFiveCompletedFlag = "1"
+            seconds = seconds-1
+            self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }
     }
     
@@ -742,6 +749,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
+        print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -777,6 +785,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     func pushNavigationController(){
         
+        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
         if self.ninetyFiveCompletedFlag == "0"{
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
@@ -984,12 +993,13 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         print("meditationLTMPlayPercentage++++*** \(meditationLTMPlayPercentage)")
         
-        if self.meditationLTMPlayPercentage < 98{
-            self.ninetyFiveCompletedFlag = "0"
+        if self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
+
             self.xibCall()
         }else{
-            alertPopupView.removeFromSuperview()
             
+            self.ninetyFiveCompletedFlag = "1"
+            alertPopupView.removeFromSuperview()
             self.pushNavigationController()
         }
     }

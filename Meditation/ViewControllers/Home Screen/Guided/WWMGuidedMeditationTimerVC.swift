@@ -56,7 +56,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     //for offline meditation data parameters
     var offlineCompleteData: [String: Any] = [:]
-    var meditationLTMPlayPercentage = 0
+    var meditationGuidedPlayPercentage = 0
     var dataAppendFlag = false
     var ismove = false
     var ninetyFiveCompletedFlag = "1"
@@ -288,9 +288,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @objc func updateTimer() {
         if isPlayer {
             
-            self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
+            self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
             
-            print("self.meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
+            print("self.meditationGuidedPlayPercentage... \(self.meditationGuidedPlayPercentage)")
             
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
@@ -327,11 +327,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
             
-            if meditationLTMPlayPercentage < 95{
+            if meditationGuidedPlayPercentage < Int(self.min_limit) ?? 95{
                 self.ninetyFiveCompletedFlag = "0"
             }
             
-            if meditationLTMPlayPercentage >= 98{
+            if meditationGuidedPlayPercentage >= Int(self.max_limit) ?? 98{
                 self.ninetyFiveCompletedFlag = "1"
             }
             
@@ -411,7 +411,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             var audioPlayPercentageCompleteStatus = ""
             if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
-                if audioPlayPercentage >= 95{
+                if audioPlayPercentage >= Int(self.min_limit) ?? 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
             }
@@ -559,7 +559,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        if self.meditationLTMPlayPercentage >= Int(self.min_limit) ?? 95 && self.meditationLTMPlayPercentage < Int(self.max_limit) ?? 98{
+        if self.meditationGuidedPlayPercentage >= Int(self.min_limit) ?? 95 && self.meditationGuidedPlayPercentage < Int(self.max_limit) ?? 98{
             
             self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.meditation_key)
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
@@ -608,7 +608,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 
                 var audioPlayPercentageCompleteStatus = ""
                 if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
-                    if audioPlayPercentage >= 95{
+                    if audioPlayPercentage >= Int(self.min_limit) ?? 95{
                         audioPlayPercentageCompleteStatus = "_COMPLETED"
                     }
                 }
@@ -807,7 +807,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
-        if self.meditationLTMPlayPercentage < 98{
+        if self.meditationGuidedPlayPercentage < Int(self.max_limit) ?? 98{
             self.xibCall()
         }else{
             self.ninetyFiveCompletedFlag = "1"

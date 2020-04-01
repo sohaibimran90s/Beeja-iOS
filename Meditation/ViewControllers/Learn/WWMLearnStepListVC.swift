@@ -158,6 +158,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 jsonData["step_audio"] = dict.step_audio
                 jsonData["outro_audio"] = dict.outro_audio
                 jsonData["completed"] = dict.completed
+                jsonData["min_limit"] = dict.min_limit
+                jsonData["max_limit"] = dict.max_limit
                 
                 let learnStepsListData = LearnStepsListData.init(json: jsonData)
                 self.learnStepsListData.append(learnStepsListData)
@@ -436,6 +438,9 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         if self.learnStepsListData[sender_Tag].completed{
             WWMHelperClass.selectedType = "learn"
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+            
+            self.appPreffrence.setLearnMin_limit(value: self.learnStepsListData[sender_Tag].min_limit)
+            self.appPreffrence.setLearnMax_limit(value: self.learnStepsListData[sender_Tag].max_limit)
             self.navigationController?.pushViewController(vc, animated: true)
             
             return
@@ -474,6 +479,9 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             WWMHelperClass.selectedType = "learn"
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+            
+            self.appPreffrence.setLearnMin_limit(value: self.learnStepsListData[sender_Tag].min_limit)
+            self.appPreffrence.setLearnMax_limit(value: self.learnStepsListData[sender_Tag].max_limit)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
