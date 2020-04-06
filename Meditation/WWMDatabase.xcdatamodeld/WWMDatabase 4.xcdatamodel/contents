@@ -89,8 +89,10 @@
     </entity>
     <entity name="DBMeditationData" representedClassName="DBMeditationData" syncable="YES">
         <attribute name="isMeditationSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
         <attribute name="meditationId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="meditationName" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
         <attribute name="setmyown" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="levels" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBLevelData"/>
     </entity>
@@ -183,7 +185,7 @@
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
         <element name="DBMantras" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
-        <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="120"/>
+        <element name="DBMeditationData" positionX="0" positionY="117" width="128" height="148"/>
         <element name="DBMeditationHistory" positionX="0" positionY="153" width="128" height="58"/>
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBNinetyFivePercent" positionX="-9" positionY="144" width="128" height="73"/>

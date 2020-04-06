@@ -41,10 +41,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     var arrMeditationData = [DBMeditationData]()
     var selectedMeditationData  = DBMeditationData()
     var isPlayerPlay = false
-    
     var isSetMyOwn = false
-    
     let appPreffrence = WWMAppPreference()
+    
+    var min_limit = ""
+    var max_limit = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +169,27 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.isSetMyOwn = false
                 for indexs in 0..<arrMeditationData.count {
                     if indexs == row {
+                        
+                        var i = 0
+                        if arrMeditationData[indexs].meditationName == "Beeja"{
+                            i = indexs
+                        }
+                        
+                        if arrMeditationData[indexs].min_limit == ""{
+                            self.appPreference.setTimerMin_limit(value: arrMeditationData[i].min_limit ?? "94")
+                            self.appPreference.setTimerMax_limit(value: arrMeditationData[i].max_limit ?? "97")
+                            self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
+                        }else{
+                            self.appPreference.setTimerMin_limit(value: arrMeditationData[indexs].min_limit ?? "94")
+                            self.appPreference.setTimerMax_limit(value: arrMeditationData[indexs].max_limit ?? "97")
+                            self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
+                        }
+                        
+                        print("........ \(arrMeditationData[indexs].min_limit)")
+                        
+                        print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
+                        
+                        
                         self.selectedMeditationData = arrMeditationData[indexs]
                         arrMeditationData[indexs].isMeditationSelected = true
                         if arrMeditationData[indexs].meditationName == "Beeja" || arrMeditationData[indexs].meditationName == "Vedic/Transcendental" {
@@ -1124,6 +1146,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             let data = ["meditation_id":dic.meditationId,
                         "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
+                        "min_limit" : dic.min_limit ?? "94",
+                        "max_limit" : dic.max_limit ?? "97",
                         "setmyown" : dic.setmyown,
                         "levels":levelDic] as [String : Any]
                     meditation_data.append(data)

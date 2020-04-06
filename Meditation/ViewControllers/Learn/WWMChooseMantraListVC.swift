@@ -208,6 +208,8 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
                         "meditation_name":dic.meditationName ?? "",
                         "isSelected":dic.isMeditationSelected,
                         "setmyown" : dic.setmyown,
+                        "min_limit" : dic.min_limit ?? "94",
+                        "max_limit" : dic.max_limit ?? "97",
                         "levels":levelDic] as [String : Any]
             meditation_data.append(data)
         }

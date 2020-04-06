@@ -12,17 +12,18 @@ import CoreData
 
 
 extension DBMeditationData {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DBMeditationData> {
         return NSFetchRequest<DBMeditationData>(entityName: "DBMeditationData")
     }
-
+    
     @NSManaged public var meditationName: String?
     @NSManaged public var meditationId: Int32
     @NSManaged public var setmyown: Int32
     @NSManaged public var isMeditationSelected: Bool
     @NSManaged public var levels: NSOrderedSet?
-
+    @NSManaged public var min_limit: String?
+    @NSManaged public var max_limit: String?    
 }
 
 // MARK: Generated accessors for levels

@@ -36,6 +36,9 @@ class WWMSetMyOwnVC: WWMBaseViewController {
     var restTime = 0
     var min = 0
     
+    var min_limit = ""
+    var max_limit = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -219,6 +222,8 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "meditation_name":txtViewMeditationName.text ?? "",
             "prep_time":"\(self.prepTime)",
             "meditation_time":"\(self.meditationTime)",
+            "min_limit" : self.min_limit,
+            "max_limit" : self.max_limit,
             "rest_time":"\(self.restTime)",
             "setmyown": 1,
             "level_name": "Beginner",
@@ -232,6 +237,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SETMYOWN, context: "WWMSetMyOwnVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let result1 = result["result"] as? [String:Any] {
+                    print("set_my_own*** \(result1)")
                     self.selectedMeditation_Id = result1["meditation_id"] as! Int
                     self.selectedLevel_Id = result1["level_id"] as! Int
                     if self.isFromSetting {
@@ -299,15 +305,6 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                               
                                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                                 UIApplication.shared.keyWindow?.rootViewController = vc
-                                
-//                                if #available(iOS 13.0, *) {
-//                                    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-//                                    window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//
-//                                } else {
-//                                    UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//                                }
-                                
                             }
                         }
                     }else {
@@ -350,15 +347,15 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         meditationDB.meditationName = self.txtViewMeditationName.text ?? ""
         meditationDB.isMeditationSelected = true
         
-            let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
-            levelDB.isLevelSelected = true
+        let levelDB = WWMHelperClass.fetchEntity(dbName: "DBLevelData") as! DBLevelData
+        levelDB.isLevelSelected = true
         
         settingData.prepTime = "\(self.prepTime)"
         settingData.meditationTime = "\(self.meditationTime)"
         settingData.restTime = "\(self.restTime)"
         
         levelDB.levelId = Int32(self.selectedLevel_Id)
-            levelDB.levelName = "Beginner"
+        levelDB.levelName = "Beginner"
         levelDB.prepTime = Int32(self.prepTime)
         levelDB.meditationTime = Int32(self.meditationTime)
         levelDB.restTime = Int32(self.restTime)
@@ -384,6 +381,16 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
         for dic in meditationData!{
+            
+            if dic.meditationName == "Beeja"{
+                self.appPreference.setTimerMin_limit(value: dic.min_limit ?? "94")
+                self.appPreference.setTimerMax_limit(value: dic.max_limit ?? "97")
+                self.appPreference.setMeditation_key(value: "setMyOwn")
+                
+                self.min_limit = dic.min_limit ?? "94"
+                self.max_limit = dic.max_limit ?? "97"
+            }
+            
             let levels = dic.levels?.array as? [DBLevelData]
             var levelDic = [[String:Any]]()
             for level in levels! {
@@ -404,12 +411,29 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                 levelDic.append(leveldata)
             }
             
-            let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName ?? "",
-                        "isSelected":dic.isMeditationSelected,
-                        "setmyown" : dic.setmyown,
-                        "levels":levelDic] as [String : Any]
-            meditation_data.append(data)
+            //print("dic setmyown... \(dic.min_limit)")
+            if dic.min_limit == "" || dic.min_limit == nil{
+                print("dic setmyown... ===")
+                let data = ["meditation_id":dic.meditationId,
+                            "meditation_name":dic.meditationName ?? "",
+                            "min_limit" : self.min_limit,
+                            "max_limit" : self.max_limit,
+                            "isSelected":dic.isMeditationSelected,
+                            "setmyown" : dic.setmyown,
+                            "levels":levelDic] as [String : Any]
+                meditation_data.append(data)
+            }else{
+                let data = ["meditation_id":dic.meditationId,
+                            "meditation_name":dic.meditationName ?? "",
+                            "min_limit" : dic.min_limit ?? "94",
+                            "max_limit" : dic.max_limit ?? "97",
+                            "isSelected":dic.isMeditationSelected,
+                            "setmyown" : dic.setmyown,
+                            "levels":levelDic] as [String : Any]
+                meditation_data.append(data)
+            }
+            
+            
         }
         
         let group = [

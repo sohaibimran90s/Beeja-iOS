@@ -334,6 +334,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 meditationDB.setmyown = Int32(dataM.setmyown)
                 meditationDB.meditationName = dataM.meditationName
                 meditationDB.isMeditationSelected = dataM.isSelected
+                meditationDB.min_limit = dataM.min_limit
+                meditationDB.max_limit = dataM.max_limit
                 
                 for index in 0..<dataM.levels.count {
                     let dic = dataM.levels[index]
