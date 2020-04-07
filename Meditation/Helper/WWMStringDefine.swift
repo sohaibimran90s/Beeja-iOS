@@ -137,6 +137,7 @@ let URL_STEPFAQ         = URL_BASE + "dictionary/setp_faqs"
 let URL_DICTIONARY  = URL_BASE + "dictionary"
 
 let URL_FORCELOGOUT = URL_BASE + "check_user"//
+let URL_MEDITATIONLIST = URL_BASE + "meditationlist"
 
 
 /************************************************/

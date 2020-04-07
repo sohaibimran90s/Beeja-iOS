@@ -438,7 +438,7 @@ class WWMAppPreference: NSObject {
     }
     
     func getMeditation_key() -> String {
-        return UserDefaults.standard.string(forKey: "meditation_key") ?? ""
+        return UserDefaults.standard.string(forKey: "meditation_key") ?? "Beeja"
     }
     
     func getLearnMin_limit() -> String {

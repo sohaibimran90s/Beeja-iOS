@@ -64,9 +64,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key)")
+        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key) cat_Name+++ \(cat_Name) mk+++ \(self.meditation_key)_\(self.cat_Name)")
         
-        WWMHelperClass.addNinetyFivePercentData(type: self.meditation_key)
+        WWMHelperClass.addNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
         
         self.viewLottieAnimation.isHidden = true
         spinnerImage.isHidden = true
@@ -561,7 +561,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         if self.meditationGuidedPlayPercentage >= Int(self.min_limit) ?? 95 && self.meditationGuidedPlayPercentage < Int(self.max_limit) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.meditation_key)
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP

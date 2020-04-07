@@ -57,7 +57,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         print("self.min_limit++ \(self.appPreference.getLearnMin_limit()) self.max_limit++ \(self.appPreference.getLearnMax_limit())")
         
-        WWMHelperClass.addNinetyFivePercentData(type: "learn")
+        WWMHelperClass.addNinetyFivePercentData(type: "Learn")
         
         self.lblTimerType.text = "\(KSTEP)\(WWMHelperClass.step_id): \(WWMHelperClass.step_title)"
         setUpView()
@@ -215,7 +215,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         if self.meditationLTMPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreference.getLearnMax_limit()) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "learn")
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "Learn")
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP

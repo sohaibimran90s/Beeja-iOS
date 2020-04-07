@@ -432,8 +432,6 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                             "levels":levelDic] as [String : Any]
                 meditation_data.append(data)
             }
-            
-            
         }
         
         let group = [

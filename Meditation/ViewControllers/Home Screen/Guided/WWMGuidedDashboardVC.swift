@@ -122,7 +122,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 
                 vc.min_limit = data.min_limit
                 vc.max_limit = data.max_limit
-                vc.meditation_key = "21_day_challenge"
+                vc.meditation_key = data.meditation_key
                 
                 arrVC.add(vc)
             }else{

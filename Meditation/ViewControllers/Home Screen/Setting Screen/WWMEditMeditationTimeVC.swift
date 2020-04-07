@@ -33,12 +33,13 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     var restTime = 0
     var meditationTime = 0
     
+    var min_limit = ""
+    var max_limit = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         self.setUpViewAndDataFetch()
-        // Do any additional setup after loading the view.
     }
     
     func setUpViewAndDataFetch() {
@@ -229,6 +230,12 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         var meditation_data = [[String:Any]]()
         let meditationData = self.settingData.meditationData!.array as? [DBMeditationData]
         for dic in meditationData!{
+            
+            if dic.meditationName == "Beeja"{
+                self.min_limit = dic.min_limit ?? "94"
+                self.max_limit = dic.max_limit ?? "97"
+            }
+            
             let levels = dic.levels?.array as? [DBLevelData]
             var levelDic = [[String:Any]]()
             for level in levels! {
@@ -249,14 +256,25 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
                 levelDic.append(leveldata)
             }
             
-            let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName ?? "",
-                        "isSelected":dic.isMeditationSelected,
-                        "setmyown" : dic.setmyown,
-                        "min_limit" : dic.min_limit ?? "94",
-                        "max_limit" : dic.max_limit ?? "97",
-                        "levels":levelDic] as [String : Any]
-            meditation_data.append(data)
+            if dic.min_limit == "" || dic.min_limit == nil{
+                let data = ["meditation_id":dic.meditationId,
+                            "meditation_name":dic.meditationName ?? "",
+                            "isSelected":dic.isMeditationSelected,
+                            "setmyown" : dic.setmyown,
+                            "min_limit" : self.min_limit,
+                            "max_limit" : self.max_limit,
+                            "levels":levelDic] as [String : Any]
+                meditation_data.append(data)
+            }else{
+                let data = ["meditation_id":dic.meditationId,
+                            "meditation_name":dic.meditationName ?? "",
+                            "isSelected":dic.isMeditationSelected,
+                            "setmyown" : dic.setmyown,
+                            "min_limit" : dic.min_limit ?? "94",
+                            "max_limit" : dic.max_limit ?? "97",
+                            "levels":levelDic] as [String : Any]
+                meditation_data.append(data)
+            }
         }
         
         let group = [

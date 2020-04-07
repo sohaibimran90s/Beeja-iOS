@@ -13,8 +13,6 @@ import FBSDKLoginKit
 
 class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate{
     
-    
-   
     let arrChimes = [kChimes_HARP,kChimes_CHIME,kChimes_CHIME2,kChimes_CONCH,kChimes_SITAR,kChimes_THRUSH,kChimes_SPARROW,kChimes_SUN_KOSHI,kChimes_MOON_KOSHI,kChimes_BURMESE_BELL,kChimes_CRYSTAL_BOWL,kChimes_HIMALAYAN_BELL,kChimes_JaiGuruDev]
     
     let arrAmbientSound = [kAmbient_BIRDSONG_1,kAmbient_BIRDSONG_2,kAmbient_WAVES_ONLY,kAmbient_CHIMES_ONLY,kAmbient_WAVES_CHIMES,kAmbient_JUNGLE_AT_DAWN]
@@ -175,7 +173,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             i = indexs
                         }
                         
-                        if arrMeditationData[indexs].min_limit == ""{
+                        if arrMeditationData[indexs].min_limit == "" || arrMeditationData[indexs].min_limit == nil{
                             self.appPreference.setTimerMin_limit(value: arrMeditationData[i].min_limit ?? "94")
                             self.appPreference.setTimerMax_limit(value: arrMeditationData[i].max_limit ?? "97")
                             self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
@@ -184,8 +182,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             self.appPreference.setTimerMax_limit(value: arrMeditationData[indexs].max_limit ?? "97")
                             self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
                         }
-                        
-                        print("........ \(arrMeditationData[indexs].min_limit)")
                         
                         print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
                         
@@ -1123,72 +1119,94 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         
         if meditationData?.count ?? 0 > 0{
             for dic in meditationData!{
+                
+                if dic.meditationName == "Beeja"{
+                    self.min_limit = dic.min_limit ?? "94"
+                    self.max_limit = dic.max_limit ?? "97"
+                }
+                
                 let levels = dic.levels?.array as? [DBLevelData]
                 var levelDic = [[String:Any]]()
                 for level in levels! {
                     let leveldata = [
-                            "level_id": level.levelId,
-                            "isSelected": level.isLevelSelected,
-                            "name": level.levelName ?? "",
-                            "prep_time": "\(level.prepTime)",
-                            "meditation_time": "\(level.meditationTime)",
-                            "rest_time": "\(level.restTime)",
-                            "prep_min": "\(level.minPrep)",
-                            "prep_max": "\(level.maxPrep)",
-                            "med_min": "\(level.minMeditation)",
-                            "med_max": "\(level.maxMeditation)",
-                            "rest_min": "\(level.minRest)",
-                            "rest_max": "\(level.maxRest)"
-                            ] as [String : Any]
-                            levelDic.append(leveldata)
+                        "level_id": level.levelId,
+                        "isSelected": level.isLevelSelected,
+                        "name": level.levelName ?? "",
+                        "prep_time": "\(level.prepTime)",
+                        "meditation_time": "\(level.meditationTime)",
+                        "rest_time": "\(level.restTime)",
+                        "prep_min": "\(level.minPrep)",
+                        "prep_max": "\(level.maxPrep)",
+                        "med_min": "\(level.minMeditation)",
+                        "med_max": "\(level.maxMeditation)",
+                        "rest_min": "\(level.minRest)",
+                        "rest_max": "\(level.maxRest)"
+                        ] as [String : Any]
+                    levelDic.append(leveldata)
                 }
-                        
-            let data = ["meditation_id":dic.meditationId,
-                        "meditation_name":dic.meditationName ?? "",
-                        "isSelected":dic.isMeditationSelected,
-                        "min_limit" : dic.min_limit ?? "94",
-                        "max_limit" : dic.max_limit ?? "97",
-                        "setmyown" : dic.setmyown,
-                        "levels":levelDic] as [String : Any]
+                
+                if dic.min_limit == "" || dic.min_limit == nil{
+                    print("++++++ \(self.min_limit) \(self.max_limit)")
+                    
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "min_limit" : self.min_limit,
+                                "max_limit" : self.max_limit,
+                                "setmyown" : dic.setmyown,
+                                "levels":levelDic] as [String : Any]
+                    meditation_data.append(data)
+                }else{
+                    print("++++++ \(dic.min_limit) +++++ \(dic.max_limit)")
+                    
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "min_limit" : dic.min_limit ?? "94",
+                                "max_limit" : dic.max_limit ?? "97",
+                                "setmyown" : dic.setmyown,
+                                "levels":levelDic] as [String : Any]
                     meditation_data.append(data)
                 }
-                    //"IsMilestoneAndRewards"
+            }
+            
+            //"IsMilestoneAndRewards"
             let group = [
-                    "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
-                    "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
-                    "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
-                    "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
-                    "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
-                    "moodMeterEnable": self.settingData.moodMeterEnable,
-                    "IsMorningReminder": self.settingData.isMorningReminder,
-                    "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-                    "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
-                    "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-                    "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
-                    "MantraID":self.settingData.mantraID,
-                    "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
-                    "IsLearnReminder":self.settingData.isLearnReminder,
-                    "meditation_data" : meditation_data
-                    ] as [String : Any]
-                    
-             let param = [
-                    "user_id": self.appPreference.getUserID(),
-                    "isJson": true,
-                    "group": group
-                    ] as [String : Any]
-                    
-             print("settings param... \(param)")
-                    
-             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
+                "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
+                "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
+                "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
+                "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
+                "moodMeterEnable": self.settingData.moodMeterEnable,
+                "IsMorningReminder": self.settingData.isMorningReminder,
+                "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+                "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
+                "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+                "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
+                "MantraID":self.settingData.mantraID,
+                "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+                "IsLearnReminder":self.settingData.isLearnReminder,
+                "meditation_data" : meditation_data
+                ] as [String : Any]
+            
+            let param = [
+                "user_id": self.appPreference.getUserID(),
+                "isJson": true,
+                "group": group
+                ] as [String : Any]
+            
+            print("settings param... \(param)")
+            
+            WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let success = result["success"] as? Bool {
                         print(success)
                         print("settingVC... \(result)")
-                            //self.tblViewSetting.reloadData()
+                        //self.tblViewSetting.reloadData()
                     }
                 }else {
                     if error != nil {
-            //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
+                        //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
                     }
                 }
             }

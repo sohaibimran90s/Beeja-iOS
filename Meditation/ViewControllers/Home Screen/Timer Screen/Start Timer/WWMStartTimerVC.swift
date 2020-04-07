@@ -73,7 +73,9 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        WWMHelperClass.addNinetyFivePercentData(type: self.appPreffrence.getType())
+        print("self.min_limit++ \(self.appPreffrence.getTimerMin_limit()) self.max_limit++ \(self.appPreffrence.getTimerMax_limit()) self.meditation_key++ \(self.appPreffrence.getMeditation_key()) ")
+        
+        WWMHelperClass.addNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
 
         animationViewMed = AnimationView(name: "final1")
         animationViewMed.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
@@ -742,7 +744,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
         if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getType())
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
         
             alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
         }else{

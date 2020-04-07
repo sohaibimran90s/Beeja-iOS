@@ -42,12 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     var value = 0
     
     var tabBarController:UITabBarController?
-    
     var userData = WWMUserData.sharedInstance
     
     var guided_type = ""
     var type = ""
     var application: UIApplication?
+    
+    var min_limit = ""
+    var max_limit = ""
     
     static func sharedDelegate () -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -643,6 +645,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             var meditation_data = [[String:Any]]()
             let meditationData = settingData.meditationData!.array as? [DBMeditationData]
             for dic in meditationData!{
+                
+                if dic.meditationName == "Beeja"{
+                    self.min_limit = dic.min_limit ?? "94"
+                    self.max_limit = dic.max_limit ?? "97"
+                }
+                
                 let levels = dic.levels?.array as? [DBLevelData]
                 var levelDic = [[String:Any]]()
                 for level in levels! {
@@ -663,14 +671,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     levelDic.append(leveldata)
                 }
                 
-                let data = ["meditation_id":dic.meditationId,
-                            "meditation_name":dic.meditationName ?? "",
-                            "isSelected":dic.isMeditationSelected,
-                            "setmyown" : dic.setmyown,
-                            "min_limit" : dic.min_limit ?? "94",
-                            "max_limit" : dic.max_limit ?? "97",
-                            "levels":levelDic] as [String : Any]
-                meditation_data.append(data)
+                if dic.min_limit == "" || dic.min_limit == nil{
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "setmyown" : dic.setmyown,
+                                "min_limit" : self.min_limit,
+                                "max_limit" : self.max_limit,
+                                "levels":levelDic] as [String : Any]
+                    meditation_data.append(data)
+                }else{
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "setmyown" : dic.setmyown,
+                                "min_limit" : dic.min_limit ?? "94",
+                                "max_limit" : dic.max_limit ?? "97",
+                                "levels":levelDic] as [String : Any]
+                    meditation_data.append(data)
+                }
             }
             //"IsMilestoneAndRewards"
             let group = [
@@ -710,7 +729,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
-    
     func convertToDictionary(text: String) -> [String: Any]? {
         if let data = text.data(using: .utf8) {
             do {
@@ -721,6 +739,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         return nil
     }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

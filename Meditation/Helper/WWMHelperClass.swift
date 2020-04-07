@@ -428,22 +428,16 @@ class WWMHelperClass {
     
     class func addNinetyFivePercentData(type: String){
         
-        var selectedMeditation: String = ""
-        if type == "Timer" || type == "timer"{
-            selectedMeditation = self.appPreffrence.getMeditation_key()
-        }else{
-            selectedMeditation = type
-        }
-        print("selectedMeditation*** \(selectedMeditation)")
+        print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
-            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: selectedMeditation, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: type, dbName: "DBNinetyFivePercent", type: "meditation_name")
             
             var flag = 0
             for dict in ninetyFivePercentArray{
                 let meditation_name = (dict as AnyObject).meditation_name as? String
-                if meditation_name == selectedMeditation{
+                if meditation_name == type{
                     flag = 1
                     break
                 }
@@ -452,14 +446,14 @@ class WWMHelperClass {
             if flag == 0{
                 let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
                 
-                dbNinetyFivePercent.meditation_name = selectedMeditation
+                dbNinetyFivePercent.meditation_name = type
                 dbNinetyFivePercent.meditation_value = "0"
             }
             
         }else{
             let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
             
-            dbNinetyFivePercent.meditation_name = selectedMeditation
+            dbNinetyFivePercent.meditation_name = type
             dbNinetyFivePercent.meditation_value = "0"
         }
         
@@ -468,22 +462,16 @@ class WWMHelperClass {
     
     class func checkNinetyFivePercentData(type: String) -> String{
         
-        var selectedMeditation: String = ""
-        if type == "Timer" || type == "timer"{
-            selectedMeditation = self.appPreffrence.getMeditation_key()
-        }else{
-            selectedMeditation = type
-        }
-        print("selectedMeditation*** \(selectedMeditation)")
+        print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
-            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: selectedMeditation, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: type, dbName: "DBNinetyFivePercent", type: "meditation_name")
             
             for dict in ninetyFivePercentArray{
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
-                if meditation_name == selectedMeditation{
+                if meditation_name == type{
                     print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
                     if value == "0"{
                         self.deleteRowfromDb(dbName: "DBNinetyFivePercent", id: meditation_name!, type: "meditation_name")
@@ -506,9 +494,57 @@ class WWMHelperClass {
         
         return "1"
     }
+    
+    //add ninetyfivepercent from backend
+    
+    class func addNinetyFivePercentDataFromBackend(type: String, count: Int){
+        
+        print("selectedMeditation*** \(type)")
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
+        if data.count > 0 {
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: type, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            
+            var flag = 0
+            for dict in ninetyFivePercentArray{
+                let meditation_name = (dict as AnyObject).meditation_name as? String
+                if meditation_name == type{
+                    if count > 0{
+                        self.deleteRowfromDb(dbName: "DBNinetyFivePercent", id: meditation_name!, type: "meditation_name")
+                        let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+                        
+                        dbNinetyFivePercent.meditation_name = meditation_name
+                        dbNinetyFivePercent.meditation_value = "1"
+                    }
+                    
+                    flag = 1
+                }
+            }
+            
+            if flag == 0{
+                if count > 0{
+                    let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+                    
+                    dbNinetyFivePercent.meditation_name = type
+                    dbNinetyFivePercent.meditation_value = "1"
+                }else{
+                    let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+                    
+                    dbNinetyFivePercent.meditation_name = type
+                    dbNinetyFivePercent.meditation_value = "0"
+                }
+            }
+            
+        }else{
+            let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
+            
+            dbNinetyFivePercent.meditation_name = type
+            dbNinetyFivePercent.meditation_value = "0"
+        }
+        
+        WWMHelperClass.saveDb()
+    }
 }
-
-
 
 
 public class Reachabilities {

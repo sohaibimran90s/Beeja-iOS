@@ -92,6 +92,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.forceLogoutAPI()
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
+            self.meditationlistAPI()
         }
         
         self.delegate = self
@@ -336,6 +337,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 meditationDB.isMeditationSelected = dataM.isSelected
                 meditationDB.min_limit = dataM.min_limit
                 meditationDB.max_limit = dataM.max_limit
+                
+                if dataM.isSelected{
+                    self.appPreffrence.setTimerMin_limit(value: dataM.min_limit)
+                    self.appPreffrence.setTimerMax_limit(value: dataM.max_limit)
+                    self.appPreffrence.setMeditation_key(value: dataM.meditationName)
+                }
+                
+                print("dataM.min_limit*** \(dataM.min_limit) dataM.max_limit*** \(dataM.max_limit) dataM.isSelected*** \(dataM.isSelected) dataM.meditationName*** \(dataM.meditationName)")
                 
                 for index in 0..<dataM.levels.count {
                     let dic = dataM.levels[index]
@@ -1268,6 +1277,41 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
 
 
+    //NinetyFive Percent API
+    func meditationlistAPI() {
+        let param = [
+        "user_id":self.appPreffrence.getUserID(), "type": self.appPreffrence.getType()] as [String : Any]
+        
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONLIST, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            print("result meditationlistAPI \(result)")
+            if let data = result["data"] as? [[String: Any]]{
+                for dict in data{
+                    
+                    //guided
+                    if self.appPreffrence.getType() == "guided" || self.appPreffrence.getType() == "Guided"{
+                        if let guided_type = dict["guided_type"] as? String{
+                            if let name = dict["name"] as? String{
+                                if let complete_count = dict["complete_count"] as? Int{
+                                    print("\(guided_type)_\(name) complete_count*** \(complete_count)")
+                                    WWMHelperClass.addNinetyFivePercentDataFromBackend(type: "\(guided_type)_\(name)", count: complete_count)
+                                }
+                            }
+                        }
+                    }else{
+                        if let name = dict["name"] as? String{
+                            if let complete_count = dict["complete_count"] as? Int{
+                                print("\(name) complete_count*** \(complete_count)")
+                                WWMHelperClass.addNinetyFivePercentDataFromBackend(type: name, count: complete_count)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     //MeditationHistoryList API
     func meditationHistoryListAPI() {
@@ -1337,8 +1381,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         //self.btnDoneAction()
                     })
                 }
-                
-                
             }else{// CONNECTION IS AVAILABLE
                 WWMHelperClass.showLoaderAnimate(on: self.view)
                 self.getProfileDataInBackground(lat: self.lat, long: self.long)
