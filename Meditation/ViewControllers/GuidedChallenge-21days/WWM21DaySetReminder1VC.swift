@@ -84,20 +84,20 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     }
     
     func callHomeController(){
-           self.navigationController?.isNavigationBarHidden = false
-       
-           if let tabController = self.tabBarController as? WWMTabBarVC {
-               tabController.selectedIndex = 4
-               for index in 0..<tabController.tabBar.items!.count {
-                   let item = tabController.tabBar.items![index]
-                   item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                   if index == 4 {
-                       item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                       }
-                   }
-               }
-           self.navigationController?.popToRootViewController(animated: false)
-       }
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 4
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 4 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
     
     // MARK:- UITextField Delegate Methods
     

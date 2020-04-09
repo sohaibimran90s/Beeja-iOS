@@ -311,7 +311,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage
+                "complete_percentage": WWMHelperClass.complete_percentage,
+                "is_complete": "1"
                 ] as [String : Any]
         }else{
             param = [
@@ -332,7 +333,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage
+                "complete_percentage": WWMHelperClass.complete_percentage,
+                "is_complete": "1"
                 ] as [String : Any]
         }
         
@@ -603,7 +605,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "meditation_id": self.meditationID,
                 "level_id": self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage
+                "complete_percentage": WWMHelperClass.complete_percentage,
+                "is_complete": "1"
                 ] as [String : Any]
             
             print("meter param... \(param)")

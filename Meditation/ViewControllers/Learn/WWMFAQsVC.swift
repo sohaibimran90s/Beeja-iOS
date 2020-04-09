@@ -15,7 +15,7 @@ class WWMFAQsVC: WWMBaseViewController {
     var selectedIndex = 0
     
     var faqsData: [WWMFAQsData] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,8 +23,6 @@ class WWMFAQsVC: WWMBaseViewController {
         
         self.fetchStepFAQDataFromDB(step_id: "\(WWMHelperClass.step_id)")
     }
-
-
     
     @IBAction func btnGotItClicked(_ sender: UIButton) {
         

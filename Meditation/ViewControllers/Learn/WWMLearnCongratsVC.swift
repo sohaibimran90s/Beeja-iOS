@@ -69,5 +69,4 @@ class WWMLearnCongratsVC: WWMBaseViewController {
         }
         self.navigationController?.popToRootViewController(animated: false)
     }
-
 }

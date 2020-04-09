@@ -24,8 +24,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     var meditationTimeAnalytics = 0
     var meditationTimeSecondsAnalytics = 0
-    
-    
+
     var meditationID = ""
     var levelID = ""
     var meditationName = ""
@@ -69,6 +68,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     var dataAppendFlag = false
     
     var ninetyFiveCompletedFlag = "1"
+    var isComplete = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,8 +134,6 @@ class WWMStartTimerVC: WWMBaseViewController {
 
         UIApplication.shared.isIdleTimerDisabled = false
     }
-    
-
     
     //MARK: Run timer in background
     
@@ -550,9 +548,28 @@ class WWMStartTimerVC: WWMBaseViewController {
                 if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
                     
                     self.meditationLTMPlayPercentage = meditationPlayPercentage
+                    
+                    if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
+                        self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
+                        self.flag = 1
+                    }else{
+                        self.meditationPlayPercentage = meditationPlayPercentage
+                    }
+                    
+                    if meditationPlayPercentage < Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
+                        self.ninetyFiveCompletedFlag = "0"
+                    }
+                    
+                    if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
+                        self.ninetyFiveCompletedFlag = "1"
+                    }
+                    
+                    if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
+                        
+                       // self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
+                    }
                 }
             }
-            
             
             //to insert into database
             offlineCompleteData["type"] = "timer"
@@ -575,6 +592,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             offlineCompleteData["level_id"] = self.levelID
             offlineCompleteData["mood_id"] = "0"
             offlineCompleteData["complete_percentage"] = self.meditationLTMPlayPercentage
+            offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
+            
+            print("self.ninetyFiveCompletedFlag*** \(self.ninetyFiveCompletedFlag)")
             
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
@@ -588,24 +608,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                 }
                 
                 print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
-            }
-            
-            //analytics
-            if let meditationPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(Double( self.meditationTimeSecondsAnalytics))))){
-                if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
-                    self.meditationPlayPercentageCompleteStatus = "_COMPLETED"
-                    self.flag = 1
-                }else{
-                    self.meditationPlayPercentage = meditationPlayPercentage
-                }
-                
-                if meditationPlayPercentage < Int(self.appPreffrence.getTimerMin_limit()) ?? 95{
-                    self.ninetyFiveCompletedFlag = "0"
-                }
-                
-                if meditationPlayPercentage >= Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
-                    self.ninetyFiveCompletedFlag = "1"
-                }
             }
             
             print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
@@ -744,10 +746,15 @@ class WWMStartTimerVC: WWMBaseViewController {
         print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
         if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
+            isComplete = 1
+            let msg = WWMHelperClass.ninetyFivePercentMsg(type: self.appPreffrence.getMeditation_key())
         
-            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+            alertPopupView.btnClose.setTitle(msg.2, for: .normal)
+            alertPopupView.btnOK.setTitle(msg.1, for: .normal)
+            alertPopupView.lblSubtitle.text = msg.0
         }else{
+            
+            isComplete = 0
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
@@ -760,6 +767,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @IBAction func btnCloseAction(_ sender: Any) {
         
+        isComplete = 0
         if animateBool == 1{
             self.resumeAnimation()
             self.animateBool = 0
@@ -782,7 +790,13 @@ class WWMStartTimerVC: WWMBaseViewController {
     @IBAction func btnDoneAction(_ sender: Any) {
         alertPopupView.removeFromSuperview()
         
-        self.pushNavigationController()
+        if isComplete == 1{
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.pushNavigationController()
+        }
     }
     
     func pushNavigationController(){
@@ -869,7 +883,8 @@ class WWMStartTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }else{
             param = [
@@ -890,7 +905,8 @@ class WWMStartTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }
 

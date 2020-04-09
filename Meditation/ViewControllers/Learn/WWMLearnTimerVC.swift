@@ -51,6 +51,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     let reachable = Reachabilities()
     
     var ninetyFiveCompletedFlag = "1"
+    var isComplete = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,9 +216,15 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         if self.meditationLTMPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreference.getLearnMax_limit()) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "Learn")
-            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+            isComplete = 1
+            let msg = WWMHelperClass.ninetyFivePercentMsg(type: "Learn")
+            
+            alertPopupView.btnClose.setTitle(msg.2, for: .normal)
+            alertPopupView.btnOK.setTitle(msg.1, for: .normal)
+            alertPopupView.lblSubtitle.text = msg.0
         }else{
+            
+            isComplete = 0
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
@@ -249,6 +256,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
+        
+        isComplete = 0
         if self.animateBool == 1{
             self.resumeAnimation()
             self.animateBool = 0
@@ -263,6 +272,10 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
         alertPopupView.removeFromSuperview()
+        
+        if isComplete == 1{
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "Learn")
+        }
         
         self.pushNavigationController()
     }
@@ -332,7 +345,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }else{
             param = [
@@ -353,7 +367,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }
 
@@ -558,6 +573,11 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.ninetyFiveCompletedFlag = "1"
         }
         
+        if meditationLTMPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreference.getLearnMax_limit()) ?? 98{
+            
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "Learn")
+        }
+        
         if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
             if audioPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95{
                 self.fetchStepsDataFromDB()
@@ -585,6 +605,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         offlineCompleteData["level_id"] = "0"
         offlineCompleteData["mood_id"] = "0"
         offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
+        offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
          
         if !self.dataAppendFlag{
             self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)

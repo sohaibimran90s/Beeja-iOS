@@ -167,6 +167,9 @@ let internetConnectionLostMsg: String!              = "Oh no, we've lost you! Pl
 let KOK = "Ok"
 let KOKYOU = "Ok You,"
 let KSTEP = "Step"
+let kGOTIT = "Ok Got It"
+let kEXIT = "exit"
+let kCONTINUE = "continue"
 
 //WWMLearnStepListVC
 let KLEARNANNUALSUBS = "Please subscribe to Annual subscription to open this.\n" + "If you subscribe monthly, you will gain access to further steps after 6 months of Beeja membership."
@@ -209,6 +212,10 @@ let kGUIDED = "GUIDED"
 //xib popup
 let kLTMABOVENINTEYFIVEPOPUP = "The integration period at the end of your meditation is very important. By cutting it short you may lose some or all of the benefits."
 let kLTMBELOWNINTEYFIVEPOPUP = "We want you to know, that Beeja loves you so!"
+let kCOMPLETENINETYFIVEPOPUP = "We're really happy that you completed the majority of the meditation, but we need to emphasise how important it is to take the rest period at the end, otherwise you won't integrate the benefits of the meditation. We can count this one complete, but if you cut it short again, it won't count as a completed meditation."
+let kINCOMPLETENINETYFIVEPOPUP = "As per our earlier instruction, cutting the meditation short will inhibit your progress, so we won't be able to count this meditation as complete."
+let kLTMCOMPLETENINETYFIVEPOPUP = "We're really happy that you completed the majority of the lesson, but we need to emphasise how important it is to take the rest period at the end, otherwise you won't integrate the benefits of the lesson. Please proceed to the next lesson, but if you cut the end section short again, we will ask you to retake the lesson."
+
 
 //WWMGuidedAudioListVC
 let KFREEAUDIO = "(Free for 15:00 min)"

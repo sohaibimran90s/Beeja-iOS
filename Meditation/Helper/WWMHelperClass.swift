@@ -36,6 +36,7 @@ class WWMHelperClass {
     static var timerCount: Int = 0
     
     static var xlpager = ""
+    static var checkNinetyFivePer = 0
     
     //Analytic %age
     static var complete_percentage: String = "0"
@@ -460,6 +461,39 @@ class WWMHelperClass {
         WWMHelperClass.saveDb()
     }
     
+    class func ninetyFivePercentMsg(type: String) -> (String, String, String){
+        
+        print("selectedMeditation*** \(type)")
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
+        if data.count > 0 {
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: type, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            
+            for dict in ninetyFivePercentArray{
+                let value = (dict as AnyObject).meditation_value as? String
+                let meditation_name = (dict as AnyObject).meditation_name as? String
+                if meditation_name == type{
+                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
+                    if value == "0"{
+                        //1
+                        if type == "Learn"{
+                           return (kLTMCOMPLETENINETYFIVEPOPUP, kGOTIT, KCANCEL)
+                        }else{
+                           return (kCOMPLETENINETYFIVEPOPUP, kGOTIT, KCANCEL)
+                        }
+                    }else{
+                        
+                        //0
+                        return (kINCOMPLETENINETYFIVEPOPUP, kEXIT, kCONTINUE)
+
+                    }
+                }
+            }
+        }
+        
+        return (kLTMBELOWNINTEYFIVEPOPUP, KOK, KCANCEL)
+    }
+    
     class func checkNinetyFivePercentData(type: String) -> String{
         
         print("selectedMeditation*** \(type)")
@@ -472,7 +506,7 @@ class WWMHelperClass {
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
                 if meditation_name == type{
-                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
+                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
                     if value == "0"{
                         self.deleteRowfromDb(dbName: "DBNinetyFivePercent", id: meditation_name!, type: "meditation_name")
                         let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
@@ -493,6 +527,32 @@ class WWMHelperClass {
         }
         
         return "1"
+    }
+    
+    class func checkNinetyFivePercentForOfflineData(type: String) -> String{
+        
+        print("selectedMeditation*** \(type)")
+        
+        let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
+        if data.count > 0 {
+            let ninetyFivePercentArray = WWMHelperClass.fetchNinetyFivePercentFilterDB(name: type, dbName: "DBNinetyFivePercent", type: "meditation_name")
+            
+            for dict in ninetyFivePercentArray{
+                let value = (dict as AnyObject).meditation_value as? String
+                let meditation_name = (dict as AnyObject).meditation_name as? String
+                if meditation_name == type{
+                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
+                    if value == "0"{
+                        print("00000****")
+                        return "1"
+                    }else{
+                        return "0"
+                    }
+                }
+            }
+        }
+        
+        return "0"
     }
     
     //add ninetyfivepercent from backend

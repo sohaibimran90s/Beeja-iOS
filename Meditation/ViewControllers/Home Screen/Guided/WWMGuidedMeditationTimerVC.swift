@@ -60,6 +60,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var dataAppendFlag = false
     var ismove = false
     var ninetyFiveCompletedFlag = "1"
+    var isComplete = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -313,6 +314,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             offlineCompleteData["level_id"] = "0"
             offlineCompleteData["mood_id"] = "0"
             offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
+            offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
              
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
@@ -561,9 +563,14 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         if self.meditationGuidedPlayPercentage >= Int(self.min_limit) ?? 95 && self.meditationGuidedPlayPercentage < Int(self.max_limit) ?? 98{
             
-            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
-            alertPopupView.lblSubtitle.text = kLTMABOVENINTEYFIVEPOPUP
+            isComplete = 1
+            let msg = WWMHelperClass.ninetyFivePercentMsg(type: "\(self.meditation_key)_\(self.cat_Name)")
+
+            alertPopupView.btnClose.setTitle(msg.2, for: .normal)
+            alertPopupView.btnOK.setTitle(msg.1, for: .normal)
+            alertPopupView.lblSubtitle.text = msg.0
         }else{
+            isComplete = 0
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
@@ -576,6 +583,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @IBAction func btnCloseAction(_ sender: Any) {
         
+        isComplete = 0
         if self.animateBool == 1{
             self.resumeAnimation()
             self.animateBool = 0
@@ -591,6 +599,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
         alertPopupView.removeFromSuperview()
+        
+        if isComplete == 1{
+            self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
+        }
         
         self.pushNavigationController()
     }
@@ -686,7 +698,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }else{
             param = [
@@ -707,7 +720,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 "meditation_id": meditation_id,
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage
+                "complete_percentage": complete_percentage,
+                "is_complete": self.ninetyFiveCompletedFlag
                 ] as [String : Any]
         }
         
