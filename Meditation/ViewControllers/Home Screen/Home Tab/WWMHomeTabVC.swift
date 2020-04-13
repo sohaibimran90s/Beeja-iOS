@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVKit
-import Crashlytics
+import FirebaseCrashlytics
 
 class WWMHomeTabVC: WWMBaseViewController {
 
@@ -72,9 +72,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.podData = []
         self.podcastData()
         
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         
         self.currentDateString = dateFormatter.string(from: Date())
         self.currentDate = dateFormatter.date(from: currentDateString)!
@@ -539,7 +543,9 @@ class WWMHomeTabVC: WWMBaseViewController {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
                     }
