@@ -50,13 +50,13 @@ class WWMBaseViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
         
         self.title1 = title
         if title == "Settings"{
             sideMenuBtn.setImage(UIImage.init(named: "Close_Icon"), for: .normal)
         }else{
-            sideMenuBtn.setImage(UIImage.init(named: "menu_44"), for: .normal)
+            sideMenuBtn.setImage(UIImage.init(named: "waveMenu"), for: .normal)
         }
         
         sideMenuBtn.addTarget(self, action: #selector(btnSideMenuAction(_:)), for: .touchUpInside)
@@ -105,10 +105,11 @@ class WWMBaseViewController: UIViewController {
             
         }else{
             
+            navigationController?.navigationBar.barTintColor = UIColor(hexString: "#001252")
             leftTitle.setTitle(title, for: .normal)
             leftTitle.setTitleColor(UIColor.white, for: .normal)
             leftTitle.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
-           
+            
             let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
             self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }

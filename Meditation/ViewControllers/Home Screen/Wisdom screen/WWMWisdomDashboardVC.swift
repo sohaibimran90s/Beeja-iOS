@@ -33,12 +33,12 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         buttonBarView.backgroundColor = UIColor.clear
         
         // change selected bar color
-        settings.style.buttonBarBackgroundColor = .clear
+        settings.style.buttonBarBackgroundColor = UIColor(hexString: "#001252")
         settings.style.buttonBarItemBackgroundColor = .clear
         settings.style.selectedBarBackgroundColor = .clear
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size:  18)!
+            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Regular", size:  16)!
         }
        
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 16)
