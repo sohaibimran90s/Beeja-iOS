@@ -10,6 +10,7 @@ import UIKit
 import GaugeKit
 import WebKit
 import EFCountingLabel
+import XLPagerTabStrip
 
 class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
@@ -50,6 +51,8 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     var data: [MoodData] = []
     var currentChartStatus: ChartStatus = .both
+    
+    var itemInfo: IndicatorInfo = "View"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -567,3 +570,8 @@ extension WWMMyProgressMoodVC: CustomChartViewDelegate{
     }
 }
 
+extension WWMMyProgressMoodVC: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        itemInfo
+    }
+}

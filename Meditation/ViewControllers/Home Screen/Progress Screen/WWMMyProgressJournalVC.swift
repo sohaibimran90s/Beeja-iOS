@@ -8,6 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import XLPagerTabStrip
 
 class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -22,6 +23,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     var tap = UITapGestureRecognizer()
     let reachable = Reachabilities()
 
+    var itemInfo: IndicatorInfo = "View"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -477,5 +480,12 @@ extension WWMMyProgressJournalVC: UITextViewDelegate{
             journalView.btnSubmit.isUserInteractionEnabled = false
             self.addJournalAPI()
         }
+    }
+}
+
+
+extension WWMMyProgressJournalVC: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        itemInfo
     }
 }

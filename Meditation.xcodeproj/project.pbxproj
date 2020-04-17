@@ -475,6 +475,8 @@
 		E0783206235E3BCA00B352ED /* guided.json in Resources */ = {isa = PBXBuildFile; fileRef = E07831EE235E3BCA00B352ED /* guided.json */; };
 		E0783207235E3BCA00B352ED /* graph.json in Resources */ = {isa = PBXBuildFile; fileRef = E07831EF235E3BCA00B352ED /* graph.json */; };
 		E0783208235E3BCA00B352ED /* home.json in Resources */ = {isa = PBXBuildFile; fileRef = E07831F0235E3BCA00B352ED /* home.json */; };
+		E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */; };
+		E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -992,6 +994,8 @@
 		E07831EF235E3BCA00B352ED /* graph.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = graph.json; sourceTree = "<group>"; };
 		E07831F0235E3BCA00B352ED /* home.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home.json; sourceTree = "<group>"; };
 		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
+		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
+		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1235,6 +1239,8 @@
 			isa = PBXGroup;
 			children = (
 				61416E0F22BB943C00C9339E /* GraphChart */,
+				E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */,
+				E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */,
 				2E5CCE8F21C79EA80085224B /* WWMMyProgressVC.swift */,
 				2EE247AB21E5D9BB00857C25 /* WWMMyProgressStatsVC.swift */,
 				2E4CE28622083A0000059396 /* WWMStatsCalCollectionViewCell.swift */,
@@ -2742,6 +2748,7 @@
 				2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */,
 				61416E6322BBB31400C9339E /* XAxisRendererRadarChart.swift in Sources */,
 				61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */,
+				E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */,
 				61416EA322BBB40300C9339E /* IAxisValueFormatter.swift in Sources */,
 				613C6F7122DF0C900012113B /* WWMFAQsVC.swift in Sources */,
 				61416E7122BBB37C00C9339E /* PieRadarHighlighter.swift in Sources */,
@@ -2776,6 +2783,7 @@
 				61416ECD22BBB45600C9339E /* MarkerImage.swift in Sources */,
 				2E4966172218089D00BC6219 /* WWMCommunityCollectionViewCell.swift in Sources */,
 				61416E9322BBB3B400C9339E /* BarLineChartViewBase.swift in Sources */,
+				E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */,
 				61416E4C22BBB29500C9339E /* ChevronDownShapeRenderer.swift in Sources */,
 				61416F4122BBB56900C9339E /* CandleChartDataProvider.swift in Sources */,
 				61416F1422BBB4C800C9339E /* RadarChartDataSet.swift in Sources */,

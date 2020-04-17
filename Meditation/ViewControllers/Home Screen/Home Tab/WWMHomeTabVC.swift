@@ -117,11 +117,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         //scrollView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
 
         print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
-        print("self.appPreffrence.getUserName()... \(self.appPreffrence.getUserName())")
-        //self.imgTopBar.isHidden = true
+        
+        let fullname = self.appPreffrence.getUserName()
+        let arrName = fullname.split(separator: " ")
+        let firstName = arrName[0]
         
         if self.appPreffrence.getSessionAvailableData(){
-            self.imgTopBar.isHidden = false
+            self.imgTopBar.isHidden = true
             self.viewVideoHeightConstraint.constant = 140
             self.lblStartedText.text = KHOMELBL
             self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
@@ -136,17 +138,17 @@ class WWMHomeTabVC: WWMBaseViewController {
             
             if hour < 12 {
                 print("good morning")
-                self.lblName.text = "\(kMORNING)\n\(self.appPreffrence.getUserName())!"
+                self.lblName.text = "\(kMORNING)\n\(firstName)!"
             }else if hour < 18 {
                 print("good afternoon")
-                self.lblName.text = "\(kAFTERNOON)\n\(self.appPreffrence.getUserName())!"
+                self.lblName.text = "\(kAFTERNOON)\n\(firstName)!"
             }else{
                 print("good evening")
-                self.lblName.text = "\(kEVENING)\n\(self.appPreffrence.getUserName())!"
+                self.lblName.text = "\(kEVENING)\n\(firstName)!"
             }
         }else{
             self.imgTopBar.isHidden = true
-            self.lblName.text = "\(KWELCOME) \(self.appPreffrence.getUserName())!"
+            self.lblName.text = "\(KWELCOME) \(firstName)!"
             self.lblStartedText.text = KHOMELBL1
             self.backImgVideo.image = UIImage(named: "bg1")
             //self.imgTopBar.image = UIImage(named: "bg1")

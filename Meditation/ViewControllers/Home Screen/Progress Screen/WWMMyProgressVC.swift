@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
 class WWMMyProgressVC: WWMBaseViewController {
 
@@ -22,7 +23,14 @@ class WWMMyProgressVC: WWMBaseViewController {
 
         self.setUpNavigationBarForDashboard(title: "My Progress")
         self.setUpSelectedButtonUI(btn: btnStats)
+        
+//        xlpagerSettings()
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func xlpagerSettings() {
+        
     }
     
     func setUpSelectedButtonUI(btn:UIButton) {
@@ -97,14 +105,5 @@ class WWMMyProgressVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS", itemId: "CALENDAR", itemName: "VIEWED")
         self.setUpSelectedButtonUI(btn: btnStats)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

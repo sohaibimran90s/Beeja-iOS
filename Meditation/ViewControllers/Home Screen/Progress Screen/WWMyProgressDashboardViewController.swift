@@ -1,18 +1,18 @@
 //
-//  WWMWisdomDashboardVC.swift
+//  WWMyProgressDashboardViewController.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 15/04/2019.
-//  Copyright © 2019 Cedita. All rights reserved.
+//  Created by Prashant Tayal on 17/04/20.
+//  Copyright © 2020 Cedita. All rights reserved.
 //
 
 import UIKit
 import XLPagerTabStrip
 
-class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
+class WWMyProgressDashboardViewController: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var tabBarView: ButtonBarView!
-    var arrWisdomList = [WWMWisdomData]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,11 +22,7 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     func setUpUI() {
         
         print("frame width.... \(self.view.frame.size.width/2)")
-        buttonBarView.frame.origin.y = -18
-        if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 70
-            //60
-        }
+        buttonBarView.frame.origin.y = -5
     
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
@@ -63,14 +59,21 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     // MARK: - PagerTabStripDataSource
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        let arrVC = NSMutableArray()
+        var arrVC = [UIViewController]()
         
-        for data in self.arrWisdomList {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomVC") as! WWMWisdomVC
-            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-            vc.wisdomData = data
-            arrVC.add(vc)
-        }
-        return arrVC as! [UIViewController]
+        let vc1 = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressStatsVC") as! WWMMyProgressStatsVC
+        vc1.itemInfo = IndicatorInfo.init(title: "Stats")
+        
+        let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressMoodVC") as! WWMMyProgressMoodVC
+        vc2.itemInfo = IndicatorInfo.init(title: "Mood")
+        
+        let vc3 = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalVC") as! WWMMyProgressJournalVC
+        vc3.itemInfo = IndicatorInfo.init(title: "Journal")
+        
+        arrVC.append(vc1)
+        arrVC.append(vc2)
+        arrVC.append(vc3)
+        
+        return arrVC
     }
 }

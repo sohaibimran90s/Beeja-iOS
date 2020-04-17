@@ -9,6 +9,7 @@
 import UIKit
 import UICircularProgressRing
 import EFCountingLabel
+import XLPagerTabStrip
 
 class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIPickerViewDelegate,UIPickerViewDataSource,AVAudioPlayerDelegate {
     
@@ -84,6 +85,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewChallenge21DaysHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnChallenge21Days: UIButton!
     @IBOutlet weak var calenderTopConstraint: NSLayoutConstraint!
+    
+    var itemInfo: IndicatorInfo = "View"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -1335,4 +1338,11 @@ extension WWMMyProgressStatsVC{
             }
         }
     }//end guided api*
+}
+
+
+extension WWMMyProgressStatsVC: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        itemInfo
+    }
 }
