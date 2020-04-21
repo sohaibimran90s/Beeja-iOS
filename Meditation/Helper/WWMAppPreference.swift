@@ -52,6 +52,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setOnBoardingData(value:[String : Any]) {
+        defaults.set(value, forKey: "onBoardingData")
+        defaults.synchronize()
+    }
+    
     func setHomePageURL(value: String) {
         defaults.set(value, forKey: "home_page_url")
         defaults.synchronize()
@@ -133,7 +138,6 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "preJournalCount")
     }
     
-
     func setUserID(value:String) {
         defaults.set(value, forKey: "User_Id")
         defaults.synchronize()
@@ -162,6 +166,10 @@ class WWMAppPreference: NSObject {
     func setMoodId(value: String) {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
+    }
+    
+    func getOnBoardingData() -> [String : Any] {
+        return UserDefaults.standard.dictionary(forKey: "onBoardingData") ?? [:]
     }
     
     func getSubscriptionPlan() -> String {
@@ -302,6 +310,10 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
 
+    func setWalkThoughStatus(value:Bool) {
+        defaults.set(value, forKey: "walkThoughStatus")
+        defaults.synchronize()
+    }
     
     func setCheckEnterSignupLogin(value:Bool) {
         defaults.set(value, forKey: "checkEnterSignupLogin")
@@ -447,5 +459,9 @@ class WWMAppPreference: NSObject {
     
     func getLearnMax_limit() -> String {
         return UserDefaults.standard.string(forKey: "learn_max_limit") ?? "97"
+    }
+    
+    func getWalkThoughStatus() -> Bool {
+        return UserDefaults.standard.bool(forKey: "walkThoughStatus")
     }
 }

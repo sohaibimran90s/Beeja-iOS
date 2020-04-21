@@ -1,0 +1,32 @@
+
+{
+  "data":[
+     {
+       "title": "First Onboarding",
+       "description": "First Onboarding Description",
+       "imageName": "onboardingImg1"
+     },
+     {
+       "title": "Second Onboarding",
+       "description": "Second Onboarding Description",
+       "imageName": "onboardingImg2"
+     },
+     {
+       "title": "Third Onboarding",
+       "description": "Third Onboarding Description",
+       "imageName": "onboardingImg3"
+     },
+     {
+       "title": "Fourth Onboarding",
+       "description": "Fourth Onboarding Description",
+       "imageName": "onboardingImg4"
+     },
+     {
+       "title": "Fifth Onboarding",
+       "description": "Fifth Onboarding Description",
+       "imageName": "onboardingImg5"
+     }
+  ]
+}
+
+

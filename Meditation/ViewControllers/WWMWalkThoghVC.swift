@@ -149,7 +149,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if value == "SignupLetsStart"{
             //videoURL = self.appPreffrence.getHomePageURL()
-            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else {
+            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else { 
                 debugPrint("video.mp4 not found")
                 return
             }

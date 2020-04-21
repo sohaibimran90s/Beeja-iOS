@@ -138,6 +138,7 @@ let URL_DICTIONARY  = URL_BASE + "dictionary"
 
 let URL_FORCELOGOUT = URL_BASE + "check_user"//
 let URL_MEDITATIONLIST = URL_BASE + "meditationlist"
+let URL_ONBOARDING = URL_BASE + "onboarding"
 
 
 /************************************************/

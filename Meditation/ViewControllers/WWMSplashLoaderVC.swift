@@ -246,6 +246,13 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         
         self.stopPlayer()
         self.pushToViewController()
+        
+//        if !self.appPreference.getWalkThoughStatus(){
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoughVC1") as! WWMWalkThoughVC1
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }else{
+//            self.pushToViewController()
+//        }
     }
     
     func stopPlayer() {
@@ -278,8 +285,12 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
             self.navigationController?.pushViewController(vc, animated: false)
         }else {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-            self.navigationController?.pushViewController(vc, animated: false)
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoughVC1") as! WWMWalkThoughVC1
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+//            self.navigationController?.pushViewController(vc, animated: false)
         }
         
         return
@@ -458,20 +469,18 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     
     func getMoodMeterDataAPI() {
         
+        DispatchQueue.global(qos: .utility).async {
+            self.getOnBoardingAPI()
+        }
+        
         if self.stopLoaderAudio{
-                print("less....")
-                            
-                self.animationView.stop()
-                self.animationView.isHidden = true
-                self.lblLogo.isHidden = false
-                                
-                self.animateSonicLogo()
-                
-            //DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            // self.loadSplashScreenafterDelay()
-            //}
-                            
-                
+            print("less....")
+            
+            self.animationView.stop()
+            self.animationView.isHidden = true
+            self.lblLogo.isHidden = false
+            
+            self.animateSonicLogo()
             return
         }
         
@@ -483,6 +492,17 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 self.saveMoodMeterDataToDB(data: result)
             }else {
                 self.getMoodMeterDataFromDB()
+            }
+        }
+    }
+    
+    func getOnBoardingAPI(){
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_ONBOARDING, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+           
+            if sucess {
+                print("URL_ONBOARDING result... \(result)")
+                self.appPreference.setOnBoardingData(value: result)
             }
         }
     }
