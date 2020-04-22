@@ -76,13 +76,13 @@ class WWMWalkThoughVC1: WWMBaseViewController {
     }
     
     @IBAction func btnSignUpAction(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
     @IBAction func btnLoginAction(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

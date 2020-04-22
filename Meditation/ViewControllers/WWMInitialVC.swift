@@ -38,7 +38,7 @@ class WWMInitialVC: WWMBaseViewController {
     }
     
     @IBAction func btnStartBe(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

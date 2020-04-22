@@ -30,7 +30,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         if WWMHelperClass.loginSignupBool{
             
             WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
             self.navigationController?.pushViewController(vc, animated: false)
             
             WWMHelperClass.loginSignupBool = false
@@ -161,7 +161,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     @IBAction func btnStartBe(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupNameVC") as! WWMSignupNameVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
             self.navigationController?.pushViewController(vc, animated: true)
         })
     }
@@ -254,16 +254,6 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                             
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
-                            
-                            
-//                            if #available(iOS 13.0, *) {
-//                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-//                                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-//                                window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//                            } else {
-//                                //                                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-//                                UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-//                            }
                             
                         }else {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC

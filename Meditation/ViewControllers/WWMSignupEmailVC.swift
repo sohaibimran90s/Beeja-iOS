@@ -1,38 +1,46 @@
 //
-//  WWMSignupEmailVC.swift
+//  WWMSignUpPasswordVCViewController.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 10/12/18.
-//  Copyright © 2018 Cedita. All rights reserved.
+//  Created by Prema Negi on 12/10/2019.
+//  Copyright © 2019 Cedita. All rights reserved.
 //
 
 import UIKit
 import IQKeyboardManagerSwift
 import FirebaseCrashlytics
 
-class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
-
-    @IBOutlet weak var btnNext: UIButton!
-    @IBOutlet weak var viewEmail: UIView!
-    @IBOutlet weak var txtViewEmail: UITextField!
+class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
     
-    var name = ""
+    @IBOutlet weak var txtViewName: UITextField!
+    @IBOutlet weak var viewName: UIView!
+    @IBOutlet weak var txtViewEmail: UITextField!
+    @IBOutlet weak var viewEmail: UIView!
+    @IBOutlet weak var txtViewPassword: UITextField!
+    @IBOutlet weak var viewPassword: UIView!
+    @IBOutlet weak var btnSignUp: UIButton!
+    @IBOutlet weak var btnBackTopConstraint: NSLayoutConstraint!
+    
+    var name: String = ""
     var isFromFb = Bool()
     var fbData = [String:Any]()
     var tap = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if WWMHelperClass.hasTopNotch{
+            self.btnBackTopConstraint.constant = 30
+        }else{
+            self.btnBackTopConstraint.constant = 10
+        }
         
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Done"
         self.setupView()
     }
     
     func setupView(){
         self.setNavigationBar(isShow: false, title: "")
-        
-        self.btnNext.layer.borderWidth = 2.0
-        self.btnNext.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
     }
     
     @objc func KeyPadTap() -> Void {
@@ -52,126 +60,90 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.view .removeGestureRecognizer(tap)
-        if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
-            self.viewEmail.layer.borderColor = UIColor.clear.cgColor
-            self.btnNext.setTitleColor(UIColor.white, for: .normal)
-            self.btnNext.backgroundColor = UIColor.clear
-        }
-        
-        if txtViewEmail.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
-        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
-            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
-        }else {
-            // Analytics
-            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_EMAIL", itemName: "")
-            if isFromFb {
-                self.loginWithSocial()
-            }else {
-                //self.signUpApi()
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpPasswordVC") as! WWMSignUpPasswordVC
-                
-                vc.email = txtViewEmail.text!
-                vc.name = self.name
-                self.navigationController?.pushViewController(vc, animated: true)
+        self.view.removeGestureRecognizer(tap)
+        if textField == txtViewName {
+            
+            if txtViewName.text ?? "" == ""{
+                self.viewName.layer.borderColor = UIColor.clear.cgColor
             }
             
+        }else if textField == self.txtViewEmail{
+            if txtViewEmail.text ?? "" == ""{
+                self.viewEmail.layer.borderColor = UIColor.clear.cgColor
+            }
+        }else if textField == self.txtViewPassword{
+            if txtViewPassword.text ?? "" == ""{
+                self.viewPassword.layer.borderColor = UIColor.clear.cgColor
+            }
         }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let str = txtViewEmail.text! + string
-        
-        if (self.isValidEmail(strEmail: str)) {
-                self.viewEmail.layer.borderWidth = 1.0
-                self.viewEmail.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-                self.btnNext.setTitleColor(UIColor.black, for: .normal)
-                self.btnNext.backgroundColor = UIColor.init(hexString: "#00eba9")!
+        if textField == txtViewName {
+            
+            let str = txtViewName.text ?? "" + string
+            if string == "" {
+                return true
+            }
+            let strRegEx = "[A-Z a-z]"
+            let emailTest = NSPredicate(format:"SELF MATCHES %@", strRegEx)
+            if !emailTest.evaluate(with: string) {
+                return false
+            }
+            
+            if str.count > 0 {
+                self.viewName.layer.borderWidth = 1.0
+                self.viewName.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            }
+            if str.count > 50 {
+                return false
+            }
+        }else if textField == self.txtViewEmail{
+            let str = txtViewEmail.text! + string
+            
+            if (self.isValidEmail(strEmail: str)) {
+                    self.viewEmail.layer.borderWidth = 1.0
+                    self.viewEmail.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            }
+            return true
+        }else if textField == txtViewPassword{
+            let str = txtViewPassword.text ?? "" + string
+            if string == "" {
+                return true
+            }
+            
+            if str.count > 0 {
+                self.viewPassword.layer.borderWidth = 1.0
+                self.viewPassword.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            }
+            if str.count > 50 {
+                return false
+            }
         }
         return true
+
     }
-    
-    // MARK: - UIButton Action
-    
-    @IBAction func btnNextAction(_ sender: UIButton) {
+        
+    @IBAction func btnSignUpAction(_ sender: UIButton) {
+        
+        if self.txtViewName.text == "" {
+            self.name = "You"
+        }else{
+            self.name = self.txtViewName.text!
+        }
+        
         if txtViewEmail.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
         }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
-        }else {
-            // Analytics
-            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_EMAIL", itemName: "")
+        }else if txtViewPassword.text == "" {
+            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)
+        }else{
             if isFromFb {
                 self.loginWithSocial()
             }else {
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpPasswordVC") as! WWMSignUpPasswordVC
-                
-                vc.email = txtViewEmail.text!
-                vc.name = self.name
-                self.navigationController?.pushViewController(vc, animated: true)
-                //self.signUpApi()
+                self.signUpApi()
             }
-        }
-    }
-    
-    func signUpApi() {
-        self.view.endEditing(true)
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "email": txtViewEmail.text!,
-            "deviceToken" : appPreference.getDeviceToken(),
-            "deviceId": kDeviceID,
-            "DeviceType": kDeviceType,
-            "loginType": kLoginTypeEmail,
-            "name":self.name,
-            "model": UIDevice.current.model,
-            "version": UIDevice.current.systemVersion
-        ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
-            if sucess {
-                
-                print("signup result... \(result)")
-                if let userProfile = result["userprofile"] as? [String:Any] {
-                    
-                    print("userProfile WWMSignupEmailVC... \(userProfile)")
-                    
-                    self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
-                    self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
-                    //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
-                    
-                     Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
-                                        
-                    self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
-                    self.appPreference.setIsLogin(value: true)
-                    self.appPreference.setIsProfileCompleted(value: false)
-                    self.appPreference.setType(value: userProfile["type"] as? String ?? "")
-                    self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
-                    self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
-                    self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
-                    self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
-                    
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                    
-                    vc.value = "SignupLetsStart"
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
-                }
-                
-                
-            }else {
-                if error?.localizedDescription == "The Internet connection appears to be offline."{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                }
-                
-            }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -243,6 +215,72 @@ class WWMSignupEmailVC: WWMBaseViewController,UITextFieldDelegate {
                         }
                     }
                 }
+            }else {
+                if error?.localizedDescription == "The Internet connection appears to be offline."{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }else{
+                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                }
+                
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    func signUpApi() {
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "WHATS_YOUR_PASSWORD", itemName: "")
+        
+        self.view.endEditing(true)
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "email": txtViewEmail.text ?? "",
+            "deviceToken" : appPreference.getDeviceToken(),
+            "deviceId": kDeviceID,
+            "DeviceType": kDeviceType,
+            "loginType": kLoginTypeEmail,
+            "name":self.name,
+            "model": UIDevice.current.model,
+            "version": UIDevice.current.systemVersion,
+            "password": self.txtViewPassword.text!
+        ]
+        
+        print("name... \(self.name) password... \(self.txtViewPassword.text ?? "") param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                
+                print("signup result... \(result)")
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    
+                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    
+                    self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                    self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
+                    self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
+                    //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
+                    self.appPreference.setCheckEnterSignupLogin(value: true)
+                                        
+                    self.appPreference.setUserName(value: userProfile["name"] as? String ?? "")
+                    self.appPreference.setIsLogin(value: true)
+                    self.appPreference.setIsProfileCompleted(value: false)
+                    self.appPreference.setType(value: userProfile["type"] as? String ?? "")
+                    self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                    self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
+                    self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
+                    self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+
+                    vc.value = "SignupLetsStart"
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                }
+                
+                
             }else {
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
                     WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)

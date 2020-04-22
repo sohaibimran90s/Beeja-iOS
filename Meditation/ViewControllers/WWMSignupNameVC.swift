@@ -90,6 +90,15 @@ class WWMSignupNameVC: WWMBaseViewController,UITextFieldDelegate{
         }
         if  textField == txtViewName {
             
+            let str = txtViewName.text! + string
+            if string == "" {
+                return true
+            }
+            let strRegEx = "[A-Z a-z]"
+            let emailTest = NSPredicate(format:"SELF MATCHES %@", strRegEx)
+            if !emailTest.evaluate(with: string) {
+                return false
+            }
             
             if str.count > 0 {
                 self.viewName.layer.borderWidth = 1.0
