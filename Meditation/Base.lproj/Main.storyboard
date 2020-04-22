@@ -17017,6 +17017,9 @@ By Will Williams</string>
                                                                 <variation key="heightClass=regular-widthClass=regular">
                                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
                                                                 </variation>
+                                                                <connections>
+                                                                    <action selector="btnLoginWithFacebookAction:" destination="3bm-dk-c1c" eventType="touchUpInside" id="Dor-RP-87M"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAp-eC-0q2">
                                                                 <rect key="frame" x="0.0" y="56" width="295" height="40"/>
@@ -17031,6 +17034,9 @@ By Will Williams</string>
                                                                 <variation key="heightClass=regular-widthClass=regular">
                                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
                                                                 </variation>
+                                                                <connections>
+                                                                    <action selector="btnLoginWithGoogleAction:" destination="3bm-dk-c1c" eventType="touchUpInside" id="DXV-AP-j7A"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -17081,6 +17087,7 @@ By Will Williams</string>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVC-om-ZDb">
                                                                         <rect key="frame" x="0.0" y="0.0" width="78.5" height="30"/>
                                                                         <connections>
+                                                                            <action selector="btnTermsOfUseAction:" destination="3bm-dk-c1c" eventType="touchUpInside" id="LZD-ma-bJa"/>
                                                                             <action selector="btnTermsOfUseAction:" destination="QQW-HL-hXW" eventType="touchUpInside" id="MU8-EY-453"/>
                                                                         </connections>
                                                                     </button>
@@ -17088,6 +17095,7 @@ By Will Williams</string>
                                                                         <rect key="frame" x="94" y="0.0" width="85.5" height="30"/>
                                                                         <connections>
                                                                             <action selector="btnPrivacyPolicyAction:" destination="QQW-HL-hXW" eventType="touchUpInside" id="6La-ev-McK"/>
+                                                                            <action selector="btnPrivacyPolicyAction:" destination="3bm-dk-c1c" eventType="touchUpInside" id="yVj-9m-6o6"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
