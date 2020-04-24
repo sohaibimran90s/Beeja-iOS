@@ -289,55 +289,54 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
     //MARK: Social Login & Terms n Condition button
     
     @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
-           WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
-           let loginManager = LoginManager()
-           loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (loginResult, error) in
-
-               if error != nil {
-                   print(error?.localizedDescription ?? "")
-               }else {
-                   if (loginResult?.isCancelled)! {
-                       print("User Cancellled To login with fb")
-                   }else {
-                       let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
-                       req.start(completionHandler: { (connection, result, error) in
-                       if error == nil {
-                           print(result!)
-                           if let fbData = result as? [String:Any] {
-                               if let fbEmail = fbData["email"] as? String {
-
-                                   let param = [
-                                       "email": fbEmail,
-                                       "password":"",
-                                       "deviceId": kDeviceID,
-                                       "DeviceType": kDeviceType,
-                                       "deviceToken" : self.appPreference.getDeviceToken(),
-                                       "loginType": kLoginTypeFacebook,
-                                       "profile_image":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
-                                       "socialId":"\(fbData["id"] ?? "")",
-                                       "name":"\(fbData["name"] ?? "")",
-                                       "model": UIDevice.current.model,
-                                       "version": UIDevice.current.systemVersion
-                                   ]
-
-                                   print("param facebook... \(param)")
-
-                                   self.loginWithSocial(param: param as Dictionary<String, Any>)
-                               }else {
-                                   let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
-                                   vc.isFromFb = true
-                                   vc.fbData = fbData
-                                   self.navigationController?.pushViewController(vc, animated: true)
-                               }
-                           }
-                       }else {
-                           print(error?.localizedDescription ?? "")
-                       }
-                   })
-                   }
-               }
-           }
-       }
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
+        let loginManager = LoginManager()
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (loginResult, error) in
+            
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+            }else {
+                if (loginResult?.isCancelled)! {
+                    print("User Cancellled To login with fb")
+                }else {
+                    let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+                    req.start(completionHandler: { (connection, result, error) in
+                        if error == nil {
+                            print(result!)
+                            if let fbData = result as? [String:Any] {
+                                if let fbEmail = fbData["email"] as? String {
+                                    
+                                    let param = [
+                                        "email": fbEmail,
+                                        "password":"",
+                                        "deviceId": kDeviceID,
+                                        "DeviceType": kDeviceType,
+                                        "deviceToken" : self.appPreference.getDeviceToken(),
+                                        "loginType": kLoginTypeFacebook,
+                                        "profile_image":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
+                                        "socialId":"\(fbData["id"] ?? "")",
+                                        "name":"\(fbData["name"] ?? "")",
+                                        "model": UIDevice.current.model,
+                                        "version": UIDevice.current.systemVersion
+                                    ]
+                                    
+                                    print("param facebook... \(param)")
+                                    
+                                    self.loginWithSocial(param: param as Dictionary<String, Any>)
+                                }else {
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
+                                    vc.fbData = fbData
+                                self.navigationController?.pushViewController(vc, animated: true)
+                                }
+                            }
+                        }else {
+                            print(error?.localizedDescription ?? "")
+                        }
+                    })
+                }
+            }
+        }
+    }
        
        @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
