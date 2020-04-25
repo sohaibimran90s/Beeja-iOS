@@ -199,9 +199,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             }
         }
         if self.txtViewPassword.text == "" {
-                WWMHelperClass.showPopupAlertController(sender: self, message: Validation_passwordMessage, title: kAlertTitle)
-        }else {
-                self.loginWithEmail()
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validation_passwordMessage, title: kAlertTitle)
+        }else{
+            self.loginWithEmail()
         }
     }
     

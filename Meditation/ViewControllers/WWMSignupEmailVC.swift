@@ -24,7 +24,6 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
     @IBOutlet weak var btnBackTopConstraint: NSLayoutConstraint!
     
     var name: String = ""
-    var fbData = [String:Any]()
     var tap = UITapGestureRecognizer()
     
     override func viewDidLoad() {
@@ -140,7 +139,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
         }else if txtViewPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)
         }else{
-            self.loginWithSocial(param: fbData)
+            self.signUpApi()
         }
     }
     
@@ -321,25 +320,8 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
     
     func loginWithSocial(param:[String : Any]) {
         self.view.endEditing(true)
-        //WWMHelperClass.showSVHud()
+
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        
-        
-        let param = [
-            "email": txtViewEmail.text ?? "",
-            "password":"",
-            "deviceId": kDeviceID,
-            "deviceToken" : appPreference.getDeviceToken(),
-            "DeviceType": kDeviceType,
-            "loginType": kLoginTypeFacebook,
-            "profile_image":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
-            "socialId":"\(fbData["id"] ?? -1)",
-            "name":"\(fbData["name"] ?? "")",
-            "model": UIDevice.current.model,
-            "version": UIDevice.current.systemVersion
-            ] as [String : Any]
-        
-        print("param2... \(param)")
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 

@@ -167,7 +167,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     
     @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
-         GIDSignIn.sharedInstance()?.delegate = self
+        GIDSignIn.sharedInstance()?.delegate = self
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance()?.signIn()
     }
@@ -185,7 +185,6 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         vc.strType = "Terms & Conditions"
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     
     // Google Login Delegate Method
     
@@ -215,7 +214,6 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                 "model": UIDevice.current.model,
                 "version": UIDevice.current.systemVersion
             ]
-            
             
             self.loginWithSocial(param: param as Dictionary<String, Any>)
             

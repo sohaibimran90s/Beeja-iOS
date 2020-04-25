@@ -111,7 +111,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
             vc.isFromWelcomeBack = true
             self.navigationController?.pushViewController(vc, animated: false)
         }else if self.userData.loginType == kLoginTypeFacebook {
-//            self.continueWithFacebook()
+            self.continueWithFacebook()
         }else if self.userData.loginType == kLoginTypeGoogle {
             self.continueWithGoogle()
         }else {
@@ -271,7 +271,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
 //                            }
                             
                         }else {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }
