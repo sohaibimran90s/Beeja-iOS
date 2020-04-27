@@ -638,7 +638,16 @@ class WWMStartTimerVC: WWMBaseViewController {
                 vc.levelID = self.levelID
                 self.navigationController?.pushViewController(vc, animated: true)
             }
-            self.ninetyFiveCompletedFlag = "1"
+            
+            print(meditationLTMPlayPercentage)
+            if meditationLTMPlayPercentage == 0{
+                self.ninetyFiveCompletedFlag = "0"
+                self.pushNavigationController()
+                return
+            }else{
+                self.ninetyFiveCompletedFlag = "1"
+            }
+            
             seconds = seconds-1
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
         }
@@ -789,6 +798,10 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
         alertPopupView.removeFromSuperview()
+        
+        if self.meditationLTMPlayPercentage == 0{
+            self.ninetyFiveCompletedFlag = "0"
+        }
         
         if isComplete == 1{
             self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
