@@ -16,58 +16,30 @@ class WWMGuidedNavVC: WWMBaseViewController {
     @IBOutlet weak var lblExpressMood: UILabel!
     @IBOutlet weak var containerView: UIView!
     
-    //MARK:- Dropdown Outlets
-    @IBOutlet weak var dropDownView: UIView!
-    @IBOutlet weak var lblPractical: UILabel!
-    @IBOutlet weak var lblSpritual: UILabel!
-    @IBOutlet weak var imgPractical: UIImageView!
-    @IBOutlet weak var imgSpritual: UIImageView!
-    
     var arrGuidedList = [WWMGuidedData]()
-    var type = "practical"
+    var type = "guided"
     var typeTitle = ""
     var guided_type = ""
-    
-    var containertapGesture = UITapGestureRecognizer()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.dropDownView.isHidden = true
-        
         self.offlineDatatoServerCall()
-        
-        containertapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDropDownTap(_:)))
-        containertapGesture.delegate = self as? UIGestureRecognizerDelegate
-        
-        KNOTIFICATIONCENTER.addObserver(self, selector: #selector(self.methodOfGuidedDropDown(notification:)), name: Notification.Name("guidedDropDownClicked"), object: nil)
+        KNOTIFICATIONCENTER.addObserver(forName: NSNotification.Name(rawValue: "guidedDropDownClicked"), object: nil, queue: nil, using: catchNotification)
 
         if self.appPreference.getGuideType() == "practical"{
             self.typeTitle = "Practical Guidance"
-            self.setUpNavigationBarForDashboard(title: "Practical Guidance")
-            self.type = "practical"
-            
-            self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
-            self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
-            self.imgSpritual.isHidden = true
-            self.imgPractical.isHidden = false
+            self.setUpNavigationBarForDashboard(title: "guided")
+            self.guided_type = "practical"
         }else {
             self.typeTitle = "Spiritual Guidance"
-            self.setUpNavigationBarForDashboard(title: "Spiritual Guidance")
-            self.type = "spiritual"
-            
-            self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
-            self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
-            self.imgSpritual.isHidden = false
-            self.imgPractical.isHidden = true
+            self.setUpNavigationBarForDashboard(title: "sleep")
+            self.guided_type = "spiritual"
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
         }
-        
-        //self.fetchGuidedDataFromDB()
-        
     }
     
     //insert offline data to server
@@ -82,7 +54,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 
                 if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
                     
-                    print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
+                    print("data....++++++===== \(String(describing: data.data)) id++++++++==== \(String(describing: data.id))")
                     
                     self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0")
                     
@@ -120,7 +92,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 ] as [String : Any]
         }else{
             param = [
-                "type": type,
+                "type": self.type,
                 "category_id": category_id,
                 "emotion_id": emotion_id,
                 "audio_id": audio_id,
@@ -152,14 +124,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             }
         }
     }//insert offline data to server*
-
-
-    
-    @objc func handleDropDownTap(_ sender: UITapGestureRecognizer) {
-        self.dropDownView.isHidden = true
-        containerView.removeGestureRecognizer(containertapGesture)
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         self.fetchGuidedDataFromDB()
     }
@@ -168,88 +133,33 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.lblExpressMood.transform = CGAffineTransform(rotationAngle:CGFloat(+Double.pi/2))
         self.layoutMoodWidth.constant = 90
     }
-    
-    @objc func methodOfGuidedDropDown(notification: Notification){
-        containerView.addGestureRecognizer(containertapGesture)
-        self.dropDownView.isHidden = false
-        if self.appPreference.getGuideType() == "practical"{
-            self.type = "guided"
-            guided_type = "practical"
-            self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
-            self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
-            self.imgSpritual.isHidden = true
-            self.imgPractical.isHidden = false
+
+    @objc func catchNotification(notification: Notification){
+        self.type = notification.userInfo?["type"] as! String
+        guided_type = notification.userInfo?["subType"] as! String
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        print("type*** \(self.type) guided_type*** \(guided_type)")
+        
+        if guided_type == "practical"{
+            self.typeTitle = "Practical Guidance"
+            setUpNavigationBarForDashboard(title: "guided")
         }else{
-            self.type = "guided"
-            guided_type = "spiritual"
-            self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
-            self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
-            self.imgSpritual.isHidden = false
-            self.imgPractical.isHidden = true
+            self.typeTitle = "Spiritual Guidance"
+            setUpNavigationBarForDashboard(title: "sleep")
         }
-    }
-    
-    @IBAction func btnPracticalClicked(_ sender: UIButton) {
-        guided_type = "practical"
-        self.type = "guided"
-        self.lblPractical.font = UIFont.init(name: "Maax-Bold", size: 16)
-        self.lblSpritual.font = UIFont.init(name: "Maax-Regular", size: 16)
-        self.imgSpritual.isHidden = true
-        self.imgPractical.isHidden = false
         
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        self.fetchGuidedDataFromDB()
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
         }
-        
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
-      /*
-        if #available(iOS 13.0, *) {
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-            
-        } else {
-            UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-        }
-        */
-    }
-    
-    @IBAction func btnSpritualClicked(_ sender: UIButton) {
-        guided_type = "spiritual"
-        self.type = "guided"
-        self.lblPractical.font = UIFont.init(name: "Maax-Regular", size: 16)
-        self.lblSpritual.font = UIFont.init(name: "Maax-Bold", size: 16)
-        self.imgSpritual.isHidden = false
-        self.imgPractical.isHidden = true
-        
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
-        
-        DispatchQueue.global(qos: .background).async {
-            self.meditationApi()
-        }
-        
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
-     /*   if #available(iOS 13.0, *) {
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            window?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-            
-        } else {
-            UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
-        }
-        */
+
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("methodOfGuidedDropDown"), object: nil)
     }
     
     func meditationApi() {
@@ -260,6 +170,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
             "type" : type,
             "guided_type" : guided_type
             ] as [String : Any]
+        
+        print("param*** \(param)")
+        
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 print("result guidednavvc meditation data... \(result)")
@@ -277,14 +190,12 @@ class WWMGuidedNavVC: WWMBaseViewController {
         }
     }
     
-    
     func setAnimationForExpressMood() {
         
         UIView.animate(withDuration: 2.5, delay: 0.0, options: .curveEaseInOut, animations: {
             self.layoutExpressMoodViewWidth.constant = 40
             self.view.layoutIfNeeded()
         }, completion: nil)
-        
     }
     
     @IBAction func btnExpressMoodAction(_ sender: Any) {
@@ -298,9 +209,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
     //MARK: Fetch Guided Data From DB
     func fetchGuidedDataFromDB() {
         
-        print("self.type+++ \(self.type)")
+        let guidedDataDB = self.fetchGuidedFilterDB(type: self.guided_type, dbName: "DBGuidedData")
+        print("self.type+++ \(self.type) self.guided_type+++ \(self.guided_type) guidedDataDB.count*** \(guidedDataDB.count)")
         
-        let guidedDataDB = self.fetchGuidedFilterDB(type: self.type, dbName: "DBGuidedData")
         if guidedDataDB.count > 0{
             print("guidedDataDB count... \(guidedDataDB.count)")
             
@@ -372,6 +283,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 view.removeFromSuperview()
             }
 
+            print("self.typeTitle+++ \(self.typeTitle)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
             vc.arrGuidedList = self.arrGuidedList

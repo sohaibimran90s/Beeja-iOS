@@ -63,8 +63,27 @@ class WWMBaseViewController: UIViewController {
         sideMenuBtn.contentMode = .scaleAspectFit
         
         let leftTitle = UIButton.init()
-        let barButtonPracticalSpiritual = UIButton.init()
-        let barButtonPracticalSpiritualImage = UIButton.init()
+
+        let barButtonGuided = UIButton.init()
+        let barButtonSleep = UIButton.init()
+        
+        barButtonGuided.addTarget(self, action: #selector(dropDownGuided), for: .touchUpInside)
+        barButtonSleep.addTarget(self, action: #selector(dropDownSleep), for: .touchUpInside)
+        
+        //To give space between bar button items
+        // Set 26px of fixed space between the two UIBarButtonItems
+        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 26.0
+        
+        // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
+        let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
+        negativeSpace.width = -7.0
+        
+        barButtonGuided.setTitle("Guided", for: .normal)
+        barButtonGuided.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+        
+        barButtonSleep.setTitle("Sleep", for: .normal)
+        barButtonSleep.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
         
         if title == "Timer" {
             leftTitle.setTitle("  Toggle Flight Mode", for: .normal)
@@ -75,33 +94,20 @@ class WWMBaseViewController: UIViewController {
             
             let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
             self.navigationItem.leftBarButtonItem = leftBarButtonItem
-        }else if title == "Practical Guidance" {
-
-            barButtonPracticalSpiritual.setTitle(title, for: .normal)
-            barButtonPracticalSpiritual.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+        }else if title == "guided" {
             
-            barButtonPracticalSpiritualImage.setImage(UIImage(named: "dropDown"), for: .normal)
-            barButtonPracticalSpiritualImage.contentMode = .scaleAspectFit
-            barButtonPracticalSpiritualImage.clipsToBounds = true
+            barButtonSleep.alpha = 0.5
+            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
+            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
+            self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
             
-            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonPracticalSpiritual)
-            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonPracticalSpiritualImage)
-            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, leftBarButtonItem1]
+        }else if title == "sleep" {
             
-        }else if title == "Spiritual Guidance" {
+            barButtonGuided.alpha = 0.5
+            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
+            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
             
-            barButtonPracticalSpiritual.setTitle(title, for: .normal)
-            barButtonPracticalSpiritual.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
-            
-            
-            barButtonPracticalSpiritualImage.setImage(UIImage(named: "dropDown"), for: .normal)
-            barButtonPracticalSpiritualImage.contentMode = .scaleAspectFit
-            barButtonPracticalSpiritualImage.clipsToBounds = true
-            
-            
-            let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonPracticalSpiritual)
-            let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonPracticalSpiritualImage)
-            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, leftBarButtonItem1]
+            self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
             
         }else{
             
@@ -114,22 +120,18 @@ class WWMBaseViewController: UIViewController {
             self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }
         
-        
-        
-        barButtonPracticalSpiritual.addTarget(self, action: #selector(dropDownClicked), for: .touchUpInside)
-        barButtonPracticalSpiritualImage.addTarget(self, action: #selector(dropDownClicked1), for: .touchUpInside)
-        
         let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
-    @objc func dropDownClicked(){
-        KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
+    @objc func dropDownSleep(){
+        //KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
+        KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "spiritual"])
     }
     
-    @objc func dropDownClicked1(){
+    @objc func dropDownGuided(){
         
-         KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
+         KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "practical"])
     }
     
     func setUpNavigationBarForAudioGuided(title:String) {
