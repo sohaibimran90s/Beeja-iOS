@@ -23,7 +23,6 @@ class WWMyProgressDashboardViewController: ButtonBarPagerTabStripViewController 
         
         print("frame width.... \(self.view.frame.size.width/2)")
         buttonBarView.frame.origin.y = -5
-    
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear

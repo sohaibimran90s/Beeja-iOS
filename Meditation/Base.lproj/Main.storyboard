@@ -4019,7 +4019,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3v-Jq-3Cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2609" y="5683"/>
+            <point key="canvasLocation" x="2105" y="5666"/>
         </scene>
         <!--Wisdom DashboardVC-->
         <scene sceneID="Y3h-eF-6C5">
@@ -6135,7 +6135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSN-ff-myb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3365.5999999999999" y="6102.5487256371816"/>
+            <point key="canvasLocation" x="3889" y="6085"/>
         </scene>
         <!--Podcast ListVC-->
         <scene sceneID="uYc-WV-fhu">
@@ -6175,13 +6175,13 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SrI-ER-GVE">
                                                             <rect key="frame" x="66" y="21" width="293" height="56.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Will Williams Podcast with Howard Donald from Take That" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-HT-MQB">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Will Williams Podcast with Howard Donald from Take That" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-HT-MQB">
                                                                     <rect key="frame" x="0.0" y="0.0" width="293" height="37.5"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="3:45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STW-Yp-M8T">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STW-Yp-M8T">
                                                                     <rect key="frame" x="0.0" y="37.5" width="293" height="19"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6302,7 +6302,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5c-dJ-EmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1630" y="5683"/>
+            <point key="canvasLocation" x="1151" y="5683"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="Y5l-RM-fcO">
@@ -6836,7 +6836,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MsY-TR-38l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4175" y="5683"/>
+            <point key="canvasLocation" x="4753" y="5666"/>
         </scene>
         <!--Add JournalVC-->
         <scene sceneID="H3b-FH-Xgk">
@@ -6963,7 +6963,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CX5-Sl-V7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5604" y="5670"/>
+            <point key="canvasLocation" x="6390" y="5656"/>
         </scene>
         <!--Mood Meter LogVC-->
         <scene sceneID="qf9-lv-LF5">
@@ -9629,7 +9629,7 @@
                                                 <rect key="frame" x="2" y="15" width="92.5" height="122"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEa-Ph-xff">
-                                                        <rect key="frame" x="17.5" y="30" width="58" height="21.5"/>
+                                                        <rect key="frame" x="17.5" y="30" width="58" height="19"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -9638,7 +9638,7 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£5.99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6I-Ub-zF2">
-                                                        <rect key="frame" x="21" y="61.5" width="50.5" height="23.5"/>
+                                                        <rect key="frame" x="21" y="59" width="50.5" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                         <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -9647,7 +9647,7 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyF-Ag-nr2">
-                                                        <rect key="frame" x="23.5" y="95" width="46" height="12"/>
+                                                        <rect key="frame" x="23.5" y="92.5" width="46" height="14.5"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="10"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -15888,7 +15888,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H9h-x5-SUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4900" y="5682.9085457271367"/>
+            <point key="canvasLocation" x="5674" y="5656"/>
         </scene>
         <!--Day ChallengeVC-->
         <scene sceneID="gTE-tI-EUb">
@@ -16702,7 +16702,7 @@ By Will Williams</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EwL-zq-Y1P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2609" y="6382"/>
+            <point key="canvasLocation" x="2975" y="5666"/>
         </scene>
         <!--Signup EmailVC-->
         <scene sceneID="dyS-J9-JCH">
