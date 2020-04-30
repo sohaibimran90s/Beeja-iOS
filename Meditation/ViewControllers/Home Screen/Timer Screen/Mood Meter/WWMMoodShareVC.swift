@@ -143,7 +143,7 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "EMOTION", itemName: "IOS")
             if self.arrImages.count == 0 {
                 let image = UIImage.init(named: self.arrStaticImages[self.selectedIndex])
-                let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
+                let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: itms-apps://itunes.apple.com/app/1453359245"
                 let imageToShare = [text,image!] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
@@ -155,8 +155,6 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                         self.xibJournalPopupCall()
                     }
                 }
-                
-                
                 activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                 
                 self.present(activityViewController, animated: true, completion: nil)
@@ -174,8 +172,12 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         WWMHelperClass.showLoaderAnimate(on: self.view)
         WWMWebServices.requestwithImageUrl(url: url) { (image, error, success) in
             if success {
-                let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
-                let imageToShare = [text,image] as [Any]
+                let text = "Feeling \(self.moodData.name) with Beeja. Download the app from here:"
+
+                let URLstring =  String(format:"https://itunes.apple.com/in/app/facebook/id1453359245?mt=8")
+                let urlToShare = URL(string:URLstring)
+                
+                let imageToShare = [image, text, urlToShare as Any] as [Any]
                 let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                 activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
                 
@@ -188,72 +190,18 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
                 
                 DispatchQueue.main.async {
                     if UIDevice.current.userInterfaceIdiom == .pad {
-                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                    activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
                         self.present(activityViewController, animated: true, completion: nil)
                     }else {
-                    
-                         activityViewController.popoverPresentationController?.sourceView = self.view 
+                    activityViewController.popoverPresentationController?.sourceView = self.view
                         self.present(activityViewController, animated: true, completion: nil)
                     }
                 }
-                
             }
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
-    func downloaded(url: URL) {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        URLSession.shared.dataTask(with: url) { data, response, error in
-        
-                if  let data = data, error == nil{
-                if let image = UIImage(data: data) {
-                    let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
-                    let imageToShare = [text,image] as [Any]
-                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                    activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
-                    
-                    activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-                        print(success ? "SUCCESS!" : "FAILURE")
-                        if success{
-                            self.xibJournalPopupCall()
-                        }
-                    }
-                    
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-                        self.present(activityViewController, animated: true, completion: nil)
-                    }else {
-                        
-                       self.present(activityViewController, animated: true, completion: nil)
-                    }
-                }else {
-                    let image = UIImage.init(named: "AppIcon")
-                    let text = "Feeling \(self.moodData.name) with Beeja. Download the app here: http://itunes.com/apps/com.beejameditation.beeja"
-                    let imageToShare = [text,image!] as [Any]
-                    let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                    activityViewController.setValue("Feeling \(self.moodData.name) with Beeja", forKey: "subject")
-                    
-                    activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-                        print(success ? "SUCCESS!" : "FAILURE")
-                        if success{
-                            self.xibJournalPopupCall()
-                        }
-                    }
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-                        self.present(activityViewController, animated: true, completion: nil)
-                    }else {
-                       self.present(activityViewController, animated: true, completion: nil)
-                    }
-                    }
-            
-            } else { return }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-            }.resume()
-    }
     
     //MARK: fetch GetVibes Data From DB
     func fetchGetVibesDataFromDB(mood_id: String) {
