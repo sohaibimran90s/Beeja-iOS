@@ -1130,6 +1130,20 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     meditation_data.append(data)
                 }
                     //"IsMilestoneAndRewards"
+            
+            
+            if self.settingData.startChime == "JAY GURU DEVA"{
+                self.settingData.startChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.endChime == "JAY GURU DEVA"{
+                self.settingData.endChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.finishChime == "JAY GURU DEVA"{
+                self.settingData.finishChime = "JAI GURU DEVA"
+            }
+            
             let group = [
                     "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
                     "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
