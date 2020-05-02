@@ -74,7 +74,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             }else if cell.lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
                 cell.lblMeditationType.text = "How to journal"
             }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
-                cell.lblMeditationType.text = "Why meditate"
+                cell.lblMeditationType.text = "Why Journal"
             }else{
                 cell.lblMeditationType.text = "Journal Entry"
             }
