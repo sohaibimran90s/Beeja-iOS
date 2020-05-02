@@ -40,6 +40,8 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
         self.btnShare.layer.borderWidth = 2.0
         self.btnShare.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
+        print("mood,,, \(moodData.id)")
+        
         self.fetchGetVibesDataFromDB(mood_id: "\(self.moodData.id)")
     }
     

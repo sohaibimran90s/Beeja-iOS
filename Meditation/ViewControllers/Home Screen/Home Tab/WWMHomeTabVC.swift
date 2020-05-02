@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 import AVKit
-import Crashlytics
+import FirebaseCrashlytics
 
 class WWMHomeTabVC: WWMBaseViewController {
 
@@ -539,7 +539,7 @@ class WWMHomeTabVC: WWMBaseViewController {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
                     }

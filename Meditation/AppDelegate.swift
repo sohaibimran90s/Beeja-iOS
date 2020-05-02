@@ -14,8 +14,7 @@ import FBSDKCoreKit
 import CoreData
 import UserNotifications
 import Reachability
-import Crashlytics
-import Fabric
+import FirebaseCrashlytics
 import CallKit
 
 
@@ -70,9 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = true
-        
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         print(UIDevice.current.identifierForVendor!.uuidString)
