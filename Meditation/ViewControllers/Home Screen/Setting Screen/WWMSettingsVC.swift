@@ -1144,6 +1144,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.settingData.finishChime = "JAI GURU DEVA"
             }
             
+            if self.settingData.ambientChime == "JAY GURU DEVA"{
+                self.settingData.ambientChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.intervalChime == "JAY GURU DEVA"{
+                self.settingData.intervalChime = "JAI GURU DEVA"
+            }
+            
             let group = [
                     "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
                     "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,

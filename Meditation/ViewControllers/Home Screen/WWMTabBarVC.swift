@@ -44,7 +44,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.updateDiskStatus()
+        //self.updateDiskStatus()
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
         
@@ -317,8 +317,18 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 settingDB.finishChime = json["finishChime"] as? String ?? kChimes_BURMESE_BELL
             }
             
-            settingDB.ambientChime = json["ambientSound"] as? String ?? kChimes_BURMESE_BELL
-            settingDB.intervalChime = json["intervalChime"] as? String ?? kChimes_BURMESE_BELL
+            if json["ambientSound"] as? String == "JAY GURU DEVA"{
+                 settingDB.ambientChime = "JAI GURU DEVA"
+            }else{
+                settingDB.ambientChime = json["ambientSound"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
+            if json["intervalChime"] as? String == "JAY GURU DEVA"{
+                 settingDB.intervalChime = "JAI GURU DEVA"
+            }else{
+                settingDB.intervalChime = json["intervalChime"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
             settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
             settingDB.isMilestoneAndRewards = json["IsMilestoneAndRewards"] as? Bool ?? false
             settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
