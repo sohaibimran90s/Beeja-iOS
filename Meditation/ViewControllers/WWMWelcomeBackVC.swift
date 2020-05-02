@@ -182,8 +182,8 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
     
     
     func continueWithFacebook() {
-        let loginManager = FBSDKLoginManager()
-        loginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (loginResult, error) in
+        let loginManager = LoginManager()
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (loginResult, error) in
             
             if error != nil {
                 print(error?.localizedDescription ?? "")
@@ -191,8 +191,8 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                 if (loginResult?.isCancelled)! {
                     print("User Cancellled To login with fb")
                 }else {
-                    let req = FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token.tokenString , version: nil, httpMethod: "GET")
-                    req?.start(completionHandler: { (connection, result, error) in
+                    let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+                    req.start(completionHandler: { (connection, result, error) in
                         if error == nil {
                             print(result!)
                             if let fbData = result as? [String:Any] {

@@ -443,10 +443,8 @@
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
 		61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */; };
 		61FE76682348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE76662348A528004073D5 /* DBMeditationHistory+CoreDataProperties.swift */; };
-		6B31C886239092ED89F368E5 /* Pods_MeditationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */; };
 		6FE80E8E224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */; };
 		6FE80E8F224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */; };
-		78ADD3E70FD1AE1E83FE7C8E /* Pods_MeditationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3CFC2BF646A938192DD625 /* Pods_MeditationUITests.framework */; };
 		E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */; };
 		E07831F1235E3BCA00B352ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E07831D6235E3BCA00B352ED /* Localizable.strings */; };
 		E07831F2235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07831D8235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift */; };
@@ -492,10 +490,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B3CFC2BF646A938192DD625 /* Pods_MeditationUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeditationUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.debug.xcconfig"; sourceTree = "<group>"; };
-		1D9710DC757A07F39D195208 /* Pods-MeditationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationTests/Pods-MeditationTests.debug.xcconfig"; sourceTree = "<group>"; };
-		26AE16DFE7128CFAFADB4E44 /* Pods-MeditationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationTests/Pods-MeditationTests.release.xcconfig"; sourceTree = "<group>"; };
 		2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTabBarItem.swift; sourceTree = "<group>"; };
 		2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJournalProgressData.swift; sourceTree = "<group>"; };
 		2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalView.swift; sourceTree = "<group>"; };
@@ -583,7 +578,6 @@
 		2E65FB8F238FAEA800576120 /* slient.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slient.mp3; sourceTree = "<group>"; };
 		2E6C8405222427180070E799 /* WWMUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMUserData.swift; sourceTree = "<group>"; };
 		2E6C840722256DFC0070E799 /* Meditation.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Meditation.entitlements; sourceTree = "<group>"; };
-		2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E7360E122159B4700D04EE4 /* WWMAddJournalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalVC.swift; sourceTree = "<group>"; };
 		2E85F1602204660B008073A2 /* JAI GURU DEVA.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "JAI GURU DEVA.mp3"; sourceTree = "<group>"; };
 		2E8EFD9D22363D8E00B19950 /* WWMFinishTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerVC.swift; sourceTree = "<group>"; };
@@ -948,7 +942,6 @@
 		6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDDCE084A12C87DE5C17EE29 /* Pods-MeditationUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeditationUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeditationUITests/Pods-MeditationUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMTimerHomeVC.swift; sourceTree = "<group>"; };
 		E07831D7235E3BCA00B352ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E07831D8235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemMoreContentView.swift; sourceTree = "<group>"; };
@@ -975,7 +968,6 @@
 		E07831EF235E3BCA00B352ED /* graph.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = graph.json; sourceTree = "<group>"; };
 		E07831F0235E3BCA00B352ED /* home.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home.json; sourceTree = "<group>"; };
 		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
-		FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeditationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -997,7 +989,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B31C886239092ED89F368E5 /* Pods_MeditationTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,7 +996,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78ADD3E70FD1AE1E83FE7C8E /* Pods_MeditationUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2043,8 +2033,6 @@
 				61416F5622BBBA1800C9339E /* Charts.framework */,
 				2E49661C22182DCC00BC6219 /* StoreKit.framework */,
 				863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */,
-				FDF5E1ECBFF8FF14A334BD96 /* Pods_MeditationTests.framework */,
-				0B3CFC2BF646A938192DD625 /* Pods_MeditationUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2054,10 +2042,6 @@
 			children = (
 				0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */,
 				E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */,
-				1D9710DC757A07F39D195208 /* Pods-MeditationTests.debug.xcconfig */,
-				26AE16DFE7128CFAFADB4E44 /* Pods-MeditationTests.release.xcconfig */,
-				CDDCE084A12C87DE5C17EE29 /* Pods-MeditationUITests.debug.xcconfig */,
-				2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2145,7 +2129,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E4B1BC521B5044D002F8A25 /* Build configuration list for PBXNativeTarget "MeditationTests" */;
 			buildPhases = (
-				160AA692852C750DA86E20F7 /* [CP] Check Pods Manifest.lock */,
 				2E4B1BAA21B5044D002F8A25 /* Sources */,
 				2E4B1BAB21B5044D002F8A25 /* Frameworks */,
 				2E4B1BAC21B5044D002F8A25 /* Resources */,
@@ -2164,7 +2147,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E4B1BC821B5044D002F8A25 /* Build configuration list for PBXNativeTarget "MeditationUITests" */;
 			buildPhases = (
-				62871A6CD405C6D1A742A969 /* [CP] Check Pods Manifest.lock */,
 				2E4B1BB521B5044D002F8A25 /* Sources */,
 				2E4B1BB621B5044D002F8A25 /* Frameworks */,
 				2E4B1BB721B5044D002F8A25 /* Resources */,
@@ -2373,28 +2355,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		160AA692852C750DA86E20F7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeditationTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2E567A0E2248D65F00CAC1DE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -2414,28 +2374,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf8a914070962839333227b1c8251f76a5ae404f eb8906d42c942503bcc840f38e2c88ac35f2c603df7fe8e174cfd34dabaaa7ed\n";
-		};
-		62871A6CD405C6D1A742A969 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MeditationUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 		9EF8A5E0C7C049E993B8084E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3100,7 +3038,6 @@
 		};
 		2E4B1BC621B5044D002F8A25 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D9710DC757A07F39D195208 /* Pods-MeditationTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3121,7 +3058,6 @@
 		};
 		2E4B1BC721B5044D002F8A25 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26AE16DFE7128CFAFADB4E44 /* Pods-MeditationTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3142,7 +3078,6 @@
 		};
 		2E4B1BC921B5044D002F8A25 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDDCE084A12C87DE5C17EE29 /* Pods-MeditationUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -3162,7 +3097,6 @@
 		};
 		2E4B1BCA21B5044D002F8A25 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E72BB9059C1CE174BD63BEB /* Pods-MeditationUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

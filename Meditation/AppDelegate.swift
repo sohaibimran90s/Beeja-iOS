@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         print(UIDevice.current.identifierForVendor!.uuidString)
         // GIDSignIn.sharedInstance().delegate = self
         
-        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -750,7 +750,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
        
         if url.absoluteString.contains("fb") {
-            return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+            return ApplicationDelegate.shared.application(app, open: url, options: options)
         }else if url.absoluteString.contains("beeja-app://getplaylist/"){
             
             if auth.canHandle(auth.redirectURL) {
