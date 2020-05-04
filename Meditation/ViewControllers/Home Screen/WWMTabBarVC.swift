@@ -308,12 +308,36 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             }
             let settingDB = WWMHelperClass.fetchEntity(dbName: "DBSettings") as! DBSettings
             
+            if json["startChime"] as? String == "JAY GURU DEVA"{
+                settingDB.startChime = "JAI GURU DEVA"
+            }else{
+                settingDB.startChime = json["startChime"] as? String ?? kChimes_BURMESE_BELL
+            }
             
-            settingDB.startChime = json["startChime"] as? String ?? ""
-            settingDB.ambientChime = json["ambientSound"] as? String ?? ""
-            settingDB.endChime = json["endChime"] as? String ?? ""
-            settingDB.finishChime = json["finishChime"] as? String ?? ""
-            settingDB.intervalChime = json["intervalChime"] as? String ?? ""
+            if json["endChime"] as? String == "JAY GURU DEVA"{
+                 settingDB.endChime = "JAI GURU DEVA"
+            }else{
+                settingDB.endChime = json["endChime"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
+            if json["finishChime"] as? String == "JAY GURU DEVA"{
+                 settingDB.finishChime = "JAI GURU DEVA"
+            }else{
+                settingDB.finishChime = json["finishChime"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
+            if json["ambientSound"] as? String == "JAY GURU DEVA"{
+                 settingDB.ambientChime = "JAI GURU DEVA"
+            }else{
+                settingDB.ambientChime = json["ambientSound"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
+            if json["intervalChime"] as? String == "JAY GURU DEVA"{
+                 settingDB.intervalChime = "JAI GURU DEVA"
+            }else{
+                settingDB.intervalChime = json["intervalChime"] as? String ?? kChimes_BURMESE_BELL
+            }
+            
             settingDB.isAfterNoonReminder = json["IsAfternoonReminder"] as? Bool ?? false
             settingDB.isMilestoneAndRewards = json["IsMilestoneAndRewards"] as? Bool ?? false
             settingDB.isMorningReminder = json["IsMorningReminder"] as? Bool ?? false
