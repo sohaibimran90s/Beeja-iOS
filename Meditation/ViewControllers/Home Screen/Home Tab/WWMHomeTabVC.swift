@@ -20,7 +20,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var imgGiftIcon: UIImageView!
     @IBOutlet weak var imgPlayIcon: UIImageView!
     @IBOutlet weak var btnPlayVideo: UIButton!
-    @IBOutlet weak var viewVideo: VideoView!
+    //@IBOutlet weak var viewVideo: VideoView!
     @IBOutlet weak var backImgVideo: UIImageView!
     @IBOutlet weak var viewVideoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var introView: UIView!
@@ -31,7 +31,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imgTopBar: UIImageView!
     
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
@@ -123,11 +122,11 @@ class WWMHomeTabVC: WWMBaseViewController {
         let firstName = arrName[0]
         
         if self.appPreffrence.getSessionAvailableData(){
-            self.imgTopBar.isHidden = true
-            self.viewVideoHeightConstraint.constant = 140
+            self.introView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+            //self.viewVideo.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+            self.viewVideoHeightConstraint.constant = 110
             self.lblStartedText.text = KHOMELBL
-            self.backImgVideo.image = UIImage(named: "meditationHistoryBG")
-            self.imgTopBar.image = UIImage(named: "meditationHistoryBG")
+            self.backImgVideo.image = UIImage(named: "")
             self.lblIntroText.isHidden = true
             self.imgGiftIcon.isHidden = true
             self.imgPlayIcon.isHidden = true
@@ -147,11 +146,11 @@ class WWMHomeTabVC: WWMBaseViewController {
                 self.lblName.text = "\(kEVENING)\n\(firstName)!"
             }
         }else{
-            self.imgTopBar.isHidden = true
             self.lblName.text = "\(KWELCOME) \(firstName)!"
             self.lblStartedText.text = KHOMELBL1
+            self.introView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+            //self.introView.backgroundColor = UIColor.clear
             self.backImgVideo.image = UIImage(named: "bg1")
-            //self.imgTopBar.image = UIImage(named: "bg1")
             self.lblIntroText.isHidden = false
             self.imgGiftIcon.isHidden = false
             self.imgPlayIcon.isHidden = false

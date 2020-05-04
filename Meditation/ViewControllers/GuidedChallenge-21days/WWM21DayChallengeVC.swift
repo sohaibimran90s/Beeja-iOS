@@ -55,6 +55,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
         print("min_limit++ \(min_limit) max_limit++ \(max_limit) meditation_key++ \(meditation_key)")
         
         if self.appPreference.getGuideType() == "practical"{
@@ -105,6 +106,11 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
     override func viewWillAppear(_ animated: Bool) {
         print("guideTitleCount+++++++ \(guideTitleCount)")
 
+    }
+    
+    @IBAction override func btnBack21DaysAction(_ sender: UIButton){
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func introBtnAction(_ sender: UIButton) {
