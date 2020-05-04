@@ -1157,7 +1157,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                                 "levels":levelDic] as [String : Any]
                     meditation_data.append(data)
                 }else{
-                    print("++++++ \(dic.min_limit) +++++ \(dic.max_limit)")
+                    //print("++++++ \(String(describing: dic.min_limit)) +++++ \(dic.max_limit)")
                     
                     let data = ["meditation_id":dic.meditationId,
                                 "meditation_name":dic.meditationName ?? "",
@@ -1171,6 +1171,27 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             //"IsMilestoneAndRewards"
+            
+            if self.settingData.startChime == "JAY GURU DEVA"{
+                self.settingData.startChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.endChime == "JAY GURU DEVA"{
+                self.settingData.endChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.finishChime == "JAY GURU DEVA"{
+                self.settingData.finishChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.ambientChime == "JAY GURU DEVA"{
+                self.settingData.ambientChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.intervalChime == "JAY GURU DEVA"{
+                self.settingData.intervalChime = "JAI GURU DEVA"
+            }
+            
             let group = [
                 "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
                 "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,

@@ -308,6 +308,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             }
             let settingDB = WWMHelperClass.fetchEntity(dbName: "DBSettings") as! DBSettings
             
+            
             settingDB.startChime = json["startChime"] as? String ?? ""
             settingDB.ambientChime = json["ambientSound"] as? String ?? ""
             settingDB.endChime = json["endChime"] as? String ?? ""
