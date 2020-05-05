@@ -94,22 +94,24 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             
                 WWMHelperClass.xlpager = "challenge"
                 print("data.cat_name... \(data.cat_Name)")
-                if data.cat_Name.contains("21"){
-                    if isIntroCompleted ?? false{
-                        
-                        if arrGuidedList.count > 3{
-                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
-                        }else{
-                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
-                        }
-                         
-                    }else{
-                         vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
-                    }
-                }else{
-                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-                }
+//                if data.cat_Name.contains("21"){
+//                    if isIntroCompleted ?? false{
+//
+//                        if arrGuidedList.count > 3{
+//                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
+//                        }else{
+//                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
+//                        }
+//
+//                    }else{
+//                         vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
+//                    }
+//                }else{
+                    
+                //}
                 
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                 vc.tile_type = tile_type
                 vc.emotionId = emotionId
                 vc.emotionKey = emotionKey

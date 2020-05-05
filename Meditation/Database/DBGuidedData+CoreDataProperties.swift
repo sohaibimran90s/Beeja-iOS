@@ -17,6 +17,7 @@ extension DBGuidedData {
         return NSFetchRequest<DBGuidedData>(entityName: "DBGuidedData")
     }
 
+    @NSManaged public var name: String?
     @NSManaged public var guided_id: String?
     @NSManaged public var guided_name: String?
     @NSManaged public var last_time_stamp: String?

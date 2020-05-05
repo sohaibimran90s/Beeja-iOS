@@ -126,12 +126,12 @@ class WWMBaseViewController: UIViewController {
     
     @objc func dropDownSleep(){
         //KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil)
-        KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "spiritual"])
+        KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "Sleep"])
     }
     
     @objc func dropDownGuided(){
         
-         KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "practical"])
+         KNOTIFICATIONCENTER.post(name: Notification.Name("guidedDropDownClicked"), object: nil, userInfo: ["type": "guided", "subType": "Guided"])
     }
     
     func setUpNavigationBarForAudioGuided(title:String) {

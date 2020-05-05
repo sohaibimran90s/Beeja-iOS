@@ -108,7 +108,7 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
 
     }
     
-    @IBAction override func btnBack21DaysAction(_ sender: UIButton){
+    @IBAction func btnBack21DaysAction(_ sender: UIButton){
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.popViewController(animated: true)
     }

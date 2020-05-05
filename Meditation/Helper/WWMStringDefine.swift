@@ -120,7 +120,7 @@ let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
 
 let URL_WISHDOMFEEDBACK            = URL_BASE + "wisdomFeedback"
 
-let URL_GETGUIDEDDATA                 = URL_BASE + "dictionary/guided"//
+let URL_GETGUIDEDDATA                 = URL_BASE + "dictionary/newguided"//
 
 let URL_GETGUIDEDAudio                = URL_BASE + "guidedAudio"//
 
