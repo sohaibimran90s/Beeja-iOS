@@ -53,7 +53,7 @@ public struct ButtonBarPagerTabStripSettings {
         public var selectedBarVerticalAlignment: SelectedBarVerticalAlignment = .bottom
 
         public var buttonBarItemBackgroundColor: UIColor?
-        public var buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 26)!
+        public var buttonBarItemFont = UIFont.systemFont(ofSize: 18)
         public var buttonBarItemLeftRightMargin: CGFloat = 8
         public var buttonBarItemTitleColor: UIColor?
         public var buttonBarItemsShouldFillAvailableWidth = true
@@ -64,11 +64,8 @@ public struct ButtonBarPagerTabStripSettings {
     public var style = Style()
 }
 
-open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource,
-PagerTabStripIsProgressiveDelegate, UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout {
+open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    public var guidedCount = 2
     public var settings = ButtonBarPagerTabStripSettings()
 
     public var buttonBarItemSpec: ButtonBarItemSpec<ButtonBarViewCell>!
@@ -96,10 +93,6 @@ UICollectionViewDelegateFlowLayout {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(self.notificationGuidedList(notification:)), name: Notification.Name("notificationGuidedListCount"), object: nil)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "notificationGuidedListCount"), object: nil, queue: nil, using: catchNotification)
-
         
         var bundle = Bundle(for: ButtonBarViewCell.self)
         if let resourcePath = bundle.path(forResource: "XLPagerTabStrip", ofType: "bundle") {
@@ -165,16 +158,6 @@ UICollectionViewDelegateFlowLayout {
             buttonBarView.register(ButtonBarViewCell.self, forCellWithReuseIdentifier:"Cell")
         }
         //-
-    }
-    
-    @objc func catchNotification(notification: Notification) {
-        guard let count = notification.userInfo!["guidedCount"] else { return }
-        
-        self.guidedCount = count as? Int ?? 2
-        print("guidedCount*** \(count) abdhcjd self.guidedCount*** \(self.guidedCount)")
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuidedListCount"), object: nil)
-        
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -286,26 +269,11 @@ UICollectionViewDelegateFlowLayout {
 
     // MARK: - UICollectionViewDelegateFlowLayut
 
-    @objc open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
-//            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
-//        }
-        print("data.tile_type...")
-        
-        if self.guidedCount > 2{
-            if indexPath.item == 2{
-                return CGSize(width: 290, height: collectionView.frame.size.height)
-            }else if indexPath.item == 3{
-                return CGSize(width: 220, height: collectionView.frame.size.height)
-            }else{
-                return CGSize(width: 120, height: collectionView.frame.size.height)
-            }
-        }else{
-            guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
-                fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
-            }
-            return CGSize(width: cellWidthValue, height: collectionView.frame.size.height)
+    @objc open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
+            fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
         }
+        return CGSize(width: cellWidthValue, height: collectionView.frame.size.height)
     }
 
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -354,15 +322,6 @@ UICollectionViewDelegateFlowLayout {
         cell.backgroundColor = settings.style.buttonBarItemBackgroundColor ?? cell.backgroundColor
         if let image = indicatorInfo.image {
             cell.imageView.image = image
-            cell.layoutImgWidth.constant = 20
-            cell.layoutImgHeight.constant = 20
-            cell.layoutLblLeading.constant = 4
-            cell.layoutLblTrailing.constant = 0
-        }else {
-            cell.layoutImgWidth.constant = 0
-            cell.layoutImgHeight.constant = 0
-            cell.layoutLblLeading.constant = 0
-            cell.layoutLblTrailing.constant = 0
         }
         if let highlightedImage = indicatorInfo.highlightedImage {
             cell.imageView.highlightedImage = highlightedImage
