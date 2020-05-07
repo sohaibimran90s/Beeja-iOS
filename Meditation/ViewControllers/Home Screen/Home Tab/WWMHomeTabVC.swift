@@ -420,7 +420,26 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
 
     @IBAction func btnGuidedClicked(_ sender: UIButton) {
-        self.xibCallGuided()
+        //self.xibCallGuided()
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
+        
+        guided_type = "practical"
+        self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
     }
 
     @IBAction func btnLearnClicked(_ sender: UIButton) {

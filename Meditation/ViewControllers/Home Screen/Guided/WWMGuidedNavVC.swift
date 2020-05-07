@@ -27,15 +27,19 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.offlineDatatoServerCall()
         KNOTIFICATIONCENTER.addObserver(forName: NSNotification.Name(rawValue: "guidedDropDownClicked"), object: nil, queue: nil, using: catchNotification)
 
-        if self.appPreference.getGuideType() == "practical"{
-            self.typeTitle = "Practical Guidance"
-            self.setUpNavigationBarForDashboard(title: "guided")
-            self.guided_type = "practical"
-        }else {
-            self.typeTitle = "Spiritual Guidance"
-            self.setUpNavigationBarForDashboard(title: "sleep")
-            self.guided_type = "spiritual"
-        }
+//        if self.appPreference.getGuideType() == "practical"{
+//            self.typeTitle = "Practical Guidance"
+//            self.setUpNavigationBarForDashboard(title: "guided")
+//            self.guided_type = "practical"
+//        }else {
+//            self.typeTitle = "Spiritual Guidance"
+//            self.setUpNavigationBarForDashboard(title: "sleep")
+//            self.guided_type = "spiritual"
+//        }
+        
+         self.typeTitle = "Practical Guidance"
+         self.setUpNavigationBarForDashboard(title: "guided")
+         self.guided_type = "Guided"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
@@ -145,11 +149,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
         print("type*** \(self.type) guided_type*** \(guided_type)")
         
-        if guided_type == "practical"{
+        if guided_type == "Guided"{
             self.typeTitle = "Practical Guidance"
             setUpNavigationBarForDashboard(title: "guided")
         }else{
-            self.typeTitle = "Spiritual Guidance"
+            self.typeTitle = "Sleep"
             setUpNavigationBarForDashboard(title: "sleep")
         }
         
@@ -478,13 +482,14 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                             }
                                             
                                             WWMHelperClass.saveDb()
-                                            self.fetchGuidedDataFromDB()
+                                            
                                         }
                                     }
                                 }
                             }
                             
                             WWMHelperClass.saveDb()
+                            self.fetchGuidedDataFromDB()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
                         print("guided data tabbarvc in background thread...")

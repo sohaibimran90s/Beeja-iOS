@@ -208,6 +208,7 @@
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
 		612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */; };
 		612DFCB62351BD060055ED96 /* WWMSignUpFacebookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612DFCB52351BD050055ED96 /* WWMSignUpFacebookVC.swift */; };
+		612FB2032462B72B001DA174 /* WWM21DayChallengeTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612FB2022462B72B001DA174 /* WWM21DayChallengeTabVC.swift */; };
 		613071EC22D72267009CBCA1 /* WWMHomeTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */; };
 		613071F022D879BC009CBCA1 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071EF22D879BC009CBCA1 /* VideoView.swift */; };
 		613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */; };
@@ -726,6 +727,7 @@
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
 		612DFCB52351BD050055ED96 /* WWMSignUpFacebookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignUpFacebookVC.swift; sourceTree = "<group>"; };
+		612FB2022462B72B001DA174 /* WWM21DayChallengeTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWM21DayChallengeTabVC.swift; sourceTree = "<group>"; };
 		613071EB22D72267009CBCA1 /* WWMHomeTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeTabVC.swift; sourceTree = "<group>"; };
 		613071EF22D879BC009CBCA1 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeMedHistoryCVC.swift; sourceTree = "<group>"; };
@@ -1766,6 +1768,7 @@
 				613AB06E23F2ACA600064B99 /* WWM21DayChallengeTVC.swift */,
 				61793D0523FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift */,
 				61793D0723FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift */,
+				612FB2022462B72B001DA174 /* WWM21DayChallengeTabVC.swift */,
 			);
 			path = "GuidedChallenge-21days";
 			sourceTree = "<group>";
@@ -2632,6 +2635,7 @@
 				611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */,
 				61416EB422BBB42600C9339E /* ChartUtils.swift in Sources */,
 				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,
+				612FB2032462B72B001DA174 /* WWM21DayChallengeTabVC.swift in Sources */,
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,
 				61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */,
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,

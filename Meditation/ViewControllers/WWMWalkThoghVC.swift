@@ -359,9 +359,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 if let _ = result["success"] as? Bool {
                     print("success result getGuidedListAPI walkthough... \(result)")
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
-                    if let audioList = result["result"] as? [[String:Any]] {
+                    if let result = result["result"] as? [[String:Any]] {
                         
-                        print("audioList... \(audioList)")
+                        print("result... \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -378,143 +378,161 @@ class WWMWalkThoghVC: WWMBaseViewController {
                             WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                         }
                         
-                        for guidedDict in audioList {
+                        for dict in result {
                             
-                            let dbGuidedData = WWMHelperClass.fetchEntity(dbName: "DBGuidedData") as! DBGuidedData
-                            
-                            let timeInterval = Int(Date().timeIntervalSince1970)
-                            print("timeInterval.... \(timeInterval)")
-                            
-                            dbGuidedData.last_time_stamp = "\(timeInterval)"
-                            
-                            if let id = guidedDict["id"]{
-                                dbGuidedData.guided_id = "\(id)"
-                            }
-                            
-                            if let name = guidedDict["name"] as? String{
-                                dbGuidedData.guided_name = name
-                            }
-                            
-                            if let meditation_type = guidedDict["meditation_type"] as? String{
-                                dbGuidedData.meditation_type = meditation_type
-                            }
-                            
-                            if let guided_mode = guidedDict["mode"] as? String{
-                                dbGuidedData.guided_mode = guided_mode
-                            }
-                            
-                            if let min_limit = guidedDict["min_limit"] as? String{
-                                dbGuidedData.min_limit = min_limit
-                            }else{
-                                dbGuidedData.min_limit = "95"
-                            }
-                            
-                            if let max_limit = guidedDict["max_limit"] as? String{
-                                dbGuidedData.max_limit = max_limit
-                            }else{
-                                dbGuidedData.max_limit = "98"
-                            }
-                            
-                            if let meditation_key = guidedDict["meditation_key"] as? String{
-                                dbGuidedData.meditation_key = meditation_key
-                            }else{
-                                if let meditation_type = guidedDict["meditation_type"] as? String{
-                                    dbGuidedData.meditation_key = meditation_type
-                                }
-                            }
-                            
-                            if let emotion_list = guidedDict["emotion_list"] as? [[String: Any]]{
-                                for emotionsDict in emotion_list {
-                                                                        
-                                    let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
-                                                                        
-                                    if let id = guidedDict["id"]{
-                                        dbGuidedEmotionsData.guided_id = "\(id)"
+                            if let meditation_list = dict["meditation_list"] as? [[String: Any]]{
+                                
+                                for meditationList in meditation_list {
+                                    let dbGuidedData = WWMHelperClass.fetchEntity(dbName: "DBGuidedData") as! DBGuidedData
+                                    
+                                    let timeInterval = Int(Date().timeIntervalSince1970)
+                                    
+                                    dbGuidedData.last_time_stamp = "\(timeInterval)"
+                                    dbGuidedData.name = dict["name"] as? String
+                                    
+                                    if let id = meditationList["id"]{
+                                        dbGuidedData.guided_id = "\(id)"
                                     }
                                     
-                                    if let emotion_id = emotionsDict["emotion_id"]{
-                                        dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
+                                    if let name = meditationList["name"] as? String{
+                                        dbGuidedData.guided_name = name
                                     }
                                     
-                                    if let author_name = emotionsDict["author_name"]{
-                                        dbGuidedEmotionsData.author_name = "\(author_name)"
+                                    if let meditation_type = meditationList["meditation_type"] as? String{
+                                        dbGuidedData.meditation_type = meditation_type
                                     }
                                     
-                                    if let emotion_image = emotionsDict["emotion_image"] as? String{
-                                        dbGuidedEmotionsData.emotion_image = emotion_image
+                                    if let guided_mode = meditationList["mode"] as? String{
+                                        dbGuidedData.guided_mode = guided_mode
                                     }
                                     
-                                    if let emotion_name = emotionsDict["emotion_name"] as? String{
-                                        dbGuidedEmotionsData.emotion_name = emotion_name
-                                    }
-                                    
-                                    if let intro_completed = emotionsDict["intro_completed"] as? Bool{
-                                        dbGuidedEmotionsData.intro_completed = intro_completed
+                                    if let min_limit = meditationList["min_limit"] as? String{
+                                        dbGuidedData.min_limit = min_limit
                                     }else{
-                                        dbGuidedEmotionsData.intro_completed = false
+                                        dbGuidedData.min_limit = "95"
                                     }
                                     
-                                    if let tile_type = emotionsDict["tile_type"] as? String{
-                                        dbGuidedEmotionsData.tile_type = tile_type
+                                    if let max_limit = meditationList["max_limit"] as? String{
+                                        dbGuidedData.max_limit = max_limit
+                                    }else{
+                                        dbGuidedData.max_limit = "98"
                                     }
                                     
-                                    if let emotion_key = emotionsDict["emotion_key"] as? String{
-                                        dbGuidedEmotionsData.emotion_key = emotion_key
+                                    if let meditation_key = meditationList["meditation_key"] as? String{
+                                        dbGuidedData.meditation_key = meditation_key
+                                    }else{
+                                        if let meditation_type = dict["meditation_type"] as? String{
+                                            dbGuidedData.meditation_key = meditation_type
+                                        }
                                     }
                                     
-                                    if let emotion_body = emotionsDict["emotion_body"] as? String{
-                                        dbGuidedEmotionsData.emotion_body = emotion_body
-                                    }
+                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.name \(dbGuidedData.name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
                                     
-                                    if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
-                                        for audioDict in audio_list {
+                                    if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
+                                        for emotionsDict in emotion_list {
                                             
-                                            let dbGuidedAudioData = WWMHelperClass.fetchEntity(dbName: "DBGuidedAudioData") as! DBGuidedAudioData
+                                            let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
+                                            
+                                            if let id = meditationList["id"]{
+                                                dbGuidedEmotionsData.guided_id = "\(id)"
+                                            }
                                             
                                             if let emotion_id = emotionsDict["emotion_id"]{
-                                                dbGuidedAudioData.emotion_id = "\(emotion_id)"
+                                                dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
                                             }
                                             
-                                            if let audio_id = audioDict["id"]{
-                                                dbGuidedAudioData.audio_id = "\(audio_id)"
+                                            if let author_name = emotionsDict["author_name"]{
+                                                dbGuidedEmotionsData.author_name = "\(author_name)"
                                             }
                                             
-                                            if let audio_image = audioDict["audio_image"] as? String{
-                                                dbGuidedAudioData.audio_image = audio_image
+                                            if let emotion_image = emotionsDict["emotion_image"] as? String{
+                                                dbGuidedEmotionsData.emotion_image = emotion_image
                                             }
                                             
-                                            if let audio_name = audioDict["audio_name"] as? String{
-                                                dbGuidedAudioData.audio_name = audio_name
+                                            if let emotion_name = emotionsDict["emotion_name"] as? String{
+                                                dbGuidedEmotionsData.emotion_name = emotion_name
                                             }
                                             
-                                            if let audio_url = audioDict["audio_url"] as? String{
-                                                dbGuidedAudioData.audio_url = audio_url
+                                            if let intro_completed = emotionsDict["intro_completed"] as? Bool{
+                                                dbGuidedEmotionsData.intro_completed = intro_completed
+                                            }else{
+                                                dbGuidedEmotionsData.intro_completed = false
                                             }
                                             
-                                            if let author_name = audioDict["author_name"] as? String{
-                                                dbGuidedAudioData.author_name = author_name
+                                            if let tile_type = emotionsDict["tile_type"] as? String{
+                                                dbGuidedEmotionsData.tile_type = tile_type
                                             }
                                             
-                                            if let duration = audioDict["duration"]{
-                                                dbGuidedAudioData.duration = "\(duration)"
+                                            if let emotion_key = emotionsDict["emotion_key"] as? String{
+                                                dbGuidedEmotionsData.emotion_key = emotion_key
                                             }
                                             
-                                            if let paid = audioDict["paid"] as? Bool{
-                                                dbGuidedAudioData.paid = paid
+                                            if let emotion_body = emotionsDict["emotion_body"] as? String{
+                                                dbGuidedEmotionsData.emotion_body = emotion_body
                                             }
                                             
-                                            if let vote = audioDict["vote"] as? Bool{
-                                                dbGuidedAudioData.vote = vote
+                                            if let completed = emotionsDict["completed"] as? Bool{
+                                                dbGuidedEmotionsData.completed = completed
+                                            }
+                                            
+                                            if let completed_date = emotionsDict["completed_date"] as? String{
+                                                dbGuidedEmotionsData.completed_date = completed_date
+                                            }
+                                            
+                                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)")
+                                            
+                                            if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
+                                                for audioDict in audio_list {
+                                                    
+                                                    let dbGuidedAudioData = WWMHelperClass.fetchEntity(dbName: "DBGuidedAudioData") as! DBGuidedAudioData
+                                                    
+                                                    if let emotion_id = emotionsDict["emotion_id"]{
+                                                        dbGuidedAudioData.emotion_id = "\(emotion_id)"
+                                                    }
+                                                    
+                                                    if let audio_id = audioDict["id"]{
+                                                        dbGuidedAudioData.audio_id = "\(audio_id)"
+                                                    }
+                                                    
+                                                    if let audio_image = audioDict["audio_image"] as? String{
+                                                        dbGuidedAudioData.audio_image = audio_image
+                                                    }
+                                                    
+                                                    if let audio_name = audioDict["audio_name"] as? String{
+                                                        dbGuidedAudioData.audio_name = audio_name
+                                                    }
+                                                    
+                                                    if let audio_url = audioDict["audio_url"] as? String{
+                                                        dbGuidedAudioData.audio_url = audio_url
+                                                    }
+                                                    
+                                                    if let author_name = audioDict["author_name"] as? String{
+                                                        dbGuidedAudioData.author_name = author_name
+                                                    }
+                                                    
+                                                    if let duration = audioDict["duration"]{
+                                                        dbGuidedAudioData.duration = "\(duration)"
+                                                    }
+                                                    
+                                                    if let paid = audioDict["paid"] as? Bool{
+                                                        dbGuidedAudioData.paid = paid
+                                                    }
+                                                    
+                                                    if let vote = audioDict["vote"] as? Bool{
+                                                        dbGuidedAudioData.vote = vote
+                                                    }
+                                                    
+                                                    print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
+                                                    
+                                                    WWMHelperClass.saveDb()
+                                                }
                                             }
                                             
                                             WWMHelperClass.saveDb()
                                         }
                                     }
-                                    
-                                    WWMHelperClass.saveDb()
                                 }
                             }
-                            
                             WWMHelperClass.saveDb()
                         }
                         WWMHelperClass.hideLoaderAnimate(on: self.view)

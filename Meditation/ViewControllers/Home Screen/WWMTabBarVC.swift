@@ -647,7 +647,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getGuidedListAPI(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: "https://uat.beejameditation.com/api/v2/dictionary/newguided", context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETGUIDEDDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
             if let _ = result["success"] as? Bool {

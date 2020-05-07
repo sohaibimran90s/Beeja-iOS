@@ -96,6 +96,7 @@ class WWMBaseViewController: UIViewController {
             self.navigationItem.leftBarButtonItem = leftBarButtonItem
         }else if title == "guided" {
             
+            barButtonGuided.alpha = 1.0
             barButtonSleep.alpha = 0.5
             let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
             let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
@@ -104,6 +105,7 @@ class WWMBaseViewController: UIViewController {
         }else if title == "sleep" {
             
             barButtonGuided.alpha = 0.5
+            barButtonSleep.alpha = 1.0
             let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
             let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
             

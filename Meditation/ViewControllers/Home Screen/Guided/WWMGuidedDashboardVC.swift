@@ -13,6 +13,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrGuidedList = [WWMGuidedData]()
+    var arrGuidedList1 = [WWMGuidedData]()
     var type = ""
     let appPreference = WWMAppPreference()
     
@@ -70,7 +71,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         var emotionKey = ""
         var tile_type = ""
         
-        for data in self.arrGuidedList {
+        self.getUniqueChallenge()
+        
+        for data in self.arrGuidedList1 {
             
             for i in 0..<data.cat_EmotionList.count{
                 print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
@@ -89,42 +92,26 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             }
             
             if data.cat_mode == "challenge"{
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                //WWM21DayChallengeVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
             
-                WWMHelperClass.xlpager = "challenge"
-                print("data.cat_name... \(data.cat_Name)")
-//                if data.cat_Name.contains("21"){
-//                    if isIntroCompleted ?? false{
+//                WWMHelperClass.xlpager = "challenge"
+//                print("data.cat_name... \(data.cat_Name)")
 //
-//                        if arrGuidedList.count > 3{
-//                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
-//                        }else{
-//                            vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_icon"))
-//                        }
+                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+//                vc.tile_type = tile_type
+//                vc.emotionId = emotionId
+//                vc.emotionKey = emotionKey
+//                vc.isIntroCompleted = isIntroCompleted ?? false
+//                vc.guidedData = data
+//                vc.type = self.type
+//                vc.cat_name = data.cat_Name
+//                vc.cat_id = data.cat_Id
+//                vc.guideTitleCount = arrGuidedList.count
 //
-//                    }else{
-//                         vc.itemInfo = IndicatorInfo.init(title: data.cat_Name, image: UIImage(named: "21_day_challenge_off"))
-//                    }
-//                }else{
-                    
-                //}
-                
-                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-                vc.tile_type = tile_type
-                vc.emotionId = emotionId
-                vc.emotionKey = emotionKey
-                vc.isIntroCompleted = isIntroCompleted ?? false
-                vc.guidedData = data
-                vc.type = self.type
-                vc.cat_name = data.cat_Name
-                vc.cat_id = data.cat_Id
-                vc.guideTitleCount = arrGuidedList.count
-                
-                vc.min_limit = data.min_limit
-                vc.max_limit = data.max_limit
-                vc.meditation_key = data.meditation_key
+//                vc.min_limit = data.min_limit
+//                vc.max_limit = data.max_limit
+//                vc.meditation_key = data.meditation_key
                 
                 arrVC.add(vc)
             }else{
@@ -144,6 +131,32 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         }
         return arrVC as! [UIViewController]
         // return [UIViewController]
+    }
+    
+    func getUniqueChallenge(){
+        if self.arrGuidedList.count > 0{
+            for dict in self.arrGuidedList{
+                var flag = 0
+                if arrGuidedList1.count > 0{
+                    
+                    for dict1 in arrGuidedList1{
+                        if dict1.cat_Name.contains("21 Days challenge"){
+                            flag = 1
+                        }
+                        
+                        if dict1.cat_Name.contains("7 Days challenge"){
+                            flag = 1
+                        }
+                        
+                    }
+                    if flag == 0{
+                        self.arrGuidedList1.append(dict)
+                    }
+                }else{
+                    self.arrGuidedList1.append(dict)
+                }
+            }
+        }
     }
 }
 
