@@ -12,6 +12,9 @@ import XLPagerTabStrip
 class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
 
     var itemInfo: IndicatorInfo = "View"
+    var type = ""
+    var name = ""
+    var meditationType = ""
     
     @IBOutlet weak var lblPracticalSessionCount: UILabel!
     @IBOutlet weak var lblSpiritualSessionCount: UILabel!
@@ -19,7 +22,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.layout()
     }
     
     func layout(){
@@ -33,15 +36,68 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        
+        print("self.name+++ \(self.name)")
+        if self.name == "7 Days challenge"{
+            if WWMHelperClass.challenge7DayCount > 1{
+                print("yes+++")
+            }else{
+                print("no+++")
+                let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
+                print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
+                
+                if guidedDataDB.count > 0{
+                    for dict in guidedDataDB {
+                        //print((dict as AnyObject).guided_id)
+                        
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                        
+                        vc.id = (dict as AnyObject).guided_id ?? ""
+                        self.navigationController?.pushViewController(vc, animated: false)
+                        
+                    }
+                }
+            }
+        }else{
+            print("21 days")
+        }
     }
     
     @IBAction func btnPracticalAction(_ sender: UIButton){
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
+        print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
+        if guidedDataDB.count > 0{
+            for dict in guidedDataDB {
+                if (dict as AnyObject).meditation_type == "practical"{
+                    print((dict as AnyObject).guided_id)
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                    
+                    vc.id = (dict as AnyObject).guided_id ?? ""
+                    self.navigationController?.pushViewController(vc, animated: false)
+                }
+            }
+        }
     }
     
     @IBAction func btnSpiritualAction(_ sender: UIButton){
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
+        print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
+        if guidedDataDB.count > 0{
+            for dict in guidedDataDB {
+                if (dict as AnyObject).meditation_type == "Spiritual"{
+                    print((dict as AnyObject).guided_id)
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                    
+                    vc.id = (dict as AnyObject).guided_id ?? ""
+                    self.navigationController?.pushViewController(vc, animated: false)
+                }
+            }
+        }
     }
     
     // MARK: - IndicatorInfoProvider

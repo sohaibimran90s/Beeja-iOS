@@ -26,4 +26,5 @@ extension DBGuidedData {
     @NSManaged public var min_limit: String?
     @NSManaged public var max_limit: String?
     @NSManaged public var meditation_key: String?
+    @NSManaged public var cat_name: String?
 }

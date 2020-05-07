@@ -11,11 +11,12 @@ import XLPagerTabStrip
 import CoreData
 import StoreKit
 
-class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
+class WWM21DayChallengeVC: WWMBaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introBtn: UIButton!
     
+    var id = ""
     var selectedIndex = 0
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
@@ -56,6 +57,15 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
         super.viewDidLoad()
         
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("guideTitleCount+++++++ \(guideTitleCount)")
+
+    }
+    
+    func abc(){
         print("min_limit++ \(min_limit) max_limit++ \(max_limit) meditation_key++ \(meditation_key)")
         
         if self.appPreference.getGuideType() == "practical"{
@@ -103,11 +113,6 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
         //*end here
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        print("guideTitleCount+++++++ \(guideTitleCount)")
-
-    }
-    
     @IBAction func btnBack21DaysAction(_ sender: UIButton){
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.popViewController(animated: true)
@@ -120,10 +125,6 @@ class WWM21DayChallengeVC: WWMBaseViewController,IndicatorInfoProvider {
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
-    // MARK: - IndicatorInfoProvider
-    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return itemInfo
-    }
     
     func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)

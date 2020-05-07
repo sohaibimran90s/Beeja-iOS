@@ -828,7 +828,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                                     let timeInterval = Int(Date().timeIntervalSince1970)
                                     
                                     dbGuidedData.last_time_stamp = "\(timeInterval)"
-                                    dbGuidedData.name = dict["name"] as? String
+                                    dbGuidedData.cat_name = dict["name"] as? String
                                     
                                     if let id = meditationList["id"]{
                                         dbGuidedData.guided_id = "\(id)"

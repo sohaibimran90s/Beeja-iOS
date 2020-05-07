@@ -1275,7 +1275,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
-                
+                WWMHelperClass.challenge7DayCount = 0
                 WWMHelperClass.selectedType = ""
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)

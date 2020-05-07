@@ -34,6 +34,7 @@ class WWMHelperClass {
     static var step_id: Int = 1
     static var value: String = ""
     static var timerCount: Int = 0
+    static var challenge7DayCount: Int = 0
     
     static var xlpager = ""
     static var checkNinetyFivePer = 0
@@ -566,6 +567,39 @@ class WWMHelperClass {
         }
         
         return "0"
+    }
+    
+    class func fetchGuidedFilterDB(type: String, dbName: String, name: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "\(name) == %@", type)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+    
+    class func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", guided_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+    
+    class func fetchGuidedFilterAudiosDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
     }
     
     //add ninetyfivepercent from backend

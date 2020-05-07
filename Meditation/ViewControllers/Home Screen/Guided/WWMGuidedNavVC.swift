@@ -20,7 +20,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
     var type = "guided"
     var typeTitle = ""
     var guided_type = "Guided"
-        
+    var challenge7DayCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +38,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
 //            self.guided_type = "spiritual"
 //        }
         
-         self.typeTitle = "Practical Guidance"
+         self.typeTitle = "Guided"
          self.setUpNavigationBarForDashboard(title: "guided")
          self.guided_type = "Guided"
         
@@ -150,7 +151,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         print("type*** \(self.type) guided_type*** \(guided_type)")
         
         if guided_type == "Guided"{
-            self.typeTitle = "Practical Guidance"
+            self.typeTitle = "Guided"
             setUpNavigationBarForDashboard(title: "guided")
         }else{
             self.typeTitle = "Sleep"
@@ -213,8 +214,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
     //MARK: Fetch Guided Data From DB
     func fetchGuidedDataFromDB() {
         
-        let guidedDataDB = self.fetchGuidedFilterDB(type: self.guided_type, dbName: "DBGuidedData")
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.guided_type, dbName: "DBGuidedData", name: "cat_name")
         print("self.type+++ \(self.type) self.guided_type+++ \(self.guided_type) guidedDataDB.count*** \(guidedDataDB.count)")
+        
+        self.challenge7DayCount = 0
         
         if guidedDataDB.count > 0{
             print("guidedDataDB count... \(guidedDataDB.count)")
@@ -228,7 +231,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonAudios: [[String: Any]] = []
             
             for dict in guidedDataDB {
-                                
+                    
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
@@ -237,7 +240,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["max_limit"] = (dict as AnyObject).max_limit as? String ?? "98"
                 jsonString["meditation_key"] = (dict as AnyObject).meditation_key as? String ?? "practical"
                 
-                let guidedEmotionsDataDB = self.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                if (dict as AnyObject).guided_name as? String == "7 Days challenge"{
+                    challenge7DayCount = challenge7DayCount + 1
+                }
+                
+                let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
@@ -253,7 +260,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
                     
-                    let guidedAudiosDataDB = self.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
+                    let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
                     
                     for dict2 in guidedAudiosDataDB{
@@ -287,6 +294,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 view.removeFromSuperview()
             }
 
+            WWMHelperClass.challenge7DayCount = self.challenge7DayCount
             print("self.typeTitle+++ \(self.typeTitle)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
@@ -341,7 +349,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                     let timeInterval = Int(Date().timeIntervalSince1970)
                                     
                                     dbGuidedData.last_time_stamp = "\(timeInterval)"
-                                    dbGuidedData.name = dict["name"] as? String
+                                    dbGuidedData.cat_name = dict["name"] as? String
                                     
                                     if let id = meditationList["id"]{
                                         dbGuidedData.guided_id = "\(id)"
@@ -379,7 +387,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                         }
                                     }
                                     
-                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.name \(dbGuidedData.name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
+                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
                                     
                                     if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
                                         for emotionsDict in emotion_list {
@@ -500,36 +508,5 @@ class WWMGuidedNavVC: WWMBaseViewController {
     }//end guided api*
 
     
-    func fetchGuidedFilterDB(type: String, dbName: String) -> [Any]{
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "name == %@", type)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
-        return param!
-
-    }
     
-    func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String) -> [Any]{
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", guided_id)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
-        return param!
-
-    }
-    
-    func fetchGuidedFilterAudiosDB(emotion_id: String, dbName: String) -> [Any]{
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
-        return param!
-
-    }
 }

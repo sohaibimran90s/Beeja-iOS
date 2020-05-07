@@ -99,6 +99,8 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
 //                print("data.cat_name... \(data.cat_Name)")
 //
                 vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                vc.name = data.cat_Name
+                vc.meditationType = data.cat_meditation_type
 //                vc.tile_type = tile_type
 //                vc.emotionId = emotionId
 //                vc.emotionKey = emotionKey
@@ -140,14 +142,14 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 if arrGuidedList1.count > 0{
                     
                     for dict1 in arrGuidedList1{
+                        
                         if dict1.cat_Name.contains("21 Days challenge"){
                             flag = 1
+                            
+                            if dict1.cat_Name.contains("7 Days challenge"){
+                                flag = 1
+                            }
                         }
-                        
-                        if dict1.cat_Name.contains("7 Days challenge"){
-                            flag = 1
-                        }
-                        
                     }
                     if flag == 0{
                         self.arrGuidedList1.append(dict)

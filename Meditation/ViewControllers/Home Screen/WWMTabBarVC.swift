@@ -582,6 +582,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.selectedType = ""
+                WWMHelperClass.challenge7DayCount = 0
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 
@@ -682,7 +683,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 let timeInterval = Int(Date().timeIntervalSince1970)
                                 
                                 dbGuidedData.last_time_stamp = "\(timeInterval)"
-                                dbGuidedData.name = dict["name"] as? String
+                                dbGuidedData.cat_name = dict["name"] as? String
                                 
                                 if let id = meditationList["id"]{
                                     dbGuidedData.guided_id = "\(id)"
@@ -720,7 +721,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     }
                                 }
                                 
-                                print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.name \(dbGuidedData.name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
+                                print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name  \(dbGuidedData.cat_name ) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
                                 
                                 if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
                                     for emotionsDict in emotion_list {

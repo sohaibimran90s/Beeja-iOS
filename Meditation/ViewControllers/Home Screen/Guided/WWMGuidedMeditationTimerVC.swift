@@ -734,6 +734,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                     
                     if let _ = result["success"] as? Bool {
                         print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
+
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
                         
