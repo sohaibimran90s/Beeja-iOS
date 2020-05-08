@@ -73,64 +73,91 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         
         self.getUniqueChallenge()
         
-        for data in self.arrGuidedList1 {
-            
-            for i in 0..<data.cat_EmotionList.count{
-                print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
-                if data.cat_EmotionList[i].intro_completed{
-                    isIntroCompleted = true
-                    tile_type = data.cat_EmotionList[i].tile_type
-                    print("title_type.... \(data.cat_EmotionList[i].tile_type)")
+        if self.type == "Guided"{
+            for data in self.arrGuidedList1 {
+                
+                for i in 0..<data.cat_EmotionList.count{
+                    print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
+                    if data.cat_EmotionList[i].intro_completed{
+                        isIntroCompleted = true
+                        tile_type = data.cat_EmotionList[i].tile_type
+                        print("title_type.... \(data.cat_EmotionList[i].tile_type)")
+                    }
+                    
+                    if data.cat_EmotionList[i].tile_type == "3"{
+                        print("emotionId+++ \(data.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data.cat_EmotionList[i].emotion_key)")
+                        emotionId = data.cat_EmotionList[i].emotion_Id
+                        emotionKey = data.cat_EmotionList[i].emotion_key
+                        
+                    }
                 }
                 
-                if data.cat_EmotionList[i].tile_type == "3"{
-                    print("emotionId+++ \(data.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data.cat_EmotionList[i].emotion_key)")
-                    emotionId = data.cat_EmotionList[i].emotion_Id
-                    emotionKey = data.cat_EmotionList[i].emotion_key
-                    
+                if data.cat_mode == "challenge"{
+                    //WWM21DayChallengeVC
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
+
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.name = data.cat_Name
+                    vc.meditationType = data.cat_meditation_type
+                    arrVC.add(vc)
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
+                                
+                    print("data.cat_name... \(data.cat_Name)")
+                    vc.delegate = self
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.guidedData = data
+                    vc.type = self.type
+                    vc.min_limit = data.min_limit
+                    vc.max_limit = data.max_limit
+                    vc.meditation_key = data.meditation_key
+                            
+                    arrVC.add(vc)
                 }
             }
-            
-            if data.cat_mode == "challenge"{
-                //WWM21DayChallengeVC
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
-            
-//                WWMHelperClass.xlpager = "challenge"
-//                print("data.cat_name... \(data.cat_Name)")
-//
-                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-                vc.name = data.cat_Name
-                vc.meditationType = data.cat_meditation_type
-//                vc.tile_type = tile_type
-//                vc.emotionId = emotionId
-//                vc.emotionKey = emotionKey
-//                vc.isIntroCompleted = isIntroCompleted ?? false
-//                vc.guidedData = data
-//                vc.type = self.type
-//                vc.cat_name = data.cat_Name
-//                vc.cat_id = data.cat_Id
-//                vc.guideTitleCount = arrGuidedList.count
-//
-//                vc.min_limit = data.min_limit
-//                vc.max_limit = data.max_limit
-//                vc.meditation_key = data.meditation_key
+        }else{
+            for data in self.arrGuidedList1 {
                 
-                arrVC.add(vc)
-            }else{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
-                            
-                print("data.cat_name... \(data.cat_Name)")
-                vc.delegate = self
-                vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
-                vc.guidedData = data
-                vc.type = self.type
-                vc.min_limit = data.min_limit
-                vc.max_limit = data.max_limit
-                vc.meditation_key = data.meditation_key
+                for i in 0..<data.cat_EmotionList.count{
+                    print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
+                    if data.cat_EmotionList[i].intro_completed{
+                        isIntroCompleted = true
+                        tile_type = data.cat_EmotionList[i].tile_type
+                        print("title_type.... \(data.cat_EmotionList[i].tile_type)")
+                    }
+                    
+                    if data.cat_EmotionList[i].tile_type == "3"{
+                        print("emotionId+++ \(data.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data.cat_EmotionList[i].emotion_key)")
+                        emotionId = data.cat_EmotionList[i].emotion_Id
+                        emotionKey = data.cat_EmotionList[i].emotion_key
                         
-                arrVC.add(vc)
+                    }
+                }
+                
+                if data.cat_mode == "challenge"{
+                    //WWM21DayChallengeVC
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
+
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.name = data.cat_Name
+                    vc.meditationType = data.cat_meditation_type
+                    arrVC.add(vc)
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepVC") as! WWMSleepVC
+                                
+                    print("data.cat_name... \(data.cat_Name)")
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.guidedData = data
+                    vc.type = self.type
+                    vc.min_limit = data.min_limit
+                    vc.max_limit = data.max_limit
+                    vc.meditation_key = data.meditation_key
+                            
+                    arrVC.add(vc)
+                }
             }
         }
+        
         return arrVC as! [UIViewController]
         // return [UIViewController]
     }

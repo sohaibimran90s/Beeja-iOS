@@ -441,6 +441,8 @@
 		61BBC36D2350D184000B5617 /* DBSteps+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */; };
 		61BBC36E2350D184000B5617 /* DBSteps+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */; };
 		61C08B6D2459ADA000FEC661 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */; };
+		61C75BF424653D0000FBF4CB /* WWMSleepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */; };
+		61C75BF6246559C600FBF4CB /* WWMSleepTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */; };
 		61D110FE242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */; };
 		61D110FF242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */; };
 		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
@@ -961,6 +963,8 @@
 		61BBC36B2350D184000B5617 /* DBSteps+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61BBC36C2350D184000B5617 /* DBSteps+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBSteps+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
+		61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepVC.swift; sourceTree = "<group>"; };
+		61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepTVC.swift; sourceTree = "<group>"; };
 		61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
@@ -1769,6 +1773,8 @@
 				61793D0523FBC64E0077E3B7 /* WWM21DaySetReminderVC.swift */,
 				61793D0723FBC6EB0077E3B7 /* WWM21DaySetReminder1VC.swift */,
 				612FB2022462B72B001DA174 /* WWM21DayChallengeTabVC.swift */,
+				61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */,
+				61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */,
 			);
 			path = "GuidedChallenge-21days";
 			sourceTree = "<group>";
@@ -2478,6 +2484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */,
+				61C75BF6246559C600FBF4CB /* WWMSleepTVC.swift in Sources */,
 				6175C66F235E0A4B00B723BA /* WWMExtension.swift in Sources */,
 				61416F1722BBB4C800C9339E /* LineChartData.swift in Sources */,
 				2EE247EE21E6315400857C25 /* AlphaPieViewLayerAnimator.swift in Sources */,
@@ -2577,6 +2584,7 @@
 				61416F1622BBB4C800C9339E /* ChartDataEntryBase.swift in Sources */,
 				2EC81C5A21E76F67003B0EEE /* WWMMoodMeterLogVC.swift in Sources */,
 				61416E3B22BBB23B00C9339E /* BarLineScatterCandleBubbleRenderer.swift in Sources */,
+				61C75BF424653D0000FBF4CB /* WWMSleepVC.swift in Sources */,
 				61416F2C22BBB53000C9339E /* IChartDataSet.swift in Sources */,
 				2E5EA5C621EC9A310076328A /* WWMSettingTableViewCell.swift in Sources */,
 				61416ED722BBB47A00C9339E /* MoveViewJob.swift in Sources */,
