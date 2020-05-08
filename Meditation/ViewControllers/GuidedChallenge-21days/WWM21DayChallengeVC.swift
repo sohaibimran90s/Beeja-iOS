@@ -57,12 +57,21 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         super.viewDidLoad()
         
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
+        self.fetchGuidedDataFromDB()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("guideTitleCount+++++++ \(guideTitleCount)")
 
+    }
+    
+    //MARK: Fetch Guided Data From DB
+    func fetchGuidedDataFromDB() {
+        
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedData", name: "guided_id")
+        print("self.type+++ \(self.type) self.guided_type+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
+        
     }
     
     func abc(){

@@ -71,7 +71,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
                 if (dict as AnyObject).meditation_type == "practical"{
-                    print((dict as AnyObject).guided_id)
+                    //print((dict as AnyObject).guided_id)
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
