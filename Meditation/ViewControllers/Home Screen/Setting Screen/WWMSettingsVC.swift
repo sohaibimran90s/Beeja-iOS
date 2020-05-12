@@ -1277,6 +1277,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.challenge7DayCount = 0
                 WWMHelperClass.selectedType = ""
+                self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 

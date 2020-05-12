@@ -240,6 +240,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["max_limit"] = (dict as AnyObject).max_limit as? String ?? "98"
                 jsonString["meditation_key"] = (dict as AnyObject).meditation_key as? String ?? "practical"
                 
+                //to check if the database accept prac and spi 7 days challenge
                 if (dict as AnyObject).guided_name as? String == "7 Days challenge"{
                     challenge7DayCount = challenge7DayCount + 1
                 }

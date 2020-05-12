@@ -13,10 +13,16 @@ import StoreKit
 
 class WWM21DayChallengeVC: WWMBaseViewController {
 
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introBtn: UIButton!
     
+    var delegate: WWMGuidedDashboardDelegate?
+
+    var category = ""
+    var subCategory = ""
     var id = ""
+
     var selectedIndex = 0
     var itemInfo: IndicatorInfo = "View"
     var guidedData = WWMGuidedData()
@@ -52,26 +58,280 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = ""
+    
+    var arrGuidedList = [WWMGuidedData]()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lblTitle.text = "\(self.category): \(self.subCategory)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
+        print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
+        self.appPreference.set21ChallengeName(value: self.category)
         self.fetchGuidedDataFromDB()
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        print("guideTitleCount+++++++ \(guideTitleCount)")
-
+    @IBAction func btnBack21DaysAction(_ sender: UIButton) {
+        
+        delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
+        self.reloadTabs21DaysController()
+    }
+    
+    func reloadTabs21DaysController(){
+        self.navigationController?.isNavigationBarHidden = false
+        
+         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationReloadGuidedTabs"), object: nil)
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     //MARK: Fetch Guided Data From DB
     func fetchGuidedDataFromDB() {
+        let guidedEmotionsData = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedEmotionsData", name: "guided_id")
+        print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedEmotionsData.count)")
+        
+        if guidedEmotionsData.count == 0{
+               singleGuidedAPI()
+        }else{
+           if self.appPreference.getLastTimeStamp21DaysBool(){
+                singleGuidedAPI()
+           }else{
+                fetchGuidedDataFromDB1()
+            }
+        }
+    }
+    
+    //MARK: Fetch Guided Data From DB
+    func fetchGuidedDataFromDB1() {
         
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedData", name: "guided_id")
-        print("self.type+++ \(self.type) self.guided_type+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
+        print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
         
+        
+        if guidedDataDB.count > 0{
+            print("guidedDataDB count... \(guidedDataDB.count)")
+            
+            self.arrGuidedList.removeAll()
+            
+            var jsonString: [String: Any] = [:]
+            var jsonEmotionsString: [String: Any] = [:]
+            var jsonEmotions: [[String: Any]] = []
+            var jsonAudiosString: [String: Any] = [:]
+            var jsonAudios: [[String: Any]] = []
+            
+            for dict in guidedDataDB {
+                    
+                jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
+                jsonString["name"] = (dict as AnyObject).guided_name as? String
+                jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
+                jsonString["mode"] = (dict as AnyObject).guided_mode as? String
+                jsonString["min_limit"] = (dict as AnyObject).min_limit as? String ?? "95"
+                jsonString["max_limit"] = (dict as AnyObject).max_limit as? String ?? "98"
+                jsonString["meditation_key"] = (dict as AnyObject).meditation_key as? String ?? "practical"
+                
+                
+                let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
+                
+                for dict1 in guidedEmotionsDataDB{
+                                        
+                    jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
+                    jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
+                    jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
+                    jsonEmotionsString["tile_type"] = (dict1 as AnyObject).tile_type ?? ""
+                    jsonEmotionsString["author_name"] = (dict1 as AnyObject).author_name ?? ""
+                    jsonEmotionsString["emotion_body"] = (dict1 as AnyObject).emotion_body ?? ""
+                    jsonEmotionsString["emotion_key"] = (dict1 as AnyObject).emotion_key ?? ""
+                    jsonEmotionsString["intro_completed"] = (dict1 as AnyObject).intro_completed ?? false
+                    jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
+                    jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
+                    
+                    let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
+                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
+                    
+                    for dict2 in guidedAudiosDataDB{
+                        
+                        print("dict2.... \(dict2)")
+                        jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
+                        jsonAudiosString["id"] = Int((dict2 as AnyObject).audio_id ?? "0")
+                        jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
+                        jsonAudiosString["duration"] = Int((dict2 as AnyObject).duration ?? "0")
+                        jsonAudiosString["paid"] = (dict2 as AnyObject).paid ?? false
+                        jsonAudiosString["audio_image"] = (dict2 as AnyObject).audio_image ?? ""
+                        jsonAudiosString["audio_url"] = (dict2 as AnyObject).audio_url ?? ""
+                        jsonAudiosString["vote"] = (dict2 as AnyObject).vote ?? false
+
+                        jsonAudios.append(jsonAudiosString)
+                    }
+                    
+                    jsonEmotionsString["audio_list"] = jsonAudios
+                    jsonEmotions.append(jsonEmotionsString)
+                    jsonAudios.removeAll()
+                }
+                
+                jsonString["emotion_list"] = jsonEmotions
+                jsonEmotions.removeAll()
+                let guidedData = WWMGuidedData.init(json: jsonString)
+                self.arrGuidedList.append(guidedData)
+            }
+            print(self.arrGuidedList.count)
+            if self.arrGuidedList.count > 0{
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func singleGuidedAPI() {
+        
+        let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SINGLEGUIDED, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                
+                if let result = result["result"] as? [String:Any] {
+                    print("success result... \(result)")
+                    
+                    var emotionId = ""
+                    let guidedEmotionsData = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedEmotionsData", name: "guided_id")
+                    if guidedEmotionsData.count > 0{
+                        for dict in guidedEmotionsData{
+                            if let emotion_id = (dict as AnyObject).emotion_id{
+                                emotionId = "\(emotion_id ?? "")"
+                            }
+                        }
+                        
+                        WWMHelperClass.deleteRowfromDb(dbName: "DBGuidedEmotionsData", id: self.id, type: "guided_id")
+                    }
+                    
+                    if emotionId != ""{
+                        let guidedAudioData = WWMHelperClass.fetchGuidedFilterDB(type: emotionId, dbName: "DBGuidedAudioData", name: "emotion_id")
+                        
+                        if guidedAudioData.count > 0{
+                            for dict in guidedAudioData{
+                                if let audio_id = (dict as AnyObject).audio_id{
+                                    WWMHelperClass.deleteRowfromDb(dbName: "DBGuidedAudioData", id: emotionId, type: "emotion_id")
+                                }
+                            }
+                        }
+                    }
+                
+                    
+                    if let emotion_list = result["emotion_list"] as? [[String: Any]]{
+                        for emotionsDict in emotion_list {
+                            
+                            let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
+                            
+                            dbGuidedEmotionsData.guided_id = "\(self.id)"
+                            
+                            if let emotion_id = emotionsDict["emotion_id"]{
+                                dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
+                            }
+                            
+                            if let author_name = emotionsDict["author_name"]{
+                                dbGuidedEmotionsData.author_name = "\(author_name)"
+                            }
+                            
+                            if let emotion_image = emotionsDict["emotion_image"] as? String{
+                                dbGuidedEmotionsData.emotion_image = emotion_image
+                            }
+                            
+                            if let emotion_name = emotionsDict["emotion_name"] as? String{
+                                dbGuidedEmotionsData.emotion_name = emotion_name
+                            }
+                            
+                            if let intro_completed = emotionsDict["intro_completed"] as? Bool{
+                                dbGuidedEmotionsData.intro_completed = intro_completed
+                            }else{
+                                dbGuidedEmotionsData.intro_completed = false
+                            }
+                            
+                            if let tile_type = emotionsDict["tile_type"] as? String{
+                                dbGuidedEmotionsData.tile_type = tile_type
+                            }
+                            
+                            if let emotion_key = emotionsDict["emotion_key"] as? String{
+                                dbGuidedEmotionsData.emotion_key = emotion_key
+                            }
+                            
+                            if let emotion_body = emotionsDict["emotion_body"] as? String{
+                                dbGuidedEmotionsData.emotion_body = emotion_body
+                            }
+                            
+                            if let completed = emotionsDict["completed"] as? Bool{
+                                dbGuidedEmotionsData.completed = completed
+                            }
+                            
+                            if let completed_date = emotionsDict["completed_date"] as? String{
+                                dbGuidedEmotionsData.completed_date = completed_date
+                            }
+                            
+                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)")
+                            
+                            if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
+                                for audioDict in audio_list {
+                                    
+                                    let dbGuidedAudioData = WWMHelperClass.fetchEntity(dbName: "DBGuidedAudioData") as! DBGuidedAudioData
+                                    
+                                    if let emotion_id = emotionsDict["emotion_id"]{
+                                        dbGuidedAudioData.emotion_id = "\(emotion_id)"
+                                    }
+                                    
+                                    if let audio_id = audioDict["id"]{
+                                        dbGuidedAudioData.audio_id = "\(audio_id)"
+                                    }
+                                    
+                                    if let audio_image = audioDict["audio_image"] as? String{
+                                        dbGuidedAudioData.audio_image = audio_image
+                                    }
+                                    
+                                    if let audio_name = audioDict["audio_name"] as? String{
+                                        dbGuidedAudioData.audio_name = audio_name
+                                    }
+                                    
+                                    if let audio_url = audioDict["audio_url"] as? String{
+                                        dbGuidedAudioData.audio_url = audio_url
+                                    }
+                                    
+                                    if let author_name = audioDict["author_name"] as? String{
+                                        dbGuidedAudioData.author_name = author_name
+                                    }
+                                    
+                                    if let duration = audioDict["duration"]{
+                                        dbGuidedAudioData.duration = "\(duration)"
+                                    }
+                                    
+                                    if let paid = audioDict["paid"] as? Bool{
+                                        dbGuidedAudioData.paid = paid
+                                    }
+                                    
+                                    if let vote = audioDict["vote"] as? Bool{
+                                        dbGuidedAudioData.vote = vote
+                                    }
+                                    
+                                    print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
+                                    
+                                    WWMHelperClass.saveDb()
+                                }
+                            }
+                            
+                            WWMHelperClass.saveDb()
+                        }
+                        self.fetchGuidedDataFromDB1()
+                    }
+                    
+//''']]]]
+                }
+            }
+        }
     }
     
     func abc(){
@@ -104,12 +364,12 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         self.navigationController?.isNavigationBarHidden = false
         var flag = 0
         
-        for i in 0..<self.guidedData.cat_EmotionList.count{
-            print("date_completed... \(self.guidedData.cat_EmotionList[i].completed_date)")
-            print("completed... \(self.guidedData.cat_EmotionList[i].completed)")
+        for i in 0..<self.arrGuidedList[0].cat_EmotionList.count{
+            print("date_completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed_date)")
+            print("completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed)")
             
-            if i !=  self.guidedData.cat_EmotionList.count - 1{
-                if self.guidedData.cat_EmotionList[i].completed == true{
+            if i !=  self.arrGuidedList[0].cat_EmotionList.count - 1{
+                if self.arrGuidedList[0].cat_EmotionList[i].completed == true{
                     self.selectedIndex = i + 1
                     flag = 1
                 }
@@ -121,12 +381,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         }
         //*end here
     }
-    
-    @IBAction func btnBack21DaysAction(_ sender: UIButton){
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.popViewController(animated: true)
-    }
-    
+        
     @IBAction func introBtnAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
@@ -155,7 +410,13 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //if self.cat_name.contains("21"){
-            return self.guidedData.cat_EmotionList.count
+        
+        if self.arrGuidedList.count > 0{
+            return self.arrGuidedList[0].cat_EmotionList.count
+        }else{
+            return 0
+        }
+           // return self.guidedData.cat_EmotionList.count
         //}else{
           //  return self.guidedData.cat_EmotionList.count/3
         //}
@@ -164,7 +425,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WWM21DayChallengeTVC") as! WWM21DayChallengeTVC
         
-        let data = self.guidedData.cat_EmotionList[indexPath.row]
+        let data = self.arrGuidedList[0].cat_EmotionList[indexPath.row]
         
         if indexPath.row == 0{
             cell.upperLineLbl.isHidden = true
@@ -225,7 +486,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         let collHeight = (46 *  data.audio_list.count) + (10 * (data.audio_list.count - 1))
         cell.collectionViewHeightConstraint.constant = CGFloat(collHeight)
         
-        print("collHeight**** \(collHeight) self.guidedData.cat_EmotionList.count*** \(data.audio_list.count)")
+        print("collHeight**** \(collHeight) self.arrGuidedList[0].cat_EmotionList.count*** \(data.audio_list.count)")
         cell.collectionView.tag = indexPath.row
         let layout = UICollectionViewFlowLayout()
         cell.collectionView.collectionViewLayout = layout
@@ -246,7 +507,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedIndex = indexPath.row
-        print(self.guidedData.cat_EmotionList[selectedIndex].completed)
+        print(self.arrGuidedList[0].cat_EmotionList[selectedIndex].completed)
         //tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.tableView.reloadData()
     }
@@ -258,13 +519,13 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.guidedData.cat_EmotionList[collectionView.tag].audio_list.count
+        return self.arrGuidedList[0].cat_EmotionList[collectionView.tag].audio_list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WWM21DayChallengeCVC", for: indexPath) as! WWM21DayChallengeCVC
         
-        let data = self.guidedData.cat_EmotionList[collectionView.tag]
+        let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
         
         cell.layer.cornerRadius = 20
         cell.layer.borderWidth = 2
@@ -298,7 +559,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
-        let data = self.guidedData.cat_EmotionList[collectionView.tag]
+        let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
         
         if self.isIntroCompleted{
             
@@ -330,7 +591,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         var flag = 0
         var position = 0
         
-        let data = self.guidedData.cat_EmotionList[table_cell_tag]
+        let data = self.arrGuidedList[0].cat_EmotionList[table_cell_tag]
         if data.completed{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             vc.audioData = data.audio_list[collection_cell_tag]
@@ -349,7 +610,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             return
         }else{
             for i in 0..<table_cell_tag{
-                let date_completed = self.guidedData.cat_EmotionList[i].completed_date
+                let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
                 if date_completed != ""{
                     let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
                     if dateCompare.0 == 1{
@@ -366,7 +627,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
         
         for i in 0..<table_cell_tag{
-            if !self.guidedData.cat_EmotionList[i].completed{
+            if !self.arrGuidedList[0].cat_EmotionList[i].completed{
                 flag = 2
                 position = i
                 break
@@ -375,9 +636,9 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         if flag == 2{
             
-            print("first play the \(self.guidedData.cat_EmotionList[position].emotion_Name) position+++ \(position)")
+            print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
             
-            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.guidedData.cat_EmotionList[position].step_id)")
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
         }else{
             WWMHelperClass.selectedType = "guided"
             WWMHelperClass.days21StepNo = "Step \(data.step_id)"

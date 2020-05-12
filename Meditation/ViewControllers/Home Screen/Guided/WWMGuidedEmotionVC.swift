@@ -10,7 +10,7 @@ import UIKit
 import XLPagerTabStrip
 
 protocol WWMGuidedDashboardDelegate {
-    func guidedEmotionReload(isTrue: Bool, vcName: String, tile_type: Int)
+    func guidedEmotionReload(isTrue: Bool, vcName: String)
 }
 
 class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
@@ -113,13 +113,14 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             }else{
                 print("data.tile_type*** \(data.tile_type)")
                 if data.tile_type == "2" {
-                    appPreference.set21ChallengeName(value: "7_days")
-                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 2)
+                    //7_days
+                    appPreference.set21ChallengeName(value: "7 Days challenge")
+                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
                     self.reloadTabs21DaysController()
 
                 }else{
-                    appPreference.set21ChallengeName(value: "")
-                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC", tile_type: 3)
+                    appPreference.set21ChallengeName(value: "21 Days challenge")
+                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
                     self.reloadTabs21DaysController()
 
                 }

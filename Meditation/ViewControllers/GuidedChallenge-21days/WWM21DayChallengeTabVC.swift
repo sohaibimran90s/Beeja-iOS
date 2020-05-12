@@ -18,6 +18,10 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     
     @IBOutlet weak var lblPracticalSessionCount: UILabel!
     @IBOutlet weak var lblSpiritualSessionCount: UILabel!
+    @IBOutlet weak var lblChallTypePractical: UILabel!
+    @IBOutlet weak var lblChallTypeSpiritual: UILabel!
+    
+    var delegate: WWMGuidedDashboardDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,9 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         
         print("self.name+++ \(self.name)")
         if self.name == "7 Days challenge"{
+            self.lblChallTypePractical.text = "7 DAY CHALLENGE"
+            self.lblChallTypeSpiritual.text = "7 DAY CHALLENGE"
+            
             if WWMHelperClass.challenge7DayCount > 1{
                 print("yes+++")
             }else{
@@ -53,6 +60,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        
                         vc.id = (dict as AnyObject).guided_id ?? ""
                         self.navigationController?.pushViewController(vc, animated: false)
                         
@@ -60,6 +68,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                 }
             }
         }else{
+            self.lblChallTypePractical.text = "21 DAY CHALLENGE"
+            self.lblChallTypeSpiritual.text = "21 DAY CHALLENGE"
             print("21 days")
         }
     }
@@ -70,11 +80,14 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
+                //print((dict as AnyObject).meditation_type)
                 if (dict as AnyObject).meditation_type == "practical"{
-                    //print((dict as AnyObject).guided_id)
+                    print("\((dict as AnyObject).guided_id) \((dict as AnyObject).emotion_key)")
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
+                    vc.subCategory = "Practical"
+                    vc.category = self.name
                     vc.id = (dict as AnyObject).guided_id ?? ""
                     self.navigationController?.pushViewController(vc, animated: false)
                 }
@@ -88,11 +101,14 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
-                if (dict as AnyObject).meditation_type == "Spiritual"{
-                    print((dict as AnyObject).guided_id)
+                if (dict as AnyObject).meditation_type == "spiritual"{
+                    //print((dict as AnyObject).guided_id)
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
+                    //vc.delegate = delegate
+                    vc.subCategory = "Spiritual"
+                    vc.category = self.name
                     vc.id = (dict as AnyObject).guided_id ?? ""
                     self.navigationController?.pushViewController(vc, animated: false)
                 }

@@ -381,9 +381,6 @@ class WWMHelperClass {
         }
     }
     
-    
-    
-    
     class func updateJournalfromDb(dbName: String, index: Int, data: String, meditation_type: String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
         fetchRequest.predicate = NSPredicate.init(format: "meditation_type == %@", meditation_type)

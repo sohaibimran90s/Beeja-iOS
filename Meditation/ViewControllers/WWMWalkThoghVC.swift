@@ -295,7 +295,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         challengePopupView.btnOK.layer.borderWidth = 2.0
         challengePopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        challengePopupView.lblTitle.text = kCHALLENGEALERT
+        if self.emotionKey == "7day_challenge"{
+            challengePopupView.lblTitle.text = "Do you accept the 7 Day challenge?"
+        }else{
+            challengePopupView.lblTitle.text = "Do you accept the 21 Day challenge?"
+        }
+        
         challengePopupView.lblSubtitle.numberOfLines = 0
         challengePopupView.lblSubtitle.text = ""
         challengePopupView.lblSubtitle.isHidden = true

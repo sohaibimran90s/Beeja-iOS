@@ -126,6 +126,10 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "is_subscribed")
     }
     
+    func setLastTimeStamp21DaysBool(value: Bool){
+        defaults.set(value, forKey: "lastTimeStamp21Days")
+    }
+    
     func SetExpireDateBackend(value: String){
         defaults.set(value, forKey: "expiryDate")
     }
@@ -196,6 +200,9 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: "email") ?? ""
     }
 
+    func getLastTimeStamp21DaysBool() -> Bool{
+        return defaults.bool(forKey: "lastTimeStamp21Days")
+    }
     
     func getMoodId() -> String {
         return UserDefaults.standard.string(forKey: "mood_id") ?? ""

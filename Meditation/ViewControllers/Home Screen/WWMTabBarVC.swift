@@ -583,6 +583,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.selectedType = ""
                 WWMHelperClass.challenge7DayCount = 0
+                self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 
@@ -629,6 +630,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let apiTimeStamp: String = "\(time_stamp)"
 
                 if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
+                    self.appPreffrence.setLastTimeStamp21DaysBool(value: true)
                     self.getGuidedListAPI()
                     return
                 }
@@ -638,6 +640,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
                 print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
+                    self.appPreffrence.setLastTimeStamp21DaysBool(value: true)
                     self.getGuidedListAPI()
                 }
             }
@@ -648,7 +651,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getGuidedListAPI(){
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETGUIDEDDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        let param = ["user_id": self.appPreffrence.getUserID()]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
             if let _ = result["success"] as? Bool {
