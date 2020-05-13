@@ -1427,7 +1427,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         } catch { return }
     }
     
-      
     func getExpirationDateFromResponse(_ jsonResponse: NSDictionary) -> Date? {
         
         if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
@@ -1449,7 +1448,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
           }
           
           if let expiresDate = lastReceipt["purchase_date"] as? String {
-              return formatter.date(from: expiresDate)
+            if let date = Formatter.customDate.date(from: expiresDate) {
+                print(date)  // "2019-08-31 05:23:44 +0000\n"
+                print(date.description(with: .current))  // "Saturday, August 31, 2019 at 2:28:44 AM Brasilia Standard Time\n"
+                return date
+            }
+             // let abc = formatter.date(from: expiresDate)
+            //print(abc)
+            //return abc
           }
             
             return nil
@@ -1657,4 +1663,13 @@ extension WWMTabBarVC{
         }
         return nil
     }
+}
+
+extension Formatter {
+    static let customDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+        return formatter
+    }()
 }
