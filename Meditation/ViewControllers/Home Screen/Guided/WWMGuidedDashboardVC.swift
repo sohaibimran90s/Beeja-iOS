@@ -15,6 +15,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     var arrGuidedList = [WWMGuidedData]()
     var arrGuidedList1 = [WWMGuidedData]()
     var type = ""
+    var name = ""
     let appPreference = WWMAppPreference()
     
     override func viewDidLoad() {
@@ -114,6 +115,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     print("data.cat_name... \(data.cat_Name)")
                     vc.delegate = self
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.name = data.cat_Name
                     vc.guidedData = data
                     vc.type = self.type
                     vc.min_limit = data.min_limit

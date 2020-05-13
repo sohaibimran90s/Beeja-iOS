@@ -21,6 +21,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
+    var name = ""
     
     var delegate: WWMGuidedDashboardDelegate?
     
@@ -107,6 +108,15 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID())")
                 vc.value = "curatedCards"
                 vc.emotionId = data.emotion_Id
+                vc.id = "\(self.guidedData.cat_Id)"
+                if data.tile_type == "2" {
+                    vc.category = "7 Days challenge"
+                    vc.subCategory = self.name.lowercased()
+                }else{
+                    vc.category = "21 Days challenge"
+                    vc.subCategory = self.name.lowercased()
+                }
+                
                 vc.emotionKey = data.emotion_key
                 vc.user_id = Int(self.appPreference.getUserID()) ?? 0
                 self.navigationController?.pushViewController(vc, animated: false)

@@ -835,6 +835,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         WWMHelperClass.saveDb()
+                        self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                     }
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
                     print("guided data tabbarvc in background thread...")

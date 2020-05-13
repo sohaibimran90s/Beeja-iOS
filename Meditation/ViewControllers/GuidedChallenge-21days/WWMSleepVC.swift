@@ -54,6 +54,22 @@ extension WWMSleepVC: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+        let data = self.guidedData.cat_EmotionList[indexPath.row]
+    
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedAudioListVC") as! WWMGuidedAudioListVC
+        vc.emotionData = data
+        vc.cat_Id = "\(self.guidedData.cat_Id)"
+        vc.cat_Name = self.guidedData.cat_Name
+        vc.type = self.type
+        
+        vc.min_limit = self.min_limit
+        vc.max_limit = self.max_limit
+        vc.meditation_key = self.meditation_key
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }

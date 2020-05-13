@@ -38,12 +38,17 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var user_id: Int = 0
     var emotionId: Int = 0
     
+    var id = ""
+    var category = ""
+    var subCategory = ""
+    
     var challengePopupView = WWMAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("watched walk... \(self.watched_duration)")
         
+        print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory)")
+        self.fetchGuidedDataFromDB()
         var prefersStatusBarHidden: Bool {
             return true
         }
@@ -340,6 +345,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.getGuidedListAPI()
                 //self.navigateToDashboard()
             }else {
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if error != nil {
                     
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -356,7 +363,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     func getGuidedListAPI() {
         
-         WWMHelperClass.showLoaderAnimate(on: self.view)
+        /// WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let param = ["user_id":self.appPreffrence.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -541,7 +548,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                             WWMHelperClass.saveDb()
                         }
                         WWMHelperClass.hideLoaderAnimate(on: self.view)
-                        self.navigateToDashboard()
+                        self.fetchGuidedDataFromDB()
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
                         print("guided data tabbarvc in background thread...")
@@ -553,23 +560,28 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
     }
     
-    func navigateToDashboard() {
-        
-        self.navigationController?.isNavigationBarHidden = false
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationReloadGuidedTabs"), object: nil)
-            
-            tabController.selectedIndex = 2
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 2 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                }
+    func fetchGuidedDataFromDB() {
+        let guidedData = WWMHelperClass.fetchGuidedFilterDB(type: self.subCategory, dbName: "DBGuidedData", name: "meditation_type")
+        print("guidedDataDB.count*** \(guidedData.count)")
+        for dict in guidedData{
+            if (dict as AnyObject).guided_name == self.category{
+                print(Int((dict as AnyObject).guided_id ?? "0") ?? 0)
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                       
+                vc.subCategory = self.subCategory
+                vc.category = self.category
+                vc.id = (dict as AnyObject).guided_id ?? ""
+                       self.navigationController?.pushViewController(vc, animated: false)
             }
         }
-        self.navigationController?.popToRootViewController(animated: false)
+        
+        
+    }
+    
+    func navigateToDashboard() {
+        
+       
     }
 
     
