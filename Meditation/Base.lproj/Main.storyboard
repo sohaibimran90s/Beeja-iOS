@@ -17530,6 +17530,9 @@ By Will Williams</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akS-cL-Lmk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleepTimerBG" translatesAutoresizingMaskIntoConstraints="NO" id="d8k-ca-SkF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anxiety" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nz-5Y-PU2">
                                 <rect key="frame" x="20" y="50" width="335" height="29.5"/>
                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
@@ -17643,6 +17646,8 @@ By Will Williams</string>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="d8k-ca-SkF" firstAttribute="trailing" secondItem="akS-cL-Lmk" secondAttribute="trailing" id="6Uh-Rq-3ZI"/>
+                            <constraint firstItem="d8k-ca-SkF" firstAttribute="leading" secondItem="akS-cL-Lmk" secondAttribute="leading" id="7v6-03-zRY"/>
                             <constraint firstItem="ylz-Gp-fXK" firstAttribute="bottom" secondItem="K7Z-Gs-hLJ" secondAttribute="bottom" constant="80" id="BFt-0V-Lkn"/>
                             <constraint firstItem="Z6L-gM-aHF" firstAttribute="top" secondItem="3Nz-5Y-PU2" secondAttribute="bottom" constant="8" id="BLm-Vw-zle"/>
                             <constraint firstItem="akS-cL-Lmk" firstAttribute="trailing" secondItem="ylz-Gp-fXK" secondAttribute="trailing" id="Gbg-bL-m6R"/>
@@ -17657,6 +17662,7 @@ By Will Williams</string>
                             <constraint firstItem="ylz-Gp-fXK" firstAttribute="trailing" secondItem="3Nz-5Y-PU2" secondAttribute="trailing" constant="20" id="aXd-5P-Fgy"/>
                             <constraint firstItem="XH4-1L-qd7" firstAttribute="top" secondItem="Yr4-gs-kAy" secondAttribute="top" id="agX-6E-4Uq"/>
                             <constraint firstAttribute="bottom" secondItem="akS-cL-Lmk" secondAttribute="bottom" id="dkQ-0W-RbI"/>
+                            <constraint firstItem="d8k-ca-SkF" firstAttribute="top" secondItem="akS-cL-Lmk" secondAttribute="top" id="eFB-OH-vPR"/>
                             <constraint firstItem="K7Z-Gs-hLJ" firstAttribute="centerX" secondItem="Yr4-gs-kAy" secondAttribute="centerX" id="gCS-w6-Stj"/>
                             <constraint firstItem="3Nz-5Y-PU2" firstAttribute="top" secondItem="ylz-Gp-fXK" secondAttribute="top" constant="50" id="gFY-UJ-4AK"/>
                             <constraint firstItem="Z6L-gM-aHF" firstAttribute="leading" secondItem="3Nz-5Y-PU2" secondAttribute="leading" id="hG3-RO-toH"/>
@@ -17664,11 +17670,11 @@ By Will Williams</string>
                             <constraint firstItem="eZs-rm-625" firstAttribute="centerY" secondItem="Yr4-gs-kAy" secondAttribute="centerY" id="pVH-tC-EE9"/>
                             <constraint firstItem="kPp-6r-lB7" firstAttribute="centerX" secondItem="Yr4-gs-kAy" secondAttribute="centerX" id="q47-Kd-aSG"/>
                             <constraint firstItem="Z6L-gM-aHF" firstAttribute="trailing" secondItem="3Nz-5Y-PU2" secondAttribute="trailing" id="qXK-PY-bLH"/>
+                            <constraint firstItem="d8k-ca-SkF" firstAttribute="bottom" secondItem="akS-cL-Lmk" secondAttribute="bottom" id="z00-6o-eSC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ylz-Gp-fXK"/>
                     </view>
                     <connections>
-                        <outlet property="backView" destination="akS-cL-Lmk" id="C3h-GD-7bq"/>
                         <outlet property="lblSubTitle" destination="Z6L-gM-aHF" id="T6q-r7-eM2"/>
                         <outlet property="lblTimer" destination="eZs-rm-625" id="WDl-SN-BXX"/>
                         <outlet property="lblTitle" destination="3Nz-5Y-PU2" id="ZZB-Ua-XIZ"/>
@@ -17678,7 +17684,7 @@ By Will Williams</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mCC-TF-LSI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8366" y="9491"/>
+            <point key="canvasLocation" x="9769" y="4871"/>
         </scene>
     </scenes>
     <resources>
@@ -17787,6 +17793,7 @@ By Will Williams</string>
         <image name="signupGoogle" width="295" height="40"/>
         <image name="singleLineLeft.png" width="14" height="1"/>
         <image name="singleLineRight.png" width="14" height="1"/>
+        <image name="sleepTimerBG" width="375" height="667"/>
         <image name="slice" width="167" height="230"/>
         <image name="slice_back1" width="167" height="229"/>
         <image name="startBeeja_Icon" width="31.5" height="27"/>

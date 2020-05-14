@@ -18,7 +18,6 @@ class WWMSleepTimerVC: WWMBaseViewController {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblSubTitle: UILabel!
     @IBOutlet weak var spinnerImage: UIImageView!
-    @IBOutlet weak var backView: UIView!
 
     //for title
     var category = ""
@@ -28,7 +27,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()
     var currentColorSet: Int!
-    var timer1 = Timer()
+    //var timer1 = Timer()
     var animateBool: Int = 0
     var animationView = AnimationView()
     var nintyFivedata: [DBNintyFiveCompletionData] = []
@@ -93,14 +92,14 @@ class WWMSleepTimerVC: WWMBaseViewController {
         self.navigationController?.isNavigationBarHidden = true
         UIApplication.shared.isIdleTimerDisabled = true
         
-        self.createColorSets()
+        //self.createColorSets()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         notificationCenter.removeObserver(self)
         self.player?.pause()
-        self.timer1.invalidate()
+        //self.timer1.invalidate()
         self.timer.invalidate()
         self.stopPlayer()
         
@@ -145,9 +144,9 @@ class WWMSleepTimerVC: WWMBaseViewController {
     //MARK: animated View
     func createColorSets() {
         
-        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
-        colorSets.append([hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
-        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
+        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "000000").cgColor])
+        //colorSets.append([hexStringToUIColor(hex: "000000").cgColor, hexStringToUIColor(hex: "001252").cgColor])
+        //colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "000000").cgColor])
         
         currentColorSet = 0
         createGradientLayer()
@@ -165,8 +164,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
         self.view.layer.addSublayer(gradientLayer)
         
         self.animateBool = 0
-        self.timerAction(value: self.animateBool)
-        timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        //self.timerAction(value: self.animateBool)
+        //timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
     
     func pauseAnimation() {
@@ -232,13 +231,12 @@ class WWMSleepTimerVC: WWMBaseViewController {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.isStop = true
-            // self.spinnerImage.layer.removeAllAnimations()
             self.animationView.pause()
             
             if self.animateBool == 1{
-                self.resumeAnimation()
+                //self.resumeAnimation()
                 self.animateBool = 0
-                self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+                //self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
             }
             
             self.player?.pause()
@@ -397,8 +395,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
             self.animationView.stop()
             
             self.animateBool = 1
-            self.pauseAnimation()
-            self.timer1.invalidate()
+            //self.pauseAnimation()
+            //self.timer1.invalidate()
             
             //to push view controllers
             if self.settingData.moodMeterEnable {
@@ -453,8 +451,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
             self.animationView.pause()
             
             self.animateBool = 1
-            self.pauseAnimation()
-            self.timer1.invalidate()
+            //self.pauseAnimation()
+            //self.timer1.invalidate()
             
             self.player?.pause()
         }, completion: nil)
@@ -470,9 +468,9 @@ class WWMSleepTimerVC: WWMBaseViewController {
             self.animationView.play()
             
             if self.animateBool == 1{
-                self.resumeAnimation()
+                //self.resumeAnimation()
                 self.animateBool = 0
-                self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+                //self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
             }
             
         }, completion: nil)
@@ -514,9 +512,9 @@ class WWMSleepTimerVC: WWMBaseViewController {
         
         isComplete = 0
         if self.animateBool == 1{
-            self.resumeAnimation()
+            //self.resumeAnimation()
             self.animateBool = 0
-            self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+            //self.timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
         }
         
         self.isStop = false
@@ -573,8 +571,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
                 self.animationView.stop()
                 
                 self.animateBool = 1
-                self.pauseAnimation()
-                self.timer1.invalidate()
+                //self.pauseAnimation()
+                //self.timer1.invalidate()
                 
                 self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds)!)))", watched_duration: "\(Int(round((self.player?.currentTime().seconds)!)))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "")
                 
@@ -710,8 +708,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
         }
         
         self.animateBool = 1
-        self.pauseAnimation()
-        self.timer1.invalidate()
+        //self.pauseAnimation()
+        //self.timer1.invalidate()
         
         if self.meditationGuidedPlayPercentage < Int(self.max_limit) ?? 98{
             self.xibCall()
@@ -728,8 +726,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
 extension WWMSleepTimerVC: CAAnimationDelegate{
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
-            gradientLayer.colors = colorSets[currentColorSet]
-            self.resumeAnimation()
+            //gradientLayer.colors = colorSets[currentColorSet]
+            //self.resumeAnimation()
         }
     }
 }
