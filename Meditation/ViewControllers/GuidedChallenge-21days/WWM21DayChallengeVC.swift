@@ -117,7 +117,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedData", name: "guided_id")
         print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
         
-        
         if guidedDataDB.count > 0{
             print("guidedDataDB count... \(guidedDataDB.count)")
             
@@ -349,7 +348,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                     vc.value = "curatedCards"
                     vc.emotionId = self.emotionId
                     vc.emotionKey = self.emotionKey
-                    vc.user_id = Int(self.appPreference.getUserID()) ?? 0
                     self.navigationController?.pushViewController(vc, animated: false)
                     return
                 }
@@ -500,7 +498,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         if selectedIndex == indexPath.row{
             return UITableView.automaticDimension
         }else{
-            return 68
+            return 74
         }
     }
     

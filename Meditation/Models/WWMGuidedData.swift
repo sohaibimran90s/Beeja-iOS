@@ -19,6 +19,7 @@ class WWMGuidedData: NSObject {
     var min_limit = String()
     var max_limit = String()
     var meditation_key = String()
+    var completedStatus = false
     
     override init() {
     }
@@ -49,19 +50,42 @@ class WWMGuidedData: NSObject {
                 
                 let video = WWMGuidedEmotionData.init(json: dict, stepId: self.step_id)
                 cat_EmotionList.append(video)
-                
+                                
                 if cat_Name.contains("7"){
                     
-                    print("step_no+++ \(self.step_id)")
-                    let com = dict["completed"] as? Bool ?? false
-                    if self.step_id == 7 && com == false{
-                        return
-                    }else if self.step_id == 7 && com == true{
-                        cat_EmotionList.removeAll()
-                    }else if self.step_id == 14 && com == false{
-                        return
-                    }else if self.step_id == 14 && com == true{
-                        cat_EmotionList.removeAll()
+                    //to check if the 7 challenge completed or not
+                    let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.cat_Name, dbName: "DBGuidedData", name: "guided_name")
+                    
+                    print("step_no+++ \(self.step_id) cat_meditation_type \(cat_meditation_type) cat_Name \(cat_Name) guidedDataDB.count*** \(guidedDataDB.count)")
+                    
+                    for dict in guidedDataDB{
+                        if (dict as AnyObject).meditation_type == cat_meditation_type{
+                            let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                            print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
+                            for dict1 in guidedEmotionsDataDB{
+                                print("(dict1 as AnyObject).completed... \((dict1 as AnyObject).completed)")
+                                if !(dict1 as AnyObject).completed{
+                                    completedStatus = true
+                                }
+                            }
+                        }
+                    }
+                    
+                    //if completedStatus is true its mean 7 challengs is not completed yet otherwise it is completed
+                    if completedStatus{
+                        let com = dict["completed"] as? Bool ?? false
+                        
+                        if self.step_id == 7 && com == false{
+                            return
+                        }else if self.step_id == 7 && com == true{
+                            cat_EmotionList.removeAll()
+                        }else if self.step_id == 14 && com == false{
+                            return
+                        }else if self.step_id == 14 && com == true{
+                            cat_EmotionList.removeAll()
+                        }
+                    }else{
+                        print("challenge completed")
                     }
                 }
             }

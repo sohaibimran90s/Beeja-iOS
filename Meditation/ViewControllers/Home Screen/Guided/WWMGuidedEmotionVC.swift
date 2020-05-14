@@ -118,7 +118,6 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 }
                 
                 vc.emotionKey = data.emotion_key
-                vc.user_id = Int(self.appPreference.getUserID()) ?? 0
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 print("data.tile_type*** \(data.tile_type)")

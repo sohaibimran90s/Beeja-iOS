@@ -15,6 +15,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     var type = ""
     var name = ""
     var meditationType = ""
+    var checkTabContain7Days = false
     
     @IBOutlet weak var lblPracticalSessionCount: UILabel!
     @IBOutlet weak var lblSpiritualSessionCount: UILabel!
@@ -70,11 +71,30 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         }else{
             self.lblChallTypePractical.text = "21 DAY CHALLENGE"
             self.lblChallTypeSpiritual.text = "21 DAY CHALLENGE"
-            print("21 days")
+            
+            let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: "7 Days challenge", dbName: "DBGuidedData", name: "guided_name")
+            print("guidedDataDB.count*** \(guidedDataDB.count) 21 days")
+            
+            if guidedDataDB.count > 0{
+                self.checkTabContain7Days = true
+            }
         }
     }
     
     @IBAction func btnPracticalAction(_ sender: UIButton){
+        
+        if self.name == "21 Days challenge"{
+            if self.checkTabContain7Days{
+                print("7 days challenge accepted")
+            }else{
+                practicalAction()
+            }
+        }else{
+            practicalAction()
+        }
+    }
+    
+    func practicalAction(){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
         print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
@@ -82,7 +102,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
             for dict in guidedDataDB {
                 //print((dict as AnyObject).meditation_type)
                 if (dict as AnyObject).meditation_type == "practical"{
-                    print("\((dict as AnyObject).guided_id) \((dict as AnyObject).emotion_key)")
+                    //print("\((dict as AnyObject).guided_id) \((dict as AnyObject).emotion_key)")
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
@@ -95,7 +115,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         }
     }
     
-    @IBAction func btnSpiritualAction(_ sender: UIButton){
+    func spiritualAction(){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
         print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
@@ -113,6 +133,18 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     self.navigationController?.pushViewController(vc, animated: false)
                 }
             }
+        }
+    }
+    
+    @IBAction func btnSpiritualAction(_ sender: UIButton){
+        if self.name == "21 Days challenge"{
+            if self.checkTabContain7Days{
+                print("7 days challenge accepted")
+            }else{
+                spiritualAction()
+            }
+        }else{
+            spiritualAction()
         }
     }
     

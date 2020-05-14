@@ -165,14 +165,15 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             let data = self.arrAudioList[indexPath.row]
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepTimerVC") as! WWMSleepTimerVC
             
             vc.audioData = self.arrAudioList[indexPath.row]
             vc.cat_id = self.cat_Id
             vc.cat_Name = self.cat_Name
             vc.emotion_Id = "\(self.emotionData.emotion_Id)"
             vc.emotion_Name = self.emotionData.emotion_Name
-            
+            vc.category = self.type
+            vc.subCategory = "\(subTitle) audio track"
             vc.min_limit = self.min_limit
             vc.max_limit = self.max_limit
             vc.meditation_key = self.meditation_key

@@ -126,6 +126,7 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "is_subscribed")
     }
     
+    //to check if the guided api is updated or not
     func setLastTimeStamp21DaysBool(value: Bool){
         defaults.set(value, forKey: "lastTimeStamp21Days")
     }

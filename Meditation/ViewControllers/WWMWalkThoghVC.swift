@@ -35,7 +35,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
 
     //21day challenge variables
     var emotionKey: String = ""
-    var user_id: Int = 0
     var emotionId: Int = 0
     
     var id = ""
@@ -330,7 +329,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         
         let param = [
-            "user_id": self.user_id,
+            "user_id": self.appPreffrence.getUserID(),
             "emotion_id": self.emotionId,
             "emotion_key": self.emotionKey
             ] as [String : Any]

@@ -1,9 +1,9 @@
 //
-//  WWMGuidedMeditationTimerVC.swift
+//  WWMSleepTimerVC.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 23/04/2019.
-//  Copyright © 2019 Cedita. All rights reserved.
+//  Created by Prema Negi on 14/05/2020.
+//  Copyright © 2020 Cedita. All rights reserved.
 //
 
 import UIKit
@@ -11,8 +11,36 @@ import AVFoundation
 import Lottie
 import CoreData
 
-class WWMGuidedMeditationTimerVC: WWMBaseViewController {
+class WWMSleepTimerVC: WWMBaseViewController {
     
+    @IBOutlet weak var viewPause: UIView!
+    @IBOutlet weak var lblTimer: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblSubTitle: UILabel!
+    @IBOutlet weak var spinnerImage: UIImageView!
+    @IBOutlet weak var backView: UIView!
+
+    //for title
+    var category = ""
+    var subCategory = ""
+
+    //for animation
+    var gradientLayer: CAGradientLayer!
+    var colorSets = [[CGColor]]()
+    var currentColorSet: Int!
+    var timer1 = Timer()
+    var animateBool: Int = 0
+    var animationView = AnimationView()
+    var nintyFivedata: [DBNintyFiveCompletionData] = []
+    
+    //for offline meditation data parameters
+    var offlineCompleteData: [String: Any] = [:]
+    var meditationGuidedPlayPercentage = 0
+    var watched_duration: Int = 0
+    var dataAppendFlag = false
+    var ismove = false
+    var ninetyFiveCompletedFlag = "1"
+    var isComplete = 0
     var seconds = 0
     var timer = Timer()
     var isStop = false
@@ -25,101 +53,158 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     var cat_Name = ""
     var emotion_Id = "0"
     var emotion_Name = ""
-    var isFavourite = false
     var rating = 0
     var totalDuration: Int = 0
     var totalTime = 0
-    
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
     
-    @IBOutlet weak var viewPause: UIView!
-    @IBOutlet weak var lblTimer: UILabel!
-    @IBOutlet weak var lblGuidedFlowType: UILabel!
-    @IBOutlet weak var lblGuidedName: UILabel!
-    @IBOutlet weak var spinnerImage: UIImageView!
-    @IBOutlet weak var btnFavourite: UIButton!
-    
-    var gradientLayer: CAGradientLayer!
-    var colorSets = [[CGColor]]()
-    var currentColorSet: Int!
-    var timer1 = Timer()
-    var animateBool: Int = 0
-    
-    var animationView = AnimationView()
-    
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var viewLottieAnimation: UIView!
-    
-    var nintyFivedata: [DBNintyFiveCompletionData] = []
-    
-    //for offline meditation data parameters
-    var offlineCompleteData: [String: Any] = [:]
-    var meditationGuidedPlayPercentage = 0
-    var dataAppendFlag = false
-    var ismove = false
-    var ninetyFiveCompletedFlag = "1"
-    var isComplete = 0
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key) cat_Name+++ \(cat_Name) mk+++ \(self.meditation_key)_\(self.cat_Name)")
+        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key) cat_Name+++ \(cat_Name) mk+++ \(self.meditation_key)_\(self.cat_Name) audio_url \(self.audioData.audio_Url)")
         
         WWMHelperClass.addNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
         
-        self.viewLottieAnimation.isHidden = true
-        spinnerImage.isHidden = true
-        
         self.totalTime = self.seconds
+        self.lblTitle.text = self.category
+        self.lblSubTitle.text = self.subCategory
+        self.lblTimer.text = self.secondToMinuteSecond(second: self.seconds)
+        self.play(url: URL.init(string: self.audioData.audio_Url)!)
+        self.appPreference.setMoodId(value: "")
+        self.setUpView()
         
-        animationView = AnimationView(name: "all_discs")
-        animationView.frame = CGRect(x: self.view.frame.origin.x, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-        animationView.alpha = 0.15
+        animationView = AnimationView(name: "final1")
+        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
         animationView.center = self.view.center
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
-        backView.insertSubview(animationView, belowSubview: viewPause)
-        
-        
-        
-//        animationView = AnimationView(name: "final1")
-//        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
-//        //animationView.center = self.viewLottieAnimation.center
-//        animationView.contentMode = .scaleAspectFit
-//        animationView.loopMode = .loop
-//        viewLottieAnimation.addSubview(animationView)
-        
+        view.insertSubview(animationView, belowSubview: viewPause)
         animationView.play()
-        
-        
-        self.setUpView()
+        spinnerImage.isHidden = true
         
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
-
-        self.play(url: URL.init(string: self.audioData.audio_Url)!)
-        self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
-        self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
-
-        print(self.appPreference.getGuideType())
-        if self.appPreference.getGuideType() == "practical" {
-            self.lblGuidedFlowType.text = "\(KPRACTICAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
-        }else {
-            self.lblGuidedFlowType.text = "\(KSPIRITUAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
-        }
-        if self.audioData.vote {
-            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
-            self.isFavourite = true
-            self.rating = 1
-        }
-        
-        self.appPreference.setMoodId(value: "")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        self.createColorSets()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        notificationCenter.removeObserver(self)
+        self.player?.pause()
+        self.timer1.invalidate()
+        self.timer.invalidate()
+        self.stopPlayer()
+        
+        UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            print("stopped")
+            play.pause()
+            player = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
+    }
+    
+    func setUpView() {
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+        }
+    }
+    
+    //MARK: notification methods
+    @objc func appMovedToBackground() {
+        print("App moved to background!")
+        self.animationView.pause()
+    }
+    
+    @objc func appMovedToForeground() {
+        print("App moved to background!")
+        if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
+            self.animationView.pause()
+        }else{
+            self.animationView.play()
+        }
+        KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
+    }
+    
+    //MARK: animated View
+    func createColorSets() {
+        
+        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
+        colorSets.append([hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
+        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
+        
+        currentColorSet = 0
+        createGradientLayer()
+    }
+    
+    func createGradientLayer() {
+        gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = colorSets[currentColorSet]
+        gradientLayer.type = .radial
+        
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 2.0, y: 1.0)
+        gradientLayer.drawsAsynchronously = true
+        self.view.layer.addSublayer(gradientLayer)
+        
+        self.animateBool = 0
+        self.timerAction(value: self.animateBool)
+        timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    }
+    
+    func pauseAnimation() {
+        let pausedTime = gradientLayer.convertTime(CACurrentMediaTime(), from: nil)
+        gradientLayer.speed = 0
+        gradientLayer.timeOffset = pausedTime
+    }
+    
+    func resumeAnimation() {
+        let pausedTime = gradientLayer.timeOffset
+        gradientLayer.speed = 1
+        gradientLayer.timeOffset = 0
+        gradientLayer.beginTime = 0
+        let timeSincePause = gradientLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        gradientLayer.beginTime = timeSincePause
+    }
+    
+    @objc func timerAction(value: Int) {
+        
+        print("animateBool.... \(animateBool)")
+        
+        if currentColorSet < colorSets.count - 1 {
+            currentColorSet! += 1
+        }else {
+            currentColorSet = 0
+        }
+        
+        let colorChangeAnimation = CABasicAnimation(keyPath: "colors")
+        colorChangeAnimation.delegate = self
+        colorChangeAnimation.duration = 4.0
+        colorChangeAnimation.toValue = colorSets[currentColorSet]
+        colorChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
+        colorChangeAnimation.isRemovedOnCompletion = false
+        gradientLayer.add(colorChangeAnimation, forKey: "colorChange")
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    //MARK: Play Audio
     func play(url:URL) {
         print("playing \(url)")
         
@@ -130,8 +215,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.player = AVPlayer(playerItem:playerItem)
             
             let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-            self.totalDuration  = Int(round(duration)/60)
-            print("totalDuration... \(totalDuration)")
+            self.totalDuration = Int(round(duration))
             
             player?.volume = 1.0
             player?.play()
@@ -159,130 +243,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             
             self.player?.pause()
         }, completion: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        notificationCenter.removeObserver(self)
-        self.player?.pause()
-        self.timer1.invalidate()
-        self.timer.invalidate()
-        self.stopPlayer()
-        
-        UIApplication.shared.isIdleTimerDisabled = false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
-        UIApplication.shared.isIdleTimerDisabled = true
-        
-        self.createColorSets()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
-    }
-    
-    //MARK: Stop Payer
-    func stopPlayer() {
-        if let play = self.player {
-            print("stopped")
-            play.pause()
-            player = nil
-            print("player deallocated")
-        } else {
-            print("player was already deallocated")
-        }
-    }
-    
-    
-    //MARK: animated View
-    
-    func createColorSets() {
-//        colorSets.append([hexStringToUIColor(hex: "FF3A49").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FFC02F").cgColor])
-//        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FF3A49").cgColor])
-//        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
-        
-        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
-        colorSets.append([hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
-        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
-        
-        currentColorSet = 0
-        createGradientLayer()
-    }
-    
-    
-    func createGradientLayer() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.view.bounds
-        gradientLayer.colors = colorSets[currentColorSet]
-        gradientLayer.type = .radial
-        //0 0 1 1
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 2.0, y: 1.0)
-        gradientLayer.drawsAsynchronously = true
-        self.view.layer.addSublayer(gradientLayer)
-        
-        self.animateBool = 0
-        self.timerAction(value: self.animateBool)
-        timer1 = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-    }
-    
-    @objc func timerAction(value: Int) {
-        
-        print("animateBool.... \(animateBool)")
-        
-        if currentColorSet < colorSets.count - 1 {
-            currentColorSet! += 1
-        }
-        else {
-            currentColorSet = 0
-        }
-        
-        let colorChangeAnimation = CABasicAnimation(keyPath: "colors")
-        colorChangeAnimation.delegate = self
-        colorChangeAnimation.duration = 4.0
-        colorChangeAnimation.toValue = colorSets[currentColorSet]
-        colorChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
-        colorChangeAnimation.isRemovedOnCompletion = false
-        gradientLayer.add(colorChangeAnimation, forKey: "colorChange")
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    func pauseAnimation() {
-        let pausedTime = gradientLayer.convertTime(CACurrentMediaTime(), from: nil)
-        gradientLayer.speed = 0
-        gradientLayer.timeOffset = pausedTime
-    }
-    
-    func resumeAnimation() {
-        let pausedTime = gradientLayer.timeOffset
-        gradientLayer.speed = 1
-        gradientLayer.timeOffset = 0
-        gradientLayer.beginTime = 0
-        let timeSincePause = gradientLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        gradientLayer.beginTime = timeSincePause
-    }
-    
-    
-    func setUpView() {
-        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-        if data.count > 0 {
-            settingData = data[0]
-        }
-    }
-    
-    @objc func appMovedToBackground() {
-        print("App moved to background!")
-        self.animationView.pause()
-        
-    }
-    
-    @objc func appMovedToForeground() {
-        print("App moved to background!")
-        if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
-            self.animationView.pause()
-        }else{
-            self.animationView.play()
-        }
-        KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
-        
     }
     
     @objc func updateTimer() {
@@ -337,7 +297,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             }
             
             let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
-            self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
+            self.lblTimer.text = self.secondToMinuteSecond(second: remainingTime)
             if remainingTime == 0 {
                 self.moveToFeedBack()
             }
@@ -440,19 +400,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.pauseAnimation()
             self.timer1.invalidate()
             
-            //save in database
-            let guidedAudioDataDB = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
-            for dict1 in guidedAudioDataDB{
-                if dict1.emotion_id == self.emotion_Id{
-                    if self.rating == 1{
-                        dict1.vote = true
-                    }else{
-                        dict1.vote = false
-                    }
-                    WWMHelperClass.saveDb()
-                }
-            }
-            
             //to push view controllers
             if self.settingData.moodMeterEnable {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterVC") as! WWMMoodMeterVC
@@ -499,10 +446,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
     }
     
-    func secondsToMinutesSeconds (second : Int) -> String {
-        return String.init(format: "%02d:%02d", second/60,second%60)
-    }
-    
     func pauseAction() {
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
@@ -536,21 +479,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnPlayAction(_ sender: Any) {
-        self.pauseAction()
-    }
-    
-    @IBAction func btnFavouriteAction(_ sender: Any) {
-        if !isFavourite {
-            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
-            self.isFavourite = true
-            self.rating = 1
-        }else {
-            isFavourite = false
-            self.btnFavourite.setImage(UIImage.init(named: "favouriteIconOFF"), for: .normal)
-            self.rating = 0
-        }
-    }
-    
+           self.pauseAction()
+       }
     
     func xibCall(){
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
@@ -646,19 +576,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 self.pauseAnimation()
                 self.timer1.invalidate()
                 
-                //save in database
-                let guidedAudioDataDB = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
-                for dict1 in guidedAudioDataDB{
-                    if dict1.emotion_id == self.emotion_Id{
-                        if self.rating == 1{
-                            dict1.vote = true
-                        }else{
-                            dict1.vote = false
-                        }
-                        WWMHelperClass.saveDb()
-                    }
-                }
-                
                 self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds)!)))", watched_duration: "\(Int(round((self.player?.currentTime().seconds)!)))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "")
                 
             }//ismovefinish
@@ -676,64 +593,39 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         
         var param: [String: Any] = [:]
-        if type == "learn"{
-            param = [
-                "type": type,
-                "step_id": step_id,
-                "mantra_id": mantra_id,
-                "category_id" : category_id,
-                "emotion_id" : emotion_id,
-                "audio_id" : audio_id,
-                "guided_type" : guided_type,
-                "duration" : watched_duration,
-                "rating" : rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
-                ] as [String : Any]
-        }else{
-            param = [
-                "type": type,
-                "category_id": category_id,
-                "emotion_id": emotion_id,
-                "audio_id": audio_id,
-                "guided_type": guided_type,
-                "watched_duration": watched_duration,
-                "rating": rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
-                ] as [String : Any]
-        }
+        param = [
+            "type": "sleep",
+            "category_id": category_id,
+            "emotion_id": emotion_id,
+            "audio_id": audio_id,
+            "guided_type": self.subCategory,
+            "watched_duration": watched_duration,
+            "rating": rating,
+            "user_id": user_id,
+            "meditation_type": meditation_type,
+            "date_time": date_time,
+            "tell_us_why": tell_us_why,
+            "prep_time": prep_time,
+            "meditation_time": meditation_time,
+            "rest_time": rest_time,
+            "meditation_id": meditation_id,
+            "level_id": level_id,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": complete_percentage,
+            "is_complete": self.ninetyFiveCompletedFlag
+            ] as [String : Any]
+        
         
         print("meter param WWMGuidedMeditationTimerVC... \(param)")
         
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMSleepTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
                         print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
-
+                        
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
                         
@@ -829,9 +721,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.pushNavigationController()
         }
     }
+
 }
 
-extension WWMGuidedMeditationTimerVC: CAAnimationDelegate{
+
+extension WWMSleepTimerVC: CAAnimationDelegate{
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
             gradientLayer.colors = colorSets[currentColorSet]

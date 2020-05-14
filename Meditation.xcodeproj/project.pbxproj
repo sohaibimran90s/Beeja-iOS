@@ -427,6 +427,7 @@
 		617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */; };
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
+		619EA419246D4CF7000B32FF /* WWMSleepTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EA418246D4CF7000B32FF /* WWMSleepTimerVC.swift */; };
 		61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */; };
 		61AC126523C6FEF600B9E9C6 /* WWMEditProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */; };
 		61B0ECB8239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */; };
@@ -951,6 +952,7 @@
 		617C284423525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
+		619EA418246D4CF7000B32FF /* WWMSleepTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepTimerVC.swift; sourceTree = "<group>"; };
 		61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileVC.swift; sourceTree = "<group>"; };
 		61AC126423C6FEF600B9E9C6 /* WWMEditProfileTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileTVC.swift; sourceTree = "<group>"; };
 		61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMZoomImgViewPopUp.xib; sourceTree = "<group>"; };
@@ -1781,6 +1783,7 @@
 				61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */,
 				6148E1E3246C4C230034179F /* WWMSleepAudioVC.swift */,
 				6148E1E5246C54310034179F /* WWMSleepAudioTVC.swift */,
+				619EA418246D4CF7000B32FF /* WWMSleepTimerVC.swift */,
 			);
 			path = "GuidedChallenge-21days";
 			sourceTree = "<group>";
@@ -2503,6 +2506,7 @@
 				2EE247E421E6315400857C25 /* FloatingPoint.swift in Sources */,
 				61416F0622BBB4C800C9339E /* LineChartDataSet.swift in Sources */,
 				61416F1522BBB4C800C9339E /* BarLineScatterCandleBubbleChartDataSet.swift in Sources */,
+				619EA419246D4CF7000B32FF /* WWMSleepTimerVC.swift in Sources */,
 				2E25CDC3222674FD002BDE15 /* WWMTabBarItem.swift in Sources */,
 				61416E8822BBB3B400C9339E /* ChartViewBase.swift in Sources */,
 				61416EB322BBB42600C9339E /* Platform.swift in Sources */,
