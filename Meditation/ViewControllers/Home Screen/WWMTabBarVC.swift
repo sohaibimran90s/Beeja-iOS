@@ -1480,6 +1480,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     if let id = dict1["id"]{
                                         dbWisdomVideoData.video_id = "\(id)"
                                     }
+                                    
+                                    if let is_intro = dict1["is_intro"] as? Int{
+                                        dbWisdomVideoData.is_intro = "\(is_intro)"
+                                    }else{
+                                        dbWisdomVideoData.is_intro = "0"
+                                    }
+                                    
                                     if let duration = dict1["duration"] as? String{
                                         dbWisdomVideoData.video_duration = duration
                                     }

@@ -37,6 +37,7 @@ class WWMWisdomVideoData: NSObject {
     var video_Url = String()
     var video_Duration = String()
     var vote = Bool()
+    var is_intro = String()
     
     init(json:[String:Any]) {
         video_Id = json["id"] as? Int ?? 1
@@ -45,6 +46,7 @@ class WWMWisdomVideoData: NSObject {
         video_Url = json["video_url"] as? String ?? ""
         video_Duration = json["duration"] as? String ?? ""
         vote = json["vote"] as? Bool ?? false
+        is_intro = json["is_intro"] as? String ?? "0"
     }
 }
 

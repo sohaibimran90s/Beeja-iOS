@@ -165,6 +165,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="DBWisdomVideoData" representedClassName="DBWisdomVideoData" syncable="YES">
+        <attribute name="is_intro" optional="YES" attributeType="String"/>
         <attribute name="video_duration" optional="YES" attributeType="String"/>
         <attribute name="video_id" optional="YES" attributeType="String"/>
         <attribute name="video_img" optional="YES" attributeType="String"/>
@@ -197,6 +198,6 @@
         <element name="DBSteps" positionX="9" positionY="162" width="128" height="223"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
-        <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="148"/>
+        <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="163"/>
     </elements>
 </model>

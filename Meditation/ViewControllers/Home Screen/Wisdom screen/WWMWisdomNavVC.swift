@@ -51,6 +51,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
                     if dict1.wisdom_id == dict.id{
                         
                         video_listJson["id"] = Int(dict1.video_id ?? "0")
+                        video_listJson["is_intro"] = dict1.is_intro ?? "0"
                         video_listJson["name"] = dict1.video_name ?? ""
                         video_listJson["poster_image"] = dict1.video_img ?? ""
                         video_listJson["video_url"] = dict1.video_url ?? ""

@@ -134,6 +134,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             })
         }
     }
+    
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
                                change: [NSKeyValueChangeKey : Any]?,
@@ -160,8 +161,17 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (self.view.frame.size.width-26)/2
-        return CGSize.init(width: width, height: width + 60)
+        
+        let data = self.wisdomData.cat_VideoList[indexPath.row]
+        
+        if data.is_intro == "0" {
+            let width = (self.view.frame.size.width-26)/2
+            return CGSize.init(width: width, height: width + 60)
+        }else {
+            let width = (self.view.frame.size.width-16)
+            let height = ((self.view.frame.size.width-26)/2) + 60
+            return CGSize.init(width: width, height: height)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

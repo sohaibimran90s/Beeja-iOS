@@ -24,5 +24,5 @@ extension DBWisdomVideoData {
     @NSManaged public var video_url: String?
     @NSManaged public var wisdom_id: String?
     @NSManaged public var video_vote: Bool
-
+    @NSManaged public var is_intro: String?
 }
