@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         self.requestAuthorization()
-        self.setLocalPush()
+        //self.setLocalPush()
         
         callObserver.setDelegate(self, queue: nil)
         
