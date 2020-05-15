@@ -590,80 +590,68 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         var position = 0
         
         let data = self.arrGuidedList[0].cat_EmotionList[table_cell_tag]
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-        vc.audioData = data.audio_list[collection_cell_tag]
-        vc.cat_id = "\(self.cat_id)"
-        vc.cat_Name = self.cat_name
-        vc.emotion_Id = "\(data.emotion_Id)"
-        vc.emotion_Name = data.emotion_Name
-        vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
         
-        vc.min_limit = self.min_limit
-        vc.max_limit = self.max_limit
-        vc.meditation_key = self.meditation_key
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-//        if data.completed{
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//            vc.audioData = data.audio_list[collection_cell_tag]
-//            vc.cat_id = "\(self.cat_id)"
-//            vc.cat_Name = self.cat_name
-//            vc.emotion_Id = "\(data.emotion_Id)"
-//            vc.emotion_Name = data.emotion_Name
-//            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-//
-//            vc.min_limit = self.min_limit
-//            vc.max_limit = self.max_limit
-//            vc.meditation_key = self.meditation_key
-//
-//            self.navigationController?.pushViewController(vc, animated: true)
-//
-//            return
-//        }else{
-//            for i in 0..<table_cell_tag{
-//                let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
-//                if date_completed != ""{
-//                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-//                    if dateCompare.0 == 1{
-//                        flag = 1
-//                        break
-//                    }
-//                }
-//            }
-//        }
-//
-//        if flag == 1{
-//            self.xibCall1(title1: KLEARNONESTEP)
-//            return
-//        }
-//
-//        for i in 0..<table_cell_tag{
-//            if !self.arrGuidedList[0].cat_EmotionList[i].completed{
-//                flag = 2
-//                position = i
-//                break
-//            }
-//        }
-//
-//        if flag == 2{
-//
-//            print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
-//
-//            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
-//        }else{
-//            WWMHelperClass.selectedType = "guided"
-//            WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-//            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
-//
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-//            vc.audioData = data.audio_list[collection_cell_tag]
-//            vc.cat_id = "\(self.cat_id)"
-//            vc.cat_Name = self.cat_name
-//            vc.emotion_Id = "\(data.emotion_Id)"
-//            vc.emotion_Name = data.emotion_Name
-//            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
+        if data.completed{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+            vc.audioData = data.audio_list[collection_cell_tag]
+            vc.cat_id = "\(self.cat_id)"
+            vc.cat_Name = self.cat_name
+            vc.emotion_Id = "\(data.emotion_Id)"
+            vc.emotion_Name = data.emotion_Name
+            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+
+            vc.min_limit = self.min_limit
+            vc.max_limit = self.max_limit
+            vc.meditation_key = self.meditation_key
+
+            self.navigationController?.pushViewController(vc, animated: true)
+
+            return
+        }else{
+            for i in 0..<table_cell_tag{
+                let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
+                if date_completed != ""{
+                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                    if dateCompare.0 == 1{
+                        flag = 1
+                        break
+                    }
+                }
+            }
+        }
+
+        if flag == 1{
+            self.xibCall1(title1: KLEARNONESTEP)
+            return
+        }
+
+        for i in 0..<table_cell_tag{
+            if !self.arrGuidedList[0].cat_EmotionList[i].completed{
+                flag = 2
+                position = i
+                break
+            }
+        }
+
+        if flag == 2{
+
+            print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
+
+            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
+        }else{
+            WWMHelperClass.selectedType = "guided"
+            WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
+
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+            vc.audioData = data.audio_list[collection_cell_tag]
+            vc.cat_id = "\(self.cat_id)"
+            vc.cat_Name = self.cat_name
+            vc.emotion_Id = "\(data.emotion_Id)"
+            vc.emotion_Name = data.emotion_Name
+            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func xibCall1(title1: String){

@@ -12,6 +12,7 @@ class WWMSleepAudioTVC: UITableViewCell {
 
     @IBOutlet weak var viewBack: UIView!
     @IBOutlet weak var lblDuration: UILabel!
+    @IBOutlet weak var imgLock: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

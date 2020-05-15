@@ -62,48 +62,12 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
     @IBAction func btnGuideAction(_ sender: UIButton) {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "GUIDE_ME", itemName: "")
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-//        vc.strUrl = URL_GUIDED
-//        vc.strType = "Guided"
-//        self.navigationController?.pushViewController(vc, animated: true)
-        guideStart = UINib(nibName: "WWMGuidedStart", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMGuidedStart
-        let window = UIApplication.shared.keyWindow!
-        
-        guideStart.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
-        guideStart.btnClose.addTarget(self, action: #selector(btnGuideCloseAction(_:)), for: .touchUpInside)
-        guideStart.btnMoreInformation.addTarget(self, action: #selector(btnMoreInformationActions(_:)), for: .touchUpInside)
-        guideStart.btnSpritual.addTarget(self, action: #selector(btnSpritualAction(_:)), for: .touchUpInside)
-        guideStart.btnPractical.addTarget(self, action: #selector(btnPracticalAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(guideStart)
-    }
-    
-    
-    @IBAction func btnGuideCloseAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-    }
-    
-    @IBAction func btnMoreInformationActions(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_MOREINFO
-        vc.strType = "More Information"
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func btnPracticalAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        guided_type = "practical"
-        WWMHelperClass.selectedType = "guided"
-        self.meditationApi(type: "guided")
-        
-    }
-    @IBAction func btnSpritualAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        guided_type = "spiritual"
+
+        guided_type = ""
         WWMHelperClass.selectedType = "guided"
         self.meditationApi(type: "guided")
     }
+    
     
     @IBAction func btnLearnAction(_ sender: UIButton) {
         // Analytics
