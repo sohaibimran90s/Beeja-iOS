@@ -313,7 +313,7 @@ class WWMHomeTabVC: WWMBaseViewController {
                     self.lblChallSubTitle.text = dict["title"] as? String
                     self.lblChallDes.text = dict["description"] as? String
                     
-                    self.key = dict["key"] as? String ?? "7 days Challenge"
+                    self.key = dict["key"] as? String ?? "21 days Challenge"
                     
                     if self.key == ""{
                         self.lblChallDes.isHidden = true
