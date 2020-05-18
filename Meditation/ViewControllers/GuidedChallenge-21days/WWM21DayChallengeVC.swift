@@ -185,6 +185,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
             }
             print(self.arrGuidedList.count)
             if self.arrGuidedList.count > 0{
+                self.expandableCellLogic()
                 self.tableView.reloadData()
             }
         }
@@ -333,33 +334,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         }
     }
     
-    func abc(){
-        print("min_limit++ \(min_limit) max_limit++ \(max_limit) meditation_key++ \(meditation_key)")
-        
-        if self.appPreference.getGuideType() == "practical"{
-            if !isIntroCompleted{
-                
-                print("emotion_id... \(self.emotionId) emotion_key... \(self.emotionKey)")
-                
-                DispatchQueue.main.async {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                    
-                    print("emotionKey...**** \(self.emotionKey) emotionId...****** \(self.emotionId) user_id...***** \(self.appPreference.getUserID())")
-                    vc.value = "curatedCards"
-                    vc.emotionId = self.emotionId
-                    vc.emotionKey = self.emotionKey
-                    self.navigationController?.pushViewController(vc, animated: false)
-                    return
-                }
-            }
-        }else{}
+    func expandableCellLogic(){
         
         //* logic for expanding the cell which we have to play
         
-        
-        /// for i in 0..<
-        
-        self.navigationController?.isNavigationBarHidden = false
         var flag = 0
         
         for i in 0..<self.arrGuidedList[0].cat_EmotionList.count{
@@ -580,8 +558,6 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
             
-            
-        //}
     }
     
     func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
@@ -593,13 +569,14 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         if data.completed{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+            
+            WWMHelperClass.stepsCompleted = data.completed
             vc.audioData = data.audio_list[collection_cell_tag]
             vc.cat_id = "\(self.cat_id)"
             vc.cat_Name = self.cat_name
             vc.emotion_Id = "\(data.emotion_Id)"
             vc.emotion_Name = data.emotion_Name
             vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-
             vc.min_limit = self.min_limit
             vc.max_limit = self.max_limit
             vc.meditation_key = self.meditation_key
@@ -639,9 +616,11 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
 
             self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
         }else{
+            
             WWMHelperClass.selectedType = "guided"
             WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)")
+            WWMHelperClass.stepsCompleted = data.completed
+            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
 
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
             vc.audioData = data.audio_list[collection_cell_tag]

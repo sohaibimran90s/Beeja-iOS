@@ -35,6 +35,7 @@ class WWMHelperClass {
     static var value: String = ""
     static var timerCount: Int = 0
     static var challenge7DayCount: Int = 0
+    static var stepsCompleted = false
     
     static var xlpager = ""
     static var checkNinetyFivePer = 0
