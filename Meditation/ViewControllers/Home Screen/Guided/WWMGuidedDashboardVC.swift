@@ -26,13 +26,13 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("++++++++++++++++++++++")
         
         let name = self.appPreference.get21ChallengeName()
         if name != ""{
             self.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
         }
     }
+    
     func setUpUI() {
         
         buttonBarView.frame.origin.y = -4
@@ -74,31 +74,9 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         let arrVC = NSMutableArray()
         
         print("arrGuidedList.count... \(arrGuidedList.count)")
-        var isIntroCompleted: Bool?
-        var emotionId = 0
-        var emotionKey = ""
-        var tile_type = ""
-        
         self.getUniqueChallenge()
-        
         if self.type == "Guided"{
             for data in self.arrGuidedList1 {
-                
-//                for data1 in self.arrGuidedList{
-//                    for i in 0..<data1.cat_EmotionList.count{
-//                        print("intro_completed...+++ \(data1.cat_EmotionList[i].intro_completed) tile_type+++ \(data1.cat_EmotionList[i].tile_type) title_type.... \(data1.cat_EmotionList[i].tile_type) emotionId+++ \(data1.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data1.cat_EmotionList[i].emotion_key)")
-//                        if data1.cat_EmotionList[i].intro_completed{
-//                            isIntroCompleted = true
-//                            tile_type = data1.cat_EmotionList[i].tile_type
-//                        }
-//
-//                        if data1.cat_EmotionList[i].tile_type == "3"{
-//                            emotionId = data1.cat_EmotionList[i].emotion_Id
-//                            emotionKey = data1.cat_EmotionList[i].emotion_key
-//
-//                        }
-//                    }
-//                }
                 
                 if data.cat_mode == "challenge"{
                     //WWM21DayChallengeVC
@@ -127,22 +105,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             }
         }else{
             for data in self.arrGuidedList1 {
-                
-//                for i in 0..<data.cat_EmotionList.count{
-//                    print("intro_completed...+++ \(data.cat_EmotionList[i].intro_completed) tile_type+++ \(data.cat_EmotionList[i].tile_type)")
-//                    if data.cat_EmotionList[i].intro_completed{
-//                        isIntroCompleted = true
-//                        tile_type = data.cat_EmotionList[i].tile_type
-//                        print("title_type.... \(data.cat_EmotionList[i].tile_type)")
-//                    }
-//
-//                    if data.cat_EmotionList[i].tile_type == "3"{
-//                        print("emotionId+++ \(data.cat_EmotionList[i].emotion_Id) emotionKey+++ \(data.cat_EmotionList[i].emotion_key)")
-//                        emotionId = data.cat_EmotionList[i].emotion_Id
-//                        emotionKey = data.cat_EmotionList[i].emotion_key
-//
-//                    }
-//                }
                 
                 if data.cat_mode == "challenge"{
                     //WWM21DayChallengeVC
@@ -218,10 +180,5 @@ extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
             self.moveToViewController(at: index, animated: true)
             appPreference.set21ChallengeName(value: "")
         }
-//        else if (vcName == "WWMGuidedEmotionVC") && isTrue && tile_type == 3{
-//            appPreference.set21ChallengeName(value: "")
-//            self.moveToViewController(at: 2, animated: true)
-//            print(self.arrGuidedList1.count)
-//        }
     }
 }
