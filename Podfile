@@ -18,7 +18,8 @@ target 'Meditation' do
   
   # update
   pod 'GaugeKit', '~> 0.5.1'
-  pod 'XLPagerTabStrip', '~> 9.0.0'
+  #pod 'XLPagerTabStrip', '~> 9.0.0'
+  pod 'XLPagerTabStrip', :git => 'https://github.com/Dagogatc/XLPagerTabStrip.git', :branch => 'moveToViewController-issue'
   
   pod 'SDWebImage', '~> 4.4.3'
   

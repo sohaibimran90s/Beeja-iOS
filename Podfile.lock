@@ -157,7 +157,7 @@ DEPENDENCIES:
   - SDWebImage (~> 4.4.3)
   - SwiftyRSA (~> 1.5.0)
   - UICircularProgressRing (~> 6.1.0)
-  - XLPagerTabStrip (~> 9.0.0)
+  - XLPagerTabStrip (from `https://github.com/Dagogatc/XLPagerTabStrip.git`, branch `moveToViewController-issue`)
 
 SPEC REPOS:
   trunk:
@@ -194,7 +194,16 @@ SPEC REPOS:
     - SDWebImage
     - SwiftyRSA
     - UICircularProgressRing
-    - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  XLPagerTabStrip:
+    :branch: moveToViewController-issue
+    :git: https://github.com/Dagogatc/XLPagerTabStrip.git
+
+CHECKOUT OPTIONS:
+  XLPagerTabStrip:
+    :commit: 9d4dd61a5b01992f81de7dbbc66b7a557e48c136
+    :git: https://github.com/Dagogatc/XLPagerTabStrip.git
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -230,8 +239,8 @@ SPEC CHECKSUMS:
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
   UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
-  XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
+  XLPagerTabStrip: 832dc9b062d150598ac7e735a769f7986cb1c801
 
-PODFILE CHECKSUM: 14520c794809abb4d1e166c9215f5315d615e314
+PODFILE CHECKSUM: 051ea3989bbffb9f52c577d175c989f3e0ceef8f
 
 COCOAPODS: 1.9.1

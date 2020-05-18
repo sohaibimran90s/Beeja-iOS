@@ -23,9 +23,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuidedListCount"), object: nil, userInfo: ["guidedCount": self.arrGuidedList.count])
         self.setUpUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         
         let name = self.appPreference.get21ChallengeName()
         if name != ""{
@@ -177,7 +174,7 @@ extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
                 print("\(name) \(index) self.arrGuidedList1.c0unt*** \(self.arrGuidedList1.count) cat_name*** \(dic.cat_Name)")
             }
             
-            self.moveToViewController(at: index, animated: true)
+            self.moveToViewController(at: index, animated: false)
             appPreference.set21ChallengeName(value: "")
         }
     }

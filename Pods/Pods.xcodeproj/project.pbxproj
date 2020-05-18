@@ -9871,41 +9871,6 @@
 			};
 			name = Debug;
 		};
-		0B7DC032279BE78A6812F2410910F946 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 783F7F6E8F3579126B08BFB08E545375 /* XLPagerTabStrip.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip.modulemap";
-				PRODUCT_MODULE_NAME = XLPagerTabStrip;
-				PRODUCT_NAME = XLPagerTabStrip;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		0F2782E14971EA42FC41D3360478F090 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C71148638E51BB918D6BBA3654586536 /* GTMSessionFetcher.release.xcconfig */;
@@ -10378,6 +10343,23 @@
 			};
 			name = Debug;
 		};
+		3B3D5126C3B4710DD0976E573FEE875A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B81415A21583D953582EDE232923296 /* XLPagerTabStrip.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/XLPagerTabStrip";
+				IBSC_MODULE = XLPagerTabStrip;
+				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/ResourceBundle-XLPagerTabStrip-XLPagerTabStrip-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = XLPagerTabStrip;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		3E34629840C593E821BBF4796F36D7BF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E5C3B5F34A6FF08F4DD567C8901031AB /* Alamofire.debug.xcconfig */;
@@ -10728,23 +10710,6 @@
 			};
 			name = Release;
 		};
-		5E2F6241912131CA13253F31A7EDF998 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 783F7F6E8F3579126B08BFB08E545375 /* XLPagerTabStrip.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/XLPagerTabStrip";
-				IBSC_MODULE = XLPagerTabStrip;
-				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/ResourceBundle-XLPagerTabStrip-XLPagerTabStrip-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				PRODUCT_NAME = XLPagerTabStrip;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
 		699FFA14D460B23A30C4C0C783F581A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CC54C57A8D2A0223CF3FF63F8C1D522 /* GTMSessionFetcher.debug.xcconfig */;
@@ -10918,6 +10883,23 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		8567309F40C0446DFFB038A954C34CBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 783F7F6E8F3579126B08BFB08E545375 /* XLPagerTabStrip.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/XLPagerTabStrip";
+				IBSC_MODULE = XLPagerTabStrip;
+				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/ResourceBundle-XLPagerTabStrip-XLPagerTabStrip-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = XLPagerTabStrip;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
 		};
 		85B900FD57DEB96CEF8AC0077F449539 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -11409,42 +11391,6 @@
 			};
 			name = Debug;
 		};
-		A9E7B14B75BE417AE484B1AF452E3FFC /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B81415A21583D953582EDE232923296 /* XLPagerTabStrip.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip.modulemap";
-				PRODUCT_MODULE_NAME = XLPagerTabStrip;
-				PRODUCT_NAME = XLPagerTabStrip;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		AE02C4C737528328813C10C86594996A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78AD7A9F1959591B6A042467213E7101 /* FirebaseCrashlytics.release.xcconfig */;
@@ -11619,23 +11565,6 @@
 			};
 			name = Release;
 		};
-		C0137CA247E3BD4B0D6142D887E2931D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B81415A21583D953582EDE232923296 /* XLPagerTabStrip.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/XLPagerTabStrip";
-				IBSC_MODULE = XLPagerTabStrip;
-				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/ResourceBundle-XLPagerTabStrip-XLPagerTabStrip-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				PRODUCT_NAME = XLPagerTabStrip;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
 		C14B10A9D0E744570F6C1EFE485CE419 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB58223022AC12B1A62A79805BC50CD3 /* FirebaseInstanceID.release.xcconfig */;
@@ -11671,6 +11600,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		C5879478FD1E7086E0259E2EC21D2CE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 783F7F6E8F3579126B08BFB08E545375 /* XLPagerTabStrip.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip.modulemap";
+				PRODUCT_MODULE_NAME = XLPagerTabStrip;
+				PRODUCT_NAME = XLPagerTabStrip;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		CFF06BCE5C96FDF624DF02F94006C839 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -12111,6 +12075,42 @@
 			};
 			name = Debug;
 		};
+		F4D759BE7C8982E2FC15E3415CF7CF81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B81415A21583D953582EDE232923296 /* XLPagerTabStrip.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/XLPagerTabStrip/XLPagerTabStrip.modulemap";
+				PRODUCT_MODULE_NAME = XLPagerTabStrip;
+				PRODUCT_NAME = XLPagerTabStrip;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		F6AE0CF8AA4C4E22C59FD4F7BE2FB2DF /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02AD5BD22AD9144114EBA30E27A72A8E /* GoogleDataTransport.release.xcconfig */;
@@ -12188,8 +12188,8 @@
 		0DC3A1F894722359353AC05A476C7644 /* Build configuration list for PBXNativeTarget "XLPagerTabStrip-XLPagerTabStrip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E2F6241912131CA13253F31A7EDF998 /* Debug */,
-				C0137CA247E3BD4B0D6142D887E2931D /* Release */,
+				8567309F40C0446DFFB038A954C34CBB /* Debug */,
+				3B3D5126C3B4710DD0976E573FEE875A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -12314,8 +12314,8 @@
 		88D866DA052EF93195E917061DB86D9A /* Build configuration list for PBXNativeTarget "XLPagerTabStrip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0B7DC032279BE78A6812F2410910F946 /* Debug */,
-				A9E7B14B75BE417AE484B1AF452E3FFC /* Release */,
+				C5879478FD1E7086E0259E2EC21D2CE2 /* Debug */,
+				F4D759BE7C8982E2FC15E3415CF7CF81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

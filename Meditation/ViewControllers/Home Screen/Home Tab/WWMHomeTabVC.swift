@@ -279,23 +279,34 @@ class WWMHomeTabVC: WWMBaseViewController {
         })
     }
     
+    @IBAction func btn21ChallengeClicked(_ sender: UIButton) {
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
+        
+        appPreference.set21ChallengeName(value: "21 Days challenge")
+        guided_type = "practical"
+        self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
     @IBAction func btnVideoClicked(_ sender: UIButton) {
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
         
         vc.value = "help"
         self.navigationController?.pushViewController(vc, animated: true)
-      /*  let videoURL: String = self.appPreffrence.getHomePageURL()
-        NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
-
-        if videoURL != ""{
-            print("videourl... \(videoURL)")
-            player = AVPlayer(url: URL(string: videoURL)!)
-            playerController.player = player
-            present(playerController, animated: true){
-                self.player?.play()
-            }
-        }*/
     }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
@@ -413,14 +424,13 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
         UIApplication.shared.keyWindow?.rootViewController = vc
         
     }
 
     @IBAction func btnGuidedClicked(_ sender: UIButton) {
-        //self.xibCallGuided()
+
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
         
         guided_type = "practical"
@@ -436,7 +446,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
         }
-        
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
         UIApplication.shared.keyWindow?.rootViewController = vc
@@ -458,91 +467,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.meditationApi()
         }
         
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
         UIApplication.shared.keyWindow?.rootViewController = vc
-        
     }
     
-    
-    //MARK: popup for guided
-    func xibCallGuided(){
-        guideStart = UINib(nibName: "WWMGuidedStart", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMGuidedStart
-        let window = UIApplication.shared.keyWindow!
-        
-        guideStart.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
-        guideStart.btnClose.addTarget(self, action: #selector(btnGuideCloseAction(_:)), for: .touchUpInside)
-        guideStart.btnMoreInformation.addTarget(self, action: #selector(btnMoreInformationActions(_:)), for: .touchUpInside)
-        guideStart.btnSpritual.addTarget(self, action: #selector(btnSpritualAction(_:)), for: .touchUpInside)
-        guideStart.btnPractical.addTarget(self, action: #selector(btnPracticalAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(guideStart)
-    }
-    
-    @IBAction func btnPracticalAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        
-        // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
-        
-        guided_type = "practical"
-        self.type = "guided"
-        WWMHelperClass.selectedType = "guided"
-        
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
-        
-        DispatchQueue.global(qos: .background).async {
-            self.meditationApi()
-        }
-        
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
-        
-    }
-    
-    @IBAction func btnSpritualAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        
-        // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "SPIRITUAL")
-        
-        guided_type = "spiritual"
-        self.type = "guided"
-        WWMHelperClass.selectedType = "guided"
-        
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
-        
-        DispatchQueue.global(qos: .background).async {
-            self.meditationApi()
-        }
-        
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
-        
-    }
-    
-    @IBAction func btnGuideCloseAction(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-    }
-    
-    @IBAction func btnMoreInformationActions(_ sender: UIButton) {
-        guideStart.removeFromSuperview()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_MOREINFO
-        vc.strType = KMOREINFORMATION
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-
     //MARK:- API Calling
     
     func meditationApi() {
