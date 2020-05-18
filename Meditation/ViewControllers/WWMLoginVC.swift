@@ -230,6 +230,10 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     print("userProfile WWMLoginVC... \(userProfile)")
                     
+                    DispatchQueue.global(qos: .background).async {
+                        self.bannerAPI()
+                    }
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
@@ -279,4 +283,17 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         }
     }
     
+    //bannerAPI
+    func bannerAPI() {
+        
+        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreference.setBanners(value: result)
+                }
+            }
+        }
+    }
 }

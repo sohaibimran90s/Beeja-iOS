@@ -27,16 +27,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
         
         self.offlineDatatoServerCall()
         KNOTIFICATIONCENTER.addObserver(forName: NSNotification.Name(rawValue: "guidedDropDownClicked"), object: nil, queue: nil, using: catchNotification)
-
-//        if self.appPreference.getGuideType() == "practical"{
-//            self.typeTitle = "Practical Guidance"
-//            self.setUpNavigationBarForDashboard(title: "guided")
-//            self.guided_type = "practical"
-//        }else {
-//            self.typeTitle = "Spiritual Guidance"
-//            self.setUpNavigationBarForDashboard(title: "sleep")
-//            self.guided_type = "spiritual"
-//        }
         
          self.typeTitle = "Guided"
          self.setUpNavigationBarForDashboard(title: "guided")

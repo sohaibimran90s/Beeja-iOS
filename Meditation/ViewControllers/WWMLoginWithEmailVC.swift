@@ -235,6 +235,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
                     print("userProfile WWMLoginWithEmailVC... \(userProfile)")
+                    DispatchQueue.global(qos: .background).async {
+                        self.bannerAPI()
+                    }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
@@ -395,63 +398,81 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
            }
        }
        
-       func loginWithSocial(param:[String : Any]) {
-           
-           //WWMHelperClass.showSVHud()
-           WWMHelperClass.showLoaderAnimate(on: self.view)
-           WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
-               if sucess {
-                   print("result.... \(result)")
-                   if let userProfile = result["userprofile"] as? [String:Any] {
-                       print("userProfile WWMLoginVC... \(userProfile)")
-                       
-                       if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
-                           self.appPreference.setIsLogin(value: true)
-                           self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                           //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
-                           
-                           Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
-                           
-                           NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-
-                           self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
-                           self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
-                           self.appPreference.setUserName(value: userProfile["name"] as? String ?? "Unauthorized request")
-                           self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
-                           self.appPreference.setType(value: userProfile["type"] as? String ?? "")
-                           self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
-                           self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
-                           if isProfileCompleted {
-                               self.appPreference.setGetProfile(value: true)
-                               
-                               let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                               UIApplication.shared.keyWindow?.rootViewController = vc
-                               
-                           }else {
-                               let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-                               self.navigationController?.pushViewController(vc, animated: true)
-                           }
-                       }
-                   }else {
-                       GIDSignIn.sharedInstance()?.signOut()
-                       WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
-                   }
-                   
-               }else {
-                   GIDSignIn.sharedInstance()?.signOut()
-                   if error != nil {
-                       if error?.localizedDescription == "The Internet connection appears to be offline."{
-                           WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                       }else{
-                           WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                       }
-                       
-                   }
-                   
-               }
-               //WWMHelperClass.dismissSVHud()
-               WWMHelperClass.hideLoaderAnimate(on: self.view)
-           }
-       }
+    func loginWithSocial(param:[String : Any]) {
+        
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
+            if sucess {
+                print("result.... \(result)")
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    print("userProfile WWMLoginVC... \(userProfile)")
+                    
+                    DispatchQueue.global(qos: .background).async {
+                        self.bannerAPI()
+                    }
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsLogin(value: true)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+                        
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                        self.appPreference.setUserName(value: userProfile["name"] as? String ?? "Unauthorized request")
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setType(value: userProfile["type"] as? String ?? "")
+                        self.appPreference.setGuideType(value: userProfile["guided_type"] as? String ?? "")
+                        self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
+                        if isProfileCompleted {
+                            self.appPreference.setGetProfile(value: true)
+                            
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                            UIApplication.shared.keyWindow?.rootViewController = vc
+                            
+                        }else {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                    }
+                }else {
+                    GIDSignIn.sharedInstance()?.signOut()
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                }
+                
+            }else {
+                GIDSignIn.sharedInstance()?.signOut()
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+                
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    //bannerAPI
+    func bannerAPI() {
+        
+        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreffrence.setBanners(value: result)
+                    print(self.appPreffrence.getBanners().count)
+                }
+            }
+        }
+    }
 }
 

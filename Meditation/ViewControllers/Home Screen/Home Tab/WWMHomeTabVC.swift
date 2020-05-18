@@ -32,6 +32,13 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    //banner outlet
+    @IBOutlet weak var lblChallTitle: UILabel!
+    @IBOutlet weak var lblChallSubTitle: UILabel!
+    @IBOutlet weak var lblChallDes: UILabel!
+    @IBOutlet weak var bannerHeightConstraint: NSLayoutConstraint!
+    var key = ""
+    
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
     var yaxis: CGFloat = 540
@@ -54,7 +61,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     let reachable = Reachabilities()
     
     var timerCount = 0
-    
     var selectedAudio = "0"
     var podcastMusicPlayerPopUp = WWWMPodCastPlayerView()
     var selectedAudioIndex: Int = 0
@@ -105,6 +111,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         //UIApplication.shared.isStatusBarHidden = true
+        self.bannerAPI()
         timerCount = Int.random(in: 0...4)
         WWMHelperClass.timerCount = timerCount
         print("timercount... \(timerCount)")
@@ -279,10 +286,52 @@ class WWMHomeTabVC: WWMBaseViewController {
         })
     }
     
+    //banner api
+    func bannerAPI() {
+        
+        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreffrence.setBanners(value: result)
+                    print(self.appPreffrence.getBanners().count)
+                    self.bannerData()
+                }
+            }
+        }
+        
+        bannerData()
+    }
+    
+    func bannerData(){
+        if self.appPreffrence.getBanners().count > 0{
+            for data in self.appPreffrence.getBanners() {
+                
+                if let dict = data as? [String: Any]{
+                    self.lblChallTitle.text = dict["name"] as? String
+                    self.lblChallSubTitle.text = dict["title"] as? String
+                    self.lblChallDes.text = dict["description"] as? String
+                    
+                    self.key = dict["key"] as? String ?? "7 days Challenge"
+                    
+                    if self.key == ""{
+                        self.lblChallDes.isHidden = true
+                        self.bannerHeightConstraint.constant = 94
+                    }else{
+                        self.lblChallDes.isHidden = false
+                        self.bannerHeightConstraint.constant = 165
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func btn21ChallengeClicked(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
         
-        appPreference.set21ChallengeName(value: "21 Days challenge")
+        appPreference.set21ChallengeName(value: self.key.capitalized)
+        print(appPreference.get21ChallengeName())
         guided_type = "practical"
         self.type = "guided"
         WWMHelperClass.selectedType = "guided"
@@ -311,7 +360,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification){
         playerController.dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func btnGiftClicked(_ sender: UIButton) {

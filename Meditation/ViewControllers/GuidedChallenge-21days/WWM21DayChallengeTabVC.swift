@@ -61,7 +61,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
-                        
+                        vc.checkTabContain7Days = true
+                        vc.name = self.name
                         vc.id = (dict as AnyObject).guided_id ?? ""
                         self.navigationController?.pushViewController(vc, animated: false)
                         
@@ -82,16 +83,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     @IBAction func btnPracticalAction(_ sender: UIButton){
-        
-        if self.name == "21 Days challenge"{
-            if self.checkTabContain7Days{
-                print("7 days challenge accepted")
-            }else{
-                practicalAction()
-            }
-        }else{
-            practicalAction()
-        }
+        practicalAction()
     }
     
     func practicalAction(){
@@ -106,6 +98,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
+                    vc.checkTabContain7Days = true
+                    vc.name = self.name
                     vc.subCategory = "Practical"
                     vc.category = self.name
                     vc.id = (dict as AnyObject).guided_id ?? ""
@@ -126,7 +120,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
-                    //vc.delegate = delegate
+                    vc.checkTabContain7Days = true
+                    vc.name = self.name
                     vc.subCategory = "Spiritual"
                     vc.category = self.name
                     vc.id = (dict as AnyObject).guided_id ?? ""
@@ -137,15 +132,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     @IBAction func btnSpiritualAction(_ sender: UIButton){
-        if self.name == "21 Days challenge"{
-            if self.checkTabContain7Days{
-                print("7 days challenge accepted")
-            }else{
-                spiritualAction()
-            }
-        }else{
-            spiritualAction()
-        }
+        spiritualAction()
     }
     
     // MARK: - IndicatorInfoProvider

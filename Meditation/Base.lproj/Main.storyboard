@@ -12854,13 +12854,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0NZ-CG-3Ra">
                                                         <rect key="frame" x="72" y="22" width="207" height="36.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="21 Days Challenge" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlz-kb-lkr">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="21 Days Challenge" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlz-kb-lkr">
                                                                 <rect key="frame" x="0.0" y="0.0" width="207" height="17.5"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" red="0.94117647058823528" green="0.63921568627450975" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you ready?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phT-Q9-Ipl">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you ready?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phT-Q9-Ipl">
                                                                 <rect key="frame" x="0.0" y="22.5" width="207" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -12892,7 +12892,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We've launched a new challenge to take your practise to the next level. Get set go!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0h-0O-e9w">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We've launched a new challenge to take your practise to the next level. Get set go!" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0h-0O-e9w">
                                                         <rect key="frame" x="16" y="105" width="299" height="34"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -13632,6 +13632,7 @@
                     <connections>
                         <outlet property="backImgVideo" destination="H4T-E3-iMX" id="mbJ-Uv-0eL"/>
                         <outlet property="backViewTableView" destination="tyc-82-X3J" id="boR-xR-QJs"/>
+                        <outlet property="bannerHeightConstraint" destination="IbX-BA-jq4" id="tmj-fH-vY6"/>
                         <outlet property="btnBuyNow" destination="Apc-6G-OB9" id="o4j-S9-Ae7"/>
                         <outlet property="btnPlayVideo" destination="CwN-Bf-X8R" id="97J-zF-URh"/>
                         <outlet property="btnPodcastShowAll" destination="2i8-2b-4ri" id="4gn-u8-j4G"/>
@@ -13639,6 +13640,9 @@
                         <outlet property="imgGiftIcon" destination="9aR-gL-i6P" id="cqy-0Y-xNv"/>
                         <outlet property="imgPlayIcon" destination="imt-Xk-MZZ" id="5jk-Ah-8VQ"/>
                         <outlet property="introView" destination="Ew8-5c-Oq0" id="Fxb-S2-TVa"/>
+                        <outlet property="lblChallDes" destination="G0h-0O-e9w" id="SFn-mt-RXz"/>
+                        <outlet property="lblChallSubTitle" destination="phT-Q9-Ipl" id="lM0-p4-7mP"/>
+                        <outlet property="lblChallTitle" destination="Hlz-kb-lkr" id="J2R-BC-1yI"/>
                         <outlet property="lblIntroText" destination="a5z-u0-aKm" id="TFR-HT-rvC"/>
                         <outlet property="lblMedHistoryText" destination="2PK-Pc-jft" id="Uy8-tT-TSw"/>
                         <outlet property="lblName" destination="CcW-r5-HEa" id="lcV-mn-wvY"/>

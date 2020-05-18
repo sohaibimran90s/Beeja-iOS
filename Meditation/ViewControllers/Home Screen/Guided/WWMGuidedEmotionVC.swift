@@ -64,11 +64,6 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hexString: "#00eba9")!, range: NSRange(location:0,length:17))
             // set label Attribute
             cell.lblTitle.attributedText = myMutableString
-            //cell.lblTitle.text = data.emotion_Name
-            
-            //cell.lblSubTitle.numberOfLines = 3
-            //cell.lblSubTitle.sizeToFit()
-            //cell.lblSubTitle.text = data.emotion_body
             return cell
             
         }else{

@@ -131,6 +131,10 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
                     
                     print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
+                    DispatchQueue.global(qos: .background).async {
+                        self.bannerAPI()
+                    }
+                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
@@ -176,6 +180,20 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    //bannerAPI
+    func bannerAPI() {
+        
+        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreference.setBanners(value: result)
+                }
+            }
         }
     }
 }

@@ -140,6 +140,7 @@ let URL_FORCELOGOUT = URL_BASE + "check_user"//
 let URL_MEDITATIONLIST = URL_BASE + "meditationlist"
 let URL_ONBOARDING = URL_BASE + "onboarding"
 let URL_SINGLEGUIDED = URL_BASE + "dictionary/singleguided"
+let URL_BANNERS = URL_BASE + "banners"
 
 
 /************************************************/

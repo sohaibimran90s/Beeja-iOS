@@ -12,6 +12,11 @@ class WWMAppPreference: NSObject {
     
     let defaults = UserDefaults.standard
     
+    //set banner array save
+    func setBanners(value: [Any]) {
+        defaults.set(value, forKey: "banners")
+    }
+    
     func setGetProfile(value:Bool) {
         defaults.set(value, forKey: "getProfile")
         defaults.synchronize()
@@ -471,5 +476,11 @@ class WWMAppPreference: NSObject {
     
     func getWalkThoughStatus() -> Bool {
         return UserDefaults.standard.bool(forKey: "walkThoughStatus")
+    }
+    
+    //get banner array save
+    func getBanners() -> [Any] {
+        return UserDefaults.standard.array(forKey: "banners") ?? []
+
     }
 }

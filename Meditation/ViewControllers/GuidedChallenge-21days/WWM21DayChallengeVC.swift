@@ -22,6 +22,8 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var category = ""
     var subCategory = ""
     var id = ""
+    var name = ""
+    var checkTabContain7Days = false
 
     var selectedIndex = 0
     var itemInfo: IndicatorInfo = "View"
@@ -537,28 +539,60 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         print(indexPath.item)
         let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
         
-       // if self.isIntroCompleted{
+        
+        if self.guideTitleCount > 3 && self.cat_name.contains("21"){
             
-            if self.guideTitleCount > 3 && self.cat_name.contains("21"){
+        }else{
+            if self.appPreference.getIsSubscribedBool(){
+                
+                //to check if 7 days accepted than 21 days will not be cliced
+                if self.name == "21 Days challenge"{
+                    if self.checkTabContain7Days{
+                        print("7 days challenge accepted")
+                    }else{
+                        self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                    }
+                }else{
+                    self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                }
+                //*
                 
             }else{
-                if self.appPreference.getIsSubscribedBool(){
+                if data.audio_list[indexPath.item].audio_Duration <= 900{
                     
-                    self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-                }else{
-                    if data.audio_list[indexPath.item].audio_Duration <= 900{
-                        
+                    //to check if 7 days accepted than 21 days will not be cliced
+                    if self.name == "21 Days challenge"{
+                        if self.checkTabContain7Days{
+                            print("7 days challenge accepted")
+                        }else{
+                            self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                        }
+                    }else{
                         self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-                        
+                    }
+                    //*
+                    
+                }else{
+                    
+                    //to check if 7 days accepted than 21 days will not be cliced
+                    if self.name == "21 Days challenge"{
+                        if self.checkTabContain7Days{
+                            print("7 days challenge accepted")
+                        }else{
+                            xibCall()
+                        }
                     }else{
                         xibCall()
                     }
+                    //*
                 }
             }
-            
-            print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
-            
+        }
+        
+        print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
+        
     }
+    
     
     func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
         

@@ -95,6 +95,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
             self.meditationlistAPI()
+            self.bannerAPI()
         }
         
         self.delegate = self
@@ -285,6 +286,21 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if index == self.selectedIndex {
                 
                 item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+            }
+        }
+    }
+    
+    //bannerAPI
+    func bannerAPI() {
+        
+        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
+    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreffrence.setBanners(value: result)
+                    print(self.appPreffrence.getBanners().count)
+                }
             }
         }
     }
