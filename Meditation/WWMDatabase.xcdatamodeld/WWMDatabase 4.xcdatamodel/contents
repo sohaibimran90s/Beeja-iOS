@@ -163,6 +163,7 @@
         <attribute name="restTime" optional="YES" attributeType="String"/>
     </entity>
     <entity name="DBWisdomData" representedClassName="DBWisdomData" syncable="YES">
+        <attribute name="cat_name" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -200,7 +201,7 @@
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
         <element name="DBSteps" positionX="9" positionY="162" width="128" height="223"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
-        <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="88"/>
+        <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="103"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="163"/>
     </elements>
 </model>

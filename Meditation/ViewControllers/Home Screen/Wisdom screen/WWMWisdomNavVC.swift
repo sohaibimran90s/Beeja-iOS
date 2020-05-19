@@ -36,57 +36,65 @@ class WWMWisdomNavVC: WWMBaseViewController {
     
     func fetchWisdomDataFromDB() {
         let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
-        let wisdomVideoDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
+        let wisdomDataDB1 = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
         
-        var resultArray: [[String: Any]] = []
-        var jsonString: [String: Any] = [:]
-        var video_listJson: [String: Any] = [:]
-        var video_list: [[String: Any]] = []
+        print("wisdomDataDB count... \(wisdomDataDB.count) wisdomDataDB1... \(wisdomDataDB1.count)")
         if wisdomDataDB.count > 0 {
+            
+            self.arrWisdomList.removeAll()
+            
             for dict in wisdomDataDB {
+                
+                
+                
+                var jsonString: [String: Any] = [:]
+                var jsonEmotionsString: [String: Any] = [:]
+                var jsonEmotions: [[String: Any]] = []
+
                 jsonString["id"] = Int(dict.id ?? "0")
                 jsonString["name"] = dict.name
+                                
+                if (dict as AnyObject).id == nil{
+                    return
+                }
+                
+                let wisdomVideoDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).id ?? "6", dbName: "DBWisdomVideoData", name: "wisdom_id")
+                print("wisdomVideoDataDB count... \(wisdomVideoDataDB.count) wisdomDataDB id... \((dict as AnyObject).id)")
                 
                 for dict1 in wisdomVideoDataDB{
-                    if dict1.wisdom_id == dict.id{
-                        
-                        video_listJson["id"] = Int(dict1.video_id ?? "0")
-                        video_listJson["is_intro"] = dict1.is_intro ?? "0"
-                        video_listJson["name"] = dict1.video_name ?? ""
-                        video_listJson["poster_image"] = dict1.video_img ?? ""
-                        video_listJson["video_url"] = dict1.video_url ?? ""
-                        video_listJson["duration"] = dict1.video_duration ?? ""
-                        video_listJson["vote"] = dict1.video_vote
-                    }
                     
-                    video_list.append(video_listJson)
+                    print((dict1 as AnyObject).video_name)
+                    jsonEmotionsString["id"] = Int((dict1 as AnyObject).video_id ?? "0")
+                    jsonEmotionsString["is_intro"] = (dict1 as AnyObject).is_intro ?? "0"
+                    jsonEmotionsString["name"] = (dict1 as AnyObject).video_name ?? ""
+                    jsonEmotionsString["poster_image"] = (dict1 as AnyObject).video_img ?? ""
+                    jsonEmotionsString["video_url"] = (dict1 as AnyObject).video_url ?? ""
+                    jsonEmotionsString["duration"] = (dict1 as AnyObject).video_duration ?? ""
+                    jsonEmotionsString["vote"] = (dict1 as AnyObject).video_vote
+                    
+                    jsonEmotions.append(jsonEmotionsString)
                 }
                 
-                jsonString["video_list"] = video_list
-                resultArray.append(jsonString)
+                jsonString["video_list"] = jsonEmotions
+                jsonEmotions.removeAll()
+                let guidedData = WWMWisdomData.init(json: jsonString)
+                self.arrWisdomList.append(guidedData)
                 
-                print("resultArray... \(resultArray.count)")
-                print("video_list... \(video_list.count)")
             }
             
-            print("resultArray... \(resultArray.count)")
-            print(resultArray)
-            
-            if let wisdomList = resultArray as? [[String:Any]] {
-                self.arrWisdomList.removeAll()
-                for data in wisdomList {
-                    let wisdomData = WWMWisdomData.init(json: data)
-                    self.arrWisdomList.append(wisdomData)
-                }
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomDashboardVC") as! WWMWisdomDashboardVC
-                vc.arrWisdomList = self.arrWisdomList
-                self.addChild(vc)
-                vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
-                self.containerView.addSubview((vc.view)!)
-                vc.didMove(toParent: self)
+            //if let view = self.containerView.cont
+            for view in self.containerView.subviews{
+                view.removeFromSuperview()
             }
             
-            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationWisdom"), object: nil)
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomDashboardVC") as! WWMWisdomDashboardVC
+            vc.arrWisdomList = self.arrWisdomList
+            self.addChild(vc)
+            vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
+            self.containerView.addSubview((vc.view)!)
+            vc.didMove(toParent: self)
+            
+            
         }
     }
 }

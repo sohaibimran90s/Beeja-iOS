@@ -21,41 +21,36 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
     
     func setUpUI() {
         
-        print("frame width.... \(self.view.frame.size.width/2)")
-        buttonBarView.frame.origin.y = -18
-        if arrWisdomList.count == 1{
-            buttonBarView.frame.origin.x = self.view.frame.size.width/2 - 70
-            //60
-        }
-    
+        buttonBarView.frame.origin.y = -4
         
         buttonBarView.selectedBar.backgroundColor = UIColor.init(hexString: "#00eba9")
         buttonBarView.backgroundColor = UIColor.clear
         
         // change selected bar color
-        settings.style.buttonBarBackgroundColor = UIColor(hexString: "#001252")
+        settings.style.buttonBarBackgroundColor = .clear
         settings.style.buttonBarItemBackgroundColor = .clear
         settings.style.selectedBarBackgroundColor = .clear
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size:  16)!
+            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 28)!
         }
-       
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size:  16)!
+        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 26)!
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
-        settings.style.buttonBarItemsShouldFillAvailableWidth = false
-        settings.style.buttonBarLeftContentInset = 20
-        settings.style.buttonBarRightContentInset = 30
-        settings.style.buttonBarMinimumInteritemSpacing = 0
-        settings.style.buttonBarItemLeftRightMargin = 20
-        
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
+        settings.style.buttonBarMinimumInteritemSpacing = 1.0
+        settings.style.buttonBarItemLeftRightMargin = 0
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-             oldCell?.label.textColor = UIColor.init(white: 0.8, alpha: 1.0)
-             newCell?.label.textColor = UIColor.white
+            oldCell?.label.textColor = UIColor.init(white: 1.0, alpha: 1.0)
+            newCell?.label.textColor = UIColor.init(white: 1.0, alpha: 1.0)
+            
+            newCell?.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            oldCell?.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         }
     }
 

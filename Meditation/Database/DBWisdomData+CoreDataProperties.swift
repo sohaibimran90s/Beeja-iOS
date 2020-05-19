@@ -20,5 +20,6 @@ extension DBWisdomData {
     @NSManaged public var id: String?
     @NSManaged public var last_time_stamp: String?
     @NSManaged public var name: String?
+    @NSManaged public var cat_name: String?
 
 }

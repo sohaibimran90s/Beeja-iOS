@@ -143,7 +143,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                 jsonString["intro_url"] = (dict as AnyObject).intro_url as? String ?? ""
                 
                 
-                let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
                 
                 for dict1 in guidedEmotionsDataDB{
                     

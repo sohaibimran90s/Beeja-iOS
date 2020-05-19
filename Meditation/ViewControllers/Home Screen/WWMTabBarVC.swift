@@ -1506,6 +1506,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             if let name = dict["name"] as? String{
                                 dbWisdomData.name = name
+                                dbWisdomData.cat_name = name
                             }
                             
                             let timeInterval = Int(Date().timeIntervalSince1970)
