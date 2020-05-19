@@ -141,10 +141,10 @@ extension WWMWalkThoughVC1: UICollectionViewDelegate, UICollectionViewDataSource
         let lblDes = cell.viewWithTag(3) as! UILabel
         
         if !reachable.isConnectedToNetwork() {
-            sliderImg.image = UIImage(named: self.onBoardingDataModel[indexPath.item].imageName ?? "onboardingImg1" )
+            sliderImg.image = UIImage(named: self.onBoardingDataModel[indexPath.item].image ?? "onboardingImg1" )
             print()
         }else{
-            sliderImg.sd_setImage(with: URL(string: self.onBoardingDataModel[indexPath.item].imageName ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+            sliderImg.sd_setImage(with: URL(string: self.onBoardingDataModel[indexPath.item].image ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
         }
         
         lblTitle.text = self.onBoardingDataModel[indexPath.item].title ?? ""

@@ -16,5 +16,5 @@ struct OnBoardingModel: Codable {
 struct OnBoardingDataModel: Codable {
     var title: String?
     var description: String?
-    var imageName: String?
+    var image: String?
 }
