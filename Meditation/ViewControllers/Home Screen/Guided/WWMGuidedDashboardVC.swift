@@ -84,6 +84,18 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     vc.name = data.cat_Name
                     vc.meditationType = data.cat_meditation_type
                     arrVC.add(vc)
+                }else if data.cat_mode == "playlist"{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPlayListVC") as! WWMPlayListVC
+                                
+                    print("data.cat_name... \(data.cat_Name)")
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.guidedData = data
+                    vc.type = self.type
+                    vc.min_limit = data.min_limit
+                    vc.max_limit = data.max_limit
+                    vc.meditation_key = data.meditation_key
+                            
+                    arrVC.add(vc)
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
                                 
