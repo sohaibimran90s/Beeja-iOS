@@ -42,7 +42,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var calenderHegihtConstraint: NSLayoutConstraint!
     
     let appPreffrence = WWMAppPreference()
@@ -74,7 +73,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var circle = true
     
     var player:  AVAudioPlayer?
-
     let reachable = Reachabilities()
     
     //challenge21Progress
@@ -85,7 +83,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewChallenge21DaysHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnChallenge21Days: UIButton!
     @IBOutlet weak var calenderTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lblPracLine: UILabel!
+    @IBOutlet weak var lblSpiriLine: UILabel!
     
+    var challType = "Practical"
     var itemInfo: IndicatorInfo = "View"
     
     override func viewDidLoad() {
@@ -93,6 +94,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         DispatchQueue.global(qos: .background).async {
             self.getGuidedListAPI()
+        }
+        
+        if self.challType == "Practical"{
+            self.lblPracLine.isHidden = false
+            self.lblSpiriLine.isHidden = true
+        }else{
+            self.lblPracLine.isHidden = true
+            self.lblSpiriLine.isHidden = false
         }
         
         // Analytics
@@ -137,7 +146,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         alertNotificationView.btnDismiss.addTarget(self, action: #selector(btnDissmissPopUp), for: .touchUpInside)
         
         WWMHelperClass.milestoneType = ""
-        
         window.rootViewController?.view.addSubview(alertNotificationView)
     }
     
@@ -212,18 +220,57 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func setUpUI() {
         self.updateDate(date: Date())
         DispatchQueue.main.async {
-            //self.viewDays.layer.borderWidth = 2.0
-            //self.viewDays.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            //self.viewAvMinutes.layer.borderWidth = 2.0
-            //self.viewAvMinutes.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            //self.viewHourMeditate.layer.borderWidth = 2.0
-            //self.viewHourMeditate.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-
+            
             self.viewSomeGoals.layer.borderWidth = 2.0
             self.viewSomeGoals.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-            
-            
         }
+    }
+    
+    @IBAction func btnPracticalClicked(_ sender: UIButton){
+        self.challType = "Practical"
+        self.lblSpiriLine.isHidden = true
+        self.lblPracLine.isHidden = false
+        self.collectionView21Chall.reloadData()
+    }
+    
+    @IBAction func btnSpiritualClicked(_ sender: UIButton){
+        self.challType = "Spiritual"
+        self.lblSpiriLine.isHidden = false
+        self.lblPracLine.isHidden = true
+        self.collectionView21Chall.reloadData()
+    }
+    
+    @IBAction func btn21TodaysChallClicked(_ sender: UIButton){
+        WWMHelperClass.selectedType = "guided"
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: "guided")
+        self.appPreference.setGuideType(value: "practical")
+        self.appPreference.setGuideTypeFor3DTouch(value: "practical")
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
+    func navigateToDashboard() {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     func updateDate(date : Date) {
@@ -280,7 +327,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.getStatsData()
     }
     
-    
     // MARK:- UIPicker View Delegate Methods
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
@@ -309,6 +355,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             return ""
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
@@ -563,9 +610,16 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days_21_Challenge.count)")
+        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days21PracticalChallenge.count)")
         
-        if collectionView == collectionViewCal{
+        if collectionView == collectionView21Chall{
+            if self.challType == "Practical"{
+                return self.statsData.days21PracticalChallenge.count
+            }else{
+                return self.statsData.days21SpiritualChallenge.count
+            }
+            
+        } else if collectionView == collectionViewCal{
             if self.statsData.consecutive_days.count > 35{
                 self.calenderHegihtConstraint.constant = 330
             }else{
@@ -574,7 +628,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             return self.statsData.consecutive_days.count
         }else{
-            return self.statsData.days_21_Challenge.count
+            return self.statsData.days21PracticalChallenge.count
         }
     }
     
@@ -656,15 +710,25 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }else{
             //
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
-            let data = statsData.days_21_Challenge[indexPath.row]
+            var data = WWMSatsProgress21DaysChallengeData()
+            if self.challType == "Practical"{
+                data = statsData.days21PracticalChallenge[indexPath.row]
+                
+                if indexPath.item == statsData.days21PracticalChallenge.count - 1{
+                    cell.imgViewRight.isHidden = true
+                }
+            }else{
+                data = statsData.days21SpiritualChallenge[indexPath.row]
+                
+                if indexPath.item == statsData.days21SpiritualChallenge.count - 1{
+                    cell.imgViewRight.isHidden = true
+                }
+            }
+            
             cell.lblDate.text = "\(data.day_id)"
             
             if indexPath.item == 0{
                 cell.imgViewLeft.isHidden = true
-            }
-            
-            if indexPath.item == statsData.days_21_Challenge.count - 1{
-                cell.imgViewRight.isHidden = true
             }
             
             if data.status{
@@ -1351,5 +1415,34 @@ extension WWMMyProgressStatsVC{
 extension WWMMyProgressStatsVC: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         itemInfo
+    }
+}
+
+extension WWMMyProgressStatsVC{
+    func meditationApi() {
+        let param = [
+            "meditation_id" : self.userData.meditation_id,
+            "level_id"      : self.userData.level_id,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : "guided",
+            "guided_type"   : self.challType.lowercased()
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                print("result hometabvc meditation data... \(result)")
+                print("success meditationdata api WWMHomeTabVC background thread")
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
+            }
+        }
     }
 }

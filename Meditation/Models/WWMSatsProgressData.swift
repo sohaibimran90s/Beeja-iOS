@@ -17,7 +17,8 @@ class WWMSatsProgressData: NSObject {
     var weekly_session:Int?
     var longest_session :Int?
     var consecutive_days = [WWMConsecutiveDaysData]()
-    var days_21_Challenge = [WWMSatsProgress21DaysChallengeData]()
+    var days21PracticalChallenge = [WWMSatsProgress21DaysChallengeData]()
+    var days21SpiritualChallenge = [WWMSatsProgress21DaysChallengeData]()
     
     override init() {
         cons_days = 0
@@ -51,10 +52,19 @@ class WWMSatsProgressData: NSObject {
             }
         }
         
-        if let days_21 = json["21days_challenge"] as? [[String:Any]]{
-            for dict in days_21 {
-                let days21Data = WWMSatsProgress21DaysChallengeData.init(json: dict)
-                days_21_Challenge.append(days21Data)
+        if let days_21 = json["21days_challenge"] as? [String:Any]{
+            if let practical = days_21["practical"] as? [[String:Any]]{
+                for dict in practical{
+                    let days21Data = WWMSatsProgress21DaysChallengeData.init(json: dict)
+                    days21PracticalChallenge.append(days21Data)
+                }
+            }
+            
+            if let practical = days_21["spiritual"] as? [[String:Any]]{
+                for dict in practical{
+                    let days21Data = WWMSatsProgress21DaysChallengeData.init(json: dict)
+                    days21SpiritualChallenge.append(days21Data)
+                }
             }
         }
     }
