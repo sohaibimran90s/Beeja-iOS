@@ -10816,7 +10816,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYn-Px-UPZ">
-                                                    <rect key="frame" x="12" y="77" width="153" height="23.5"/>
+                                                    <rect key="frame" x="12" y="76" width="153" height="25"/>
                                                     <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -10858,11 +10858,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="177" height="158"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="31N-Rf-JDv">
-                                                    <rect key="frame" x="0.0" y="6" width="177" height="146"/>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="31N-Rf-JDv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="177" height="152"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="curatedCard7Day" translatesAutoresizingMaskIntoConstraints="NO" id="EiM-Mn-nQ6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="177" height="146"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="curatedCard7Day" translatesAutoresizingMaskIntoConstraints="NO" id="buA-Sf-jBm">
+                                                            <rect key="frame" x="0.0" y="0.0" width="177" height="152"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
                                                                     <integer key="value" value="5"/>
@@ -10870,7 +10871,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="curated7dayIcon" translatesAutoresizingMaskIntoConstraints="NO" id="rbE-HV-mak">
-                                                            <rect key="frame" x="16" y="53" width="40" height="40"/>
+                                                            <rect key="frame" x="16" y="56" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="40" id="70z-XV-Hzl"/>
                                                                 <constraint firstAttribute="height" constant="40" id="kld-NH-jTg"/>
@@ -10882,7 +10883,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DER-Ji-ghJ">
-                                                            <rect key="frame" x="72" y="28.5" width="53" height="89"/>
+                                                            <rect key="frame" x="72" y="29.5" width="53" height="93.5"/>
                                                             <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="19"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -10893,7 +10894,7 @@
                                                             </variation>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="V1s-Cx-eEp">
-                                                            <rect key="frame" x="149" y="63" width="20" height="20"/>
+                                                            <rect key="frame" x="149" y="66" width="20" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="1TC-lW-mKD"/>
                                                                 <constraint firstAttribute="width" constant="20" id="pL5-6k-KCm"/>
@@ -10904,13 +10905,13 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="V1s-Cx-eEp" secondAttribute="trailing" constant="8" id="4CB-VZ-IrR"/>
                                                         <constraint firstItem="V1s-Cx-eEp" firstAttribute="centerY" secondItem="rbE-HV-mak" secondAttribute="centerY" id="DSL-Fc-jjg"/>
-                                                        <constraint firstAttribute="trailing" secondItem="EiM-Mn-nQ6" secondAttribute="trailing" id="HOD-OP-pgq"/>
                                                         <constraint firstItem="V1s-Cx-eEp" firstAttribute="leading" secondItem="DER-Ji-ghJ" secondAttribute="trailing" constant="24" id="NlU-8T-Owt"/>
-                                                        <constraint firstItem="EiM-Mn-nQ6" firstAttribute="top" secondItem="31N-Rf-JDv" secondAttribute="top" id="PHG-h7-eHa"/>
                                                         <constraint firstItem="DER-Ji-ghJ" firstAttribute="centerY" secondItem="31N-Rf-JDv" secondAttribute="centerY" id="ROD-jQ-28C"/>
-                                                        <constraint firstItem="EiM-Mn-nQ6" firstAttribute="leading" secondItem="31N-Rf-JDv" secondAttribute="leading" id="cjO-GO-Fk6"/>
-                                                        <constraint firstAttribute="bottom" secondItem="EiM-Mn-nQ6" secondAttribute="bottom" id="gm3-om-t3o"/>
+                                                        <constraint firstAttribute="bottom" secondItem="buA-Sf-jBm" secondAttribute="bottom" id="WAm-Cl-QEP"/>
+                                                        <constraint firstAttribute="trailing" secondItem="buA-Sf-jBm" secondAttribute="trailing" id="X3p-WE-FTw"/>
+                                                        <constraint firstItem="buA-Sf-jBm" firstAttribute="top" secondItem="31N-Rf-JDv" secondAttribute="top" id="hYU-BB-Tvq"/>
                                                         <constraint firstItem="rbE-HV-mak" firstAttribute="centerY" secondItem="31N-Rf-JDv" secondAttribute="centerY" id="pAq-vx-cDF"/>
+                                                        <constraint firstItem="buA-Sf-jBm" firstAttribute="leading" secondItem="31N-Rf-JDv" secondAttribute="leading" id="rFn-FK-q2X"/>
                                                         <constraint firstItem="DER-Ji-ghJ" firstAttribute="leading" secondItem="rbE-HV-mak" secondAttribute="trailing" constant="16" id="thf-kx-3Xz"/>
                                                         <constraint firstItem="rbE-HV-mak" firstAttribute="leading" secondItem="31N-Rf-JDv" secondAttribute="leading" constant="16" id="zvn-NK-FPS"/>
                                                     </constraints>
@@ -10924,7 +10925,7 @@
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="31N-Rf-JDv" firstAttribute="top" secondItem="wi0-n4-H9g" secondAttribute="top" constant="6" id="1mk-tX-Gll"/>
+                                            <constraint firstItem="31N-Rf-JDv" firstAttribute="top" secondItem="wi0-n4-H9g" secondAttribute="top" id="1mk-tX-Gll"/>
                                             <constraint firstItem="31N-Rf-JDv" firstAttribute="leading" secondItem="wi0-n4-H9g" secondAttribute="leading" id="7oN-yA-2aI"/>
                                             <constraint firstAttribute="bottom" secondItem="31N-Rf-JDv" secondAttribute="bottom" constant="6" id="XXE-XV-4z7"/>
                                             <constraint firstAttribute="trailing" secondItem="31N-Rf-JDv" secondAttribute="trailing" id="Z4K-EF-J27"/>
@@ -10958,7 +10959,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 days challenge" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DgF-Eo-8Ku">
-                                                            <rect key="frame" x="72" y="72" width="203" height="21"/>
+                                                            <rect key="frame" x="72" y="71.5" width="203" height="22.5"/>
                                                             <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -11059,7 +11060,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mcw-OZ-98r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3686" y="4871"/>
+            <point key="canvasLocation" x="3685.5999999999999" y="4870.614692653674"/>
         </scene>
         <!--Delegate-->
         <scene sceneID="jCU-Tx-cZc">
