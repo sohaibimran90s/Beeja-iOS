@@ -23,6 +23,8 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
     var max_limit = "97"
     var meditation_key = "practical"
     
+    var guided_type = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,11 +43,72 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     @IBAction func btnLearnClicked(_ sender: UIButton){
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "PLAYLIST_PAGE", itemId: "LIKE_TO_LEARN", itemName: "")
+        guided_type = ""
+        WWMHelperClass.selectedType = "learn"
+        self.meditationApi(type: "learn")
     }
     
     @IBAction func btnGuidedClicked(_ sender: UIButton){
-        
+        // Analytics
+        WWMHelperClass.sendEventAnalytics(contentType: "PLAYLIST_PAGE", itemId: "GUIDE_ME", itemName: "")
+
+        guided_type = ""
+        WWMHelperClass.selectedType = "guided"
+        self.meditationApi(type: "guided")
+    }
+    
+    // Calling API
+    func meditationApi(type: String) {
+        self.view.endEditing(true)
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : 1,
+            "level_id"         : 1,
+            "user_id"       : self.appPreference.getUserID(),
+            "type" : type,
+            "guided_type" : guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                print("result signupletsstartvc meditation data... \(result)")
+                
+                
+                if let userProfile = result["userprofile"] as? [String:Any] {
+                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
+                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
+                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
+                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
+                    }
+                }
+                
+                self.appPreference.setIsProfileCompleted(value: true)
+                self.appPreference.setType(value: type)
+                self.appPreference.setGuideType(value: self.guided_type)
+                self.appPreference.setGuideTypeFor3DTouch(value: self.guided_type)
+                
+                self.appPreference.setGetProfile(value: true)
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                UIApplication.shared.keyWindow?.rootViewController = vc
+                
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                    
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
     }
 }
 
