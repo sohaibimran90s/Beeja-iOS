@@ -20,6 +20,7 @@ class WWMWisdomData: NSObject {
     init(json:[String:Any]) {
         cat_Id = json["id"] as? Int ?? 1
         cat_Name = json["name"] as? String ?? ""
+        print(cat_Name)
         if let arrLevels = json["video_list"] as? [[String:Any]]{
             for dict in arrLevels {
                 let video = WWMWisdomVideoData.init(json: dict)

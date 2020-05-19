@@ -64,7 +64,7 @@ class WWMGuidedData: NSObject {
                     
                     for dict in guidedDataDB{
                         if (dict as AnyObject).meditation_type == cat_meditation_type{
-                            let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
+                            let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
                             print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                             for dict1 in guidedEmotionsDataDB{
                                 //print("(dict1 as AnyObject).completed... \((dict1 as AnyObject).completed)")

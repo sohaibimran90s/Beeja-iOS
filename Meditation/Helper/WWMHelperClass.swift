@@ -578,9 +578,9 @@ class WWMHelperClass {
 
     }
     
-    class func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String) -> [Any]{
+    class func fetchGuidedFilterEmotionsDB(guided_id: String, dbName: String, name: String) -> [Any]{
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "guided_id == %@", guided_id)
+        fetchRequest.predicate = NSPredicate.init(format: "\(name) == %@", guided_id)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
