@@ -549,6 +549,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 if self.name == "21 Days challenge"{
                     if self.checkTabContain7Days{
                         print("7 days challenge accepted")
+                        self.xibCall1(title1: "You have accepted 7 Days Challenge")
                     }else{
                         self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                     }
@@ -564,6 +565,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     if self.name == "21 Days challenge"{
                         if self.checkTabContain7Days{
                             print("7 days challenge accepted")
+                            self.xibCall1(title1: "You have accepted 7 Days Challenge")
                         }else{
                             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         }
@@ -579,10 +581,20 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                         if self.checkTabContain7Days{
                             print("7 days challenge accepted")
                         }else{
-                            xibCall()
+                            
+                            //purchase subscription
+                            if reachable.isConnectedToNetwork() {
+                                xibCall()
+                            }else {
+                                WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                            }
                         }
                     }else{
-                        xibCall()
+                        if reachable.isConnectedToNetwork() {
+                            xibCall()
+                        }else {
+                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        }
                     }
                     //*
                 }
@@ -596,74 +608,78 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
         
-        var flag = 0
-        var position = 0
-        
-        let data = self.arrGuidedList[0].cat_EmotionList[table_cell_tag]
-        
-        if data.completed{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+        if reachable.isConnectedToNetwork() {
+           var flag = 0
+            var position = 0
             
-            WWMHelperClass.stepsCompleted = data.completed
-            vc.audioData = data.audio_list[collection_cell_tag]
-            vc.cat_id = "\(self.cat_id)"
-            vc.cat_Name = self.cat_name
-            vc.emotion_Id = "\(data.emotion_Id)"
-            vc.emotion_Name = data.emotion_Name
-            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-            vc.min_limit = self.min_limit
-            vc.max_limit = self.max_limit
-            vc.meditation_key = self.meditation_key
+            let data = self.arrGuidedList[0].cat_EmotionList[table_cell_tag]
+            
+            if data.completed{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+                
+                WWMHelperClass.stepsCompleted = data.completed
+                vc.audioData = data.audio_list[collection_cell_tag]
+                vc.cat_id = "\(self.cat_id)"
+                vc.cat_Name = self.cat_name
+                vc.emotion_Id = "\(data.emotion_Id)"
+                vc.emotion_Name = data.emotion_Name
+                vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+                vc.min_limit = self.min_limit
+                vc.max_limit = self.max_limit
+                vc.meditation_key = self.meditation_key
 
-            self.navigationController?.pushViewController(vc, animated: true)
+                self.navigationController?.pushViewController(vc, animated: true)
 
-            return
-        }else{
-            for i in 0..<table_cell_tag{
-                let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
-                if date_completed != ""{
-                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                    if dateCompare.0 == 1{
-                        flag = 1
-                        break
+                return
+            }else{
+                for i in 0..<table_cell_tag{
+                    let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
+                    if date_completed != ""{
+                        let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                        if dateCompare.0 == 1{
+                            flag = 1
+                            break
+                        }
                     }
                 }
             }
-        }
 
-        if flag == 1{
-            self.xibCall1(title1: KLEARNONESTEP)
-            return
-        }
-
-        for i in 0..<table_cell_tag{
-            if !self.arrGuidedList[0].cat_EmotionList[i].completed{
-                flag = 2
-                position = i
-                break
+            if flag == 1{
+                self.xibCall1(title1: KLEARNONESTEP)
+                return
             }
-        }
 
-        if flag == 2{
+            for i in 0..<table_cell_tag{
+                if !self.arrGuidedList[0].cat_EmotionList[i].completed{
+                    flag = 2
+                    position = i
+                    break
+                }
+            }
 
-            print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
+            if flag == 2{
 
-            self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
-        }else{
-            
-            WWMHelperClass.selectedType = "guided"
-            WWMHelperClass.days21StepNo = "Step \(data.step_id)"
-            WWMHelperClass.stepsCompleted = data.completed
-            print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
+                print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
 
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-            vc.audioData = data.audio_list[collection_cell_tag]
-            vc.cat_id = "\(self.cat_id)"
-            vc.cat_Name = self.cat_name
-            vc.emotion_Id = "\(data.emotion_Id)"
-            vc.emotion_Name = data.emotion_Name
-            vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-            self.navigationController?.pushViewController(vc, animated: true)
+                self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
+            }else{
+                
+                WWMHelperClass.selectedType = "guided"
+                WWMHelperClass.days21StepNo = "Step \(data.step_id)"
+                WWMHelperClass.stepsCompleted = data.completed
+                print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
+
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+                vc.audioData = data.audio_list[collection_cell_tag]
+                vc.cat_id = "\(self.cat_id)"
+                vc.cat_Name = self.cat_name
+                vc.emotion_Id = "\(data.emotion_Id)"
+                vc.emotion_Name = data.emotion_Name
+                vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }
     
