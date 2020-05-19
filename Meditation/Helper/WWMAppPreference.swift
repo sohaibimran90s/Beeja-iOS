@@ -12,6 +12,15 @@ class WWMAppPreference: NSObject {
     
     let defaults = UserDefaults.standard
     
+    //set 21 challene intro video accepted or not
+    func setPracticalChallenge(value: Bool) {
+        defaults.set(value, forKey: "practicalChallenge")
+    }
+    
+    func setSpiritualChallenge(value:Bool) {
+        defaults.set(value, forKey: "spiritualChallenge")
+    }
+    
     //set banner array save
     func setBanners(value: [Any]) {
         defaults.set(value, forKey: "banners")
@@ -482,5 +491,14 @@ class WWMAppPreference: NSObject {
     func getBanners() -> [Any] {
         return UserDefaults.standard.array(forKey: "banners") ?? []
 
+    }
+    
+    //get 21 challene intro video accepted or not
+    func getPracticalChallenge() -> Bool{
+        return defaults.bool(forKey: "practicalChallenge")
+    }
+    
+    func getSpiritualChallenge() -> Bool {
+        return defaults.bool(forKey: "spiritualChallenge")
     }
 }

@@ -229,6 +229,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["min_limit"] = (dict as AnyObject).min_limit as? String ?? "95"
                 jsonString["max_limit"] = (dict as AnyObject).max_limit as? String ?? "98"
                 jsonString["meditation_key"] = (dict as AnyObject).meditation_key as? String ?? "practical"
+                jsonString["complete_count"] = (dict as AnyObject).complete_count as? String ?? "0"
+                jsonString["intro_url"] = (dict as AnyObject).intro_url as? String ?? ""
                 
                 //to check if the database accept prac and spi 7 days challenge
                 if (dict as AnyObject).guided_name as? String == "7 Days challenge"{
@@ -239,6 +241,18 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
+                    
+                    if (dict as AnyObject).guided_name as? String == "Practical"{
+                        if (dict1 as AnyObject).intro_completed{
+                            self.appPreference.setPracticalChallenge(value: true)
+                        }
+                    }
+                    
+                    if (dict as AnyObject).guided_name as? String == "Spiritual"{
+                        if (dict1 as AnyObject).intro_completed{
+                            self.appPreference.setSpiritualChallenge(value: true)
+                        }
+                    }
                                         
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
@@ -250,9 +264,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["intro_completed"] = (dict1 as AnyObject).intro_completed ?? false
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
+                    jsonEmotionsString["intro_url"] = (dict1 as AnyObject).intro_url ?? ""
                     
                     let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
-                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
+                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count) \(guidedEmotionsDataDB.count)")
                     
                     for dict2 in guidedAudiosDataDB{
                         
@@ -378,7 +393,19 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                         }
                                     }
                                     
-                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key)")
+                                    if let complete_count = meditationList["complete_count"] as? Int{
+                                        dbGuidedData.complete_count = "\(complete_count)"
+                                    }else{
+                                        dbGuidedData.complete_count = "0"
+                                    }
+                                    
+                                    if let intro_url = meditationList["intro_url"] as? String{
+                                        dbGuidedData.intro_url = intro_url
+                                    }else{
+                                        dbGuidedData.intro_url = ""
+                                    }
+                                    
+                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count \(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
                                     
                                     if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
                                         for emotionsDict in emotion_list {
@@ -431,7 +458,13 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                                 dbGuidedEmotionsData.completed_date = completed_date
                                             }
                                             
-                                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)")
+                                            if let intro_url = emotionsDict["intro_url"] as? String{
+                                                dbGuidedEmotionsData.intro_url = intro_url
+                                            }else{
+                                                dbGuidedEmotionsData.intro_url = ""
+                                            }
+                                            
+                                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
                                             
                                             if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                                 for audioDict in audio_list {

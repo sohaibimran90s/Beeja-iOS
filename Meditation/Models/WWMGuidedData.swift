@@ -20,6 +20,8 @@ class WWMGuidedData: NSObject {
     var max_limit = String()
     var meditation_key = String()
     var completedStatus = false
+    var complete_count = String()
+    var intro_url = String()
     
     override init() {
     }
@@ -32,6 +34,8 @@ class WWMGuidedData: NSObject {
         min_limit = json["min_limit"] as? String ?? "95"
         max_limit = json["max_limit"] as? String ?? "98"
         meditation_key = json["meditation_key"] as? String ?? "practical"
+        complete_count = "\(json["complete_count"] as? Int ?? 0)"
+        intro_url = json["intro_url"] as? String ?? ""
         
         if let arrLevels = json["emotion_list"] as? [[String:Any]]{
             for dict in arrLevels {
@@ -63,7 +67,7 @@ class WWMGuidedData: NSObject {
                             let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData")
                             print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                             for dict1 in guidedEmotionsDataDB{
-                                print("(dict1 as AnyObject).completed... \((dict1 as AnyObject).completed)")
+                                //print("(dict1 as AnyObject).completed... \((dict1 as AnyObject).completed)")
                                 if !(dict1 as AnyObject).completed{
                                     completedStatus = true
                                 }
@@ -107,6 +111,7 @@ class WWMGuidedEmotionData: NSObject {
     var completed_date = String()
     var audio_list = [WWMGuidedAudioData]()
     var step_id = String()
+    var intro_url = String()
     
     override init() {
     }
@@ -123,6 +128,7 @@ class WWMGuidedEmotionData: NSObject {
         completed = json["completed"] as? Bool ?? false
         completed_date = json["completed_date"] as? String ?? ""
         step_id = "\(stepId)"
+        intro_url = json["intro_url"] as? String ?? ""
         
         var isSaveAudioData = 0
         if let arrLevels = json["audio_list"] as? [[String:Any]]{
