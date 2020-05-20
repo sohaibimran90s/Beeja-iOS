@@ -25,6 +25,8 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
     let reachable = Reachabilities()
     
+    var wisdomData1 = [WWMWisdomVideoData]()
+    
     //MARK:- Viewcontroller Delegate
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,25 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
+        
+        self.abc()
+    }
+    
+    func abc(){
+        self.wisdomData1.removeAll()
+        for i in 0..<self.wisdomData.cat_VideoList.count{
+            print(self.wisdomData.cat_VideoList[i].is_intro)
+            if "\(self.wisdomData.cat_VideoList[i].is_intro)" == "1"{
+                self.wisdomData1.append(self.wisdomData.cat_VideoList[i])
+            }
+        }
+        
+        for i in 0..<self.wisdomData.cat_VideoList.count{
+            print(self.wisdomData.cat_VideoList[i].is_intro)
+            if "\(self.wisdomData.cat_VideoList[i].is_intro)" == "0"{
+                self.wisdomData1.append(self.wisdomData.cat_VideoList[i])
+            }
+        }
     }
 
     // MARK: - IndicatorInfoProvider
@@ -50,14 +71,14 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.wisdomData.cat_VideoList.count
+        return self.wisdomData1.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = WWMCommunityCollectionViewCell()
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
-        let data = self.wisdomData.cat_VideoList[indexPath.row]
+        let data = self.wisdomData1[indexPath.row]
         
         cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.video_Name
@@ -69,10 +90,10 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if reachable.isConnectedToNetwork() {
-            let data = self.wisdomData.cat_VideoList[indexPath.row]
-            self.video_id = String(self.wisdomData.cat_VideoList[indexPath.row].video_Id)
-            self.videoURL = self.wisdomData.cat_VideoList[indexPath.row].video_Url
-            self.videoTitle = self.wisdomData.cat_VideoList[indexPath.row].video_Name
+            let data = self.wisdomData1[indexPath.row]
+            self.video_id = String(data.video_Id)
+            self.videoURL = data.video_Url
+            self.videoTitle = data.video_Name
             let videoURL = URL(string: data.video_Url)
             let player = AVPlayer(url: videoURL!)
             playerViewController = self.storyboard?.instantiateViewController(withIdentifier: "WWMVedioPlayerVC") as! WWMVedioPlayerVC
@@ -162,7 +183,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let data = self.wisdomData.cat_VideoList[indexPath.row]
+        let data = self.wisdomData1[indexPath.row]
         
         if data.is_intro == "0" {
             let width = (self.view.frame.size.width-26)/2
@@ -200,18 +221,6 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
                 }
             }
-            /*else{
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                    
-                }
-            }*/
-            //WWMHelperClass.dismissSVHud()
-            //WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }
