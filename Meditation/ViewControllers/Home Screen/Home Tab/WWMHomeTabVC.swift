@@ -289,8 +289,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     //banner api
     func bannerAPI() {
         
-        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
@@ -313,7 +313,7 @@ class WWMHomeTabVC: WWMBaseViewController {
                     self.lblChallSubTitle.text = dict["title"] as? String
                     self.lblChallDes.text = dict["description"] as? String
                     
-                    self.key = dict["key"] as? String ?? "21 days Challenge"
+                    self.key = dict["description"] as? String ?? ""
                     
                     if self.key == ""{
                         self.lblChallDes.isHidden = true
@@ -322,6 +322,8 @@ class WWMHomeTabVC: WWMBaseViewController {
                         self.lblChallDes.isHidden = false
                         self.bannerHeightConstraint.constant = 165
                     }
+                    
+                    self.key = dict["name"] as? String ?? "21 Days challenge"
                 }
             }
         }
@@ -330,7 +332,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBAction func btn21ChallengeClicked(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
         
-        appPreference.set21ChallengeName(value: self.key.capitalized)
+        appPreference.set21ChallengeName(value: self.key)
         print(appPreference.get21ChallengeName())
         guided_type = "practical"
         self.type = "guided"

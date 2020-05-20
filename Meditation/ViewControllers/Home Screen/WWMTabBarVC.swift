@@ -292,9 +292,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     //bannerAPI
     func bannerAPI() {
-        
-        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+        let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
@@ -305,9 +304,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    
     func setDataToDb(json:[String:Any]) {
-        
         print("database setting.... \(json)")
         var arrMeditationData = [WWMMeditationData]()
         if let dataMeditation = json["meditation_data"] as? [[String:Any]]{

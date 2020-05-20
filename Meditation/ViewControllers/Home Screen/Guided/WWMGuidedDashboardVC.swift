@@ -75,6 +75,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         if self.type == "Guided"{
             for data in self.arrGuidedList1 {
                 
+                print(data.cat_mode)
                 if data.cat_mode == "challenge"{
                     //WWM21DayChallengeVC
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
@@ -179,11 +180,12 @@ extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
             let name = self.appPreference.get21ChallengeName()
             for dic in self.arrGuidedList1{
                 
+                print("\(name) \(index) cat_name*** \(dic.cat_Name) self.arrGuidedList1.count*** \(self.arrGuidedList1.count) ")
                 if name == dic.cat_Name{
                     break
                 }
                 index = index + 1
-                print("\(name) \(index) self.arrGuidedList1.c0unt*** \(self.arrGuidedList1.count) cat_name*** \(dic.cat_Name)")
+                print("index \(index) self.arrGuidedList1.c0unt*** \(self.arrGuidedList1.count) cat_name*** \(dic.cat_Name)")
             }
             
             self.moveToViewController(at: index, animated: false)

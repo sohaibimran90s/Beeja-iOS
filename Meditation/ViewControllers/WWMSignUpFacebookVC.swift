@@ -186,8 +186,8 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
     //bannerAPI
     func bannerAPI() {
         
-        //let param = ["user_id": self.appPreference.getUserID(), "id": self.id] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMSginupFacebookVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
