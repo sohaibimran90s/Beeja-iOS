@@ -39,7 +39,7 @@ class OptionsData: Codable {
 }
 
 
-class WWMConOnboardingVC: UIViewController {
+class WWMConOnboardingVC: WWMBaseViewController {
 
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
@@ -294,6 +294,44 @@ class WWMConOnboardingVC: UIViewController {
         self.postData.append(postBody)
     }
     
+    func meditationApi(type: String) {
+        self.view.endEditing(true)
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : 1,
+            "level_id"      : 1,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : type,
+            "guided_type"   : "Guided", // 'guided_type'
+            "personalise"   : self.postData
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                print("result signupletsstartvc meditation data... \(result)")
+                self.appPreference.setType(value: type)
+                self.appPreference.setGuideType(value: "Guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: type)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.appPreference.setGetProfile(value: true)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    //UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+                }
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
     
     @IBAction func backBtnAction(_ sender: Any) {
         
@@ -412,16 +450,18 @@ extension WWMConOnboardingVC: UITableViewDelegate{
         let selectedOpt = self.optionList[indexPath.section]
         selectedOpt.isSelected = true
 
-        if (self.isMultipleSelection == 0){
-            
+        if (self.isMultipleSelection == 0) {
             if let nextQues = selectedOpt.next_question {
-
                 self.selectedOption(nextPageId: nextQues, isNavigateForward: true)
             }
             else {
-                let alert = UIAlertController(title: "Alert", message: "Next_Question: Null", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                if let exitPoint = selectedOpt.exitPoint {
+                    self.meditationApi(type: exitPoint);
+                } else {
+                    let alert = UIAlertController(title: "Alert", message: "Next_Question: Null", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
         else {
