@@ -41,10 +41,10 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         
-        self.abc()
+        self.setFirstObjectIntroVideo()
     }
     
-    func abc(){
+    func setFirstObjectIntroVideo(){
         self.wisdomData1.removeAll()
         for i in 0..<self.wisdomData.cat_VideoList.count{
             print(self.wisdomData.cat_VideoList[i].is_intro)
