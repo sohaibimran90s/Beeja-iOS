@@ -600,6 +600,21 @@ class WWMHelperClass {
 
     }
     
+    //fetch unique data from database
+    class func fetchUniqueDataFromDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.resultType = .dictionaryResultType
+        fetchRequest.propertiesToFetch = ["audio_id"]
+        fetchRequest.returnsDistinctResults = true
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+
+    }
+
+    
     //add ninetyfivepercent from backend
     
     class func addNinetyFivePercentDataFromBackend(type: String, count: Int){

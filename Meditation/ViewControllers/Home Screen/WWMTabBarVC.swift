@@ -574,6 +574,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 self.appPreffrence.setCheckEnterSignupLogin(value: false)
                 self.appPreffrence.setEmail(value: "")
                 KUSERDEFAULTS.set("0", forKey: "restore")
+                self.appPreffrence.setPracticalChallenge(value: false)
+                self.appPreffrence.setSpiritualChallenge(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
@@ -749,6 +751,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     dbGuidedData.intro_url = intro_url
                                 }else{
                                     dbGuidedData.intro_url = ""
+                                }
+                                
+                                if let intro_completed = meditationList["intro_completed"] as? Bool{
+                                    dbGuidedData.intro_completed = intro_completed
+                                }else{
+                                    dbGuidedData.intro_completed = false
                                 }
                                 
                                 print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name  \(dbGuidedData.cat_name ) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count \(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
@@ -1919,7 +1927,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
                                     }
                                     
+                                    //backend
                                     let expireDate = WWMHelperClass.getExpireDate(expiryDate: expiryDate, formatter: formatter)
+                                    
+                                    //apple
                                     let serverDate = WWMHelperClass.getExpireDate(expiryDate: formatter.string(from: date), formatter: formatter)
                                     print("dkfjkdfksd+++++= \(expireDate) serverDate++++ \(serverDate)")
                                     

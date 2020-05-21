@@ -221,6 +221,18 @@ class WWMGuidedNavVC: WWMBaseViewController {
             var jsonAudios: [[String: Any]] = []
             
             for dict in guidedDataDB {
+                
+                if (dict as AnyObject).meditation_type as? String == "practical"{
+                    if (dict as AnyObject).intro_completed{
+                        self.appPreference.setPracticalChallenge(value: true)
+                    }
+                }
+                
+                if (dict as AnyObject).meditation_type as? String == "spiritual"{
+                    if (dict as AnyObject).intro_completed{
+                        self.appPreference.setSpiritualChallenge(value: true)
+                    }
+                }
                     
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
@@ -241,14 +253,16 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
+                     
+                    //print("meditation_type... \((dict as AnyObject).meditation_type) intro_completed... \((dict1 as AnyObject).intro_completed) guided_name... \((dict1 as AnyObject).guided_name)")
                     
-                    if (dict as AnyObject).guided_name as? String == "Practical"{
+                    if (dict as AnyObject).meditation_type as? String == "practical"{
                         if (dict1 as AnyObject).intro_completed{
                             self.appPreference.setPracticalChallenge(value: true)
                         }
                     }
                     
-                    if (dict as AnyObject).guided_name as? String == "Spiritual"{
+                    if (dict as AnyObject).meditation_type as? String == "spiritual"{
                         if (dict1 as AnyObject).intro_completed{
                             self.appPreference.setSpiritualChallenge(value: true)
                         }
@@ -405,7 +419,14 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                         dbGuidedData.intro_url = ""
                                     }
                                     
-                                    print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count \(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
+                                    if let intro_completed = meditationList["intro_completed"] as? Bool{
+                                        dbGuidedData.intro_completed = intro_completed
+                                    }else{
+                                        dbGuidedData.intro_completed = false
+                                    }
+                                    
+                                    
+                                    //print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count \(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
                                     
                                     if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
                                         for emotionsDict in emotion_list {

@@ -122,12 +122,25 @@ class WWMSleepAudioVC: WWMBaseViewController {
                 jsonString["vote"] = (dict as AnyObject).vote
                 jsonString["paid"] = (dict as AnyObject).paid
                 
-                let audioData = WWMGuidedAudioData.init(json: jsonString)
-                self.arrAudioList.append(audioData)
+                
+                var isSaveAudioData = 0
+                if self.arrAudioList.count > 0{
+                    for i in 0..<self.arrAudioList.count{
+                        let id = self.arrAudioList[i].audio_Id
+                        //print("audion_id \((dict as AnyObject).audio_id) id \(id)")
+                        if Int((dict as AnyObject).audio_id ?? "0") == id{
+                            isSaveAudioData = 1
+                        }
+                    }
+                }
+                
+                if isSaveAudioData == 0{
+                    let audioData = WWMGuidedAudioData.init(json: jsonString)
+                    self.arrAudioList.append(audioData)
+                }
             }
             
             self.tableView.reloadData()
-            
         }
     }
     

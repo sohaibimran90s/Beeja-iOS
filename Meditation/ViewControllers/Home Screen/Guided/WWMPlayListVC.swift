@@ -66,10 +66,10 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "meditation_id" : 1,
-            "level_id"         : 1,
+            "level_id"      : 1,
             "user_id"       : self.appPreference.getUserID(),
-            "type" : type,
-            "guided_type" : guided_type
+            "type"          : type,
+            "guided_type"   : guided_type
             ] as [String : Any]
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
