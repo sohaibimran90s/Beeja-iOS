@@ -24,7 +24,6 @@ class WWMSleepAudioVC: WWMBaseViewController {
     var type = ""
     var imgURL = ""
     var subTitle = ""
-    var vcType = ""
     
     var arrAudioList = [WWMGuidedAudioData]()
     var alertPopupView1 = WWMAlertController()
@@ -190,7 +189,7 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             
-            if self.vcType  == "WWMPlayListVC"{
+            if self.appPreference.getGuidedSleep() == "Guided" {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                 
                 let data = self.arrAudioList[indexPath.row]
@@ -215,9 +214,9 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }else{
-                let data = self.arrAudioList[indexPath.row]
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepTimerVC") as! WWMSleepTimerVC
                 
+                let data = self.arrAudioList[indexPath.row]
                 vc.audioData = self.arrAudioList[indexPath.row]
                 vc.cat_id = self.cat_Id
                 vc.cat_Name = self.cat_Name

@@ -131,7 +131,6 @@ extension WWMPlayListVC: UITableViewDelegate, UITableViewDataSource{
         
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepAudioVC") as! WWMSleepAudioVC
             
-            vc.vcType = "WWMPlayListVC"
             vc.emotionData = data
             vc.subTitle = self.subType
             vc.cat_Id = "\(self.guidedData.cat_Id)"

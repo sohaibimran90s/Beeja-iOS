@@ -28,9 +28,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.offlineDatatoServerCall()
         KNOTIFICATIONCENTER.addObserver(forName: NSNotification.Name(rawValue: "guidedDropDownClicked"), object: nil, queue: nil, using: catchNotification)
         
-         self.typeTitle = "Guided"
-         self.setUpNavigationBarForDashboard(title: "guided")
-         self.guided_type = "Guided"
+        self.appPreference.setGuidedSleep(value: "Guided")
+        self.typeTitle = "Guided"
+        self.setUpNavigationBarForDashboard(title: "guided")
+        self.guided_type = "Guided"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
@@ -141,9 +142,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
         print("type*** \(self.type) guided_type*** \(guided_type)")
         
         if guided_type == "Guided"{
+            self.appPreference.setGuidedSleep(value: "Guided")
             self.typeTitle = "Guided"
             setUpNavigationBarForDashboard(title: "guided")
         }else{
+            self.appPreference.setGuidedSleep(value: "Sleep")
             self.typeTitle = "Sleep"
             setUpNavigationBarForDashboard(title: "sleep")
         }

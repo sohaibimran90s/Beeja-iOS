@@ -12,6 +12,11 @@ class WWMAppPreference: NSObject {
     
     let defaults = UserDefaults.standard
     
+    //set if guided and sleep selected
+    func setGuidedSleep(value: String) {
+        defaults.set(value, forKey: "gudiedSleep")
+    }
+    
     //set 21 challene intro video accepted or not
     func setPracticalChallenge(value: Bool) {
         defaults.set(value, forKey: "practicalChallenge")
@@ -500,5 +505,10 @@ class WWMAppPreference: NSObject {
     
     func getSpiritualChallenge() -> Bool {
         return defaults.bool(forKey: "spiritualChallenge")
+    }
+    
+    //get if guided and sleep selected
+    func getGuidedSleep() -> String {
+        return defaults.string(forKey: "gudiedSleep") ?? "Guided"
     }
 }
