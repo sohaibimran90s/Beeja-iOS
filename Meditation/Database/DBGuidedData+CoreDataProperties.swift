@@ -29,4 +29,5 @@ extension DBGuidedData {
     @NSManaged public var cat_name: String?
     @NSManaged public var complete_count: String?
     @NSManaged public var intro_url: String?
+    @NSManaged public var intro_completed: Bool
 }

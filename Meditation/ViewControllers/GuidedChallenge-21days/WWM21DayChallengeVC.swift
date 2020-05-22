@@ -23,7 +23,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var subCategory = ""
     var id = ""
     var name = ""
-    var checkTabContain7Days = false
 
     var selectedIndex = 0
     var itemInfo: IndicatorInfo = "View"
@@ -54,6 +53,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var isIntroCompleted = false
     var tile_type = ""
     var emotionId = 0
+    var guided_id = 0
     var emotionKey = ""
     var guideTitleCount = 3
     
@@ -66,10 +66,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblTitle.text = "\(self.category): \(self.subCategory.capitalized)"
+        self.lblTitle.text = "\(self.category.capitalized): \(self.subCategory.capitalized)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
         print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
-        self.appPreference.set21ChallengeName(value: self.category)
+        //self.appPreference.set21ChallengeName(value: self.category)
         self.fetchGuidedDataFromDB()
     }
     
@@ -132,6 +132,18 @@ class WWM21DayChallengeVC: WWMBaseViewController {
             
             for dict in guidedDataDB {
                     
+                if (dict as AnyObject).meditation_type as? String == "practical"{
+                    if (dict as AnyObject).intro_completed{
+                        self.appPreference.setPracticalChallenge(value: true)
+                    }
+                }
+                
+                if (dict as AnyObject).meditation_type as? String == "spiritual"{
+                    if (dict as AnyObject).intro_completed{
+                        self.appPreference.setSpiritualChallenge(value: true)
+                    }
+                }
+                
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
@@ -142,18 +154,17 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                 jsonString["complete_count"] = (dict as AnyObject).complete_count as? String ?? "0"
                 jsonString["intro_url"] = (dict as AnyObject).intro_url as? String ?? ""
                 
-                
                 let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
                 
                 for dict1 in guidedEmotionsDataDB{
                     
-                    if (dict as AnyObject).guided_name as? String == "Practical"{
+                    if (dict as AnyObject).meditation_type as? String == "practical"{
                         if (dict1 as AnyObject).intro_completed{
                             self.appPreference.setPracticalChallenge(value: true)
                         }
                     }
                     
-                    if (dict as AnyObject).guided_name as? String == "Spiritual"{
+                    if (dict as AnyObject).meditation_type as? String == "spiritual"{
                         if (dict1 as AnyObject).intro_completed{
                             self.appPreference.setSpiritualChallenge(value: true)
                         }
@@ -224,7 +235,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                                 emotionId = "\(emotion_id ?? "")"
                             }
                         }
-                        
                         WWMHelperClass.deleteRowfromDb(dbName: "DBGuidedEmotionsData", id: self.id, type: "guided_id")
                     }
                     
@@ -233,13 +243,12 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                         
                         if guidedAudioData.count > 0{
                             for dict in guidedAudioData{
-                                if let audio_id = (dict as AnyObject).audio_id{
+                                if let _ = (dict as AnyObject).audio_id{
                                     WWMHelperClass.deleteRowfromDb(dbName: "DBGuidedAudioData", id: emotionId, type: "emotion_id")
                                 }
                             }
                         }
                     }
-                
                     
                     if let emotion_list = result["emotion_list"] as? [[String: Any]]{
                         for emotionsDict in emotion_list {
@@ -296,7 +305,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                                 dbGuidedEmotionsData.intro_url = ""
                             }
                             
-                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
+                            //print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
                             
                             if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                 for audioDict in audio_list {
@@ -339,18 +348,15 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                                         dbGuidedAudioData.vote = vote
                                     }
                                     
-                                    print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
+                                    //print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
                                     
                                     WWMHelperClass.saveDb()
                                 }
                             }
-                            
                             WWMHelperClass.saveDb()
                         }
                         self.fetchGuidedDataFromDB1()
                     }
-                    
-//''']]]]
                 }
             }
         }
@@ -530,7 +536,6 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         cell.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         DispatchQueue.main.async {
-            //cell.backImg.sd_setImage(with: URL.init(string: "\(data.audio_list[indexPath.item].audio_Image)"), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
             cell.lblAudioTime.text = "\(self.secondToMinuteSecond(second: data.audio_list[indexPath.item].audio_Duration))"
             
             if self.appPreference.getIsSubscribedBool(){
@@ -567,7 +572,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 
                 //to check if 7 days accepted than 21 days will not be cliced
                 if self.name == "21 Days challenge"{
-                    if self.checkTabContain7Days{
+                    if self.check7DaysChallenge(){
                         print("7 days challenge accepted")
                         self.xibCall1(title1: "You have accepted 7 Days Challenge")
                     }else{
@@ -583,10 +588,13 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     
                     //to check if 7 days accepted than 21 days will not be cliced
                     if self.name == "21 Days challenge"{
-                        if self.checkTabContain7Days{
+                        
+                        print(self.check7DaysChallenge())
+                        if self.check7DaysChallenge(){
                             print("7 days challenge accepted")
                             self.xibCall1(title1: "You have accepted 7 Days Challenge")
                         }else{
+                            
                             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         }
                     }else{
@@ -595,34 +603,35 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     //*
                     
                 }else{
-                    
-                    //to check if 7 days accepted than 21 days will not be cliced
-                    if self.name == "21 Days challenge"{
-                        if self.checkTabContain7Days{
-                            print("7 days challenge accepted")
-                        }else{
-                            
-                            //purchase subscription
-                            if reachable.isConnectedToNetwork() {
-                                xibCall()
-                            }else {
-                                WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                            }
-                        }
-                    }else{
-                        if reachable.isConnectedToNetwork() {
-                            xibCall()
-                        }else {
-                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                        }
-                    }
+                    self.purchaseSubscription()
                     //*
                 }
             }
         }
-        
         print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
-        
+    }
+    
+    func check7DaysChallenge() -> Bool{
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: "7 Days challenge", dbName: "DBGuidedData", name: "guided_name")
+        print("guidedDataDB.count*** \(guidedDataDB.count) 21 days")
+        if guidedDataDB.count > 0{
+            for dict in guidedDataDB {
+                let meditation_type = ((dict as AnyObject).meditation_type) ?? "Spiritual"
+                //print("subCategory \(subCategory) meditation_type \(meditation_type)")
+                if subCategory == meditation_type{
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func purchaseSubscription(){
+        if reachable.isConnectedToNetwork() {
+            xibCall()
+        }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
     }
     
     

@@ -1255,6 +1255,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreffrence.setCheckEnterSignupLogin(value: false)
                 self.appPreffrence.setEmail(value: "")
                 KUSERDEFAULTS.set("0", forKey: "restore")
+                self.appPreffrence.setPracticalChallenge(value: false)
+                self.appPreffrence.setSpiritualChallenge(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

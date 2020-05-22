@@ -102,7 +102,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
 
                 print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID()) data.intro_url \(data.intro_url)")
                 vc.value = "curatedCards"
-                vc.emotionId = data.emotion_Id
+                vc.emotionId = "\(data.emotion_Id)"
                 vc.id = "\(self.guidedData.cat_Id)"
                 vc.videoURL = data.intro_url
                 if data.tile_type == "2" {
@@ -116,18 +116,31 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 vc.emotionKey = data.emotion_key
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
-                print("data.tile_type*** \(data.tile_type)")
+                
                 if data.tile_type == "2" {
                     //7_days
-                    appPreference.set21ChallengeName(value: "7 Days challenge")
-                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
-                    self.reloadTabs21DaysController()
+                    
+                    if self.guidedData.cat_Name == "Practical"{
+                        appPreference.set21ChallengeName(value: "Practical")
+                        self.practicalAction(name: "7 Days challenge", type: "practical")
+                    }else{
+                        appPreference.set21ChallengeName(value: "Spiritual")
+                        self.spiritualAction(name: "7 Days challenge", type: "spiritual")
+                    }
+                    
+                    print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
 
                 }else{
-                    appPreference.set21ChallengeName(value: "21 Days challenge")
-                    delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
-                    self.reloadTabs21DaysController()
+                    
+                    if self.guidedData.cat_Name == "Practical"{
+                        appPreference.set21ChallengeName(value: "Practical")
+                        self.practicalAction(name: "21 Days challenge", type: "practical")
+                    }else{
+                        appPreference.set21ChallengeName(value: "Spiritual")
+                        self.spiritualAction(name: "21 Days challenge", type: "spiritual")
+                    }
 
+                    print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
                 }
             }
         }
@@ -165,21 +178,47 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         
     }
     
-    func reloadTabs21DaysController(){
-        self.navigationController?.isNavigationBarHidden = false
+    func practicalAction(name: String, type: String){
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: name, dbName: "DBGuidedData", name: "guided_name")
+        print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
         
-         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationReloadGuidedTabs"), object: nil)
-        
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 2
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 2 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+        if guidedDataDB.count > 0{
+            for dict in guidedDataDB {
+               
+                if (dict as AnyObject).meditation_type == "practical"{
+                    //print("\((dict as AnyObject).guided_id) \((dict as AnyObject).emotion_key) meditation_type \((dict as AnyObject).meditation_type)")
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                    
+                    vc.name = name
+                    vc.subCategory = type
+                    vc.category = name
+                    vc.id = (dict as AnyObject).guided_id ?? ""
+                    self.navigationController?.pushViewController(vc, animated: false)
                 }
             }
         }
-        self.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    func spiritualAction(name: String, type: String){
+        let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: name, dbName: "DBGuidedData", name: "guided_name")
+        print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
+        
+        if guidedDataDB.count > 0{
+            for dict in guidedDataDB {
+               
+                if (dict as AnyObject).meditation_type == "practical"{
+                    //print("\((dict as AnyObject).guided_id) \((dict as AnyObject).emotion_key) meditation_type \((dict as AnyObject).meditation_type)")
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
+                    
+                    vc.name = name
+                    vc.subCategory = type
+                    vc.category = name
+                    vc.id = (dict as AnyObject).guided_id ?? ""
+                    self.navigationController?.pushViewController(vc, animated: false)
+                }
+            }
+        }
     }
 }
