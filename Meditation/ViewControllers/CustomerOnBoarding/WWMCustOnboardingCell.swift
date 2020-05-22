@@ -22,11 +22,10 @@ class WWMCustOnboardingCell: UITableViewCell {
         // Configure the view for the selected state
         if selected {
             //contentView.backgroundColor = UIColor(red: 0/255, green: 235/255, blue: 169/255, alpha: 1.0)
-            self.textLabel?.textColor = UIColor.black
+            self.textLabel?.textColor = UIColor(red: 0/255, green: 23/255, blue: 108/255, alpha: 1.0) // new
         } else {
             self.textLabel?.textColor = UIColor.white
         }
-
     }
 
     func setCellData(options: OptionsData) {

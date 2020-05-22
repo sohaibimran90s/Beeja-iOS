@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMPopoverOnboardingVC: UIViewController {
+class WWMPopoverOnboardingVC: WWMBaseViewController {
 
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
@@ -58,6 +58,45 @@ class WWMPopoverOnboardingVC: UIViewController {
     @IBAction func closeBtnAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func meditationApi(type: String) {
+        self.view.endEditing(true)
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : 1,
+            "level_id"      : 1,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : type,
+            "guided_type"   : "Guided", // 'guided_type'
+            "personalise"   : DataManager.sharedInstance.postData
+            ] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                print("result signupletsstartvc meditation data... \(result)")
+                self.appPreference.setType(value: type)
+                self.appPreference.setGuideType(value: "Guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: type)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.appPreference.setGetProfile(value: true)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                    UIApplication.shared.keyWindow?.rootViewController = vc
+                    //UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
+                }
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            //WWMHelperClass.dismissSVHud()
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
 
 }
 
@@ -94,11 +133,24 @@ extension WWMPopoverOnboardingVC: UITableViewDataSource{
         return cell
     }
     
+    func selectedOption() {
+        
+        let selectedOption = self.optionList.filter({$0.isSelected == true})
+        DataManager.sharedInstance.getOptionList(selectedOptionList: selectedOption, currentPage: self.dataObj)
+        DataManager.sharedInstance.postOnboardingRequest()
+        if let exitPoint = selectedOption.first?.exitPoint {
+            self.meditationApi(type: exitPoint);
+        }
+    }
 }
 
 extension WWMPopoverOnboardingVC: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedOpt = self.optionList[indexPath.section]
+        selectedOpt.isSelected = true
+        self.selectedOption()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

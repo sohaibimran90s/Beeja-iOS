@@ -40,7 +40,7 @@ class OptionsData: Codable {
 
 
 class WWMConOnboardingVC: WWMBaseViewController {
-
+    
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var boardingTable: UITableView!
@@ -59,11 +59,11 @@ class WWMConOnboardingVC: WWMBaseViewController {
     var isMultipleSelection = 0
     var multipleSelectedRow:[Int] = []
     var currentPageData = GetData()
-    var postData: [Any] = []
-
+    //var postData: [Any] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         //self.getQuestionsAnsAPI()
         
@@ -81,20 +81,20 @@ class WWMConOnboardingVC: WWMBaseViewController {
                 }
             }
         }
-
         
         
-//        // Though locally saved Data
-//        let onboardData = self.loadJson()
-//        if let dataArr = onboardData?.data{
-//            self.dataArray = dataArr
-//            let filteredDataArray = self.dataArray.filter({$0.first_question == 1})
-//            if (filteredDataArray.count > 0){
-//                self.updadtePage(selectedData: filteredDataArray[0])
-//            }
-//        }
+        
+        //        // Though locally saved Data
+        //        let onboardData = self.loadJson()
+        //        if let dataArr = onboardData?.data{
+        //            self.dataArray = dataArr
+        //            let filteredDataArray = self.dataArray.filter({$0.first_question == 1})
+        //            if (filteredDataArray.count > 0){
+        //                self.updadtePage(selectedData: filteredDataArray[0])
+        //            }
+        //        }
     }
-        
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
     }
@@ -122,7 +122,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         
         let titleLblBottomPos = self.titleLbl.frame.size.height + self.titleLbl.frame.origin.y
         let tableBottomPos = self.boardingTable.frame.size.height + self.boardingTable.frame.origin.y
-
+        
         let disBWTableBtmAndTitleLblBtm = Int(tableBottomPos - titleLblBottomPos)
         let tableReqH = 75 * self.optionList.count  // 75 is each cell height + top/bottom gap
         let diff = disBWTableBtmAndTitleLblBtm - tableReqH
@@ -138,7 +138,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
     }
     
     func reloadTableData(isForward: Bool) {
-    
+        
         let transition = CATransition()
         transition.type = CATransitionType.push
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
@@ -162,7 +162,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
             self.index3Lbl.text = "•"
             self.index2Lbl.layer.borderColor = UIColor.clear.cgColor
             self.index3Lbl.layer.borderColor = UIColor.clear.cgColor
-
+            
         case 2:
             self.index2Lbl.layer.cornerRadius = self.index2Lbl.frame.size.height / 2
             self.index2Lbl.layer.borderWidth = 3
@@ -172,8 +172,8 @@ class WWMConOnboardingVC: WWMBaseViewController {
             self.index3Lbl.text = "•"
             self.index1Lbl.layer.borderColor = UIColor.clear.cgColor
             self.index3Lbl.layer.borderColor = UIColor.clear.cgColor
-
-//        case 3,4:
+            
+        //        case 3,4:
         default:
             self.index3Lbl.layer.cornerRadius = self.index3Lbl.frame.size.height / 2
             self.index3Lbl.layer.borderWidth = 3
@@ -189,48 +189,48 @@ class WWMConOnboardingVC: WWMBaseViewController {
     func getOnboardingDataAPI(completionHandler: @escaping (OnboardingData, Bool) -> Void) {
         
         let url = URL(string: "https://uat.beejameditation.com/api/v2/consumer/onboarding")!
-           
+        
         let task = URLSession.shared.dataTask(with: url){(data, response, error) in
             
             let httpResponse = response as? HTTPURLResponse
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-
-            if (httpResponse?.statusCode == 200){
-                guard let data = data else {return}
-                do {
-                    let onboardData = try JSONDecoder().decode(OnboardingData.self, from: data)
-                    completionHandler(onboardData, true)
+                
+                if (httpResponse?.statusCode == 200){
+                    guard let data = data else {return}
+                    do {
+                        let onboardData = try JSONDecoder().decode(OnboardingData.self, from: data)
+                        completionHandler(onboardData, true)
+                    }
+                    catch {
+                        print("JSONSerialization error:", error)
+                    }
                 }
-                catch {
-                    print("JSONSerialization error:", error)
-                }
-            }
-            else {
+                else {
                     completionHandler(OnboardingData(), false)
-            }
+                }
             }
         }
         task.resume()
     }
-
     
-//    func getQuestionsAnsAPI() {
-//        
-//        WWMHelperClass.showLoaderAnimate(on: self.view)
-//
-//        let param = [:] as [String : Any]
-//        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_CONSUMER_ONBOARDING, context: "WWMMeditationDataVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-//            
-//            WWMHelperClass.hideLoaderAnimate(on: self.view)
-//
-//            if sucess {
-//            }
-//        }
-//    }
-
-
+    
+    //    func getQuestionsAnsAPI() {
+    //
+    //        WWMHelperClass.showLoaderAnimate(on: self.view)
+    //
+    //        let param = [:] as [String : Any]
+    //        WWMWebServices.requestAPIWithBody(param:param , urlString: URL_CONSUMER_ONBOARDING, context: "WWMMeditationDataVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+    //
+    //            WWMHelperClass.hideLoaderAnimate(on: self.view)
+    //
+    //            if sucess {
+    //            }
+    //        }
+    //    }
+    
+    
     func loadJson() -> OnboardingData? {
-
+        
         if let url = Bundle.main.path(forResource: "conOnboarding", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: url), options: .mappedIfSafe)
@@ -242,8 +242,8 @@ class WWMConOnboardingVC: WWMBaseViewController {
         }
         return nil
     }
-
-
+    
+    
     func selectedOption(nextPageId: Int, isNavigateForward: Bool) {
         
         let filteredDataArray = self.dataArray.filter({$0.id == nextPageId})
@@ -257,7 +257,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
                 VC.modalPresentationStyle = .fullScreen
                 VC.dataObj = dataObject
                 self.present(VC, animated:true, completion: nil)
-
+                
                 return
             }
             else {
@@ -279,19 +279,18 @@ class WWMConOnboardingVC: WWMBaseViewController {
     }
     
     func createPostData() {
-    
+        
         let selectedOption = self.optionList.filter({$0.isSelected == true})
         //let ids = selectedOption.map { $0.id }
-        
-        var selectedId: [Int] = []
+        DataManager.sharedInstance.getOptionList(selectedOptionList: selectedOption, currentPage: self.currentPageData)
+        self.unselectAllSelectedOptions()
+    }
+    
+    func unselectAllSelectedOptions() {
+        let selectedOption = self.optionList.filter({$0.isSelected == true})
         for option in selectedOption {
-            if let id = option.id{
-                selectedId.append(id)
-            }
+            option.isSelected = false
         }
-        
-        let postBody = self.postBody(currentPageId: self.currentPageData.id!, selectedOption: selectedId, isMultiple: Bool(truncating: self.currentPageData.multiple_selection! as NSNumber))
-        self.postData.append(postBody)
     }
     
     func meditationApi(type: String) {
@@ -304,7 +303,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
             "user_id"       : self.appPreference.getUserID(),
             "type"          : type,
             "guided_type"   : "Guided", // 'guided_type'
-            "personalise"   : self.postData
+            "personalise"   : DataManager.sharedInstance.postData
             ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -336,14 +335,15 @@ class WWMConOnboardingVC: WWMBaseViewController {
     @IBAction func backBtnAction(_ sender: Any) {
         
         if let pageInfo = self.pageInfoArray.last{
-            
+            self.multipleSelectedRow.removeAll() // new
             self.pageInfoArray.removeLast()
-            self.postData.removeLast()
-
+            DataManager.sharedInstance.deletePostData()
+            self.unselectAllSelectedOptions()
+            
             let pageInformation = pageInfo as! (pageId: Int, multiSelection: [Int])
-
+            
             self.selectedOption(nextPageId: pageInformation.pageId, isNavigateForward: false)
-
+            
             if (pageInformation.multiSelection.count > 0) {
                 
                 self.multipleSelectedRow = pageInformation.multiSelection
@@ -351,21 +351,13 @@ class WWMConOnboardingVC: WWMBaseViewController {
                     
                     let indexPath = IndexPath(row: 0, section: selectedSection)
                     boardingTable.selectRow(at: indexPath, animated: false, scrollPosition: .none )
+                    let option = self.optionList[selectedSection]
+                    option.isSelected = true
                 }
             }
         }
     }
     
-    func postBody(currentPageId: Int, selectedOption: [Int], isMultiple: Bool) -> Any
-    {
-        let jsonBody = ["question_id":currentPageId,
-                        "answer":selectedOption,
-                        "is_multiple": isMultiple
-                           ] as [String : Any];
-        
-        return jsonBody;
-    }
-
     @IBAction func nextBtnAction(_ sender: Any) {
         
         // fetch priority for nextQuestion/nextPage from the selected options
@@ -378,7 +370,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         
         var nextQuestion = -1
         let uniqueQues = Array(Set(listOfNextQues))
-
+        
         if (uniqueQues.count <= 2) {
             nextQuestion = uniqueQues.last!
         }
@@ -389,7 +381,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
             
             let firstQuesArray = listOfNextQues.filter({$0 == firstIndexQues})
             let secondQuesArray = listOfNextQues.filter({$0 == secondIndexQues})
-
+            
             nextQuestion = (firstQuesArray.count > secondQuesArray.count) ? firstQuesArray[0] : secondQuesArray[0]
         }
         
@@ -405,7 +397,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         //if let VC = segue.destination as? WWMPopoverOnboardingVC {
         //}
     }
-
+    
 }
 
 
@@ -420,26 +412,29 @@ extension WWMConOnboardingVC: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustOnboardingCell")! as! WWMCustOnboardingCell
-
+        
         let image = UIImageView(image: UIImage(named: "smallArrow.png"))
         cell.accessoryView = (self.isMultipleSelection == 0) ? image:nil
-
+        
         let selectedBGImage = UIImageView(image: UIImage(named: "cellSelectedBG.png"))
         cell.selectedBackgroundView = selectedBGImage
         
         let bgImage = UIImageView(image: UIImage(named: "cellBG.png"))
         cell.backgroundView = bgImage
-
-        cell.tintColor = UIColor.black
-
-        cell.accessoryType = (self.multipleSelectedRow.contains(indexPath.section)) ? .checkmark : .none
+        
+        //cell.tintColor = UIColor(red: 0/255, green: 23/255, blue: 108/255, alpha: 1.0) // new
+        
+        // new
+        let chkMarkImage = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
+        cell.accessoryView = (self.multipleSelectedRow.contains(indexPath.section)) ? chkMarkImage : nil
+        //cell.accessoryType = (self.multipleSelectedRow.contains(indexPath.section)) ? .checkmark : .none
         cell.setCellData(options: self.optionList[indexPath.section])
         return cell
     }
     
-
+    
 }
 
 extension WWMConOnboardingVC: UITableViewDelegate{
@@ -449,12 +444,14 @@ extension WWMConOnboardingVC: UITableViewDelegate{
         //let cell:WWMCustOnboardingCell = tableView.cellForRow(at: indexPath) as! WWMCustOnboardingCell
         let selectedOpt = self.optionList[indexPath.section]
         selectedOpt.isSelected = true
-
+        
         if (self.isMultipleSelection == 0) {
             if let nextQues = selectedOpt.next_question {
                 self.selectedOption(nextPageId: nextQues, isNavigateForward: true)
             }
             else {
+                self.createPostData()
+                DataManager.sharedInstance.postOnboardingRequest()
                 if let exitPoint = selectedOpt.exitPoint {
                     self.meditationApi(type: exitPoint);
                 } else {
@@ -465,22 +462,27 @@ extension WWMConOnboardingVC: UITableViewDelegate{
             }
         }
         else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            
+            let image = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
+            tableView.cellForRow(at: indexPath)?.accessoryView = image
+            
+            //tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             self.multipleSelectedRow.append(indexPath.section)
         }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        tableView.cellForRow(at: indexPath)?.accessoryView = nil // new
+        //tableView.cellForRow(at: indexPath)?.accessoryType = .none
         self.multipleSelectedRow.removeAll(where: { $0 == indexPath.section } )
         
         let selectedOpt = self.optionList[indexPath.section]
         selectedOpt.isSelected = false
-
+        
     }
-
-
+    
+    
 }
 
 
