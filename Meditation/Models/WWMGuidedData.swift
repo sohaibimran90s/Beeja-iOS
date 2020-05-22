@@ -112,6 +112,7 @@ class WWMGuidedEmotionData: NSObject {
     var audio_list = [WWMGuidedAudioData]()
     var step_id = String()
     var intro_url = String()
+    var emotion_type = String()
     
     override init() {
     }
@@ -129,6 +130,7 @@ class WWMGuidedEmotionData: NSObject {
         completed_date = json["completed_date"] as? String ?? ""
         step_id = "\(stepId)"
         intro_url = json["intro_url"] as? String ?? ""
+        emotion_type = json["emotion_type"] as? String ?? ""
         
         var isSaveAudioData = 0
         if let arrLevels = json["audio_list"] as? [[String:Any]]{

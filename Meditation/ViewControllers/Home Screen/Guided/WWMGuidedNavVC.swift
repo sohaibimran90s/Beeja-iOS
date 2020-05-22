@@ -282,6 +282,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
                     jsonEmotionsString["intro_url"] = (dict1 as AnyObject).intro_url ?? ""
+                    jsonEmotionsString["emotion_type"] = (dict1 as AnyObject).emotion_type ?? ""
                     
                     let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count) \(guidedEmotionsDataDB.count)")
@@ -486,6 +487,12 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                                 dbGuidedEmotionsData.intro_url = intro_url
                                             }else{
                                                 dbGuidedEmotionsData.intro_url = ""
+                                            }
+                                            
+                                            if let emotion_type = emotionsDict["emotion_type"] as? String{
+                                                dbGuidedEmotionsData.emotion_type = emotion_type
+                                            }else{
+                                                dbGuidedEmotionsData.emotion_type = ""
                                             }
                                             
                                             print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
