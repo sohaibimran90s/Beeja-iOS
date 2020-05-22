@@ -1850,7 +1850,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 var expireDate: Date = Date()
                                 var currentDate: Date = Date()
                                 
+                                //system date
                                 currentDate = formatter.date(from: currentDateString)!
+                                
+                                //server Date
                                 expireDate = WWMHelperClass.getExpireDate(expiryDate: expiryDate, formatter: formatter)
                                 
                                 print("self.appPreffrence.getExpiryDate... \(expiryDate) formatter.date... \(String(describing: formatter.date(from: expiryDate))) currentDate+++ \(currentDate) expireDate++ \(expireDate)")
