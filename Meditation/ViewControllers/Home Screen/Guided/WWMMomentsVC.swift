@@ -114,6 +114,7 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         let data = self.arrOfGuidedEmotionData[indexPath.row]
         cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.emotion_Name
+        cell.lblSectionTitle.text = data.emotion_type.capitalized
         
         print("emotion_type moments... \(data.emotion_type)")
         
