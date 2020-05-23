@@ -14,6 +14,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btnMantra: UIButton!
 
+    let reachable = Reachabilities()
     var itemInfo: IndicatorInfo = "View"
     var type = ""
     var subType = ""
@@ -86,18 +87,23 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
             print(randomIndex)
             
             let data = self.guidedData.cat_EmotionList[randomIndex]
+            let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepAudioVC") as! WWMSleepAudioVC
-            vc.emotionData = data
-            vc.subTitle = self.subType
-            vc.cat_Id = "\(self.guidedData.cat_Id)"
-            vc.cat_Name = self.guidedData.cat_Name
-            vc.type = data.emotion_Name
-            vc.imgURL = data.emotion_Image
-            vc.min_limit = self.min_limit
-            vc.max_limit = self.max_limit
-            vc.meditation_key = self.meditation_key
-            self.navigationController?.pushViewController(vc, animated: true)
+            if guidedAudioDataDB.count > 1{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepAudioVC") as! WWMSleepAudioVC
+                vc.emotionData = data
+                vc.subTitle = self.subType
+                vc.cat_Id = "\(self.guidedData.cat_Id)"
+                vc.cat_Name = self.guidedData.cat_Name
+                vc.type = data.emotion_Name
+                vc.imgURL = data.emotion_Image
+                vc.min_limit = self.min_limit
+                vc.max_limit = self.max_limit
+                vc.meditation_key = self.meditation_key
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if guidedAudioDataDB.count == 1{
+                self.fetchGuidedAudioDataFromDB(emotion_id: "\(data.emotion_Id)", emotion_name: "\(data.emotion_Name)", min_limit: self.guidedData.min_limit, max_limit: self.guidedData.max_limit, meditation_key: self.guidedData.meditation_key)
+            }
         }
     }
 }
@@ -135,7 +141,6 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         if self.arrToCheckSection[indexPath.row] == "0"{
             print("section of tableView")
         }else{
-            
             let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")
             
             if guidedAudioDataDB.count > 1{
@@ -182,21 +187,24 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
                 jsonString["paid"] = (dict as AnyObject).paid
                 
                 let audioData = WWMGuidedAudioData.init(json: jsonString)
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                
-                vc.audioData = audioData
-                vc.cat_id = "\(self.guidedData.cat_Id)"
-                vc.cat_Name = self.guidedData.cat_Name
-                vc.emotion_Id = "\(emotion_id)"
-                vc.emotion_Name = emotion_name
-                vc.min_limit = self.min_limit
-                vc.max_limit = self.max_limit
-                vc.meditation_key = self.meditation_key
-                
-                vc.seconds = audioData.audio_Duration
-                self.navigationController?.pushViewController(vc, animated: true)
-                
+    
+                if reachable.isConnectedToNetwork() {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+                    
+                    vc.audioData = audioData
+                    vc.cat_id = "\(self.guidedData.cat_Id)"
+                    vc.cat_Name = self.guidedData.cat_Name
+                    vc.emotion_Id = "\(emotion_id)"
+                    vc.emotion_Name = emotion_name
+                    vc.min_limit = self.min_limit
+                    vc.max_limit = self.max_limit
+                    vc.meditation_key = self.meditation_key
+                    
+                    vc.seconds = audioData.audio_Duration
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else {
+                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                }
             }
         }
     }

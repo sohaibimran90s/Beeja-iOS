@@ -231,11 +231,9 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }
-            
         }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
-
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

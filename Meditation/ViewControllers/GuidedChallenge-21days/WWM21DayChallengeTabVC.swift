@@ -23,6 +23,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     
     var delegate: WWMGuidedDashboardDelegate?
     var check7Days = false
+    let reachable = Reachabilities()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,18 +150,22 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     }else{
                         print("Challenge not accepted yet")
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-
-                        //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                        
-                        vc.value = "curatedCards"
-                        vc.emotionId = ""
-                        vc.id = (dict as AnyObject).guided_id ?? ""
-                        vc.videoURL = (dict as AnyObject).intro_url ?? ""
-                        vc.category = self.name
-                        vc.subCategory = "practical"
-                        vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
-                        self.navigationController?.pushViewController(vc, animated: false)
+                        if reachable.isConnectedToNetwork() {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                            
+                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
+                            
+                            vc.value = "curatedCards"
+                            vc.emotionId = ""
+                            vc.id = (dict as AnyObject).guided_id ?? ""
+                            vc.videoURL = (dict as AnyObject).intro_url ?? ""
+                            vc.category = self.name
+                            vc.subCategory = "practical"
+                            vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }else {
+                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        }
                     }
                 }
             }
@@ -191,18 +196,22 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     }else{
                         print("Challenge not accepted yet")
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-
-                        print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                        
-                        vc.value = "curatedCards"
-                        vc.emotionId = ""
-                        vc.id = (dict as AnyObject).guided_id ?? ""
-                        vc.videoURL = (dict as AnyObject).intro_url ?? ""
-                        vc.category = self.name
-                        vc.subCategory = "spiritual"
-                        vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
-                        self.navigationController?.pushViewController(vc, animated: false)
+                        if reachable.isConnectedToNetwork() {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                            
+                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
+                            
+                            vc.value = "curatedCards"
+                            vc.emotionId = ""
+                            vc.id = (dict as AnyObject).guided_id ?? ""
+                            vc.videoURL = (dict as AnyObject).intro_url ?? ""
+                            vc.category = self.name
+                            vc.subCategory = "spiritual"
+                            vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }else {
+                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        }
                     }
                 }
             }

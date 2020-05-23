@@ -22,8 +22,8 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
-    
     var guided_type = ""
+    let reachable = Reachabilities( )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +103,6 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
                     }else{
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
-                    
                 }
             }
             //WWMHelperClass.dismissSVHud()
@@ -143,7 +142,6 @@ extension WWMPlayListVC: UITableViewDelegate, UITableViewDataSource{
             self.navigationController?.pushViewController(vc, animated: true)
     }
     
-   
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
