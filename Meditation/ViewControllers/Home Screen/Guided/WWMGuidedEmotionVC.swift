@@ -190,6 +190,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
+                    vc.intro_url = (dict as AnyObject).intro_url ?? ""
                     vc.name = name
                     vc.subCategory = type
                     vc.category = name
@@ -212,6 +213,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                     
+                    vc.intro_url = (dict as AnyObject).intro_url ?? ""
                     vc.name = name
                     vc.subCategory = type
                     vc.category = name

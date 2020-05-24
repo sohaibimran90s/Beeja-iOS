@@ -592,7 +592,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
         
         var param: [String: Any] = [:]
         param = [
-            "type": "sleep",
+            "type": "Sleep",
             "category_id": category_id,
             "emotion_id": emotion_id,
             "audio_id": audio_id,

@@ -81,8 +81,6 @@ class WWMConOnboardingVC: WWMBaseViewController {
                 }
             }
         }
-
-        
         
 //        // Though locally saved Data
 //        let onboardData = self.loadJson()
@@ -189,25 +187,25 @@ class WWMConOnboardingVC: WWMBaseViewController {
     func getOnboardingDataAPI(completionHandler: @escaping (OnboardingData, Bool) -> Void) {
         
         let url = URL(string: "https://uat.beejameditation.com/api/v2/consumer/onboarding")!
-           
+        
         let task = URLSession.shared.dataTask(with: url){(data, response, error) in
             
             let httpResponse = response as? HTTPURLResponse
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-
-            if (httpResponse?.statusCode == 200){
-                guard let data = data else {return}
-                do {
-                    let onboardData = try JSONDecoder().decode(OnboardingData.self, from: data)
-                    completionHandler(onboardData, true)
+                
+                if (httpResponse?.statusCode == 200){
+                    guard let data = data else {return}
+                    do {
+                        let onboardData = try JSONDecoder().decode(OnboardingData.self, from: data)
+                        completionHandler(onboardData, true)
+                    }
+                    catch {
+                        print("JSONSerialization error:", error)
+                    }
                 }
-                catch {
-                    print("JSONSerialization error:", error)
-                }
-            }
-            else {
+                else {
                     completionHandler(OnboardingData(), false)
-            }
+                }
             }
         }
         task.resume()

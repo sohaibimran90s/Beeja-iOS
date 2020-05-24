@@ -131,10 +131,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             self.view.isUserInteractionEnabled = false
                             
                         }
-//                        else{
-//                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
-//                            self.view.isUserInteractionEnabled = true
-//                        }
+                        //                        else{
+                        //                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
+                        //                            self.view.isUserInteractionEnabled = true
+                        //                        }
                     }else{
                         let getPostMoodCount = self.appPreference.getPostMoodCount()
                         let getPostJournalCount = self.appPreference.getPostJournalCount()
@@ -142,7 +142,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         //if (getPostMoodCount < 7 && getPostMoodCount != 0) || (getPostJournalCount < 7 && getPostJournalCount != 0)
                         if (getPostMoodCount == 0) && (getPostJournalCount == 0){
                             print("getPostMoodCount... \(getPostMoodCount)")
-
+                            
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Post")
                             self.view.isUserInteractionEnabled = false
                             

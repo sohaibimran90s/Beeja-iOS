@@ -33,11 +33,12 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     //banner outlet
-    @IBOutlet weak var lblChallTitle: UILabel!
-    @IBOutlet weak var lblChallSubTitle: UILabel!
-    @IBOutlet weak var lblChallDes: UILabel!
     @IBOutlet weak var bannerHeightConstraint: NSLayoutConstraint!
-    var key = ""
+    @IBOutlet weak var bannerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBanners: UITableView!
+    var bannerDataArray: [[String: Any]] = []
+    var bannerDescBool = false
+    var bannerSelectdIndex = 0
     
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
@@ -49,10 +50,8 @@ class WWMHomeTabVC: WWMBaseViewController {
 
     var giftPopUp = WWMHomeGiftPopUp()
     var alertJournalPopup = WWMJouranlPopUp()
-    
     var data: [WWMMeditationHistoryListData] = []
     var podData: [WWMPodCastData] = []
-
     var guideStart = WWMGuidedStart()
     var guided_type = ""
     var type = ""
@@ -289,6 +288,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     //banner api
     func bannerAPI() {
         
+        self.bannerTopConstraint.constant = 0
+        self.bannerHeightConstraint.constant = 100
+        
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
@@ -301,55 +303,32 @@ class WWMHomeTabVC: WWMBaseViewController {
             }
         }
         
+        //banner top constraint 22
+        //banner height constraint 185
+        
         bannerData()
     }
     
     func bannerData(){
+        self.bannerDataArray.removeAll()
         if self.appPreffrence.getBanners().count > 0{
+            self.bannerTopConstraint.constant = 22
             for data in self.appPreffrence.getBanners() {
                 
                 if let dict = data as? [String: Any]{
-                    self.lblChallTitle.text = dict["name"] as? String
-                    self.lblChallSubTitle.text = dict["title"] as? String
-                    self.lblChallDes.text = dict["description"] as? String
-                    
-                    self.key = dict["description"] as? String ?? ""
-                    
-                    if self.key == ""{
-                        self.lblChallDes.isHidden = true
-                        self.bannerHeightConstraint.constant = 94
+                    if dict["description"] as? String != ""{
+                        self.bannerDescBool = true
                     }else{
-                        self.lblChallDes.isHidden = false
-                        self.bannerHeightConstraint.constant = 165
+                        self.bannerDescBool = false
                     }
-                    
-                    self.key = dict["name"] as? String ?? "21 Days challenge"
+                    self.bannerDataArray.append(dict)
+
                 }
+                self.tableViewBanners.delegate = self
+                self.tableViewBanners.dataSource = self
+                self.tableViewBanners.reloadData()
             }
         }
-    }
-    
-    @IBAction func btn21ChallengeClicked(_ sender: UIButton) {
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
-        
-        appPreference.set21ChallengeName(value: self.key)
-        print(appPreference.get21ChallengeName())
-        guided_type = "practical"
-        self.type = "guided"
-        WWMHelperClass.selectedType = "guided"
-        
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
-        self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
-        
-        DispatchQueue.global(qos: .background).async {
-            self.meditationApi()
-        }
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-        UIApplication.shared.keyWindow?.rootViewController = vc
     }
     
     @IBAction func btnVideoClicked(_ sender: UIButton) {
@@ -725,43 +704,153 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
 extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.podData.count - 1
+        if tableView == tableViewBanners{
+            //print(self.bannerDataArray.count)
+            return 3
+        }else{
+           return self.podData.count - 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
-        
-        if indexPath.row == 2{
-            cell.lineLbl.isHidden = true
+        if tableView == self.tableViewBanners{
+            let cell = self.tableViewBanners.dequeueReusableCell(withIdentifier: "WWMBannerTVC") as! WWMBannerTVC
+            
+            //des: We've launched a new challenge to take your practise to the next level. Get set go!
+            
+            //            cell.lblChallTitle.text = self.bannerDataArray[indexPath.row]["name"] as? String
+            //            cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
+            //            cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
+            //            cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+  
+            if self.bannerDataArray.count > 1{
+                //bannerDescBool false means doesnt contain description
+                if !self.bannerDescBool{
+                    self.bannerHeightConstraint.constant = 84 * 1
+                }else{
+                    self.bannerHeightConstraint.constant = 126 * 1
+                }
+            }else{
+                if indexPath.row == 0{
+                    cell.lblChallTitle.textColor = UIColor.white
+                    cell.imgWidthConstraint.constant = 0
+                    cell.imgHeightConstraint.constant = 0
+                    cell.stackViewLeadingConstraint.constant = 0
+                }else{
+                    cell.lblChallTitle.textColor = UIColor(red: 240/255, green: 163/255, blue: 103/255, alpha: 1.0)
+                    cell.imgWidthConstraint.constant = 40
+                    cell.imgHeightConstraint.constant = 40
+                    cell.stackViewLeadingConstraint.constant = 16
+                }
+                    
+                if self.bannerSelectdIndex == 0{
+                    self.bannerHeightConstraint.constant = 84 * 1
+                    cell.imgArrow.image = UIImage(named: "downArrow")
+                }else{
+                    self.bannerHeightConstraint.constant = 84 * 3
+                    if indexPath.row == 0{
+                        cell.imgArrow.image = UIImage(named: "upArrow")
+                    }else{
+                        cell.imgArrow.image = UIImage(named: "rightArrow_Icon")
+                    }
+                }
+            }
+            
+            return cell
         }else{
-            cell.lineLbl.isHidden = false
+           let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
+           
+           if indexPath.row == 2{
+               cell.lineLbl.isHidden = true
+           }else{
+               cell.lineLbl.isHidden = false
+           }
+           
+           cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+           cell.lblTitle.text = self.podData[indexPath.row].title
+           let data = self.podData[indexPath.row]
+           let duration = secondsToMinutesSeconds(second: data.duration)
+           cell.lblTime.text = "\(duration)"
+           
+           return cell
         }
-        
-        cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-        cell.lblTitle.text = self.podData[indexPath.row].title
-        let data = self.podData[indexPath.row]
-        let duration = secondsToMinutesSeconds(second: data.duration)
-        cell.lblTime.text = "\(duration)"
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.tableView.frame.size.height/3
+        if tableView == self.tableView{
+            return self.tableView.frame.size.height/3
+        }
+        
+        //reverse it when array comes from background
+        if self.bannerDataArray.count > 1{
+            if !self.bannerDescBool{
+                return 126
+            }else{
+                return 84
+            }
+            
+        }else{
+            return 84
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
-           let data = self.podData[indexPath.row]
-
-            // Analytics
-           WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
+            if tableView == self.tableViewBanners{
+                //let cell = self.tableViewBanners.cellForRow(at: indexPath) as! WWMBannerTVC
+                
+                if self.bannerDataArray.count > 1{
+                    
+                }else{
+                    
+                    if indexPath.row == 0{
+                        if self.bannerSelectdIndex == 0{
+                            self.bannerSelectdIndex = 1
+                        }else{
+                            self.bannerSelectdIndex = 0
+                        }
+                        self.tableViewBanners.reloadData()
+                    }else{
+                        self.bannerClicked(guided_type: "21 Days challenge")
+                        print("selected challenge")
+                    }
+                }
+            }else{
+                let data = self.podData[indexPath.row]
+                
+                // Analytics
+                WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
+                
+                self.selectedAudioIndex = indexPath.row
+                self.podCastXib(index: self.selectedAudioIndex)
+            }
             
-            self.selectedAudioIndex = indexPath.row
-            self.podCastXib(index: self.selectedAudioIndex)
-         }else {
+        }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
+    }
+    
+    func bannerClicked(guided_type: String) {
+        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
+        
+        appPreference.set21ChallengeName(value: guided_type)
+        print(appPreference.get21ChallengeName())
+        self.guided_type = guided_type
+        self.type = "guided"
+        WWMHelperClass.selectedType = "guided"
+        
+        self.view.endEditing(true)
+        self.appPreference.setIsProfileCompleted(value: true)
+        self.appPreference.setType(value: self.type)
+        self.appPreference.setGuideType(value: self.guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
     }
 
     

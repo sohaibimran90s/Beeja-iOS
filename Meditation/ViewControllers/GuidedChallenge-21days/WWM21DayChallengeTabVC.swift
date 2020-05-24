@@ -72,9 +72,11 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
                             self.appPreference.set21ChallengeName(value: subCategory?.capitalized ?? "Practical")
+                            vc.cat_name = self.name
                             vc.name = self.name
                             vc.subCategory = subCategory ?? "practical"
                             vc.category = self.name
+                            vc.intro_url = (dict as AnyObject).intro_url ?? ""
                             vc.id = (dict as AnyObject).guided_id ?? ""
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
@@ -142,6 +144,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        vc.cat_name = self.name
+                        vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name
                         vc.subCategory = "practical"
                         vc.category = self.name
@@ -187,6 +191,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        vc.cat_name = self.name
+                        vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name
                         vc.subCategory = "spiritual"
                         vc.category = self.name

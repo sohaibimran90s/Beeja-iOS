@@ -1861,7 +1861,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    
     func getDataFromDatabase() {
         if self.appPreffrence.isLogout() {
             var userData = WWMUserData.sharedInstance
@@ -1873,7 +1872,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             }else {
                 self.connectionLost()
             }
-            
         }else {
             self.connectionLost()
         }
@@ -1916,7 +1914,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
-    
     @IBAction func btnDoneAction(_ sender: Any) {
         self.btnDoneAction()
     }
@@ -1939,7 +1936,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }else{
                     print("no alert...")
                     self.getUserProfileData(lat: self.lat, long: self.long)
-                    
                 }
             }else{
                 self.getUserProfileData(lat: self.lat, long: self.long)
@@ -1973,7 +1969,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         let totalSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.totalDiskSpace)
         
         print("usedSpace... \(usedSpace) freeSpace... \(freeSpace) totalSpace... \(totalSpace) ramSpace... \(ProcessInfo.processInfo.physicalMemory/1073741824)")
-        
     }
 }
 
@@ -1988,5 +1983,4 @@ extension WWMTabBarVC{
         }
         return nil
     }
-    
 }

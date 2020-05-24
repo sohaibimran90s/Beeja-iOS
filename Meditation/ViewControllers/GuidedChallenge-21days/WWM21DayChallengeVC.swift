@@ -56,6 +56,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var guided_id = 0
     var emotionKey = ""
     var guideTitleCount = 3
+    var intro_url = ""
     
     var min_limit = "94"
     var max_limit = "97"
@@ -396,7 +397,8 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     @IBAction func introBtnAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-        vc.value = "learnStepList"
+        vc.videoURL = self.intro_url
+        vc.value = "curatedCards"
         self.navigationController?.pushViewController(vc, animated: false)
     }
 }
@@ -632,8 +634,9 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
         
+        print(self.cat_name)
         if reachable.isConnectedToNetwork() {
-           var flag = 0
+            var flag = 0
             var position = 0
             
             let data = self.arrGuidedList[0].cat_EmotionList[table_cell_tag]
@@ -651,9 +654,9 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 vc.min_limit = self.min_limit
                 vc.max_limit = self.max_limit
                 vc.meditation_key = self.meditation_key
-
+                
                 self.navigationController?.pushViewController(vc, animated: true)
-
+                
                 return
             }else{
                 for i in 0..<table_cell_tag{
@@ -667,12 +670,12 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     }
                 }
             }
-
+            
             if flag == 1{
                 self.xibCall1(title1: KLEARNONESTEP)
                 return
             }
-
+            
             for i in 0..<table_cell_tag{
                 if !self.arrGuidedList[0].cat_EmotionList[i].completed{
                     flag = 2
@@ -680,11 +683,11 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     break
                 }
             }
-
+            
             if flag == 2{
-
+                
                 print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
-
+                
                 self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
             }else{
                 
@@ -692,7 +695,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 WWMHelperClass.days21StepNo = "Step \(data.step_id)"
                 WWMHelperClass.stepsCompleted = data.completed
                 print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
-
+                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                 vc.audioData = data.audio_list[collection_cell_tag]
                 vc.cat_id = "\(self.cat_id)"
