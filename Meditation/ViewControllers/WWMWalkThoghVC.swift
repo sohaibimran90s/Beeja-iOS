@@ -67,7 +67,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.btnCrossSkip.isHidden = false
         
-        if (value == "help" || value == "learnStepList" || value == "curatedCards"){
+        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
@@ -211,6 +211,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "curatedCards"{
             videoURL = self.appPreffrence.getLearnPageURL()
+        }else if value == "curatedCards"{
+            videoURL = self.appPreffrence.getLearnPageURL()
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
@@ -244,6 +246,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.navigateToDashboard()
+        }else if value == "21_days"{
+            self.navigationController?.popViewController(animated: false)
         }else{
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_SKIPPED", itemName: "")
@@ -253,18 +257,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-//    @objc func reachTheEndOfTheVideo1(note: NSNotification){
-//        if self.videoCompleted == 1{
-//            if !reachable.isConnectedToNetwork() {
-//                self.navigationController?.popViewController(animated: true)
-//                return
-//            }
-//
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
         print("abc....***** \(self.videoCompleted )")
@@ -280,6 +272,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }else if value == "curatedCards"{
                 self.challengeIntroVideoCompleted()
                 //self.challengePopup()
+            }else if value == "21_days"{
+                self.navigationController?.popViewController(animated: false)
             }else{
                 // Analytics
                 WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_COMPLETED", itemName: "")

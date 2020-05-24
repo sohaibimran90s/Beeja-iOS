@@ -16,6 +16,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introBtn: UIButton!
+    @IBOutlet weak var viewHeader: UIView!
     
     var delegate: WWMGuidedDashboardDelegate?
 
@@ -67,9 +68,11 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.viewHeader.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 86)
+        
         self.lblTitle.text = "\(self.category.capitalized): \(self.subCategory.capitalized)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
-        print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
+        //print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
         //self.appPreference.set21ChallengeName(value: self.category)
         self.fetchGuidedDataFromDB()
     }
@@ -398,7 +401,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.videoURL = self.intro_url
-        vc.value = "curatedCards"
+        vc.value = "21_days"
         self.navigationController?.pushViewController(vc, animated: false)
     }
 }

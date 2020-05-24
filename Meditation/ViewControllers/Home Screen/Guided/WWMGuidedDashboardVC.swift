@@ -81,7 +81,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
 
                     vc.delegate = self
-                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name.capitalized)
                     vc.name = data.cat_Name
                     vc.meditationType = data.cat_meditation_type
                     arrVC.add(vc)
@@ -133,7 +133,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
 
                     vc.delegate = self
-                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
+                    vc.itemInfo = IndicatorInfo.init(title: data.cat_Name.capitalized)
                     vc.name = data.cat_Name
                     vc.meditationType = data.cat_meditation_type
                     arrVC.add(vc)

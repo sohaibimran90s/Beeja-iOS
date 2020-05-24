@@ -16817,6 +16817,7 @@ By Will Williams</string>
                     <connections>
                         <outlet property="lblTitle" destination="evc-cj-do1" id="0hg-0X-jhB"/>
                         <outlet property="tableView" destination="Jjj-2U-uYP" id="Tlg-hi-sgj"/>
+                        <outlet property="viewHeader" destination="eGN-gM-y2A" id="22d-o7-tp3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ESs-Fg-bqi" userLabel="First Responder" sceneMemberID="firstResponder"/>

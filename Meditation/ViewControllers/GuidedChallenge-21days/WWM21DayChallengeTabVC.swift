@@ -231,6 +231,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        
+        print(self.name)
         return itemInfo
     }
 }
