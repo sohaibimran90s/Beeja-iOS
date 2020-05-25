@@ -100,7 +100,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     if Int(complete_count!)! > 0{
                         
                         self.lblPracticalSessionCount.isHidden = false
-                        self.lblPracticalSessionCount.text = "\(String(describing: complete_count))"
+                        self.lblPracticalSessionCount.text = "\(complete_count ?? "0")"
                     }
                 }
                 if (dict as AnyObject).meditation_type == "spiritual"{
@@ -108,7 +108,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     if Int(complete_count!)! > 0{
                         
                         self.lblSpiritualSessionCount.isHidden = false
-                        self.lblSpiritualSessionCount.text = "\(String(describing: complete_count))"
+                        self.lblSpiritualSessionCount.text = "\(complete_count ?? "0")"
                     }
                 }
             }

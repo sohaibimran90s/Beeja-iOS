@@ -296,7 +296,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
-                    //self.appPreffrence.setBanners(value: result)
+                    self.appPreffrence.setBanners(value: result)
                     print(self.appPreffrence.getBanners().count)
                     self.bannerData()
                 }
@@ -721,12 +721,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             
             //des: We've launched a new challenge to take your practise to the next level. Get set go!
             
-            cell.lblChallTitle.text = self.bannerDataArray[indexPath.row]["name"] as? String
-            cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
-            cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
-            cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
-            
             if self.bannerDataArray.count == 1{
+                cell.lblChallTitle.text = self.bannerDataArray[indexPath.row]["name"] as? String
+                cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
+                cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
+                cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
                 //bannerDescBool false means doesnt contain description
                 if !self.bannerDescBool{
                     self.bannerHeightConstraint.constant = 84 * 1
@@ -735,11 +734,20 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 }
             }else{
                 if indexPath.row == 0{
+                    cell.lblChallTitle.text = "2 Challenges: In-Progress"
+                    cell.lblChallSubTitle.text = "Tap to view details"
+                    cell.lblChallDes.text = ""
+                    
                     cell.lblChallTitle.textColor = UIColor.white
                     cell.imgWidthConstraint.constant = 0
                     cell.imgHeightConstraint.constant = 0
                     cell.stackViewLeadingConstraint.constant = 0
                 }else{
+                    cell.lblChallTitle.text = self.bannerDataArray[indexPath.row - 1]["name"] as? String
+                    cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row - 1]["title"] as? String
+                    cell.lblChallDes.text = self.bannerDataArray[indexPath.row - 1]["description"] as? String
+                    cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row - 1]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+                    
                     cell.lblChallTitle.textColor = UIColor(red: 240/255, green: 163/255, blue: 103/255, alpha: 1.0)
                     cell.imgWidthConstraint.constant = 40
                     cell.imgHeightConstraint.constant = 40

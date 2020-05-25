@@ -297,7 +297,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
-                    //self.appPreffrence.setBanners(value: result)
+                    self.appPreffrence.setBanners(value: result)
                     print(self.appPreffrence.getBanners().count)
                 }
             }
@@ -1744,7 +1744,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     //apple
                                     let serverDate = WWMHelperClass.getExpireDate(expiryDate: formatter.string(from: date), formatter: formatter)
-                                    print("dkfjkdfksd+++++= \(expireDate) serverDate++++ \(serverDate)")
+                                    print("backend date \(expireDate) apple date++++ \(serverDate)")
                                     
                                     if serverDate > expireDate{
                                         print("product_id... \(self.product_id) repurchased")
@@ -1767,25 +1767,31 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
             
-          let lastReceipt = receiptInfo.lastObject as! NSDictionary
-          let formatter = DateFormatter()
-          formatter.dateFormat = "yyyy-MM-dd hh:mm:ss VV"
-           
-          if let product_id = lastReceipt["product_id"] as? String {
-              self.product_id = product_id
-          }
-          
-          if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
-              self.date_time = purchase_date_ms
-          }
-          
-          if let transaction_id = lastReceipt["transaction_id"]{
-              self.transaction_id = transaction_id
-          }
-          
-          if let expiresDate = lastReceipt["purchase_date"] as? String {
-              return formatter.date(from: expiresDate)
-          }
+            let lastReceipt = receiptInfo.lastObject as! NSDictionary
+            let formatter = DateFormatter()
+            formatter.locale = Locale.current
+            formatter.locale = Locale(identifier: formatter.locale.identifier)
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            if let product_id = lastReceipt["product_id"] as? String {
+                self.product_id = product_id
+            }
+            
+            if let purchase_date_ms = lastReceipt["purchase_date_ms"] {
+                self.date_time = purchase_date_ms
+            }
+            
+            if let transaction_id = lastReceipt["transaction_id"]{
+                self.transaction_id = transaction_id
+            }
+            
+            if let expiresDate = lastReceipt["purchase_date"] as? String {
+                let expiryDateComponents = expiresDate.components(separatedBy: " ")
+                let purchaseDateStr = expiryDateComponents[0] + " " + expiryDateComponents[1]
+                
+                let purchaseDate = formatter.date(from: purchaseDateStr)
+                return purchaseDate
+            }
             
             return nil
         }
