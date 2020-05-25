@@ -16407,6 +16407,7 @@ Best enjoyed with headphones.</string>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAQ-sl-Hme">
                                                     <rect key="frame" x="0.0" y="0.0" width="325" height="48"/>
+                                                    <state key="normal" title="Button"/>
                                                     <connections>
                                                         <action selector="btnRetakeAction:" destination="aOI-Q7-f47" eventType="touchUpInside" id="r0m-oF-XbV"/>
                                                     </connections>
