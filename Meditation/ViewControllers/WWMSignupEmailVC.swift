@@ -394,7 +394,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
-                    self.appPreference.setBanners(value: result)
+                    //self.appPreference.setBanners(value: result)
                 }
             }
         }

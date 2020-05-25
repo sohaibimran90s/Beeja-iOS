@@ -15,11 +15,13 @@ class WWM21DayChallengeVC: WWMBaseViewController {
 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var introBtn: UIButton!
     @IBOutlet weak var viewHeader: UIView!
     
+    @IBOutlet weak var viewBannerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewBanner: UIView!
+    @IBOutlet weak var btnIntroTopConstraint: NSLayoutConstraint!
+    
     var delegate: WWMGuidedDashboardDelegate?
-
     var category = ""
     var subCategory = ""
     var id = ""
@@ -64,23 +66,41 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var meditation_key = ""
     
     var arrGuidedList = [WWMGuidedData]()
+    //to check if all the 21 steps completed
+    var retakeFlag = 0
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.viewHeader.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 86)
-        
+
         self.lblTitle.text = "\(self.category.capitalized): \(self.subCategory.capitalized)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
         //print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
         //self.appPreference.set21ChallengeName(value: self.category)
         self.fetchGuidedDataFromDB()
+        
+        if self.retakeFlag == 21{
+            self.btnIntroTopConstraint.constant = 30
+            self.viewBannerHeightConstraint.constant = 58
+            self.viewHeader.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 170)
+            self.viewBanner.isHidden = false
+        }else{
+            self.btnIntroTopConstraint.constant = 10
+            self.viewBannerHeightConstraint.constant = 0
+            self.viewBanner.isHidden = true
+            self.viewHeader.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 86)
+        }
+        print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
     }
     
     @IBAction func btnBack21DaysAction(_ sender: UIButton) {
         
         delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
         self.reloadTabs21DaysController()
+    }
+    
+    @IBAction func btnRetakeAction(_ sender: UIButton) {
+        
+        print("Retake button clicked")
     }
     
     func reloadTabs21DaysController(){
@@ -135,7 +155,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
             var jsonAudios: [[String: Any]] = []
             
             for dict in guidedDataDB {
-                    
+                
                 if (dict as AnyObject).meditation_type as? String == "practical"{
                     if (dict as AnyObject).intro_completed{
                         self.appPreference.setPracticalChallenge(value: true)
@@ -161,6 +181,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                 let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
                 
                 for dict1 in guidedEmotionsDataDB{
+                    
+                    if (dict1 as AnyObject).completed{
+                        self.retakeFlag = self.retakeFlag + 1
+                    }
                     
                     if (dict as AnyObject).meditation_type as? String == "practical"{
                         if (dict1 as AnyObject).intro_completed{
@@ -562,39 +586,21 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
-        let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
         
-        
-        if self.guideTitleCount > 3 && self.cat_name.contains("21"){
-            
+        if self.retakeFlag == 21{
+            print("challenge completed")
         }else{
-            if self.appPreference.getIsSubscribedBool(){
-                
-                //to check if 7 days accepted than 21 days will not be cliced
-                if self.name == "21 Days challenge"{
-                    if self.check7DaysChallenge(){
-                        print("7 days challenge accepted")
-                        self.xibCall1(title1: "You have accepted 7 Days Challenge")
-                    }else{
-                        self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-                    }
-                }else{
-                    self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
-                }
-                //*
-                
+            let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
+            if self.guideTitleCount > 3 && self.cat_name.contains("21"){
             }else{
-                if data.audio_list[indexPath.item].audio_Duration <= 900{
+                if self.appPreference.getIsSubscribedBool(){
                     
                     //to check if 7 days accepted than 21 days will not be cliced
                     if self.name == "21 Days challenge"{
-                        
-                        print(self.check7DaysChallenge())
                         if self.check7DaysChallenge(){
                             print("7 days challenge accepted")
                             self.xibCall1(title1: "You have accepted 7 Days Challenge")
                         }else{
-                            
                             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         }
                     }else{
@@ -603,12 +609,30 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     //*
                     
                 }else{
-                    self.purchaseSubscription()
-                    //*
+                    if data.audio_list[indexPath.item].audio_Duration <= 900{
+                        
+                        //to check if 7 days accepted than 21 days will not be cliced
+                        if self.name == "21 Days challenge"{
+                            print(self.check7DaysChallenge())
+                            if self.check7DaysChallenge(){
+                                //print("7 days challenge accepted")
+                                self.xibCall1(title1: "You have accepted 7 Days Challenge")
+                            }else{
+                                self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                            }
+                        }else{
+                            self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
+                        }
+                        //*
+                        
+                    }else{
+                        self.purchaseSubscription()
+                        //*
+                    }
                 }
             }
+            //print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
         }
-        print("data....+++++ \(data.emotion_Id) \(data.completed) \(data.completed_date) data.tile_type+++++++++ \(data.tile_type) cat_name++++++ \(self.cat_name)")
     }
     
     func check7DaysChallenge() -> Bool{

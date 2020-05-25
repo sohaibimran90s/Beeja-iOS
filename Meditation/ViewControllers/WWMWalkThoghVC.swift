@@ -369,7 +369,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             if let _ = result["success"] as? Bool {
                 print("result")
                 if let result = result["result"] as? [Any]{
-                    self.appPreffrence.setBanners(value: result)
+                    //self.appPreffrence.setBanners(value: result)
                     print(self.appPreffrence.getBanners().count)
                 }
             }
