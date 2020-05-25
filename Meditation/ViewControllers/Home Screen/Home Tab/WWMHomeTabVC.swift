@@ -324,6 +324,9 @@ class WWMHomeTabVC: WWMBaseViewController {
                     self.bannerDataArray.append(dict)
 
                 }
+                
+                print("bannerDataArray \(bannerDataArray.count)")
+                
                 self.tableViewBanners.delegate = self
                 self.tableViewBanners.dataSource = self
                 self.tableViewBanners.reloadData()
@@ -706,7 +709,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tableViewBanners{
             //print(self.bannerDataArray.count)
-            return 3
+            return self.bannerDataArray.count
         }else{
            return self.podData.count - 1
         }
@@ -718,12 +721,12 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             
             //des: We've launched a new challenge to take your practise to the next level. Get set go!
             
-            //            cell.lblChallTitle.text = self.bannerDataArray[indexPath.row]["name"] as? String
-            //            cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
-            //            cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
-            //            cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
-  
-            if self.bannerDataArray.count > 1{
+            cell.lblChallTitle.text = self.bannerDataArray[indexPath.row]["name"] as? String
+            cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
+            cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
+            cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+            
+            if self.bannerDataArray.count == 1{
                 //bannerDescBool false means doesnt contain description
                 if !self.bannerDescBool{
                     self.bannerHeightConstraint.constant = 84 * 1
@@ -742,7 +745,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgHeightConstraint.constant = 40
                     cell.stackViewLeadingConstraint.constant = 16
                 }
-                    
+                
                 if self.bannerSelectdIndex == 0{
                     self.bannerHeightConstraint.constant = 84 * 1
                     cell.imgArrow.image = UIImage(named: "downArrow")
@@ -758,21 +761,21 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             
             return cell
         }else{
-           let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
-           
-           if indexPath.row == 2{
-               cell.lineLbl.isHidden = true
-           }else{
-               cell.lineLbl.isHidden = false
-           }
-           
-           cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
-           cell.lblTitle.text = self.podData[indexPath.row].title
-           let data = self.podData[indexPath.row]
-           let duration = secondsToMinutesSeconds(second: data.duration)
-           cell.lblTime.text = "\(duration)"
-           
-           return cell
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMHomePodcastTVC") as! WWMHomePodcastTVC
+            
+            if indexPath.row == 2{
+                cell.lineLbl.isHidden = true
+            }else{
+                cell.lineLbl.isHidden = false
+            }
+            
+            cell.playPauseImg.image = UIImage(named: "podcastPlayIcon")
+            cell.lblTitle.text = self.podData[indexPath.row].title
+            let data = self.podData[indexPath.row]
+            let duration = secondsToMinutesSeconds(second: data.duration)
+            cell.lblTime.text = "\(duration)"
+            
+            return cell
         }
     }
     
@@ -782,11 +785,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         //reverse it when array comes from background
-        if self.bannerDataArray.count > 1{
+        if self.bannerDataArray.count == 1{
             if !self.bannerDescBool{
-                return 126
-            }else{
                 return 84
+            }else{
+                return 126
             }
             
         }else{
@@ -797,10 +800,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             if tableView == self.tableViewBanners{
-                //let cell = self.tableViewBanners.cellForRow(at: indexPath) as! WWMBannerTVC
                 
-                if self.bannerDataArray.count > 1{
-                    
+                if self.bannerDataArray.count == 1{
+                    //self.bannerClicked(guided_type: self.bannerDataArray[indexPath.row]["name"] as? String ?? "21 Days challenge")
+                    self.bannerClicked(guided_type: "7 Days challenge")
                 }else{
                     
                     if indexPath.row == 0{
@@ -811,7 +814,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         }
                         self.tableViewBanners.reloadData()
                     }else{
-                        self.bannerClicked(guided_type: "21 Days challenge")
+                        self.bannerClicked(guided_type: self.bannerDataArray[indexPath.row]["name"] as? String ?? "21 Days challenge")
                         print("selected challenge")
                     }
                 }
@@ -833,17 +836,19 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func bannerClicked(guided_type: String) {
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
         
-        appPreference.set21ChallengeName(value: guided_type)
+        if guided_type == "Challenge Expired"{
+            appPreference.set21ChallengeName(value: "21 Days challenge")
+        }else{
+            appPreference.set21ChallengeName(value: guided_type)
+        }
+        
         print(appPreference.get21ChallengeName())
-        self.guided_type = guided_type
-        self.type = "guided"
         WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: self.type)
+        self.appPreference.setType(value: "guided")
         self.appPreference.setGuideType(value: self.guided_type)
-        self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        self.appPreference.setGuideTypeFor3DTouch(value: "guided")
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()

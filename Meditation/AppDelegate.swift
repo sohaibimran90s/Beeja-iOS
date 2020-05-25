@@ -186,15 +186,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 handle = true
                     
                 self.type = "guided"
-                
-                if self.appPreference.getGuideTypeFor3DTouch() == "spiritual"{
-                    guided_type = "spiritual"
-                    WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "GUIDED", itemName: "SPIRITUAL")
-                }else{
-                    guided_type = "practical"
-                    WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "GUIDED", itemName: "PRACTICAL")
-                }
-                    
                 self.pushTimerGuidedLearnVC()
             }
             

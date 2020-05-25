@@ -340,6 +340,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 print("success... \(result)")
                 //WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.getGuidedListAPI()
+                DispatchQueue.global(qos: .background).async {
+                    self.bannerAPI()
+                }
                 //self.navigateToDashboard()
             }else {
                 
@@ -355,6 +358,21 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 }
             }
             //WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    //banner api
+    func bannerAPI() {
+        
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreffrence.setBanners(value: result)
+                    print(self.appPreffrence.getBanners().count)
+                }
+            }
         }
     }
     
