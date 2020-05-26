@@ -110,6 +110,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         self.boardingTable.allowsMultipleSelection = (self.isMultipleSelection == 1) ? true:false
         
         self.nextBtn.isHidden = (self.isMultipleSelection == 0) ? true:false
+        self.handleNextBtn()
         
         self.optionList = selectedData.options ?? []
         self.pageIndex(index: self.pageInfoArray.count + 1)
@@ -332,6 +333,11 @@ class WWMConOnboardingVC: WWMBaseViewController {
         }
     }
     
+    func handleNextBtn() {
+        self.nextBtn.isEnabled = (self.multipleSelectedRow.count == 0) ? false : true
+        self.nextBtn.setTitleColor((self.multipleSelectedRow.count == 0) ? .gray : .white, for: .normal)
+    }
+    
     @IBAction func backBtnAction(_ sender: Any) {
         
         if let pageInfo = self.pageInfoArray.last{
@@ -347,6 +353,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
             if (pageInformation.multiSelection.count > 0) {
                 
                 self.multipleSelectedRow = pageInformation.multiSelection
+                self.handleNextBtn()
                 for selectedSection in self.multipleSelectedRow {
                     
                     let indexPath = IndexPath(row: 0, section: selectedSection)
@@ -468,6 +475,7 @@ extension WWMConOnboardingVC: UITableViewDelegate{
             
             //tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             self.multipleSelectedRow.append(indexPath.section)
+            self.handleNextBtn()
         }
     }
     
@@ -479,7 +487,7 @@ extension WWMConOnboardingVC: UITableViewDelegate{
         
         let selectedOpt = self.optionList[indexPath.section]
         selectedOpt.isSelected = false
-        
+        self.handleNextBtn()
     }
     
     
