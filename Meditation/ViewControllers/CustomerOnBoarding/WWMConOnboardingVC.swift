@@ -67,6 +67,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         // Do any additional setup after loading the view.
         //self.getQuestionsAnsAPI()
         
+        self.nextBtn.isHidden = true;
         self.getOnboardingDataAPI { (onboardingData, isSuccess) in
             if (isSuccess){
                 
