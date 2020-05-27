@@ -289,7 +289,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     func bannerAPI() {
         
         self.bannerTopConstraint.constant = 0
-        self.bannerHeightConstraint.constant = 100
+        self.bannerHeightConstraint.constant = 1
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in

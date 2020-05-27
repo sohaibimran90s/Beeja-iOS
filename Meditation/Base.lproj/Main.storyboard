@@ -4070,7 +4070,7 @@
             <objects>
                 <viewController storyboardIdentifier="WWMMyProgressMoodVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jJR-QV-tBI" customClass="WWMMyProgressMoodVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NF0-6z-pjg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1146"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0j-Wj-gLP">
@@ -4980,7 +4980,7 @@
             <objects>
                 <viewController storyboardIdentifier="WWMMyProgressStatsVC" id="eSS-HZ-ypU" customClass="WWMMyProgressStatsVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qH0-iW-9mV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="scrollableAxes" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSb-2z-UxQ">
