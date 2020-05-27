@@ -81,18 +81,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         backView.insertSubview(animationView, belowSubview: viewPause)
-        
-        
-        
-//        animationView = AnimationView(name: "final1")
-//        animationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
-//        //animationView.center = self.viewLottieAnimation.center
-//        animationView.contentMode = .scaleAspectFit
-//        animationView.loopMode = .loop
-//        viewLottieAnimation.addSubview(animationView)
-        
         animationView.play()
-        
         
         self.setUpView()
         
@@ -105,11 +94,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
 
         print(self.appPreference.getGuideType())
-        if self.appPreference.getGuideType() == "practical" {
-            self.lblGuidedFlowType.text = "\(KPRACTICAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
-        }else {
-            self.lblGuidedFlowType.text = "\(KSPIRITUAL) ~ \(self.cat_Name) ~ \(self.emotion_Name)"
-        }
+        self.lblGuidedFlowType.text = "\(self.cat_Name.capitalized) ~ \(self.emotion_Name)"
+        
         if self.audioData.vote {
             self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
             self.isFavourite = true
@@ -118,7 +104,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         
         self.appPreference.setMoodId(value: "")
     }
-    
     
     func play(url:URL) {
         print("playing \(url)")
@@ -191,14 +176,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
     }
     
-    
     //MARK: animated View
-    
     func createColorSets() {
-//        colorSets.append([hexStringToUIColor(hex: "FF3A49").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FFC02F").cgColor])
-//        colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "FF3A49").cgColor])
-//        colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
-        
         colorSets.append([hexStringToUIColor(hex: "00EBA9").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
         colorSets.append([hexStringToUIColor(hex: "49298A").cgColor, hexStringToUIColor(hex: "001252").cgColor])
         colorSets.append([hexStringToUIColor(hex: "001252").cgColor, hexStringToUIColor(hex: "49298A").cgColor])
@@ -206,7 +185,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         currentColorSet = 0
         createGradientLayer()
     }
-    
     
     func createGradientLayer() {
         gradientLayer = CAGradientLayer()
@@ -260,7 +238,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         gradientLayer.beginTime = timeSincePause
     }
     
-    
     func setUpView() {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
@@ -271,7 +248,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @objc func appMovedToBackground() {
         print("App moved to background!")
         self.animationView.pause()
-        
     }
     
     @objc func appMovedToForeground() {
@@ -282,7 +258,6 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.animationView.play()
         }
         KUSERDEFAULTS.set("", forKey: "CallEndedIdentifier")
-        
     }
     
     @objc func updateTimer() {
@@ -402,6 +377,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     func moveToFeedBack() {
+        
         if !ismove {
             
             //For analytics
@@ -417,14 +393,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 }
             }
             
-            
             if self.appPreference.getGuideType() == "practical" {
                 if self.rating == 1 {
                     WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
                 }
                 WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
-                
-                
             }else {
                 if self.rating == 1 {
                     WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
@@ -607,8 +580,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     func pushNavigationController(){
+        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag) self.appPreference.getGuideType \(self.appPreference.getGuideType()) cat_name... \(self.cat_Name)")
         
-        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
+        self.appPreference.setGuideType(value: self.cat_Name)
+        
         if self.ninetyFiveCompletedFlag == "0"{
             if !ismove{
                 //For analytics
@@ -624,19 +599,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                     }
                 }
                 
-                if self.appPreference.getGuideType() == "practical" {
-                    if self.rating == 1 {
-                        WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
-                    }
-                    WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_PRACTICAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
-                    
-                    
-                }else {
-                    if self.rating == 1 {
-                        WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
-                    }
-                    WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_SPIRITUAL", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
+                
+                if self.rating == 1 {
+                    WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_\(self.cat_Name.uppercased())", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "LIKE")
                 }
+                WWMHelperClass.sendEventAnalytics(contentType: "GUIDED_\(self.cat_Name.uppercased())", itemId: "\(analyticCatName)_\(analyticEmotionName)", itemName: "\(self.totalDuration)\(audioPlayPercentageCompleteStatus)")
                 
                 ismove = true
                 self.timer.invalidate()
@@ -706,7 +673,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 "category_id": category_id,
                 "emotion_id": emotion_id,
                 "audio_id": audio_id,
-                "guided_type": guided_type,
+                "guided_type": self.appPreference.getGuideType(),
                 "watched_duration": watched_duration,
                 "rating": rating,
                 "user_id": user_id,

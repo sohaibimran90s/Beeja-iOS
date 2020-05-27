@@ -20,9 +20,12 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var lblSpiritualSessionCount: UILabel!
     @IBOutlet weak var lblChallTypePractical: UILabel!
     @IBOutlet weak var lblChallTypeSpiritual: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
     
     var delegate: WWMGuidedDashboardDelegate?
     var check7Days = false
+    let reachable = Reachabilities()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,13 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         self.lblSpiritualSessionCount.layer.cornerRadius = 16
         self.lblSpiritualSessionCount.layer.borderWidth = 1.0
         self.lblSpiritualSessionCount.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        
+        self.lblTitle.text = self.name.capitalized
+        if self.name.contains("21"){
+            self.lblDescription.text = "A curated set of 21 guided sessions, aimed at taking you on a journey and creating habits. Choose a style of guidance - from Practical or Spiritual to get started."
+        }else{
+            self.lblDescription.text = "A curated set of 7 guided sessions, aimed at taking you on a journey and creating habits. Choose a style of guidance - from Practical or Spiritual to get started."
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,9 +81,11 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
                             self.appPreference.set21ChallengeName(value: subCategory?.capitalized ?? "Practical")
+                            vc.cat_name = self.name
                             vc.name = self.name
                             vc.subCategory = subCategory ?? "practical"
                             vc.category = self.name
+                            vc.intro_url = (dict as AnyObject).intro_url ?? ""
                             vc.id = (dict as AnyObject).guided_id ?? ""
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
@@ -97,7 +109,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     if Int(complete_count!)! > 0{
                         
                         self.lblPracticalSessionCount.isHidden = false
-                        self.lblPracticalSessionCount.text = "\(String(describing: complete_count))"
+                        self.lblPracticalSessionCount.text = "\(complete_count ?? "0")"
                     }
                 }
                 if (dict as AnyObject).meditation_type == "spiritual"{
@@ -105,7 +117,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     if Int(complete_count!)! > 0{
                         
                         self.lblSpiritualSessionCount.isHidden = false
-                        self.lblSpiritualSessionCount.text = "\(String(describing: complete_count))"
+                        self.lblSpiritualSessionCount.text = "\(complete_count ?? "0")"
                     }
                 }
             }
@@ -141,6 +153,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        vc.cat_name = self.name
+                        vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name
                         vc.subCategory = "practical"
                         vc.category = self.name
@@ -149,18 +163,22 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     }else{
                         print("Challenge not accepted yet")
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-
-                        //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                        
-                        vc.value = "curatedCards"
-                        vc.emotionId = ""
-                        vc.id = (dict as AnyObject).guided_id ?? ""
-                        vc.videoURL = (dict as AnyObject).intro_url ?? ""
-                        vc.category = self.name
-                        vc.subCategory = "practical"
-                        vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
-                        self.navigationController?.pushViewController(vc, animated: false)
+                        if reachable.isConnectedToNetwork() {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                            
+                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
+                            
+                            vc.value = "curatedCards"
+                            vc.emotionId = ""
+                            vc.id = (dict as AnyObject).guided_id ?? ""
+                            vc.videoURL = (dict as AnyObject).intro_url ?? ""
+                            vc.category = self.name
+                            vc.subCategory = "practical"
+                            vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }else {
+                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        }
                     }
                 }
             }
@@ -182,6 +200,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        vc.cat_name = self.name
+                        vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name
                         vc.subCategory = "spiritual"
                         vc.category = self.name
@@ -191,18 +211,22 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     }else{
                         print("Challenge not accepted yet")
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-
-                        print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                        
-                        vc.value = "curatedCards"
-                        vc.emotionId = ""
-                        vc.id = (dict as AnyObject).guided_id ?? ""
-                        vc.videoURL = (dict as AnyObject).intro_url ?? ""
-                        vc.category = self.name
-                        vc.subCategory = "spiritual"
-                        vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
-                        self.navigationController?.pushViewController(vc, animated: false)
+                        if reachable.isConnectedToNetwork() {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                            
+                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
+                            
+                            vc.value = "curatedCards"
+                            vc.emotionId = ""
+                            vc.id = (dict as AnyObject).guided_id ?? ""
+                            vc.videoURL = (dict as AnyObject).intro_url ?? ""
+                            vc.category = self.name
+                            vc.subCategory = "spiritual"
+                            vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }else {
+                            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                        }
                     }
                 }
             }
@@ -216,6 +240,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        
+        print(self.name)
         return itemInfo
     }
 }

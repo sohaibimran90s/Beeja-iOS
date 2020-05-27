@@ -28,9 +28,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.offlineDatatoServerCall()
         KNOTIFICATIONCENTER.addObserver(forName: NSNotification.Name(rawValue: "guidedDropDownClicked"), object: nil, queue: nil, using: catchNotification)
         
-         self.typeTitle = "Guided"
-         self.setUpNavigationBarForDashboard(title: "guided")
-         self.guided_type = "Guided"
+        self.appPreference.setGuidedSleep(value: "Guided")
+        self.typeTitle = "Guided"
+        self.setUpNavigationBarForDashboard(title: "guided")
+        self.guided_type = "Guided"
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
@@ -141,9 +142,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
         print("type*** \(self.type) guided_type*** \(guided_type)")
         
         if guided_type == "Guided"{
+            self.appPreference.setGuidedSleep(value: "Guided")
             self.typeTitle = "Guided"
             setUpNavigationBarForDashboard(title: "guided")
         }else{
+            self.appPreference.setGuidedSleep(value: "Sleep")
             self.typeTitle = "Sleep"
             setUpNavigationBarForDashboard(title: "sleep")
         }
@@ -279,6 +282,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["completed"] = (dict1 as AnyObject).completed ?? false
                     jsonEmotionsString["completed_date"] = (dict1 as AnyObject).completed_date ?? ""
                     jsonEmotionsString["intro_url"] = (dict1 as AnyObject).intro_url ?? ""
+                    jsonEmotionsString["emotion_type"] = (dict1 as AnyObject).emotion_type ?? ""
                     
                     let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
                     print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count) \(guidedEmotionsDataDB.count)")
@@ -425,7 +429,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                         dbGuidedData.intro_completed = false
                                     }
                                     
-                                    
                                     //print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.cat_name \(dbGuidedData.cat_name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count \(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
                                     
                                     if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
@@ -485,7 +488,13 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                                 dbGuidedEmotionsData.intro_url = ""
                                             }
                                             
-                                            print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
+                                            if let emotion_type = emotionsDict["emotion_type"] as? String{
+                                                dbGuidedEmotionsData.emotion_type = emotion_type
+                                            }else{
+                                                dbGuidedEmotionsData.emotion_type = ""
+                                            }
+                                            
+                                            //print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
                                             
                                             if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                                 for audioDict in audio_list {
@@ -528,7 +537,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                                                         dbGuidedAudioData.vote = vote
                                                     }
                                                     
-                                                    print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
+                                                    //print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
                                                     
                                                     WWMHelperClass.saveDb()
                                                 }
@@ -551,7 +560,4 @@ class WWMGuidedNavVC: WWMBaseViewController {
             }
         }
     }//end guided api*
-
-    
-    
 }

@@ -131,10 +131,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             self.view.isUserInteractionEnabled = false
                             
                         }
-//                        else{
-//                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
-//                            self.view.isUserInteractionEnabled = true
-//                        }
+                        //                        else{
+                        //                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
+                        //                            self.view.isUserInteractionEnabled = true
+                        //                        }
                     }else{
                         let getPostMoodCount = self.appPreference.getPostMoodCount()
                         let getPostJournalCount = self.appPreference.getPostJournalCount()
@@ -142,7 +142,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         //if (getPostMoodCount < 7 && getPostMoodCount != 0) || (getPostJournalCount < 7 && getPostJournalCount != 0)
                         if (getPostMoodCount == 0) && (getPostJournalCount == 0){
                             print("getPostMoodCount... \(getPostMoodCount)")
-
+                            
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Post")
                             self.view.isUserInteractionEnabled = false
                             
@@ -942,6 +942,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                                                 dbGuidedEmotionsData.intro_url = intro_url
                                             }else{
                                                 dbGuidedEmotionsData.intro_url = ""
+                                            }
+                                            
+                                            if let emotion_type = emotionsDict["emotion_type"] as? String{
+                                                dbGuidedEmotionsData.emotion_type = emotion_type
+                                            }else{
+                                                dbGuidedEmotionsData.emotion_type = ""
                                             }
                                             
                                             //print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date)  dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")

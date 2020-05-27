@@ -613,6 +613,17 @@ class WWMHelperClass {
         return param!
 
     }
+    
+    class func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
+        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
+        print("No of Object in database : \(param!.count)")
+        return param!
+        
+    }
 
     
     //add ninetyfivepercent from backend

@@ -60,6 +60,7 @@
         <attribute name="emotion_image" optional="YES" attributeType="String"/>
         <attribute name="emotion_key" optional="YES" attributeType="String"/>
         <attribute name="emotion_name" optional="YES" attributeType="String"/>
+        <attribute name="emotion_type" optional="YES" attributeType="String"/>
         <attribute name="guided_id" optional="YES" attributeType="String"/>
         <attribute name="intro_completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="intro_url" optional="YES" attributeType="String"/>
@@ -187,7 +188,7 @@
         <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>
         <element name="DBGuidedAudioData" positionX="0" positionY="153" width="128" height="178"/>
         <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="238"/>
-        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="223"/>
+        <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="238"/>
         <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
         <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="73"/>
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>

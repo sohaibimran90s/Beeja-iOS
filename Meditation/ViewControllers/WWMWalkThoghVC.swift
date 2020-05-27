@@ -67,7 +67,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.btnCrossSkip.isHidden = false
         
-        if (value == "help" || value == "learnStepList" || value == "curatedCards"){
+        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
@@ -211,6 +211,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "curatedCards"{
             videoURL = self.appPreffrence.getLearnPageURL()
+        }else if value == "curatedCards"{
+            videoURL = self.appPreffrence.getLearnPageURL()
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
@@ -244,6 +246,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.navigateToDashboard()
+        }else if value == "21_days"{
+            self.navigationController?.popViewController(animated: false)
         }else{
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_SKIPPED", itemName: "")
@@ -253,18 +257,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-//    @objc func reachTheEndOfTheVideo1(note: NSNotification){
-//        if self.videoCompleted == 1{
-//            if !reachable.isConnectedToNetwork() {
-//                self.navigationController?.popViewController(animated: true)
-//                return
-//            }
-//
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
         print("abc....***** \(self.videoCompleted )")
@@ -280,6 +272,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }else if value == "curatedCards"{
                 self.challengeIntroVideoCompleted()
                 //self.challengePopup()
+            }else if value == "21_days"{
+                self.navigationController?.popViewController(animated: false)
             }else{
                 // Analytics
                 WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_COMPLETED", itemName: "")
@@ -346,6 +340,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 print("success... \(result)")
                 //WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.getGuidedListAPI()
+                DispatchQueue.global(qos: .background).async {
+                    self.bannerAPI()
+                }
                 //self.navigateToDashboard()
             }else {
                 
@@ -361,6 +358,21 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 }
             }
             //WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+    
+    //banner api
+    func bannerAPI() {
+        
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreffrence.setBanners(value: result)
+                    //print(self.appPreffrence.getBanners().count)
+                }
+            }
         }
     }
     
@@ -516,6 +528,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
                                                 dbGuidedEmotionsData.intro_url = intro_url
                                             }else{
                                                 dbGuidedEmotionsData.intro_url = ""
+                                            }
+                                            
+                                            if let emotion_type = emotionsDict["emotion_type"] as? String{
+                                                dbGuidedEmotionsData.emotion_type = emotion_type
+                                            }else{
+                                                dbGuidedEmotionsData.emotion_type = ""
                                             }
                                             
                                             //print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date) dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")

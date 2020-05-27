@@ -24,7 +24,6 @@ class WWMSleepAudioVC: WWMBaseViewController {
     var type = ""
     var imgURL = ""
     var subTitle = ""
-    var vcType = ""
     
     var arrAudioList = [WWMGuidedAudioData]()
     var alertPopupView1 = WWMAlertController()
@@ -104,7 +103,7 @@ class WWMSleepAudioVC: WWMBaseViewController {
     
     func fetchGuidedAudioDataFromDB() {
         
-        let guidedAudioDataDB = self.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
+        let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
         if guidedAudioDataDB.count > 0{
             print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
             
@@ -144,16 +143,7 @@ class WWMSleepAudioVC: WWMBaseViewController {
         }
     }
     
-    func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
-        return param!
-        
-    }
+    
     
 }
 
@@ -190,7 +180,7 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             
-            if self.vcType  == "WWMPlayListVC"{
+            if self.appPreference.getGuidedSleep() == "Guided" {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                 
                 let data = self.arrAudioList[indexPath.row]
@@ -215,9 +205,9 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }else{
-                let data = self.arrAudioList[indexPath.row]
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepTimerVC") as! WWMSleepTimerVC
                 
+                let data = self.arrAudioList[indexPath.row]
                 vc.audioData = self.arrAudioList[indexPath.row]
                 vc.cat_id = self.cat_Id
                 vc.cat_Name = self.cat_Name
@@ -241,11 +231,9 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }
-            
         }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
-
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

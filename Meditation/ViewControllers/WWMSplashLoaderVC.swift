@@ -34,7 +34,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         super.viewDidLoad()
         
         KUSERDEFAULTS.set("0", forKey: "restore")
-
+        self.appPreference.set21ChallengeName(value: "")
         //WWMHelperClass.selectedType = ""
         self.lblLogo.isHidden = true
         self.setNavigationBar(isShow: false, title: "")

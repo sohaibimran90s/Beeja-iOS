@@ -83,8 +83,6 @@ class WWMConOnboardingVC: WWMBaseViewController {
             }
         }
         
-        
-        
         //        // Though locally saved Data
         //        let onboardData = self.loadJson()
         //        if let dataArr = onboardData?.data{

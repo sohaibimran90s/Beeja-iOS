@@ -173,7 +173,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func fetchGuidedAudioDataFromDB() {
         
-        let guidedAudioDataDB = self.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
+        let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
         if guidedAudioDataDB.count > 0{
             print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
             
@@ -198,17 +198,6 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.audioCollectionView.reloadData()
             
         }
-    }
-    
-    func fetchGuidedAudioFilterDB(emotion_id: String, dbName: String) -> [Any]{
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
-        fetchRequest.predicate = NSPredicate.init(format: "emotion_id == %@", emotion_id)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
-        return param!
-
     }
 }
 

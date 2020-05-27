@@ -29,4 +29,5 @@ extension DBGuidedEmotionsData {
     @NSManaged public var completed: Bool
     @NSManaged public var completed_date: String?
     @NSManaged public var intro_url: String?
+    @NSManaged public var emotion_type: String?
 }
