@@ -298,7 +298,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 print("result")
                 if let result = result["result"] as? [Any]{
                     self.appPreffrence.setBanners(value: result)
-                    print(self.appPreffrence.getBanners().count)
                 }
             }
         }

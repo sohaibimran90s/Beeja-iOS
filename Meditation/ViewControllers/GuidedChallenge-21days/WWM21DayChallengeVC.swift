@@ -49,7 +49,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var restoreBool = false
     
     //21days
-    var alertPopupView1 = WWMAlertController()
     let reachable = Reachabilities()
     var alertUpgradePopupView = WWMGuidedUpgradeBeejaPopUp()
     var stepToComplete = 0
@@ -64,20 +63,27 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = ""
-    
     var arrGuidedList = [WWMGuidedData]()
+    
     //to check if all the 21 steps completed
+    var alertRetakePopupView = WWMAlertController()
     var retakeFlag = 0
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.viewBannerHeightConstraint.constant = 0
+        self.viewBanner.isHidden = true
+        
         self.lblTitle.text = "\(self.category.capitalized): \(self.subCategory.capitalized)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
         //print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
         //self.appPreference.set21ChallengeName(value: self.category)
         self.fetchGuidedDataFromDB()
-        
+    }
+    
+    func showHidRetakeView(){
+        print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
         if self.retakeFlag == 21{
             self.btnIntroTopConstraint.constant = 30
             self.viewBannerHeightConstraint.constant = 58
@@ -89,7 +95,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
             self.viewBanner.isHidden = true
             self.viewHeader.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 86)
         }
-        print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
     }
     
     @IBAction func btnBack21DaysAction(_ sender: UIButton) {
@@ -101,6 +106,12 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     @IBAction func btnRetakeAction(_ sender: UIButton) {
         
         print("Retake button clicked")
+        
+        if reachable.isConnectedToNetwork() {
+            self.xibRetake()
+        }else {
+            WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
     }
     
     func reloadTabs21DaysController(){
@@ -238,6 +249,8 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                 jsonEmotions.removeAll()
                 let guidedData = WWMGuidedData.init(json: jsonString)
                 self.arrGuidedList.append(guidedData)
+                
+                self.showHidRetakeView()
             }
             print(self.arrGuidedList.count)
             if self.arrGuidedList.count > 0{
@@ -876,7 +889,6 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
     }
     
     @objc func btnCloseAction(_ sender: Any){
-        
     }
     
     // MARK:- Get Product Data from Itunes
@@ -1077,4 +1089,284 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
+}
+
+extension WWM21DayChallengeVC{
+    
+    func xibRetake(){
+        self.alertRetakePopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        alertRetakePopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertRetakePopupView.btnOK.layer.borderWidth = 2.0
+        alertRetakePopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertRetakePopupView.btnClose.setTitle(KCANCEL, for: .normal)
+        alertRetakePopupView.btnOK.setTitle(KOK, for: .normal)
+        alertRetakePopupView.lblSubtitle.text = "Retake Challenge"
+        alertRetakePopupView.lblSubtitle.text = "Are you ready to retake challenge if you do it will remove the previous progress"
+        alertRetakePopupView.btnClose.addTarget(self, action: #selector(btnRetakeCloseAction(_:)), for: .touchUpInside)
+        alertRetakePopupView.btnOK.addTarget(self, action: #selector(btnRetakeDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertRetakePopupView)
+    }
+    
+    @objc func btnRetakeCloseAction(_ sender: Any){
+        self.alertPopup.removeFromSuperview()
+    }
+    
+    @objc func btnRetakeDoneAction(_ sender: Any){
+        self.alertPopup.removeFromSuperview()
+        self.retakeChallengeApi(guided_id: self.id)
+    }
+    
+    func retakeChallengeApi(guided_id: String) {
+        self.view.endEditing(true)
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "user_id"       : self.appPreference.getUserID(),
+            "guided_id"     : guided_id
+            ] as [String : Any]
+        
+        print("retakeChallenge param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                print("retake api... \(result)")
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideType(value: "21 Days challenge")
+                self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+                
+                self.getGuidedListAPI()
+            }else {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getGuidedListAPI() {
+
+        let param = ["user_id":self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let _ = result["success"] as? Bool {
+                    print("success result... getGuidedListAPI \(result)")
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.appPreference.set21ChallengeName(value: "21 Days challenge")
+                    if let result = result["result"] as? [[String:Any]] {
+                        
+                        print("audioList... \(result)")
+                        
+                        let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
+                        if guidedData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
+                        }
+                        
+                        let guidedEmotionsData = WWMHelperClass.fetchDB(dbName: "DBGuidedEmotionsData") as! [DBGuidedEmotionsData]
+                        if guidedEmotionsData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
+                        }
+                        
+                        let guidedAudioData = WWMHelperClass.fetchDB(dbName: "DBGuidedAudioData") as! [DBGuidedAudioData]
+                        if guidedAudioData.count > 0 {
+                            WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
+                        }
+                        
+                        for dict in result {
+                            
+                            if let meditation_list = dict["meditation_list"] as? [[String: Any]]{
+                                
+                                for meditationList in meditation_list {
+                                    let dbGuidedData = WWMHelperClass.fetchEntity(dbName: "DBGuidedData") as! DBGuidedData
+                                    
+                                    let timeInterval = Int(Date().timeIntervalSince1970)
+                                    
+                                    dbGuidedData.last_time_stamp = "\(timeInterval)"
+                                    dbGuidedData.cat_name = dict["name"] as? String
+                                    
+                                    if let id = meditationList["id"]{
+                                        dbGuidedData.guided_id = "\(id)"
+                                    }
+                                    
+                                    if let name = meditationList["name"] as? String{
+                                        dbGuidedData.guided_name = name
+                                    }
+                                    
+                                    if let meditation_type = meditationList["meditation_type"] as? String{
+                                        dbGuidedData.meditation_type = meditation_type
+                                    }
+                                    
+                                    if let guided_mode = meditationList["mode"] as? String{
+                                        dbGuidedData.guided_mode = guided_mode
+                                    }
+                                    
+                                    if let min_limit = meditationList["min_limit"] as? String{
+                                        dbGuidedData.min_limit = min_limit
+                                    }else{
+                                        dbGuidedData.min_limit = "95"
+                                    }
+                                    
+                                    if let max_limit = meditationList["max_limit"] as? String{
+                                        dbGuidedData.max_limit = max_limit
+                                    }else{
+                                        dbGuidedData.max_limit = "98"
+                                    }
+                                    
+                                    if let meditation_key = meditationList["meditation_key"] as? String{
+                                        dbGuidedData.meditation_key = meditation_key
+                                    }else{
+                                        if let meditation_type = dict["meditation_type"] as? String{
+                                            dbGuidedData.meditation_key = meditation_type
+                                        }
+                                    }
+                                    
+                                    if let complete_count = meditationList["complete_count"] as? Int{
+                                        dbGuidedData.complete_count = "\(complete_count)"
+                                    }else{
+                                        dbGuidedData.complete_count = "0"
+                                    }
+                                    
+                                    if let intro_url = meditationList["intro_url"] as? String{
+                                        dbGuidedData.intro_url = intro_url
+                                    }else{
+                                        dbGuidedData.intro_url = ""
+                                    }
+                                    
+                                    if let intro_completed = meditationList["intro_completed"] as? Bool{
+                                        dbGuidedData.intro_completed = intro_completed
+                                    }else{
+                                        dbGuidedData.intro_completed = false
+                                    }
+                                    
+                                    if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
+                                        for emotionsDict in emotion_list {
+                                            
+                                            let dbGuidedEmotionsData = WWMHelperClass.fetchEntity(dbName: "DBGuidedEmotionsData") as! DBGuidedEmotionsData
+                                            
+                                            if let id = meditationList["id"]{
+                                                dbGuidedEmotionsData.guided_id = "\(id)"
+                                            }
+                                            
+                                            if let emotion_id = emotionsDict["emotion_id"]{
+                                                dbGuidedEmotionsData.emotion_id = "\(emotion_id)"
+                                            }
+                                            
+                                            if let author_name = emotionsDict["author_name"]{
+                                                dbGuidedEmotionsData.author_name = "\(author_name)"
+                                            }
+                                            
+                                            if let emotion_image = emotionsDict["emotion_image"] as? String{
+                                                dbGuidedEmotionsData.emotion_image = emotion_image
+                                            }
+                                            
+                                            if let emotion_name = emotionsDict["emotion_name"] as? String{
+                                                dbGuidedEmotionsData.emotion_name = emotion_name
+                                            }
+                                            
+                                            if let intro_completed = emotionsDict["intro_completed"] as? Bool{
+                                                dbGuidedEmotionsData.intro_completed = intro_completed
+                                            }else{
+                                                dbGuidedEmotionsData.intro_completed = false
+                                            }
+                                            
+                                            if let tile_type = emotionsDict["tile_type"] as? String{
+                                                dbGuidedEmotionsData.tile_type = tile_type
+                                            }
+                                            
+                                            if let emotion_key = emotionsDict["emotion_key"] as? String{
+                                                dbGuidedEmotionsData.emotion_key = emotion_key
+                                            }
+                                            
+                                            if let emotion_body = emotionsDict["emotion_body"] as? String{
+                                                dbGuidedEmotionsData.emotion_body = emotion_body
+                                            }
+                                            
+                                            if let completed = emotionsDict["completed"] as? Bool{
+                                                dbGuidedEmotionsData.completed = completed
+                                            }
+                                            
+                                            if let completed_date = emotionsDict["completed_date"] as? String{
+                                                dbGuidedEmotionsData.completed_date = completed_date
+                                            }
+                                            
+                                            if let intro_url = emotionsDict["intro_url"] as? String{
+                                                dbGuidedEmotionsData.intro_url = intro_url
+                                            }else{
+                                                dbGuidedEmotionsData.intro_url = ""
+                                            }
+                                            
+                                            if let emotion_type = emotionsDict["emotion_type"] as? String{
+                                                dbGuidedEmotionsData.emotion_type = emotion_type
+                                            }else{
+                                                dbGuidedEmotionsData.emotion_type = ""
+                                            }
+                                            
+                                            if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
+                                                for audioDict in audio_list {
+                                                    
+                                                    let dbGuidedAudioData = WWMHelperClass.fetchEntity(dbName: "DBGuidedAudioData") as! DBGuidedAudioData
+                                                    
+                                                    if let emotion_id = emotionsDict["emotion_id"]{
+                                                        dbGuidedAudioData.emotion_id = "\(emotion_id)"
+                                                    }
+                                                    
+                                                    if let audio_id = audioDict["id"]{
+                                                        dbGuidedAudioData.audio_id = "\(audio_id)"
+                                                    }
+                                                    
+                                                    if let audio_image = audioDict["audio_image"] as? String{
+                                                        dbGuidedAudioData.audio_image = audio_image
+                                                    }
+                                                    
+                                                    if let audio_name = audioDict["audio_name"] as? String{
+                                                        dbGuidedAudioData.audio_name = audio_name
+                                                    }
+                                                    
+                                                    if let audio_url = audioDict["audio_url"] as? String{
+                                                        dbGuidedAudioData.audio_url = audio_url
+                                                    }
+                                                    
+                                                    if let author_name = audioDict["author_name"] as? String{
+                                                        dbGuidedAudioData.author_name = author_name
+                                                    }
+                                                    
+                                                    if let duration = audioDict["duration"]{
+                                                        dbGuidedAudioData.duration = "\(duration)"
+                                                    }
+                                                    
+                                                    if let paid = audioDict["paid"] as? Bool{
+                                                        dbGuidedAudioData.paid = paid
+                                                    }
+                                                    
+                                                    if let vote = audioDict["vote"] as? Bool{
+                                                        dbGuidedAudioData.vote = vote
+                                                    }
+                                                    WWMHelperClass.saveDb()
+                                                }
+                                            }
+                                            
+                                            WWMHelperClass.saveDb()
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            WWMHelperClass.saveDb()
+                            self.reloadTabs21DaysController()
+                        }
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
+                        print("guided data tabbarvc in background thread...")
+                    }
+                }
+            }
+            
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }//end guided api*
 }

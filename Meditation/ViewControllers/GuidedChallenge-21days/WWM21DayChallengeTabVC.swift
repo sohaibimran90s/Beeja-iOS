@@ -20,6 +20,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var lblSpiritualSessionCount: UILabel!
     @IBOutlet weak var lblChallTypePractical: UILabel!
     @IBOutlet weak var lblChallTypeSpiritual: UILabel!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
     
     var delegate: WWMGuidedDashboardDelegate?
     var check7Days = false
@@ -42,6 +44,13 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         self.lblSpiritualSessionCount.layer.cornerRadius = 16
         self.lblSpiritualSessionCount.layer.borderWidth = 1.0
         self.lblSpiritualSessionCount.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        
+        self.lblTitle.text = self.name.capitalized
+        if self.name.contains("21"){
+            self.lblDescription.text = "A curated set of 21 guided sessions, aimed at taking you on a journey and creating habits. Choose a style of guidance - from Practical or Spiritual to get started."
+        }else{
+            self.lblDescription.text = "A curated set of 7 guided sessions, aimed at taking you on a journey and creating habits. Choose a style of guidance - from Practical or Spiritual to get started."
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
