@@ -220,14 +220,14 @@ class WWMLearnStepListVC: WWMBaseViewController {
     
     @IBAction func btnIntroClicked(_ sender: UIButton) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
-
-        self.navigationController?.pushViewController(vc, animated: false)
-        
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
 //
-//        vc.value = "learnStepList"
 //        self.navigationController?.pushViewController(vc, animated: false)
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+
+        vc.value = "learnStepList"
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     
