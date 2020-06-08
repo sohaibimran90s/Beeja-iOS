@@ -48,7 +48,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     var currentDateString: String = ""
     var currentDate: Date!
 
-    var giftPopUp = WWMHomeGiftPopUp()
+    var shareTheLovePopUp = WWMShareLovePopUp()
     var alertJournalPopup = WWMJouranlPopUp()
     var data: [WWMMeditationHistoryListData] = []
     var podData: [WWMPodCastData] = []
@@ -351,39 +351,27 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func giftPopupAlert(){
-        self.giftPopUp = UINib(nibName: "WWMHomeGiftPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMHomeGiftPopUp
+        self.shareTheLovePopUp = UINib(nibName: "WWMShareLovePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMShareLovePopUp
         let window = UIApplication.shared.keyWindow!
         
-        self.giftPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        self.shareTheLovePopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        self.shareTheLovePopUp.btnInviteFriends.layer.cornerRadius = 20
+        self.shareTheLovePopUp.lblCopyCode.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        self.shareTheLovePopUp.lblCopyCode.layer.borderWidth = 1.0
         
-        self.giftPopUp.btnText.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.giftPopUp.btnEmail.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.giftPopUp.btnShare.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-        self.giftPopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnText.addTarget(self, action: #selector(btnTextAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnEmail.addTarget(self, action: #selector(btnEmailAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnShare.addTarget(self, action: #selector(btnShareAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(giftPopUp)
+        self.shareTheLovePopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
+        
+        self.shareTheLovePopUp.btnInviteFriends.addTarget(self, action: #selector(btnInviteFriendsAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(shareTheLovePopUp)
     }
     
     @objc func btnAlertCloseAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
+        self.shareTheLovePopUp.removeFromSuperview()
     }
     
-    
-    @objc func btnTextAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
-        self.shareData()
-    }
-    
-    @objc func btnEmailAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
-        self.shareData()
-    }
-    
-    @objc func btnShareAction(_ sender: Any){
+    @objc func btnInviteFriendsAction(_ sender: Any){
 
-        self.giftPopUp.removeFromSuperview()
+        self.shareTheLovePopUp.removeFromSuperview()
         self.shareData()
     }
     

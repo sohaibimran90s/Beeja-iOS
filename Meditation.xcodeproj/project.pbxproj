@@ -202,6 +202,9 @@
 		611D6ACF2382A61D00B927C3 /* DiskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D6ACE2382A61D00B927C3 /* DiskStatus.swift */; };
 		611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */; };
 		611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */; };
+		6120F13924863BF300F790A7 /* WWM30DaysGearUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120F13724863BF300F790A7 /* WWM30DaysGearUpVC.swift */; };
+		6120F13A24863BF300F790A7 /* WWM30DaysChallengeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120F13824863BF300F790A7 /* WWM30DaysChallengeVC.swift */; };
+		6123B453248A6CA0000F6343 /* WWMShareLoveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6123B452248A6CA0000F6343 /* WWMShareLoveVC.swift */; };
 		612751D7242A009A00B53276 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 612751D6242A009900B53276 /* GoogleService-Info.plist */; };
 		6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
@@ -214,8 +217,8 @@
 		613071F222D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */; };
 		613071F422D8FB97009CBCA1 /* WWMHomePodcastTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F322D8FB97009CBCA1 /* WWMHomePodcastTVC.swift */; };
 		613071F622D9AED1009CBCA1 /* WWMWalkThoghVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F522D9AED1009CBCA1 /* WWMWalkThoghVC.swift */; };
-		613071F822D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613071F722D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib */; };
-		613071FA22D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */; };
+		613071F822D9DBA9009CBCA1 /* WWMShareLovePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613071F722D9DBA9009CBCA1 /* WWMShareLovePopUp.xib */; };
+		613071FA22D9DBD8009CBCA1 /* WWMShareLovePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613071F922D9DBD8009CBCA1 /* WWMShareLovePopUp.swift */; };
 		613071FC22D9EF40009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */; };
 		613071FE22D9F60F009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */; };
 		6130720122D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6130720022D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift */; };
@@ -760,6 +763,9 @@
 		611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMProfileUpdatedPopUp.xib; sourceTree = "<group>"; };
 		611D9BAB23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProfileUpdatedPopUp.swift; sourceTree = "<group>"; };
 		61208D2822FC272300514840 /* WWMDatabase 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 2.xcdatamodel"; sourceTree = "<group>"; };
+		6120F13724863BF300F790A7 /* WWM30DaysGearUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM30DaysGearUpVC.swift; sourceTree = "<group>"; };
+		6120F13824863BF300F790A7 /* WWM30DaysChallengeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM30DaysChallengeVC.swift; sourceTree = "<group>"; };
+		6123B452248A6CA0000F6343 /* WWMShareLoveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMShareLoveVC.swift; sourceTree = "<group>"; };
 		612751D6242A009900B53276 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
@@ -771,8 +777,8 @@
 		613071F122D8BA3D009CBCA1 /* WWMHomeMedHistoryCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeMedHistoryCVC.swift; sourceTree = "<group>"; };
 		613071F322D8FB97009CBCA1 /* WWMHomePodcastTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomePodcastTVC.swift; sourceTree = "<group>"; };
 		613071F522D9AED1009CBCA1 /* WWMWalkThoghVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWalkThoghVC.swift; sourceTree = "<group>"; };
-		613071F722D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMHomeGiftPopUp.xib; sourceTree = "<group>"; };
-		613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMHomeGiftPopUp.swift; sourceTree = "<group>"; };
+		613071F722D9DBA9009CBCA1 /* WWMShareLovePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMShareLovePopUp.xib; sourceTree = "<group>"; };
+		613071F922D9DBD8009CBCA1 /* WWMShareLovePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMShareLovePopUp.swift; sourceTree = "<group>"; };
 		613071FB22D9EF3F009CBCA1 /* MM_BEEJA_LETSMEDITATE_V2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MM_BEEJA_LETSMEDITATE_V2.wav; sourceTree = "<group>"; };
 		613071FD22D9F60E009CBCA1 /* MM_BEEJA_MEDITATION_COMPLETE_V1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MM_BEEJA_MEDITATION_COMPLETE_V1.wav; sourceTree = "<group>"; };
 		6130720022D9FCD4009CBCA1 /* WWMLearnFlightModeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnFlightModeVC.swift; sourceTree = "<group>"; };
@@ -1388,8 +1394,8 @@
 				61442942224B831200C6682C /* WWMJouranlPopUp.swift */,
 				6147F56022CCDCCB00A749D5 /* WWMMilestonePopUp.xib */,
 				6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */,
-				613071F722D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib */,
-				613071F922D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift */,
+				613071F722D9DBA9009CBCA1 /* WWMShareLovePopUp.xib */,
+				613071F922D9DBD8009CBCA1 /* WWMShareLovePopUp.swift */,
 				61B0ECB7239941E900E7EDB8 /* WWMZoomImgViewPopUp.xib */,
 				61B0ECB92399420B00E7EDB8 /* WWMZoomImgViewPopUp.swift */,
 				611D9BA923CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib */,
@@ -1583,6 +1589,7 @@
 		2EB9072621B65428009891E8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6120F13624863BB600F790A7 /* Challenge30Days */,
 				CE212737247430F300815BD7 /* CustomerOnBoarding */,
 				61B47901244F003F001E9222 /* OnBoarding */,
 				613AB06B23F2ACA600064B99 /* GuidedChallenge-21days */,
@@ -1805,6 +1812,16 @@
 				2EE247DC21E6315400857C25 /* PieSliceData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6120F13624863BB600F790A7 /* Challenge30Days */ = {
+			isa = PBXGroup;
+			children = (
+				6120F13824863BF300F790A7 /* WWM30DaysChallengeVC.swift */,
+				6120F13724863BF300F790A7 /* WWM30DaysGearUpVC.swift */,
+				6123B452248A6CA0000F6343 /* WWMShareLoveVC.swift */,
+			);
+			path = Challenge30Days;
 			sourceTree = "<group>";
 		};
 		613071EA22D721D3009CBCA1 /* Home Tab */ = {
@@ -2444,7 +2461,7 @@
 				2E25CDC922269BE6002BDE15 /* WWMAddJournalView.xib in Resources */,
 				2E4371C722004D9A00EF5D62 /* CONCH.mp3 in Resources */,
 				611D9BAA23CC95DC00D894AE /* WWMProfileUpdatedPopUp.xib in Resources */,
-				613071F822D9DBA9009CBCA1 /* WWMHomeGiftPopUp.xib in Resources */,
+				613071F822D9DBA9009CBCA1 /* WWMShareLovePopUp.xib in Resources */,
 				CE212755247430F500815BD7 /* back@3x.png in Resources */,
 				61426B2322DC5304006FE825 /* float3.json in Resources */,
 				2E4CE29022087A1000059396 /* singleLineRight.png in Resources */,
@@ -2644,6 +2661,7 @@
 				2EE247ED21E6315400857C25 /* PieViewLayerAnimator.swift in Sources */,
 				61416E3722BBB23B00C9339E /* LineRadarRenderer.swift in Sources */,
 				2EE247E421E6315400857C25 /* FloatingPoint.swift in Sources */,
+				6123B453248A6CA0000F6343 /* WWMShareLoveVC.swift in Sources */,
 				61416F0622BBB4C800C9339E /* LineChartDataSet.swift in Sources */,
 				61416F1522BBB4C800C9339E /* BarLineScatterCandleBubbleChartDataSet.swift in Sources */,
 				619EA419246D4CF7000B32FF /* WWMSleepTimerVC.swift in Sources */,
@@ -2800,6 +2818,7 @@
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,
 				61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */,
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
+				6120F13A24863BF300F790A7 /* WWM30DaysChallengeVC.swift in Sources */,
 				61416EC822BBB45600C9339E /* ComponentBase.swift in Sources */,
 				615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */,
 				2EE247E921E6315400857C25 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
@@ -2849,7 +2868,7 @@
 				61416F3C22BBB56900C9339E /* BarChartDataProvider.swift in Sources */,
 				2E5CCE9021C79EA80085224B /* WWMMyProgressVC.swift in Sources */,
 				61416F0F22BBB4C800C9339E /* BarChartDataEntry.swift in Sources */,
-				613071FA22D9DBD8009CBCA1 /* WWMHomeGiftPopUp.swift in Sources */,
+				613071FA22D9DBD8009CBCA1 /* WWMShareLovePopUp.swift in Sources */,
 				2EA6DB0621C38A9D006A8E1D /* WWMMeditationListVC.swift in Sources */,
 				2E8EFD9E22363D8E00B19950 /* WWMFinishTimerVC.swift in Sources */,
 				2EE247E821E6315400857C25 /* PiePlainTextLayer.swift in Sources */,
@@ -2934,6 +2953,7 @@
 				61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */,
 				61BA7CE224741DD1000713B1 /* WWMPlayListVC.swift in Sources */,
 				2E2F8A3621BE7CA800516AFF /* WWMSignupEmailVC.swift in Sources */,
+				6120F13924863BF300F790A7 /* WWM30DaysGearUpVC.swift in Sources */,
 				61416E6322BBB31400C9339E /* XAxisRendererRadarChart.swift in Sources */,
 				61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */,
 				E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */,
