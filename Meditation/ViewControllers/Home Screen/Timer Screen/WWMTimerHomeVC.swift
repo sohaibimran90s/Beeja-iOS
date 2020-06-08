@@ -38,9 +38,16 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var min = 0
 
     //var alertPopupView = WWMAlertController()
+    var i = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if i == 0{
+            self.tabBarController?.tabBar.isHidden = true
+        }else{
+            self.tabBarController?.tabBar.isHidden = false
+        }
         
         self.setUpView()
         NotificationCenter.default.addObserver(

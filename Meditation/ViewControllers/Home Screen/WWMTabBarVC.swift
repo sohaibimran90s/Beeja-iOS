@@ -671,12 +671,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
             if let _ = result["success"] as? Bool {
-                print("success result... \(result)")
-                
                 if let result = result["result"] as? [[String:Any]] {
-                                        
-                    print("result... \(result)")
                     
+                    print("success result getGuidedListAPI... \(result)")
                     let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                     if guidedData.count > 0 {
                         WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
