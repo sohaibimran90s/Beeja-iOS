@@ -236,7 +236,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                         self.appPreference.setSpiritualChallenge(value: true)
                     }
                 }
-                    
+                
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
@@ -256,7 +256,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
-                     
+                    
                     //print("meditation_type... \((dict as AnyObject).meditation_type) intro_completed... \((dict1 as AnyObject).intro_completed) guided_name... \((dict1 as AnyObject).guided_name)")
                     
                     if (dict as AnyObject).meditation_type as? String == "practical"{
@@ -270,7 +270,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                             self.appPreference.setSpiritualChallenge(value: true)
                         }
                     }
-                                        
+                    
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
@@ -298,7 +298,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                         jsonAudiosString["audio_image"] = (dict2 as AnyObject).audio_image ?? ""
                         jsonAudiosString["audio_url"] = (dict2 as AnyObject).audio_url ?? ""
                         jsonAudiosString["vote"] = (dict2 as AnyObject).vote ?? false
-
+                        
                         jsonAudios.append(jsonAudiosString)
                     }
                     
@@ -317,7 +317,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
             for view in self.containerView.subviews{
                 view.removeFromSuperview()
             }
-
+            
             WWMHelperClass.challenge7DayCount = self.challenge7DayCount
             print("self.typeTitle+++ \(self.typeTitle)")
             

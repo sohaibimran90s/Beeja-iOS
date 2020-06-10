@@ -28,14 +28,12 @@ class WWMLearnStepListVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setNavigationBar(isShow: false, title: "")
-        
+        //self.setNavigationBar(isShow: false, title: "")
         self.offlineDatatoServerCall()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.setAnimationForExpressMood()
         }
-        
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         }
@@ -49,7 +47,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.navigationController?.isNavigationBarHidden = true
+        //self.navigationController?.isNavigationBarHidden = true
+        self.setUpNavigationBarForDashboard(title: "Learn")
         self.fetchStepsDataFromDB()
     }
     

@@ -402,7 +402,6 @@
 		6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6144293E224B764600C6682C /* WWMAlertPopUp.swift */; };
 		61442941224B82D300C6682C /* WWMJouranlPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61442940224B82D300C6682C /* WWMJouranlPopUp.xib */; };
 		61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61442942224B831200C6682C /* WWMJouranlPopUp.swift */; };
-		614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */; };
 		614678E522E44E8D006AA6E9 /* WWMMantraData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E422E44E8D006AA6E9 /* WWMMantraData.swift */; };
 		614678E722E4649E006AA6E9 /* WWMLearnTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E622E4649E006AA6E9 /* WWMLearnTimerVC.swift */; };
 		614678E922E4BEA8006AA6E9 /* WWMFAQsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */; };
@@ -410,6 +409,7 @@
 		6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */; };
 		6148E1E4246C4C230034179F /* WWMSleepAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6148E1E3246C4C230034179F /* WWMSleepAudioVC.swift */; };
 		6148E1E6246C54310034179F /* WWMSleepAudioTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6148E1E5246C54310034179F /* WWMSleepAudioTVC.swift */; };
+		6152F4D724908F8A0094A47C /* WWMLearnData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6152F4D624908F8A0094A47C /* WWMLearnData.swift */; };
 		615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */; };
 		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
@@ -460,6 +460,12 @@
 		61E618E9241F880700CC7247 /* singleLineRight1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E618E8241F880600CC7247 /* singleLineRight1.png */; };
 		61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */; };
 		61F347EF234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */; };
+		61F632B0248E5EE800573536 /* WWMLearnDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F632AF248E5EE800573536 /* WWMLearnDashboardVC.swift */; };
+		61F63305248F51C900573536 /* WWMLearnNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F63304248F51C900573536 /* WWMLearnNavVC.swift */; };
+		61F63308248F74A700573536 /* DBLearn+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F63306248F74A700573536 /* DBLearn+CoreDataClass.swift */; };
+		61F63309248F74A700573536 /* DBLearn+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F63307248F74A700573536 /* DBLearn+CoreDataProperties.swift */; };
+		61F6330C248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F6330A248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift */; };
+		61F6330D248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F6330B248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift */; };
 		61F84972244DB6CA00DA65B1 /* WWMWalkThoughVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F84971244DB6CA00DA65B1 /* WWMWalkThoughVC1.swift */; };
 		61FBD25E22F4071100EE6902 /* WWMLearnOutroVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */; };
 		61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */; };
@@ -963,7 +969,6 @@
 		6144293E224B764600C6682C /* WWMAlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAlertPopUp.swift; sourceTree = "<group>"; };
 		61442940224B82D300C6682C /* WWMJouranlPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WWMJouranlPopUp.xib; sourceTree = "<group>"; };
 		61442942224B831200C6682C /* WWMJouranlPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJouranlPopUp.swift; sourceTree = "<group>"; };
-		614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnStepsListData.swift; sourceTree = "<group>"; };
 		614678E422E44E8D006AA6E9 /* WWMMantraData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMantraData.swift; sourceTree = "<group>"; };
 		614678E622E4649E006AA6E9 /* WWMLearnTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnTimerVC.swift; sourceTree = "<group>"; };
 		614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMFAQsData.swift; sourceTree = "<group>"; };
@@ -971,6 +976,7 @@
 		6147F56222CCDCEF00A749D5 /* WWMMilestonePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestonePopUp.swift; sourceTree = "<group>"; };
 		6148E1E3246C4C230034179F /* WWMSleepAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepAudioVC.swift; sourceTree = "<group>"; };
 		6148E1E5246C54310034179F /* WWMSleepAudioTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepAudioTVC.swift; sourceTree = "<group>"; };
+		6152F4D624908F8A0094A47C /* WWMLearnData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnData.swift; sourceTree = "<group>"; };
 		615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 3.xcdatamodel"; sourceTree = "<group>"; };
 		615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1022,6 +1028,12 @@
 		61F0BF9823FFE4BF0067B660 /* WWMDatabase 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 4.xcdatamodel"; sourceTree = "<group>"; };
 		61F347EC234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61F347ED234F366B0046E1E1 /* DBStepFaq+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBStepFaq+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61F632AF248E5EE800573536 /* WWMLearnDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDashboardVC.swift; sourceTree = "<group>"; };
+		61F63304248F51C900573536 /* WWMLearnNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnNavVC.swift; sourceTree = "<group>"; };
+		61F63306248F74A700573536 /* DBLearn+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBLearn+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		61F63307248F74A700573536 /* DBLearn+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBLearn+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		61F6330A248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBThirtyDays+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		61F6330B248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBThirtyDays+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		61F84971244DB6CA00DA65B1 /* WWMWalkThoughVC1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMWalkThoughVC1.swift; sourceTree = "<group>"; };
 		61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnOutroVC.swift; sourceTree = "<group>"; };
 		61FE76652348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBMeditationHistory+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1129,6 +1141,10 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				61F6330A248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift */,
+				61F6330B248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift */,
+				61F63306248F74A700573536 /* DBLearn+CoreDataClass.swift */,
+				61F63307248F74A700573536 /* DBLearn+CoreDataProperties.swift */,
 				61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */,
 				61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */,
 				615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */,
@@ -1567,6 +1583,7 @@
 				61083F4322D354E4001B770D /* WWMMilestoneData.swift */,
 				2E49661A221815E400BC6219 /* WWMCommunityData.swift */,
 				2E5DF5A6226DC76F00CF2935 /* WWMGuidedData.swift */,
+				6152F4D624908F8A0094A47C /* WWMLearnData.swift */,
 				2E5DF5742265BC6E00CF2935 /* WWMWisdomData.swift */,
 				2EC81C5521E746A3003B0EEE /* WWMMoodMeterData.swift */,
 				2E4371D22203039E00EF5D62 /* WWMMeditationData.swift */,
@@ -1576,7 +1593,6 @@
 				61320867223B7D2000F0ACFF /* WWMMoodProgressData.swift */,
 				613ED77B22E05E8F0063B10B /* WWMMeditationHistoryListData.swift */,
 				613ED77D22E0AE910063B10B /* WWMPodCastData.swift */,
-				614678E222E2E936006AA6E9 /* WWMLearnStepsListData.swift */,
 				614678E422E44E8D006AA6E9 /* WWMMantraData.swift */,
 				2EC81C5B21E777A7003B0EEE /* adobe.svg */,
 				2EC81C5721E75444003B0EEE /* MoodMeterData.geojson */,
@@ -1854,6 +1870,8 @@
 				613C6F7622DF32040012113B /* WWMLearnCongratsVC.swift */,
 				614678E822E4BEA8006AA6E9 /* WWMFAQsData.swift */,
 				61FBD25D22F4071100EE6902 /* WWMLearnOutroVC.swift */,
+				61F632AF248E5EE800573536 /* WWMLearnDashboardVC.swift */,
+				61F63304248F51C900573536 /* WWMLearnNavVC.swift */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -2676,6 +2694,7 @@
 				2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */,
 				612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */,
 				61416E2F22BBB23B00C9339E /* RadarChartRenderer.swift in Sources */,
+				61F63305248F51C900573536 /* WWMLearnNavVC.swift in Sources */,
 				61416F1222BBB4C800C9339E /* PieChartDataEntry.swift in Sources */,
 				2EB0865A22817069008BF6E4 /* WWMGuidedEmotionVC.swift in Sources */,
 				61AC126523C6FEF600B9E9C6 /* WWMEditProfileTVC.swift in Sources */,
@@ -2706,6 +2725,7 @@
 				611D6ACF2382A61D00B927C3 /* DiskStatus.swift in Sources */,
 				2EEF9AE4221AEC900016A77C /* DBMoodMeter+CoreDataProperties.swift in Sources */,
 				613528B7225DF34C00CE68D9 /* WWMCommunityAllEventsVC.swift in Sources */,
+				61F6330C248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift in Sources */,
 				2EE247DD21E6315400857C25 /* PieSliceDelegate.swift in Sources */,
 				61F347EE234F366B0046E1E1 /* DBStepFaq+CoreDataClass.swift in Sources */,
 				2EE247E121E6315400857C25 /* PieChart.swift in Sources */,
@@ -2809,6 +2829,7 @@
 				2EA6DB0C21C3C5A6006A8E1D /* WWMTabBarVC.swift in Sources */,
 				61416E7722BBB37C00C9339E /* Range.swift in Sources */,
 				2EB1F11221DF619100F98EC2 /* WWMSplashLoaderVC.swift in Sources */,
+				61F6330D248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift in Sources */,
 				61416E8D22BBB3B400C9339E /* PieRadarChartViewBase.swift in Sources */,
 				61416F2A22BBB53000C9339E /* IBubbleChartDataSet.swift in Sources */,
 				611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */,
@@ -2846,6 +2867,7 @@
 				61416F0822BBB4C800C9339E /* PieChartData.swift in Sources */,
 				2E316FD62227C6D000018538 /* DBSettings+CoreDataProperties.swift in Sources */,
 				61416F5322BBB5B500C9339E /* ChartView.swift in Sources */,
+				6152F4D724908F8A0094A47C /* WWMLearnData.swift in Sources */,
 				61426B2B22DCA9E0006FE825 /* WWMChooseMantraVC.swift in Sources */,
 				61D110FE242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift in Sources */,
 				61442943224B831200C6682C /* WWMJouranlPopUp.swift in Sources */,
@@ -2935,6 +2957,7 @@
 				CE212768247430F500815BD7 /* WWMCustOnboardingCell.swift in Sources */,
 				61416EB622BBB42600C9339E /* Fill.swift in Sources */,
 				614678E522E44E8D006AA6E9 /* WWMMantraData.swift in Sources */,
+				61F632B0248E5EE800573536 /* WWMLearnDashboardVC.swift in Sources */,
 				2EA6DB0E21C3E2C6006A8E1D /* WWMNavigationVC.swift in Sources */,
 				61BBC36D2350D184000B5617 /* DBSteps+CoreDataClass.swift in Sources */,
 				2E9CCCBE225C9A8C001465AD /* AuthService.swift in Sources */,
@@ -2976,6 +2999,7 @@
 				2EAE29B722326452008E4361 /* WWMMoodProgressCVC.swift in Sources */,
 				61416F0322BBB4C800C9339E /* BarChartDataSet.swift in Sources */,
 				61416F2D22BBB53000C9339E /* ILineChartDataSet.swift in Sources */,
+				61F63309248F74A700573536 /* DBLearn+CoreDataProperties.swift in Sources */,
 				61416ED822BBB47A00C9339E /* ZoomViewJob.swift in Sources */,
 				E07831F8235E3BCA00B352ED /* ESTabBarItemContainer.swift in Sources */,
 				61416EA622BBB40300C9339E /* IFillFormatter.swift in Sources */,
@@ -2985,6 +3009,7 @@
 				2EEF9AEF221AEC900016A77C /* DBJournalList+CoreDataClass.swift in Sources */,
 				61416E7422BBB37C00C9339E /* ChartHighlighter.swift in Sources */,
 				6133735423C315F100F9C866 /* WWMGuidedUpgradeBeejaPopUp.swift in Sources */,
+				61F63308248F74A700573536 /* DBLearn+CoreDataClass.swift in Sources */,
 				61416ECE22BBB45600C9339E /* MarkerView.swift in Sources */,
 				61B6AE1F224A64030067F2E1 /* WWMAlertController.swift in Sources */,
 				6144293F224B764600C6682C /* WWMAlertPopUp.swift in Sources */,
@@ -3035,7 +3060,6 @@
 				61416F1922BBB4FB00C9339E /* ChartBaseDataSet.swift in Sources */,
 				61FE76672348A528004073D5 /* DBMeditationHistory+CoreDataClass.swift in Sources */,
 				615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */,
-				614678E322E2E936006AA6E9 /* WWMLearnStepsListData.swift in Sources */,
 				6148E1E6246C54310034179F /* WWMSleepAudioTVC.swift in Sources */,
 				2EEF9AED221AEC900016A77C /* DBTimerData+CoreDataProperties.swift in Sources */,
 			);

@@ -553,7 +553,7 @@ class WWMHelperClass {
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
                 if meditation_name == type{
-                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
+                    //print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
                     if value == "0"{
                         print("00000****")
                         return "1"
