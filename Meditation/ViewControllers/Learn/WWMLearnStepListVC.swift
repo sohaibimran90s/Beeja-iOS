@@ -8,9 +8,11 @@
 
 import UIKit
 import CoreData
+import XLPagerTabStrip
 
-class WWMLearnStepListVC: WWMBaseViewController {
+class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
 
+    var itemInfo: IndicatorInfo = "View"
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var layoutMoodWidth: NSLayoutConstraint!
     @IBOutlet weak var layoutExpressMoodViewWidth: NSLayoutConstraint!
@@ -28,12 +30,13 @@ class WWMLearnStepListVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("learnStepsListData+++ \(learnStepsListData.count)")
         //self.setNavigationBar(isShow: false, title: "")
         self.offlineDatatoServerCall()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.setAnimationForExpressMood()
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//            self.setAnimationForExpressMood()
+//        }
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         }
@@ -43,13 +46,17 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.appPreference.setMoodId(value: "")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         //self.navigationController?.isNavigationBarHidden = true
-        self.setUpNavigationBarForDashboard(title: "Learn")
+        //self.setUpNavigationBarForDashboard(title: "Learn")
         self.fetchStepsDataFromDB()
+    }
+    
+    // MARK: - IndicatorInfoProvider
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return itemInfo
     }
     
     @objc func notificationLearnSteps(notification: Notification) {
@@ -140,32 +147,32 @@ class WWMLearnStepListVC: WWMBaseViewController {
     
     //MARK: Fetch Steps Data From DB
     func fetchStepsDataFromDB() {
-        let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+        //let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
         
-        if getStepsDataDB.count > 0 {
-            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
-            self.learnStepsListData.removeAll()
-            for dict in getStepsDataDB {
-                
-                var jsonData: [String: Any] = [:]
-                
-                jsonData["step_name"] = dict.step_name
-                jsonData["id"] = dict.id
-                jsonData["date_completed"] = dict.date_completed
-                jsonData["title"] = dict.title
-                jsonData["timer_audio"] = dict.timer_audio
-                jsonData["description"] = dict.description1
-                jsonData["step_audio"] = dict.step_audio
-                jsonData["outro_audio"] = dict.outro_audio
-                jsonData["completed"] = dict.completed
-                jsonData["min_limit"] = dict.min_limit
-                jsonData["max_limit"] = dict.max_limit
-                
-                let learnStepsListData = LearnStepsListData.init(json: jsonData)
-                self.learnStepsListData.append(learnStepsListData)
-                
-                print("jsonData... \(jsonData)")
-            }
+        //if getStepsDataDB.count > 0 {
+//            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
+//            self.learnStepsListData.removeAll()
+//            for dict in getStepsDataDB {
+//
+//                var jsonData: [String: Any] = [:]
+//
+//                jsonData["step_name"] = dict.step_name
+//                jsonData["id"] = dict.id
+//                jsonData["date_completed"] = dict.date_completed
+//                jsonData["title"] = dict.title
+//                jsonData["timer_audio"] = dict.timer_audio
+//                jsonData["description"] = dict.description1
+//                jsonData["step_audio"] = dict.step_audio
+//                jsonData["outro_audio"] = dict.outro_audio
+//                jsonData["completed"] = dict.completed
+//                jsonData["min_limit"] = dict.min_limit
+//                jsonData["max_limit"] = dict.max_limit
+//
+//                let learnStepsListData = LearnStepsListData.init(json: jsonData)
+//                self.learnStepsListData.append(learnStepsListData)
+//
+//                print("jsonData... \(jsonData)")
+//            }
             
             //* logic for expanding the cell which we have to play
             var flag = 0
@@ -192,7 +199,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
             self.tableView.reloadData()
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
-        }
+        //}
     }
     
     override func viewDidLayoutSubviews() {

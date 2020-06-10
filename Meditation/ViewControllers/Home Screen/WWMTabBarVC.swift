@@ -955,6 +955,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         WWMHelperClass.deletefromDb(dbName: "DBSteps")
                     }
                     
+                    let getThirtyDaysData = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
+                    if getThirtyDaysData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                    }
+                    
                     for dict in data{
                         
                         let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn

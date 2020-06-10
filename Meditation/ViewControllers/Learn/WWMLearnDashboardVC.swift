@@ -60,18 +60,22 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         let arrVC = NSMutableArray()
         
         for data in self.arrLearnList {
+            print("data.step_list--- \(data.step_list.count)")
             
-            //print(data.cat_mode)
-            /*
-             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
-             
-             vc.delegate = self
-             vc.itemInfo = IndicatorInfo.init(title: data.cat_Name.capitalized)
-             vc.name = data.cat_Name
-             vc.meditationType = data.cat_meditation_type
-             arrVC.add(vc)
-             */
-            
+            if data.name == "12 Steps"{
+                //WWM21DayChallengeVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
+                
+                vc.itemInfo = IndicatorInfo.init(title: data.name)
+                vc.learnStepsListData = data.step_list
+                arrVC.add(vc)
+            }else if data.name == "30 Day Challenge"{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
+                
+                vc.itemInfo = IndicatorInfo.init(title: data.name)
+                //vc.learnStepsListData = data.step_list
+                arrVC.add(vc)
+            }
         }
         
         

@@ -84,7 +84,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                 
                 jsonData["step_list"] = jsonSteps
                 
-                let getThirtyDaysDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBThirtyDays]
+                let getThirtyDaysDataDB = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
                 for day_list in getThirtyDaysDataDB{
                     jsonThirtyDaysString["id"] = day_list.id
                     jsonThirtyDaysString["day_name"] = day_list.day_name
@@ -121,8 +121,8 @@ class WWMLearnNavVC: WWMBaseViewController {
             }
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnDashboardVC") as! WWMLearnDashboardVC
-            vc.arrGuidedList = self.arrLearnList
-            vc.type = self.typeTitle
+            vc.arrLearnList = self.arrLearnList
+           // vc.type = self.typeTitle
             self.addChild(vc)
             vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
             self.containerView.addSubview((vc.view)!)
@@ -160,6 +160,11 @@ class WWMLearnNavVC: WWMBaseViewController {
                     let getStepsData = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
                     if getStepsData.count > 0 {
                         WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                    }
+                    
+                    let getThirtyDaysData = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
+                    if getThirtyDaysData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
                     }
                     
                     for dict in data{
