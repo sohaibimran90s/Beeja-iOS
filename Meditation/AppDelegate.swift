@@ -114,7 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         self.addShortCuts(application: application)
         NotificationCenter.default.addObserver(self, selector: #selector(addShortCutsRefresh), name: NSNotification.Name(rawValue: "logoutSuccessful"), object: nil)
         
-       // Crashlytics.sharedInstance().crash()
+//      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
+//        Crashlytics.crashlytics().setUserID("userId Ehsan Test")
+//        fatalError()
+        
+//        Crashlytics.sharedInstance().crash()
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
 //            AnalyticsParameterItemID: "id-Beeja-App-Started-123",
 //            AnalyticsParameterContentType: "App Login 123"

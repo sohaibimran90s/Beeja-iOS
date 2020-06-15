@@ -72,7 +72,10 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Crashlytics.sharedInstance().crash()
+//      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
+//        Crashlytics.crashlytics().setUserID("userId Ehsan Test")
+//        fatalError()
+//        Crashlytics.sharedInstance().crash()
         self.podData = []
         self.podcastData()
         
