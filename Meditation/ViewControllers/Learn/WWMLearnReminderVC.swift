@@ -64,7 +64,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
         AppDelegate.sharedDelegate().date = tommDate!
         AppDelegate.sharedDelegate().value = 1
-        print("tommDate... \(tommDate!)")
+        //print("tommDate... \(tommDate!)")
         
     }
     
@@ -80,7 +80,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let afterThirtyDate = Calendar.current.date(byAdding: .day, value: 30, to: date)
         AppDelegate.sharedDelegate().date = afterThirtyDate!
         AppDelegate.sharedDelegate().value = 2
-        print("afterThirtyDate... \(afterThirtyDate!)")
+        //print("afterThirtyDate... \(afterThirtyDate!)")
         flag = 1
     }
     
@@ -95,7 +95,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
             let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
             AppDelegate.sharedDelegate().date = tommDate!
             AppDelegate.sharedDelegate().value = 1
-            print("tommDate... \(tommDate!)")
+            //print("tommDate... \(tommDate!)")
         }
         
         callPushNotification()
@@ -138,7 +138,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         settingData.learnReminderTime = dateFormatter.string(from: sender.date)
         
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
+        //print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
         
         let date1 = dateFormatter.string(from: sender.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
@@ -172,7 +172,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
     
     @objc func donedatePicker(){
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
+        //print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
         
         let date1 = dateFormatter.string(from: datePicker.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  datePicker.date)
@@ -279,8 +279,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMLearnReminderVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
-                    print(success)
-                    print("WWMLearnReminderVC")
+                    //print("WWMLearnReminderVC")
                 }
             }
         }

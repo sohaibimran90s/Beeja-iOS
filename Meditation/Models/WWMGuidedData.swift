@@ -43,13 +43,13 @@ class WWMGuidedData: NSObject {
                 if cat_Name.contains("21"){
                     self.step_id = self.step_id + 1
                     
-                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id)")
+                    //print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id)")
                 }
                 
                 if cat_Name.contains("7"){
                     self.step_id = self.step_id + 1
                     
-                    print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id) completed+++ \(dict["completed"] as? Bool ?? false)")
+                    //print("dictkdjsfkdsjfl...... \(dict) step_id++ \(self.step_id) completed+++ \(dict["completed"] as? Bool ?? false)")
                 }
                 
                 let video = WWMGuidedEmotionData.init(json: dict, stepId: self.step_id)
@@ -60,12 +60,12 @@ class WWMGuidedData: NSObject {
                     //to check if the 7 challenge completed or not
                     let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.cat_Name, dbName: "DBGuidedData", name: "guided_name")
                     
-                    print("step_no+++ \(self.step_id) cat_meditation_type \(cat_meditation_type) cat_Name \(cat_Name) guidedDataDB.count*** \(guidedDataDB.count)")
+                    //print("step_no+++ \(self.step_id) cat_meditation_type \(cat_meditation_type) cat_Name \(cat_Name) guidedDataDB.count*** \(guidedDataDB.count)")
                     
                     for dict in guidedDataDB{
                         if (dict as AnyObject).meditation_type == cat_meditation_type{
                             let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
-                            print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
+                            //print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                             for dict1 in guidedEmotionsDataDB{
                                 //print("(dict1 as AnyObject).completed... \((dict1 as AnyObject).completed)")
                                 if !(dict1 as AnyObject).completed{
@@ -89,7 +89,7 @@ class WWMGuidedData: NSObject {
                             cat_EmotionList.removeAll()
                         }
                     }else{
-                        print("challenge completed")
+                        //print("challenge completed")
                     }
                 }
             }

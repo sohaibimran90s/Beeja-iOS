@@ -65,25 +65,25 @@ class WWMFinishTimerVC: UIViewController {
         if UIDevice().userInterfaceIdiom == .phone {
             switch UIScreen.main.nativeBounds.height {
             case 1136:
-                print("iPhone 5 or 5S or 5C")
+                //print("iPhone 5 or 5S or 5C")
                 rowHeight = 110
             case 1334:
-                print("iPhone 6/6S/7/8")
+                //print("iPhone 6/6S/7/8")
                 rowHeight = 130
             case 2208:
-                print("iPhone 6+/6S+/7+/8+")
+                //print("iPhone 6+/6S+/7+/8+")
                 rowHeight = 150
             case 2436:
-                print("iPhone X, XS")
+                //print("iPhone X, XS")
                 rowHeight = 180
             case 2688:
-                print("iPhone XS Max")
+                //print("iPhone XS Max")
                 rowHeight = 200
             case 1792:
-                print("iPhone XR")
+                //print("iPhone XR")
                 rowHeight = 180
             default:
-                print("unknown")
+                //print("unknown")
                 rowHeight = 150
             }
         }

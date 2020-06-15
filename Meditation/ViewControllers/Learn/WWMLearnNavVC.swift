@@ -32,11 +32,11 @@ class WWMLearnNavVC: WWMBaseViewController {
             "guided_type" : ""
             ] as [String : Any]
         
-        print("param*** \(param)")
+        //print("param*** \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("meditation api in learnNav in background...")
+                //print("meditation api in learnNav in background...")
             }
         }
     }
@@ -46,7 +46,7 @@ class WWMLearnNavVC: WWMBaseViewController {
         let getLearnDataDB = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
         
         if getLearnDataDB.count > 0 {
-            print("self.stepFaqDataDB... \(getLearnDataDB.count)")
+            //print("self.stepFaqDataDB... \(getLearnDataDB.count)")
             self.arrLearnList.removeAll()
             
             var jsonData: [String: Any] = [:]
@@ -112,7 +112,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                     self.appPreference.set30IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
                     
-                    print("30intro_completed... \(self.appPreference.get30IntroCompleted()) 30intro_url... \(self.appPreference.get30DaysURL())")
+                    //print("30intro_completed... \(self.appPreference.get30IntroCompleted()) 30intro_url... \(self.appPreference.get30DaysURL())")
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
@@ -120,7 +120,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                 let learnData = WWMLearnData.init(json: jsonData)
                 self.arrLearnList.append(learnData)
                 
-                print("jsonData... \(jsonData)")
+                //print("jsonData... \(jsonData)")
             }
             
             for view in self.containerView.subviews{
@@ -148,16 +148,16 @@ class WWMLearnNavVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URI_LEARN, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            print("learn result... \(result)")
+            //print("learn result... \(result)")
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{
-                    print("total_paid double.. \(total_paid)")
+                    //print("total_paid double.. \(total_paid)")
                     WWMHelperClass.total_paid = Int(round(total_paid))
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
                     
-                    print("getLearnAPI count... \(data.count)")
+                    //print("getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
@@ -179,7 +179,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                         let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
                         
                         let timeInterval = Int(Date().timeIntervalSince1970)
-                        print("timeInterval.... \(timeInterval)")
+                        //print("timeInterval.... \(timeInterval)")
                         dbLearnData.last_time_stamp = "\(timeInterval)"
                         
                         if let name = dict["name"] as? String{

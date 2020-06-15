@@ -84,7 +84,7 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         alertZoomImgPopup = UINib(nibName: "WWMZoomImgViewPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMZoomImgViewPopUp
         let window = UIApplication.shared.keyWindow!
         
-        print("imgURL..... \(imgURL)")
+        //print("imgURL..... \(imgURL)")
         
         alertZoomImgPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         

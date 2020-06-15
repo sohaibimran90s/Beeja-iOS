@@ -70,7 +70,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
         
-        print("arrGuidedList.count... \(arrGuidedList.count)")
+        //print("arrGuidedList.count... \(arrGuidedList.count)")
         self.getUniqueChallenge()
         if self.type == "Guided"{
             for data in self.arrGuidedList1 {
@@ -88,7 +88,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 }else if data.cat_mode == "playlist"{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPlayListVC") as! WWMPlayListVC
                                 
-                    print("data.cat_name... \(data.cat_Name)")
+                    //print("data.cat_name... \(data.cat_Name)")
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                     vc.guidedData = data
                     vc.type = self.type
@@ -100,7 +100,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 }else if data.cat_mode == "moments"{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMomentsVC") as! WWMMomentsVC
                                 
-                    print("data.cat_name... \(data.cat_Name)")
+                    //print("data.cat_name... \(data.cat_Name)")
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                     vc.guidedData = data
                     vc.type = self.type
@@ -112,7 +112,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
                                 
-                    print("data.cat_name... \(data.cat_Name)")
+                    //print("data.cat_name... \(data.cat_Name)")
                     vc.delegate = self
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                     vc.name = data.cat_Name
@@ -140,7 +140,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepVC") as! WWMSleepVC
                                 
-                    print("data.cat_name... \(data.cat_Name)")
+                    //print("data.cat_name... \(data.cat_Name)")
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                     vc.guidedData = data
                     vc.type = self.type
@@ -166,7 +166,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 if arrGuidedList1.count > 0{
                     
                     for dict1 in arrGuidedList1{
-                        print("dict1.cat_Name+++ \(dict1.cat_Name) dict.cat_name+++ \(dict.cat_Name)")
+                        //print("dict1.cat_Name+++ \(dict1.cat_Name) dict.cat_name+++ \(dict.cat_Name)")
                         if dict1.cat_Name.contains(dict.cat_Name){
                             flag = 1
                         }
@@ -185,19 +185,19 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
 
 extension WWMGuidedDashboardVC: WWMGuidedDashboardDelegate{
     func guidedEmotionReload(isTrue: Bool, vcName: String) {
-        print("vcnamce.... \(vcName)")
+        //print("vcnamce.... \(vcName)")
         if (vcName == "WWMGuidedEmotionVC") && isTrue{
             
             var index = 0
             let name = self.appPreference.get21ChallengeName()
             for dic in self.arrGuidedList1{
                 
-                print("\(name) \(index) cat_name*** \(dic.cat_Name) self.arrGuidedList1.count*** \(self.arrGuidedList1.count) ")
+                //print("\(name) \(index) cat_name*** \(dic.cat_Name) self.arrGuidedList1.count*** \(self.arrGuidedList1.count) ")
                 if name == dic.cat_Name{
                     break
                 }
                 index = index + 1
-                print("index \(index) self.arrGuidedList1.c0unt*** \(self.arrGuidedList1.count) cat_name*** \(dic.cat_Name)")
+                //print("index \(index) self.arrGuidedList1.c0unt*** \(self.arrGuidedList1.count) cat_name*** \(dic.cat_Name)")
             }
             
             self.moveToViewController(at: index, animated: false)

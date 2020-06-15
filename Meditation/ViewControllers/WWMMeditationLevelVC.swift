@@ -77,7 +77,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
+        //print("You tapped cell number \(indexPath.row).")
         self.navigationController?.isNavigationBarHidden = true
         self.selectedLevel_Id = "\(arrMeditationLevels[indexPath.row].levelId)"
         self.meditationApi()
@@ -105,7 +105,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMMeditationLevelVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result meditationlevelvc meditation data... \(result)")
+                //print("result meditationlevelvc meditation data... \(result)")
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -119,10 +119,6 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
                 self.appPreference.setIsProfileCompleted(value: true)
                 self.appPreference.setGuideType(value: "")
                 self.appPreference.setType(value: self.type)
-                
-                
-                print("self.type.... \(self.type)")
-                //MM_BEEJA_LETSMEDITATE_V2
                 
                 //MARK:- play sonic sound
                 self.playSound(name: "MM_BEEJA_LETSMEDITATE_V2")
@@ -192,7 +188,7 @@ class WWMMeditationLevelVC: WWMBaseViewController,UITableViewDelegate,UITableVie
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("finished")//It is working now! printed "finished"!
+        //print("finished")//It is working now! printed "finished"!
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             
             self.appPreference.setGetProfile(value: true)

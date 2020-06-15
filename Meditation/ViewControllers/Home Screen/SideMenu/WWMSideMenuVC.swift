@@ -72,7 +72,7 @@ class WWMSideMenuVC: WWMBaseViewController {
                      self.lblDaysLeft.text = "\(daysLeft) days left"
                  }
              }
-             print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
+             //print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
          }else{
              self.freeView.isHidden = false
              self.premiumView.isHidden = true
@@ -95,7 +95,7 @@ class WWMSideMenuVC: WWMBaseViewController {
                 self.city = userData1["city"] as? String ?? ""
                 self.country = userData1["country"] as? String ?? ""
             
-                print("self.lat+++ \(self.lat) self.long+++ \(self.long) self.city+++ \(self.city) self.country+++ \(self.country)")
+                //print("self.lat+++ \(self.lat) self.long+++ \(self.long) self.city+++ \(self.city) self.country+++ \(self.country)")
                 
                 self.getProfileDataInBackground(lat: self.lat, long: self.long)
         }
@@ -111,7 +111,7 @@ class WWMSideMenuVC: WWMBaseViewController {
                 "country":country
                 ] as [String : Any]
                 
-                print("param... \(param)")
+                //print("param... \(param)")
                 
                 WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMSideMenuVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                     
@@ -121,7 +121,7 @@ class WWMSideMenuVC: WWMBaseViewController {
                             if let userProfile = result["user_profile"] as? [String : Any]{
                                 //setEmail
                                 
-                                print("userProfile+++### \(userProfile)")
+                                //print("userProfile+++### \(userProfile)")
                                 self.appPreffrence.setEmail(value: userProfile["email"] as? String ?? "")
                                 self.appPreffrence.setUserName(value: userProfile["name"] as? String ?? "")
                                 self.appPreffrence.setProfileImgURL(value: userProfile["profile_image"] as? String ?? "")

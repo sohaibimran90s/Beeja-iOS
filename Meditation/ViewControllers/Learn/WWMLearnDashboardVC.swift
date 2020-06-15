@@ -60,7 +60,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         let arrVC = NSMutableArray()
         
         for data in self.arrLearnList {
-            print("data.step_list--- \(data.step_list.count)")
+            //print("data.step_list--- \(data.step_list.count)")
             
             if data.name == "12 Steps"{
                 //WWM21DayChallengeVC

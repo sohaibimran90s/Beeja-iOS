@@ -64,12 +64,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -103,7 +103,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.lblExpressMood.text = ""
         }
         
-        print("oodData.show_burn... \(moodData.show_burn)")
+        //print("oodData.show_burn... \(moodData.show_burn)")
         if !moodData.show_burn {
             btnBurnMood.isHidden = true
         }
@@ -293,12 +293,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 ] as [String : Any]
         }
         
-        print("param meterlog... \(param)")
+        //print("param meterlog... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success moodmeterlogvc background api run")
+                    //print("success moodmeterlogvc background api run")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
 
@@ -360,7 +360,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
-        print("self.type..... \(self.type)")
+        //print("self.type..... \(self.type)")
         if WWMHelperClass.selectedType == "learn"{
             if self.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
@@ -437,8 +437,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success WWMStartTimerVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success WWMStartTimerVC meditationhistoryapi in background thread")
             }
         }
     }

@@ -75,7 +75,7 @@ class WWMSupportVC: WWMBaseViewController {
                       "body" : txtViewQuery.text!
             ] as [String : Any]
         
-        print("contact param... \(param)")
+        //print("contact param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, context: "WWMSupportVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

@@ -67,8 +67,7 @@ class WWMWebServices {
         
         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-        print("Request URL: \(urlString)")
-        print("Data: \(myString!)")
+        print("Request URL: \(urlString) Data: \(myString!)")
         if param.count>0 {
             request.httpBody = jsonData
         }

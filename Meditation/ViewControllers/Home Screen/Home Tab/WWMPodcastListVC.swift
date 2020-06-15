@@ -27,7 +27,7 @@ class WWMPodcastListVC: WWMBaseViewController {
         super.viewDidLoad()
 
         self.setNavigationBar(isShow: false, title: "")
-        print("poddatacount..... \(podData)")
+        //print("poddatacount..... \(podData)")
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -50,12 +50,12 @@ class WWMPodcastListVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -104,7 +104,7 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
         let window = UIApplication.shared.keyWindow!
         
         podcastMusicPlayerPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        print("index... \(index)")
+        //print("index... \(index)")
         
         self.selectedAudioIndex = index
         
@@ -144,7 +144,7 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
     
     
     @IBAction func sliderAction(_ sender: Any) {
-        print("podcastMusicPlayerPopUp.slider.currentValue... \(podcastMusicPlayerPopUp.slider.value)")
+        //print("podcastMusicPlayerPopUp.slider.currentValue... \(podcastMusicPlayerPopUp.slider.value)")
         
         if self.player == nil{
             return
@@ -213,7 +213,7 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
         
         self.audioBool = false
         self.selectedAudioIndex = self.selectedAudioIndex + 1
-        print("self.selectedAudioIndex next... \(self.selectedAudioIndex) self.podData.count... \(self.podData.count - 1)")
+        //print("self.selectedAudioIndex next... \(self.selectedAudioIndex) self.podData.count... \(self.podData.count - 1)")
         self.selectedAudio = "0"
         self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
         if self.selectedAudioIndex == self.podData.count - 1{
@@ -299,9 +299,9 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
                 self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
                     if self.player?.currentItem?.status == .readyToPlay {
                     let currentTime = CMTimeGetSeconds(self.player!.currentTime())
-                    print("currentTime... \(currentTime)")
+                    //print("currentTime... \(currentTime)")
                     let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-                    print("totalDuration... \(Int(duration) - Int(currentTime))")
+                    //print("totalDuration... \(Int(duration) - Int(currentTime))")
                     self.podcastMusicPlayerPopUp.lblEndTime.text = "\(self.secondsToMinutesSeconds(second: Int(duration)))"
                     self.currentTimePlay = Int(currentTime)
                     self.podcastMusicPlayerPopUp.slider.maximumValue = Float(Int(duration))
@@ -309,8 +309,7 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
                     if self.currentTimePlay != 0{
                         let remainingDuration = self.secondsToMinutesSeconds(second: self.currentTimePlay)
                         self.podcastMusicPlayerPopUp.lblStartTime.text = "\(remainingDuration)"
-                        print("remainingDuration... \(remainingDuration)")
-                        print("indexPath... \(index)")
+                        //print("remainingDuration... \(remainingDuration) indexPath... \(index)")
                         
                         if self.podcastMusicPlayerPopUp.lblStartTime.text == self.podcastMusicPlayerPopUp.lblEndTime.text{
                             self.selectedAudio = "0"
@@ -343,7 +342,7 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
                             }
-                            print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
+                            //print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
 
                         }
                     }

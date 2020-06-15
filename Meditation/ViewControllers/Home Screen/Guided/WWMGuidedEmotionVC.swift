@@ -47,7 +47,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         var cell = WWMGuidedEmotionCVC()
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         
-        print("data.tile_type... \(data.tile_type)")
+        //print("data.tile_type... \(data.tile_type)")
         var myMutableString = NSMutableAttributedString()
         
         if data.tile_type == "1" {
@@ -100,7 +100,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             if !data.intro_completed{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-                print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID()) data.intro_url \(data.intro_url)")
+                //print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID()) data.intro_url \(data.intro_url)")
                 vc.value = "curatedCards"
                 vc.emotionId = "\(data.emotion_Id)"
                 vc.id = "\(self.guidedData.cat_Id)"
@@ -128,7 +128,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                         self.spiritualAction(name: "7 Days challenge", type: "spiritual")
                     }
                     
-                    print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
+                    //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
 
                 }else{
                     
@@ -140,7 +140,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                         self.spiritualAction(name: "21 Days challenge", type: "spiritual")
                     }
 
-                    print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
+                    //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
                 }
             }
         }
@@ -180,7 +180,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     
     func practicalAction(name: String, type: String){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: name, dbName: "DBGuidedData", name: "guided_name")
-        print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
@@ -203,7 +203,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     
     func spiritualAction(name: String, type: String){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: name, dbName: "DBGuidedData", name: "guided_name")
-        print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.guided_type+++ \(name) guidedDataDB.count*** \(guidedDataDB.count)")
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {

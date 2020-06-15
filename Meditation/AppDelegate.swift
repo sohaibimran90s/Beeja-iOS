@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         do{
             try reachability!.startNotifier()
         }catch{
-            print("could not start reachability notifier")
+            //print("could not start reachability notifier")
         }
         
         self.requestAuthorization()
@@ -147,7 +147,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
-        print("abc.......")
         let handleShortCutItem = self.handleShortCutItem(shortcutItem: shortcutItem)
         completionHandler(handleShortCutItem)
     }
@@ -157,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         guard let shortCutType = shortcutItem.type as String? else {return false}
     
         UserDefaults.standard.set(true, forKey: "shortCutType")
-        print("shortCutType++++ \(shortCutType)")
+        //print("shortCutType++++ \(shortCutType)")
         switch shortCutType {
         case "Timer":
             
@@ -166,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "I_KNOW_HOW", itemName: "")
                 self.dismissRootViewController()
-                print("Take me to timer")
+                //print("Take me to timer")
                 handle = true
                               
                 self.type = "timer"
@@ -197,7 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 
                 WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "LEARN", itemName: "")
                 self.dismissRootViewController()
-                print("Learn to Meditate")
+                //print("Learn to Meditate")
                 handle = true
                     
                 self.type = "learn"
@@ -209,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             break
             
         case "Login":
-            print("Learn to Meditate")
+
             handle = true
             WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "LOG_IN", itemName: "")
             
@@ -220,7 +219,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
                 rootViewController.pushViewController(profileViewController, animated: false)
             }else if self.appPreffrence.getCheckEnterSignupLogin(){
-                    print("checkEnterSignupLogin is true login")
+                    //print("checkEnterSignupLogin is true login")
                 if self.appPreference.isLogin() {
                   if !self.appPreference.isProfileComplete() {
                         
@@ -246,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             break
         case "Signup":
-            print("Learn to Meditate")
+
             handle = true
             
             WWMHelperClass.sendEventAnalytics(contentType: "3D", itemId: "START_BEEJA", itemName: "")
@@ -258,7 +257,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSplashLoaderVC") as! WWMSplashLoaderVC
                 rootViewController.pushViewController(profileViewController, animated: false)
             }else if self.appPreffrence.getCheckEnterSignupLogin(){
-                print("checkEnterSignupLogin is true signup")
+                //print("checkEnterSignupLogin is true signup")
                 
                 if self.appPreference.isLogin() {
                   if !self.appPreference.isProfileComplete() {
@@ -323,8 +322,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result appdelegate meditation data... \(result)")
-                print("success meditationdata api WWMHomeTabVC background thread")
+                //print("result appdelegate meditation data... \(result) success meditationdata api WWMHomeTabVC background thread")
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -341,8 +339,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        
-        print("mmdkdfkdfkdfkdj")
         if let vc = window?.rootViewController as? WWMStartTimerVC{
             vc.updateTimer()
         }
@@ -352,14 +348,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "AppDelegate") { (result, error, success) in
             if success {
                 
-                print("appdelegate result... \(result)")
-                //staging_url
-                //base_url
+                //print("appdelegate result... \(result)")
                 
                 //set url from backend using constant*
                 if kBETA_ENABLED{
                     
-                    print("I'm running in a non-DEBUG mode")
+                    //print("I'm running in a non-DEBUG mode")
                     
                     if let baseUrl = result["base_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
@@ -368,7 +362,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 }else{
                     
-                    print("I'm running in DEBUG mode")
+                    //print("I'm running in DEBUG mode")
                     
                     if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
@@ -437,7 +431,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 let appStoreVersion = results[0]["version"] as? String
                 let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
                 
-                print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion)) AWS appVersion... \(KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "")")
+                //print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion)) AWS appVersion... \(KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "")")
                 
                 if KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "" != "" && currentVersion != ""{
                     
@@ -707,13 +701,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 "group": group
                 ] as [String : Any]
             
-            print("param delegte ... \(param)")
+            //print("param delegte ... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let _ = result["success"] as? Bool {
-                        print("setting appdelegate... \(result)")
-                        print("settingapi appdelegate with background")
+                        //print("setting appdelegate... \(result) settingapi appdelegate with background")
                     }
                 }
             }
@@ -848,7 +841,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             let currentDate1 = dateFormate.string(from: currentDate)
             let currentDate2 = dateFormate.date(from: currentDate1)
             
-            print("appdelegate*** reminder21DaysDate \(reminder21DaysDate) currentDate*** \(currentDate2 ?? Date())")
+            //print("appdelegate*** reminder21DaysDate \(reminder21DaysDate) currentDate*** \(currentDate2 ?? Date())")
             if reminder21DaysDate == currentDate2{
                 let dateFormate = DateFormatter()
                 dateFormate.locale = Locale.current
@@ -861,7 +854,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 var strDate = dateFormate.string(from: Date())
                 
                 if formatter.contains("a") {
-                    print("phone is set to 12 hours")
+                    //print("phone is set to 12 hours")
                     //phone is set to 12 hours
                     
                     let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
@@ -872,7 +865,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let reminder21DaysTime1 = reminder21DaysTime.components(separatedBy: " ")
                             strDate = strDate + " \(reminder21DaysTime1[0])"
                             
-                            print("strDate 12 pm+++ \(strDate)")
+                            //print("strDate 12 pm+++ \(strDate)")
                             date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
                         }else{
                             strDate = dateFormate.string(from: Date())
@@ -885,13 +878,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             
                             dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
                             
-                            print("strDate+++ \(strDate)")
+                            //print("strDate+++ \(strDate)")
                             date = dateFormate.date(from: strDate)!
                         }
                     }
                 } else {
                     //phone is set to 24 hours
-                    print("phone is set to 24 hours")
+                    //print("phone is set to 24 hours")
                     //strDate = strDate + " \(settingData.morningReminderTime!)"
                     
                     let morningReminderArray = reminder21DaysTime.components(separatedBy: ":")
@@ -907,9 +900,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let date11 = dateFormate.date(from: reminder21DaysTime)
                             dateFormate.dateFormat = "hh:mm"
                             let Date12 = dateFormate.string(from: date11!)
-                            print("date12... \(Date12)")
+                            //print("date12... \(Date12)")
                             strDate = strDate + " " + Date12
-                            print("strDate... \(strDate)")
+                            //print("strDate... \(strDate)")
                         }else{
                             strDate = strDate + " \(reminder21DaysTime)"
                         }
@@ -939,14 +932,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         //local_pushnotification_learn_timer_guided
         if self.value == 1{
-            print("tomm")
-            print("date... \(date)")
+            //print("tomm date... \(date)")
         }else if self.value == 2{
-            print("everyday")
-            print("date... \(date)")
+            //print("everyday date... \(date)")
         }else{
-            print("defult")
-            print("date... \(date)")
+            //print("defult date... \(date)")
         }
         
         if data.count > 0 {
@@ -964,7 +954,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 var strDate = dateFormate.string(from: Date())
 
                 if formatter.contains("a") {
-                    print("phone is set to 12 hours")
+                    //print("phone is set to 12 hours")
                     //phone is set to 12 hours
                     
                     let morningReminderArray = settingData.morningReminderTime?.components(separatedBy: ":")
@@ -975,7 +965,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let morningReminderTime1 = settingData.morningReminderTime?.components(separatedBy: " ")
                             strDate = strDate + " \(morningReminderTime1![0])"
                             
-                            print("morinit++ \(strDate)")
+                            //print("morinit++ \(strDate)")
                             date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
                         }else{
                             strDate = dateFormate.string(from: Date())
@@ -993,7 +983,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     }
                 } else {
                     //phone is set to 24 hours
-                    print("phone is set to 24 hours")
+                    //print("phone is set to 24 hours")
                     //strDate = strDate + " \(settingData.morningReminderTime!)"
                         
                     let morningReminderArray = settingData.morningReminderTime?.components(separatedBy: ":")
@@ -1009,9 +999,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let date11 = dateFormate.date(from: settingData.morningReminderTime ?? "08:00")
                             dateFormate.dateFormat = "hh:mm"
                             let Date12 = dateFormate.string(from: date11!)
-                            print("date12... \(Date12)")
+                            //print("date12... \(Date12)")
                             strDate = strDate + " " + Date12
-                            print("strDate... \(strDate)")
+                            //print("strDate... \(strDate)")
                         }else{
                             
                             if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM") {
@@ -1022,7 +1012,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                                 strDate = strDate + " \(settingData.morningReminderTime!)"
                             }
                             
-                            print("strDate+++ \(strDate)")
+                            //print("strDate+++ \(strDate)")
                         }
                     }
                         
@@ -1053,7 +1043,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 var strDate = dateFormate.string(from: Date())
                     
                 if formatter.contains("a") {
-                    print("phone is set to 12 hours")
+                    //print("phone is set to 12 hours")
                     
                     let afterNoonReminderArray = settingData.afterNoonReminderTime?.components(separatedBy: ":")
                     if afterNoonReminderArray?.count ?? 0 > 0{
@@ -1063,7 +1053,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let afternoonReminderTime1 = settingData.afterNoonReminderTime?.components(separatedBy: " ")
                             strDate = strDate + " \(afternoonReminderTime1![0])"
                             
-                            print("strDate++== \(strDate)")
+                            //print("strDate++== \(strDate)")
                             date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
                         }else{
                             strDate = dateFormate.string(from: Date())
@@ -1082,7 +1072,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                                         
                 } else {
                     //phone is set to 24 hours
-                    print("phone is set to 24 hours")
+                    //print("phone is set to 24 hours")
                     
                     //strDate = strDate + " \(settingData.afterNoonReminderTime!)"
                     let afterNoonReminderArray = settingData.afterNoonReminderTime?.components(separatedBy: ":")
@@ -1099,9 +1089,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let date11 = dateFormate.date(from: settingData.afterNoonReminderTime ?? "08:00")
                             dateFormate.dateFormat = "hh:mm"
                             let Date12 = dateFormate.string(from: date11!)
-                            print("date12... \(Date12)")
+                            //print("date12... \(Date12)")
                             strDate = strDate + " " + Date12
-                            print("strDate... \(strDate)")
+                            //print("strDate... \(strDate)")
                         }else{
                             
                             if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
@@ -1121,8 +1111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     
                     }//phone is set to 24 hours end***
                     
-                    print("strDate afternoon... \(strDate)")
-                    print(settingData.afterNoonReminderTime ?? "")
+                    //print("strDate afternoon... \(strDate)")
+                    //print(settingData.afterNoonReminderTime ?? "")
                     
                     self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: "afternoon")
                 
@@ -1145,7 +1135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 var strDate = dateFormate.string(from: Date())
                     
                 if formatter.contains("a") {
-                    print("phone is set to 12 hours")
+                    //print("phone is set to 12 hours")
                     //phone is set to 12 hours
                     
                     let afterLearnReminderArray = settingData.learnReminderTime?.components(separatedBy: ":")
@@ -1177,7 +1167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }else{
                     //phone is set to 24 hours
 
-                    print("phone is set to 24 hours \(settingData.learnReminderTime ?? "")")
+                    //print("phone is set to 24 hours \(settingData.learnReminderTime ?? "")")
                 
                     //strDate = strDate + " \(settingData.learnReminderTime ?? "14:00")"
                     let afterLearnReminderArray = settingData.learnReminderTime?.components(separatedBy: ":")
@@ -1195,9 +1185,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             let date11 = dateFormate.date(from: settingData.learnReminderTime ?? "08:00")
                             dateFormate.dateFormat = "hh:mm"
                             let Date12 = dateFormate.string(from: date11!)
-                            print("date12... \(Date12)")
+                            //print("date12... \(Date12)")
                             strDate = strDate + " " + Date12
-                            print("strDate... \(strDate)")
+                            //print("strDate... \(strDate)")
                         }else{
                             
 
@@ -1358,7 +1348,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }
                     }
                 }
-                print("tomm... date... \(self.date) date1... \(date)")
+                //print("tomm... date... \(self.date) date1... \(date)")
             }else if self.value == 2{
                 if self.date > date{
                     let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
@@ -1372,7 +1362,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         }
                     }
                 }
-                print("everyday... date... \(self.date) date1... \(date)")
+                //print("everyday... date... \(self.date) date1... \(date)")
             }else{
                 let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
                 let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
@@ -1403,7 +1393,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         if self.appPreffrence.isLogin(){
             if let type = userInfo["type"] as? String{
                 if type == "force_logout"{
-                    print("force_logout_status+++ type \(type)")
+                    //print("force_logout_status+++ type \(type)")
                     self.appPreference.setForceLogout(value: "force_logout_true")
                     UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
                 }
@@ -1429,13 +1419,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         // Print full message.
-        print("userNotificationCenter .. \(userInfo)")
+        //print("userNotificationCenter .. \(userInfo)")
         
         
         if self.appPreffrence.isLogin(){
             if let type = userInfo["type"] as? String{
                 if type == "force_logout"{
-                    print("force_logout_status+++ type \(type)")
+                    //print("force_logout_status+++ type \(type)")
                     self.appPreference.setForceLogout(value: "force_logout_true")
                     UIApplication.shared.keyWindow?.rootViewController = self.animatedTabBarController()
                 }
@@ -1487,7 +1477,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         Messaging.messaging().apnsToken = deviceToken
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-        print("Device Token: \(token)")
+        //print("Device Token: \(token)")
         
     }
     

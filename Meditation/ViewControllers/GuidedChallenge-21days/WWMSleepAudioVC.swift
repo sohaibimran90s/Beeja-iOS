@@ -105,7 +105,7 @@ class WWMSleepAudioVC: WWMBaseViewController {
         
         let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
         if guidedAudioDataDB.count > 0{
-            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
+            //print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
             
             self.arrAudioList.removeAll()
             
@@ -291,7 +291,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             if product.productIdentifier == "get_42_gbp_annual_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -311,7 +311,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             if product.productIdentifier == "get_6_gbp_monthly_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -331,7 +331,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -377,7 +377,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             productRequest.start()
         }
         else {
-            print("Cannot perform In App Purchases.")
+            //print("Cannot perform In App Purchases.")
         }
     }
     
@@ -404,7 +404,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
             
-            print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
+            //print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
             
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
@@ -426,7 +426,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             }
         }
         else {
-            print("There are no products.")
+            //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
@@ -439,7 +439,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
         for transaction in transactions {
             switch transaction.transactionState {
             case SKPaymentTransactionState.purchased, .restored:
-                print("Transaction completed successfully.")
+                //print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 print(transaction.transactionIdentifier as Any)
@@ -447,7 +447,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 var plan_id: Int = 2
                 var subscriptionPlan: String = "annual"
                 
-                print("responseArray.count..... \(responseArray.count) \(responseArray)")
+                //print("responseArray.count..... \(responseArray.count) \(responseArray)")
                 if responseArray.count > buttonIndex{
                     if let dict = self.responseArray[buttonIndex] as? [String: Any]{
                         if let id = dict["id"] as? Int{
@@ -471,14 +471,14 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
                 
-                print("param,,,,... \(param)")
+                //print("param,,,,... \(param)")
                 
                 if !self.restoreBool{
                     self.subscriptionSucessAPI(param: param)
                 }
                 
             case SKPaymentTransactionState.failed:
-                print("Transaction Failed");
+                //print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 //WWMHelperClass.dismissSVHud()
@@ -496,7 +496,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                   print("result.... \(result)")
+                   //print("result.... \(result)")
                 }
             }else {
                 
@@ -517,7 +517,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
     
     func subscriptionSucessAPI(param : [String : Any]) {
         
-        print("param.....###### \(param)")
+        //print("param.....###### \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {

@@ -63,7 +63,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             cell.viewShadow.layer.masksToBounds = false
             
             let data = journalData[indexPath.row]
-            print("journal data... \(data)")
+            //print("journal data... \(data)")
             
             cell.lblJournalDesc.adjustsFontSizeToFitWidth = false
             cell.lblJournalDesc.lineBreakMode = .byTruncatingTail
@@ -136,7 +136,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         let param = ["user_id":self.appPreference.getUserID(),
         "med_type" : self.appPreference.getType()]
         
-        print("jounallist.... \(param)")
+        //print("jounallist.... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_JOURNALMYPROGRESS, context: "WWMMyProgressJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -146,7 +146,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                         var flag = false
                         for i in 0..<moodData.count {
                             let db = moodData[i]
-                            print("db.meditation_type+++ \(db.meditation_type) self.appPreference.getType()+++ \(self.appPreference.getType())")
+                            //print("db.meditation_type+++ \(db.meditation_type) self.appPreference.getType()+++ \(self.appPreference.getType())")
                             if db.meditation_type == "\(self.appPreference.getType())" {
                                 moodData.remove(at: i)
                                 let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalList") as! DBJournalList
@@ -200,7 +200,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         let journalDataDB = WWMHelperClass.fetchDB(dbName: "DBJournalList") as! [DBJournalList]
         if journalDataDB.count > 0 {
             
-            print("self.appPreference.getType()... \(self.appPreference.getType()) journalDataDB.count... \(journalDataDB.count)")
+            //print("self.appPreference.getType()... \(self.appPreference.getType()) journalDataDB.count... \(journalDataDB.count)")
             for dict in journalDataDB {
                 if dict.meditation_type == "\(self.appPreference.getType())" {
                     if let jsonResult = self.convertToDictionaryArray(text: dict.data ?? "") {
@@ -397,7 +397,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             "med_type" : self.appPreference.getType()
         ]
         
-        print("journal param.... \(param)")
+        //print("journal param.... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "WWMMyProgressJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

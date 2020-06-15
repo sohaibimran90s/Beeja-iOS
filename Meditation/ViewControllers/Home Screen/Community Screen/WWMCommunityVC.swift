@@ -76,7 +76,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     }
     
     @objc func appMovedFromBackground() {
-        print("App moved from background!")
+        //print("App moved from background!")
         //self.getCommunityAPI()
         self.fetchCommunityDataFromDB()
     }
@@ -287,7 +287,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 for imageDictionary in images {
                     
                     let imageUrl = imageDictionary["url"] as? String ?? ""
-                    print("\(imageUrl)")
+                    //print("\(imageUrl)")
                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 }
             }else if collectionView.tag == 2 {
@@ -315,7 +315,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 for imageDictionary in images {
                     
                     let imageUrl = imageDictionary["url"] as? String ?? ""
-                    print("\(imageUrl)")
+                    //print("\(imageUrl)")
                     cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
                 }
                 
@@ -351,9 +351,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         if self.communityData.events.count == 0 {
             if collectionView.tag == 0 {
                 let playlist = self.currentPlaylist![indexPath.row]
-                print("\(playlist)")
+                //print("\(playlist)")
                 
-                print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
+                //print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
                 
                 playListURIToBePlay = playlist["uri"] as? String
                 
@@ -406,9 +406,9 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         }else {
             if collectionView.tag == 0 {
                 let playlist = self.currentPlaylist![indexPath.row]
-                print("\(playlist)")
+                //print("\(playlist)")
                 
-                print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
+                //print(String(data: try! JSONSerialization.data(withJSONObject: playlist, options: .prettyPrinted), encoding: .utf8 )!)
                 
                 playListURIToBePlay = playlist["uri"] as? String
                 
@@ -513,7 +513,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         alertZoomImgPopup = UINib(nibName: "WWMZoomImgViewPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMZoomImgViewPopUp
         let window = UIApplication.shared.keyWindow!
         
-        print("imgURL..... \(imgURL)")
+        //print("imgURL..... \(imgURL)")
         
         alertZoomImgPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         
@@ -542,15 +542,15 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func btnUploadHashTagsAction(_ sender: Any) {
         
-        print("btnUploadHashTagsAction detect")
+        //print("btnUploadHashTagsAction detect")
         let ImagePickerManager = WWMImagePickerManager()
         ImagePickerManager.pickImage(self){ image in
             //here is the image
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             
-            print("%@",self.imageData)
+            //print("%@",self.imageData)
             self.uploadHashtagAPI(image: image)
-            print("Get Image Data")
+            //print("Get Image Data")
         }
     }
     
@@ -567,7 +567,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         WWMWebServices.request(params: param, urlString: URL_UPLOADHASHTAG, imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
 
             if success {
-                print("success... \(result)")
+                //print("success... \(result)")
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.getCommunityAPI()
             }else {
@@ -592,11 +592,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
                     self.communityData = WWMCommunityData.init(json: jsonResult)
                     self.titleMeditateAW = self.communityData.titleAnyWhere
-                    print("self.titleMeditateAW... \(self.titleMeditateAW)")
+                    //print("self.titleMeditateAW... \(self.titleMeditateAW)")
                 }
             }
-            print("self.titleMeditateAW*... \(self.titleMeditateAW)")
-            print(self.communityData.events.count)
+            //print("self.titleMeditateAW*... \(self.titleMeditateAW) \(self.communityData.events.count)")
             self.tblViewCommunity.reloadData()
             
             if self.tblViewCommunity.numberOfRows(inSection: 0) != 0 {
@@ -630,7 +629,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 dbCommunityData.data = myString
                 
                 let timeInterval = Int(Date().timeIntervalSince1970)
-                print("timeInterval.... \(timeInterval)")
+                //print("timeInterval.... \(timeInterval)")
                 
                 dbCommunityData.last_time_stamp = "\(timeInterval)"
                 

@@ -59,7 +59,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            print("... settingData... \(settingData)")
+            //print("... settingData... \(settingData)")
             if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
                 arrMeditationData = meditationData
             }
@@ -82,7 +82,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func secondsToMinutesSeconds(second : Int) -> String {
-        print("secinndnddd... \(second)")
+        //print("secinndnddd... \(second)")
         if second<60 {
             return "\(second) sec"
         }else {
@@ -183,7 +183,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
                         }
                         
-                        print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
+                        //print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
                         
                         
                         self.selectedMeditationData = arrMeditationData[indexs]
@@ -256,7 +256,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
     // MARK:- UITableView Delegate methods
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("....userdate.... \(self.userData.type)")
+        //print("....userdate.... \(self.userData.type)")
         
         
         if self.appPreffrence.getType() == "timer" {
@@ -331,7 +331,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime ?? "0") ?? 0)
                         }else if indexPath.row == 3 {                            
                             if let meditationTime = settingData.meditationTime{
-                                print("meditationTime====== \(meditationTime)")
+                                //print("meditationTime====== \(meditationTime)")
                                 cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(meditationTime)!)
                             }else{
                                 cell.lblTime.text = self.secondsToMinutesSeconds(second: 0)
@@ -749,7 +749,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                    print("help...")
+                    //print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.value = "help"
@@ -801,7 +801,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else if indexPath.row == 10{
                         WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                        print("help...")
+                        //print("help...")
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                         
                         vc.value = "help"
@@ -847,7 +847,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else if indexPath.row == 10{
                         WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                        print("help...")
+                        //print("help...")
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                         
                         vc.value = "help"
@@ -887,7 +887,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                    print("help...")
+                    //print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.value = "help"
@@ -1146,7 +1146,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 
                 if dic.min_limit == "" || dic.min_limit == nil{
-                    print("++++++ \(self.min_limit) \(self.max_limit)")
+                    //print("++++++ \(self.min_limit) \(self.max_limit)")
                     
                     let data = ["meditation_id":dic.meditationId,
                                 "meditation_name":dic.meditationName ?? "",
@@ -1216,13 +1216,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 "group": group
                 ] as [String : Any]
             
-            print("settings param... \(param)")
+            //print("settings param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let success = result["success"] as? Bool {
                         print(success)
-                        print("settingVC... \(result)")
+                        //print("settingVC... \(result)")
                         //self.tblViewSetting.reloadData()
                     }
                 }else {

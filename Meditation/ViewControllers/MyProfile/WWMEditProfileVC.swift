@@ -89,28 +89,28 @@ class WWMEditProfileVC: WWMBaseViewController {
     }
     
     @IBAction func btnUploadImgAction(_ sender: UIButton) {
-        print("btnUploadHashTagsAction detect")
+        //print("btnUploadHashTagsAction detect")
         let ImagePickerManager = WWMImagePickerManager()
         ImagePickerManager.pickImage(self){ image in
             //here is the image
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
-            print("%@",self.imageData)
-            print("Get Image Data")
+            //print("%@",self.imageData)
+            //print("Get Image Data")
         }
     }
     
     @IBAction func btnUploadImg1Action(_ sender: UIButton) {
-        print("btnUploadHashTagsAction detect")
+        //print("btnUploadHashTagsAction detect")
         let ImagePickerManager = WWMImagePickerManager()
         ImagePickerManager.pickImage(self){ image in
             //here is the image
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
-            print("%@",self.imageData)
-            print("Get Image Data")
+            //print("%@",self.imageData)
+            //print("Get Image Data")
         }
     }
     
@@ -135,11 +135,7 @@ class WWMEditProfileVC: WWMBaseViewController {
     @IBAction func btnUpdateAction(_ sender: UIButton) {
         
         if reachable.isConnectedToNetwork() {
-            print("name... \(String(describing: self.textFieldName.text))")
-            print("trim name... \(String(describing: self.textFieldName.text?.trimmingCharacters(in: .whitespaces)))")
-            print("email... \(String(describing: self.textFieldEmail.text))")
-            print("gender... \(String(describing: self.textFieldGender.text))")
-            print("dob... \(String(describing: self.textFieldDOB.text))")
+            //print("name... \(String(describing: self.textFieldName.text)) trim name... \(String(describing: self.textFieldName.text?.trimmingCharacters(in: .whitespaces))) email... \(String(describing: self.textFieldEmail.text)) gender... \(String(describing: self.textFieldGender.text)) dob... \(String(describing: self.textFieldDOB.text))")
             
             self.uploadProfileAPI(image: self.profileImg.image ?? UIImage(named: "editProfileImg")!)
          }else {
@@ -246,7 +242,6 @@ extension WWMEditProfileVC: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.cellForRow(at: indexPath) as! WWMEditProfileTVC
         cell.radioImg.image = UIImage(named: "heartFillMedHis")
         self.textFieldGender.text = self.genderList[indexPath.row]
-        print("abc")
         
         if hideUnhideTable{
           self.tableView.isHidden = true
@@ -298,12 +293,12 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
            "gender": self.textFieldGender.text ?? ""
            ] as [String : Any]
         
-       print("param... \(param)")
+       //print("param... \(param)")
        
        WWMWebServices.request1(params: param, urlString: URL_UPDATE_PROFILE, imgData: self.imageData, image: image, isHeader: true) { (result, error, success) in
 
            if success {
-                print("success... \(result)")
+                //print("success... \(result)")
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
                 self.appPreference.setGender(value: result["gender"] as? String ?? "")

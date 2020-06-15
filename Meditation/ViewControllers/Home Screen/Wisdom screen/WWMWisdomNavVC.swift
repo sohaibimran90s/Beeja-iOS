@@ -38,7 +38,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
         let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
         let wisdomDataDB1 = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
         
-        print("wisdomDataDB count... \(wisdomDataDB.count) wisdomDataDB1... \(wisdomDataDB1.count)")
+        //print("wisdomDataDB count... \(wisdomDataDB.count) wisdomDataDB1... \(wisdomDataDB1.count)")
         if wisdomDataDB.count > 0 {
             
             self.arrWisdomList.removeAll()
@@ -59,7 +59,7 @@ class WWMWisdomNavVC: WWMBaseViewController {
                 }
                 
                 let wisdomVideoDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).id ?? "6", dbName: "DBWisdomVideoData", name: "wisdom_id")
-                print("wisdomVideoDataDB count... \(wisdomVideoDataDB.count) wisdomDataDB id... \((dict as AnyObject).id)")
+                //print("wisdomVideoDataDB count... \(wisdomVideoDataDB.count) wisdomDataDB id... \((dict as AnyObject).id)")
                 
                 for dict1 in wisdomVideoDataDB{
                     

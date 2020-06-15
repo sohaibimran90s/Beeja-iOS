@@ -46,7 +46,7 @@ class WWMSplashAnimationVC: WWMBaseViewController {
     }
     
     @objc func handleTapOnSplash(_ sender: AnyObject){
-        print("splash current index.... \(sender.view.tag)")
+        //print("splash current index.... \(sender.view.tag)")
         
         self.arrData1 = self.arrViewSplashTxt
         imageTag = sender.view.tag

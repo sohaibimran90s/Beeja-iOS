@@ -67,11 +67,11 @@ class WWMTimerHomeVC: WWMBaseViewController {
             
             for data in nintyFivePercentDB{
                 
-                print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
                 
                 if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
                     
-                    print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
+                    //print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
                     
                     self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0")
                     
@@ -131,12 +131,12 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 ] as [String : Any]
         }
 
-        print("meter param... \(param)")
+        //print("meter param... \(param)")
 
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("URL_MEDITATIONCOMPLETE..... success timer")
+                //print("URL_MEDITATIONCOMPLETE..... success timer")
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
@@ -301,7 +301,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
     
-        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
+        //print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
         
         self.min = Int(self.sliderPrepTime.value)/60
         
@@ -360,7 +360,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
             return
         }
         
-        print("prepTime... \(self.prepTime) meditationTime... \(self.meditationTime) restTime... \(self.restTime)")
+        //print("prepTime... \(self.prepTime) meditationTime... \(self.meditationTime) restTime... \(self.restTime)")
         self.btnStartTimer.isUserInteractionEnabled = true
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
         vc.prepTime = self.prepTime
