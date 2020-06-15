@@ -68,6 +68,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             }
             
         }else if textField == self.txtViewEmail{
+            self.txtViewEmail.text = self.txtViewEmail.text?.trimmingTrailingSpaces()
             if txtViewEmail.text ?? "" == ""{
                 self.viewEmail.layer.borderColor = UIColor.clear.cgColor
             }
@@ -134,7 +135,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
         
         if txtViewEmail.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
-        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!.trimmingTrailingSpaces())){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else if txtViewPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)

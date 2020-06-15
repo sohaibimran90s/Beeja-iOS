@@ -69,8 +69,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         
         self.nextBtn.isHidden = true;
         self.getOnboardingDataAPI { (onboardingData, isSuccess) in
-            if (isSuccess){
-                
+            if (isSuccess){                
                 let onboardData: OnboardingData = onboardingData
                 if let dataArr = onboardData.data{
                     self.dataArray = dataArr

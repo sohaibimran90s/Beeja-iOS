@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -360,7 +360,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TaU-Qb-phd">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="657"/>
                                         <subviews>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ith-eT-lGR">
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ith-eT-lGR">
                                                 <rect key="frame" x="0.0" y="72" width="375" height="380"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -4852,7 +4852,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="177" height="241"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="9VU-2V-9Zu">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Background_LetsStart" translatesAutoresizingMaskIntoConstraints="NO" id="9VU-2V-9Zu">
                                                     <rect key="frame" x="0.0" y="0.0" width="177" height="140"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="140" id="Ibp-SE-WhV"/>
@@ -11070,7 +11070,7 @@
             </objects>
             <point key="canvasLocation" x="3685.5999999999999" y="4870.614692653674"/>
         </scene>
-        <!--Delegate-->
+        <!--Mood MeterVC-->
         <scene sceneID="jCU-Tx-cZc">
             <objects>
                 <viewController storyboardIdentifier="WWMMoodMeterVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="2Rx-r1-2CX" customClass="WWMMoodMeterVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
@@ -14415,7 +14415,7 @@ Best enjoyed with headphones.</string>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day 1 · 15mins" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAt-VL-6cT">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAt-VL-6cT">
                                                                     <rect key="frame" x="0.0" y="28" width="199" height="17"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -14508,7 +14508,7 @@ Best enjoyed with headphones.</string>
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ix-mr-Pk7">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="586.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="620.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOA-bd-sp9">
                                                 <rect key="frame" x="319" y="16" width="32" height="32"/>
@@ -14559,7 +14559,7 @@ Best enjoyed with headphones.</string>
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the duration of your binaural track below:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15I-c4-gT8">
-                                                <rect key="frame" x="48" y="339.5" width="279" height="40"/>
+                                                <rect key="frame" x="48" y="373.5" width="279" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="ik9-Eg-Na8"/>
                                                 </constraints>
@@ -14568,7 +14568,7 @@ Best enjoyed with headphones.</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1yJ-Gl-LNa">
-                                                <rect key="frame" x="48" y="420.5" width="279" height="90"/>
+                                                <rect key="frame" x="48" y="454.5" width="279" height="90"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="90" id="CVV-mh-fMq"/>
@@ -14597,7 +14597,7 @@ Best enjoyed with headphones.</string>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock1" translatesAutoresizingMaskIntoConstraints="NO" id="bUf-Dp-dSM">
-                                                                            <rect key="frame" x="262" y="12" width="12" height="12"/>
+                                                                            <rect key="frame" x="247" y="12" width="12" height="12"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="12" id="QZ7-xG-SZc"/>
                                                                                 <constraint firstAttribute="width" constant="12" id="Tsz-pg-4wx"/>
@@ -14608,7 +14608,7 @@ Best enjoyed with headphones.</string>
                                                                     <constraints>
                                                                         <constraint firstItem="Xuw-rv-3Js" firstAttribute="centerX" secondItem="GAD-DU-paH" secondAttribute="centerX" id="H2i-zh-s1Q"/>
                                                                         <constraint firstItem="Xuw-rv-3Js" firstAttribute="centerY" secondItem="GAD-DU-paH" secondAttribute="centerY" id="VcD-UY-Xhd"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="bUf-Dp-dSM" secondAttribute="trailing" constant="5" id="Xr1-XY-1Q6"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="bUf-Dp-dSM" secondAttribute="trailing" constant="20" id="Xr1-XY-1Q6"/>
                                                                         <constraint firstItem="bUf-Dp-dSM" firstAttribute="centerY" secondItem="GAD-DU-paH" secondAttribute="centerY" id="hKr-U2-E4o"/>
                                                                     </constraints>
                                                                 </view>
@@ -14641,7 +14641,7 @@ Best enjoyed with headphones.</string>
                                             <constraint firstItem="1yJ-Gl-LNa" firstAttribute="leading" secondItem="3ix-mr-Pk7" secondAttribute="leading" constant="48" id="2Sh-5X-TwC"/>
                                             <constraint firstAttribute="bottom" secondItem="1yJ-Gl-LNa" secondAttribute="bottom" constant="76" id="2mf-kP-DZ6"/>
                                             <constraint firstAttribute="trailing" secondItem="ywZ-Lp-DXz" secondAttribute="trailing" constant="48" id="7QO-Gu-nHE"/>
-                                            <constraint firstItem="15I-c4-gT8" firstAttribute="top" secondItem="ywZ-Lp-DXz" secondAttribute="bottom" constant="66" id="Jbe-bg-AmT"/>
+                                            <constraint firstItem="15I-c4-gT8" firstAttribute="top" secondItem="ywZ-Lp-DXz" secondAttribute="bottom" constant="100" id="Jbe-bg-AmT"/>
                                             <constraint firstAttribute="trailing" secondItem="15I-c4-gT8" secondAttribute="trailing" constant="48" id="KXi-Bg-upo"/>
                                             <constraint firstItem="15I-c4-gT8" firstAttribute="leading" secondItem="3ix-mr-Pk7" secondAttribute="leading" constant="48" id="QdT-rK-rON"/>
                                             <constraint firstItem="EOA-bd-sp9" firstAttribute="top" secondItem="3ix-mr-Pk7" secondAttribute="top" constant="16" id="TzV-Jy-LXu"/>
@@ -18130,7 +18130,7 @@ Best enjoyed with headphones.</string>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgTexture.png" translatesAutoresizingMaskIntoConstraints="NO" id="sVH-fk-PNI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rg1-bt-6u5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rg1-bt-6u5">
                                 <rect key="frame" x="47" y="132" width="282" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="NaS-3n-K94"/>
@@ -18139,7 +18139,7 @@ Best enjoyed with headphones.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPa-b8-hHs">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPa-b8-hHs">
                                 <rect key="frame" x="47" y="217" width="282" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="KhF-Bm-Agc"/>
@@ -18174,21 +18174,21 @@ Best enjoyed with headphones.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLP-w9-1Fi">
                                 <rect key="frame" x="108" y="26" width="158" height="78"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1p-a7-J1u">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1p-a7-J1u">
                                         <rect key="frame" x="139" y="24" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-1V-Sp9">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-1V-Sp9">
                                         <rect key="frame" x="84" y="24" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUf-ni-aYv">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUf-ni-aYv">
                                         <rect key="frame" x="28" y="24" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -18198,7 +18198,7 @@ Best enjoyed with headphones.</string>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-D5-mrt">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-D5-mrt">
                                 <rect key="frame" x="29" y="0.0" width="49" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="49" id="1Pr-Sg-Y6s"/>
@@ -18323,7 +18323,7 @@ Best enjoyed with headphones.</string>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UhE-tO-XsT">
-                                <rect key="frame" x="303" y="6" width="52" height="64"/>
+                                <rect key="frame" x="303" y="6" width="52" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="52" id="mQa-nj-r18"/>
                                 </constraints>
