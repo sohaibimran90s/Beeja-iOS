@@ -27,7 +27,9 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var viewHeaderHC: NSLayoutConstraint!
     @IBOutlet weak var viewMeditationDaysHC: NSLayoutConstraint!
     @IBOutlet weak var viewCollectionViewHC: NSLayoutConstraint!
+    
     var itemInfo: IndicatorInfo = "View"
+    var daysListData: [ThirtyDaysListData] = []
     
     var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     var i = 0
@@ -36,6 +38,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         super.viewDidLoad()
 
         self.setUpView()
+        print(self.daysListData.count)
     }
     
     // MARK: - IndicatorInfoProvider

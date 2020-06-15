@@ -595,6 +595,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
+                WWMHelperClass.deletefromDb(dbName: "DBLearn")
                 WWMHelperClass.selectedType = ""
                 WWMHelperClass.challenge7DayCount = 0
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
@@ -934,16 +935,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URI_LEARN, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            print("learn result... \(result)")
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{
-                    print("total_paid double.. \(total_paid)")
                     WWMHelperClass.total_paid = Int(round(total_paid))
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
-                    
-                    print("getLearnAPI count... \(data.count)")
+                    print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
@@ -967,6 +965,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         let timeInterval = Int(Date().timeIntervalSince1970)
                         print("timeInterval.... \(timeInterval)")
                         dbLearnData.last_time_stamp = "\(timeInterval)"
+                        
+                        if dict["name"] as? String == "30 Day Challenge"{
+                            self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                        }
+                        
+                        print("30intro_completed... \(self.appPreffrence.get30IntroCompleted()) 30intro_url... \(self.appPreffrence.get30DaysURL())")
                         
                         if let name = dict["name"] as? String{
                             dbLearnData.name = name
@@ -1053,7 +1058,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
-                                
+                                                                
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
                                 }
@@ -1665,6 +1670,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             
                             self.appPreffrence.setGetProfile(value: false)
                             self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
+                            self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
                             self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])

@@ -43,6 +43,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var subCategory = ""
     
     var challengePopupView = WWMAlertController()
+    var challenge_type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -329,7 +330,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             "user_id": self.appPreffrence.getUserID(),
             "emotion_id": self.emotionId,
             "emotion_key": self.emotionKey,
-            "guided_id": self.id
+            "guided_id": self.id,
+            "challenge_type": self.challenge_type
             ] as [String : Any]
         
         print("param... \(param)")

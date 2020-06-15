@@ -1277,6 +1277,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
+                WWMHelperClass.deletefromDb(dbName: "DBLearn")
                 WWMHelperClass.challenge7DayCount = 0
                 WWMHelperClass.selectedType = ""
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)

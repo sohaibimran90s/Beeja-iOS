@@ -178,8 +178,7 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
             var flag = 0
             
             for i in 0..<self.learnStepsListData.count{
-                print("date_completed... \(self.learnStepsListData[i].date_completed)")
-                print("completed... \(self.learnStepsListData[i].completed)")
+                print("date_completed... \(self.learnStepsListData[i].date_completed) completed... \(self.learnStepsListData[i].completed) WWMHelperClass.total_paid... \(WWMHelperClass.total_paid) learnStepsListData count... \(self.learnStepsListData.count)")
                 
                 if i !=  self.learnStepsListData.count - 1{
                     if self.learnStepsListData[i].completed == true{
@@ -194,8 +193,6 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
             }
             //*end here
             
-            print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
-            print("learnStepsListData count... \(self.learnStepsListData.count)")
             self.tableView.reloadData()
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
@@ -291,7 +288,6 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     
     //MARK: API call
     func stepFaqAPI() {
-                
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_STEPFAQ, context: "WWMFAQsVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {

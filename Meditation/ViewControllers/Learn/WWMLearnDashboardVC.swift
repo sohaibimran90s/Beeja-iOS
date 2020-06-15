@@ -72,14 +72,13 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
             }else if data.name == "30 Day Challenge"{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
                 
+                print(data.thirty_day_list)
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
-                //vc.learnStepsListData = data.step_list
+                vc.daysListData = data.thirty_day_list
                 arrVC.add(vc)
             }
         }
         
-        
         return arrVC as! [UIViewController]
-        // return [UIViewController]
     }
 }
