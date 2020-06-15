@@ -125,7 +125,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         let fullname = self.appPreffrence.getUserName()
         let arrName = fullname.split(separator: " ")
-        let firstName = arrName[0]
+        let firstName = arrName[0].localizedCapitalized
         
         if self.appPreffrence.getSessionAvailableData(){
             self.introView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
@@ -143,16 +143,16 @@ class WWMHomeTabVC: WWMBaseViewController {
             
             if hour < 12 {
                 print("good morning")
-                self.lblName.text = "\(kMORNING)\n\(firstName)!"
+                self.lblName.text = "\(kMORNING)\n\(firstName)"
             }else if hour < 18 {
                 print("good afternoon")
-                self.lblName.text = "\(kAFTERNOON)\n\(firstName)!"
+                self.lblName.text = "\(kAFTERNOON)\n\(firstName)"
             }else{
                 print("good evening")
-                self.lblName.text = "\(kEVENING)\n\(firstName)!"
+                self.lblName.text = "\(kEVENING)\n\(firstName)"
             }
         }else{
-            self.lblName.text = "\(KWELCOME) \(firstName)!"
+            self.lblName.text = "\(KWELCOME) \(firstName)"
             self.lblStartedText.text = KHOMELBL1
             self.introView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
             //self.introView.backgroundColor = UIColor.clear
