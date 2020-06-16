@@ -43,11 +43,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var subCategory = ""
     
     var challengePopupView = WWMAlertController()
+    var challenge_type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id)")
+        //print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id) videoURL... \(self.videoURL)")
         var prefersStatusBarHidden: Bool {
             return true
         }
@@ -96,11 +97,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.playVideo()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
@@ -118,12 +114,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player1 {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player1 = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -145,7 +141,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
         }
         catch {
-            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+            //print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
         
         
@@ -155,9 +151,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 debugPrint("video.mp4 not found")
                 return
             }
-            
-            
-            //viewVideo.configure(url: "\(path)")
             
             player1 = AVPlayer(url: URL(fileURLWithPath: path))
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
@@ -172,7 +165,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             let duration = CMTimeGetSeconds((self.player1?.currentItem?.asset.duration)!)
             let duration1 = Int(round(duration))
             let totalAudioLength = self.secondToMinuteSecond(second : duration1)
-            print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
+            //print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
             
             self.endTimeLbl.text = "\(totalAudioLength)"
             
@@ -217,10 +210,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }
         
-        print("walkthough videoURL... \(videoURL)")
+        //print("walkthough videoURL... \(videoURL)")
         
         if videoURL != "" {
-            print("videourl... \(videoURL)")
+            //print("videourl... \(videoURL)")
             viewVideo.configure(url: "\(videoURL)")
             viewVideo.isLoop = true
             viewVideo.play()
@@ -230,7 +223,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     @objc func updateTime(_ timer: Timer) {
         let currentTime = CMTimeGetSeconds((self.player1?.currentTime())!)
-        print("currentTime... \(currentTime)")
+        //print("currentTime... \(currentTime)")
         self.slider.value = Float(currentTime)
         self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
         
@@ -259,8 +252,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
-        print("abc....***** \(self.videoCompleted )")
-        print("value... \(value)")
+        //print("abc....***** \(self.videoCompleted) value... \(value)")
         self.timer.invalidate()
         if self.videoCompleted == 1{
             if !reachable.isConnectedToNetwork() {
@@ -329,16 +321,17 @@ class WWMWalkThoghVC: WWMBaseViewController {
             "user_id": self.appPreffrence.getUserID(),
             "emotion_id": self.emotionId,
             "emotion_key": self.emotionKey,
-            "guided_id": self.id
+            "guided_id": self.id,
+            "challenge_type": self.challenge_type
             ] as [String : Any]
         
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ACCEPT_CHALLENGE, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
             
             if success {
-                print("success... \(result)")
-                //WWMHelperClass.hideLoaderAnimate(on: self.view)
+                //print("success... \(result)")
+                ///WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.getGuidedListAPI()
                 DispatchQueue.global(qos: .background).async {
                     self.bannerAPI()
@@ -367,7 +360,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
-                print("result")
+                //print("result")
                 if let result = result["result"] as? [Any]{
                     self.appPreffrence.setBanners(value: result)
                     //print(self.appPreffrence.getBanners().count)
@@ -384,11 +377,11 @@ class WWMWalkThoghVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result getGuidedListAPI walkthough... \(result)")
+                    //print("success result getGuidedListAPI walkthough... \(result)")
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("result... \(result)")
+                        //print("result... \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -596,7 +589,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                         self.fetchGuidedDataFromDB()
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }
@@ -607,7 +600,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     func fetchGuidedDataFromDB() {
         let guidedData = WWMHelperClass.fetchGuidedFilterDB(type: self.subCategory, dbName: "DBGuidedData", name: "meditation_type")
-        print("guidedDataDB.count*** \(guidedData.count)")
+        //print("guidedDataDB.count*** \(guidedData.count)")
         for dict in guidedData{
             if (dict as AnyObject).guided_name == self.category{
                 print(Int((dict as AnyObject).guided_id ?? "0") ?? 0)

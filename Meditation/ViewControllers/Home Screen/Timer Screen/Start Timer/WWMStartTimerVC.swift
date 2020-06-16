@@ -73,7 +73,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("self.min_limit++ \(self.appPreffrence.getTimerMin_limit()) self.max_limit++ \(self.appPreffrence.getTimerMax_limit()) self.meditation_key++ \(self.appPreffrence.getMeditation_key()) ")
+        //print("self.min_limit++ \(self.appPreffrence.getTimerMin_limit()) self.max_limit++ \(self.appPreffrence.getTimerMax_limit()) self.meditation_key++ \(self.appPreffrence.getMeditation_key()) ")
         
         WWMHelperClass.addNinetyFivePercentData(type: self.appPreffrence.getMeditation_key())
 
@@ -170,14 +170,14 @@ class WWMStartTimerVC: WWMBaseViewController {
     @objc func updateTimerInBackground(){
         switch UIApplication.shared.applicationState {
         case .active:
-            print("active state")
+            //print("active state")
             
             self.updateBgTimer?.invalidate()
             self.updateBgTimer = nil
             self.endBackgroundTask()
             
         case .background:
-            print("backgrond state")
+            //print("backgrond state")
             updateTimer()
         default:
             print("default state")
@@ -218,7 +218,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func timerAction(value: Int) {
         
-        print("animateBool.... \(animateBool)")
+        //print("animateBool.... \(animateBool)")
         
         if currentColorSet < colorSets.count - 1 {
             currentColorSet! += 1
@@ -253,7 +253,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     }
     
     @objc func appMovedToBackground() {
-        print("App moved to background!")
+        //print("App moved to background!")
                 
         self.animationViewMed.pause()
         self.animationViewPrep.pause()
@@ -263,7 +263,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func appMovedToForeground() {
         
-        print("App moved to background!")
+        //print("App moved to background!")
         if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
             self.animationViewMed.pause()
             self.animationViewPrep.pause()
@@ -349,7 +349,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     @objc func methodOfCallEndedIdentifier(notification: Notification) {
         
-        print("call ended notification..........")
+        //print("call ended notification..........")
         UIView.animate(withDuration: 1.0, delay: 0.1, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.timer.invalidate()
@@ -440,7 +440,7 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     //#selector(self.updateTimer)
     @objc func updateTimer() {
-        print("seconds... \(seconds)")
+        //print("seconds... \(seconds)")
         if timerType == "Prep"{
             if self.seconds < 1 {
                 if self.meditationTime > 0 {
@@ -540,7 +540,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             
             //convertDurationIntoPercentage
             self.meditationTimeSecondsAnalytics = self.meditationTimeAnalytics - seconds
-            print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
+            //print("self.meditationTimeSecondsAnalytics++++ \(self.meditationTimeSecondsAnalytics)")
             
             //for 95% LTM
             
@@ -594,7 +594,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             offlineCompleteData["complete_percentage"] = self.meditationLTMPlayPercentage
             offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
             
-            print("self.ninetyFiveCompletedFlag*** \(self.ninetyFiveCompletedFlag)")
+            //print("self.ninetyFiveCompletedFlag*** \(self.ninetyFiveCompletedFlag)")
             
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
@@ -603,14 +603,14 @@ class WWMStartTimerVC: WWMBaseViewController {
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
                     
-                    print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+                    //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
                     
                 }
                 
-                print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }
             
-            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
+            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
             
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
@@ -674,7 +674,7 @@ class WWMStartTimerVC: WWMBaseViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        print("id+++++ \(id) data+++++ \(data)")
+        //print("id+++++ \(id) data+++++ \(data)")
         
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {
@@ -752,7 +752,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
+        //print("xib meditationLTMPlayPercentage... \(self.meditationLTMPlayPercentage)")
         if self.meditationLTMPlayPercentage >= Int(self.appPreffrence.getTimerMin_limit()) ?? 95 && self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
             
             isComplete = 1
@@ -767,7 +767,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
-        print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
+        //print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -814,10 +814,10 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     func pushNavigationController(){
         
-        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
+        //print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
         if self.ninetyFiveCompletedFlag == "0"{
             
-            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
                       
              if self.flag == 1{
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
@@ -825,7 +825,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                  WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
               }
             
-            print("meditation_time... \(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0) restTime... \(self.restTime) prepTime... \(self.prepTime)")
+            //print("meditation_time... \(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0) restTime... \(self.restTime) prepTime... \(self.prepTime)")
                       
             self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "\(self.restTime)", emotion_id: "0", tell_us_why: "", prep_time: "\(self.prepTime)", meditation_time: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", watched_duration: "0", level_id: self.levelID, complete_percentage: "\(self.meditationLTMPlayPercentage)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: self.meditationID, date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "timer", guided_type: "", audio_id: "0", step_id: "", mantra_id: "")
             
@@ -835,7 +835,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
             self.timer.invalidate()
             
-            print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
             
             if self.flag == 1{
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
@@ -923,7 +923,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                 ] as [String : Any]
         }
 
-        print("meter param WWMStartTimerVC... \(param)")
+        //print("meter param WWMStartTimerVC... \(param)")
 
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
@@ -931,7 +931,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        print("success... WWMStartTimerVC meditationcomplete api in background")
+                        //print("success... WWMStartTimerVC meditationcomplete api in background")
                         self.appPreffrence.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
                         
@@ -985,8 +985,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success WWMStartTimerVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success WWMStartTimerVC meditationhistoryapi in background thread")
             }
         }
     }
@@ -1022,7 +1021,7 @@ class WWMStartTimerVC: WWMBaseViewController {
         self.pauseAnimation()
         self.timer1.invalidate()
         
-        print("meditationLTMPlayPercentage++++*** \(meditationLTMPlayPercentage)")
+        //print("meditationLTMPlayPercentage++++*** \(meditationLTMPlayPercentage)")
         
         if self.meditationLTMPlayPercentage < Int(self.appPreffrence.getTimerMax_limit()) ?? 98{
 

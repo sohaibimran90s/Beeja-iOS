@@ -68,10 +68,10 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)
         let futureDate1 = dateFormate.string(from: futureDate ?? currentDate)
         let futureDate2 = dateFormate.date(from: futureDate1)
-        print("currentDate+++ \(currentDate) futureDate2+++ \(futureDate2 ?? currentDate)")
+        //print("currentDate+++ \(currentDate) futureDate2+++ \(futureDate2 ?? currentDate)")
         self.appPreffrence.setReminder21DaysDate(value: futureDate2 ?? currentDate)
 
-        print("futureDate*** \(self.appPreffrence.getReminder21DaysDate())")
+        //print("futureDate*** \(self.appPreffrence.getReminder21DaysDate())")
     }
     
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
@@ -118,7 +118,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         self.appPreffrence.setReminder21DaysTime(value: dateFormatter.string(from: sender.date))
         
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: sender.date)) getReminder21DaysTime+++ \(self.appPreffrence.getReminder21DaysTime())")
+        //print("datePicker.date.... \(dateFormatter.string(from: sender.date)) getReminder21DaysTime+++ \(self.appPreffrence.getReminder21DaysTime())")
         
         let date1 = dateFormatter.string(from: sender.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
@@ -158,7 +158,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     
     @objc func donedatePicker(){
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
+        //print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
         
         let date1 = dateFormatter.string(from: datePicker.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  datePicker.date)

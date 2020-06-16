@@ -52,7 +52,7 @@ class WWMFAQsVC: WWMBaseViewController {
         
         var jsonString: [String: Any] = [:]
         if stepFaqDataDB.count > 0 {
-            print("self.stepFaqDataDB... \(stepFaqDataDB.count)")
+            //print("self.stepFaqDataDB... \(stepFaqDataDB.count)")
             for dict in stepFaqDataDB {
                 
                 if dict.step_id == step_id{
@@ -63,7 +63,7 @@ class WWMFAQsVC: WWMBaseViewController {
                     self.faqsData.append(faqsData)
                 }
                 
-                print("self.faqsData... \(self.faqsData.count)")
+                //print("self.faqsData... \(self.faqsData.count)")
             }
         }
     }

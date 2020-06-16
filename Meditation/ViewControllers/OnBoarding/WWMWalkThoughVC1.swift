@@ -36,7 +36,7 @@ class WWMWalkThoughVC1: WWMBaseViewController {
             self.offlineJsonFileCall()
         }else{
             if !self.appPreffrence.getOnBoardingData().isEmpty{
-                print("not empty")
+                //print("not empty")
                 self.decodeModel(json: self.appPreffrence.getOnBoardingData() as AnyObject)
             }else{
                 self.offlineJsonFileCall()
@@ -110,13 +110,13 @@ class WWMWalkThoughVC1: WWMBaseViewController {
             let decoder = JSONDecoder()
             let jsonData: Data? = try? JSONSerialization.data(withJSONObject: json , options: .prettyPrinted)
             let moods = try decoder.decode(OnBoardingModel.self, from: jsonData!)
-            print("+++ \(moods.data ?? [])")
+            //print("+++ \(moods.data ?? [])")
             self.onBoardingDataModel = moods.data ?? []
             self.collectionView.reloadData()
             pageControl.numberOfPages = self.onBoardingDataModel.count
             _ = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
         }catch let error{
-            print("error found \(error)")
+            //print("error found \(error)")
         }
     }
 }

@@ -58,7 +58,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 //set url from backend using constant*
                 if kBETA_ENABLED{
                     
-                    print("I'm running in a non-DEBUG mode")
+                    //print("I'm running in a non-DEBUG mode")
                     
                     if let baseUrl = result["base_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
@@ -67,7 +67,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                     }
                 }else{
                     
-                    print("I'm running in DEBUG mode")
+                    //print("I'm running in DEBUG mode")
                     
                     if let baseUrl = result["staging_url"] as? String{
                         KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
@@ -136,7 +136,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 let appStoreVersion = results[0]["version"] as? String
                 let currentVersion = infoDictionary?["CFBundleShortVersionString"] as? String
                 
-                print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion)) AWS appVersion... \(KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "")")
+                //print("appStoreVersion... \(String(describing: appStoreVersion)) currentVersion... \(String(describing: currentVersion)) AWS appVersion... \(KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "")")
                 
                 if KUSERDEFAULTS.string(forKey: kVERSION_NAME) ?? "" != "" && currentVersion != ""{
                     
@@ -257,12 +257,12 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -397,7 +397,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
                 self.stopLoaderAudio = true
         
-                print("excution..... \(self.executionTime)")
+                //print("excution..... \(self.executionTime)")
         }
     
     //MARK: Sonic
@@ -447,7 +447,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func getMeditationDataFromDB() {
         let dbData = WWMHelperClass.fetchDB(dbName: "DBAllMeditationData") as! [DBAllMeditationData]
         if dbData.count > 0 {
-            print("dbData... \(dbData) excution..... \(self.executionTime)")
+            //print("dbData... \(dbData) excution..... \(self.executionTime)")
             
             self.stopLoaderAudio = true
         }else {
@@ -472,7 +472,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         }
         
         if self.stopLoaderAudio{
-            print("less....")
+            //print("less....")
             
             self.animationView.stop()
             self.animationView.isHidden = true
@@ -483,7 +483,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         }
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMOODMETERDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
-            print("URL_GETMOODMETERDATA result... \(result)")
+            //print("URL_GETMOODMETERDATA result... \(result)")
             self.executionTime = Date().timeIntervalSince(self.startDate)
 
             if sucess {
@@ -499,7 +499,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_ONBOARDING, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
            
             if sucess {
-                print("URL_ONBOARDING result... \(result)")
+                //print("URL_ONBOARDING result... \(result)")
                 self.appPreference.setOnBoardingData(value: result)
             }
         }

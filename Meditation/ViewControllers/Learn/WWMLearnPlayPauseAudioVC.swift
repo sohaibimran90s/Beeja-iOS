@@ -40,12 +40,12 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -58,7 +58,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
         
         self.btnReplay.setImage(UIImage(named: "pauseAudio"), for: .normal)
         
-        print("timeraudio... \(WWMHelperClass.timer_audio)")
+        //print("timeraudio... \(WWMHelperClass.timer_audio)")
         self.audioPlay()
     }
     
@@ -78,7 +78,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
                 let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
                 let duration1 = Int(round(duration))
                 let totalAudioLength = self.secondToMinuteSecond(second : duration1)
-                print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
+                //print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
                 
                 self.endTimeLbl.text = "\(totalAudioLength)"
                 self.beginTimeLbl.text = "00:00"
@@ -105,7 +105,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     
     @objc func updateTime(_ timer: Timer) {
         let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
-        print("currentTime... \(currentTime)")
+        //print("currentTime... \(currentTime)")
         self.slider.value = Float(currentTime)
         self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
         

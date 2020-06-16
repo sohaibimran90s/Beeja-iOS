@@ -73,6 +73,15 @@
         <attribute name="data" optional="YES" attributeType="String"/>
         <attribute name="meditation_type" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="DBLearn" representedClassName="DBLearn" syncable="YES">
+        <attribute name="intro_completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="intro_url" optional="YES" attributeType="String"/>
+        <attribute name="is_expired" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DBLevelData" representedClassName="DBLevelData" syncable="YES">
         <attribute name="isLevelSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="levelId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -148,7 +157,6 @@
         <attribute name="date_completed" optional="YES" attributeType="String"/>
         <attribute name="description1" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
         <attribute name="max_limit" optional="YES" attributeType="String"/>
         <attribute name="min_limit" optional="YES" attributeType="String"/>
         <attribute name="outro_audio" optional="YES" attributeType="String"/>
@@ -156,6 +164,26 @@
         <attribute name="step_name" optional="YES" attributeType="String"/>
         <attribute name="timer_audio" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DBThirtyDays" representedClassName="DBThirtyDays" syncable="YES">
+        <attribute name="auther_name" optional="YES" attributeType="String"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="date_completed" optional="YES" attributeType="String"/>
+        <attribute name="day_name" optional="YES" attributeType="String"/>
+        <attribute name="description1" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="is_milestone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="med_max" optional="YES" attributeType="String"/>
+        <attribute name="med_min" optional="YES" attributeType="String"/>
+        <attribute name="meditation_time" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
+        <attribute name="prep_max" optional="YES" attributeType="String"/>
+        <attribute name="prep_min" optional="YES" attributeType="String"/>
+        <attribute name="prep_time" optional="YES" attributeType="String"/>
+        <attribute name="rest_max" optional="YES" attributeType="String"/>
+        <attribute name="rest_min" optional="YES" attributeType="String"/>
+        <attribute name="rest_time" optional="YES" attributeType="String"/>
     </entity>
     <entity name="DBTimerData" representedClassName="DBTimerData" syncable="YES">
         <attribute name="levelId" optional="YES" attributeType="String"/>
@@ -191,6 +219,7 @@
         <element name="DBGuidedEmotionsData" positionX="-9" positionY="144" width="128" height="238"/>
         <element name="DBJournalData" positionX="-18" positionY="135" width="128" height="60"/>
         <element name="DBJournalList" positionX="-63" positionY="-9" width="128" height="73"/>
+        <element name="DBLearn" positionX="-9" positionY="144" width="128" height="148"/>
         <element name="DBLevelData" positionX="-9" positionY="117" width="128" height="225"/>
         <element name="DBMantras" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBMeditationComplete" positionX="-18" positionY="90" width="128" height="60"/>
@@ -201,7 +230,8 @@
         <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
-        <element name="DBSteps" positionX="9" positionY="162" width="128" height="223"/>
+        <element name="DBSteps" positionX="9" positionY="162" width="128" height="208"/>
+        <element name="DBThirtyDays" positionX="-18" positionY="135" width="128" height="313"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="103"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="163"/>

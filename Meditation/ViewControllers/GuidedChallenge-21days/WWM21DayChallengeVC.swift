@@ -83,7 +83,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     }
     
     func showHidRetakeView(){
-        print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
+        //print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
         if self.retakeFlag == 21{
             self.btnIntroTopConstraint.constant = 30
             self.viewBannerHeightConstraint.constant = 58
@@ -105,7 +105,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     
     @IBAction func btnRetakeAction(_ sender: UIButton) {
         
-        print("Retake button clicked")
+        //print("Retake button clicked")
         
         if reachable.isConnectedToNetwork() {
             self.xibRetake()
@@ -135,7 +135,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     //MARK: Fetch Guided Data From DB
     func fetchGuidedDataFromDB() {
         let guidedEmotionsData = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedEmotionsData", name: "guided_id")
-        print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedEmotionsData.count)")
+        //print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedEmotionsData.count)")
         
         if guidedEmotionsData.count == 0{
                singleGuidedAPI()
@@ -152,10 +152,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     func fetchGuidedDataFromDB1() {
         
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedData", name: "guided_id")
-        print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.id+++ \(self.id) guidedDataDB.count*** \(guidedDataDB.count)")
         
         if guidedDataDB.count > 0{
-            print("guidedDataDB count... \(guidedDataDB.count)")
+            //print("guidedDataDB count... \(guidedDataDB.count)")
             
             self.arrGuidedList.removeAll()
             
@@ -223,11 +223,11 @@ class WWM21DayChallengeVC: WWMBaseViewController {
                     jsonEmotionsString["emotion_type"] = (dict1 as AnyObject).emotion_type ?? ""
                     
                     let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
-                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
+                    //print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count)")
                     
                     for dict2 in guidedAudiosDataDB{
                         
-                        print("dict2.... \(dict2)")
+                        //print("dict2.... \(dict2)")
                         jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
                         jsonAudiosString["id"] = Int((dict2 as AnyObject).audio_id ?? "0")
                         jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
@@ -267,7 +267,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
             if let _ = result["success"] as? Bool {
                 
                 if let result = result["result"] as? [String:Any] {
-                    print("success result... \(result)")
+                    //print("success result... \(result)")
                     
                     var emotionId = ""
                     let guidedEmotionsData = WWMHelperClass.fetchGuidedFilterDB(type: self.id, dbName: "DBGuidedEmotionsData", name: "guided_id")
@@ -417,8 +417,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         var flag = 0
         
         for i in 0..<self.arrGuidedList[0].cat_EmotionList.count{
-            print("date_completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed_date)")
-            print("completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed)")
+            //print("date_completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed_date) completed... \(self.arrGuidedList[0].cat_EmotionList[i].completed)")
             
             if i !=  self.arrGuidedList[0].cat_EmotionList.count - 1{
                 if self.arrGuidedList[0].cat_EmotionList[i].completed == true{
@@ -527,7 +526,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         let collHeight = (46 *  data.audio_list.count) + (10 * (data.audio_list.count - 1))
         cell.collectionViewHeightConstraint.constant = CGFloat(collHeight)
         
-        print("collHeight**** \(collHeight) self.arrGuidedList[0].cat_EmotionList.count*** \(data.audio_list.count)")
+        //print("collHeight**** \(collHeight) self.arrGuidedList[0].cat_EmotionList.count*** \(data.audio_list.count)")
         cell.collectionView.tag = indexPath.row
         let layout = UICollectionViewFlowLayout()
         cell.collectionView.collectionViewLayout = layout
@@ -579,7 +578,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 cell.lockImg.image = UIImage(named: "")
                 cell.lockImg.isHidden = true
             }else{
-                print("data.audio_list[indexPath.item].audio_Duration... \(data.audio_list[indexPath.item].audio_Duration)")
+                //print("data.audio_list[indexPath.item].audio_Duration... \(data.audio_list[indexPath.item].audio_Duration)")
                 if data.audio_list[indexPath.item].audio_Duration <= 900{
                     cell.lockImg.image = UIImage(named: "")
                     cell.lockImg.isHidden = true
@@ -601,7 +600,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
         print(indexPath.item)
         
         if self.retakeFlag == 21{
-            print("challenge completed")
+            //print("challenge completed")
         }else{
             let data = self.arrGuidedList[0].cat_EmotionList[collectionView.tag]
             if self.guideTitleCount > 3 && self.cat_name.contains("21"){
@@ -611,7 +610,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     //to check if 7 days accepted than 21 days will not be cliced
                     if self.name == "21 Days challenge"{
                         if self.check7DaysChallenge(){
-                            print("7 days challenge accepted")
+                            //print("7 days challenge accepted")
                             self.xibCall1(title1: "You have accepted 7 Days Challenge")
                         }else{
                             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
@@ -650,7 +649,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func check7DaysChallenge() -> Bool{
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: "7 Days challenge", dbName: "DBGuidedData", name: "guided_name")
-        print("guidedDataDB.count*** \(guidedDataDB.count) 21 days")
+        //print("guidedDataDB.count*** \(guidedDataDB.count) 21 days")
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
                 let meditation_type = ((dict as AnyObject).meditation_type) ?? "Spiritual"
@@ -726,7 +725,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             if flag == 2{
                 
-                print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
+                //print("first play the \(self.arrGuidedList[0].cat_EmotionList[position].emotion_Name) position+++ \(position)")
                 
                 self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
             }else{
@@ -734,7 +733,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 WWMHelperClass.selectedType = "guided"
                 WWMHelperClass.days21StepNo = "Step \(data.step_id)"
                 WWMHelperClass.stepsCompleted = data.completed
-                print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
+                //print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                 vc.audioData = data.audio_list[collection_cell_tag]
@@ -816,7 +815,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             if product.productIdentifier == "get_42_gbp_annual_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -836,7 +835,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             if product.productIdentifier == "get_6_gbp_monthly_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -856,7 +855,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -901,7 +900,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             productRequest.start()
         }
         else {
-            print("Cannot perform In App Purchases.")
+            //print("Cannot perform In App Purchases.")
         }
     }
     
@@ -928,7 +927,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
             
-            print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
+            //print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
             
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
@@ -950,7 +949,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             }
         }
         else {
-            print("There are no products.")
+            //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
@@ -963,7 +962,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
         for transaction in transactions {
             switch transaction.transactionState {
             case SKPaymentTransactionState.purchased, .restored:
-                print("Transaction completed successfully.")
+                //print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 print(transaction.transactionIdentifier as Any)
@@ -971,7 +970,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 var plan_id: Int = 2
                 var subscriptionPlan: String = "annual"
                 
-                print("responseArray.count..... \(responseArray.count) \(responseArray)")
+                //print("responseArray.count..... \(responseArray.count) \(responseArray)")
                 if responseArray.count > buttonIndex{
                     if let dict = self.responseArray[buttonIndex] as? [String: Any]{
                         if let id = dict["id"] as? Int{
@@ -995,14 +994,14 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
                 
-                print("param,,,,... \(param)")
+                //print("param,,,,... \(param)")
                 
                 if !self.restoreBool{
                     self.subscriptionSucessAPI(param: param)
                 }
                 
             case SKPaymentTransactionState.failed:
-                print("Transaction Failed");
+                //print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 //WWMHelperClass.dismissSVHud()
@@ -1020,7 +1019,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                    print("result.... \(result)")
+                    //print("result.... \(result)")
                 }
             }else {
                 
@@ -1041,7 +1040,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
     
     func subscriptionSucessAPI(param : [String : Any]) {
         
-        print("param.....###### \(param)")
+        //print("param.....###### \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
@@ -1126,11 +1125,11 @@ extension WWM21DayChallengeVC{
             "guided_id"     : guided_id
             ] as [String : Any]
         
-        print("retakeChallenge param... \(param)")
+        //print("retakeChallenge param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("retake api... \(result)")
+                //print("retake api... \(result)")
                 self.appPreference.setType(value: "guided")
                 self.appPreference.setGuideType(value: "21 Days challenge")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
@@ -1160,7 +1159,7 @@ extension WWM21DayChallengeVC{
                     self.appPreference.set21ChallengeName(value: "21 Days challenge")
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("audioList... \(result)")
+                        //print("audioList... \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -1361,7 +1360,7 @@ extension WWM21DayChallengeVC{
                             self.reloadTabs21DaysController()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

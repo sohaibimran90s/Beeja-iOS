@@ -50,7 +50,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     }
     
     @objc func automaticHiddenNavigation(){
-        print("automaticHiddenNavigation.........")
+        //print("automaticHiddenNavigation.........")
         if self.playerStatus == "Playing"{
             self.navigationController?.navigationBar.isHidden = true
         }else{
@@ -66,7 +66,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     
     @objc func onCustomTap(sender: UITapGestureRecognizer) {
     
-        print("onCustomTap.........\(self.playerStatus)")
+        //print("onCustomTap.........\(self.playerStatus)")
 
         if self.playerStatus == "Playing"{
             self.navigationController?.navigationBar.isHidden = false
@@ -80,14 +80,14 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "rate" {
             if self.player?.rate == 1  {
-                print("Playing")
+                //print("Playing")
                 self.playerStatus = "Playing"
                 self.playerAudio?.play()
                 self.navigationController?.navigationBar.isHidden = false
                 self.timerInterval = Int(4.6)
                 self.timerNavigation()
             }else{
-                print("Stop")
+                //print("Stop")
                 self.playerStatus = "Stop"
                 self.playerAudio?.pause()
                 self.navigationController?.navigationBar.isHidden = false
@@ -262,7 +262,7 @@ extension WWMVedioPlayerVC: UIGestureRecognizerDelegate {
 extension WWMVedioPlayerVC: AVAudioPlayerDelegate{
     func playSound(name: String ) {
         guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
-            print("url not found")
+            //print("url not found")
             return
         }
         
@@ -285,7 +285,7 @@ extension WWMVedioPlayerVC: AVAudioPlayerDelegate{
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
     
-        print("finished")//It is working now! printed "finished"!
+        //print("finished")//It is working now! printed "finished"!
         self.playerAudio?.play()
     }
 }

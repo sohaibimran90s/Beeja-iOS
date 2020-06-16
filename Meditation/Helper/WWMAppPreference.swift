@@ -81,6 +81,14 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func set30DaysURL(value: String) {
+        defaults.set(value, forKey: "30_days_url")
+    }
+    
+    func set30IntroCompleted(value: Bool) {
+        defaults.set(value, forKey: "30DaysIntroCompleted")
+    }
+    
     func setForceLogout(value: String) {
         defaults.set(value, forKey: "force_logout")
         defaults.synchronize()
@@ -250,6 +258,14 @@ class WWMAppPreference: NSObject {
     
     func getLearnPageURL() -> String {
         return UserDefaults.standard.string(forKey: "learn_page_url") ?? ""
+    }
+    
+    func get30DaysURL() -> String {
+        return UserDefaults.standard.string(forKey: "30_days_url") ?? ""
+    }
+    
+    func get30IntroCompleted() -> Bool {
+        return defaults.bool(forKey: "30DaysIntroCompleted")
     }
     
     func getSessionAvailableData() -> Bool{

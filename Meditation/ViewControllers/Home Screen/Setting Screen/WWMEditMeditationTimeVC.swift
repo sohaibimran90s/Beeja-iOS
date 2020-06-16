@@ -89,7 +89,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         
         self.sliderMeditationTime.minimumValue = Float(self.selectedLevelData.minMeditation)
         self.sliderMeditationTime.maximumValue = Float(self.selectedLevelData.maxMeditation)
-        print("settingData.meditationTime*** \(settingData.meditationTime)")
+        //print("settingData.meditationTime*** \(settingData.meditationTime)")
         self.sliderMeditationTime.value = Float(settingData.meditationTime ?? "0") ?? 0
         self.lblMeditationTime.text = self.secondsToMinutesSeconds1(second: Int(self.sliderMeditationTime.value))
         
@@ -102,7 +102,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     
     
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
-        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
+        //print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
         
         self.min = Int(self.sliderPrepTime.value)/60
         
@@ -137,7 +137,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         self.lblMeditationTime.text = self.secondsToMinutesSeconds1(second: Int(self.meditationTime))
         self.selectedLevelData.meditationTime = Int32(self.meditationTime)
         
-        print("self.meditationTime... \(self.meditationTime)")
+        //print("self.meditationTime... \(self.meditationTime)")
 
         self.settingData.meditationTime = "\(self.meditationTime)"
     }
@@ -298,13 +298,13 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "group": group
             ] as [String : Any]
         
-        print("edit param... \(param)")
+        //print("edit param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
-                    print(success)
-                    print("WWMEditMeditationTimeVC background thread")
+                    //print(success)
+                    //print("WWMEditMeditationTimeVC background thread")
                 }
             }
         }

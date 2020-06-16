@@ -37,7 +37,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
         self.btnUseAnother.layer.borderWidth = 2.0
         self.btnUseAnother.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        print("getuserdata..... \(self.appPreffrence.getUserData())")
+        //print("getuserdata..... \(self.appPreffrence.getUserData())")
         //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
         let getuserdata = self.appPreffrence.getUserData()
         
@@ -189,7 +189,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                 print(error?.localizedDescription ?? "")
             }else {
                 if (loginResult?.isCancelled)! {
-                    print("User Cancellled To login with fb")
+                    //print("User Cancellled To login with fb")
                 }else {
                     let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
                     req.start(completionHandler: { (connection, result, error) in
@@ -240,7 +240,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
             if sucess {
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
-                    print("userProfile WWMWelcomeBackVC... \(userProfile)")
+                    //print("userProfile WWMWelcomeBackVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
                         self.bannerAPI()
@@ -305,7 +305,7 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
     let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
     WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMWelcomeBackVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
-                print("result")
+                //print("result")
                 if let result = result["result"] as? [Any]{
                     self.appPreffrence.setBanners(value: result)
                 }

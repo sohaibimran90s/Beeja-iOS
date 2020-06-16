@@ -8,11 +8,10 @@
 
 import UIKit
 
-class WWMHomeGiftPopUp: UIView {
+class WWMShareLovePopUp: UIView {
     
     @IBOutlet weak var btnClose: UIButton!
-    @IBOutlet weak var btnText: UIButton!
-    @IBOutlet weak var btnEmail: UIButton!
-    @IBOutlet weak var btnShare: UIButton!
-    @IBOutlet weak var lblInvites: UILabel!
+    @IBOutlet weak var btnInviteFriends: UIButton!
+    @IBOutlet weak var lblCopyCode: UILabel!
+    @IBOutlet weak var lblNoOfInvites: UILabel!
 }

@@ -126,7 +126,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
         var param: [String: Any] = [:]
         
-        print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
+        //print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
         
         if WWMHelperClass.selectedType == "learn"{
             param = [
@@ -177,12 +177,12 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 ] as [String : Any]
         }
         
-        print("journal param... \(param)")
+        //print("journal param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success moodjournalvc background meditationcomplete api...")
+                    //print("success moodjournalvc background meditationcomplete api...")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
                     
@@ -273,8 +273,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success moodjournalVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success moodjournalVC meditationhistoryapi in background thread")
             }
         }
     }

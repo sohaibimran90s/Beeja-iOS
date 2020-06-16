@@ -92,7 +92,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result signupletsstartvc meditation data... \(result)")
+                //print("result signupletsstartvc meditation data... \(result)")
                 
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {

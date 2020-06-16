@@ -205,7 +205,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
             self.previousDate = dateFormatter.string(from: date1)
         }
         
-        print("\(self.currentDate).... \(self.previousDate)")
+        //print("\(self.currentDate).... \(self.previousDate)")
     }
     
     // MARK:- UITable View Delegates Methods
@@ -322,13 +322,13 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
         
         let param = ["user_id":self.appPreference.getUserID(),"med_type" : self.appPreference.getType(), "date": xData, "type": self.type]
         
-        print("mood para... \(param)")
+        //print("mood para... \(param)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MOODPROGRESS, context: "WWMMyProgressMoodVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 if let statsData = result["result"] as? [String:Any] {
                     
-                    print("statsData.... \(statsData)")
+                    //print("statsData.... \(statsData)")
                     
                     if self.type == "weekly"{
                         self.btnChangeDuration.setTitle("Last 7 Days", for: .normal)
@@ -340,8 +340,7 @@ class WWMMyProgressMoodVC: WWMBaseViewController,UITableViewDelegate,UITableView
                     self.moodProgressData = WWMMoodProgressData.init(json: statsData)
                     
                     
-                    print("self.moodProgressData.color_score.pre... \(self.moodProgressData.color_score.pre)")
-                    print("self.moodProgressData.color_score.post... \(self.moodProgressData.color_score.post)")
+                    //print("self.moodProgressData.color_score.pre... \(self.moodProgressData.color_score.pre) self.moodProgressData.color_score.post... \(self.moodProgressData.color_score.post)")
                     
                     self.graphChartApiCall()
                     self.tblMoodProgress.reloadData()

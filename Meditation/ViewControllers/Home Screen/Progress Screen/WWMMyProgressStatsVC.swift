@@ -174,7 +174,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         scrollView.setContentOffset(.zero, animated: true)
         self.setUpNavigationBarForDashboard(title: "My Progress")
         
-        print("self.appPreffrence.getType().... \(self.appPreffrence.getType())")
+        //print("self.appPreffrence.getType().... \(self.appPreffrence.getType())")
         
         if self.appPreffrence.getType() == "timer"{
             self.btnAddSession.setTitle("Add a Session", for: .normal)
@@ -490,8 +490,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //addSessionView.txtViewDate.isUserInteractionEnabled = false
         let dateFormatter = DateFormatter()
         
-        print("pickerView.date.convertedDate..... \(sender.date.convertedDate)")
-        print("sender.date.... \(sender.date)")
+        //print("pickerView.date.convertedDate..... \(sender.date.convertedDate) sender.date.... \(sender.date)")
         dateFormatter.dateFormat = "dd MMM yyyy"
         dateFormatter.locale = NSLocale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
@@ -565,7 +564,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let meditationTime1 = hour1*3600 + minutes1*60 + seconds1
         let meditationTime2 = hour2*3600 + minutes2*60 + seconds2
         
-        print("meditationTime1.... \(meditationTime1) meditationTime2.... \(meditationTime2)")
+        //meditationTime1.... \(meditationTime1) meditationTime2.... \(meditationTime2)")
         
         let param = ["user_id":self.appPreference.getUserID(),
                      "meditation_id":self.selectedMeditationId,
@@ -610,7 +609,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     // MARK:- UICollection View Delegate Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days21PracticalChallenge.count)")
+        //print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days21PracticalChallenge.count)")
         
         if collectionView == collectionView21Chall{
             if self.challType == "Practical"{
@@ -774,7 +773,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func addSessionAPI(param:[String:Any]) {
 
-        print("add session params.... \(param)")
+        //print("add session params.... \(param)")
 
         addSessionView.btnDone.isUserInteractionEnabled = false
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -863,13 +862,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         let param = ["user_id":self.appPreference.getUserID(),
                      "med_type" : self.appPreference.getType(),
                      "month":self.strMonthYear]
-        print("param stats... \(param)")
+        //print("param stats... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STATSMYPROGRESS, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
                     
-                    print("data stats++++ \(data)")
+                    //print("data stats++++ \(data)")
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
                 self.isLeft = false
@@ -915,7 +914,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     self.tableView.dataSource = self
                     
                     self.tableView.reloadData()
-                  print("enabledCount...\(self.milestoneData.milestoneEnabledData.count)++ disabledCount...\(self.milestoneData.milestoneDisabledData.count)")
+                  //print("enabledCount...\(self.milestoneData.milestoneEnabledData.count)++ disabledCount...\(self.milestoneData.milestoneDisabledData.count)")
                 }
             }else {
                 if error != nil {
@@ -958,31 +957,31 @@ extension Date {
 
 extension WWMMyProgressStatsVC{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("scrollview.... \(scrollView.contentOffset.y)")
+        //print("scrollview.... \(scrollView.contentOffset.y)")
         
         var yaxis: CGFloat = 395
         if UIDevice().userInterfaceIdiom == .phone {
             switch UIScreen.main.nativeBounds.height {
             case 1136:
-                print("iPhone 5 or 5S or 5C")
+                //print("iPhone 5 or 5S or 5C")
                 yaxis = 400
             case 1334:
-                print("iPhone 6/6S/7/8")
+                //print("iPhone 6/6S/7/8")
                 yaxis = 395
             case 2208:
-                print("iPhone 6+/6S+/7+/8+")
+                //print("iPhone 6+/6S+/7+/8+")
                 yaxis = 370
             case 2436:
-                print("iPhone X, XS")
+                //print("iPhone X, XS")
                 yaxis = 340
             case 2688:
-                print("iPhone XS Max")
+                //print("iPhone XS Max")
                 yaxis = 300
             case 1792:
-                print("iPhone XR")
+                //print("iPhone XR")
                 yaxis = 370
             default:
-                print("unknown")
+                //print("unknown")
                 yaxis = 395
             }
         }
@@ -993,34 +992,34 @@ extension WWMMyProgressStatsVC{
                     
                     if self.isLeft{
                         let weeklySession: Int = self.statsData.weekly_session ?? 0
-                        print("weeklySession.... \(weeklySession)")
+                        //print("weeklySession.... \(weeklySession)")
                         self.lblMeditate.format = "%d"
                         self.lblMeditate.countFrom(0, to: CGFloat(weeklySession), withDuration: 1.0)
                         
                         let avgSession: Int = self.statsData.avg_session ?? 0
-                        print("avg_session.... \(avgSession)")
+                        //print("avg_session.... \(avgSession)")
                         self.lblValueSession.format = "%d"
                         self.lblValueSession.countFrom(0, to: CGFloat(avgSession), withDuration: 1.0)
                         
                         
                         let longestSession: Int = self.statsData.longest_session ?? 0
-                        print("longestSession.... \(longestSession)")
+                        //print("longestSession.... \(longestSession)")
                         self.lblValueDays.format = "%d"
                         self.lblValueDays.countFrom(0, to: CGFloat(longestSession), withDuration: 1.0)
                     }else{
                         let hoursOfMeditateSession: Int = self.statsData.hours_of_meditate ?? 0
-                        print("hoursOfMeditateSession.... \(hoursOfMeditateSession)")
+                        //print("hoursOfMeditateSession.... \(hoursOfMeditateSession)")
                         self.lblMeditate.format = "%d"
                         self.lblMeditate.countFrom(0, to: CGFloat(hoursOfMeditateSession), withDuration: 1.0)
                         
                         let totalSession: Int = self.statsData.total_Session ?? 0
-                        print("totalSession.... \(totalSession)")
+                        //print("totalSession.... \(totalSession)")
                         self.lblValueSession.format = "%d"
                         self.lblValueSession.countFrom(0, to: CGFloat(totalSession), withDuration: 1.0)
                         
                         
                         let consdaysSession: Int = self.statsData.cons_days ?? 0
-                        print("consdaysSession.... \(consdaysSession)")
+                        //print("consdaysSession.... \(consdaysSession)")
                         self.lblValueDays.format = "%d"
                         self.lblValueDays.countFrom(0, to: CGFloat(consdaysSession), withDuration: 1.0)
                     }
@@ -1048,12 +1047,11 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
         self.tableViewHeightConstraint.constant = 190 * CGFloat(self.milestoneData.milestoneEnabledData.count + self.milestoneData.milestoneDisabledData.count)
         
         
-         print("self.milestoneData.milestoneEnabledData.count.... \(self.milestoneData.milestoneEnabledData.count)")
-         print("self.milestoneData.milestonedisabledData.count.... \(self.milestoneData.milestoneDisabledData.count)")
+         //print("self.milestoneData.milestoneEnabledData.count.... \(self.milestoneData.milestoneEnabledData.count) self.milestoneData.milestonedisabledData.count.... \(self.milestoneData.milestoneDisabledData.count)")
 
         if self.milestoneData.milestoneEnabledData.count > indexPath.row{
             
-            print("**** \(indexPath.row)")
+            //print("**** \(indexPath.row)")
             
             if indexPath.row%2 == 0{
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
@@ -1120,7 +1118,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
             }
             
         }else{
-            print("indexpathrow....+++\(indexPath.row)")
+            //print("indexpathrow....+++\(indexPath.row)")
             let indexPathRow1 = indexPath.row - (self.milestoneData.milestoneEnabledData.count)
             
             if indexPath.row%2 == 0{
@@ -1212,7 +1210,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
     
-        print("finished")//It is working now! printed "finished"!
+        //print("finished")//It is working now! printed "finished"!
         self.player?.stop()
     }
 }
@@ -1224,11 +1222,11 @@ extension WWMMyProgressStatsVC{
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result...+++++ \(result)")
+                    //print("success result...+++++ \(result)")
                     
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("audioList...+++ \(result)")
+                        //print("audioList...+++ \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -1433,7 +1431,7 @@ extension WWMMyProgressStatsVC{
                             WWMHelperClass.saveDb()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }
@@ -1460,8 +1458,7 @@ extension WWMMyProgressStatsVC{
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result hometabvc meditation data... \(result)")
-                print("success meditationdata api WWMHomeTabVC background thread")
+                //print("result hometabvc meditation data... \(result) success meditationdata api WWMHomeTabVC background thread")
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {

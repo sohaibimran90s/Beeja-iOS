@@ -62,7 +62,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key) cat_Name+++ \(cat_Name) mk+++ \(self.meditation_key)_\(self.cat_Name) audio_url \(self.audioData.audio_Url)")
+        //print("self.min_limit++ \(min_limit) self.max_limit++ \(max_limit) self.meditation_key++ \(meditation_key) cat_Name+++ \(cat_Name) mk+++ \(self.meditation_key)_\(self.cat_Name) audio_url \(self.audioData.audio_Url)")
         
         WWMHelperClass.addNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
         
@@ -109,12 +109,12 @@ class WWMSleepTimerVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -127,12 +127,12 @@ class WWMSleepTimerVC: WWMBaseViewController {
     
     //MARK: notification methods
     @objc func appMovedToBackground() {
-        print("App moved to background!")
+        //print("App moved to background!")
         self.animationView.pause()
     }
     
     @objc func appMovedToForeground() {
-        print("App moved to background!")
+        //print("App moved to background!")
         if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
             self.animationView.pause()
         }else{
@@ -185,7 +185,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     
     @objc func timerAction(value: Int) {
         
-        print("animateBool.... \(animateBool)")
+        //print("animateBool.... \(animateBool)")
         
         if currentColorSet < colorSets.count - 1 {
             currentColorSet! += 1
@@ -205,7 +205,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     
     //MARK: Play Audio
     func play(url:URL) {
-        print("playing \(url)")
+        //print("playing \(url)")
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -227,7 +227,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     
     @objc func methodOfCallEndedIdentifier(notification: Notification) {
         
-        print("call ended notification..........")
+        //print("call ended notification..........")
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.isStop = true
@@ -248,7 +248,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
             
             self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
             
-            print("self.meditationGuidedPlayPercentage... \(self.meditationGuidedPlayPercentage)")
+            //print("self.meditationGuidedPlayPercentage... \(self.meditationGuidedPlayPercentage)")
             
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
@@ -280,10 +280,10 @@ class WWMSleepTimerVC: WWMBaseViewController {
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
                     
-                    print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+                    //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
                 }
                 
-                print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
             
             if meditationGuidedPlayPercentage < Int(self.min_limit) ?? 95{
@@ -323,7 +323,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        print("id+++++ \(id) data+++++ \(data)")
+        //print("id+++++ \(id) data+++++ \(data)")
         
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {
@@ -344,7 +344,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     func convertDurationIntoPercentage(duration:Int) -> String  {
         if ((self.player?.currentItem?.duration) != nil) {
             let totalTime = Double(self.totalTime)
-            print("totalTime...++++ \(totalTime)")
+            //print("totalTime...++++ \(totalTime)")
             
             let per = (Double(duration)/totalTime)*100
             
@@ -501,7 +501,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
-        print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
+        //print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -536,7 +536,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
     
     func pushNavigationController(){
         
-        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
+        //print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
         if self.ninetyFiveCompletedFlag == "0"{
             if !ismove{
                 //For analytics
@@ -614,7 +614,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
             ] as [String : Any]
         
         
-        print("meter param WWMGuidedMeditationTimerVC... \(param)")
+        //print("meter param WWMGuidedMeditationTimerVC... \(param)")
         
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
@@ -622,7 +622,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
+                        //print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
                         
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
@@ -677,8 +677,8 @@ class WWMSleepTimerVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success WWMGuidedMeditationTimerVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                //print("success WWMGuidedMeditationTimerVC meditationhistoryapi in background thread")
             }
         }
     }

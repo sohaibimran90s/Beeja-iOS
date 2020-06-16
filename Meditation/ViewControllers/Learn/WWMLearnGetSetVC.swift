@@ -41,6 +41,10 @@ class WWMLearnGetSetVC: WWMBaseViewController {
         self.lblGetSet.center.y = self.lblGetSet.center.y + 30
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     
     //MARK: animated Views
     func animateLblGetComfy(){
