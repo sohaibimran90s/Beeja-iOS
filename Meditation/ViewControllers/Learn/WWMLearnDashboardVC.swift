@@ -9,15 +9,25 @@
 import UIKit
 import XLPagerTabStrip
 
+protocol WWMLearnDashboardDelegate {
+    func reloadTab(isTrue: Bool, vcName: String)
+}
+
 class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrLearnList = [WWMLearnData]()
+    var name = ""
+    let appPreference = WWMAppPreference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpUI()
+        let name = self.appPreference.get21ChallengeName()
+        if name != ""{
+            self.reloadTab(isTrue: true, vcName: "30 Day Challenge")
+        }
     }
 
     func setUpUI() {
@@ -66,6 +76,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 //WWM21DayChallengeVC
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
                 
+                vc.delegate = self
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.learnStepsListData = data.step_list
                 arrVC.add(vc)
@@ -73,6 +84,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
                 
                 print(data.thirty_day_list)
+                vc.delegate = self
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.daysListData = data.thirty_day_list
                 arrVC.add(vc)
@@ -80,5 +92,26 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         }
         
         return arrVC as! [UIViewController]
+    }
+}
+
+extension WWMLearnDashboardVC: WWMLearnDashboardDelegate{
+    func reloadTab(isTrue: Bool, vcName: String) {
+        //print("vcnamce.... \(vcName)")
+        if (vcName == "30 Day Challenge") && isTrue{
+            
+            var index = 0
+            let name = self.appPreference.get21ChallengeName()
+            for dic in self.arrLearnList{
+
+                if name == dic.name{
+                    break
+                }
+                index = index + 1
+            }
+            
+            self.moveToViewController(at: index, animated: false)
+            appPreference.set21ChallengeName(value: "")
+        }
     }
 }

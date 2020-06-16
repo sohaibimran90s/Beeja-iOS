@@ -145,6 +145,26 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
+    
+    func setupTabBarSeparators() {
+        let itemWidth = floor(self.tabBar.frame.size.width / CGFloat(self.tabBar.items!.count))
+
+        // this is the separator width.  0.5px matches the line at the top of the tab bar
+        let separatorWidth: CGFloat = 0.5
+
+        // iterate through the items in the Tab Bar, except the last one
+        for i in 0...(self.tabBar.items!.count - 2) {
+            // make a new separator at the end of each tab bar item
+            let separator = UIView(frame: CGRect(x: itemWidth * CGFloat(i + 1) - CGFloat(separatorWidth / 2), y: 0, width: CGFloat(separatorWidth), height: self.tabBar.frame.size.height))
+
+            // set the color to light gray (default line color for tab bar)
+            separator.backgroundColor = UIColor.lightGray
+
+            self.tabBar.addSubview(separator)
+        }
+    }
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          currentLocation = locations[0]
         self.appPreffrence.setLoctionDenied(value: "Location Enable")
@@ -160,7 +180,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.appPreffrence.setLoctionDenied(value: "Location Disable")
             var userData = WWMUserData()
             userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
             self.lat = userData.latitude
             self.long = userData.longitude
             city = userData.city
@@ -186,7 +206,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         var userData = WWMUserData()
                         userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-                        print(userData)
+                        //print(userData)
                         
                         let userData1 = self.appPreffrence.getUserData()
                         
@@ -288,6 +308,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 item?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
             }
         }
+        
+        self.setupTabBarSeparators()
+
     }
     
     //bannerAPI
@@ -1400,7 +1423,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     //get wisdom api
     func fetchWisdomDataFromDB(time_stamp: Any) {
         let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
-        let wisdomVideoData = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
         if wisdomDataDB.count > 0 {
             //print("wisdomDataDB.. \(wisdomDataDB.count) wisdomVideoData.. \(wisdomVideoData.count)")
             

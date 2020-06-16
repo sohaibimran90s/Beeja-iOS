@@ -33,6 +33,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     
     var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     var i = 0
+    var delegate: WWMLearnDashboardDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,8 +131,11 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
-        //imgLeft.isHidden = true
-        //imgRight.isHidden = false
+//        if self.daysListData[indexPath.item].completed{
+//            imgLeft.image = UIImage(named: "lineGreen")
+//        }else{
+//            imgLeft.image = UIImage(named: "lineWhite")
+//        }
         
         if self.array[indexPath.item]%7 == 0 || self.array[indexPath.item] == 30{
             imgLeft.isHidden = true

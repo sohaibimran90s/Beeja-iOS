@@ -48,7 +48,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id)")
+        //print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id) videoURL... \(self.videoURL)")
         var prefersStatusBarHidden: Bool {
             return true
         }
@@ -95,11 +95,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
         
         self.playVideo()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -156,9 +151,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 debugPrint("video.mp4 not found")
                 return
             }
-            
-            
-            //viewVideo.configure(url: "\(path)")
             
             player1 = AVPlayer(url: URL(fileURLWithPath: path))
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;

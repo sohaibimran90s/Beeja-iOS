@@ -26,6 +26,7 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     var alertPopup = WWMAlertPopUp()
     
     let reachable = Reachabilities()
+    var delegate: WWMLearnDashboardDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -198,12 +199,6 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.value = "learnStepList"
-        self.navigationController?.pushViewController(vc, animated: false)
-    }
-    
-    
-    @IBAction func btnSideMenuClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -396,7 +391,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 return
             }
         }
-        
+
         if reachable.isConnectedToNetwork() {
             self.pushViewController(sender_Tag: sender.tag)
         }else{
