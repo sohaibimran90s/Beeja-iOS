@@ -63,7 +63,8 @@ class WWMBaseViewController: UIViewController {
         sideMenuBtn.contentMode = .scaleAspectFit
         
         let leftTitle = UIButton.init()
-
+        let btnBack = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        
         let barButtonGuided = UIButton.init()
         let barButtonSleep = UIButton.init()
         
@@ -93,7 +94,15 @@ class WWMBaseViewController: UIViewController {
             leftTitle.addTarget(self, action: #selector(btnFlightModeAction(_:)), for: .touchUpInside)
             
             let leftBarButtonItem = UIBarButtonItem.init(customView: leftTitle)
-            self.navigationItem.leftBarButtonItem = leftBarButtonItem
+            let btnBackItem = UIBarButtonItem.init(customView: btnBack)
+            btnBack.setImage(UIImage.init(named: "Back_Arrow_Icon"), for: .normal)
+            btnBack.addTarget(self, action: #selector(btnBackAction(_:)), for: .touchUpInside)
+            
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.navigationItem.leftBarButtonItems = [btnBackItem, leftBarButtonItem]
+            }else{
+                self.navigationItem.leftBarButtonItem = leftBarButtonItem
+            }
         }else if title == "guided" {
             
             self.appPreference.setGuidedSleep(value: "Guided")
@@ -126,6 +135,10 @@ class WWMBaseViewController: UIViewController {
         
         let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc func btnBackAction(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func dropDownSleep(){
@@ -196,7 +209,17 @@ class WWMBaseViewController: UIViewController {
         }
         
         if self.title1 == "Settings"{
-            self.navigationController?.popToRootViewController(animated: true)
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.navigationController?.popViewController(animated: true)
+                let controllers = self.navigationController?.viewControllers
+                 for vc in controllers! {
+                   if vc is WWMTimerHomeVC {
+                     _ = self.navigationController?.popToViewController(vc as! WWMTimerHomeVC, animated: true)
+                   }
+                }
+            }else{
+                self.navigationController?.popToRootViewController(animated: true)
+            }
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
             self.navigationController?.pushViewController(vc, animated: false)

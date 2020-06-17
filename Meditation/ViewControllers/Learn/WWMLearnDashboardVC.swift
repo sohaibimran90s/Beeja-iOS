@@ -9,10 +9,6 @@
 import UIKit
 import XLPagerTabStrip
 
-protocol WWMLearnDashboardDelegate {
-    func reloadTab(isTrue: Bool, vcName: String)
-}
-
 class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var tabBarView: ButtonBarView!
@@ -24,10 +20,12 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.setUpUI()
-        let name = self.appPreference.get21ChallengeName()
-        if name != ""{
-            self.reloadTab(isTrue: true, vcName: "30 Day Challenge")
-        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        //self.moveToViewController(at: 1, animated: false)
+        
     }
 
     func setUpUI() {
@@ -69,6 +67,8 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
         
+         
+        
         for data in self.arrLearnList {
             //print("data.step_list--- \(data.step_list.count)")
             
@@ -76,7 +76,6 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 //WWM21DayChallengeVC
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnStepListVC") as! WWMLearnStepListVC
                 
-                vc.delegate = self
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.learnStepsListData = data.step_list
                 arrVC.add(vc)
@@ -84,22 +83,15 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
                 
                 print(data.thirty_day_list)
-                vc.delegate = self
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.daysListData = data.thirty_day_list
                 arrVC.add(vc)
             }
         }
         
-        return arrVC as! [UIViewController]
-    }
-}
-
-extension WWMLearnDashboardVC: WWMLearnDashboardDelegate{
-    func reloadTab(isTrue: Bool, vcName: String) {
-        //print("vcnamce.... \(vcName)")
-        if (vcName == "30 Day Challenge") && isTrue{
-            
+        //to jump in particular index
+        let name = self.appPreference.get21ChallengeName()
+        if name != ""{
             var index = 0
             let name = self.appPreference.get21ChallengeName()
             for dic in self.arrLearnList{
@@ -110,8 +102,10 @@ extension WWMLearnDashboardVC: WWMLearnDashboardDelegate{
                 index = index + 1
             }
             
-            self.moveToViewController(at: index, animated: false)
+            pagerTabStripController.moveToViewController(at: index, animated: true)
             appPreference.set21ChallengeName(value: "")
-        }
+        }//end*
+        
+        return arrVC as! [UIViewController]
     }
 }

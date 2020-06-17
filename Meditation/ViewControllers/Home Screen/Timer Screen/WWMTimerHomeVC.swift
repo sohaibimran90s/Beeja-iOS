@@ -43,12 +43,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if i == 0{
-            self.tabBarController?.tabBar.isHidden = true
-        }else{
-            self.tabBarController?.tabBar.isHidden = false
-        }
-        
         self.setUpView()
         NotificationCenter.default.addObserver(
             self,
@@ -146,6 +140,19 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.navigationController?.isNavigationBarHidden = false
         self.setUpNavigationBarForDashboard(title: "Timer")
         self.getSettingData()
+        
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "timer")
+            self.tabBarController?.tabBar.isHidden = true
+        }else{
+            self.tabBarController?.tabBar.isHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "learn")
+        }
     }
     
     private func updateGradientLayer() {
@@ -196,7 +203,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
             self.layoutExpressMoodViewWidth.constant = 40
             self.view.layoutIfNeeded()
         }, completion: nil)
-        
     }
     
     func setUpSliderTimesAccordingToLevels() {
@@ -217,27 +223,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.restTime = Int(self.sliderRestTime.value)
-        
-
-        
-//        if !self.userData.is_subscribed {
-
-//            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
-//            let window = UIApplication.shared.keyWindow!
-//
-//            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-//            alertPopupView.btnOK.layer.borderWidth = 2.0
-//            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//
-//            alertPopupView.lblTitle.text = kAlertTitle
-//            alertPopupView.lblSubtitle.text = "Your subscription plan is expired to continue please upgrade."
-//            alertPopupView.btnClose.isHidden = true
-//
-//            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
-//            window.rootViewController?.view.addSubview(alertPopupView)
-//
-//        }
-
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -254,14 +239,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.layoutMoodWidth.constant = 90
         
         gradientLayer.frame = view.bounds
-        
-       //self.sliderPrepTime.minimumTrackImage(for: <#T##UIControl.State#>)
-       // self.sliderPrepTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-      //  self.sliderRestTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-      //  self.sliderMeditationTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-
-        //self.sliderPrepTime.setMaximumTrackImage(UIImage.init(named: "maxSlider_Icon"), for: .normal)
-        
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -278,7 +255,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
                     return String.init(format: "%d mins", second/60,second%60)
                 }
                 return String.init(format: "%d:%02d", second/60,second%60)
-                
             }
         }
     }
@@ -295,10 +271,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
         }
     }
     
-    
-    
     // MARK: - UIButton Action
-    
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
     
         //print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")

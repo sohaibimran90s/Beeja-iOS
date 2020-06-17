@@ -903,7 +903,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     // MARK: Button Action
-    
     @IBAction func btnPickerAction(_ sender: WWMCustomButton) {
         if let cell = tblViewSetting.cellForRow(at: sender.indexPath) as? WWMSettingTableViewCell {
             if self.appPreffrence.getType() == "timer" {
@@ -1048,17 +1047,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-
-    
     func callPushNotification() {
         AppDelegate.sharedDelegate().setLocalPush()
     }
     
     // MARK: - UIButton Action
-    
-    
-    
-    
     @IBAction func btnSwitchAction(_ sender: Any) {
         let btn = sender as! UISwitch
         if btn.tag == 1 {

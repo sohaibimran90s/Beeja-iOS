@@ -742,13 +742,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         //self.addShortCuts(application: application)
-        
-       
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "learn")
+            self.appPreference.set21ChallengeName(value: "")
+        }
+        
         self.saveContext()
     }
     

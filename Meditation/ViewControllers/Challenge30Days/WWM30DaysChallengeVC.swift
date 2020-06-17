@@ -33,7 +33,6 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     
     var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     var i = 0
-    var delegate: WWMLearnDashboardDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,5 +152,11 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (self.collectionView.frame.size.width)/7
         return CGSize.init(width: width, height: width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        appPreference.set21ChallengeName(value: "30 Day Challenge")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -26,7 +26,6 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     var alertPopup = WWMAlertPopUp()
     
     let reachable = Reachabilities()
-    var delegate: WWMLearnDashboardDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
