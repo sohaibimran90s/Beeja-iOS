@@ -8,10 +8,14 @@
 
 import UIKit
 
-class WWMMilestoneAchievementVC: UIViewController {
+class WWMMilestoneAchievementVC: WWMBaseViewController {
 
+    @IBOutlet weak var lblName: UILabel!
+    let name = "Abc"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.lblName.text = "You’re such a star, \(self.name)!"
     }
 }

@@ -105,6 +105,12 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMShareLoveVC") as! WWMShareLoveVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    //Start Challenge
+    @IBAction func btnStartChallClicked(_ sender: UIButton){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{

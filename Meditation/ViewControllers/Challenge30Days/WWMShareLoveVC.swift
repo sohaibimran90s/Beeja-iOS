@@ -12,6 +12,8 @@ class WWMShareLoveVC: WWMBaseViewController {
     
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var imgBanner: UIImageView!
+    @IBOutlet weak var imgDArrow: UIImageView!
+    @IBOutlet weak var imgDArrowWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnInviteFriends: UIButton!
     @IBOutlet weak var lblCopyCode: UILabel!
     @IBOutlet weak var lblNoOfInvites: UILabel!
@@ -19,10 +21,11 @@ class WWMShareLoveVC: WWMBaseViewController {
     @IBOutlet weak var tableViewInvitesListHC: NSLayoutConstraint!
     @IBOutlet weak var tableViewInvitesListTC: NSLayoutConstraint!
     
-    var i = 1
+    var i = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.isHidden = true
         setUpView()
     }
     
@@ -33,10 +36,14 @@ class WWMShareLoveVC: WWMBaseViewController {
         self.lblCopyCode.layer.cornerRadius = 20
         
         if i == 0{
+            self.imgDArrow.isHidden = true
+            self.imgDArrowWidthConstraint.constant = 0
             self.tableViewInvitesList.isHidden = true
             self.tableViewInvitesListHC.constant = 0
             self.tableViewInvitesListTC.constant = 0
         }else{
+            self.imgDArrow.isHidden = false
+            self.imgDArrowWidthConstraint.constant = 12
             self.tableViewInvitesList.isHidden = false
             self.tableViewInvitesListHC.constant = 50 * 5
             self.tableViewInvitesListTC.constant = 20
