@@ -732,18 +732,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             if data.status{
                 
+                cell.lblDate.textColor = UIColor.black
                 cell.viewDateCircle.layer.borderWidth = 2.0
+                cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
                 cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-                
                 cell.imgViewLeft.image = UIImage(named: "singleLineLeft")
-                //cell.imgViewRight.image = UIImage(named: "")
-                //cell.imgViewLeft.isHidden = false
-                //cell.imgViewRight.isHidden = false
             }else{
                 
+                cell.lblDate.textColor = UIColor.white
                 cell.viewDateCircle.layer.borderWidth = 2.0
                 cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
-                
+                cell.viewDateCircle.backgroundColor = UIColor.clear
                 cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
                 cell.imgViewRight.image = UIImage(named: "singleLineRight1")
             }
