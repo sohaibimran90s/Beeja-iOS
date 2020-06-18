@@ -9,13 +9,45 @@
 import UIKit
 
 class WWMMilestoneAchievementVC: WWMBaseViewController {
-
+    
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnProgress: UIButton!
     let name = "Abc"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblName.text = "You’re such a star, \(self.name)!"
+        self.setUpView()
+        self.lblName.text = "You’re such a star,\n\(self.name)!"
+    }
+    
+    func setUpView(){
+        self.btnProgress.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.btnProgress.layer.borderWidth = 1.0
+    }
+    
+    @IBAction func btnHomeAction(_ sender: UIButton){
+        self.navigateToDashboard(index: 2)
+    }
+    
+    @IBAction func btnProgressAction(_ sender: UIButton){
+        self.navigateToDashboard(index: 4)
+    }
+    
+    func navigateToDashboard(index: Int) {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = index
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 4 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
     }
 }

@@ -8,23 +8,41 @@
 
 import UIKit
 
-class WWMTodaysChallengeVC: UIViewController {
-
+class WWMTodaysChallengeVC: WWMBaseViewController {
+    
+    @IBOutlet weak var lblDayNo: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblAuthor: UILabel!
+    @IBOutlet weak var imgView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.navigateToDashboard()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func btnCrossAction(_ sender: UIButton){
+        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        self.navigateToDashboard()
     }
-    */
-
+    
+    @IBAction func btnChallengeAction(_ sender: UIButton){
+        
+    }
+    
+    func navigateToDashboard() {
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 2
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 2 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
 }

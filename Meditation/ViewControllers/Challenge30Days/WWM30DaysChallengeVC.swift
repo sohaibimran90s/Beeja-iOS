@@ -107,8 +107,9 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     //Start Challenge
-    @IBAction func btnStartChallClicked(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+    @IBAction func btnStartChalClicked(_ sender: UIButton){
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -162,7 +163,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         appPreference.set21ChallengeName(value: "30 Day Challenge")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

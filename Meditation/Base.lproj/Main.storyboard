@@ -15768,7 +15768,7 @@ Best enjoyed with headphones.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editBackgroundImg" translatesAutoresizingMaskIntoConstraints="NO" id="qcD-A7-2N2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667.00000000000011"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nhd-9N-zMd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -15789,7 +15789,7 @@ Best enjoyed with headphones.</string>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Personal Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aE-L9-poz">
-                                                <rect key="frame" x="105" y="70" width="165.5" height="29.5"/>
+                                                <rect key="frame" x="108.5" y="70" width="158" height="29.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="29.5" id="Zf5-EK-73H"/>
                                                 </constraints>
@@ -15838,13 +15838,13 @@ Best enjoyed with headphones.</string>
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="69.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqk-hf-d9f">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="16.5"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Prachi Negi" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9wF-Gr-9p5">
-                                                                <rect key="frame" x="0.0" y="21.5" width="335" height="39.5"/>
+                                                                <rect key="frame" x="0.0" y="20.5" width="335" height="40.5"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -15878,13 +15878,13 @@ Best enjoyed with headphones.</string>
                                                         <rect key="frame" x="0.0" y="95.5" width="335" height="69.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WNE-tK-3if">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="16.5"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="I'd rather not say" placeholder="select gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WjM-h4-HyZ">
-                                                                <rect key="frame" x="0.0" y="21.5" width="299" height="39.5"/>
+                                                                <rect key="frame" x="0.0" y="20.5" width="299" height="40.5"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
@@ -15900,7 +15900,7 @@ Best enjoyed with headphones.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVw-mM-5LP">
-                                                                <rect key="frame" x="309" y="28.5" width="26" height="26"/>
+                                                                <rect key="frame" x="309" y="28" width="26" height="26"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="26" id="E6j-Tf-pej"/>
                                                                     <constraint firstAttribute="width" constant="26" id="azK-So-uQF"/>
@@ -15931,13 +15931,13 @@ Best enjoyed with headphones.</string>
                                                         <rect key="frame" x="0.0" y="191" width="335" height="69.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Date of Birth" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzP-zd-fPd">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="16.5"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="dd/mm/yyyy" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IiK-b8-2ch">
-                                                                <rect key="frame" x="0.0" y="21.5" width="335" height="39.5"/>
+                                                                <rect key="frame" x="0.0" y="20.5" width="335" height="40.5"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
@@ -15971,13 +15971,13 @@ Best enjoyed with headphones.</string>
                                                         <rect key="frame" x="0.0" y="286.5" width="335" height="69.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Email id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tys-4T-RPQ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="17.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="16.5"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Prachi Negi" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i1s-p9-Wlz">
-                                                                <rect key="frame" x="0.0" y="21.5" width="335" height="39.5"/>
+                                                                <rect key="frame" x="0.0" y="20.5" width="335" height="40.5"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits"/>
@@ -16061,7 +16061,7 @@ Best enjoyed with headphones.</string>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-Ur-1T9">
-                                                                    <rect key="frame" x="44" y="10.5" width="188" height="18.5"/>
+                                                                    <rect key="frame" x="44" y="11" width="188" height="17.5"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -18740,7 +18740,7 @@ Best enjoyed with headphones.</string>
         <!--Todays ChallengeVC-->
         <scene sceneID="ZjA-Vn-WeG">
             <objects>
-                <viewController storyboardIdentifier="WWMTodaysChallengeVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="T1X-yi-c5U" customClass="WWMTodaysChallengeVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WWMTodaysChallengeVC" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="T1X-yi-c5U" customClass="WWMTodaysChallengeVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uOm-P3-qvd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -18749,39 +18749,54 @@ Best enjoyed with headphones.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btg-ex-FoP">
-                                <rect key="frame" x="16" y="20" width="343" height="20"/>
-                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
+                                <rect key="frame" x="16" y="35" width="64" height="29.5"/>
+                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zaz-ka-Feb">
+                                <rect key="frame" x="315" y="25" width="38" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="38" id="bhC-8x-1Q5"/>
+                                    <constraint firstAttribute="height" constant="38" id="xqn-mW-Ysg"/>
+                                </constraints>
+                                <state key="normal" image="Close_Icon">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnCrossAction:" destination="T1X-yi-c5U" eventType="touchUpInside" id="3jZ-Bd-oSq"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkB-dS-gMV">
-                                <rect key="frame" x="16" y="149.5" width="343" height="248.5"/>
+                                <rect key="frame" x="16" y="131" width="343" height="305"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;The world is moving so fast these days that the man who says it can't be done is usually interupted by someone doing it&quot;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jX2-Ov-XQK">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="66.5"/>
-                                        <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="18"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="147.5"/>
+                                        <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="hWI-1X-jn1">
-                                        <rect key="frame" x="151.5" y="96.5" width="40" height="30"/>
+                                        <rect key="frame" x="151.5" y="165.5" width="40" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="7W1-Ln-A50"/>
                                             <constraint firstAttribute="width" constant="40" id="RxB-xx-g52"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hary Emerson Fosdick" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iXb-eA-vSV">
-                                        <rect key="frame" x="0.0" y="166.5" width="343" height="22"/>
-                                        <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="18"/>
+                                        <rect key="frame" x="0.0" y="223.5" width="343" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gn2-q7-Q39">
-                                        <rect key="frame" x="73.5" y="208.5" width="196" height="40"/>
+                                        <rect key="frame" x="51.5" y="265" width="240" height="40"/>
+                                        <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="KKe-Nj-fig"/>
+                                            <constraint firstAttribute="width" constant="240" id="khP-5C-dvZ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <state key="normal" title="Start Today's Challenge">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -18790,6 +18805,9 @@ Best enjoyed with headphones.</string>
                                                 <integer key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="btnChallengeAction:" destination="T1X-yi-c5U" eventType="touchUpInside" id="KWN-HF-xXj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -18797,12 +18815,12 @@ Best enjoyed with headphones.</string>
                                     <constraint firstAttribute="bottom" secondItem="Gn2-q7-Q39" secondAttribute="bottom" id="0TN-NI-ZWa"/>
                                     <constraint firstItem="jX2-Ov-XQK" firstAttribute="leading" secondItem="kkB-dS-gMV" secondAttribute="leading" id="1uh-CC-0E9"/>
                                     <constraint firstItem="Gn2-q7-Q39" firstAttribute="centerX" secondItem="kkB-dS-gMV" secondAttribute="centerX" id="1vZ-ip-ZEb"/>
-                                    <constraint firstItem="hWI-1X-jn1" firstAttribute="top" secondItem="jX2-Ov-XQK" secondAttribute="bottom" constant="30" id="3Sh-qf-Mha"/>
+                                    <constraint firstItem="hWI-1X-jn1" firstAttribute="top" secondItem="jX2-Ov-XQK" secondAttribute="bottom" constant="18" id="3Sh-qf-Mha"/>
                                     <constraint firstItem="jX2-Ov-XQK" firstAttribute="top" secondItem="kkB-dS-gMV" secondAttribute="top" id="6Pr-Sf-Kdv"/>
-                                    <constraint firstItem="Gn2-q7-Q39" firstAttribute="top" secondItem="iXb-eA-vSV" secondAttribute="bottom" constant="20" id="E60-xm-ebo"/>
+                                    <constraint firstItem="Gn2-q7-Q39" firstAttribute="top" secondItem="iXb-eA-vSV" secondAttribute="bottom" constant="22" id="E60-xm-ebo"/>
                                     <constraint firstAttribute="trailing" secondItem="jX2-Ov-XQK" secondAttribute="trailing" id="LV2-pK-029"/>
                                     <constraint firstAttribute="trailing" secondItem="iXb-eA-vSV" secondAttribute="trailing" id="UcT-nd-cPJ"/>
-                                    <constraint firstItem="iXb-eA-vSV" firstAttribute="top" secondItem="hWI-1X-jn1" secondAttribute="bottom" constant="40" id="dy6-2v-Iyp"/>
+                                    <constraint firstItem="iXb-eA-vSV" firstAttribute="top" secondItem="hWI-1X-jn1" secondAttribute="bottom" constant="28" id="dy6-2v-Iyp"/>
                                     <constraint firstItem="hWI-1X-jn1" firstAttribute="centerX" secondItem="kkB-dS-gMV" secondAttribute="centerX" id="oS8-ba-5QS"/>
                                     <constraint firstItem="iXb-eA-vSV" firstAttribute="leading" secondItem="kkB-dS-gMV" secondAttribute="leading" id="z6V-jl-fy2"/>
                                 </constraints>
@@ -18810,19 +18828,26 @@ Best enjoyed with headphones.</string>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="btg-ex-FoP" firstAttribute="top" secondItem="kgl-Jg-SxT" secondAttribute="top" constant="20" id="00v-zs-J96"/>
+                            <constraint firstItem="btg-ex-FoP" firstAttribute="top" secondItem="kgl-Jg-SxT" secondAttribute="top" constant="35" id="00v-zs-J96"/>
                             <constraint firstAttribute="bottom" secondItem="JOn-jj-5cE" secondAttribute="bottom" id="4Tb-Cf-Bwf"/>
                             <constraint firstAttribute="trailing" secondItem="JOn-jj-5cE" secondAttribute="trailing" id="5Ah-Xj-2L8"/>
-                            <constraint firstItem="kkB-dS-gMV" firstAttribute="centerY" secondItem="uOm-P3-qvd" secondAttribute="centerY" constant="-60" id="5Fq-PM-pkJ"/>
+                            <constraint firstItem="kkB-dS-gMV" firstAttribute="centerY" secondItem="uOm-P3-qvd" secondAttribute="centerY" constant="-50" id="5Fq-PM-pkJ"/>
                             <constraint firstItem="JOn-jj-5cE" firstAttribute="leading" secondItem="uOm-P3-qvd" secondAttribute="leading" id="JbP-pd-FQC"/>
                             <constraint firstItem="JOn-jj-5cE" firstAttribute="top" secondItem="uOm-P3-qvd" secondAttribute="top" id="Nhg-7Z-d0u"/>
+                            <constraint firstItem="zaz-ka-Feb" firstAttribute="top" secondItem="kgl-Jg-SxT" secondAttribute="top" constant="25" id="POj-b8-mQQ"/>
                             <constraint firstItem="btg-ex-FoP" firstAttribute="leading" secondItem="kgl-Jg-SxT" secondAttribute="leading" constant="16" id="U2m-8H-s6C"/>
                             <constraint firstAttribute="trailing" secondItem="kkB-dS-gMV" secondAttribute="trailing" constant="16" id="U3I-cp-h6C"/>
+                            <constraint firstItem="kgl-Jg-SxT" firstAttribute="trailing" secondItem="zaz-ka-Feb" secondAttribute="trailing" constant="22" id="mrg-Rz-WNE"/>
                             <constraint firstItem="kkB-dS-gMV" firstAttribute="leading" secondItem="uOm-P3-qvd" secondAttribute="leading" constant="16" id="pIP-tB-xrn"/>
-                            <constraint firstItem="kgl-Jg-SxT" firstAttribute="trailing" secondItem="btg-ex-FoP" secondAttribute="trailing" constant="16" id="qKx-pc-SCa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kgl-Jg-SxT"/>
                     </view>
+                    <connections>
+                        <outlet property="imgView" destination="JOn-jj-5cE" id="MKB-KU-GSP"/>
+                        <outlet property="lblAuthor" destination="iXb-eA-vSV" id="OXJ-56-3hN"/>
+                        <outlet property="lblDayNo" destination="btg-ex-FoP" id="HCw-TI-RKO"/>
+                        <outlet property="lblDescription" destination="jX2-Ov-XQK" id="Sgf-oW-KwP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZaT-R3-urb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -18867,31 +18892,31 @@ Best enjoyed with headphones.</string>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're such a star, Prachi" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kcf-90-IBe">
-                                                <rect key="frame" x="20" y="290" width="335" height="74"/>
+                                                <rect key="frame" x="20" y="267" width="335" height="74"/>
                                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've completed your 1st milestone! To celeberate this, we've emailed you a gift. Hope you love it just as much as we do!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZW-Gc-7WH">
-                                                <rect key="frame" x="18" y="374" width="339" height="65"/>
-                                                <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="18"/>
+                                                <rect key="frame" x="18" y="344" width="339" height="58"/>
+                                                <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="QtR-vP-wEe">
-                                                <rect key="frame" x="167.5" y="459" width="40" height="30"/>
+                                                <rect key="frame" x="167.5" y="424" width="40" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="Apl-Sc-Thl"/>
                                                     <constraint firstAttribute="height" constant="30" id="Fdv-QC-g36"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K1M-mS-gZ9">
-                                                <rect key="frame" x="67.5" y="509" width="240" height="40"/>
+                                                <rect key="frame" x="67.5" y="479" width="240" height="40"/>
                                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="oa0-nc-6zV"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <state key="normal" title="Thanks! Take me Home">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -18900,14 +18925,17 @@ Best enjoyed with headphones.</string>
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="btnHomeAction:" destination="Lza-cl-NVl" eventType="touchUpInside" id="fa2-rL-CTK"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ib-SZ-Eai">
-                                                <rect key="frame" x="67.5" y="559" width="240" height="40"/>
+                                                <rect key="frame" x="67.5" y="534" width="240" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="CJJ-Z4-NR4"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                                 <state key="normal" title="Show me my progress">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -18916,24 +18944,27 @@ Best enjoyed with headphones.</string>
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="btnProgressAction:" destination="Lza-cl-NVl" eventType="touchUpInside" id="wxe-Yw-ubU"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="0ID-HT-eoi" secondAttribute="trailing" constant="25" id="4Gg-qM-mHQ"/>
                                             <constraint firstItem="Kcf-90-IBe" firstAttribute="leading" secondItem="sj5-73-mNb" secondAttribute="leading" constant="20" id="72J-tF-wdj"/>
-                                            <constraint firstItem="5Ib-SZ-Eai" firstAttribute="top" secondItem="K1M-mS-gZ9" secondAttribute="bottom" constant="10" id="AbA-AA-ft6"/>
+                                            <constraint firstItem="5Ib-SZ-Eai" firstAttribute="top" secondItem="K1M-mS-gZ9" secondAttribute="bottom" constant="15" id="AbA-AA-ft6"/>
                                             <constraint firstItem="0ID-HT-eoi" firstAttribute="top" secondItem="sj5-73-mNb" secondAttribute="top" constant="22" id="CRN-LH-iwL"/>
                                             <constraint firstItem="AK7-pI-el9" firstAttribute="top" secondItem="0ID-HT-eoi" secondAttribute="bottom" constant="60" id="FHV-Ca-63F"/>
                                             <constraint firstItem="K1M-mS-gZ9" firstAttribute="width" secondItem="sj5-73-mNb" secondAttribute="width" multiplier="0.64" id="Muz-OF-6Cb"/>
                                             <constraint firstAttribute="height" constant="667" id="Qfu-Tn-JgC"/>
                                             <constraint firstItem="QtR-vP-wEe" firstAttribute="centerX" secondItem="sj5-73-mNb" secondAttribute="centerX" id="RsL-Ti-6OT"/>
                                             <constraint firstItem="5Ib-SZ-Eai" firstAttribute="trailing" secondItem="K1M-mS-gZ9" secondAttribute="trailing" id="SgV-EI-mMc"/>
-                                            <constraint firstItem="K1M-mS-gZ9" firstAttribute="top" secondItem="QtR-vP-wEe" secondAttribute="bottom" constant="20" id="dkR-wa-GrQ"/>
-                                            <constraint firstItem="Kcf-90-IBe" firstAttribute="top" secondItem="AK7-pI-el9" secondAttribute="bottom" constant="50" id="hPS-JC-TA1"/>
+                                            <constraint firstItem="K1M-mS-gZ9" firstAttribute="top" secondItem="QtR-vP-wEe" secondAttribute="bottom" constant="25" id="dkR-wa-GrQ"/>
+                                            <constraint firstItem="Kcf-90-IBe" firstAttribute="top" secondItem="AK7-pI-el9" secondAttribute="bottom" constant="27" id="hPS-JC-TA1"/>
                                             <constraint firstItem="K1M-mS-gZ9" firstAttribute="centerX" secondItem="sj5-73-mNb" secondAttribute="centerX" id="hWB-mN-K4l"/>
-                                            <constraint firstItem="lZW-Gc-7WH" firstAttribute="top" secondItem="Kcf-90-IBe" secondAttribute="bottom" constant="10" id="iDL-oW-ydq"/>
-                                            <constraint firstItem="QtR-vP-wEe" firstAttribute="top" secondItem="lZW-Gc-7WH" secondAttribute="bottom" constant="20" id="iL6-i7-3gX"/>
+                                            <constraint firstItem="lZW-Gc-7WH" firstAttribute="top" secondItem="Kcf-90-IBe" secondAttribute="bottom" constant="3" id="iDL-oW-ydq"/>
+                                            <constraint firstItem="QtR-vP-wEe" firstAttribute="top" secondItem="lZW-Gc-7WH" secondAttribute="bottom" constant="22" id="iL6-i7-3gX"/>
                                             <constraint firstItem="AK7-pI-el9" firstAttribute="centerX" secondItem="sj5-73-mNb" secondAttribute="centerX" id="nX1-ty-aEe"/>
                                             <constraint firstItem="5Ib-SZ-Eai" firstAttribute="leading" secondItem="K1M-mS-gZ9" secondAttribute="leading" id="pEg-Ru-kwA"/>
                                             <constraint firstItem="lZW-Gc-7WH" firstAttribute="leading" secondItem="sj5-73-mNb" secondAttribute="leading" constant="18" id="rGT-90-4CC"/>
@@ -18966,6 +18997,8 @@ Best enjoyed with headphones.</string>
                         <viewLayoutGuide key="safeArea" id="v4W-Em-cQ5"/>
                     </view>
                     <connections>
+                        <outlet property="btnHome" destination="K1M-mS-gZ9" id="C8X-mZ-Z1t"/>
+                        <outlet property="btnProgress" destination="5Ib-SZ-Eai" id="x4e-9d-Quf"/>
                         <outlet property="lblName" destination="Kcf-90-IBe" id="BYH-fS-541"/>
                     </connections>
                 </viewController>
@@ -19274,6 +19307,9 @@ Best enjoyed with headphones.</string>
                                                                         <integer key="value" value="20"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="btnStartChalClicked:" destination="a88-Kj-cF7" eventType="touchUpInside" id="scQ-W2-c43"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="0.059999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
