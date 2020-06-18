@@ -15,10 +15,22 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     @IBOutlet weak var lblAuthor: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     
+    var daysListData = ThirtyDaysListData()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lblDayNo.text = "Day 1\(daysListData.day_name)"
+        self.lblDescription.text = "The world is moving so fast these days that the man who says it can't be done is usually interupted by someone doing it\(daysListData.Description)"
+        self.lblAuthor.text = "Hary Emerson Fosdick\(daysListData.auther_name)"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     @IBAction func btnCrossAction(_ sender: UIButton){
@@ -27,6 +39,8 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     }
     
     @IBAction func btnChallengeAction(_ sender: UIButton){
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
+
+        self.navigationController?.pushViewController(vc, animated: false)
     }
 }

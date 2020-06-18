@@ -37,9 +37,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var restTime = 0
     var min = 0
 
-    //var alertPopupView = WWMAlertController()
-    var i = 1
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,7 +118,9 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": is_complete
+                "is_complete": is_complete,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
 

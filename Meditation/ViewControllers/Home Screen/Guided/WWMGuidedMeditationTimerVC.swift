@@ -687,7 +687,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
+                "is_complete": self.ninetyFiveCompletedFlag,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
         

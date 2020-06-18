@@ -330,7 +330,9 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
         
