@@ -20,6 +20,9 @@ class WWMLearnNavVC: WWMBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "learn")
+        }
         self.fetchLearnDataFromDB()
     }
     

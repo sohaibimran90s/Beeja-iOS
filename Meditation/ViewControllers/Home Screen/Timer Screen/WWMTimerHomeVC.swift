@@ -148,12 +148,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-            self.appPreference.setType(value: "learn")
-        }
-    }
-    
     private func updateGradientLayer() {
         gradientLayer.locations = [ 0.0, 1.2 ]
         gradientLayer.startPoint = .zero

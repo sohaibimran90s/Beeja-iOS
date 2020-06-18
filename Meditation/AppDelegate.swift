@@ -747,9 +747,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-            self.appPreference.setType(value: "learn")
-            self.appPreference.set21ChallengeName(value: "")
+        if self.appPreference.isLogin(){
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.appPreference.setType(value: "learn")
+                self.type = "learn"
+                self.meditationApi()
+                self.appPreference.set21ChallengeName(value: "")
+            }
         }
         
         self.saveContext()
@@ -1486,7 +1490,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         Messaging.messaging().apnsToken = deviceToken
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-        //print("Device Token: \(token)")
+        print("Device Token: \(token)")
         
     }
     
