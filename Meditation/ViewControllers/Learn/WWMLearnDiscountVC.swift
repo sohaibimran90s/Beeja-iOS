@@ -18,7 +18,6 @@ class WWMLearnDiscountVC: WWMBaseViewController {
         super.viewDidLoad()
         
         self.lblCompMsg.text = "Yay \(self.appPreference.getUserName()), you’ve completed the 12 steps Learn to meditate course successfully."
-        self.intro_url = self.appPreference.get30DaysURL()
         self.intro_completed = self.appPreference.get30IntroCompleted()
     }
     
@@ -34,7 +33,7 @@ class WWMLearnDiscountVC: WWMBaseViewController {
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-                vc.videoURL = self.intro_url
+                vc.challenge_type = "30days"
                 vc.value = "30days"
                 self.navigationController?.pushViewController(vc, animated: false)
             }

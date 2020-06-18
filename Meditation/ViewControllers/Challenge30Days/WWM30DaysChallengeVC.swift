@@ -27,6 +27,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var viewHeaderHC: NSLayoutConstraint!
     @IBOutlet weak var viewMeditationDaysHC: NSLayoutConstraint!
     @IBOutlet weak var viewCollectionViewHC: NSLayoutConstraint!
+    @IBOutlet weak var btnIntro: UIButton!
     
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
@@ -90,6 +91,13 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.btnStartChallenge.isHidden = true
             self.lblBelowTitle.text = ""
         }
+        
+        let intro_completed = self.appPreference.get30IntroCompleted()
+        if intro_completed{
+            self.btnIntro.isHidden = true
+        }else{
+            self.btnIntro.isHidden = false
+        }
     }
     
     @IBAction func btnExpiredClicked(_ sender: UIButton){
@@ -112,6 +120,14 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func btnIntroVideoClicked(_ sender: UIButton){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+
+        vc.challenge_type = "30days"
+        vc.value = "30days"
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
 }
 
 extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
@@ -130,18 +146,38 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         let lblChallNo = cell.viewWithTag(3) as! UILabel
         
         viewBackLbl.layer.borderWidth = 2.0
-        viewBackLbl.layer.borderColor = UIColor.white.cgColor
         lblChallNo.text = "\(self.array[indexPath.item])"
         
         imgLock.layer.cornerRadius = 8
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
-//        if self.daysListData[indexPath.item].completed{
-//            imgLeft.image = UIImage(named: "lineGreen")
-//        }else{
-//            imgLeft.image = UIImage(named: "lineWhite")
-//        }
+        
+        /*if self.daysListData[indexPath.item].completed{
+            viewBackLbl.backgroundColor = UIColor.init(hexString: "#00eba9")!
+            viewBackLbl.layer.borderColor = UIColor.clear.cgColor
+            imgLeft.image = UIImage(named: "lineGreen")
+            lblChallNo.textColor = UIColor.black
+        }else{
+            viewBackLbl.layer.borderColor = UIColor.white.cgColor
+            viewBackLbl.backgroundColor = UIColor.clear
+            imgLeft.image = UIImage(named: "lineWhite")
+            lblChallNo.textColor = UIColor.white
+        }
+        
+        if self.daysListData[indexPath.item].is_milestone{
+            imgLeft.isHidden = true
+            imgLock.isHidden = false
+        }else{
+            imgLeft.isHidden = false
+            imgLock.isHidden = true
+        }*/
+        
+        //we have to remove this once api will done*
+        viewBackLbl.layer.borderColor = UIColor.white.cgColor
+        viewBackLbl.backgroundColor = UIColor.clear
+        imgLeft.image = UIImage(named: "lineWhite")
+        lblChallNo.textColor = UIColor.white
         
         if self.array[indexPath.item]%7 == 0 || self.array[indexPath.item] == 30{
             imgLeft.isHidden = true
@@ -149,7 +185,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         }else{
             imgLeft.isHidden = false
             imgLock.isHidden = true
-        }
+        }//end*
         
         return cell
     }
@@ -163,7 +199,11 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         appPreference.set21ChallengeName(value: "30 Day Challenge")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let intro_completed = self.appPreference.get30IntroCompleted()
+        if intro_completed{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

@@ -21,12 +21,6 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         
         self.setUpUI()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        //self.moveToViewController(at: 1, animated: false)
-        
-    }
 
     func setUpUI() {
         
