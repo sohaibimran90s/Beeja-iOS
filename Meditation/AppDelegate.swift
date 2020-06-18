@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         self.requestAuthorization()
-        //self.setLocalPush()
+        self.setLocalPush()
         
         callObserver.setDelegate(self, queue: nil)
         
@@ -1250,7 +1250,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func afterNoonMorningReminderFunc(settingData: DBSettings, date: Date, type: String){
             //let date = dateFormate.date(from: strDate)
             //print(date!)
-            let arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
+            var arrTemp: [String]?
+            if type == "morning"{
+                arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
+            }else{
+                arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
+            }
+        
             var str = KGOODMORNING
             if type == "challenge21days"{
                 str = KCHALLENGEREMINDER
