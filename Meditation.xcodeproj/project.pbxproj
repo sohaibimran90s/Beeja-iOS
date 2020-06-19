@@ -530,6 +530,7 @@
 		E0783208235E3BCA00B352ED /* home.json in Resources */ = {isa = PBXBuildFile; fileRef = E07831F0235E3BCA00B352ED /* home.json */; };
 		E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */; };
 		E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */; };
+		E8613381249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */; };
 		E8B4450E2498B07900C3579F /* 8week.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8B4450D2498B07900C3579F /* 8week.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -1103,6 +1104,7 @@
 		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
+		E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWM8WeeksGridsViewController.swift; sourceTree = "<group>"; };
 		E8B4450D2498B07900C3579F /* 8week.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = 8week.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2332,6 +2334,7 @@
 		E8B4450F2498B09C00C3579F /* Challenge8Weeks */ = {
 			isa = PBXGroup;
 			children = (
+				E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */,
 			);
 			path = Challenge8Weeks;
 			sourceTree = "<group>";
@@ -2764,6 +2767,7 @@
 				61416E8B22BBB3B400C9339E /* LineChartView.swift in Sources */,
 				615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */,
 				2E5DF5A7226DC76F00CF2935 /* WWMGuidedData.swift in Sources */,
+				E8613381249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift in Sources */,
 				61416EB122BBB42600C9339E /* ChartColorTemplates.swift in Sources */,
 				2EE247B321E5EFBD00857C25 /* WWMJournalTableViewCell.swift in Sources */,
 				2EE247DE21E6315400857C25 /* PieSlice.swift in Sources */,
