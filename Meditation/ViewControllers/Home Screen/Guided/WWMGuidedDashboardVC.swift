@@ -49,7 +49,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
-        settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        settings.style.buttonBarItemsShouldFillAvailableWidth = false
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         settings.style.buttonBarMinimumInteritemSpacing = 1.0

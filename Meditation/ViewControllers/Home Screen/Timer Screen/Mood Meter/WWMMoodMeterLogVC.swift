@@ -159,6 +159,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         player?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = self.view.frame
+        playerLayer.frame.origin.y = playerLayer.frame.origin.y + 25
+        playerLayer.frame.size.height = playerLayer.frame.height - 25
         playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         self.view.layer.addSublayer(playerLayer)
         player?.seek(to: CMTime.zero)

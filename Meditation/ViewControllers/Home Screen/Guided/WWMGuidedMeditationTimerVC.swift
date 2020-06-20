@@ -41,6 +41,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     @IBOutlet weak var spinnerImage: UIImageView!
     @IBOutlet weak var btnFavourite: UIButton!
     
+    @IBOutlet weak var btnPause: UIButton!
+    @IBOutlet weak var btnStop: UIButton!
+    
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()
     var currentColorSet: Int!
@@ -70,6 +73,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         WWMHelperClass.addNinetyFivePercentData(type: "\(self.meditation_key)_\(self.cat_Name)")
         
         self.viewLottieAnimation.isHidden = true
+        self.view.isExclusiveTouch = true
+        self.btnPause.isExclusiveTouch = true
+        self.btnStop.isExclusiveTouch = true
         spinnerImage.isHidden = true
         
         self.totalTime = self.seconds
@@ -493,6 +499,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     // MARK:- Button Action
     
     @IBAction func btnResumeAction(_ sender: Any) {
+        self.btnPause.isEnabled = true
+        self.btnStop.isEnabled = true
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = true
             self.isStop = false
@@ -509,6 +517,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnPlayAction(_ sender: Any) {
+        self.btnPause.isEnabled = false
+        self.btnStop.isEnabled = false
         self.pauseAction()
     }
     
@@ -554,7 +564,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        
+        self.btnPause.isEnabled = true
+        self.btnStop.isEnabled = true
         isComplete = 0
         if self.animateBool == 1{
             self.resumeAnimation()
@@ -778,6 +789,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     }//meditationComplete*
     
     @IBAction func btnPauseAction(_ sender: Any) {
+        self.btnPause.isEnabled = false
+        self.btnStop.isEnabled = false
         if !isStop {
             self.isStop = true
             self.animationView.pause()
