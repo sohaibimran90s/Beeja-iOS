@@ -531,6 +531,7 @@
 		E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */; };
 		E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */; };
 		E8613381249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */; };
+		E883A9FA249FE16D00CCB4AD /* Cell8Weeks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E883A9F9249FE16D00CCB4AD /* Cell8Weeks.swift */; };
 		E8B4450E2498B07900C3579F /* 8week.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8B4450D2498B07900C3579F /* 8week.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -1105,6 +1106,7 @@
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
 		E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWM8WeeksGridsViewController.swift; sourceTree = "<group>"; };
+		E883A9F9249FE16D00CCB4AD /* Cell8Weeks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell8Weeks.swift; sourceTree = "<group>"; };
 		E8B4450D2498B07900C3579F /* 8week.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = 8week.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2335,6 +2337,7 @@
 			isa = PBXGroup;
 			children = (
 				E8613380249CC5ED00AAABD1 /* WWM8WeeksGridsViewController.swift */,
+				E883A9F9249FE16D00CCB4AD /* Cell8Weeks.swift */,
 			);
 			path = Challenge8Weeks;
 			sourceTree = "<group>";
@@ -2973,6 +2976,7 @@
 				61416E3922BBB23B00C9339E /* CandleStickChartRenderer.swift in Sources */,
 				61416E3622BBB23B00C9339E /* ChartDataRendererBase.swift in Sources */,
 				2E49661B221815E400BC6219 /* WWMCommunityData.swift in Sources */,
+				E883A9FA249FE16D00CCB4AD /* Cell8Weeks.swift in Sources */,
 				2EE247DF21E6315400857C25 /* PieSliceLayer.swift in Sources */,
 				61416F4022BBB56900C9339E /* ScatterChartDataProvider.swift in Sources */,
 				2EEF9AE1221AEC900016A77C /* DBTimerData+CoreDataClass.swift in Sources */,
