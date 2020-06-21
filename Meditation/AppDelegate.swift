@@ -838,282 +838,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func setLocalPush(){
         
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-        self.days21Reminder()
-        
         if data.count > 0 {
-            let settingData = data[0]
-            if settingData.isMorningReminder {
-                if settingData.morningReminderTime != "" {
-                let dateFormate = DateFormatter()
-                dateFormate.locale = Locale.current
-                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
-                dateFormate.dateFormat = "dd:MM:yyyy"
-                    
-                let locale = NSLocale.current
-                let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                var date: Date = Date()
-                var strDate = dateFormate.string(from: Date())
-
-                if formatter.contains("a") {
-                    //print("phone is set to 12 hours")
-                    //phone is set to 12 hours
-                    
-                    let morningReminderArray = settingData.morningReminderTime?.components(separatedBy: ":")
-                    if morningReminderArray?.count ?? 0 > 0{
-                        if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
-                            dateFormate.dateFormat = "dd-MM-yyyy"
-                            strDate = dateFormate.string(from: Date())
-                            let morningReminderTime1 = settingData.morningReminderTime?.components(separatedBy: " ")
-                            strDate = strDate + " \(morningReminderTime1![0])"
-                            
-                            //print("morinit++ \(strDate)")
-                            date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
-                        }else{
-                            strDate = dateFormate.string(from: Date())
-                                                        
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM"){
-
-                                strDate = strDate + " \(settingData.morningReminderTime!)"
-                            }else{
-                                strDate = strDate + " \(settingData.morningReminderTime!) AM"
-                            }
-                            
-                            dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
-                            date = dateFormate.date(from: strDate)!
-                        }
-                    }
-                } else {
-                    //phone is set to 24 hours
-                    //print("phone is set to 24 hours")
-                    //strDate = strDate + " \(settingData.morningReminderTime!)"
-                        
-                    let morningReminderArray = settingData.morningReminderTime?.components(separatedBy: ":")
-                    if morningReminderArray?.count ?? 0 > 0{
-                        if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
-                            
-                            if settingData.morningReminderTime!.contains("p") || settingData.morningReminderTime!.contains("a") || settingData.morningReminderTime!.contains("A") || settingData.morningReminderTime!.contains("P"){
-                                dateFormate.dateFormat = "hh:mm a"
-                            }else{
-                                dateFormate.dateFormat = "HH:mm"
-                            }
-                            
-                            let date11 = dateFormate.date(from: settingData.morningReminderTime ?? "08:00")
-                            dateFormate.dateFormat = "hh:mm"
-                            let Date12 = dateFormate.string(from: date11!)
-                            //print("date12... \(Date12)")
-                            strDate = strDate + " " + Date12
-                            //print("strDate... \(strDate)")
-                        }else{
-                            
-                            if settingData.morningReminderTime!.contains("AM") || settingData.morningReminderTime!.contains("am") || settingData.morningReminderTime!.contains("pm") || settingData.morningReminderTime!.contains("PM") {
-                                
-                            let morningReminderTime1 = settingData.morningReminderTime?.components(separatedBy: " ")
-                                strDate = strDate + " \(morningReminderTime1![0])"
-                            }else{
-                                strDate = strDate + " \(settingData.morningReminderTime!)"
-                            }
-                            
-                            //print("strDate+++ \(strDate)")
-                        }
-                    }
-                        
-                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
-                    print(settingData.morningReminderTime ?? "08:00")
-                    
-                    date = dateFormate.date(from: strDate)!
-                    
-                }//phone is set to 24 hours end***
-                    print(settingData.morningReminderTime ?? "")
-                    self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: "morning")
-                
-                }//isMorningReminder not nil****
-            }else {
-                center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
-            }
-            if settingData.isAfterNoonReminder {
-                if settingData.afterNoonReminderTime != "" {
-                let dateFormate = DateFormatter()
-                dateFormate.locale = Locale.current
-                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
-                dateFormate.dateFormat = "dd:MM:yyyy"
-                    
-                let locale = NSLocale.current
-                let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                
-                var date: Date = Date()
-                var strDate = dateFormate.string(from: Date())
-                    
-                if formatter.contains("a") {
-                    //print("phone is set to 12 hours")
-                    
-                    let afterNoonReminderArray = settingData.afterNoonReminderTime?.components(separatedBy: ":")
-                    if afterNoonReminderArray?.count ?? 0 > 0{
-                        if Int(afterNoonReminderArray?[0] ?? "0") ?? 0 > 11{
-                            dateFormate.dateFormat = "dd-MM-yyyy"
-                            strDate = dateFormate.string(from: Date())
-                            let afternoonReminderTime1 = settingData.afterNoonReminderTime?.components(separatedBy: " ")
-                            strDate = strDate + " \(afternoonReminderTime1![0])"
-                            
-                            //print("strDate++== \(strDate)")
-                            date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
-                        }else{
-                            strDate = dateFormate.string(from: Date())
-                                                        
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
-
-                                strDate = strDate + " \(settingData.afterNoonReminderTime!)"
-                            }else{
-                                strDate = strDate + " \(settingData.afterNoonReminderTime!) AM"
-                            }
-                            
-                            dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
-                            date = dateFormate.date(from: strDate)!
-                        }
-                    }
-                                        
-                } else {
-                    //phone is set to 24 hours
-                    //print("phone is set to 24 hours")
-                    
-                    //strDate = strDate + " \(settingData.afterNoonReminderTime!)"
-                    let afterNoonReminderArray = settingData.afterNoonReminderTime?.components(separatedBy: ":")
-                    if afterNoonReminderArray?.count ?? 0 > 0{
-                        if Int(afterNoonReminderArray?[0] ?? "0") ?? 0 > 11{
-                            
-                            if settingData.afterNoonReminderTime!.contains("p") || settingData.afterNoonReminderTime!.contains("a") || settingData.afterNoonReminderTime!.contains("A") || settingData.afterNoonReminderTime!.contains("P"){
-
-                                dateFormate.dateFormat = "hh:mm a"
-                            }else{
-                                dateFormate.dateFormat = "HH:mm"
-                            }
-                            
-                            let date11 = dateFormate.date(from: settingData.afterNoonReminderTime ?? "08:00")
-                            dateFormate.dateFormat = "hh:mm"
-                            let Date12 = dateFormate.string(from: date11!)
-                            //print("date12... \(Date12)")
-                            strDate = strDate + " " + Date12
-                            //print("strDate... \(strDate)")
-                        }else{
-                            
-                            if settingData.afterNoonReminderTime!.contains("AM") || settingData.afterNoonReminderTime!.contains("am") || settingData.afterNoonReminderTime!.contains("pm") || settingData.afterNoonReminderTime!.contains("PM"){
-                                
-                            let afterNoonReminderTime1 = settingData.afterNoonReminderTime?.components(separatedBy: " ")
-                                strDate = strDate + " \(afterNoonReminderTime1![0])"
-                            }else{
-                                strDate = strDate + " \(settingData.afterNoonReminderTime!)"
-                            }
-                        }
-                    }
-                    
-                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
-                    print(settingData.afterNoonReminderTime ?? "00:00")
-                    
-                    date = dateFormate.date(from: strDate)!
-                    
-                    }//phone is set to 24 hours end***
-                    
-                    //print("strDate afternoon... \(strDate)")
-                    //print(settingData.afterNoonReminderTime ?? "")
-                    
-                    self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: "afternoon")
-                
-              }//isAfternoonReminder not nil****
-                
-            }else {
-                center.removePendingNotificationRequests(withIdentifiers: ["AfternoonTimer"])
-            }
-            
-            if settingData.isLearnReminder {
-                if settingData.learnReminderTime != "" {
-                let dateFormate = DateFormatter()
-                dateFormate.locale = Locale.current
-                dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
-                dateFormate.dateFormat = "dd:MM:yyyy"
-                    
-                let locale = NSLocale.current
-                let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
-                var date: Date = Date()
-                var strDate = dateFormate.string(from: Date())
-                    
-                if formatter.contains("a") {
-                    //print("phone is set to 12 hours")
-                    //phone is set to 12 hours
-                    
-                    let afterLearnReminderArray = settingData.learnReminderTime?.components(separatedBy: ":")
-                    if afterLearnReminderArray?.count ?? 0 > 0{
-                        if Int(afterLearnReminderArray?[0] ?? "0") ?? 0 > 11{
-                            dateFormate.dateFormat = "dd-MM-yyyy"
-                            strDate = dateFormate.string(from: Date())
-                            
-                            let learnReminderTime1 = settingData.learnReminderTime?.components(separatedBy: " ")
-                            
-                            strDate = strDate + " \(learnReminderTime1![0])"
-                            date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
-                        }else{
-                            strDate = dateFormate.string(from: Date())
-                            
-
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
-
-                                strDate = strDate + " \(settingData.learnReminderTime!)"
-                            }else{
-                                strDate = strDate + " \(settingData.learnReminderTime!) AM"
-                            }
-                            
-                            dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
-                            date = dateFormate.date(from: strDate)!
-                        }
-                    }
-                    
-                }else{
-                    //phone is set to 24 hours
-
-                    //print("phone is set to 24 hours \(settingData.learnReminderTime ?? "")")
-                
-                    //strDate = strDate + " \(settingData.learnReminderTime ?? "14:00")"
-                    let afterLearnReminderArray = settingData.learnReminderTime?.components(separatedBy: ":")
-                    if afterLearnReminderArray?.count ?? 0 > 0{
-                        if Int(afterLearnReminderArray?[0] ?? "0") ?? 0 > 11{
-                            
-
-                            if settingData.learnReminderTime!.contains("p") || settingData.learnReminderTime!.contains("a") || settingData.learnReminderTime!.contains("A") || settingData.learnReminderTime!.contains("P"){
-
-                                dateFormate.dateFormat = "hh:mm a"
-                            }else{
-                                dateFormate.dateFormat = "HH:mm"
-                            }
-                            
-                            let date11 = dateFormate.date(from: settingData.learnReminderTime ?? "08:00")
-                            dateFormate.dateFormat = "hh:mm"
-                            let Date12 = dateFormate.string(from: date11!)
-                            //print("date12... \(Date12)")
-                            strDate = strDate + " " + Date12
-                            //print("strDate... \(strDate)")
-                        }else{
-                            
-
-                            if settingData.learnReminderTime!.contains("AM") || settingData.learnReminderTime!.contains("am") || settingData.learnReminderTime!.contains("pm") || settingData.learnReminderTime!.contains("PM"){
-                                
-                            let learnReminderTime1 = settingData.learnReminderTime?.components(separatedBy: " ")
-                                strDate = strDate + " \(learnReminderTime1![0])"
-                            }else{
-                                strDate = strDate + " \(settingData.learnReminderTime ?? "14:00")"
-                            }
-                        }
-                    }
-                        
-                    dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
-                    print(settingData.learnReminderTime ?? "08:00")
-                    
-                    date = dateFormate.date(from: strDate)!
-                }//phone is set to 24 hours end***
-                
-                self.learnReminderFunc(settingData: settingData, date: date)
-
-              }//end if settingData.learnReminderTime != ""
-            }else {
-                center.removePendingNotificationRequests(withIdentifiers: ["LearnReminder"])
-            }
+            self.days21Reminder()
+            self.identifyReminderType(type: "morning")
+            self.identifyReminderType(type: "afternoon")
+            self.identifyReminderType(type: "learn")
         }
     }
     
@@ -1220,6 +949,118 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }else{
             center.removePendingNotificationRequests(withIdentifiers: ["ChallengeReminder"])
         }
+    }
+    
+    func identifyReminderType(type: String){
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        let settingData = data[0]
+        
+        var reminderTime: String?
+        var isReminder: Bool?
+        
+        if type == "morning"{
+            reminderTime = settingData.morningReminderTime ?? ""
+            isReminder = settingData.isMorningReminder
+        }else if type == "afternoon"{
+            reminderTime = settingData.afterNoonReminderTime ?? ""
+            isReminder = settingData.isAfterNoonReminder
+        }else if type == "learn"{
+            reminderTime = settingData.learnReminderTime ?? ""
+            isReminder = settingData.isLearnReminder
+        }
+        
+        if isReminder ?? false {
+            if reminderTime != "" {
+            let dateFormate = DateFormatter()
+            dateFormate.locale = Locale.current
+            dateFormate.locale = Locale(identifier: dateFormate.locale.identifier)
+            dateFormate.dateFormat = "dd:MM:yyyy"
+                
+            let locale = NSLocale.current
+            let formatter : String = DateFormatter.dateFormat(fromTemplate: "j", options:0, locale:locale)!
+            var date: Date = Date()
+            var strDate = dateFormate.string(from: Date())
+
+            if formatter.contains("a") {
+                //print("phone is set to 12 hours")
+
+                let morningReminderArray = reminderTime?.components(separatedBy: ":")
+                if morningReminderArray?.count ?? 0 > 0{
+                    if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
+                        dateFormate.dateFormat = "dd-MM-yyyy"
+                        strDate = dateFormate.string(from: Date())
+                        let morningReminderTime1 = reminderTime?.components(separatedBy: " ")
+                        strDate = strDate + " \(morningReminderTime1![0])"
+                        
+                        //print("morinit++ \(strDate)")
+                        date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
+                    }else{
+                        strDate = dateFormate.string(from: Date())
+                                                    
+                        if reminderTime!.contains("AM") || reminderTime!.contains("am") || reminderTime!.contains("pm") || reminderTime!.contains("PM"){
+
+                            strDate = strDate + " \(reminderTime!)"
+                        }else{
+                            strDate = strDate + " \(reminderTime!) AM"
+                        }
+                        
+                        dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
+                        date = dateFormate.date(from: strDate)!
+                    }
+                }
+            } else {
+                //phone is set to 24 hours
+                //print("phone is set to 24 hours")
+                //strDate = strDate + " \(settingData.morningReminderTime!)"
+                    
+                let morningReminderArray = reminderTime?.components(separatedBy: ":")
+                if morningReminderArray?.count ?? 0 > 0{
+                    if Int(morningReminderArray?[0] ?? "0") ?? 0 > 11{
+                        
+                        if reminderTime!.contains("p") || reminderTime!.contains("a") || reminderTime!.contains("A") || reminderTime!.contains("P"){
+                            dateFormate.dateFormat = "hh:mm a"
+                        }else{
+                            dateFormate.dateFormat = "HH:mm"
+                        }
+                        
+                        let date11 = dateFormate.date(from: reminderTime ?? "08:00")
+                        dateFormate.dateFormat = "hh:mm"
+                        let Date12 = dateFormate.string(from: date11!)
+                        //print("date12... \(Date12)")
+                        strDate = strDate + " " + Date12
+                        //print("strDate... \(strDate)")
+                    }else{
+                        
+                        if reminderTime!.contains("AM") || reminderTime!.contains("am") || reminderTime!.contains("pm") || reminderTime!.contains("PM") {
+                            
+                        let morningReminderTime1 = reminderTime?.components(separatedBy: " ")
+                            strDate = strDate + " \(morningReminderTime1![0])"
+                        }else{
+                            strDate = strDate + " \(reminderTime!)"
+                        }
+                    }
+                }
+                
+                //print("strDate+++ \(strDate)")
+                    
+                dateFormate.dateFormat = "dd:MM:yyyy hh:mm"
+                print(reminderTime ?? "08:00")
+                
+                date = dateFormate.date(from: strDate)!
+                
+            }//phone is set to 24 hours end***
+                print(reminderTime ?? "")
+                
+                if type == "learn"{
+                    self.learnReminderFunc(settingData: settingData, date: date)
+                }else{
+                    self.afterNoonMorningReminderFunc(settingData: settingData, date: date, type: type)
+                }
+            }//isMorningReminder not nil****
+        }else {
+            center.removePendingNotificationRequests(withIdentifiers: ["MorningTimer"])
+        }
+
     }
     
     func getCurrentDate()-> Date {

@@ -1099,6 +1099,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MOOD_METER", itemName: "OFF")
             }
             settingData.moodMeterEnable = btn.isOn
+            callPushNotification()
         }else if btn.tag == 6 {
             if btn.isOn {
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MILESTONES_REWARDS", itemName: "ON")
@@ -1120,6 +1121,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 settingData.learnReminderTime = "08:00"
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER_TIME", itemName: "08:00")
             }
+            callPushNotification()
         }else if btn.tag == 102 {
             // Enable 30 Days Reminder
             
@@ -1129,6 +1131,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "OFF")
             }
             settingData.isThirtyDaysReminder = btn.isOn
+            callPushNotification()
         }
 //      self.settingAPI()
         self.tblViewSetting.reloadData()
