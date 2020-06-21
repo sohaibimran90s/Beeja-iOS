@@ -441,10 +441,18 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "intervalChime": self.settingData.intervalChime!,
             "ambientSound": self.settingData.ambientChime!,
             "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
             "IsMorningReminder": self.settingData.isMorningReminder,
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         

@@ -326,6 +326,23 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
+    //meditationAPI
+    // Calling API
+    func meditationApi(type: String) {
+        self.view.endEditing(true)
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : 1,
+            "level_id"         : 1,
+            "user_id"       : self.appPreffrence.getUserID(),
+            "type" : type,
+            "guided_type" : ""
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            }
+        }
+    
     func setDataToDb(json:[String:Any]) {
         //print("database setting.... \(json)")
         var arrMeditationData = [WWMMeditationData]()
@@ -382,11 +399,16 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             settingDB.learnReminderTime = json["LearnReminderTime"] as? String ?? ""
             settingDB.isLearnReminder = json["IsLearnReminder"] as? Bool ?? false
             settingDB.mantraID = json["MantraID"] as? Int ?? 1
-            
+            settingDB.isThirtyDaysReminder = json["isThirtyDaysReminder"] as? Bool ?? false
+            settingDB.thirtyDaysReminder = json["thirtyDaysReminder"] as? String ?? ""
+            settingDB.isTwentyoneDaysReminder = json["isTwentyoneDaysReminder"] as? Bool ?? false
+            settingDB.twentyoneDaysReminder = json["twentyoneDaysReminder"] as? String ?? ""
             settingDB.prepTime = "10"
             settingDB.meditationTime = "90"
             settingDB.restTime = "20"
             
+            self.appPreffrence.setIs30DaysReminder(value: json["isThirtyDaysReminder"] as? Bool ?? false)
+            self.appPreffrence.setIs21DaysReminder(value: json["isTwentyoneDaysReminder"] as? Bool ?? false)
             
             for index in 0..<arrMeditationData.count {
                 let dataM = arrMeditationData[index]
@@ -1690,6 +1712,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.setGetProfile(value: false)
                             self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
                             self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
+                            self.appPreffrence.setInvitationCode(value: result["Invitation_code"] as! String)
                             self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])

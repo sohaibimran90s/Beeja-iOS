@@ -249,6 +249,10 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             "MantraID":self.settingData.mantraID,
             "LearnReminderTime":self.settingData.learnReminderTime!,
             "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         

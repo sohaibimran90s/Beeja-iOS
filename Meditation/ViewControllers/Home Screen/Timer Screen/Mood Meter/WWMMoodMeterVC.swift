@@ -647,33 +647,41 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func navigateToDashboard() {
         
         if WWMHelperClass.selectedType == "learn"{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            
-            if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
-                
-                WWMHelperClass.days21StepNo = ""
-                WWMHelperClass.stepsCompleted = false
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
-                self.navigationController?.pushViewController(vc, animated: true)
-                
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.nextVC()
             }else{
-                self.navigationController?.isNavigationBarHidden = false
-                
-                if let tabController = self.tabBarController as? WWMTabBarVC {
-                    tabController.selectedIndex = 4
-                    for index in 0..<tabController.tabBar.items!.count {
-                        let item = tabController.tabBar.items![index]
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                        if index == 4 {
-                            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                        }
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            self.nextVC()
+        }
+    }
+    
+    func nextVC(){
+        if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
+            
+            WWMHelperClass.days21StepNo = ""
+            WWMHelperClass.stepsCompleted = false
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else{
+            self.navigationController?.isNavigationBarHidden = false
+            
+            if let tabController = self.tabBarController as? WWMTabBarVC {
+                tabController.selectedIndex = 4
+                for index in 0..<tabController.tabBar.items!.count {
+                    let item = tabController.tabBar.items![index]
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                    if index == 4 {
+                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
                     }
                 }
-                self.navigationController?.popToRootViewController(animated: false)
             }
+            self.navigationController?.popToRootViewController(animated: false)
         }
+
     }
     
     @IBAction func btnNextAction(_ sender: Any) {

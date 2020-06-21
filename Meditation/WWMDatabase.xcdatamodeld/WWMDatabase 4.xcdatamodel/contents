@@ -136,6 +136,8 @@
         <attribute name="isLearnReminder" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isMilestoneAndRewards" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isMorningReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isThirtyDaysReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isTwentyoneDaysReminder" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="learnReminderTime" optional="YES" attributeType="String"/>
         <attribute name="mantraID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="meditationTime" optional="YES" attributeType="String"/>
@@ -144,6 +146,8 @@
         <attribute name="prepTime" optional="YES" attributeType="String"/>
         <attribute name="restTime" optional="YES" attributeType="String"/>
         <attribute name="startChime" optional="YES" attributeType="String"/>
+        <attribute name="thirtyDaysReminder" optional="YES" attributeType="String"/>
+        <attribute name="twentyoneDaysReminder" optional="YES" attributeType="String"/>
         <relationship name="meditationData" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DBMeditationData"/>
     </entity>
     <entity name="DBStepFaq" representedClassName="DBStepFaq" syncable="YES">
@@ -228,7 +232,7 @@
         <element name="DBMoodMeter" positionX="-63" positionY="-18" width="128" height="60"/>
         <element name="DBNinetyFivePercent" positionX="-9" positionY="144" width="128" height="73"/>
         <element name="DBNintyFiveCompletionData" positionX="-18" positionY="135" width="128" height="73"/>
-        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="315"/>
+        <element name="DBSettings" positionX="-36" positionY="36" width="128" height="373"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
         <element name="DBSteps" positionX="9" positionY="162" width="128" height="208"/>
         <element name="DBThirtyDays" positionX="-18" positionY="135" width="128" height="313"/>

@@ -22,8 +22,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-    let arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
-    let arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
+    var arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+    var arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
@@ -62,6 +62,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             //print("... settingData... \(settingData)")
             if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
                 arrMeditationData = meditationData
+            }
+            
+            if settingData.thirtyDaysReminder != ""{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+            }else{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
             }
         }
         self.tblViewSetting.reloadData()
@@ -258,12 +266,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func numberOfSections(in tableView: UITableView) -> Int {
         //print("....userdate.... \(self.userData.type)")
         
-        
         if self.appPreffrence.getType() == "timer" {
             return 3
         }else if self.appPreffrence.getType() == "learn" {
             return 2
-        }else {
+        }else{
             return 1
         }
     }
@@ -276,7 +283,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
                             return arrTimeChimes.count-1
                         }
-                        
                     }
                 }
                 return arrTimeChimes.count+1
@@ -474,10 +480,26 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTime.isHidden = false
                         cell.checkImage.isHidden = true
                         cell.lblTime.text = settingData.learnReminderTime
-                            
-                            if !settingData.isLearnReminder {
-                                cell.lblTime.isHidden = true
-                            }
+                        
+                        if !settingData.isLearnReminder {
+                            cell.lblTime.isHidden = true
+                        }
+                    }else if indexPath.row == 4 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 102
+                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                    }else if indexPath.row == 5 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        
+                        if !settingData.isThirtyDaysReminder{
+                            cell.lblTime.isHidden = true
+                        }
                     }
                 }else if indexPath.section == 1 {
                     
@@ -1086,6 +1108,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             
             settingData.isMilestoneAndRewards = btn.isOn
         }else if btn.tag == 101 {
+            // Enable Learn Reminder
+            
             if btn.isOn {
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER", itemName: "ON")
             }else {
@@ -1096,7 +1120,15 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 settingData.learnReminderTime = "08:00"
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER_TIME", itemName: "08:00")
             }
-            // Enable Learn Reminder
+        }else if btn.tag == 102 {
+            // Enable 30 Days Reminder
+            
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "OFF")
+            }
+            settingData.isThirtyDaysReminder = btn.isOn
         }
 //      self.settingAPI()
         self.tblViewSetting.reloadData()
@@ -1200,6 +1232,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 "MantraID":self.settingData.mantraID,
                 "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
                 "IsLearnReminder":self.settingData.isLearnReminder,
+                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
                 "meditation_data" : meditation_data
                 ] as [String : Any]
             

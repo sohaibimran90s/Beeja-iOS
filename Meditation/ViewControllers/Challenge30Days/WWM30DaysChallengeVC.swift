@@ -29,6 +29,8 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var viewCollectionViewHC: NSLayoutConstraint!
     @IBOutlet weak var btnIntro: UIButton!
     
+    let reachable = Reachabilities()
+    
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
@@ -98,20 +100,42 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         }else{
             self.btnIntro.isHidden = false
         }
+        
+        var settingData = DBSettings()
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+        }
+        
+        
     }
     
+    //MARK: Challenge Expired button
     @IBAction func btnExpiredClicked(_ sender: UIButton){
         
     }
     
+    //MARK: Challenge Retake button
     @IBAction func btnRetakeClicked(_ sender: UIButton){
         
     }
     
+    //MARK: Set a Reminder button
+    @IBAction func btnReminderClicked(_ sender: UIButton){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+        
+        vc.type = "30_days"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     //MARK: Share the love
     @IBAction func btnShareLoveClicked(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMShareLoveVC") as! WWMShareLoveVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        if !reachable.isConnectedToNetwork() {
+            WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
+        }else{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMShareLoveVC") as! WWMShareLoveVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     //Start Challenge

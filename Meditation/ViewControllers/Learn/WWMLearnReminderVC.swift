@@ -49,6 +49,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+            self.appPreference.setIs30DaysReminder(value: settingData.isThirtyDaysReminder)
         }
     }
     
@@ -145,10 +146,19 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let hour = components.hour!
         let minute = components.minute!
         
-        if date1.contains("PM"){
-            self.amPmBtn.setTitle("pm", for: .normal)
+        if !date1.contains("PM") || !date1.contains("pm") || !date1.contains("AM") || !date1.contains("am"){
+            switch hour {
+            case 12...23:
+                self.amPmBtn.setTitle("pm", for: .normal)
+            default:
+                self.amPmBtn.setTitle("am", for: .normal)
+            }
         }else{
-            self.amPmBtn.setTitle("am", for: .normal)
+            if date1.contains("PM") || date1.contains("pm"){
+                self.amPmBtn.setTitle("pm", for: .normal)
+            }else{
+                self.amPmBtn.setTitle("am", for: .normal)
+            }
         }
         
         self.hourBtn.setTitle("\(hour)", for: .normal)
@@ -267,6 +277,10 @@ class WWMLearnReminderVC: WWMBaseViewController {
             "MantraID":self.settingData.mantraID,
             "LearnReminderTime":self.settingData.learnReminderTime!,
             "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         
@@ -278,7 +292,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMLearnReminderVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
+                if let _ = result["success"] as? Bool {
                     //print("WWMLearnReminderVC")
                 }
             }

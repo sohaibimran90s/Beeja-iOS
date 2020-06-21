@@ -25,6 +25,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     @IBOutlet weak var sliderRestTime: WWMSlider!
     @IBOutlet weak var btnStartTimer: UIButton!
     @IBOutlet weak var btnChoosePreset: UIButton!
+    @IBOutlet weak var viewPrePost: UIView!
     
     var selectedMeditationData  = DBMeditationData()
     var selectedLevelData  = DBLevelData()
@@ -48,6 +49,21 @@ class WWMTimerHomeVC: WWMBaseViewController {
             object: nil)
         
         self.offlineDatatoServerCall()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.setUpNavigationBarForDashboard(title: "Timer")
+        self.getSettingData()
+        
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "timer")
+            self.tabBarController?.tabBar.isHidden = true
+            self.viewPrePost.isHidden = true
+        }else{
+            self.tabBarController?.tabBar.isHidden = false
+            self.viewPrePost.isHidden = false
+        }
     }
     
     //insert offline data to server
@@ -134,19 +150,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
             }
         }
     }//insert offline data to server*
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.setUpNavigationBarForDashboard(title: "Timer")
-        self.getSettingData()
-        
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-            self.appPreference.setType(value: "timer")
-            self.tabBarController?.tabBar.isHidden = true
-        }else{
-            self.tabBarController?.tabBar.isHidden = false
-        }
-    }
     
     private func updateGradientLayer() {
         gradientLayer.locations = [ 0.0, 1.2 ]

@@ -114,7 +114,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         }
     }
     
-    
     func needsUpdate() -> Bool {
         let infoDictionary = Bundle.main.infoDictionary
         let appID = "1453359245"//infoDictionary?["CFBundleIdentifier"] as? String

@@ -30,7 +30,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewHourMeditate: UICircularProgressRing!
     @IBOutlet weak var lblMeditate: EFCountingLabel!
     @IBOutlet weak var lblNameMeditate: UILabel!
-    
     @IBOutlet weak var viewBottom: UIStackView!
     @IBOutlet weak var lblAvSession: UILabel!
     @IBOutlet weak var lblValueSession: EFCountingLabel!
@@ -43,6 +42,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var calenderHegihtConstraint: NSLayoutConstraint!
+    @IBOutlet weak var challengeCalHC: NSLayoutConstraint!
     
     let appPreffrence = WWMAppPreference()
     var statsData = WWMSatsProgressData()
@@ -85,7 +85,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var calenderTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var lblPracLine: UILabel!
     @IBOutlet weak var lblSpiriLine: UILabel!
-    
+    @IBOutlet weak var stackViewPraSpiritual: UIStackView!
+    @IBOutlet weak var constraint21DaysHeader: NSLayoutConstraint!
+    @IBOutlet weak var lbl21DaysTitle: UILabel!
+
     var challType = "Practical"
     var itemInfo: IndicatorInfo = "View"
     
@@ -158,14 +161,35 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        //to check if progrss of challenges have to show or not
         self.btnChallenge21Days.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnChallenge21Days.layer.borderWidth = 2
-        self.viewChallenge21Days.isHidden = true
-        self.viewChallenge21DaysHeightConstraint.constant = 0
-        self.btnChallenge21Days.isHidden = true
-        self.calenderTopConstraint.constant = 0
-        self.viewSuperChallenge21Days.isHidden = true
-        self.constraintSuperView21Days.constant = 0
+        
+        
+        //check weather 30 days or not
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.stackViewPraSpiritual.isHidden = true
+            self.constraint21DaysHeader.constant = 90
+            self.lbl21DaysTitle.text = "30 Days meditation Challenge"
+            self.viewChallenge21Days.isHidden = false
+            self.viewChallenge21DaysHeightConstraint.constant = 410
+            self.btnChallenge21Days.isHidden = false
+            self.viewSuperChallenge21Days.isHidden = false
+            self.constraintSuperView21Days.constant = 520
+            self.challengeCalHC.constant = 300
+            self.lblPracLine.isHidden = true
+            self.lblSpiriLine.isHidden = true
+        }else{
+            self.viewChallenge21Days.isHidden = true
+            self.viewChallenge21DaysHeightConstraint.constant = 0
+            self.btnChallenge21Days.isHidden = true
+            self.viewSuperChallenge21Days.isHidden = true
+            self.constraintSuperView21Days.constant = 0
+            self.calenderTopConstraint.constant = 0
+            self.stackViewPraSpiritual.isHidden = false
+            self.constraint21DaysHeader.constant = 110
+            self.lbl21DaysTitle.text = "21 Days meditation Challenge"
+        }
         
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100
@@ -241,13 +265,16 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @IBAction func btn21TodaysChallClicked(_ sender: UIButton){
-        WWMHelperClass.selectedType = "guided"
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "learn")
+            WWMHelperClass.selectedType = "learn"
+        }else{
+            WWMHelperClass.selectedType = "guided"
+        }
         
-        self.view.endEditing(true)
-        self.appPreference.setIsProfileCompleted(value: true)
-        self.appPreference.setType(value: "guided")
-        self.appPreference.setGuideType(value: "practical")
-        self.appPreference.setGuideTypeFor3DTouch(value: "practical")
+        
+        //self.view.endEditing(true)
+        
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -612,10 +639,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days21PracticalChallenge.count)")
         
         if collectionView == collectionView21Chall{
-            if self.challType == "Practical"{
-                return self.statsData.days21PracticalChallenge.count
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                return 30
             }else{
-                return self.statsData.days21SpiritualChallenge.count
+                if self.challType == "Practical"{
+                    return self.statsData.days21PracticalChallenge.count
+                }else{
+                    return self.statsData.days21SpiritualChallenge.count
+                }
             }
             
         } else if collectionView == collectionViewCal{
@@ -632,9 +663,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-     
+        
         if collectionView == collectionViewCal{
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMStatsCalCollectionViewCell
             
             let data = statsData.consecutive_days[indexPath.row]
             if data.date == ""{
@@ -708,55 +739,58 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             return cell
         }else{
             //
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
-            var data = WWMSatsProgress21DaysChallengeData()
-            if self.challType == "Practical"{
-                data = statsData.days21PracticalChallenge[indexPath.row]
-                
-                if indexPath.item == statsData.days21PracticalChallenge.count - 1{
-                    cell.imgViewRight.isHidden = true
-                }
-            }else{
-                data = statsData.days21SpiritualChallenge[indexPath.row]
-                
-                if indexPath.item == statsData.days21SpiritualChallenge.count - 1{
-                    cell.imgViewRight.isHidden = true
-                }
-            }
-            
-            cell.lblDate.text = "\(data.day_id)"
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
             
             if indexPath.item == 0{
                 cell.imgViewLeft.isHidden = true
             }
             
-            if data.status{
-                
-                cell.lblDate.textColor = UIColor.black
-                cell.viewDateCircle.layer.borderWidth = 2.0
-                cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
-                cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-                cell.imgViewLeft.image = UIImage(named: "singleLineLeft")
-            }else{
-                
+            if indexPath.item == 29{
+                cell.imgViewRight.isHidden = true
+            }
+            
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
                 cell.lblDate.textColor = UIColor.white
                 cell.viewDateCircle.layer.borderWidth = 2.0
                 cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
                 cell.viewDateCircle.backgroundColor = UIColor.clear
                 cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
                 cell.imgViewRight.image = UIImage(named: "singleLineRight1")
-            }
-            
-            
-            UIView.animate(withDuration: 0.2, delay: 0.1*Double(indexPath.item), options: [.curveEaseInOut], animations: {
-                cell.viewDateCircle.transform = CGAffineTransform(translationX: 0, y: 0)
-                cell.viewDateCircle.alpha = 1
-                cell.imgViewLeft.transform = CGAffineTransform(translationX: 0, y: 0)
-                cell.imgViewLeft.alpha = 1
-                cell.imgViewRight.transform = CGAffineTransform(translationX: 0, y: 0)
-                cell.imgViewRight.alpha = 1
+            }else{
+                var data = WWMSatsProgress21DaysChallengeData()
+                if self.challType == "Practical"{
+                    data = statsData.days21PracticalChallenge[indexPath.row]
+                    
+                    if indexPath.item == statsData.days21PracticalChallenge.count - 1{
+                        cell.imgViewRight.isHidden = true
+                    }
+                }else{
+                    data = statsData.days21SpiritualChallenge[indexPath.row]
+                    
+                    if indexPath.item == statsData.days21SpiritualChallenge.count - 1{
+                        cell.imgViewRight.isHidden = true
+                    }
+                }
                 
-            }, completion: nil)
+                cell.lblDate.text = "\(data.day_id)"
+                
+                if data.status{
+                    
+                    cell.lblDate.textColor = UIColor.black
+                    cell.viewDateCircle.layer.borderWidth = 2.0
+                    cell.viewDateCircle.backgroundColor = UIColor.init(hexString: "#00eba9")!
+                    cell.viewDateCircle.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+                    cell.imgViewLeft.image = UIImage(named: "singleLineLeft")
+                }else{
+                    
+                    cell.lblDate.textColor = UIColor.white
+                    cell.viewDateCircle.layer.borderWidth = 2.0
+                    cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
+                    cell.viewDateCircle.backgroundColor = UIColor.clear
+                    cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
+                    cell.imgViewRight.image = UIImage(named: "singleLineRight1")
+                }
+            }
             
             return cell
         }
@@ -880,6 +914,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     self.calenderTopConstraint.constant = 0
                     self.viewSuperChallenge21Days.isHidden = false
                     self.constraintSuperView21Days.constant = 485
+                    self.challengeCalHC.constant = 245
                     
                     self.collectionView21Chall.reloadData()
                 }

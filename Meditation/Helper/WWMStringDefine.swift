@@ -143,7 +143,7 @@ let URL_SINGLEGUIDED = URL_BASE + "dictionary/singleguided"
 let URL_BANNERS = URL_BASE + "banners"
 let URL_RETAKE = URL_BASE + "guided/retake"
 let URI_LEARN = URL_BASE + "dictionary/learn"
-
+let URI_INVITEACCEPTUSERS = URL_BASE + "invite_accept_users"
 
 /************************************************/
 

@@ -289,6 +289,13 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         
@@ -302,7 +309,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
+                if let _ = result["success"] as? Bool {
                     //print(success)
                     //print("WWMEditMeditationTimeVC background thread")
                 }
