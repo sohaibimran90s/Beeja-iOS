@@ -334,6 +334,8 @@ class WWMConOnboardingVC: WWMBaseViewController {
     func handleNextBtn() {
         self.nextBtn.isEnabled = (self.multipleSelectedRow.count == 0) ? false : true
         self.nextBtn.setTitleColor((self.multipleSelectedRow.count == 0) ? .gray : .white, for: .normal)
+        let alterTitle = "You've currently selected " + String(self.multipleSelectedRow.count) + " types"
+        self.titleLbl.text = (self.multipleSelectedRow.count == 0) ? self.currentPageData.title : alterTitle
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -365,29 +367,30 @@ class WWMConOnboardingVC: WWMBaseViewController {
     
     @IBAction func nextBtnAction(_ sender: Any) {
         
-        // fetch priority for nextQuestion/nextPage from the selected options
-        var listOfNextQues: [Int] = []
-        for selectedCell in self.multipleSelectedRow {
-            
-            let selectedOpt = self.optionList[selectedCell]
-            listOfNextQues.append(selectedOpt.next_question!)
-        }
-        
+        // check if general option is selected alone or with ONLY one more another option then next question should be from Genral option.
+        // Else next question would be from another option (because number of other option selected more than one.)
+        // number of selected option cant exceed more than 7
         var nextQuestion = -1
-        let uniqueQues = Array(Set(listOfNextQues))
         
-        if (uniqueQues.count <= 2) {
-            nextQuestion = uniqueQues.last!
+        let selectedOptionArry = self.optionList.filter({$0.isSelected == true})
+        if (selectedOptionArry.count == 0){
+            return
         }
-        else
-        {
-            let firstIndexQues = uniqueQues[0]
-            let secondIndexQues = uniqueQues[1]
-            
-            let firstQuesArray = listOfNextQues.filter({$0 == firstIndexQues})
-            let secondQuesArray = listOfNextQues.filter({$0 == secondIndexQues})
-            
-            nextQuestion = (firstQuesArray.count > secondQuesArray.count) ? firstQuesArray[0] : secondQuesArray[0]
+        else if (selectedOptionArry.count > 7) {
+            let alert = UIAlertController(title: "Warnning", message: "You can't select more than 7 option.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        let generalArray = selectedOptionArry.filter({$0.is_genral == 1})
+        if ((generalArray.count > 0) && (selectedOptionArry.count <= 2)){
+            let generalOption = generalArray[0]
+            nextQuestion = generalOption.next_question!
+        }
+        else {
+            let nonGeneralArray = selectedOptionArry.filter({$0.is_genral == 0})
+            nextQuestion = nonGeneralArray[0].next_question!
         }
         
         self.selectedOption(nextPageId: nextQuestion, isNavigateForward: true)
@@ -420,9 +423,16 @@ extension WWMConOnboardingVC: UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustOnboardingCell")! as! WWMCustOnboardingCell
         
-        let image = UIImageView(image: UIImage(named: "smallArrow.png"))
-        cell.accessoryView = (self.isMultipleSelection == 0) ? image:nil
-        
+        if (self.isMultipleSelection == 0){
+            let image = UIImageView(image: UIImage(named: "smallArrow.png"))
+            cell.accessoryView = image
+        }
+        else {
+            let option = self.optionList[indexPath.section]
+            let image = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
+            cell.accessoryView = (option.isSelected ?? false) ? image:nil
+        }
+
         let selectedBGImage = UIImageView(image: UIImage(named: "cellSelectedBG.png"))
         cell.selectedBackgroundView = selectedBGImage
         
@@ -432,8 +442,8 @@ extension WWMConOnboardingVC: UITableViewDataSource{
         //cell.tintColor = UIColor(red: 0/255, green: 23/255, blue: 108/255, alpha: 1.0) // new
         
         // new
-        let chkMarkImage = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
-        cell.accessoryView = (self.multipleSelectedRow.contains(indexPath.section)) ? chkMarkImage : nil
+        //let chkMarkImage = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
+        //cell.accessoryView = (self.multipleSelectedRow.contains(indexPath.section)) ? chkMarkImage : nil
         //cell.accessoryType = (self.multipleSelectedRow.contains(indexPath.section)) ? .checkmark : .none
         cell.setCellData(options: self.optionList[indexPath.section])
         return cell
@@ -467,7 +477,6 @@ extension WWMConOnboardingVC: UITableViewDelegate{
             }
         }
         else {
-            
             let image = UIImageView(image: UIImage(named: "selectedChkMark.png")) // new
             tableView.cellForRow(at: indexPath)?.accessoryView = image
             
