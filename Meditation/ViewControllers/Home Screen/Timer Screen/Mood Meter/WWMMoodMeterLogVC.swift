@@ -64,12 +64,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -103,7 +103,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             self.lblExpressMood.text = ""
         }
         
-        print("oodData.show_burn... \(moodData.show_burn)")
+        //print("oodData.show_burn... \(moodData.show_burn)")
         if !moodData.show_burn {
             btnBurnMood.isHidden = true
         }
@@ -117,10 +117,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 btnLogExperience.isHidden = true
             }
         }
-        
-//        if WWMHelperClass.selectedType == "learn"{
-//            btnBurnMood.isHidden = true
-//        }
         
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name.uppercased()) because"
@@ -247,7 +243,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         var param: [String: Any] = [:]
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -269,11 +265,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "journal_type": ""
                 ] as [String : Any]
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -291,16 +288,17 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "journal_type": ""
                 ] as [String : Any]
         }
         
-        print("param meterlog... \(param)")
+        //print("param meterlog... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success moodmeterlogvc background api run")
+                    //print("success moodmeterlogvc background api run")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
 
@@ -362,40 +360,49 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
-        print("self.type..... \(self.type)")
-        if WWMHelperClass.selectedType == "learn"{
+        //print("self.type..... \(self.type)")
+        if self.appPreference.getType() == "learn"{
             if self.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)
             }else {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
-                self.navigationController?.pushViewController(vc, animated: true)
+                
+                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    self.nextVC()
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }else{
             if self.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)
             }else {
+                self.nextVC()
+             }
+        }
+    }
+    
+    func nextVC(){
+        if !self.moodData.show_burn && self.moodData.id != -1 {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
+            vc.moodData = self.moodData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
+            
+            if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
                 
-                if !self.moodData.show_burn && self.moodData.id != -1 {
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
-                    vc.moodData = self.moodData
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else {
-                    
-                    if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
-                        
-                        WWMHelperClass.days21StepNo = ""
-                        WWMHelperClass.stepsCompleted = false
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
-                        self.navigationController?.pushViewController(vc, animated: true)
-                        
-                    }else{
-                        self.callHomeController()
-                    }
-                }
+                WWMHelperClass.days21StepNo = ""
+                WWMHelperClass.stepsCompleted = false
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }else{
+                self.callHomeController()
             }
         }
+
     }
     
     func callHomeController(){
@@ -439,8 +446,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success WWMStartTimerVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success WWMStartTimerVC meditationhistoryapi in background thread")
             }
         }
     }

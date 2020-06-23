@@ -205,18 +205,18 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     
     //MARK: fetch GetVibes Data From DB
     func fetchGetVibesDataFromDB(mood_id: String) {
-        print("mood_id... \(mood_id)")
+        //print("mood_id... \(mood_id)")
         let getVibesDataDB = WWMHelperClass.fetchDB(dbName: "DBGetVibesImages") as! [DBGetVibesImages]
         
         if getVibesDataDB.count > 0 {
-            print("self.getVibesDataDB... \(getVibesDataDB.count)")
+            //print("self.getVibesDataDB... \(getVibesDataDB.count)")
             self.arrImages.removeAll()
             for dict in getVibesDataDB {
                 if dict.mood_id == mood_id{
                     self.arrImages.append(dict.images ?? "atease")
                 }
             }
-            print("self.arrImages... \(arrImages.count) \(arrImages)")
+            //print("self.arrImages... \(arrImages.count) \(arrImages)")
             self.imageCollectionView.reloadData()
         }else{
             self.imageCollectionView.reloadData()

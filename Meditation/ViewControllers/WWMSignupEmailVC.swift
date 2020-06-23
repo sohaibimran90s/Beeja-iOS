@@ -162,15 +162,15 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             "password": self.txtViewPassword.text!
         ]
         
-        print("name... \(self.name) password... \(self.txtViewPassword.text ?? "") param... \(param)")
+        //print("name... \(self.name) password... \(self.txtViewPassword.text ?? "") param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SIGNUP, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
-                print("signup result... \(result)")
+                //print("signup result... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
-                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
@@ -222,7 +222,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                 print(error?.localizedDescription ?? "")
             }else {
                 if (loginResult?.isCancelled)! {
-                    print("User Cancellled To login with fb")
+                    //print("User Cancellled To login with fb")
                 }else {
                     let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
                     req.start(completionHandler: { (connection, result, error) in
@@ -245,7 +245,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                                         "version": UIDevice.current.systemVersion
                                     ]
                                     
-                                    print("param facebook... \(param)")
+                                    //print("param facebook... \(param)")
                                     
                                     self.loginWithSocial(param: param as Dictionary<String, Any>)
                                 }else {
@@ -328,10 +328,11 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
-                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMSignupEmailVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -352,7 +353,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                         self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         self.appPreference.setUserData(value: [:])
                         
-                        print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
+                        //print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
                         
                         self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                         self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
@@ -384,20 +385,6 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreference.setBanners(value: result)
-                }
-            }
         }
     }
 }

@@ -61,7 +61,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
                 
                 if flag == 0{
                     name = self.guidedData.cat_EmotionList[i].emotion_type
-                    print("name.... \(name)")
+                    //print("name.... \(name)")
                     self.arrToCheckSection.append("0")
                     arrOfGuidedEmotionData.append(self.guidedData.cat_EmotionList[i])
                     for i in 0..<self.guidedData.cat_EmotionList.count{
@@ -77,7 +77,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
             self.tableView.reloadData()
         }
         
-        print("self.guidedData.cat_EmotionList.count \(self.guidedData.cat_EmotionList.count) arra.count \(arrOfGuidedEmotionData.count)")
+        //print("self.guidedData.cat_EmotionList.count \(self.guidedData.cat_EmotionList.count) arra.count \(arrOfGuidedEmotionData.count)")
     }
     
     
@@ -122,7 +122,7 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         cell.lblTitle.text = data.emotion_Name
         cell.lblSectionTitle.text = data.emotion_type.capitalized
         
-        print("emotion_type moments... \(data.emotion_type)")
+        //print("emotion_type moments... \(data.emotion_type)")
         
         if self.arrToCheckSection[indexPath.row] == "0"{
             cell.viewBack.isHidden = true
@@ -139,7 +139,7 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         let data = self.arrOfGuidedEmotionData[indexPath.row]
         
         if self.arrToCheckSection[indexPath.row] == "0"{
-            print("section of tableView")
+            //print("section of tableView")
         }else{
             let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")
             
@@ -168,11 +168,11 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
     
     func fetchGuidedAudioDataFromDB(emotion_id: String, emotion_name: String, min_limit: String, max_limit: String, meditation_key: String){
         
-        print("emotion_id \(emotion_id) emotion_name \(emotion_name) min_limit \(min_limit) max_limit \(max_limit) meditation_key \(meditation_key)")
+        //print("emotion_id \(emotion_id) emotion_name \(emotion_name) min_limit \(min_limit) max_limit \(max_limit) meditation_key \(meditation_key)")
         
         let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(emotion_id)", dbName: "DBGuidedAudioData")
         if guidedAudioDataDB.count == 1{
-            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
+            //print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
             
             var jsonString: [String: Any] = [:]
             for dict in guidedAudioDataDB {

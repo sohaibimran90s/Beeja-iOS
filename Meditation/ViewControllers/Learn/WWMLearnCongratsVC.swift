@@ -21,7 +21,7 @@ class WWMLearnCongratsVC: WWMBaseViewController {
         
         self.lblStep.text = "\(KSTEP) \(WWMHelperClass.step_id)"
         self.lblStepDescription.text = "\(KSTEPCONGMSG) \(WWMHelperClass.step_id) \(KSTEPCONGMSG1)"
-        print("wathced duration.... \(Int(watched_duration) ?? 0)")
+        //print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
     }
     

@@ -177,7 +177,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             print(param)
             self.wisdomFeedback(param: param as Dictionary<String, Any>)
         }else {
-            print("Prachi")
+            //print("Prachi")
         }
     }
     
@@ -227,7 +227,6 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
 
 extension WWMWisdomVC: WWMWisdomFeedbackDelegate{
     func refreshView() {
-        print("")
     }
     
     func videoURl(url: String) {

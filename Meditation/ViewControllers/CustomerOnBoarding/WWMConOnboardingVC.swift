@@ -201,7 +201,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
                         completionHandler(onboardData, true)
                     }
                     catch {
-                        print("JSONSerialization error:", error)
+                        //print("JSONSerialization error:", error)
                     }
                 }
                 else {
@@ -236,7 +236,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
                 let onboardData = try JSONDecoder().decode(OnboardingData.self, from: data)
                 return onboardData
             } catch {
-                print("error:\(error)")
+                //print("error:\(error)")
             }
         }
         return nil
@@ -307,7 +307,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("result signupletsstartvc meditation data... \(result)")
+                //print("result signupletsstartvc meditation data... \(result)")
                 self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: "Guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: type)

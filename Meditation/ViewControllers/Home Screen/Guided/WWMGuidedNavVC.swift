@@ -46,11 +46,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
             
             for data in nintyFivePercentDB{
                 
-                print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
                 
                 if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
                     
-                    print("data....++++++===== \(String(describing: data.data)) id++++++++==== \(String(describing: data.id))")
+                    //print("data....++++++===== \(String(describing: data.data)) id++++++++==== \(String(describing: data.id))")
                     
                     self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0")
                     
@@ -106,16 +106,18 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": is_complete
+                "is_complete": is_complete,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
 
-        print("meter param... \(param)")
+        //print("meter param... \(param)")
 
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
 
-                print("URL_MEDITATIONCOMPLETE..... success guided")
+                //print("URL_MEDITATIONCOMPLETE..... success guided")
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
@@ -139,7 +141,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
         self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
-        print("type*** \(self.type) guided_type*** \(guided_type)")
+        //print("type*** \(self.type) guided_type*** \(guided_type)")
         
         if guided_type == "Guided"{
             self.appPreference.setGuidedSleep(value: "Guided")
@@ -169,12 +171,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
             "guided_type" : guided_type
             ] as [String : Any]
         
-        print("param*** \(param)")
+        //print("param*** \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMGuidedNavVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("result guidednavvc meditation data... \(result)")
-                print("meditation api in guidednav in background...")
+                //print("result guidednavvc meditation data... \(result) meditation api in guidednav in background...")
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -208,12 +209,12 @@ class WWMGuidedNavVC: WWMBaseViewController {
     func fetchGuidedDataFromDB() {
         
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.guided_type, dbName: "DBGuidedData", name: "cat_name")
-        print("self.type+++ \(self.type) self.guided_type+++ \(self.guided_type) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.guided_type+++ \(self.guided_type) guidedDataDB.count*** \(guidedDataDB.count)")
         
         self.challenge7DayCount = 0
         
         if guidedDataDB.count > 0{
-            print("guidedDataDB count... \(guidedDataDB.count)")
+            //print("guidedDataDB count... \(guidedDataDB.count)")
             
             self.arrGuidedList.removeAll()
             
@@ -236,7 +237,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                         self.appPreference.setSpiritualChallenge(value: true)
                     }
                 }
-                    
+                
                 jsonString["id"] = Int((dict as AnyObject).guided_id ?? "0")
                 jsonString["name"] = (dict as AnyObject).guided_name as? String
                 jsonString["meditation_type"] = (dict as AnyObject).meditation_type as? String
@@ -253,10 +254,10 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 }
                 
                 let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
-                print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
+                //print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
                 for dict1 in guidedEmotionsDataDB{
-                     
+                    
                     //print("meditation_type... \((dict as AnyObject).meditation_type) intro_completed... \((dict1 as AnyObject).intro_completed) guided_name... \((dict1 as AnyObject).guided_name)")
                     
                     if (dict as AnyObject).meditation_type as? String == "practical"{
@@ -270,7 +271,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                             self.appPreference.setSpiritualChallenge(value: true)
                         }
                     }
-                                        
+                    
                     jsonEmotionsString["emotion_id"] = Int((dict1 as AnyObject).emotion_id ?? "0")
                     jsonEmotionsString["emotion_name"] = (dict1 as AnyObject).emotion_name ?? ""
                     jsonEmotionsString["emotion_image"] = (dict1 as AnyObject).emotion_image ?? ""
@@ -285,11 +286,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     jsonEmotionsString["emotion_type"] = (dict1 as AnyObject).emotion_type ?? ""
                     
                     let guidedAudiosDataDB = WWMHelperClass.fetchGuidedFilterAudiosDB(emotion_id: (dict1 as AnyObject).emotion_id ?? "0", dbName: "DBGuidedAudioData")
-                    print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count) \(guidedEmotionsDataDB.count)")
+                    //print("guidedAudiosDataDB count... \(guidedAudiosDataDB.count) \(guidedEmotionsDataDB.count)")
                     
                     for dict2 in guidedAudiosDataDB{
                         
-                        print("dict2.... \(dict2)")
+                        //print("dict2.... \(dict2)")
                         jsonAudiosString["emotion_id"] = Int((dict2 as AnyObject).emotion_id ?? "0")
                         jsonAudiosString["id"] = Int((dict2 as AnyObject).audio_id ?? "0")
                         jsonAudiosString["audio_name"] = (dict2 as AnyObject).audio_name ?? ""
@@ -298,7 +299,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                         jsonAudiosString["audio_image"] = (dict2 as AnyObject).audio_image ?? ""
                         jsonAudiosString["audio_url"] = (dict2 as AnyObject).audio_url ?? ""
                         jsonAudiosString["vote"] = (dict2 as AnyObject).vote ?? false
-
+                        
                         jsonAudios.append(jsonAudiosString)
                     }
                     
@@ -317,9 +318,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
             for view in self.containerView.subviews{
                 view.removeFromSuperview()
             }
-
+            
             WWMHelperClass.challenge7DayCount = self.challenge7DayCount
-            print("self.typeTitle+++ \(self.typeTitle)")
+            //print("self.typeTitle+++ \(self.typeTitle)")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedDashboardVC") as! WWMGuidedDashboardVC
             vc.arrGuidedList = self.arrGuidedList
@@ -342,11 +343,11 @@ class WWMGuidedNavVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result... getGuidedListAPI \(result)")
+                    //print("success result... getGuidedListAPI \(result)")
                     
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("audioList... \(result)")
+                        //print("audioList... \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -554,7 +555,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                             self.fetchGuidedDataFromDB()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

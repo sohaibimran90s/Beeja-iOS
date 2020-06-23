@@ -237,7 +237,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_SETMYOWN, context: "WWMSetMyOwnVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let result1 = result["result"] as? [String:Any] {
-                    print("set_my_own*** \(result1)")
+                    //print("set_my_own*** \(result1)")
                     self.selectedMeditation_Id = result1["meditation_id"] as! Int
                     self.selectedLevel_Id = result1["level_id"] as! Int
                     if self.isFromSetting {
@@ -283,7 +283,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
                 if let sucessAPI = result["success"] as? Bool {
                     if sucessAPI {
                         
-                        print("result setmyownvc meditation data... \(result)")
+                        //print("result setmyownvc meditation data... \(result)")
                         
                         if let userProfile = result["userprofile"] as? [String:Any] {
                             if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -413,7 +413,7 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             
             //print("dic setmyown... \(dic.min_limit)")
             if dic.min_limit == "" || dic.min_limit == nil{
-                print("dic setmyown... ===")
+                //print("dic setmyown... ===")
                 let data = ["meditation_id":dic.meditationId,
                             "meditation_name":dic.meditationName ?? "",
                             "min_limit" : self.min_limit,
@@ -441,10 +441,18 @@ class WWMSetMyOwnVC: WWMBaseViewController {
             "intervalChime": self.settingData.intervalChime!,
             "ambientSound": self.settingData.ambientChime!,
             "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
             "IsMorningReminder": self.settingData.isMorningReminder,
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         

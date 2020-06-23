@@ -34,19 +34,19 @@ class WWMListenMantraVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
     func fetchMantrasDataFromDB() {
         let mantrasDataDB = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
         if mantrasDataDB.count > 0 {
-            print("mantrasDataDB.count WWMListenMantraVC... \(mantrasDataDB.count)")
+            //print("mantrasDataDB.count WWMListenMantraVC... \(mantrasDataDB.count)")
             for dict in mantrasDataDB {
                 if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
                     let mantraData = WWMMantraData.init(json: jsonResult)
@@ -74,8 +74,7 @@ class WWMListenMantraVC: WWMBaseViewController {
                     }
                     for dict in data{
                         
-                        print("mantras result... \(result)")
-                        print("listenmantravc getmantras api")
+                        //print("mantras result... \(result) listenmantravc getmantras api")
                         
                         
                         let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
@@ -84,7 +83,7 @@ class WWMListenMantraVC: WWMBaseViewController {
                         dbMantrasData.data = myString
                         
                         let timeInterval = Int(Date().timeIntervalSince1970)
-                        print("timeInterval.... \(timeInterval)")
+                        //print("timeInterval.... \(timeInterval)")
                         
                         dbMantrasData.last_time_stamp = "\(timeInterval)"
                         WWMHelperClass.saveDb()

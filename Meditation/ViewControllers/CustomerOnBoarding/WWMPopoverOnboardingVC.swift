@@ -74,7 +74,7 @@ class WWMPopoverOnboardingVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("result signupletsstartvc meditation data... \(result)")
+                //print("result signupletsstartvc meditation data... \(result)")
                 self.appPreference.setType(value: type)
                 self.appPreference.setGuideType(value: "Guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: type)

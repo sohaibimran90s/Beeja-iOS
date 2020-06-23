@@ -14,7 +14,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var lblEmotionTitle: UILabel!
     @IBOutlet weak var audioCollectionView: UICollectionView!
-
+    
     var emotionData = WWMGuidedEmotionData()
     var cat_Id = "0"
     var cat_Name = ""
@@ -44,11 +44,14 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var max_limit = "97"
     var meditation_key = "practical"
     
+    var tap = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpNavigationBarForAudioGuided(title: self.type)
         self.lblEmotionTitle.text = emotionData.emotion_Name
+        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
         
         self.fetchGuidedAudioDataFromDB()
     }
@@ -64,14 +67,13 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.arrAudioList[indexPath.row]
-
+        
         cell.imgView.sd_setImage(with: URL.init(string: data.audio_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.audio_Name
         cell.lblDuration.text = "(\(self.secondsToMinutesSeconds(second: data.audio_Duration)))"
         cell.lblAuthorName.text = data.author_name
         
-        print("data.paid... \(data.paid)")
-        print("data.audio_Duration... \(data.audio_Duration)")
+        //print("data.paid... \(data.paid) data.audio_Duration... \(data.audio_Duration)")
         
         if self.appPreffrence.getExpiryDate(){
             cell.imgLock.isHidden = true
@@ -130,7 +132,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath)
             return headerView
         }
-
+        
         let footerView =
             collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath)
         
@@ -175,7 +177,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(emotionData.emotion_Id)", dbName: "DBGuidedAudioData")
         if guidedAudioDataDB.count > 0{
-            print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
+            //print("guidedAudioDataDB count... \(guidedAudioDataDB.count)")
             
             self.arrAudioList.removeAll()
             
@@ -214,7 +216,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         SKPaymentQueue.default().add(self)
         
         self.getSubscriptionPlanId()
-        
+                
         alertUpgradePopupView.viewAnnually.isHidden = false
         alertUpgradePopupView.viewLifeTime.isHidden = true
         alertUpgradePopupView.viewMonthly.isHidden = true
@@ -233,8 +235,36 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         alertUpgradePopupView.btnRestore.addTarget(self, action: #selector(btnRestoreAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnContinue.addTarget(self, action: #selector(btnContinueAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        //redeem coupon
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+        alertUpgradePopupView.btnACoupon.addTarget(self, action: #selector(btnACouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
+
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
+    
+    @objc func btnACouponAction(_ sender: Any){
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = false
+        alertUpgradePopupView.viewACoupon.isHidden = true
+    }
+    
+    @objc func btnRCouponAction(_ sender: Any){
+        let obj = WWMUpgradeBeejaVC()
+        let redeemCode = "\(alertUpgradePopupView.textField1.text ?? "")\(alertUpgradePopupView.textField2.text ?? "")\(alertUpgradePopupView.textField3.text ?? "")\(alertUpgradePopupView.textField4.text ?? "")\(alertUpgradePopupView.textField5.text ?? "")\(alertUpgradePopupView.textField6.text ?? "")"
+
+        if redeemCode.count == 6{
+            obj.getRedeemCodeAPI(redeemCode: redeemCode)
+        }else{
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
+        }
+    }
+    
+    @objc func checkTapAction(sender : UITapGestureRecognizer) {
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+    }//redeem coupon end*
     
     @objc func btnAnnuallyAction(_ sender: Any){
         self.boolGetIndex = false
@@ -250,7 +280,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             if product.productIdentifier == "get_42_gbp_annual_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -270,7 +300,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             if product.productIdentifier == "get_6_gbp_monthly_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -290,7 +320,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -336,7 +366,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             productRequest.start()
         }
         else {
-            print("Cannot perform In App Purchases.")
+            //print("Cannot perform In App Purchases.")
         }
     }
     
@@ -363,7 +393,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
             
-            print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
+            //print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
             
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
@@ -385,7 +415,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             }
         }
         else {
-            print("There are no products.")
+            //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
@@ -398,7 +428,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         for transaction in transactions {
             switch transaction.transactionState {
             case SKPaymentTransactionState.purchased, .restored:
-                print("Transaction completed successfully.")
+                //print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 print(transaction.transactionIdentifier as Any)
@@ -406,7 +436,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 var plan_id: Int = 2
                 var subscriptionPlan: String = "annual"
                 
-                print("responseArray.count..... \(responseArray.count) \(responseArray)")
+                //print("responseArray.count..... \(responseArray.count) \(responseArray)")
                 if responseArray.count > buttonIndex{
                     if let dict = self.responseArray[buttonIndex] as? [String: Any]{
                         if let id = dict["id"] as? Int{
@@ -430,14 +460,14 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
                 
-                print("param,,,,... \(param)")
+                //print("param,,,,... \(param)")
                 
                 if !self.restoreBool{
                     self.subscriptionSucessAPI(param: param)
                 }
                 
             case SKPaymentTransactionState.failed:
-                print("Transaction Failed");
+                //print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 //WWMHelperClass.dismissSVHud()
@@ -455,7 +485,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                   print("result.... \(result)")
+                   //print("result.... \(result)")
                 }
             }else {
                 
@@ -476,7 +506,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
     
     func subscriptionSucessAPI(param : [String : Any]) {
         
-        print("param.....###### \(param)")
+        //print("param.....###### \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
@@ -522,6 +552,24 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+}
+
+extension WWMGuidedAudioListVC{
+
+    func getRedeemCodeAPI(redeemCode: String) {
+        
+        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                self.callHomeVC(index: 2)
+            }else{
+                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
+            }
         }
     }
 }

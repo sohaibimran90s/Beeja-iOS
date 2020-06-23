@@ -21,7 +21,6 @@ class WWMHelperClass {
     static var galleryValue = false
     static var loader_register = false
     static var milestoneType: String = ""
-    static var selectedType: String = ""
     static var days21StepNo: String = ""
     
     //learn
@@ -217,7 +216,7 @@ class WWMHelperClass {
     
     class func getBuildVersion() -> String {
         let buildNo = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String)
-        print("build no\(buildNo ?? "")")
+        //print("build no\(buildNo ?? "")")
         return "b\(buildNo ?? "")"
     }
     
@@ -240,7 +239,7 @@ class WWMHelperClass {
         
         if expireDate > currentDate{
             let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ).day ?? 0
-            print("day..... \(day) currentDate++ \(currentDate) expireDate... \(expireDate)")
+            //print("day..... \(day) currentDate++ \(currentDate) expireDate... \(expireDate)")
             return day
         }else{
             return -1
@@ -265,7 +264,7 @@ class WWMHelperClass {
         let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
         let currentDate = self.getExpireDate(expiryDate: currentDateString, formatter: dateFormatter)
       
-        print("currentDate..... \(currentDate) expireDate---- \(expireDate)")
+        //print("currentDate..... \(currentDate) expireDate---- \(expireDate)")
         if currentDate > expireDate {
             KUSERDEFAULTS.set(true, forKey: "getPrePostMoodBool")
             return 1
@@ -287,11 +286,11 @@ class WWMHelperClass {
             else {
                 formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
                 let newExpireDate = formatter.date(from: expiryDate)
-                print("12 Hour - \(newExpireDate ?? Date())")
+                //print("12 Hour - \(newExpireDate ?? Date())")
                 return newExpireDate!
         }
         
-        print("24 Hour - \(expireDate)")
+        //print("24 Hour - \(expireDate)")
         return expireDate
     }
     
@@ -328,7 +327,7 @@ class WWMHelperClass {
             
             let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
             let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
-            print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min) date_completed... \(date_completed)")
+            //print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min) date_completed... \(date_completed)")
             return (1, day, second)
         }else{
             return (0, day, 0)
@@ -342,7 +341,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
     }
     
@@ -393,18 +392,18 @@ class WWMHelperClass {
             let fetchDataJournal = try managedContext.fetch(fetchRequest)
             
             let objectUpdate = fetchDataJournal[index] as! NSManagedObject
-            print("data...+++ \(data)")
+            //print("data...+++ \(data)")
             objectUpdate.setValue(data, forKey: "data")
             objectUpdate.setValue(meditation_type, forKey: "meditation_type")
             
             do{
                 try managedContext.save()
             }catch{
-                print("error journal...")
+                //print("error journal...")
             }
             
         }catch{
-            print("error update cart...")
+            //print("error update cart...")
         }
     }
     
@@ -434,14 +433,14 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
 
     }
     
     class func addNinetyFivePercentData(type: String){
         
-        print("selectedMeditation*** \(type)")
+        //print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
@@ -475,7 +474,7 @@ class WWMHelperClass {
     
     class func ninetyFivePercentMsg(type: String) -> (String, String, String){
         
-        print("selectedMeditation*** \(type)")
+        //print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
@@ -485,7 +484,7 @@ class WWMHelperClass {
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
                 if meditation_name == type{
-                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
+                    //print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
                     if value == "0"{
                         //1
                         if type == "Learn"{
@@ -508,7 +507,7 @@ class WWMHelperClass {
     
     class func checkNinetyFivePercentData(type: String) -> String{
         
-        print("selectedMeditation*** \(type)")
+        //print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
@@ -518,7 +517,7 @@ class WWMHelperClass {
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
                 if meditation_name == type{
-                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
+                    //print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count) self.checkNinetyFivePer+++ \(self.checkNinetyFivePer)")
                     if value == "0"{
                         self.deleteRowfromDb(dbName: "DBNinetyFivePercent", id: meditation_name!, type: "meditation_name")
                         let dbNinetyFivePercent = WWMHelperClass.fetchEntity(dbName: "DBNinetyFivePercent") as! DBNinetyFivePercent
@@ -528,10 +527,10 @@ class WWMHelperClass {
                         
                         WWMHelperClass.saveDb()
                         
-                        print("00000****")
+                        //print("00000****")
                         return "1"
                     }else{
-                        print("11111+++****")
+                        //print("11111+++****")
                         return "0"
                     }
                 }
@@ -553,9 +552,9 @@ class WWMHelperClass {
                 let value = (dict as AnyObject).meditation_value as? String
                 let meditation_name = (dict as AnyObject).meditation_name as? String
                 if meditation_name == type{
-                    print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
+                    //print("value+++ \(value) meditation_name+++ \(meditation_name) data+++ \(data.count)")
                     if value == "0"{
-                        print("00000****")
+                        //print("00000****")
                         return "1"
                     }else{
                         return "0"
@@ -573,7 +572,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
 
     }
@@ -584,7 +583,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
 
     }
@@ -595,7 +594,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
 
     }
@@ -609,7 +608,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
 
     }
@@ -620,7 +619,7 @@ class WWMHelperClass {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let param = try? appDelegate.managedObjectContext.fetch(fetchRequest)
-        print("No of Object in database : \(param!.count)")
+        //print("No of Object in database : \(param!.count)")
         return param!
         
     }
@@ -630,7 +629,7 @@ class WWMHelperClass {
     
     class func addNinetyFivePercentDataFromBackend(type: String, count: Int){
         
-        print("selectedMeditation*** \(type)")
+        //print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {

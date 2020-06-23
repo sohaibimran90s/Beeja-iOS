@@ -8,9 +8,11 @@
 
 import UIKit
 import CoreData
+import XLPagerTabStrip
 
-class WWMLearnStepListVC: WWMBaseViewController {
+class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
 
+    var itemInfo: IndicatorInfo = "View"
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var layoutMoodWidth: NSLayoutConstraint!
     @IBOutlet weak var layoutExpressMoodViewWidth: NSLayoutConstraint!
@@ -28,13 +30,8 @@ class WWMLearnStepListVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setNavigationBar(isShow: false, title: "")
-        
+        //print("learnStepsListData+++ \(learnStepsListData.count)")
         self.offlineDatatoServerCall()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.setAnimationForExpressMood()
-        }
         
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
@@ -45,12 +42,17 @@ class WWMLearnStepListVC: WWMBaseViewController {
         self.appPreference.setMoodId(value: "")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.navigationController?.isNavigationBarHidden = true
+        //self.navigationController?.isNavigationBarHidden = true
+        //self.setUpNavigationBarForDashboard(title: "Learn")
         self.fetchStepsDataFromDB()
+    }
+    
+    // MARK: - IndicatorInfoProvider
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return itemInfo
     }
     
     @objc func notificationLearnSteps(notification: Notification) {
@@ -65,11 +67,11 @@ class WWMLearnStepListVC: WWMBaseViewController {
             
             for data in nintyFivePercentDB{
                 
-                print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
                 
                 if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
                     
-                    print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
+                    //print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
                     
                     self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0")
                 }
@@ -124,16 +126,18 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": is_complete
+                "is_complete": is_complete,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
 
-        print("meter param... \(param)")
+        //print("meter param... \(param)")
 
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
 
-                print("URL_MEDITATIONCOMPLETE..... success learn")
+                //print("URL_MEDITATIONCOMPLETE..... success learn")
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
@@ -141,59 +145,28 @@ class WWMLearnStepListVC: WWMBaseViewController {
     
     //MARK: Fetch Steps Data From DB
     func fetchStepsDataFromDB() {
-        let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
         
-        if getStepsDataDB.count > 0 {
-            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
-            self.learnStepsListData.removeAll()
-            for dict in getStepsDataDB {
-                
-                var jsonData: [String: Any] = [:]
-                
-                jsonData["step_name"] = dict.step_name
-                jsonData["id"] = dict.id
-                jsonData["date_completed"] = dict.date_completed
-                jsonData["title"] = dict.title
-                jsonData["timer_audio"] = dict.timer_audio
-                jsonData["description"] = dict.description1
-                jsonData["step_audio"] = dict.step_audio
-                jsonData["outro_audio"] = dict.outro_audio
-                jsonData["completed"] = dict.completed
-                jsonData["min_limit"] = dict.min_limit
-                jsonData["max_limit"] = dict.max_limit
-                
-                let learnStepsListData = LearnStepsListData.init(json: jsonData)
-                self.learnStepsListData.append(learnStepsListData)
-                
-                print("jsonData... \(jsonData)")
-            }
+        var flag = 0
+        
+        for i in 0..<self.learnStepsListData.count{
+            //print("date_completed... \(self.learnStepsListData[i].date_completed) completed... \(self.learnStepsListData[i].completed) WWMHelperClass.total_paid... \(WWMHelperClass.total_paid) learnStepsListData count... \(self.learnStepsListData.count)")
             
-            //* logic for expanding the cell which we have to play
-            var flag = 0
-            
-            for i in 0..<self.learnStepsListData.count{
-                print("date_completed... \(self.learnStepsListData[i].date_completed)")
-                print("completed... \(self.learnStepsListData[i].completed)")
-                
-                if i !=  self.learnStepsListData.count - 1{
-                    if self.learnStepsListData[i].completed == true{
-                        self.selectedIndex = i + 1
-                        flag = 1
-                    }
+            if i !=  self.learnStepsListData.count - 1{
+                if self.learnStepsListData[i].completed == true{
+                    self.selectedIndex = i + 1
+                    flag = 1
                 }
             }
-            
-            if flag == 0{
-                self.selectedIndex = 0
-            }
-            //*end here
-            
-            print("WWMHelperClass.total_paid... \(WWMHelperClass.total_paid)")
-            print("learnStepsListData count... \(self.learnStepsListData.count)")
-            self.tableView.reloadData()
-            
-            NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
         }
+        
+        if flag == 0{
+            self.selectedIndex = 0
+        }
+        //*end here
+        
+        self.tableView.reloadData()
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -220,15 +193,13 @@ class WWMLearnStepListVC: WWMBaseViewController {
     
     @IBAction func btnIntroClicked(_ sender: UIButton) {
         
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
+//
+//        self.navigationController?.pushViewController(vc, animated: false)
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.value = "learnStepList"
-        self.navigationController?.pushViewController(vc, animated: false)
-    }
-    
-    
-    @IBAction func btnSideMenuClicked(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSideMenuVC") as! WWMSideMenuVC
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -269,7 +240,7 @@ class WWMLearnStepListVC: WWMBaseViewController {
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
                 
-                print("date1... \(systemDate) date2... \(apiDate)")
+                //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
                     self.stepFaqAPI()
                 }
@@ -281,13 +252,11 @@ class WWMLearnStepListVC: WWMBaseViewController {
     
     //MARK: API call
     func stepFaqAPI() {
-                
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_STEPFAQ, context: "WWMFAQsVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 
-                print("StepFaq WWMLearnStepListVC in background thread...")
-                print("faqs data..... \(result)")
+                //print("StepFaq WWMLearnStepListVC in background thread... faqs data..... \(result)")
                 if let data = result["data"] as? [[String: Any]]{
                     
                     let stepFaqData = WWMHelperClass.fetchDB(dbName: "DBStepFaq") as! [DBStepFaq]
@@ -371,7 +340,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         cell.btnProceed.addTarget(self, action: #selector(btnProceedClicked), for: .touchUpInside)
         cell.btnProceed.tag = indexPath.row
         
-        print("self.total_paid... \(self.total_paid)")
+        //print("self.total_paid... \(self.total_paid)")
         if self.appPreffrence.getExpiryDate(){
             cell.imgLock.isHidden = true
             cell.imgLock.image = UIImage(named: "")
@@ -423,7 +392,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
                 return
             }
         }
-        
+
         if reachable.isConnectedToNetwork() {
             self.pushViewController(sender_Tag: sender.tag)
         }else{
@@ -437,7 +406,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         var position = 0
         
         if self.learnStepsListData[sender_Tag].completed{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreference.setType(value: "learn")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
             
             self.appPreffrence.setLearnMin_limit(value: self.learnStepsListData[sender_Tag].min_limit)
@@ -473,11 +442,11 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         
         if flag == 2{
             
-            print("first play the \(self.learnStepsListData[position].step_name)")
+            //print("first play the \(self.learnStepsListData[position].step_name)")
             
             self.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.learnStepsListData[position].step_name) \(KLEARNJUMPSTEP1)")
         }else{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreference.setType(value: "learn")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
             

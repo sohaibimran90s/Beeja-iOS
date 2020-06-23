@@ -14,8 +14,21 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBOutlet weak var viewLifeTime: UIView!
     @IBOutlet weak var viewAnnually: UIView!
     @IBOutlet weak var viewMonthly: UIView!
-    
     @IBOutlet weak var lblBilledText: UILabel!
+
+    //aply coupon outlets
+    @IBOutlet weak var viewACoupon: UIView!
+    @IBOutlet weak var viewRedeemCoupon: UIView!
+    @IBOutlet weak var viewACouponHC: NSLayoutConstraint!
+    @IBOutlet weak var btnACoupon: UIButton!
+    @IBOutlet weak var textField1: UITextField!
+    @IBOutlet weak var textField2: UITextField!
+    @IBOutlet weak var textField3: UITextField!
+    @IBOutlet weak var textField4: UITextField!
+    @IBOutlet weak var textField5: UITextField!
+    @IBOutlet weak var textField6: UITextField!
+    
+    var tap = UITapGestureRecognizer()
     var selectedProductIndex = 2
     var transactionInProgress = false
     var productsArray = [SKProduct]()
@@ -33,15 +46,25 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     var popupTitle: String = ""
     var continueRestoreValue: String = ""
     var boolGetIndex = false
-    
     var restoreBool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       // WWMHelperClass.showSVHud()
+        
+        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
+        self.view.addGestureRecognizer(self.tap)
         self.boolGetIndex = true
         self.setNavigationBar(isShow: false, title: "")
+        self.setupView()
+        
+        self.requestProductInfo()
+        SKPaymentQueue.default().add(self)
+        
+        self.getSubscriptionPlanId()
+    }
+    
+    func setupView(){
+        
         self.viewAnnually.isHidden = false
         self.viewLifeTime.isHidden = true
         self.viewMonthly.isHidden = true
@@ -54,12 +77,38 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewLifeTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewAnnually.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
-        self.requestProductInfo()
-        SKPaymentQueue.default().add(self)
+        self.viewRedeemCoupon.isHidden = true
+        self.viewACoupon.isHidden = false
         
-        self.getSubscriptionPlanId()
+        if WWMHelperClass.hasTopNotch{
+            self.viewACouponHC.constant = 66
+            self.viewACoupon.layer.cornerRadius = 33
+        }else{
+            self.viewACoupon.layer.cornerRadius = 28
+            self.viewACouponHC.constant = 56
+        }
     }
     
+    @objc func checkTapAction(sender : UITapGestureRecognizer) {
+        self.viewRedeemCoupon.isHidden = true
+        self.viewACoupon.isHidden = false
+    }
+    
+    //MARK: Apply Coupon code
+    @IBAction func btnACouponAction(_ sender: UIButton){
+        self.viewRedeemCoupon.isHidden = false
+        self.viewACoupon.isHidden = true
+    }
+    
+    @IBAction func btnRCouponAction(_ sender: UIButton){
+        let redeemCode = "\(self.textField1.text ?? "")\(self.textField2.text ?? "")\(self.textField3.text ?? "")\(self.textField4.text ?? "")\(self.textField5.text ?? "")\(self.textField6.text ?? "")"
+
+        if redeemCode.count == 6{
+            self.getRedeemCodeAPI(redeemCode: redeemCode)
+        }else{
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
+        }
+    }
     
     // MARK:- Get Product Data from Itunes
     func requestProductInfo() {
@@ -71,7 +120,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             productRequest.start()
         }
         else {
-            print("Cannot perform In App Purchases.")
+            //print("Cannot perform In App Purchases.")
         }
     }
     
@@ -98,7 +147,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
             
-            print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
+            //print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
             
             let payment = SKPayment(product: self.productsArray[self.selectedProductIndex] )
             SKPaymentQueue.default().add(payment)
@@ -127,9 +176,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             if product.productIdentifier == "get_6_gbp_monthly_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
         
     }
@@ -148,7 +197,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             if product.productIdentifier == "get_42_gbp_annual_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
             }
             print(product.productIdentifier)
         }
@@ -168,9 +217,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             if product.productIdentifier == "get_240_gbp_lifetime_sub" {
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
-                print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
         
     }
@@ -214,7 +263,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             }
         }
         else {
-            print("There are no products.")
+            //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
@@ -227,7 +276,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         for transaction in transactions {
             switch transaction.transactionState {
             case SKPaymentTransactionState.purchased, .restored:
-                print("Transaction completed successfully.")
+                //print("Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 print(transaction.transactionIdentifier as Any)
@@ -235,7 +284,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 var plan_id: Int = 2
                 var subscriptionPlan: String = "annual"
                 
-                print("responseArray.count..... \(responseArray.count) \(responseArray)")
+                //print("responseArray.count..... \(responseArray.count) \(responseArray)")
                 if responseArray.count > buttonIndex{
                     if let dict = self.responseArray[buttonIndex] as? [String: Any]{
                         if let id = dict["id"] as? Int{
@@ -259,15 +308,14 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
                 
-                print("param,,,,... \(param)")
+                //print("param,,,,... \(param)")
                 
                 if !self.restoreBool{
                     self.subscriptionSucessAPI(param: param)
                 }
                 
-                
             case SKPaymentTransactionState.failed:
-                print("Transaction Failed");
+                //print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
                 //WWMHelperClass.dismissSVHud()
@@ -278,6 +326,24 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             }
         }
     }
+}
+
+extension WWMUpgradeBeejaVC{
+    
+    func getRedeemCodeAPI(redeemCode: String) {
+        
+        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                self.callHomeVC(index: 2)
+            }else{
+                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
+            }
+        }
+    }
     
     func getSubscriptionPlanId(){
         
@@ -285,7 +351,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                   print("result.... \(result)")
+                   //print("result.... \(result)")
                 }
             }else {
                 
@@ -306,7 +372,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     
     func subscriptionSucessAPI(param : [String : Any]) {
         
-        print("param.....###### \(param)")
+        //print("param.....###### \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {

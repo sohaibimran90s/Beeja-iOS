@@ -123,16 +123,17 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
             "version": UIDevice.current.systemVersion
             ] as [String : Any]
         
-        print("param2... \(param)")
+        //print("param2... \(param)")
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
-                    print("userProfile WWMSignupEmailVC... \(userProfile)")
+                    //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMSignUpFacebookVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -149,7 +150,7 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
                         self.appPreference.setGuideTypeFor3DTouch(value: userProfile["guided_type"] as? String ?? "")
                         self.appPreference.setUserData(value: [:])
                         
-                        print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
+                        //print("self.appPreference.getUserName() ...... \(self.appPreference.getUserName())")
                         
                         self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                         self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
@@ -180,20 +181,6 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMSginupFacebookVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreference.setBanners(value: result)
-                }
-            }
         }
     }
 }

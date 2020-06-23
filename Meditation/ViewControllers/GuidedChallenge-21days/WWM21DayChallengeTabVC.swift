@@ -60,17 +60,17 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     func toCheck7DayChallengeExit(){
-        print("self.name+++ \(self.name)")
+        //print("self.name+++ \(self.name)")
         if self.name == "7 Days challenge"{
             self.lblChallTypePractical.text = "7 DAY CHALLENGE"
             self.lblChallTypeSpiritual.text = "7 DAY CHALLENGE"
             
             if WWMHelperClass.challenge7DayCount > 1{
-                print("yes+++")
+                //print("yes+++")
             }else{
-                print("no+++")
+                //print("no+++")
                 let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
-                print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
+                //print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
                 
                 if guidedDataDB.count > 0{
                     for dict in guidedDataDB {
@@ -101,7 +101,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     
     func getSessionCount(name: String){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
-        print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
                 if (dict as AnyObject).meditation_type == "practical"{
@@ -131,15 +131,15 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     func checkSpiritualIntroVideoCompleted(){
         let getChallengeStatus = self.appPreference.getSpiritualChallenge()
         if getChallengeStatus{
-            print("Challenge already accepted")
+            //print("Challenge already accepted")
         }else{
-            print("Challenge not accepted yet")
+            //print("Challenge not accepted yet")
         }
     }
     
     func practicalAction(){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
-        print("self.type+++ \(self.type) self.name+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.name+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
@@ -149,7 +149,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     
                     let getChallengeStatus = self.appPreference.getPracticalChallenge()
                     if getChallengeStatus{
-                        print("Challenge already accepted")
+                        //print("Challenge already accepted")
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
@@ -161,7 +161,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         vc.id = (dict as AnyObject).guided_id ?? ""
                         self.navigationController?.pushViewController(vc, animated: false)
                     }else{
-                        print("Challenge not accepted yet")
+                        //print("Challenge not accepted yet")
                         
                         if reachable.isConnectedToNetwork() {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -187,7 +187,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     
     func spiritualAction(){
         let guidedDataDB = WWMHelperClass.fetchGuidedFilterDB(type: self.name, dbName: "DBGuidedData", name: "guided_name")
-        print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
+        //print("self.type+++ \(self.type) self.guided_type+++ \(self.name) guidedDataDB.count*** \(guidedDataDB.count)")
         
         if guidedDataDB.count > 0{
             for dict in guidedDataDB {
@@ -196,7 +196,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     
                     let getChallengeStatus = self.appPreference.getSpiritualChallenge()
                     if getChallengeStatus{
-                        print("Challenge already accepted")
+                        //print("Challenge already accepted")
                         self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
@@ -209,7 +209,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         vc.emotionKey = (dict as AnyObject).meditation_key ?? ""
                         self.navigationController?.pushViewController(vc, animated: false)
                     }else{
-                        print("Challenge not accepted yet")
+                        //print("Challenge not accepted yet")
                         
                         if reachable.isConnectedToNetwork() {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC

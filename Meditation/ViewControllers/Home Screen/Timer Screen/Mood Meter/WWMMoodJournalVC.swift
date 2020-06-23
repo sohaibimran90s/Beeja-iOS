@@ -126,9 +126,9 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
         var param: [String: Any] = [:]
         
-        print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
+        //print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -155,7 +155,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -173,16 +173,18 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
         
-        print("journal param... \(param)")
+        //print("journal param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success moodjournalvc background meditationcomplete api...")
+                    //print("success moodjournalvc background meditationcomplete api...")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
                     
@@ -210,7 +212,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     func logExperience() {
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             if WWMHelperClass.step_id == 12{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -273,8 +275,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success moodjournalVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success moodjournalVC meditationhistoryapi in background thread")
             }
         }
     }

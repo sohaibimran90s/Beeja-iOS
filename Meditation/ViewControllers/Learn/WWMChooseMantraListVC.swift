@@ -39,7 +39,7 @@ class WWMChooseMantraListVC: WWMBaseViewController {
     func fetchMantrasDataFromDB() {
         let mantrasDataDB = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
         if mantrasDataDB.count > 0 {
-            print("mantrasDataDB.count WWMChooseMantraListVC... \(mantrasDataDB.count)")
+            //print("mantrasDataDB.count WWMChooseMantraListVC... \(mantrasDataDB.count)")
             for dict in mantrasDataDB {
                 if let jsonResult = self.convertToDictionary1(text: dict.data ?? "") {
                     let mantraData = WWMMantraData.init(json: jsonResult)
@@ -68,8 +68,7 @@ class WWMChooseMantraListVC: WWMBaseViewController {
                        }
                        for dict in data{
                            
-                           print("mantras result... \(result)")
-                           print("choosemantralist getmantras api")
+                           //print("mantras result... \(result) choosemantralist getmantras api")
                            
                            
                            let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
@@ -250,6 +249,10 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             "MantraID":self.settingData.mantraID,
             "LearnReminderTime":self.settingData.learnReminderTime!,
             "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         
@@ -262,9 +265,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMChooseMantraListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let success = result["success"] as? Bool {
-                    print(success)
-                    print("WWMChooseMantraListVC")
-                    
+                    //print("WWMChooseMantraListVC")
                 }
             }
         }

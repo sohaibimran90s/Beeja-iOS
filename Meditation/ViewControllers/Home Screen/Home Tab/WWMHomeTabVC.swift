@@ -48,7 +48,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     var currentDateString: String = ""
     var currentDate: Date!
 
-    var giftPopUp = WWMHomeGiftPopUp()
+    var shareTheLovePopUp = WWMShareLovePopUp()
     var alertJournalPopup = WWMJouranlPopUp()
     var data: [WWMMeditationHistoryListData] = []
     var podData: [WWMPodCastData] = []
@@ -113,18 +113,17 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         //UIApplication.shared.isStatusBarHidden = true
-        self.bannerAPI()
+        self.banner1API()
         timerCount = Int.random(in: 0...4)
         WWMHelperClass.timerCount = timerCount
-        print("timercount... \(timerCount)")
+        //print("timercount... \(timerCount)")
         
         self.fetchMeditationHistDataFromDB()
 
         self.setNavigationBar(isShow: false, title: "")
         scrollView.setContentOffset(.zero, animated: true)
-        //scrollView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: 0)
 
-        print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
+        //print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         
         let fullname = self.appPreffrence.getUserName()
         let arrName = fullname.split(separator: " ")
@@ -145,13 +144,13 @@ class WWMHomeTabVC: WWMBaseViewController {
             let hour = calendar.component(.hour, from: date)
             
             if hour < 12 {
-                print("good morning")
+                //print("good morning")
                 self.lblName.text = "\(kMORNING)\n\(firstName)"
             }else if hour < 18 {
-                print("good afternoon")
+                //print("good afternoon")
                 self.lblName.text = "\(kAFTERNOON)\n\(firstName)"
             }else{
-                print("good evening")
+                //print("good evening")
                 self.lblName.text = "\(kEVENING)\n\(firstName)"
             }
         }else{
@@ -204,12 +203,12 @@ class WWMHomeTabVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -218,25 +217,25 @@ class WWMHomeTabVC: WWMBaseViewController {
         if UIDevice().userInterfaceIdiom == .phone {
             switch UIScreen.main.nativeBounds.height {
             case 1136:
-                print("iPhone 5 or 5S or 5C")
+                //print("iPhone 5 or 5S or 5C")
                 yaxis = 476
             case 1334:
-                print("iPhone 6/6S/7/8")
+                //print("iPhone 6/6S/7/8")
                 yaxis = 570
             case 2208:
-                print("iPhone 6+/6S+/7+/8+")
+                //print("iPhone 6+/6S+/7+/8+")
                 yaxis = 640
             case 2436:
-                print("iPhone X, XS")
+                //print("iPhone X, XS")
                 yaxis = 660
             case 2688:
-                print("iPhone XS Max")
+                //print("iPhone XS Max")
                 yaxis = 740
             case 1792:
-                print("iPhone XR")
+                //print("iPhone XR")
                 yaxis = 740
             default:
-                print("unknown")
+                //print("unknown")
                 yaxis = 570
             }
             
@@ -289,7 +288,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     //banner api
-    func bannerAPI() {
+    func banner1API() {
         
         self.bannerTopConstraint.constant = 0
         self.bannerHeightConstraint.constant = 1
@@ -297,7 +296,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
-                print("result")
+                //print("result")
                 if let result = result["result"] as? [Any]{
                     self.appPreffrence.setBanners(value: result)
                     //print(self.appPreffrence.getBanners().count)
@@ -328,7 +327,7 @@ class WWMHomeTabVC: WWMBaseViewController {
 
                 }
                 
-                print("bannerDataArray \(bannerDataArray.count)")
+                //print("bannerDataArray \(bannerDataArray.count)")
                 
                 self.tableViewBanners.delegate = self
                 self.tableViewBanners.dataSource = self
@@ -354,39 +353,27 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func giftPopupAlert(){
-        self.giftPopUp = UINib(nibName: "WWMHomeGiftPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMHomeGiftPopUp
+        self.shareTheLovePopUp = UINib(nibName: "WWMShareLovePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMShareLovePopUp
         let window = UIApplication.shared.keyWindow!
         
-        self.giftPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        self.shareTheLovePopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        self.shareTheLovePopUp.btnInviteFriends.layer.cornerRadius = 20
+        self.shareTheLovePopUp.lblCopyCode.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
+        self.shareTheLovePopUp.lblCopyCode.layer.borderWidth = 1.0
         
-        self.giftPopUp.btnText.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.giftPopUp.btnEmail.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-         self.giftPopUp.btnShare.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-        self.giftPopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnText.addTarget(self, action: #selector(btnTextAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnEmail.addTarget(self, action: #selector(btnEmailAction(_:)), for: .touchUpInside)
-        self.giftPopUp.btnShare.addTarget(self, action: #selector(btnShareAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(giftPopUp)
+        self.shareTheLovePopUp.btnClose.addTarget(self, action: #selector(btnAlertCloseAction(_:)), for: .touchUpInside)
+        
+        self.shareTheLovePopUp.btnInviteFriends.addTarget(self, action: #selector(btnInviteFriendsAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(shareTheLovePopUp)
     }
     
     @objc func btnAlertCloseAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
+        self.shareTheLovePopUp.removeFromSuperview()
     }
     
-    
-    @objc func btnTextAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
-        self.shareData()
-    }
-    
-    @objc func btnEmailAction(_ sender: Any){
-        self.giftPopUp.removeFromSuperview()
-        self.shareData()
-    }
-    
-    @objc func btnShareAction(_ sender: Any){
+    @objc func btnInviteFriendsAction(_ sender: Any){
 
-        self.giftPopUp.removeFromSuperview()
+        self.shareTheLovePopUp.removeFromSuperview()
         self.shareData()
     }
     
@@ -447,13 +434,11 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "timer"
         self.guided_type = ""
-        WWMHelperClass.selectedType = "timer"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.userData.type = "timer"
-        WWMHelperClass.selectedType = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -470,7 +455,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "practical"
         self.type = "guided"
-        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -492,7 +476,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "learn"
         self.guided_type = ""
-        WWMHelperClass.selectedType = "learn"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -519,14 +502,12 @@ class WWMHomeTabVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result hometabvc meditation data... \(result)")
-                print("success meditationdata api WWMHomeTabVC background thread")
+                //print("result hometabvc meditation data... \(result) success meditationdata api WWMHomeTabVC background thread")
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
                         Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
@@ -549,7 +530,7 @@ class WWMHomeTabVC: WWMBaseViewController {
                     data = WWMMeditationHistoryListData.init(json: jsonResult)
                     self.data.append(data)
                     
-                    print("meditation history cart dict... \(dict)")
+                    //print("meditation history cart dict... \(dict)")
                 }
             }
             
@@ -564,7 +545,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
          }else{
-            print("no meditation list data...")
+            //print("no meditation list data...")
             self.medHisViewHeightConstraint.constant = 0
             self.lblMedHistoryText.textColor = UIColor.clear
             
@@ -600,7 +581,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
         
         let url = self.appPreffrence.getOffers()
-        print("url /.... \(url[0])")
+        //print("url /.... \(url[0])")
         
         vc.strType = KBUYBOOK
         vc.strUrl = url[0] 
@@ -662,14 +643,14 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }
             }
 
-            print("meditation history title... \(self.data[indexPath.row].title)")
+            //print("meditation history title... \(self.data[indexPath.row].title)")
             
             cell.heartLbl.text = "\(self.data[indexPath.row].like)"
         
             if self.data[indexPath.row].duration < 60 && self.data[indexPath.row].duration != 0{
                 cell.lblMin.text = "\(self.data[indexPath.row].duration) sec"
             }else{
-                print("duration..... \(self.data[indexPath.row].duration)")
+                //print("duration..... \(self.data[indexPath.row].duration)")
                 cell.lblMin.text = "\(Int(round(Double(self.data[indexPath.row].duration)/60.0))) min"
             }
             
@@ -680,12 +661,12 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
             if date_completed != ""{
             let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
                 
-            print("dateCompare.... \(dateCompare)")
+            //print("dateCompare.... \(dateCompare)")
             if dateCompare.0 == 1{
                 //equal
                 let sec: Int = Int("\(dateCompare.2)".replacingOccurrences(of:
                     "-", with: "")) ?? 0
-                print("dateCompare.2... \(sec)")
+                //print("dateCompare.2... \(sec)")
                 if sec < 60{
                     cell.lblHr.text = KJUSTNOW
                 }else if sec < 3600{
@@ -852,7 +833,6 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         self.appPreference.setType(value: "guided")
         self.appPreference.setGuideTypeFor3DTouch(value: "guided")
-        WWMHelperClass.selectedType = "guided"
         self.view.endEditing(true)
         self.type = "guided"
         DispatchQueue.global(qos: .background).async {
@@ -901,7 +881,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         let window = UIApplication.shared.keyWindow!
         
         podcastMusicPlayerPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        print("index... \(index)")
+        //print("index... \(index)")
         
         self.selectedAudioIndex = index
         
@@ -941,7 +921,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     
     @IBAction func sliderAction(_ sender: Any) {
-        print("podcastMusicPlayerPopUp.slider.currentValue... \(podcastMusicPlayerPopUp.slider.value)")
+        //print("podcastMusicPlayerPopUp.slider.currentValue... \(podcastMusicPlayerPopUp.slider.value)")
         
         if self.player == nil{
             return
@@ -1011,7 +991,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         self.audioBool = false
         self.selectedAudioIndex = self.selectedAudioIndex + 1
-        print("self.selectedAudioIndex next... \(self.selectedAudioIndex) self.podData.count... \(self.podData.count - 2)")
+        //print("self.selectedAudioIndex next... \(self.selectedAudioIndex) self.podData.count... \(self.podData.count - 2)")
         self.selectedAudio = "0"
         self.podcastMusicPlayerPopUp.lblStartTime.text = "00:00"
         if self.selectedAudioIndex == self.podData.count - 2{
@@ -1097,9 +1077,9 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
                     if self.player?.currentItem?.status == .readyToPlay {
                     let currentTime = CMTimeGetSeconds(self.player!.currentTime())
-                    print("currentTime... \(currentTime)")
+                    //print("currentTime... \(currentTime)")
                     let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-                    print("totalDuration... \(Int(duration) - Int(currentTime))")
+                    //print("totalDuration... \(Int(duration) - Int(currentTime))")
                     self.podcastMusicPlayerPopUp.lblEndTime.text = "\(self.secondsToMinutesSeconds(second: Int(duration)))"
                     self.currentTimePlay = Int(currentTime)
                     self.podcastMusicPlayerPopUp.slider.maximumValue = Float(Int(duration))
@@ -1107,8 +1087,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     if self.currentTimePlay != 0{
                         let remainingDuration = self.secondsToMinutesSeconds(second: self.currentTimePlay)
                         self.podcastMusicPlayerPopUp.lblStartTime.text = "\(remainingDuration)"
-                        print("remainingDuration... \(remainingDuration)")
-                        print("indexPath... \(index)")
+                        //print("remainingDuration... \(remainingDuration) indexPath... \(index)")
                         
                         if self.podcastMusicPlayerPopUp.lblStartTime.text == self.podcastMusicPlayerPopUp.lblEndTime.text{
                             self.selectedAudio = "0"
@@ -1141,7 +1120,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                                 self.podcastMusicPlayerPopUp.btnNext.setImage(UIImage(named: "next_img1"), for: .normal)
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
                             }
-                            print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
+                            //print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
 
                         }
                     }
@@ -1172,11 +1151,11 @@ extension WWMHomeTabVC{
             "guided_id"     : guided_id
             ] as [String : Any]
         
-        print("retakeChallenge param... \(param)")
+        //print("retakeChallenge param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("retake api... \(result)")
+                //print("retake api... \(result)")
                 self.getGuidedListAPI()
             }else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -1197,7 +1176,7 @@ extension WWMHomeTabVC{
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success guidedList hometabVC... getGuidedListAPI \(result)")
+                    //print("success guidedList hometabVC... getGuidedListAPI \(result)")
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                     self.appPreference.set21ChallengeName(value: "21 Days challenge")
                     if let result = result["result"] as? [[String:Any]] {
@@ -1401,7 +1380,7 @@ extension WWMHomeTabVC{
                             self.reloadTabs21DaysController()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

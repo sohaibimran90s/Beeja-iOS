@@ -20,7 +20,6 @@ extension DBSteps {
     @NSManaged public var date_completed: String?
     @NSManaged public var description1: String?
     @NSManaged public var id: String?
-    @NSManaged public var last_time_stamp: String?
     @NSManaged public var outro_audio: String?
     @NSManaged public var step_audio: String?
     @NSManaged public var step_name: String?

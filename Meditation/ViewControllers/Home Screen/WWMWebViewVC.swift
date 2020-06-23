@@ -19,7 +19,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("strurl.... \(strUrl)")
+        //print("strurl.... \(strUrl)")
         
         self.webView.sizeToFit()
         self.webView.contentMode = .scaleAspectFit
@@ -79,7 +79,7 @@ class WWMWebViewVC: WWMBaseViewController,WKNavigationDelegate, UIScrollViewDele
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //WWMHelperClass.hideActivity(fromView: self.view)
         WWMHelperClass.hideLoaderAnimate(on: self.view)
-        print("Finished navigating to url \(String(describing: webView.url))");
+        //print("Finished navigating to url \(String(describing: webView.url))");
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

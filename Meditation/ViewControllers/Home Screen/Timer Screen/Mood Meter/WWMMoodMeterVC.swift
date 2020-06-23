@@ -66,7 +66,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             self.btnBack.isHidden = true
         }
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             self.btnAskMeAgain.isHidden = true
         }
         
@@ -125,7 +125,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         
                         //if (getPreMoodCount < 7 && getPreMoodCount != 0) || (getPreJournalCount < 7 && getPreJournalCount != 0)
                         if (getPreMoodCount == 0 && getPreJournalCount == 0) || (getPreMoodCount == 0 && getPreJournalCount > 0){
-                            print("getPreMoodCount... \(getPreMoodCount)")
+                            //print("getPreMoodCount... \(getPreMoodCount)")
                             
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Pre")
                             self.view.isUserInteractionEnabled = false
@@ -141,7 +141,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         
                         //if (getPostMoodCount < 7 && getPostMoodCount != 0) || (getPostJournalCount < 7 && getPostJournalCount != 0)
                         if (getPostMoodCount == 0) && (getPostJournalCount == 0){
-                            print("getPostMoodCount... \(getPostMoodCount)")
+                            //print("getPostMoodCount... \(getPostMoodCount)")
                             
                             self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPostMoodCount), title: KSUBSPLANEXP, subTitle: KNOFREEMOODJOU, type: "Post")
                             self.view.isUserInteractionEnabled = false
@@ -178,8 +178,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     @objc func btnAlertDoneAction(_ sender: Any){
         if type == "pre" {
             
-            print("getPreJournalCount.... \(self.appPreference.getPreJournalCount())")
-             print("getPreMoodCount.... \(self.appPreference.getPreMoodCount())")
+            //print("getPreJournalCount.... \(self.appPreference.getPreJournalCount()) getPreMoodCount.... \(self.appPreference.getPreMoodCount())")
             if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
                 
                 self.view.isUserInteractionEnabled = true
@@ -208,7 +207,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             }
         }else{
             
-            print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
+            //print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
             if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
                 self.view.isUserInteractionEnabled = true
                 self.alertPopupView1.removeFromSuperview()
@@ -239,10 +238,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func callWWMMoodMeterLogVC(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
         
-        print("type..... \(self.type)")
-        print("apppre... \(self.appPreffrence.getPrePostJournalBool())")
-        print("postmoddcount.. \(self.appPreference.getPostMoodCount())")
-        print("getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
+        //print("type..... \(self.type) apppre... \(self.appPreffrence.getPrePostJournalBool()) postmoddcount.. \(self.appPreference.getPostMoodCount()) getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
         
         vc.selectedIndex = String(selectedIndex)
         if self.type == "pre"{
@@ -290,7 +286,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         var param: [String: Any] = [:]
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -316,7 +312,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 ] as [String : Any]
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -334,18 +330,20 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
         
-        print("meter param... \(param)")
+        //print("meter param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    print("success... moodmetervc meditationcomplete api in background")
+                    //print("success... moodmetervc meditationcomplete api in background")
                     self.meditationHistoryListAPI()
 
                     WWMHelperClass.complete_percentage = "0"
@@ -386,8 +384,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success moodmeterVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success moodmeterVC meditationhistoryapi in background thread")
             }
         }
     }
@@ -413,8 +410,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         var tags: Int = 0
         for mood in self.arrMoodData {
             
-            print("mood...\(mood.id)")
-            print("mood...\(mood.name)")
+            //print("mood...\(mood.id) mood...\(mood.name)")
             
             //buttons....
             
@@ -446,7 +442,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     @objc func selectedMoodAction(sender: UIButton){
-        print("sender selected button label with tag.....\(sender.tag) selectedName...\(self.arrMoodData[sender.tag].name) buttonName.... \(arrButton[sender.tag].titleLabel?.text ?? "") selected index button... \(sender.tag)")
+        //print("sender selected button label with tag.....\(sender.tag) selectedName...\(self.arrMoodData[sender.tag].name) buttonName.... \(arrButton[sender.tag].titleLabel?.text ?? "") selected index button... \(sender.tag)")
         
         selectedIndex = sender.tag
         
@@ -467,7 +463,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let angle = self.translatedAngle(angle: angle1)
         
         let distance = self.distance(a: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: 0), b: CGPoint.init(x: (self.circularSlider?.frame.size.width)!/2, y: (self.circularSlider?.frame.size.height)!/2))
-        print("distance... \(distance) angle... \(angle)")
+        //print("distance... \(distance) angle... \(angle)")
         
         let rect = CGPoint.init(x:(self.circularSlider?.frame.size.width)!/2 + CGFloat(distance * cos(angle)) , y: (self.circularSlider?.frame.size.height)!/2 + CGFloat(distance*sin(angle)))
         
@@ -555,7 +551,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
 
     @IBAction func btnSkipAction(_ sender: Any) {
         
-        print("self.userData.type.... \(self.userData.type)")
+        //print("self.userData.type.... \(self.userData.type)")
         self.appPreference.setMoodId(value: "")
 
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
@@ -571,7 +567,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
             vc.type = self.type
             vc.prepTime = self.prepTime
@@ -588,7 +584,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }else{
 
             let param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id": self.category_Id,
                 "emotion_id": self.emotion_Id,
                 "audio_id": self.audio_Id,
@@ -609,7 +605,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 "is_complete": "1"
                 ] as [String : Any]
             
-            print("meter param... \(param)")
+            //print("meter param... \(param)")
             
             
             //background thread meditation api*
@@ -617,7 +613,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                     if sucess {
                         if let _ = result["success"] as? Bool {
-                            print("success... moodmetervc meditationcomplete api in background")
+                            //print("success... moodmetervc meditationcomplete api in background")
                             self.appPreffrence.setSessionAvailableData(value: true)
                             self.getGuidedListAPI()
                             self.meditationHistoryListAPI()
@@ -650,33 +646,29 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func navigateToDashboard() {
         
-        if WWMHelperClass.selectedType == "learn"{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            
-            if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
-                
-                WWMHelperClass.days21StepNo = ""
-                WWMHelperClass.stepsCompleted = false
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
-                self.navigationController?.pushViewController(vc, animated: true)
-                
+        if self.appPreference.getType() == "learn"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.nextVC()
             }else{
-                self.navigationController?.isNavigationBarHidden = false
-                
-                if let tabController = self.tabBarController as? WWMTabBarVC {
-                    tabController.selectedIndex = 4
-                    for index in 0..<tabController.tabBar.items!.count {
-                        let item = tabController.tabBar.items![index]
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                        if index == 4 {
-                            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                        }
-                    }
-                }
-                self.navigationController?.popToRootViewController(animated: false)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                self.navigationController?.pushViewController(vc, animated: true)
             }
+        }else{
+            self.nextVC()
+        }
+    }
+    
+    func nextVC(){
+        if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
+            
+            WWMHelperClass.days21StepNo = ""
+            WWMHelperClass.stepsCompleted = false
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else{
+            self.navigationController?.isNavigationBarHidden = false
+            self.callHomeVC(index: 4)
         }
     }
     
@@ -697,7 +689,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 
                 if self.type == "pre" {
                     
-                    print("getPostJournalCount.... \(self.appPreference.getPreJournalCount())")
+                    //print("getPostJournalCount.... \(self.appPreference.getPreJournalCount())")
                     if (self.appPreference.getPreMoodCount() < 7 && self.appPreference.getPreMoodCount() != 0) && (self.appPreference.getPreJournalCount() < 7 && self.appPreference.getPreJournalCount() != 0){
                         
                         self.callWWMMoodMeterLogVC()
@@ -735,7 +727,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         self.appPreference.setPostMoodCount(value: self.appPreference.getPostMoodCount() - 1)
                     }
                     
-                    print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
+                    //print("getPostJournalCount.... \(self.appPreference.getPostJournalCount())")
                     if (self.appPreference.getPostMoodCount() < 7 && self.appPreference.getPostMoodCount() != 0) && (self.appPreference.getPostJournalCount() < 7 && self.appPreference.getPostJournalCount() != 0){
                         
                         self.callWWMMoodMeterLogVC()
@@ -798,11 +790,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result...+++++ \(result)")
+                    //print("success result...+++++ \(result)")
                     
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("result...+++ \(result)")
+                        //print("result...+++ \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -1007,7 +999,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             WWMHelperClass.saveDb()
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationProgressMoodMeter"), object: nil)
-                        print("guided data moodmeter tabbarvc in background thread...")
+                        //print("guided data moodmeter tabbarvc in background thread...")
                     }
                 }
             }

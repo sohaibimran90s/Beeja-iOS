@@ -64,7 +64,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
+        //print("You tapped cell number \(indexPath.row).")
         if indexPath.row == self.arrMeditationDataList.count {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSetMyOwnVC") as! WWMSetMyOwnVC
             vc.type = "timer"
@@ -75,7 +75,7 @@ class WWMMeditationListVC: WWMBaseViewController,UITableViewDelegate,UITableView
             self.appPreference.setTimerMax_limit(value: arrMeditationDataList[indexPath.row].max_limit ?? "97")
             self.appPreference.setMeditation_key(value: arrMeditationDataList[indexPath.row].meditationName ?? "Beeja")
             
-            print("setMin_limit++++ \(self.appPreference.getTimerMin_limit()) setMax_limit++++ \(self.appPreference.getTimerMax_limit()) setMeditation++++ \(self.appPreference.getMeditation_key())")
+            //print("setMin_limit++++ \(self.appPreference.getTimerMin_limit()) setMax_limit++++ \(self.appPreference.getTimerMax_limit()) setMeditation++++ \(self.appPreference.getMeditation_key())")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationLevelVC") as! WWMMeditationLevelVC
             vc.selectedMeditation_Id = "\(arrMeditationDataList[indexPath.row].meditationId)"

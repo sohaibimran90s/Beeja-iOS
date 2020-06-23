@@ -56,7 +56,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("self.min_limit++ \(self.appPreference.getLearnMin_limit()) self.max_limit++ \(self.appPreference.getLearnMax_limit())")
+        //print("self.min_limit++ \(self.appPreference.getLearnMin_limit()) self.max_limit++ \(self.appPreference.getLearnMax_limit())")
         
         WWMHelperClass.addNinetyFivePercentData(type: "Learn")
         
@@ -104,12 +104,12 @@ class WWMLearnTimerVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -150,7 +150,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func timerAction(value: Int) {
         
-        print("animateBool.... \(animateBool)")
+        //print("animateBool.... \(animateBool)")
         
         if currentColorSet < colorSets.count - 1 {
             currentColorSet! += 1
@@ -181,7 +181,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             param = ["step_id": WWMHelperClass.step_id, "mantra_id": self.settingData.mantraID] as [String : Any]
         }
         
-        print("param learn timer... \(param)")
+        //print("param learn timer... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMBINEDMANTRA, context: "WWMLearnTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -190,7 +190,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                         self.play(url: URL(string: audio_url)!)
                     }
                 }
-                print("combinedMantra.... \(result)")
+                //print("combinedMantra.... \(result)")
                 
             }else {
                 if error != nil {
@@ -228,7 +228,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             alertPopupView.lblSubtitle.text = kLTMBELOWNINTEYFIVEPOPUP
         }
         
-        print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
+        //print("self.ninetyFiveCompletedFlag \(self.ninetyFiveCompletedFlag )")
         alertPopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
@@ -282,7 +282,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     func pushNavigationController(){
         
-        print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
+        //print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
         if self.ninetyFiveCompletedFlag == "0"{
             if !ismove {
                 var analyticStepName = "\(WWMHelperClass.step_id)".uppercased()
@@ -368,11 +368,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
+                "is_complete": self.ninetyFiveCompletedFlag,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
 
-        print("meter param WWMLeranTimerVC... \(param)")
+        //print("meter param WWMLeranTimerVC... \(param)")
 
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
@@ -380,7 +382,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        print("success... WWMLeranTimerVC meditationcomplete api in background")
+                        //print("success... WWMLeranTimerVC meditationcomplete api in background")
                         
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
@@ -435,8 +437,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                     }
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success WWMGuidedMeditationTimerVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success WWMGuidedMeditationTimerVC meditationhistoryapi in background thread")
             }
         }
     }
@@ -479,7 +480,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     func play(url:URL) {
-        print("playing \(url)")
+        //print("playing \(url)")
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -526,13 +527,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     
     @objc func appMovedToBackground() {
-        print("App moved to background!")
+        //print("App moved to background!")
         self.animationView.pause()
         
     }
     
     @objc func appMovedToForeground() {
-        print("App moved to background!")
+        //print("App moved to background!")
         if KUSERDEFAULTS.string(forKey: "CallEndedIdentifier") == "true"{
             self.animationView.pause()
         }else{
@@ -544,7 +545,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func methodOfCallEndedIdentifier(notification: Notification) {
         
-        print("call ended notification..........")
+        //print("call ended notification..........")
         UIView.animate(withDuration: 1.0, delay: 0.5, options: .transitionCrossDissolve, animations: {
             self.viewPause.isHidden = false
             self.isStop = true
@@ -614,17 +615,15 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if nintyFivePercentDB.count > 0{
                 self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
                 
-                print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
             }
             
-            print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
         }//offline data meditation*
         
         
         if isPlayer {
             if self.totalAudioLength != ""{
-                print("totalaudiolength... \(self.totalDuration)")
-                print("currentTime... \(self.player!.currentTime().seconds)")
+                //print("totalaudiolength... \(self.totalDuration) currentTime... \(self.player!.currentTime().seconds)")
                 self.watched_duration = Int(round(self.player!.currentTime().seconds))
                 let remainingTime = self.totalDuration - Int(round(self.player!.currentTime().seconds))
                 self.lblTimer.text = self.secondToMinuteSecond(second: remainingTime)
@@ -652,7 +651,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        print("id+++++ \(id) data+++++ \(data)")
+        //print("id+++++ \(id) data+++++ \(data)")
         
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {
@@ -675,12 +674,12 @@ class WWMLearnTimerVC: WWMBaseViewController {
         let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
         
         if getStepsDataDB.count > 0 {
-            print("self.stepFaqDataDB... \(getStepsDataDB.count)")
+            //print("self.stepFaqDataDB... \(getStepsDataDB.count)")
             //self.arrImages.removeAll()
             
             for dict in getStepsDataDB {
                 
-                print("dict.id... \(dict.id ?? "") WWMHelperClass.step_id... \(WWMHelperClass.step_id)")
+                //print("dict.id... \(dict.id ?? "") WWMHelperClass.step_id... \(WWMHelperClass.step_id)")
                 if dict.id == "\(WWMHelperClass.step_id)"{
                     
                     dict.completed = true
@@ -692,10 +691,9 @@ class WWMLearnTimerVC: WWMBaseViewController {
                     
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     let currentDateString = dateFormatter.string(from: Date())
-                    print("faq current date string... \(currentDateString)")
                     dict.date_completed = "\(currentDateString)"
                     
-                    print("dict.date_completed... \(dict.date_completed ?? "nothing")")
+                    //print("faq current date string... \(currentDateString) dict.date_completed... \(dict.date_completed ?? "nothing")")
                     WWMHelperClass.saveDb()
                 }
             }
@@ -737,13 +735,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if WWMHelperClass.outro_audio != ""{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }
@@ -795,13 +793,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if WWMHelperClass.outro_audio != ""{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }

@@ -35,7 +35,10 @@ extension DBSettings {
     @NSManaged public var mantraID: Int
     @NSManaged public var isLearnReminder: Bool
     @NSManaged public var learnReminderTime: String?
-
+    @NSManaged public var isThirtyDaysReminder: Bool
+    @NSManaged public var thirtyDaysReminder: String?
+    @NSManaged public var isTwentyoneDaysReminder: Bool
+    @NSManaged public var twentyoneDaysReminder: String?
 }
 
 // MARK: Generated accessors for meditationData

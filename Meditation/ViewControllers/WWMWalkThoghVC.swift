@@ -43,11 +43,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var subCategory = ""
     
     var challengePopupView = WWMAlertController()
+    var challenge_type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id)")
+        //print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id) videoURL... \(self.videoURL)")
         var prefersStatusBarHidden: Bool {
             return true
         }
@@ -67,7 +68,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.btnCrossSkip.isHidden = false
         
-        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days"){
+        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days" || value == "30days"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
@@ -96,11 +97,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.playVideo()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
@@ -118,12 +114,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
     //MARK: Stop Payer
     func stopPlayer() {
         if let play = self.player1 {
-            print("stopped")
+            //print("stopped")
             play.pause()
             self.player1 = nil
-            print("player deallocated")
+            //print("player deallocated")
         } else {
-            print("player was already deallocated")
+            //print("player was already deallocated")
         }
     }
     
@@ -145,7 +141,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
         }
         catch {
-            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+            //print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
         
         
@@ -155,9 +151,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 debugPrint("video.mp4 not found")
                 return
             }
-            
-            
-            //viewVideo.configure(url: "\(path)")
             
             player1 = AVPlayer(url: URL(fileURLWithPath: path))
             player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
@@ -172,7 +165,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             let duration = CMTimeGetSeconds((self.player1?.currentItem?.asset.duration)!)
             let duration1 = Int(round(duration))
             let totalAudioLength = self.secondToMinuteSecond(second : duration1)
-            print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
+            //print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
             
             self.endTimeLbl.text = "\(totalAudioLength)"
             
@@ -211,16 +204,35 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "curatedCards"{
             videoURL = self.appPreffrence.getLearnPageURL()
-        }else if value == "curatedCards"{
-            videoURL = self.appPreffrence.getLearnPageURL()
+        }else if value == "30days"{
+            videoURL = self.appPreference.get30DaysURL()
+            
+            
+            //we to remove it once assests upload
+            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else {
+                debugPrint("video.mp4 not found")
+                return
+            }
+            
+            player1 = AVPlayer(url: URL(fileURLWithPath: path))
+            player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
+            self.playerLayer = AVPlayerLayer(player: player1)
+            playerLayer.frame = self.view.frame
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+            self.viewVideo.layer.addSublayer(playerLayer)
+            player1?.seek(to: CMTime.zero)
+            
+            player1?.play()
+            self.videoCompleted = 1
+            return//*end
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
         
-        print("walkthough videoURL... \(videoURL)")
+        //print("walkthough videoURL... \(videoURL)")
         
         if videoURL != "" {
-            print("videourl... \(videoURL)")
+            //print("videourl... \(videoURL)")
             viewVideo.configure(url: "\(videoURL)")
             viewVideo.isLoop = true
             viewVideo.play()
@@ -230,7 +242,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     @objc func updateTime(_ timer: Timer) {
         let currentTime = CMTimeGetSeconds((self.player1?.currentTime())!)
-        print("currentTime... \(currentTime)")
+        //print("currentTime... \(currentTime)")
         self.slider.value = Float(currentTime)
         self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
         
@@ -246,7 +258,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.navigateToDashboard()
-        }else if value == "21_days"{
+        }else if (value == "21_days" || value == "30days") {
             self.navigationController?.popViewController(animated: false)
         }else{
             // Analytics
@@ -259,17 +271,16 @@ class WWMWalkThoghVC: WWMBaseViewController {
     }
     
     @objc func reachTheEndOfTheVideo(_ notification: Notification) {
-        print("abc....***** \(self.videoCompleted )")
-        print("value... \(value)")
+        //print("abc....***** \(self.videoCompleted) value... \(value)")
         self.timer.invalidate()
         if self.videoCompleted == 1{
             if !reachable.isConnectedToNetwork() {
                 self.navigationController?.popViewController(animated: true)
                 return
             }
-            if value == "help"  || value == "learnStepList"{
+            if value == "help" || value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
-            }else if value == "curatedCards"{
+            }else if (value == "curatedCards" || value == "30days"){
                 self.challengeIntroVideoCompleted()
                 //self.challengePopup()
             }else if value == "21_days"{
@@ -329,7 +340,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             "user_id": self.appPreffrence.getUserID(),
             "emotion_id": self.emotionId,
             "emotion_key": self.emotionKey,
-            "guided_id": self.id
+            "guided_id": self.id,
+            "challenge_type": self.challenge_type
             ] as [String : Any]
         
         print("param... \(param)")
@@ -337,11 +349,16 @@ class WWMWalkThoghVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ACCEPT_CHALLENGE, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
             
             if success {
-                print("success... \(result)")
-                //WWMHelperClass.hideLoaderAnimate(on: self.view)
-                self.getGuidedListAPI()
+                //print("success... \(result)")
+                ///WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if self.challenge_type == ""{
+                   self.getGuidedListAPI()
+                }else{
+                    self.getLearnAPI()
+                }
+                
                 DispatchQueue.global(qos: .background).async {
-                    self.bannerAPI()
+                    self.bannerAPI(context1: "WWMWalkThoughVC")
                 }
                 //self.navigateToDashboard()
             }else {
@@ -361,21 +378,29 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
     }
     
-    //banner api
-    func bannerAPI() {
+    func navigateToDashboard() {
         
-        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreffrence.setBanners(value: result)
-                    //print(self.appPreffrence.getBanners().count)
-                }
-            }
+        self.navigationController?.isNavigationBarHidden = false
+        self.callHomeVC(index: 2)
+    }
+
+    
+    //App enter in forground.
+    @objc func applicationWillEnterForeground(_ notification: Notification) {
+        if ((player1?.pause()) != nil){
+            self.player1?.play()
         }
     }
     
+    //App enter in forground.
+    @objc func applicationDidEnterBackground(_ notification: Notification) {
+        self.player1?.pause()
+    }
+}
+
+extension WWMWalkThoghVC{
+   
+    //21 days guided
     func getGuidedListAPI() {
         
         /// WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -384,11 +409,11 @@ class WWMWalkThoghVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("success result getGuidedListAPI walkthough... \(result)")
+                    //print("success result getGuidedListAPI walkthough... \(result)")
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                     if let result = result["result"] as? [[String:Any]] {
                         
-                        print("result... \(result)")
+                        //print("result... \(result)")
                         
                         let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                         if guidedData.count > 0 {
@@ -470,9 +495,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                                     }else{
                                         dbGuidedData.intro_completed = false
                                     }
-                                    
-                                    //print("dbGuidedData.last_time_stamp \(dbGuidedData.last_time_stamp) dbGuidedData.name \(dbGuidedData.name) dbGuidedData.guided_name \(dbGuidedData.guided_name) dbGuidedData.meditation_type \(dbGuidedData.meditation_type) dbGuidedData.guided_mode \(dbGuidedData.guided_mode) dbGuidedData.min_limit \(dbGuidedData.min_limit) dbGuidedData.max_limit \(dbGuidedData.max_limit) dbGuidedData.meditation_key \(dbGuidedData.meditation_key) dbGuidedData.complete_count\(dbGuidedData.complete_count) dbGuidedData.intro_url \(dbGuidedData.intro_url)")
-                                    
+                                                                        
                                     if let emotion_list = meditationList["emotion_list"] as? [[String: Any]]{
                                         for emotionsDict in emotion_list {
                                             
@@ -535,9 +558,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                                             }else{
                                                 dbGuidedEmotionsData.emotion_type = ""
                                             }
-                                            
-                                            //print("dbGuidedEmotionsData.guided_id \(dbGuidedEmotionsData.guided_id) dbGuidedEmotionsData.emotion_id \(dbGuidedEmotionsData.emotion_id) dbGuidedEmotionsData.author_name  \(dbGuidedEmotionsData.author_name ) dbGuidedEmotionsData.emotion_image \(dbGuidedEmotionsData.emotion_image) dbGuidedEmotionsData.emotion_name \(dbGuidedEmotionsData.emotion_name) dbGuidedEmotionsData.intro_completed \(dbGuidedEmotionsData.intro_completed) dbGuidedEmotionsData.tile_type \(dbGuidedEmotionsData.tile_type) dbGuidedEmotionsData.emotion_key \(dbGuidedEmotionsData.emotion_key) dbGuidedEmotionsData.emotion_body \(dbGuidedEmotionsData.emotion_body) dbGuidedEmotionsData.completed  \(dbGuidedEmotionsData.completed) dbGuidedEmotionsData.completed_date \(dbGuidedEmotionsData.completed_date) dbGuidedEmotionsData.intro_url \(dbGuidedEmotionsData.intro_url)")
-                                            
+                                                                                        
                                             if let audio_list = emotionsDict["audio_list"] as? [[String: Any]]{
                                                 for audioDict in audio_list {
                                                     
@@ -578,9 +599,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                                                     if let vote = audioDict["vote"] as? Bool{
                                                         dbGuidedAudioData.vote = vote
                                                     }
-                                                    
-                                                    //print("dbGuidedAudioData.emotion_id \(dbGuidedAudioData.emotion_id) dbGuidedAudioData.audio_id \(dbGuidedAudioData.audio_id) dbGuidedAudioData.audio_image \(dbGuidedAudioData.audio_image) dbGuidedAudioData.audio_name \(dbGuidedAudioData.audio_name) dbGuidedAudioData.audio_url \(dbGuidedAudioData.audio_url) dbGuidedAudioData.author_name \(dbGuidedAudioData.author_name) dbGuidedAudioData.duration \(dbGuidedAudioData.duration) dbGuidedAudioData.paid \(dbGuidedAudioData.paid) dbGuidedAudioData.vote \(dbGuidedAudioData.vote)")
-                                                    
+                                                
                                                     WWMHelperClass.saveDb()
                                                 }
                                             }
@@ -596,7 +615,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                         self.fetchGuidedDataFromDB()
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        print("guided data tabbarvc in background thread...")
+                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }
@@ -607,7 +626,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     func fetchGuidedDataFromDB() {
         let guidedData = WWMHelperClass.fetchGuidedFilterDB(type: self.subCategory, dbName: "DBGuidedData", name: "meditation_type")
-        print("guidedDataDB.count*** \(guidedData.count)")
+        //print("guidedDataDB.count*** \(guidedData.count)")
         for dict in guidedData{
             if (dict as AnyObject).guided_name == self.category{
                 print(Int((dict as AnyObject).guided_id ?? "0") ?? 0)
@@ -622,32 +641,257 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
     }
     
-    func navigateToDashboard() {
+    //MARK: getLearnSetps API call
+    func getLearnAPI() {
         
-       self.navigationController?.isNavigationBarHidden = false
-       if let tabController = self.tabBarController as? WWMTabBarVC {
-           tabController.selectedIndex = 2
-           for index in 0..<tabController.tabBar.items!.count {
-               let item = tabController.tabBar.items![index]
-               item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-               if index == 2 {
-                   item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-               }
-           }
-       }
-       self.navigationController?.popToRootViewController(animated: false)
-    }
-
-    
-    //App enter in forground.
-    @objc func applicationWillEnterForeground(_ notification: Notification) {
-        if ((player1?.pause()) != nil){
-            self.player1?.play()
+        //self.learnStepsListData.removeAll()
+        let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                if let total_paid = result["total_paid"] as? Double{
+                    WWMHelperClass.total_paid = Int(round(total_paid))
+                }
+                
+                if let data = result["data"] as? [[String: Any]]{
+                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
+                    
+                    let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
+                    if getDBLearn.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                    }
+                    
+                    let getStepsData = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+                    if getStepsData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                    }
+                    
+                    let getThirtyDaysData = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
+                    if getThirtyDaysData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                    }
+                    
+                    for dict in data{
+                        
+                        let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
+                        
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        //print("timeInterval.... \(timeInterval)")
+                        dbLearnData.last_time_stamp = "\(timeInterval)"
+                        
+                        if dict["name"] as? String == "30 Day Challenge"{
+                            self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                        }
+                                                
+                        if let name = dict["name"] as? String{
+                            dbLearnData.name = name
+                        }
+                        
+                        if let intro_url = dict["intro_url"] as? String{
+                            dbLearnData.intro_url = intro_url
+                        }
+                        
+                        if let intro_completed = dict["intro_completed"] as? Bool{
+                            dbLearnData.intro_completed = intro_completed
+                        }
+                        
+                        if let min_limit = dict["min_limit"] as? String{
+                            dbLearnData.min_limit = min_limit
+                        }
+                        
+                        if let max_limit = dict["max_limit"] as? String{
+                            dbLearnData.max_limit = max_limit
+                        }
+                        
+                        if let is_expired = dict["is_expired"] as? Bool{
+                            dbLearnData.is_expired = is_expired
+                        }else{
+                            dbLearnData.is_expired = false
+                        }
+                        
+                        if let step_list = dict["step_list"] as? [[String: Any]]{
+                            for dict in step_list{
+                                let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
+                                if let completed = dict["completed"] as? Bool{
+                                    dbStepsData.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbStepsData.date_completed = date_completed
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbStepsData.description1 = description
+                                }
+                                
+                                if let id = dict["id"]{
+                                    dbStepsData.id = "\(id)"
+                                }
+                                
+                                if let outro_audio = dict["outro_audio"] as? String{
+                                    dbStepsData.outro_audio = outro_audio
+                                }
+                                
+                                if let step_audio = dict["step_audio"] as? String{
+                                    dbStepsData.step_audio = step_audio
+                                }
+                                
+                                if let step_name = dict["step_name"] as? String{
+                                    dbStepsData.step_name = step_name
+                                }
+                                
+                                if let timer_audio = dict["timer_audio"] as? String{
+                                    dbStepsData.timer_audio = timer_audio
+                                }
+                                
+                                if let title = dict["title"] as? String{
+                                    dbStepsData.title = title
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbStepsData.min_limit = min_limit
+                                }else{
+                                    dbStepsData.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbStepsData.max_limit = max_limit
+                                }else{
+                                    dbStepsData.max_limit = "98"
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                                
+                            }
+                        }
+                        
+                        if let day_list = dict["day_list"] as? [[String: Any]]{
+                            for dict in day_list{
+                                let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
+                                                                
+                                if let id = dict["id"]{
+                                    dbThirtyDays.id = "\(id)"
+                                }
+                                
+                                if let day_name = dict["day_name"] as? String{
+                                    dbThirtyDays.day_name = day_name
+                                }
+                                
+                                if let auther_name = dict["auther_name"] as? String{
+                                    dbThirtyDays.auther_name = auther_name
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbThirtyDays.description1 = description
+                                }
+                                
+                                if let is_milestone = dict["is_milestone"] as? Bool{
+                                    dbThirtyDays.is_milestone = is_milestone
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbThirtyDays.min_limit = min_limit
+                                }else{
+                                    dbThirtyDays.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbThirtyDays.max_limit = max_limit
+                                }else{
+                                    dbThirtyDays.max_limit = "98"
+                                }
+                                
+                                if let prep_time = dict["prep_time"] as? String{
+                                    dbThirtyDays.prep_time = prep_time
+                                }else{
+                                    dbThirtyDays.prep_time = "60"
+                                }
+                                
+                                if let meditation_time = dict["meditation_time"] as? String{
+                                    dbThirtyDays.meditation_time = meditation_time
+                                }else{
+                                    dbThirtyDays.meditation_time = "1200"
+                                }
+                                
+                                if let rest_time = dict["rest_time"] as? String{
+                                    dbThirtyDays.rest_time = rest_time
+                                }else{
+                                    dbThirtyDays.rest_time = "120"
+                                }
+                                
+                                if let prep_min = dict["prep_min"] as? String{
+                                    dbThirtyDays.prep_min = prep_min
+                                }else{
+                                    dbThirtyDays.prep_min = "0"
+                                }
+                                
+                                if let prep_max = dict["prep_max"] as? String{
+                                    dbThirtyDays.prep_max = prep_max
+                                }else{
+                                    dbThirtyDays.prep_max = "300"
+                                }
+                                
+                                if let rest_min = dict["rest_min"] as? String{
+                                    dbThirtyDays.rest_min = rest_min
+                                }else{
+                                    dbThirtyDays.prep_max = "0"
+                                }
+                                
+                                if let rest_max = dict["rest_max"] as? String{
+                                    dbThirtyDays.rest_max = rest_max
+                                }else{
+                                    dbThirtyDays.prep_max = "600"
+                                }
+                                
+                                if let med_min = dict["med_min"] as? String{
+                                    dbThirtyDays.med_min = med_min
+                                }else{
+                                    dbThirtyDays.med_min = "0"
+                                }
+                                
+                                if let med_max = dict["med_max"] as? String{
+                                    dbThirtyDays.med_max = med_max
+                                }else{
+                                    dbThirtyDays.med_max = "2400"
+                                }
+                                
+                                if let completed = dict["completed"] as? Bool{
+                                    dbThirtyDays.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbThirtyDays.date_completed = date_completed
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                            }
+                        }
+                        
+                        WWMHelperClass.saveDb()
+                    }
+                }
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                
+                if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
+                    self.navigationController?.navigationBar.isHidden = false
+                    self.callHomeVC1()
+                }else{
+                   self.navigateToDashboard()
+                }
+                
+                return
+            }
         }
-    }
-    
-    //App enter in forground.
-    @objc func applicationDidEnterBackground(_ notification: Notification) {
-        self.player1?.pause()
+        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        WWMHelperClass.hideLoaderAnimate(on: self.view)
+        if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
+            self.navigationController?.navigationBar.isHidden = false
+            self.callHomeVC1()
+        }else{
+           self.navigateToDashboard()
+        }
     }
 }

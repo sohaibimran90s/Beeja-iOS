@@ -81,6 +81,39 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func set30DaysURL(value: String) {
+        defaults.set(value, forKey: "30_days_url")
+    }
+    
+    func set30DaysReminder(value: String) {
+        defaults.set(value, forKey: "30DaysReminder")
+    }
+    
+    func setIs30DaysReminder(value: Bool) {
+        defaults.set(value, forKey: "is30DaysReminder")
+    }
+    
+    func set21DaysReminder(value: String) {
+        defaults.set(value, forKey: "21DaysReminder")
+    }
+    
+    func setIs21DaysReminder(value: Bool) {
+        defaults.set(value, forKey: "is21DaysReminder")
+    }
+    
+    //Invitation_code
+    func setInvitationCode(value: String) {
+        defaults.set(value, forKey: "invitationCode")
+    }
+    
+    func setInvitationCount(value: Int) {
+        defaults.set(value, forKey: "invitationCount")
+    }
+    
+    func set30IntroCompleted(value: Bool) {
+        defaults.set(value, forKey: "30DaysIntroCompleted")
+    }
+    
     func setForceLogout(value: String) {
         defaults.set(value, forKey: "force_logout")
         defaults.synchronize()
@@ -250,6 +283,38 @@ class WWMAppPreference: NSObject {
     
     func getLearnPageURL() -> String {
         return UserDefaults.standard.string(forKey: "learn_page_url") ?? ""
+    }
+    
+    func get30DaysURL() -> String {
+        return UserDefaults.standard.string(forKey: "30_days_url") ?? ""
+    }
+    
+    func get30DaysReminder() -> String {
+        return UserDefaults.standard.string(forKey: "30DaysReminder") ?? ""
+    }
+    
+    func getIs30DaysReminder() -> Bool {
+        return defaults.bool(forKey: "is30DaysReminder")
+    }
+    
+    func get21DaysReminder() -> String {
+        return UserDefaults.standard.string(forKey: "21DaysReminder") ?? ""
+    }
+    
+    func getIs21DaysReminder() -> Bool {
+        return defaults.bool(forKey: "is21DaysReminder")
+    }
+    
+    func getInvitationCode() -> String {
+        return UserDefaults.standard.string(forKey: "invitationCode") ?? ""
+    }
+    
+    func getInvitationCount() -> Int {
+        return UserDefaults.standard.integer(forKey: "invitationCount") 
+    }
+    
+    func get30IntroCompleted() -> Bool {
+        return defaults.bool(forKey: "30DaysIntroCompleted")
     }
     
     func getSessionAvailableData() -> Bool{

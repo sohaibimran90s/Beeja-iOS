@@ -29,7 +29,7 @@ class WWMMeditationHistoryListData: NSObject{
     
     init(json: [String: Any]) {
         
-        print("json... \(json)")
+        //print("json... \(json)")
         self.duration = json["duration"] as? Int ?? 0
         self.id = json["id"] as? Int ?? 0
         self.image = json["image"] as? String ?? ""
@@ -54,7 +54,7 @@ class WWMMeditationHistoryListData: NSObject{
                 default:
                   break
             }
-            print("timerCount++++ \(WWMHelperClass.timerCount)")
+            //print("timerCount++++ \(WWMHelperClass.timerCount)")
             
             WWMHelperClass.timerCount = WWMHelperClass.timerCount + 1
         }else{

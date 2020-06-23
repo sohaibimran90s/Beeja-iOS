@@ -25,10 +25,11 @@ class WWM21DaySetReminderVC: WWMBaseViewController {
     }
     
     @IBAction func btnReminderClicked(_ sender: UIButton) {
-           let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
-
-           self.navigationController?.pushViewController(vc, animated: false)
-       }
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+        
+        vc.type = "21_days"
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
     
     func callHomeController(){
         self.navigationController?.isNavigationBarHidden = false

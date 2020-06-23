@@ -68,7 +68,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             self.btnLogin.setTitle(KNEXT, for: .normal)
             viewContinueAsEmail.isHidden = false
             
-            print("getuserdata..... \(self.appPreffrence.getUserData())")
+            //print("getuserdata..... \(self.appPreffrence.getUserData())")
             //self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
             let getuserdata = self.appPreffrence.getUserData()
             
@@ -228,15 +228,16 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             "version": UIDevice.current.systemVersion
         ]
         
-        print("backparam... \(param)")
+        //print("backparam... \(param)")
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGIN, context: "WWMLoginWithEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
-                    print("userProfile WWMLoginWithEmailVC... \(userProfile)")
+                    //print("userProfile WWMLoginWithEmailVC... \(userProfile)")
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMLoginWithEmailVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -300,7 +301,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                 print(error?.localizedDescription ?? "")
             }else {
                 if (loginResult?.isCancelled)! {
-                    print("User Cancellled To login with fb")
+                    //print("User Cancellled To login with fb")
                 }else {
                     let req = GraphRequest.init(graphPath: "me", parameters: ["fields":"email,name"], tokenString:loginResult?.token?.tokenString , version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
                     req.start(completionHandler: { (connection, result, error) in
@@ -323,7 +324,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                                         "version": UIDevice.current.systemVersion
                                     ]
                                     
-                                    print("param facebook... \(param)")
+                                    //print("param facebook... \(param)")
                                     
                                     self.loginWithSocial(param: param as Dictionary<String, Any>)
                                 }else {
@@ -404,12 +405,12 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         WWMHelperClass.showLoaderAnimate(on: self.view)
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
-                print("result.... \(result)")
+                //print("result.... \(result)")
                 if let userProfile = result["userprofile"] as? [String:Any] {
-                    print("userProfile WWMLoginVC... \(userProfile)")
+                    //print("userProfile WWMLoginVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMLoginWithEmailVC")
                     }
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
@@ -457,20 +458,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMLoginWithEmailVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreffrence.setBanners(value: result)
-                }
-            }
         }
     }
 }

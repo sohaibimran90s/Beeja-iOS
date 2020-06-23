@@ -49,6 +49,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+            self.appPreference.setIs30DaysReminder(value: settingData.isThirtyDaysReminder)
         }
     }
     
@@ -64,7 +65,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
         AppDelegate.sharedDelegate().date = tommDate!
         AppDelegate.sharedDelegate().value = 1
-        print("tommDate... \(tommDate!)")
+        //print("tommDate... \(tommDate!)")
         
     }
     
@@ -80,7 +81,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
         let afterThirtyDate = Calendar.current.date(byAdding: .day, value: 30, to: date)
         AppDelegate.sharedDelegate().date = afterThirtyDate!
         AppDelegate.sharedDelegate().value = 2
-        print("afterThirtyDate... \(afterThirtyDate!)")
+        //print("afterThirtyDate... \(afterThirtyDate!)")
         flag = 1
     }
     
@@ -95,7 +96,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
             let tommDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
             AppDelegate.sharedDelegate().date = tommDate!
             AppDelegate.sharedDelegate().value = 1
-            print("tommDate... \(tommDate!)")
+            //print("tommDate... \(tommDate!)")
         }
         
         callPushNotification()
@@ -138,17 +139,26 @@ class WWMLearnReminderVC: WWMBaseViewController {
         settingData.learnReminderTime = dateFormatter.string(from: sender.date)
         
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
+        //print("datePicker.date.... \(dateFormatter.string(from: sender.date))")
         
         let date1 = dateFormatter.string(from: sender.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  sender.date)
         let hour = components.hour!
         let minute = components.minute!
         
-        if date1.contains("PM"){
-            self.amPmBtn.setTitle("pm", for: .normal)
+        if !date1.contains("PM") || !date1.contains("pm") || !date1.contains("AM") || !date1.contains("am"){
+            switch hour {
+            case 12...23:
+                self.amPmBtn.setTitle("pm", for: .normal)
+            default:
+                self.amPmBtn.setTitle("am", for: .normal)
+            }
         }else{
-            self.amPmBtn.setTitle("am", for: .normal)
+            if date1.contains("PM") || date1.contains("pm"){
+                self.amPmBtn.setTitle("pm", for: .normal)
+            }else{
+                self.amPmBtn.setTitle("am", for: .normal)
+            }
         }
         
         self.hourBtn.setTitle("\(hour)", for: .normal)
@@ -172,7 +182,7 @@ class WWMLearnReminderVC: WWMBaseViewController {
     
     @objc func donedatePicker(){
         dateFormatter.dateFormat = "HH:mm a"
-        print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
+        //print("datePicker.date.... \(dateFormatter.string(from: datePicker.date))")
         
         let date1 = dateFormatter.string(from: datePicker.date)
         let components = Calendar.current.dateComponents([.hour, .minute], from:  datePicker.date)
@@ -267,6 +277,10 @@ class WWMLearnReminderVC: WWMBaseViewController {
             "MantraID":self.settingData.mantraID,
             "LearnReminderTime":self.settingData.learnReminderTime!,
             "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         
@@ -278,9 +292,8 @@ class WWMLearnReminderVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMLearnReminderVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    print("WWMLearnReminderVC")
+                if let _ = result["success"] as? Bool {
+                    //print("WWMLearnReminderVC")
                 }
             }
         }

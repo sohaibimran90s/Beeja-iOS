@@ -25,7 +25,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
-    var alertPopupView1 = WWMAlertController()
     
     var isGetProfileCall = false
     
@@ -73,7 +72,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         self.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCTimer,navigationVCGuided,navigationVCLearn, navigationVCWisdom, navigationVCProgress]
         
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
-            print("restore.... \(restoreValue)")
+            //print("restore.... \(restoreValue)")
             if restoreValue == "1"{
                 KUSERDEFAULTS.set("0", forKey: "restore")
                 self.showToast(message: KRESTOREMSG)
@@ -95,7 +94,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
             self.meditationlistAPI()
-            self.bannerAPI()
+            self.banner1API()
         }
         
         self.delegate = self
@@ -130,17 +129,17 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if CLLocationManager.locationServicesEnabled() {
                 switch CLLocationManager.authorizationStatus() {
                 case .notDetermined, .restricted, .denied:
-                    print("loction permission not access")
+                    //print("loction permission not access")
                     
                     self.appPreffrence.setLoctionDenied(value: "Location Disable")
                 case .authorizedAlways, .authorizedWhenInUse:
-                    print("Access")
+                    //print("Access")
                     
                     self.appPreffrence.setLoctionDenied(value: "Location Enable")
                 }
             } else {
                 self.appPreffrence.setLoctionDenied(value: "Location Disable")
-                print("Location services are not enabled")
+                //print("Location services are not enabled")
             }
         }
     }
@@ -180,7 +179,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.appPreffrence.setLoctionDenied(value: "Location Disable")
             var userData = WWMUserData()
             userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
             self.lat = userData.latitude
             self.long = userData.longitude
             city = userData.city
@@ -206,7 +205,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         var userData = WWMUserData()
                         userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-                        print(userData)
+                        //print(userData)
                         
                         let userData1 = self.appPreffrence.getUserData()
                         
@@ -221,7 +220,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.country = userData1["country"] as? String ?? ""
                         
                         
-                        print("lat.. \(self.lat) long... \(self.long) city.. \(self.city) country... \(self.country)")
+                        //print("lat.. \(self.lat) long... \(self.long) city.. \(self.city) country... \(self.country)")
                     }
                     
                     self.getUserProfileData(lat: self.lat, long: self.long)
@@ -253,34 +252,32 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 
                 
-                print("lat.. \(self.lat) long... \(self.long)")
+                //print("lat.. \(self.lat) long... \(self.long)")
                 
                 self.getUserProfileData(lat: self.lat, long: self.long)
         })
     }
-    
     
     func setupView() {
         
         if self.appPreffrence.getType() == "timer"{
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "timer"
+            self.appPreffrence.setType(value: "timer")
             
         }else if self.appPreffrence.getType() == "guided"{
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "guided"            
+            self.appPreffrence.setType(value: "guided")
 
         }else if self.appPreffrence.getType() == "learn"{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreffrence.setType(value: "learn")
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 2)
-            WWMHelperClass.selectedType = "learn"
         }else {
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "timer"
+            self.appPreffrence.setType(value: "timer")
         }
         
         if WWMHelperClass.milestoneType == "hours_meditate"{
@@ -312,13 +309,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         self.setupTabBarSeparators()
 
     }
-    
+
     //bannerAPI
-    func bannerAPI() {
+    func banner1API() {
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
-                print("result")
+                //print("result")
                 if let result = result["result"] as? [Any]{
                     self.appPreffrence.setBanners(value: result)
                 }
@@ -326,8 +323,25 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
+    //meditationAPI
+    // Calling API
+    func meditationApi(type: String) {
+        self.view.endEditing(true)
+        //WWMHelperClass.showSVHud()
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "meditation_id" : 1,
+            "level_id"         : 1,
+            "user_id"       : self.appPreffrence.getUserID(),
+            "type" : type,
+            "guided_type" : ""
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMSignupLetsStartVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            }
+        }
+    
     func setDataToDb(json:[String:Any]) {
-        print("database setting.... \(json)")
+        //print("database setting.... \(json)")
         var arrMeditationData = [WWMMeditationData]()
         if let dataMeditation = json["meditation_data"] as? [[String:Any]]{
             for dict in dataMeditation {
@@ -382,11 +396,16 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             settingDB.learnReminderTime = json["LearnReminderTime"] as? String ?? ""
             settingDB.isLearnReminder = json["IsLearnReminder"] as? Bool ?? false
             settingDB.mantraID = json["MantraID"] as? Int ?? 1
-            
+            settingDB.isThirtyDaysReminder = json["isThirtyDaysReminder"] as? Bool ?? false
+            settingDB.thirtyDaysReminder = json["thirtyDaysReminder"] as? String ?? ""
+            settingDB.isTwentyoneDaysReminder = json["isTwentyoneDaysReminder"] as? Bool ?? false
+            settingDB.twentyoneDaysReminder = json["twentyoneDaysReminder"] as? String ?? ""
             settingDB.prepTime = "10"
             settingDB.meditationTime = "90"
             settingDB.restTime = "20"
             
+            self.appPreffrence.setIs30DaysReminder(value: json["isThirtyDaysReminder"] as? Bool ?? false)
+            self.appPreffrence.setIs21DaysReminder(value: json["isTwentyoneDaysReminder"] as? Bool ?? false)
             
             for index in 0..<arrMeditationData.count {
                 let dataM = arrMeditationData[index]
@@ -404,7 +423,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.appPreffrence.setMeditation_key(value: dataM.meditationName)
                 }
                 
-                print("dataM.min_limit*** \(dataM.min_limit) dataM.max_limit*** \(dataM.max_limit) dataM.isSelected*** \(dataM.isSelected) dataM.meditationName*** \(dataM.meditationName)")
+                //print("dataM.min_limit*** \(dataM.min_limit) dataM.max_limit*** \(dataM.max_limit) dataM.isSelected*** \(dataM.isSelected) dataM.meditationName*** \(dataM.meditationName)")
                 
                 for index in 0..<dataM.levels.count {
                     let dic = dataM.levels[index]
@@ -450,14 +469,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_DICTIONARY, context: "URL_DICTIONARY", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                print("get dictionary result... \(result)")
+                //print("get dictionary result... \(result)")
                 
                 let systemDate = Int(Date().timeIntervalSince1970)
                 
                 //let result = ["getVibesImages": 1569801600, "getSubscriptionPlans": 1572393600, "wisdom": 1583366400, "getProfile": 1583366400, "community": nil, "guidedData": 1583366400, "mantras": 1569801600, "getmoods": 1569801600, "combinedMantra": 1569801600, "steps": 1569801600, "getMeditationData": 1583366400, "stepFaq": 1569801600]
                 //community data*
                 if let communtiyTimeStamp = result["community"] as? Int{
-                    print("communtiyTimeStamp.....++ \(communtiyTimeStamp) systemDate...++ \(systemDate)")
+                    //print("communtiyTimeStamp.....++ \(communtiyTimeStamp) systemDate...++ \(systemDate)")
                     
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
                 }else{
@@ -485,7 +504,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     
                     self.fetchStepsDataFromDB(time_stamp: steps)
                 }else{
-                    self.getLearnSetpsAPI()
+                    self.getLearnAPI()
                 }
                 
                 //mantras data*
@@ -510,7 +529,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.appPreffrence.setStepFAQTimeStamp(value: systemDate)
                 }
                 
-                print("success tabbarVC getdictionaryapi in background thread")
+                //print("success tabbarVC getdictionaryapi in background thread")
             }
         }
     }
@@ -528,7 +547,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "user_id": self.appPreffrence.getUserID()
         ]
         
-        print("param forcelogout+++ \(param)")
+        //print("param forcelogout+++ \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
             if sucess {
@@ -541,7 +560,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     }
                 }
                 
-                print("success forceLogout api in background thread")
+                //print("success forceLogout api in background thread")
             }
         }
     }
@@ -618,7 +637,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
-                WWMHelperClass.selectedType = ""
+                WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                self.appPreffrence.setType(value: "")
                 WWMHelperClass.challenge7DayCount = 0
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                 
@@ -675,7 +696,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
-                print("date1... \(systemDate) date2... \(apiDate)")
+                //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
                     self.appPreffrence.setLastTimeStamp21DaysBool(value: true)
                     self.getGuidedListAPI()
@@ -694,12 +715,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
             if let _ = result["success"] as? Bool {
-                print("success result... \(result)")
-                
                 if let result = result["result"] as? [[String:Any]] {
-                                        
-                    print("result... \(result)")
                     
+                    //print("success result getGuidedListAPI... \(result)")
                     let guidedData = WWMHelperClass.fetchDB(dbName: "DBGuidedData") as! [DBGuidedData]
                     if guidedData.count > 0 {
                         WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
@@ -847,7 +865,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         }
                                         
                                         if let emotion_type = emotionsDict["emotion_type"] as? String{
-                                            print("emotion_type tab** \(emotion_type)")
+                                            //print("emotion_type tab** \(emotion_type)")
                                             dbGuidedEmotionsData.emotion_type = emotion_type
                                         }else{
                                             dbGuidedEmotionsData.emotion_type = ""
@@ -912,7 +930,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                     }
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                    print("guided data tabbarvc in background thread...")
+                    //print("guided data tabbarvc in background thread...")
                 }
             }
         }
@@ -922,10 +940,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     //MARK: Fetch Steps Data From DB
     func fetchStepsDataFromDB(time_stamp: Any) {
-           let getStepsDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
-           if getStepsDataDB.count > 0 {
+           let getDBLearnDB = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
+           if getDBLearnDB.count > 0 {
                
-               for dict in getStepsDataDB {
+               for dict in getDBLearnDB {
                                    
                    let dateFormatter = DateFormatter()
                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -934,109 +952,256 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                    let apiTimeStamp: String = "\(time_stamp)"
 
                     if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
-                        self.getLearnSetpsAPI()
+                        self.getLearnAPI()
                         return
                     }
                    
                    let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                    let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                    
-                   print("date1... \(systemDate) date2... \(apiDate)")
+                   //print("date1... \(systemDate) date2... \(apiDate)")
                    if systemDate < apiDate{
-                       self.getLearnSetpsAPI()
+                       self.getLearnAPI()
                    }
                }
            }else{
-               self.getLearnSetpsAPI()
+               self.getLearnAPI()
            }
        }
 
     
     //MARK: getLearnSetps API call
-    func getLearnSetpsAPI() {
+    func getLearnAPI() {
         
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_STEPS, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            print("learn result... \(result)")
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{
-                    print("total_paid double.. \(total_paid)")
                     WWMHelperClass.total_paid = Int(round(total_paid))
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
+                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
-                    print("GetLearnSetpsAPI count... \(data.count)")
+                    let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
+                    if getDBLearn.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                    }
                     
                     let getStepsData = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
                     if getStepsData.count > 0 {
                         WWMHelperClass.deletefromDb(dbName: "DBSteps")
                     }
                     
+                    let getThirtyDaysData = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
+                    if getThirtyDaysData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                    }
+                    
                     for dict in data{
                         
-                        let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
-                            
+                        let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
+                        
                         let timeInterval = Int(Date().timeIntervalSince1970)
-                        print("timeInterval.... \(timeInterval)")
+                        //print("timeInterval.... \(timeInterval)")
+                        dbLearnData.last_time_stamp = "\(timeInterval)"
                         
-                        dbStepsData.last_time_stamp = "\(timeInterval)"
-                        
-                        if let completed = dict["completed"] as? Bool{
-                            dbStepsData.completed = completed
+                        if dict["name"] as? String == "30 Day Challenge"{
+                            self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
                         }
                         
-                        if let date_completed = dict["date_completed"] as? String{
-                            dbStepsData.date_completed = date_completed
+                        //print("30intro_completed... \(self.appPreffrence.get30IntroCompleted()) 30intro_url... \(self.appPreffrence.get30DaysURL())")
+                        
+                        if let name = dict["name"] as? String{
+                            dbLearnData.name = name
                         }
                         
-                        if let description = dict["description"] as? String{
-                            dbStepsData.description1 = description
+                        if let intro_url = dict["intro_url"] as? String{
+                            dbLearnData.intro_url = intro_url
                         }
                         
-                        if let id = dict["id"]{
-                            dbStepsData.id = "\(id)"
-                        }
-                        
-                        if let outro_audio = dict["outro_audio"] as? String{
-                            dbStepsData.outro_audio = outro_audio
-                        }
-                        
-                        if let step_audio = dict["step_audio"] as? String{
-                            dbStepsData.step_audio = step_audio
-                        }
-                        
-                        if let step_name = dict["step_name"] as? String{
-                            dbStepsData.step_name = step_name
-                        }
-                        
-                        if let timer_audio = dict["timer_audio"] as? String{
-                            dbStepsData.timer_audio = timer_audio
-                        }
-                        
-                        if let title = dict["title"] as? String{
-                            dbStepsData.title = title
+                        if let intro_completed = dict["intro_completed"] as? Bool{
+                            dbLearnData.intro_completed = intro_completed
                         }
                         
                         if let min_limit = dict["min_limit"] as? String{
-                            dbStepsData.min_limit = min_limit
-                        }else{
-                            dbStepsData.min_limit = "95"
+                            dbLearnData.min_limit = min_limit
                         }
                         
                         if let max_limit = dict["max_limit"] as? String{
-                            dbStepsData.max_limit = max_limit
+                            dbLearnData.max_limit = max_limit
+                        }
+                        
+                        if let is_expired = dict["is_expired"] as? Bool{
+                            dbLearnData.is_expired = is_expired
                         }else{
-                            dbStepsData.max_limit = "98"
+                            dbLearnData.is_expired = false
+                        }
+                        
+                        if let step_list = dict["step_list"] as? [[String: Any]]{
+                            for dict in step_list{
+                                let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
+                                if let completed = dict["completed"] as? Bool{
+                                    dbStepsData.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbStepsData.date_completed = date_completed
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbStepsData.description1 = description
+                                }
+                                
+                                if let id = dict["id"]{
+                                    dbStepsData.id = "\(id)"
+                                }
+                                
+                                if let outro_audio = dict["outro_audio"] as? String{
+                                    dbStepsData.outro_audio = outro_audio
+                                }
+                                
+                                if let step_audio = dict["step_audio"] as? String{
+                                    dbStepsData.step_audio = step_audio
+                                }
+                                
+                                if let step_name = dict["step_name"] as? String{
+                                    dbStepsData.step_name = step_name
+                                }
+                                
+                                if let timer_audio = dict["timer_audio"] as? String{
+                                    dbStepsData.timer_audio = timer_audio
+                                }
+                                
+                                if let title = dict["title"] as? String{
+                                    dbStepsData.title = title
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbStepsData.min_limit = min_limit
+                                }else{
+                                    dbStepsData.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbStepsData.max_limit = max_limit
+                                }else{
+                                    dbStepsData.max_limit = "98"
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                                
+                            }
+                        }
+                        
+                        if let day_list = dict["day_list"] as? [[String: Any]]{
+                            for dict in day_list{
+                                let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
+                                                                
+                                if let id = dict["id"]{
+                                    dbThirtyDays.id = "\(id)"
+                                }
+                                
+                                if let day_name = dict["day_name"] as? String{
+                                    dbThirtyDays.day_name = day_name
+                                }
+                                
+                                if let auther_name = dict["auther_name"] as? String{
+                                    dbThirtyDays.auther_name = auther_name
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbThirtyDays.description1 = description
+                                }
+                                
+                                if let is_milestone = dict["is_milestone"] as? Bool{
+                                    dbThirtyDays.is_milestone = is_milestone
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbThirtyDays.min_limit = min_limit
+                                }else{
+                                    dbThirtyDays.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbThirtyDays.max_limit = max_limit
+                                }else{
+                                    dbThirtyDays.max_limit = "98"
+                                }
+                                
+                                if let prep_time = dict["prep_time"] as? String{
+                                    dbThirtyDays.prep_time = prep_time
+                                }else{
+                                    dbThirtyDays.prep_time = "60"
+                                }
+                                
+                                if let meditation_time = dict["meditation_time"] as? String{
+                                    dbThirtyDays.meditation_time = meditation_time
+                                }else{
+                                    dbThirtyDays.meditation_time = "1200"
+                                }
+                                
+                                if let rest_time = dict["rest_time"] as? String{
+                                    dbThirtyDays.rest_time = rest_time
+                                }else{
+                                    dbThirtyDays.rest_time = "120"
+                                }
+                                
+                                if let prep_min = dict["prep_min"] as? String{
+                                    dbThirtyDays.prep_min = prep_min
+                                }else{
+                                    dbThirtyDays.prep_min = "0"
+                                }
+                                
+                                if let prep_max = dict["prep_max"] as? String{
+                                    dbThirtyDays.prep_max = prep_max
+                                }else{
+                                    dbThirtyDays.prep_max = "300"
+                                }
+                                
+                                if let rest_min = dict["rest_min"] as? String{
+                                    dbThirtyDays.rest_min = rest_min
+                                }else{
+                                    dbThirtyDays.prep_max = "0"
+                                }
+                                
+                                if let rest_max = dict["rest_max"] as? String{
+                                    dbThirtyDays.rest_max = rest_max
+                                }else{
+                                    dbThirtyDays.prep_max = "600"
+                                }
+                                
+                                if let med_min = dict["med_min"] as? String{
+                                    dbThirtyDays.med_min = med_min
+                                }else{
+                                    dbThirtyDays.med_min = "0"
+                                }
+                                
+                                if let med_max = dict["med_max"] as? String{
+                                    dbThirtyDays.med_max = med_max
+                                }else{
+                                    dbThirtyDays.med_max = "2400"
+                                }
+                                
+                                if let completed = dict["completed"] as? Bool{
+                                    dbThirtyDays.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbThirtyDays.date_completed = date_completed
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                            }
                         }
                         
                         WWMHelperClass.saveDb()
                     }
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearnSteps"), object: nil)
                 }
             }
         }
@@ -1065,7 +1230,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
-                print("date1... \(systemDate) date2... \(apiDate)")
+                //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
                     self.getVibesAPI()
                 }
@@ -1079,12 +1244,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETVIBESIMAGES, context: "WWMMoodShareVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    print("result getVibesAPI... \(result)")
-                    print("GetVibesAPI tabbarvc in background thread...")
+                    //print("result getVibesAPI... \(result) GetVibesAPI tabbarvc in background thread...")
                     
                     if let data = result["data"] as? [[String: Any]]{
                         
-                        print("GetVibesAPI count... \(data.count)")
+                        //print("GetVibesAPI count... \(data.count)")
                         
                         let getVibesData = WWMHelperClass.fetchDB(dbName: "DBGetVibesImages") as! [DBGetVibesImages]
                         if getVibesData.count > 0 {
@@ -1099,7 +1263,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                         let dbGetVibesData = WWMHelperClass.fetchEntity(dbName: "DBGetVibesImages") as! DBGetVibesImages
                                             
                                         let timeInterval = Int(Date().timeIntervalSince1970)
-                                        print("timeInterval.... \(timeInterval)")
+                                        //print("timeInterval.... \(timeInterval)")
                                         
                                         dbGetVibesData.images = images[i]
                                         
@@ -1126,7 +1290,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func fetchCommunityDataFromDB(time_stamp: Any) {
         
-        print("time_stamp....+++ \(time_stamp)")
+        //print("time_stamp....+++ \(time_stamp)")
         
         let comunityDataDB = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
         if comunityDataDB.count > 0 {
@@ -1147,7 +1311,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
-                print("date1... \(systemDate) date2... \(apiDate)")
+                //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
                     self.getCommunityAPI()
                 }
@@ -1177,11 +1341,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "month":self.strMonthYear
             ] as [String : Any]
         
-        print("param get community.. \(param) URL_COMMUNITYDATA... \(URL_COMMUNITYDATA)")
+        //print("param get community.. \(param) URL_COMMUNITYDATA... \(URL_COMMUNITYDATA)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMMUNITYDATA, context: "WWMCommunityVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("result getcommunity... \(result)")
+                //print("result getcommunity... \(result)")
                 
                 let comunityData = WWMHelperClass.fetchDB(dbName: "DBCommunityData") as! [DBCommunityData]
                 if comunityData.count > 0 {
@@ -1191,19 +1355,19 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dbCommunityData = WWMHelperClass.fetchEntity(dbName: "DBCommunityData") as! DBCommunityData
                 
                 if let result = result["result"] as? [String: Any]{
-                    print("result get community... \(result)")
+                    //print("result get community... \(result)")
                     let jsonData: Data? = try? JSONSerialization.data(withJSONObject: result, options:.prettyPrinted)
                     let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
                     dbCommunityData.data = myString
                     
                     let timeInterval = Int(Date().timeIntervalSince1970)
-                    print("timeInterval.... \(timeInterval)")
+                    //print("timeInterval.... \(timeInterval)")
                     
                     dbCommunityData.last_time_stamp = "\(timeInterval)"
                     
                     WWMHelperClass.saveDb()
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationCommunity"), object: nil)
-                    print("success tabbarVC getcommunity in background thread")
+                    //print("success tabbarVC getcommunity in background thread")
                 }
             }
         }
@@ -1231,7 +1395,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                     let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                     
-                    print("date1... \(systemDate) date2... \(apiDate)")
+                    //print("date1... \(systemDate) date2... \(apiDate)")
                     if systemDate < apiDate{
                         self.getMantrasAPI()
                     }
@@ -1256,14 +1420,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         for dict in data{
                             
-                            print("mantras result... \(result)")
+                            //print("mantras result... \(result)")
                             let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
                             let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
                             let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
                             dbMantrasData.data = myString
                             
                             let timeInterval = Int(Date().timeIntervalSince1970)
-                            print("timeInterval.... \(timeInterval)")
+                            //print("timeInterval.... \(timeInterval)")
                             
                             dbMantrasData.last_time_stamp = "\(timeInterval)"
                             
@@ -1271,7 +1435,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             
                         }
                     }
-                    print("success tabbarvc getmantras api in background")
+                    //print("success tabbarvc getmantras api in background")
                 }
             }
         }
@@ -1279,10 +1443,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     //get wisdom api
     func fetchWisdomDataFromDB(time_stamp: Any) {
         let wisdomDataDB = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
-        let wisdomVideoData = WWMHelperClass.fetchDB(dbName: "DBWisdomVideoData") as! [DBWisdomVideoData]
         if wisdomDataDB.count > 0 {
-            print("wisdomDataDB.. \(wisdomDataDB.count)")
-            print("wisdomVideoData.. \(wisdomVideoData.count)")
+            //print("wisdomDataDB.. \(wisdomDataDB.count) wisdomVideoData.. \(wisdomVideoData.count)")
             
             for dict in wisdomDataDB {
                             
@@ -1300,7 +1462,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let systemDate = Date(timeIntervalSince1970: Double(systemTimeStamp)!)
                 let apiDate = Date(timeIntervalSince1970: Double(apiTimeStamp)!)
                 
-                print("date1... \(systemDate) date2... \(apiDate)")
+                //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
                     self.getWisdomAPI()
                 }
@@ -1318,7 +1480,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 if let _ = result["success"] as? Bool {
                     
-                    print("success getWisdomAPI \(result)")
+                    //print("success getWisdomAPI \(result)")
                     if let wisdomList = result["result"] as? [[String:Any]] {
                         
                         let wisdomData = WWMHelperClass.fetchDB(dbName: "DBWisdomData") as! [DBWisdomData]
@@ -1333,7 +1495,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         for dict in wisdomList {
                             var wisdom_id: Int = 0
-                            print("wisdom result... \(result)")
+                            //print("wisdom result... \(result)")
                             let dbWisdomData = WWMHelperClass.fetchEntity(dbName: "DBWisdomData") as! DBWisdomData
                         
                             if let id = dict["id"]{
@@ -1346,7 +1508,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             
                             let timeInterval = Int(Date().timeIntervalSince1970)
-                            print("timeInterval.... \(timeInterval)")
+                            //print("timeInterval.... \(timeInterval)")
                             
                             dbWisdomData.last_time_stamp = "\(timeInterval)"
                             
@@ -1383,7 +1545,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
 
                                     dbWisdomVideoData.wisdom_id = "\(wisdom_id)"
                                     WWMHelperClass.saveDb()
-                                    print("wisdomVideoData.count... \(wisdomVideoData.count)")
+                                    //print("wisdomVideoData.count... \(wisdomVideoData.count)")
                                 }
                             }
                             
@@ -1391,7 +1553,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationWisdom"), object: nil)
-                        print("wisdomData tabbarvc in background thread...")
+                        //print("wisdomData tabbarvc in background thread...")
                     }
                 }
             }
@@ -1408,7 +1570,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONLIST, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            print("result meditationlistAPI \(result)")
+            //print("result meditationlistAPI \(result)")
             if let data = result["data"] as? [[String: Any]]{
                 for dict in data{
                     
@@ -1417,7 +1579,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if let guided_type = dict["guided_type"] as? String{
                             if let name = dict["name"] as? String{
                                 if let complete_count = dict["complete_count"] as? Int{
-                                    print("\(guided_type)_\(name) complete_count*** \(complete_count)")
+                                    //print("\(guided_type)_\(name) complete_count*** \(complete_count)")
                                     WWMHelperClass.addNinetyFivePercentDataFromBackend(type: "\(guided_type)_\(name)", count: complete_count)
                                 }
                             }
@@ -1425,7 +1587,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     }else{
                         if let name = dict["name"] as? String{
                             if let complete_count = dict["complete_count"] as? Int{
-                                print("\(name) complete_count*** \(complete_count)")
+                                //print("\(name) complete_count*** \(complete_count)")
                                 WWMHelperClass.addNinetyFivePercentDataFromBackend(type: name, count: complete_count)
                             }
                         }
@@ -1444,7 +1606,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 if let data = result["data"] as? [String: Any]{
                     if let records = data["records"] as? [[String: Any]]{
                         
-                        print("meditationHistory records... \(records)")
+                        //print("meditationHistory records... \(records)")
                         
                         let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
                         if meditationHistoryData.count > 0 {
@@ -1463,8 +1625,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
-                print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
-                print("success tabbarVC meditationhistoryapi in background thread")
+                //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result) success tabbarVC meditationhistoryapi in background thread")
             }
         }
     }
@@ -1526,7 +1687,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "country":country
             ] as [String : Any]
             
-            print("param... \(param)")
+            //print("param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 
@@ -1541,13 +1702,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
                             
                             
-                            print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
+                            //print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
                             
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
                             
                             self.appPreffrence.setGetProfile(value: false)
                             self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
+                            self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
+                            self.appPreffrence.setInvitationCode(value: result["Invitation_code"] as! String)
                             self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
@@ -1569,7 +1732,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             
                             self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
                             
-                            print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
+                            //print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
                             
                             self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
                             self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
@@ -1613,7 +1776,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     self.appPreffrence.setPrePostJournalBool(value: true)
                                     
-                                    print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
+                                    //print("premood.. \(userSubscription.preMood) postmood.. \(userSubscription.postMood) prejouranl.. \(userSubscription.preJournal) postjoural.. \(userSubscription.postJournal)")
                                     
                                     
                                     if let subscription = result["subscription"] as? [String : Any]{
@@ -1659,7 +1822,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             
                             self.setDataToDb(json: result["settings"] as! [String:Any])
-                            print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
+                            //print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
                             
                             //*receiptValidation
                             let formatter = DateFormatter()
@@ -1687,7 +1850,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 //server Date
                                 expireDate = WWMHelperClass.getExpireDate(expiryDate: expiryDate, formatter: formatter)
                                 
-                                print("self.appPreffrence.getExpiryDate... \(expiryDate) formatter.date... \(String(describing: formatter.date(from: expiryDate))) currentDate+++ \(currentDate) expireDate++ \(expireDate)")
+                                //print("self.appPreffrence.getExpiryDate... \(expiryDate) formatter.date... \(String(describing: formatter.date(from: expiryDate))) currentDate+++ \(currentDate) expireDate++ \(expireDate)")
                                 
                                 
                                 self.checkExpireFunc(currentDate: currentDate, expireDate: expireDate)
@@ -1713,14 +1876,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func checkExpireFunc(currentDate: Date, expireDate: Date){
         if currentDate > expireDate{
-            print("currentDate is greater than expireDate")
+            //print("currentDate is greater than expireDate")
             if self.appPreffrence.isLogin(){
                 DispatchQueue.global(qos: .background).async {
                     self.receiptValidation()
                 }
             }
         }else{
-            print("currentDate is smaller than expireDate \(currentDate) \(expireDate)")
+            //print("currentDate is smaller than expireDate \(currentDate) \(expireDate)")
         }
     }
     
@@ -1745,10 +1908,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         
                         if json != nil{
                             if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
-                                print("date...+++++ \(date)")
+                                //print("date...+++++ \(date)")
                                 let expiryDate = self.appPreffrence.getExpireDateBackend()
                                 if expiryDate != ""{
-                                    print("self.appPreffrence.getExpiryDate... \(expiryDate)")
+                                    //print("self.appPreffrence.getExpiryDate... \(expiryDate)")
                                     
                                     let formatter = DateFormatter()
 //                                    formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -1766,13 +1929,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     //apple
                                     let serverDate = WWMHelperClass.getExpireDate(expiryDate: formatter.string(from: date), formatter: formatter)
-                                    print("backend date \(expireDate) apple date++++ \(serverDate)")
+                                    //print("backend date \(expireDate) apple date++++ \(serverDate)")
                                     
                                     if serverDate > expireDate{
-                                        print("product_id... \(self.product_id) repurchased")
+                                        //print("product_id... \(self.product_id) repurchased")
                                         self.getSubscriptionPlanId()
                                     }else{
-                                        print("expired")
+                                        //print("expired")
                                     }
                                 }
                             }
@@ -1829,7 +1992,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                   print("result.... \(result)")
+                   //print("result.... \(result)")
                     
                     var getProductId: Bool = false
                     var plan_id: Int = 2
@@ -1868,7 +2031,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             "amount" : subscriptionAmount!
                             ] as [String : Any]
                         
-                        print("param,,,,... \(param)")
+                        //print("param,,,,... \(param)")
                         self.subscriptionSucessAPI(param: param)
                     }
                 }
@@ -1878,12 +2041,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func subscriptionSucessAPI(param : [String : Any]) {
         
-        print("param.....###### \(param)")
+        //print("param.....###### \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
-                print("success.... upgrade beeja tab bar vc")
-                print("lat...\(self.lat) long... \(self.long)")
+                //print("success.... upgrade beeja tab bar vc lat...\(self.lat) long... \(self.long)")
                 self.getUserProfileData(lat: self.lat, long: self.long)
             }
         }
@@ -1954,7 +2116,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         //WWMHelperClass.hideLoaderAnimate(on: self.view)
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
-            print("dismiss popup...")
+            //print("dismiss popup...")
             self.getDataFromDatabase()
         }else{
             if !reachable.isConnectedToNetwork() {
@@ -1962,7 +2124,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.connectionLost()
                     self.flagConnAlertShow = true
                 }else{
-                    print("no alert...")
+                    //print("no alert...")
                     self.getUserProfileData(lat: self.lat, long: self.long)
                 }
             }else{
@@ -1996,7 +2158,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         let freeSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.freeDiskSpace)
         let totalSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.totalDiskSpace)
         
-        print("usedSpace... \(usedSpace) freeSpace... \(freeSpace) totalSpace... \(totalSpace) ramSpace... \(ProcessInfo.processInfo.physicalMemory/1073741824)")
+        //print("usedSpace... \(usedSpace) freeSpace... \(freeSpace) totalSpace... \(totalSpace) ramSpace... \(ProcessInfo.processInfo.physicalMemory/1073741824)")
     }
 }
 

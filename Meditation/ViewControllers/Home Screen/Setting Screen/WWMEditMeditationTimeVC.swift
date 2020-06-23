@@ -89,7 +89,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         
         self.sliderMeditationTime.minimumValue = Float(self.selectedLevelData.minMeditation)
         self.sliderMeditationTime.maximumValue = Float(self.selectedLevelData.maxMeditation)
-        print("settingData.meditationTime*** \(settingData.meditationTime)")
+        //print("settingData.meditationTime*** \(settingData.meditationTime)")
         self.sliderMeditationTime.value = Float(settingData.meditationTime ?? "0") ?? 0
         self.lblMeditationTime.text = self.secondsToMinutesSeconds1(second: Int(self.sliderMeditationTime.value))
         
@@ -102,7 +102,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
     
     
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
-        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
+        //print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
         
         self.min = Int(self.sliderPrepTime.value)/60
         
@@ -137,7 +137,7 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
         self.lblMeditationTime.text = self.secondsToMinutesSeconds1(second: Int(self.meditationTime))
         self.selectedLevelData.meditationTime = Int32(self.meditationTime)
         
-        print("self.meditationTime... \(self.meditationTime)")
+        //print("self.meditationTime... \(self.meditationTime)")
 
         self.settingData.meditationTime = "\(self.meditationTime)"
     }
@@ -289,6 +289,13 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "MorningReminderTime": self.settingData.morningReminderTime!,
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
             "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         
@@ -298,46 +305,15 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             "group": group
             ] as [String : Any]
         
-        print("edit param... \(param)")
+        //print("edit param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                if let success = result["success"] as? Bool {
-                    print(success)
-                    print("WWMEditMeditationTimeVC background thread")
+                if let _ = result["success"] as? Bool {
+                    //print(success)
+                    //print("WWMEditMeditationTimeVC background thread")
                 }
             }
-        }
-    }
-    
-    func logoutAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "token" : appPreference.getToken()
-        ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                self.appPreference.setIsLogin(value: false)
-                self.appPreference.setUserToken(value: "")
-                self.appPreference.setUserID(value: "")
-                self.appPreference.setIsProfileCompleted(value: false)
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                let vcc = UINavigationController.init(rootViewController: vc)
-                UIApplication.shared.keyWindow?.rootViewController = vcc
-                
-            }else {
-                if error?.localizedDescription == "The Internet connection appears to be offline."{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                }
-                
-            }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
 }

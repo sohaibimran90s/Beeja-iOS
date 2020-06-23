@@ -25,6 +25,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     @IBOutlet weak var sliderRestTime: WWMSlider!
     @IBOutlet weak var btnStartTimer: UIButton!
     @IBOutlet weak var btnChoosePreset: UIButton!
+    @IBOutlet weak var viewPrePost: UIView!
     
     var selectedMeditationData  = DBMeditationData()
     var selectedLevelData  = DBLevelData()
@@ -36,8 +37,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
     var meditationTime = 0
     var restTime = 0
     var min = 0
-
-    //var alertPopupView = WWMAlertController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +51,21 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.offlineDatatoServerCall()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.setUpNavigationBarForDashboard(title: "Timer")
+        self.getSettingData()
+        
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreference.setType(value: "timer")
+            self.tabBarController?.tabBar.isHidden = true
+            self.viewPrePost.isHidden = true
+        }else{
+            self.tabBarController?.tabBar.isHidden = false
+            self.viewPrePost.isHidden = false
+        }
+    }
+    
     //insert offline data to server
     func offlineDatatoServerCall(){
 
@@ -60,11 +74,11 @@ class WWMTimerHomeVC: WWMBaseViewController {
             
             for data in nintyFivePercentDB{
                 
-                print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
+                //print("nintyFivePercentDB.count++++====== \(nintyFivePercentDB.count)")
                 
                 if let jsonResult = self.convertToDictionary1(text: data.data ?? "") {
                     
-                    print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
+                    //print("data....++++++===== \(data.data) id++++++++==== \(data.id)")
                     
                     self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0")
                     
@@ -120,26 +134,22 @@ class WWMTimerHomeVC: WWMBaseViewController {
                 "level_id": level_id,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": complete_percentage,
-                "is_complete": is_complete
+                "is_complete": is_complete,
+                "title": "",
+                "journal_type": ""
                 ] as [String : Any]
         }
 
-        print("meter param... \(param)")
+        //print("meter param... \(param)")
 
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
-                print("URL_MEDITATIONCOMPLETE..... success timer")
+                //print("URL_MEDITATIONCOMPLETE..... success timer")
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
     }//insert offline data to server*
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.setUpNavigationBarForDashboard(title: "Timer")
-        self.getSettingData()
-    }
     
     private func updateGradientLayer() {
         gradientLayer.locations = [ 0.0, 1.2 ]
@@ -189,7 +199,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
             self.layoutExpressMoodViewWidth.constant = 40
             self.view.layoutIfNeeded()
         }, completion: nil)
-        
     }
     
     func setUpSliderTimesAccordingToLevels() {
@@ -210,27 +219,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.sliderRestTime.value = Float(selectedLevelData.restTime)
         self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
         self.restTime = Int(self.sliderRestTime.value)
-        
-
-        
-//        if !self.userData.is_subscribed {
-
-//            alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
-//            let window = UIApplication.shared.keyWindow!
-//
-//            alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-//            alertPopupView.btnOK.layer.borderWidth = 2.0
-//            alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//
-//            alertPopupView.lblTitle.text = kAlertTitle
-//            alertPopupView.lblSubtitle.text = "Your subscription plan is expired to continue please upgrade."
-//            alertPopupView.btnClose.isHidden = true
-//
-//            alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
-//            window.rootViewController?.view.addSubview(alertPopupView)
-//
-//        }
-
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -247,14 +235,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.layoutMoodWidth.constant = 90
         
         gradientLayer.frame = view.bounds
-        
-       //self.sliderPrepTime.minimumTrackImage(for: <#T##UIControl.State#>)
-       // self.sliderPrepTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-      //  self.sliderRestTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-      //  self.sliderMeditationTime.setMinimumTrackImage(UIImage.init(named: "minSlider_Icon"), for: .normal)
-
-        //self.sliderPrepTime.setMaximumTrackImage(UIImage.init(named: "maxSlider_Icon"), for: .normal)
-        
     }
     
     func secondsToMinutesSeconds (second : Int) -> String {
@@ -271,7 +251,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
                     return String.init(format: "%d mins", second/60,second%60)
                 }
                 return String.init(format: "%d:%02d", second/60,second%60)
-                
             }
         }
     }
@@ -288,13 +267,10 @@ class WWMTimerHomeVC: WWMBaseViewController {
         }
     }
     
-    
-    
     // MARK: - UIButton Action
-    
     @IBAction func sliderPrepTimeValueChangedAction(_ sender: Any) {
     
-        print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
+        //print("self.sliderPrepTime.value....\(Int(self.sliderPrepTime.value))")
         
         self.min = Int(self.sliderPrepTime.value)/60
         
@@ -353,7 +329,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
             return
         }
         
-        print("prepTime... \(self.prepTime) meditationTime... \(self.meditationTime) restTime... \(self.restTime)")
+        //print("prepTime... \(self.prepTime) meditationTime... \(self.meditationTime) restTime... \(self.restTime)")
         self.btnStartTimer.isUserInteractionEnabled = true
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMStartTimerVC") as! WWMStartTimerVC
         vc.prepTime = self.prepTime

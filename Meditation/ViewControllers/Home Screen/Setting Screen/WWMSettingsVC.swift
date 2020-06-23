@@ -22,8 +22,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-    let arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
-    let arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
+    var arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+    var arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
@@ -59,9 +59,17 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            print("... settingData... \(settingData)")
+            //print("... settingData... \(settingData)")
             if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
                 arrMeditationData = meditationData
+            }
+            
+            if settingData.thirtyDaysReminder != ""{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+            }else{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
             }
         }
         self.tblViewSetting.reloadData()
@@ -82,7 +90,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func secondsToMinutesSeconds(second : Int) -> String {
-        print("secinndnddd... \(second)")
+        //print("secinndnddd... \(second)")
         if second<60 {
             return "\(second) sec"
         }else {
@@ -183,7 +191,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             self.appPreference.setMeditation_key(value: arrMeditationData[indexs].meditationName ?? "Beeja")
                         }
                         
-                        print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
+                        //print("min_limit*** \(self.appPreffrence.getTimerMin_limit() ) max_limit*** \(self.appPreffrence.getTimerMax_limit()) name*** \(self.appPreffrence.getMeditation_key())")
                         
                         
                         self.selectedMeditationData = arrMeditationData[indexs]
@@ -256,14 +264,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
 
     // MARK:- UITableView Delegate methods
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("....userdate.... \(self.userData.type)")
-        
+        //print("....userdate.... \(self.userData.type)")
         
         if self.appPreffrence.getType() == "timer" {
             return 3
         }else if self.appPreffrence.getType() == "learn" {
             return 2
-        }else {
+        }else{
             return 1
         }
     }
@@ -276,7 +283,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if data.meditationName == "Beeja" || data.meditationName == "Vedic/Transcendental" {
                             return arrTimeChimes.count-1
                         }
-                        
                     }
                 }
                 return arrTimeChimes.count+1
@@ -331,7 +337,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(settingData.prepTime ?? "0") ?? 0)
                         }else if indexPath.row == 3 {                            
                             if let meditationTime = settingData.meditationTime{
-                                print("meditationTime====== \(meditationTime)")
+                                //print("meditationTime====== \(meditationTime)")
                                 cell.lblTime.text = self.secondsToMinutesSeconds(second: Int(meditationTime)!)
                             }else{
                                 cell.lblTime.text = self.secondsToMinutesSeconds(second: 0)
@@ -474,10 +480,26 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTime.isHidden = false
                         cell.checkImage.isHidden = true
                         cell.lblTime.text = settingData.learnReminderTime
-                            
-                            if !settingData.isLearnReminder {
-                                cell.lblTime.isHidden = true
-                            }
+                        
+                        if !settingData.isLearnReminder {
+                            cell.lblTime.isHidden = true
+                        }
+                    }else if indexPath.row == 4 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 102
+                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                    }else if indexPath.row == 5 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        
+                        if !settingData.isThirtyDaysReminder{
+                            cell.lblTime.isHidden = true
+                        }
                     }
                 }else if indexPath.section == 1 {
                     
@@ -562,6 +584,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTime.text = settingData.learnReminderTime
                         
                         if !settingData.isLearnReminder {
+                            cell.lblTime.isHidden = true
+                        }
+                    }else if indexPath.row == 3 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 102
+                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                    }else if indexPath.row == 4 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        
+                        if !settingData.isThirtyDaysReminder{
                             cell.lblTime.isHidden = true
                         }
                     }
@@ -749,7 +787,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                    print("help...")
+                    //print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.value = "help"
@@ -774,50 +812,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
-                    }
-                }else if indexPath.section == 1{
-                    if indexPath.row == 7 {
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
-                        
-                        let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
-                        //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
-                        
-                        let url = URL.init(string: iOSAppStoreURLFormat)
-                        
-                        if UIApplication.shared.canOpenURL(url!){
-                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-                        }
-                    }else if indexPath.row == 8 {
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
-                        let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
-                        let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
-                        let imageToShare = [textToShare] as [Any]
-                        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-                        activityViewController.popoverPresentationController?.sourceView = self.view
-                        self.present(activityViewController, animated: true, completion: nil)
-                    }else if indexPath.row == 9 {
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }else if indexPath.row == 10{
-                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                        print("help...")
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                        
-                        vc.value = "help"
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }else if indexPath.row == 11 || indexPath.row == 12 {
-                        self.openWebView(index: indexPath.row)
-                        
-                    }else if indexPath.row == 13{
-                        self.logout()
-                    }
-                }
-            }else{
-                if indexPath.section == 0{
-                    if indexPath.row == 2{
-                        if settingData.isLearnReminder {
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+                    }else if indexPath.row == 5{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
                     }
@@ -847,7 +846,60 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else if indexPath.row == 10{
                         WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                        print("help...")
+                        //print("help...")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                        
+                        vc.value = "help"
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if indexPath.row == 11 || indexPath.row == 12 {
+                        self.openWebView(index: indexPath.row)
+                        
+                    }else if indexPath.row == 13{
+                        self.logout()
+                    }
+                }
+            }else{
+                if indexPath.section == 0{
+                    if indexPath.row == 2{
+                        if settingData.isLearnReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
+                    }else if indexPath.row == 4{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.isSetting = true
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
+                    }
+                }else if indexPath.section == 1{
+                    if indexPath.row == 7 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RATE_REVIEW", itemName: "")
+                        
+                        let iOSAppStoreURLFormat = "itms-apps://itunes.apple.com/app/1453359245"
+                        //let iOSAppStoreURLFormat = "http://itunes.com/apps/com.beejameditation.beeja"
+                        
+                        let url = URL.init(string: iOSAppStoreURLFormat)
+                        
+                        if UIApplication.shared.canOpenURL(url!){
+                            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                        }
+                    }else if indexPath.row == 8 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "TELL_FRIEND", itemName: "")
+                        let url = URL.init(string: "http://itunes.com/apps/com.beejameditation.beeja")
+                        let textToShare = "\(KBEMORECONNECTED) \(url!.absoluteString)"
+                        let imageToShare = [textToShare] as [Any]
+                        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+                        activityViewController.popoverPresentationController?.sourceView = self.view
+                        self.present(activityViewController, animated: true, completion: nil)
+                    }else if indexPath.row == 9 {
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "RESET_PASSWORD", itemName: "")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMResetPasswordVC") as! WWMResetPasswordVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else if indexPath.row == 10{
+                        WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
+                        //print("help...")
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                         
                         vc.value = "help"
@@ -887,7 +939,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else if indexPath.row == 10{
                     WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "HELP", itemName: "")
-                    print("help...")
+                    //print("help...")
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.value = "help"
@@ -903,7 +955,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     // MARK: Button Action
-    
     @IBAction func btnPickerAction(_ sender: WWMCustomButton) {
         if let cell = tblViewSetting.cellForRow(at: sender.indexPath) as? WWMSettingTableViewCell {
             if self.appPreffrence.getType() == "timer" {
@@ -977,6 +1028,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     @objc func handleDatePicker(sender: UIDatePicker) {
+        
+        print("sender.tag... \(sender.tag)")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         if sender.tag == 2 {
@@ -991,7 +1044,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func logout() {
         self.xibCall()
     }
-    
     
     func xibCall(){
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
@@ -1048,17 +1100,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-
-    
     func callPushNotification() {
         AppDelegate.sharedDelegate().setLocalPush()
     }
     
     // MARK: - UIButton Action
-    
-    
-    
-    
     @IBAction func btnSwitchAction(_ sender: Any) {
         let btn = sender as! UISwitch
         if btn.tag == 1 {
@@ -1084,6 +1130,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MOOD_METER", itemName: "OFF")
             }
             settingData.moodMeterEnable = btn.isOn
+            callPushNotification()
         }else if btn.tag == 6 {
             if btn.isOn {
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "MILESTONES_REWARDS", itemName: "ON")
@@ -1093,6 +1140,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             
             settingData.isMilestoneAndRewards = btn.isOn
         }else if btn.tag == 101 {
+            // Enable Learn Reminder
+            
             if btn.isOn {
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER", itemName: "ON")
             }else {
@@ -1103,15 +1152,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 settingData.learnReminderTime = "08:00"
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_REMINDER_TIME", itemName: "08:00")
             }
-            // Enable Learn Reminder
+            callPushNotification()
+        }else if btn.tag == 102 {
+            // Enable 30 Days Reminder
+            
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "OFF")
+            }
+            settingData.isThirtyDaysReminder = btn.isOn
+            callPushNotification()
         }
-//      self.settingAPI()
         self.tblViewSetting.reloadData()
     }
     
-    
     // MARK:- API Calling
-    
     func settingAPI() {
         
         var meditation_data = [[String:Any]]()
@@ -1146,7 +1202,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 
                 if dic.min_limit == "" || dic.min_limit == nil{
-                    print("++++++ \(self.min_limit) \(self.max_limit)")
+                    //print("++++++ \(self.min_limit) \(self.max_limit)")
                     
                     let data = ["meditation_id":dic.meditationId,
                                 "meditation_name":dic.meditationName ?? "",
@@ -1207,6 +1263,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 "MantraID":self.settingData.mantraID,
                 "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
                 "IsLearnReminder":self.settingData.isLearnReminder,
+                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
                 "meditation_data" : meditation_data
                 ] as [String : Any]
             
@@ -1216,13 +1276,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 "group": group
                 ] as [String : Any]
             
-            print("settings param... \(param)")
+            //print("settings param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let success = result["success"] as? Bool {
                         print(success)
-                        print("settingVC... \(result)")
+                        //print("settingVC... \(result)")
                         //self.tblViewSetting.reloadData()
                     }
                 }else {
@@ -1277,9 +1337,11 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
+                WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
                 WWMHelperClass.challenge7DayCount = 0
-                WWMHelperClass.selectedType = ""
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
+                self.appPreffrence.setType(value: "")
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 

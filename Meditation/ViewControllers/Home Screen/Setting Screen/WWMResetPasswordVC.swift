@@ -62,7 +62,7 @@ class WWMResetPasswordVC: WWMBaseViewController {
             "newPassword" : txtViewNewPassword.text ?? ""
             ] as [String : Any]
         
-        print("resetPassword param... \(param)")
+        //print("resetPassword param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_RESETPASSWORD, context: "WWMResetPasswordVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
