@@ -617,6 +617,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 KUSERDEFAULTS.set("0", forKey: "restore")
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)
+                self.appPreffrence.set21ChallengeName(value: "")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

@@ -122,16 +122,24 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     @IBAction func btnSetReminderClicked(_ sender: UIButton) {
         
         print(datePicker.date)
+        self.callPushNotification()
         if self.type == "21_days"{
             self.appPreference.setIs21DaysReminder(value: true)
         }else if self.type == "30_days"{
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
             if flag == 0{
                 settingData.thirtyDaysReminder = self.defaultDate
             }
-            self.appPreference.setIs30DaysReminder(value: true)
+            settingData.isThirtyDaysReminder = true
+            
+            if isSetting{
+                self.callHomeVC1()
+            }else{
+                self.callHomeController(selectedIndex: 4)
+            }
+            return
         }
         
-        self.callPushNotification()
         if isSetting{
             self.callHomeController(selectedIndex: 2)
         }else{
@@ -141,6 +149,16 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     
     @IBAction func btnSkipClicked(_ sender: UIButton){
         self.appPreference.setReminder21DaysTime(value: "")
+        
+        if self.type == "30_days"{
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+            if isSetting{
+                self.callHomeVC1()
+            }else{
+                self.callHomeController(selectedIndex: 4)
+            }
+            return
+        }
         
         if isSetting{
             self.callHomeController(selectedIndex: 2)
@@ -153,11 +171,11 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 4
+            tabController.selectedIndex = selectedIndex
             for index in 0..<tabController.tabBar.items!.count {
                 let item = tabController.tabBar.items![index]
                 item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 4 {
+                if index == selectedIndex {
                     item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
                 }
             }

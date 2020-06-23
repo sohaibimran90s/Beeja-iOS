@@ -259,7 +259,12 @@ class WWMWalkThoghVC: WWMBaseViewController {
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.navigateToDashboard()
         }else if (value == "21_days" || value == "30days") {
-            self.navigationController?.popViewController(animated: false)
+            if challenge_type == "30days"{
+                self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                self.callHomeVC1()
+            }else{
+                self.navigationController?.popViewController(animated: false)
+            }
         }else{
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "SIGN_UP", itemId: "VIDEO_SKIPPED", itemName: "")
@@ -876,7 +881,7 @@ extension WWMWalkThoghVC{
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
                 if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
-                    self.navigationController?.navigationBar.isHidden = false
+                    self.appPreference.set21ChallengeName(value: "30 Day Challenge")
                     self.callHomeVC1()
                 }else{
                    self.navigateToDashboard()
@@ -885,10 +890,9 @@ extension WWMWalkThoghVC{
                 return
             }
         }
-        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        
         WWMHelperClass.hideLoaderAnimate(on: self.view)
         if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
-            self.navigationController?.navigationBar.isHidden = false
             self.callHomeVC1()
         }else{
            self.navigateToDashboard()

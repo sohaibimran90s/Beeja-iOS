@@ -816,6 +816,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if settingData.isThirtyDaysReminder {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
                             
+                            vc.type = "30_days"
                             vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
@@ -869,6 +870,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if settingData.isThirtyDaysReminder {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
                             
+                            vc.type = "30_days"
                             vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
@@ -1317,6 +1319,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 KUSERDEFAULTS.set("0", forKey: "restore")
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)
+                self.appPreffrence.set21ChallengeName(value: "")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
