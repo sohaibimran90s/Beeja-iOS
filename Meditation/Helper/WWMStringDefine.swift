@@ -142,8 +142,9 @@ let URL_ONBOARDING = URL_BASE + "onboarding"
 let URL_SINGLEGUIDED = URL_BASE + "dictionary/singleguided"
 let URL_BANNERS = URL_BASE + "banners"
 let URL_RETAKE = URL_BASE + "guided/retake"
-let URI_LEARN = URL_BASE + "dictionary/learn"
-let URI_INVITEACCEPTUSERS = URL_BASE + "invite_accept_users"
+let URL_LEARN_ = URL_BASE + "dictionary/learn"
+let URL_INVITEACCEPTUSERS = URL_BASE + "invite_accept_users"
+let URL_REDEEMCOUPONCODE = URL_BASE + "redeem_coupon_code"
 
 /************************************************/
 

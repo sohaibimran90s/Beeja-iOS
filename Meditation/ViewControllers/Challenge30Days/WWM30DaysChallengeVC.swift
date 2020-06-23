@@ -28,9 +28,10 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var viewMeditationDaysHC: NSLayoutConstraint!
     @IBOutlet weak var viewCollectionViewHC: NSLayoutConstraint!
     @IBOutlet weak var btnIntro: UIButton!
+    @IBOutlet weak var btnShare: UIButton!
+    @IBOutlet weak var btnReminder: UIButton!
     
     let reachable = Reachabilities()
-    
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
@@ -55,7 +56,6 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
             self.viewReminder.isHidden = false
-            self.viewHeaderHC.constant = 126
             self.lblMeditationCount.text = "Day 2/30"
             self.lblMeditationCountTopConstraint.constant = 16
             self.viewCollectionViewHC.constant = 403
@@ -64,6 +64,15 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.lblLine.isHidden = false
             self.btnStartChallenge.isHidden = false
             self.lblBelowTitle.text = "Psst, we have little surprises everytime you complete a milestone."
+            
+            if self.appPreference.getInvitationCount() > 4{
+                self.viewHeaderHC.constant = 86
+                self.btnShare.isHidden = true
+            }else{
+                self.viewHeaderHC.constant = 126
+                self.btnShare.isHidden = false
+            }
+            
         }else if self.i == 1{
             //Expired
             self.viewExpired.isHidden = false
@@ -105,9 +114,14 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
+            if settingData.thirtyDaysReminder != ""{
+                self.btnReminder.isHidden = true
+                self.lblReminder.isHidden = true
+            }else{
+                self.btnReminder.isHidden = false
+                self.lblReminder.isHidden = false
+            }
         }
-        
-        
     }
     
     //MARK: Challenge Expired button
@@ -124,6 +138,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBAction func btnReminderClicked(_ sender: UIButton){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
         
+        vc.isSetting = true
         vc.type = "30_days"
         self.navigationController?.pushViewController(vc, animated: true)
     }

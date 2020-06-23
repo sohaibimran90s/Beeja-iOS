@@ -730,7 +730,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 self.xibCall1(title1: "\(KLEARNJUMPSTEP) \(self.arrGuidedList[0].cat_EmotionList[position].step_id)")
             }else{
                 
-                WWMHelperClass.selectedType = "guided"
+                self.appPreference.setType(value: "guided")
                 WWMHelperClass.days21StepNo = "Step \(data.step_id)"
                 WWMHelperClass.stepsCompleted = data.completed
                 //print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")

@@ -46,7 +46,7 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "PLAYLIST_PAGE", itemId: "LIKE_TO_LEARN", itemName: "")
         guided_type = ""
-        WWMHelperClass.selectedType = "learn"
+        self.appPreference.setType(value: "learn")
         self.meditationApi(type: "learn")
     }
     
@@ -55,7 +55,7 @@ class WWMPlayListVC: WWMBaseViewController, IndicatorInfoProvider {
         WWMHelperClass.sendEventAnalytics(contentType: "PLAYLIST_PAGE", itemId: "GUIDE_ME", itemName: "")
 
         guided_type = ""
-        WWMHelperClass.selectedType = "guided"
+        self.appPreference.setType(value: "guided")
         self.meditationApi(type: "guided")
     }
     

@@ -106,6 +106,10 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "invitationCode")
     }
     
+    func setInvitationCount(value: Int) {
+        defaults.set(value, forKey: "invitationCount")
+    }
+    
     func set30IntroCompleted(value: Bool) {
         defaults.set(value, forKey: "30DaysIntroCompleted")
     }
@@ -303,6 +307,10 @@ class WWMAppPreference: NSObject {
     
     func getInvitationCode() -> String {
         return UserDefaults.standard.string(forKey: "invitationCode") ?? ""
+    }
+    
+    func getInvitationCount() -> Int {
+        return UserDefaults.standard.integer(forKey: "invitationCount") 
     }
     
     func get30IntroCompleted() -> Bool {

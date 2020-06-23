@@ -19,6 +19,7 @@ class WWMSatsProgressData: NSObject {
     var consecutive_days = [WWMConsecutiveDaysData]()
     var days21PracticalChallenge = [WWMSatsProgress21DaysChallengeData]()
     var days21SpiritualChallenge = [WWMSatsProgress21DaysChallengeData]()
+    var days30Challenge = [WWMSatsProgress30Days]()
     
     override init() {
         cons_days = 0
@@ -29,9 +30,8 @@ class WWMSatsProgressData: NSObject {
         avg_session = 0
         longest_session = 0
     }
+    
     init(json:[String:Any], dayAdded:Int) {
-        
-        
         cons_days = json["cons_days"] as? Int ?? 0
         total_Session = json["total_Session"] as? Int ?? 0
         weekly_session = json["weekly_session"] as? Int ?? 0
@@ -67,36 +67,17 @@ class WWMSatsProgressData: NSObject {
                 }
             }
         }
+        
+        //days30Challenge
+        if let days_30 = json["30_days_challenge"] as? [[String:Any]]{
+            for dict in days_30{
+                print("dict... \(dict)")
+            }
+        }
     }
-    
-//    func getStatsProgressData() -> WWMSatsProgressData {
-//        let statsData = WWMSatsProgressData()
-//        if let path = Bundle.main.url(forResource: "CalendarData", withExtension: "geojson")
-//        {
-//            do {
-//                let data = try Data.init(contentsOf: path )
-//                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-//                print(jsonResult)
-//                if let jsonResult = jsonResult as? Dictionary<String, AnyObject>, let result = jsonResult["Result"] as? [String:Any] {
-//
-//
-//                             //statsData = WWMSatsProgressData.init(json: result)
-//
-//
-//                    }
-//
-//
-//            } catch {
-//                // handle error
-//            }
-//        }
-//
-//        return statsData
-//    }
 }
 
 class WWMConsecutiveDaysData: NSObject {
-    
     
     var date = String()
     var meditation_status = Int()
@@ -138,6 +119,23 @@ class WWMSatsProgress21DaysChallengeData: NSObject {
     }
 }
 
+class WWMSatsProgress30Days: NSObject {
+    
+    var completed_date = ""
+    var day_id = 1
+    var emotion_id = ""
+    var status = false
+    
+    override init() {
+    }
+    
+    init(json:[String:Any]) {
+        completed_date = json["completed_date"] as? String ?? ""
+        day_id = json["day_id"] as? Int ?? 1
+        emotion_id = json["emotion_id"] as? String ?? ""
+        status = json["status"] as? Bool ?? false
+    }
+}
 
 
 

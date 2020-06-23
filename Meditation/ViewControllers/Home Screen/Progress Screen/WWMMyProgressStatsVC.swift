@@ -91,6 +91,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
 
     var challType = "Practical"
     var itemInfo: IndicatorInfo = "View"
+    var array1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,14 +170,14 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //check weather 30 days or not
         if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
             self.stackViewPraSpiritual.isHidden = true
-            self.constraint21DaysHeader.constant = 90
-            self.lbl21DaysTitle.text = "30 Days meditation Challenge"
+            self.constraint21DaysHeader.constant = 0
+            self.lbl21DaysTitle.text = ""
             self.viewChallenge21Days.isHidden = false
-            self.viewChallenge21DaysHeightConstraint.constant = 410
+            self.viewChallenge21DaysHeightConstraint.constant = 0
             self.btnChallenge21Days.isHidden = false
             self.viewSuperChallenge21Days.isHidden = false
-            self.constraintSuperView21Days.constant = 520
-            self.challengeCalHC.constant = 300
+            self.constraintSuperView21Days.constant = 0
+            self.challengeCalHC.constant = 0
             self.lblPracLine.isHidden = true
             self.lblSpiriLine.isHidden = true
         }else{
@@ -265,16 +266,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @IBAction func btn21TodaysChallClicked(_ sender: UIButton){
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+        if self.appPreference.getType() == "learn"{
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
             self.appPreference.setType(value: "learn")
-            WWMHelperClass.selectedType = "learn"
         }else{
-            WWMHelperClass.selectedType = "guided"
+            self.appPreffrence.setType(value: "guided")
         }
-        
-        
-        //self.view.endEditing(true)
-        
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -639,9 +636,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         //print("self.statsData.consecutive_days.count... \(self.statsData.consecutive_days.count) 21dayschallengecount... \(self.statsData.days21PracticalChallenge.count)")
         
         if collectionView == collectionView21Chall{
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-                return 30
-            }else{
+            if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn") && (self.statsData.days30Challenge.count == 0){
+                
+                return self.array1.count
+            }else if (self.appPreference.getType() == "guided" || self.appPreference.getType() == "Guided") && (self.statsData.days21PracticalChallenge.count != 0 || self.statsData.days21SpiritualChallenge.count != 0) {
+                
                 if self.challType == "Practical"{
                     return self.statsData.days21PracticalChallenge.count
                 }else{
@@ -660,6 +659,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }else{
             return self.statsData.days21PracticalChallenge.count
         }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -738,7 +739,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             return cell
         }else{
-            //
+
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
             
             if indexPath.item == 0{
@@ -749,13 +750,15 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 cell.imgViewRight.isHidden = true
             }
             
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
                 cell.lblDate.textColor = UIColor.white
                 cell.viewDateCircle.layer.borderWidth = 2.0
                 cell.viewDateCircle.layer.borderColor = UIColor.white.cgColor
                 cell.viewDateCircle.backgroundColor = UIColor.clear
                 cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
                 cell.imgViewRight.image = UIImage(named: "singleLineRight1")
+                
+                cell.lblDate.text = "\(self.array1[indexPath.row])"
             }else{
                 var data = WWMSatsProgress21DaysChallengeData()
                 if self.challType == "Practical"{
@@ -768,6 +771,10 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     data = statsData.days21SpiritualChallenge[indexPath.row]
                     
                     if indexPath.item == statsData.days21SpiritualChallenge.count - 1{
+                        cell.imgViewRight.isHidden = true
+                    }
+                    
+                    if indexPath.item == 20{
                         cell.imgViewRight.isHidden = true
                     }
                 }
@@ -803,11 +810,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         return CGSize.init(width: width, height: width)
     }
     
-    
     func addSessionAPI(param:[String:Any]) {
 
         //print("add session params.... \(param)")
-
         addSessionView.btnDone.isUserInteractionEnabled = false
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDSESSION, context: "WWMMyProgressStatsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             self.addSessionView.btnDone.isUserInteractionEnabled = true
@@ -850,7 +855,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 self.lblValueSession.text = "\(self.statsData.avg_session ?? 0)"
                 self.lblValueDays.text = "\(self.statsData.longest_session ?? 0)"
             }
-
             
             self.lblNameMeditate.text = "Weekly Session"
             self.lblAvSession.text = "Av. Session"
@@ -901,13 +905,13 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             if sucess {
                 if let data = result["Response"] as? [String:Any] {
                     
-                    //print("data stats++++ \(data)")
+                    print("data stats++++ \(data)")
                     self.statsData = WWMSatsProgressData.init(json: data, dayAdded: self.dayAdded)
                 }
                 self.isLeft = false
                 self.setData()
                 
-                if WWMHelperClass.selectedType == "guided" || WWMHelperClass.selectedType == "Guided"{
+                if self.appPreference.getType() == "guided" || self.appPreference.getType() == "Guided" && self.appPreffrence.getExpiryDate(){
                     self.viewChallenge21Days.isHidden = false
                     self.viewChallenge21DaysHeightConstraint.constant = 355
                     self.btnChallenge21Days.isHidden = false
@@ -915,6 +919,23 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     self.viewSuperChallenge21Days.isHidden = false
                     self.constraintSuperView21Days.constant = 485
                     self.challengeCalHC.constant = 245
+                    
+                    self.collectionView21Chall.reloadData()
+                }else if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn") && (self.statsData.days30Challenge.count == 0){
+                    
+                    print(self.statsData.days30Challenge.count)
+                    
+                    self.stackViewPraSpiritual.isHidden = true
+                    self.constraint21DaysHeader.constant = 90
+                    self.lbl21DaysTitle.text = "30 Days meditation Challenge"
+                    self.viewChallenge21Days.isHidden = false
+                    self.viewChallenge21DaysHeightConstraint.constant = 410
+                    self.btnChallenge21Days.isHidden = false
+                    self.viewSuperChallenge21Days.isHidden = false
+                    self.constraintSuperView21Days.constant = 520
+                    self.challengeCalHC.constant = 300
+                    self.lblPracLine.isHidden = true
+                    self.lblSpiriLine.isHidden = true
                     
                     self.collectionView21Chall.reloadData()
                 }

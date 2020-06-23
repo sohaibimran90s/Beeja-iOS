@@ -406,7 +406,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         var position = 0
         
         if self.learnStepsListData[sender_Tag].completed{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreference.setType(value: "learn")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
             
             self.appPreffrence.setLearnMin_limit(value: self.learnStepsListData[sender_Tag].min_limit)
@@ -446,7 +446,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
             
             self.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.learnStepsListData[position].step_name) \(KLEARNJUMPSTEP1)")
         }else{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreference.setType(value: "learn")
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
             

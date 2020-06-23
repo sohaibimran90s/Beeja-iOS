@@ -118,10 +118,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             }
         }
         
-//        if WWMHelperClass.selectedType == "learn"{
-//            btnBurnMood.isHidden = true
-//        }
-        
         if moodData.name != "" {
             self.txtViewLog.text = "I am feeling \(moodData.name.uppercased()) because"
             self.checkAnalyticStr = self.txtViewLog.text
@@ -245,7 +241,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         
         var param: [String: Any] = [:]
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -267,11 +263,12 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "level_id":self.levelID,
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
+                "is_complete": "1",
+                "journal_type": ""
                 ] as [String : Any]
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -290,7 +287,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
                 "complete_percentage": WWMHelperClass.complete_percentage,
                 "is_complete": "1",
-                "title": "",
                 "journal_type": ""
                 ] as [String : Any]
         }
@@ -363,7 +359,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     func navigateToDashboard() {
         
         //print("self.type..... \(self.type)")
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             if self.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)

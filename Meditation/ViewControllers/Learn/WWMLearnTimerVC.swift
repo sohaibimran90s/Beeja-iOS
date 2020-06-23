@@ -735,13 +735,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if WWMHelperClass.outro_audio != ""{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }
@@ -793,13 +793,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if WWMHelperClass.outro_audio != ""{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnOutroVC") as! WWMLearnOutroVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
                 
-                WWMHelperClass.selectedType = "learn"
+                self.appPreference.setType(value: "learn")
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }

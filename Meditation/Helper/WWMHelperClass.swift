@@ -21,7 +21,6 @@ class WWMHelperClass {
     static var galleryValue = false
     static var loader_register = false
     static var milestoneType: String = ""
-    static var selectedType: String = ""
     static var days21StepNo: String = ""
     
     //learn

@@ -35,7 +35,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         
         KUSERDEFAULTS.set("0", forKey: "restore")
         self.appPreference.set21ChallengeName(value: "")
-        //WWMHelperClass.selectedType = ""
         self.lblLogo.isHidden = true
         self.setNavigationBar(isShow: false, title: "")
         //imageViewLoader.image = UIImage.gifImageWithName("SplashLoader")

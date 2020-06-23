@@ -331,7 +331,8 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                     //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMSignupEmailVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -384,20 +385,6 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreference.setBanners(value: result)
-                }
-            }
         }
     }
 }

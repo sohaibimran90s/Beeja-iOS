@@ -950,7 +950,6 @@ class WWMStartTimerVC: WWMBaseViewController {
             DispatchQueue.main.async {
                 if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
                     self.appPreference.setType(value: "learn")
-                    WWMHelperClass.selectedType = "learn"
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                            UIApplication.shared.keyWindow?.rootViewController = vc
                 }else{

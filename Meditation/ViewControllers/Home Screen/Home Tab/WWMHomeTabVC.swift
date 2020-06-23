@@ -110,7 +110,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         //UIApplication.shared.isStatusBarHidden = true
-        self.bannerAPI()
+        self.banner1API()
         timerCount = Int.random(in: 0...4)
         WWMHelperClass.timerCount = timerCount
         //print("timercount... \(timerCount)")
@@ -285,7 +285,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     //banner api
-    func bannerAPI() {
+    func banner1API() {
         
         self.bannerTopConstraint.constant = 0
         self.bannerHeightConstraint.constant = 1
@@ -431,13 +431,11 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "timer"
         self.guided_type = ""
-        WWMHelperClass.selectedType = "timer"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.userData.type = "timer"
-        WWMHelperClass.selectedType = "timer"
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -454,7 +452,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "practical"
         self.type = "guided"
-        WWMHelperClass.selectedType = "guided"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -476,7 +473,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "learn"
         self.guided_type = ""
-        WWMHelperClass.selectedType = "learn"
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -834,7 +830,6 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         self.appPreference.setType(value: "guided")
         self.appPreference.setGuideTypeFor3DTouch(value: "guided")
-        WWMHelperClass.selectedType = "guided"
         self.view.endEditing(true)
         self.type = "guided"
         DispatchQueue.global(qos: .background).async {

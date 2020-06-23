@@ -316,35 +316,4 @@ class WWMEditMeditationTimeVC: WWMBaseViewController {
             }
         }
     }
-    
-    func logoutAPI() {
-        //WWMHelperClass.showSVHud()
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "token" : appPreference.getToken()
-        ]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, context: "WWMEditMeditationTimeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                self.appPreference.setIsLogin(value: false)
-                self.appPreference.setUserToken(value: "")
-                self.appPreference.setUserID(value: "")
-                self.appPreference.setIsProfileCompleted(value: false)
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
-                let vcc = UINavigationController.init(rootViewController: vc)
-                UIApplication.shared.keyWindow?.rootViewController = vcc
-                
-            }else {
-                if error?.localizedDescription == "The Internet connection appears to be offline."{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                }else{
-                    WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                }
-                
-            }
-            //WWMHelperClass.dismissSVHud()
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
 }

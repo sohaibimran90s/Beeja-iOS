@@ -231,7 +231,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                     //print("userProfile WWMLoginVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMLoginVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -280,20 +281,6 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreference.setBanners(value: result)
-                }
-            }
         }
     }
 }

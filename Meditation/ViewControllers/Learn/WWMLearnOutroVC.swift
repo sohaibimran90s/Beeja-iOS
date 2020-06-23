@@ -142,7 +142,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
         
-        WWMHelperClass.selectedType = "learn"
+        self.appPreference.setType(value: "learn")
         vc.watched_duration = self.watched_duration
         self.navigationController?.pushViewController(vc, animated: false)
     }

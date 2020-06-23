@@ -199,6 +199,25 @@ class WWMBaseViewController: UIViewController {
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     
+    func callHomeVC(index: Int){
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = index
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == index {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    func callHomeVC1(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
     // MARK: Button Action
     
     @IBAction func btnSideMenuAction(_ sender: UIButton) {
@@ -269,6 +288,37 @@ class WWMBaseViewController: UIViewController {
             }
         }
         return nil
+    }
+}
+
+extension WWMBaseViewController{
+    
+    func getInviteAcceptAPI(context1: String) {
+        
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_INVITEACCEPTUSERS, context: context1, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                
+                let data = result["result"] as? [String]
+                self.appPreference.setInvitationCount(value: data?.count ?? 0)
+            }
+        }
+    }
+    
+    //bannerAPI
+    func bannerAPI(context1: String) {
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: context1, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if let _ = result["success"] as? Bool {
+                //print("result")
+                if let result = result["result"] as? [Any]{
+                    self.appPreference.setBanners(value: result)
+                }
+            }
+        }
     }
 }
 

@@ -149,7 +149,7 @@ class WWMLearnNavVC: WWMBaseViewController {
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URI_LEARN, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             //print("learn result... \(result)")
             if let _ = result["success"] as? Bool {

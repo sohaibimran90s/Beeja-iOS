@@ -586,6 +586,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if !settingData.isLearnReminder {
                             cell.lblTime.isHidden = true
                         }
+                    }else if indexPath.row == 3 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 102
+                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                    }else if indexPath.row == 4 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        
+                        if !settingData.isThirtyDaysReminder{
+                            cell.lblTime.isHidden = true
+                        }
                     }
                 }else if indexPath.section == 1 {
                     
@@ -796,6 +812,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
+                    }else if indexPath.row == 5{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.isSetting = true
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
                     }
                 }else if indexPath.section == 1{
                     if indexPath.row == 7 {
@@ -840,6 +863,13 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                     if indexPath.row == 2{
                         if settingData.isLearnReminder {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnReminderVC") as! WWMLearnReminderVC
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
+                    }else if indexPath.row == 4{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
                     }
@@ -998,6 +1028,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     @objc func handleDatePicker(sender: UIDatePicker) {
+        
+        print("sender.tag... \(sender.tag)")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         if sender.tag == 2 {
@@ -1012,7 +1044,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     func logout() {
         self.xibCall()
     }
-    
     
     func xibCall(){
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
@@ -1133,13 +1164,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             settingData.isThirtyDaysReminder = btn.isOn
             callPushNotification()
         }
-//      self.settingAPI()
         self.tblViewSetting.reloadData()
     }
     
-    
     // MARK:- API Calling
-    
     func settingAPI() {
         
         var meditation_data = [[String:Any]]()
@@ -1310,9 +1338,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
                 WWMHelperClass.challenge7DayCount = 0
-                WWMHelperClass.selectedType = ""
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
+                self.appPreffrence.setType(value: "")
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
                 

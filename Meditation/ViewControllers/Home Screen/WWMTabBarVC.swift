@@ -25,7 +25,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     let reachable = Reachabilities()
     
     var alertPopupView = WWMAlertController()
-    var alertPopupView1 = WWMAlertController()
     
     var isGetProfileCall = false
     
@@ -95,7 +94,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
             self.meditationlistAPI()
-            self.bannerAPI()
+            self.banner1API()
         }
         
         self.delegate = self
@@ -259,28 +258,26 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         })
     }
     
-    
     func setupView() {
         
         if self.appPreffrence.getType() == "timer"{
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "timer"
+            self.appPreffrence.setType(value: "timer")
             
         }else if self.appPreffrence.getType() == "guided"{
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "guided"            
+            self.appPreffrence.setType(value: "guided")
 
         }else if self.appPreffrence.getType() == "learn"{
-            WWMHelperClass.selectedType = "learn"
+            self.appPreffrence.setType(value: "learn")
             self.viewControllers?.remove(at: 2)
             self.viewControllers?.remove(at: 2)
-            WWMHelperClass.selectedType = "learn"
         }else {
             self.viewControllers?.remove(at: 3)
             self.viewControllers?.remove(at: 3)
-            WWMHelperClass.selectedType = "timer"
+            self.appPreffrence.setType(value: "timer")
         }
         
         if WWMHelperClass.milestoneType == "hours_meditate"{
@@ -312,9 +309,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         self.setupTabBarSeparators()
 
     }
-    
+
     //bannerAPI
-    func bannerAPI() {
+    func banner1API() {
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
@@ -641,7 +638,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.deletefromDb(dbName: "DBLearn")
-                WWMHelperClass.selectedType = ""
+                WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                self.appPreffrence.setType(value: "")
                 WWMHelperClass.challenge7DayCount = 0
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                 
@@ -978,7 +976,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URI_LEARN, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{

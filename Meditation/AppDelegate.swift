@@ -843,6 +843,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             self.identifyReminderType(type: "morning")
             self.identifyReminderType(type: "afternoon")
             self.identifyReminderType(type: "learn")
+            self.identifyReminderType(type: "30Days")
         }
     }
     
@@ -964,6 +965,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }else if type == "afternoon"{
             reminderTime = settingData.afterNoonReminderTime ?? ""
             isReminder = settingData.isAfterNoonReminder
+        }else if type == "30Days"{
+            reminderTime = settingData.thirtyDaysReminder ?? ""
+            isReminder = settingData.isThirtyDaysReminder
         }else if type == "learn"{
             reminderTime = settingData.learnReminderTime ?? ""
             isReminder = settingData.isLearnReminder
@@ -1091,89 +1095,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func afterNoonMorningReminderFunc(settingData: DBSettings, date: Date, type: String){
-            //let date = dateFormate.date(from: strDate)
-            //print(date!)
-            var arrTemp: [String]?
-            if type == "morning"{
-                arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
-            }else{
-                arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
-            }
+        //let date = dateFormate.date(from: strDate)
+        //print(date!)
+        var arrTemp: [String]?
+        if type == "morning"{
+            arrTemp = settingData.morningReminderTime?.components(separatedBy: ":")
+        }else if type == "afternoon"{
+            arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
+        }else if type == "30Days"{
+            arrTemp = settingData.thirtyDaysReminder?.components(separatedBy: ":")
+        }
         
-            var str = KGOODMORNING
-            if type == "challenge21days"{
-                str = KCHALLENGEREMINDER
-            }else{
-                if arrTemp?.count == 2 {
-                    let hours = Int(arrTemp?[0] ?? "0") ?? 0
-                    let minutes = Int(arrTemp?[1] ?? "0") ?? 0
-                    let seconds = hours*60 + minutes
-                    if seconds < 720 {
-                        str = KGOODMORNING
-                    }else if 720 <= seconds && seconds < 1080 {
-                        str = KGOODAFTERNOON
-                    }else {
-                        str = KGOODEVENING
-                    }
+        var str = KGOODMORNING
+        if type == "challenge21days"{
+            str = KCHALLENGEREMINDER
+        }else{
+            if arrTemp?.count == 2 {
+                let hours = Int(arrTemp?[0] ?? "0") ?? 0
+                let minutes = Int(arrTemp?[1] ?? "0") ?? 0
+                let seconds = hours*60 + minutes
+                if seconds < 720 {
+                    str = KGOODMORNING
+                }else if 720 <= seconds && seconds < 1080 {
+                    str = KGOODAFTERNOON
+                }else {
+                    str = KGOODEVENING
                 }
             }
-            
-            // let timeStemp = Int(date!.timeIntervalSince1970)
-            let content = UNMutableNotificationContent()
-            content.title = NSString.localizedUserNotificationString(forKey: str, arguments: nil)
-            content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
-            content.sound = UNNotificationSound.default
-            
-            if type == "morning"{
-                content.threadIdentifier = "local-notifications-MorningReminder"
-            }else if type == "afternoon"{
-                content.threadIdentifier = "local-notifications-AfterNoonReminder"
-            }else{
-                content.threadIdentifier = "local-notifications-Challenge21DaysReminder"
+        }
+        
+        // let timeStemp = Int(date!.timeIntervalSince1970)
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: str, arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: KITSTIMEFORBEEJA, arguments: nil)
+        content.sound = UNNotificationSound.default
+        
+        var identifire: String = ""
+        
+        if type == "morning"{
+            content.threadIdentifier = "local-notifications-MorningReminder"
+            identifire = "MorningTimer"
+        }else if type == "afternoon"{
+            content.threadIdentifier = "local-notifications-AfterNoonReminder"
+            identifire = "AfternoonTimer"
+        }else if type == "30Days"{
+            content.threadIdentifier = "local-notifications-Challenge30DaysReminder"
+            identifire = "ChallengeReminder"
+        }else{
+            content.threadIdentifier = "local-notifications-Challenge21DaysReminder"
+            identifire = "ChallengeReminder"
+        }
+        
+        
+        var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date)
+        toDateComponents.second = 0
+        let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: identifire, content: content, trigger: notificationTrigger)
+        //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+        
+        center.add(request){ (error) in
+            if error == nil {
+                print("schedule push succeed")
             }
-            
-            // print(Int(Date().timeIntervalSince1970))
-            // print(timeStemp)
-            //let time =  timeStemp - Int(Date().timeIntervalSince1970)
-            // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: false)
-            if type == "morning"{
-                let toDateComponents = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
-                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                               
-                //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(time), repeats: true)
-                let request = UNNotificationRequest(identifier: "MorningTimer", content: content, trigger: notificationTrigger)
-                center.add(request){ (error) in
-                    if error == nil {
-                        print("schedule push succeed")
-                    }
-                }
-            }else if type == "afternoon"{
-                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date)
-                toDateComponents.second = 0
-                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                
-                let request = UNNotificationRequest(identifier: "AfternoonTimer", content: content, trigger: notificationTrigger)
-                //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
-                
-                center.add(request){ (error) in
-                    if error == nil {
-                        print("schedule push succeed")
-                    }
-                }
-            }else{
-                var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date)
-                toDateComponents.second = 0
-                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: toDateComponents, repeats: true)
-                
-                let request = UNNotificationRequest(identifier: "ChallengeReminder", content: content, trigger: notificationTrigger)
-                //notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
-                
-                center.add(request){ (error) in
-                    if error == nil {
-                        print("schedule push succeed")
-                    }
-                }
-            }
+        }
     }
     
     

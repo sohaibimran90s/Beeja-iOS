@@ -128,7 +128,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         
         //print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -155,7 +155,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
 
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -212,7 +212,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
     
     func logExperience() {
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             if WWMHelperClass.step_id == 12{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
                 self.navigationController?.pushViewController(vc, animated: true)

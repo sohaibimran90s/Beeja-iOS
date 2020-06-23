@@ -358,7 +358,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 }
                 
                 DispatchQueue.global(qos: .background).async {
-                    self.bannerAPI()
+                    self.bannerAPI(context1: "WWMWalkThoughVC")
                 }
                 //self.navigateToDashboard()
             }else {
@@ -380,18 +380,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
-       self.navigationController?.isNavigationBarHidden = false
-       if let tabController = self.tabBarController as? WWMTabBarVC {
-           tabController.selectedIndex = 2
-           for index in 0..<tabController.tabBar.items!.count {
-               let item = tabController.tabBar.items![index]
-               item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-               if index == 2 {
-                   item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-               }
-           }
-       }
-       self.navigationController?.popToRootViewController(animated: false)
+        self.navigationController?.isNavigationBarHidden = false
+        self.callHomeVC(index: 2)
     }
 
     
@@ -409,21 +399,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
 }
 
 extension WWMWalkThoghVC{
-    //banner api
-    func bannerAPI() {
-        
-        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreffrence.setBanners(value: result)
-                    //print(self.appPreffrence.getBanners().count)
-                }
-            }
-        }
-    }
-    
+   
     //21 days guided
     func getGuidedListAPI() {
         
@@ -671,7 +647,7 @@ extension WWMWalkThoghVC{
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URI_LEARN, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{
@@ -897,14 +873,23 @@ extension WWMWalkThoghVC{
                     }
                 }
                 
-                self.appPreference.set21ChallengeName(value: "")
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
-                self.navigateToDashboard()
+                
+                if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
+                    self.callHomeVC1()
+                }else{
+                   self.navigateToDashboard()
+                }
+                
                 return
             }
         }
         self.appPreference.set21ChallengeName(value: "30 Day Challenge")
         WWMHelperClass.hideLoaderAnimate(on: self.view)
-        self.navigateToDashboard()
+        if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
+            self.callHomeVC1()
+        }else{
+           self.navigateToDashboard()
+        }
     }
 }

@@ -243,7 +243,8 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                     //print("userProfile WWMWelcomeBackVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI()
+                        self.bannerAPI(context1: "WWMWelcomeBackVC")
+                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
@@ -296,20 +297,6 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
-        }
-    }
-
-    //bannerAPI
-    func bannerAPI() {
-        
-    let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-    WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMWelcomeBackVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [Any]{
-                    self.appPreffrence.setBanners(value: result)
-                }
-            }
         }
     }
 }

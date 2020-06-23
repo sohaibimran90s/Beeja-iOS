@@ -44,11 +44,13 @@ class WWMShareLoveVC: WWMBaseViewController {
         
         self.lblCopyCode.text = "Copy Code: \(self.appPreference.getInvitationCode())"
         
-        self.getInviteAcceptAPI()
+        self.getInviteAccept1API()
     }
     
     @IBAction func btnAlertCloseAction(_ sender: UIButton){
-        
+        self.navigationController?.navigationBar.isHidden = false
+        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnInviteFriendsAction(_ sender: UIButton){
@@ -75,12 +77,12 @@ class WWMShareLoveVC: WWMBaseViewController {
         self.present(activityViewController, animated: true, completion: nil)
     }
     
-    func getInviteAcceptAPI() {
+    func getInviteAccept1API() {
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         print("param... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URI_INVITEACCEPTUSERS, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_INVITEACCEPTUSERS, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             if let _ = result["success"] as? Bool {
                 self.data = result["result"] as? [String] ?? []

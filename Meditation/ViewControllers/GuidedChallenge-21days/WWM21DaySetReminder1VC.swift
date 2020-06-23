@@ -16,6 +16,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     @IBOutlet weak var hourBtn: UIButton!
     @IBOutlet weak var minBtn: UIButton!
     @IBOutlet weak var amPmBtn: UIButton!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblSubTitle: UILabel!
     
     var type: String = ""
     let dateFormatter = DateFormatter()
@@ -25,6 +27,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     var settingData = DBSettings()
     var flag = 0
     var defaultDate = ""
+    var isSetting = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +90,10 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         }
         
         if type == "21_days"{
+            self.lblSubTitle.text = "Set a notification for your 7 day sequence"
             self.dateToAddInCurrent()
+        }else{
+            self.lblSubTitle.text = "Set a notification for your 30 day sequence"
         }
     }
     
@@ -126,15 +132,24 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         }
         
         self.callPushNotification()
-        self.callHomeController()
+        if isSetting{
+            self.callHomeController(selectedIndex: 2)
+        }else{
+            self.callHomeController(selectedIndex: 4)
+        }
     }
     
     @IBAction func btnSkipClicked(_ sender: UIButton){
         self.appPreference.setReminder21DaysTime(value: "")
-        self.callHomeController()
+        
+        if isSetting{
+            self.callHomeController(selectedIndex: 2)
+        }else{
+            self.callHomeController(selectedIndex: 4)
+        }
     }
     
-    func callHomeController(){
+    func callHomeController(selectedIndex: Int){
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {

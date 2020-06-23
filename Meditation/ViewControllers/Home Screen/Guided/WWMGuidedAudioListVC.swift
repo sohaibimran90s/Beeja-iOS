@@ -14,7 +14,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     @IBOutlet weak var lblEmotionTitle: UILabel!
     @IBOutlet weak var audioCollectionView: UICollectionView!
-
+    
     var emotionData = WWMGuidedEmotionData()
     var cat_Id = "0"
     var cat_Name = ""
@@ -44,11 +44,14 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var max_limit = "97"
     var meditation_key = "practical"
     
+    var tap = UITapGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpNavigationBarForAudioGuided(title: self.type)
         self.lblEmotionTitle.text = emotionData.emotion_Name
+        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
         
         self.fetchGuidedAudioDataFromDB()
     }
@@ -64,7 +67,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.arrAudioList[indexPath.row]
-
+        
         cell.imgView.sd_setImage(with: URL.init(string: data.audio_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.audio_Name
         cell.lblDuration.text = "(\(self.secondsToMinutesSeconds(second: data.audio_Duration)))"
@@ -129,7 +132,7 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath)
             return headerView
         }
-
+        
         let footerView =
             collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath)
         
@@ -213,7 +216,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         SKPaymentQueue.default().add(self)
         
         self.getSubscriptionPlanId()
-        
+                
         alertUpgradePopupView.viewAnnually.isHidden = false
         alertUpgradePopupView.viewLifeTime.isHidden = true
         alertUpgradePopupView.viewMonthly.isHidden = true
@@ -232,8 +235,36 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         alertUpgradePopupView.btnRestore.addTarget(self, action: #selector(btnRestoreAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnContinue.addTarget(self, action: #selector(btnContinueAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        //redeem coupon
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+        alertUpgradePopupView.btnACoupon.addTarget(self, action: #selector(btnACouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
+
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
+    
+    @objc func btnACouponAction(_ sender: Any){
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = false
+        alertUpgradePopupView.viewACoupon.isHidden = true
+    }
+    
+    @objc func btnRCouponAction(_ sender: Any){
+        let obj = WWMUpgradeBeejaVC()
+        let redeemCode = "\(alertUpgradePopupView.textField1.text ?? "")\(alertUpgradePopupView.textField2.text ?? "")\(alertUpgradePopupView.textField3.text ?? "")\(alertUpgradePopupView.textField4.text ?? "")\(alertUpgradePopupView.textField5.text ?? "")\(alertUpgradePopupView.textField6.text ?? "")"
+
+        if redeemCode.count == 6{
+            obj.getRedeemCodeAPI(redeemCode: redeemCode)
+        }else{
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
+        }
+    }
+    
+    @objc func checkTapAction(sender : UITapGestureRecognizer) {
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+    }//redeem coupon end*
     
     @objc func btnAnnuallyAction(_ sender: Any){
         self.boolGetIndex = false
@@ -521,6 +552,24 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
+}
+
+extension WWMGuidedAudioListVC{
+
+    func getRedeemCodeAPI(redeemCode: String) {
+        
+        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
+        print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                self.callHomeVC(index: 2)
+            }else{
+                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
+            }
         }
     }
 }

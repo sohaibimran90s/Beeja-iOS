@@ -66,7 +66,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             self.btnBack.isHidden = true
         }
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             self.btnAskMeAgain.isHidden = true
         }
         
@@ -286,7 +286,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         var param: [String: Any] = [:]
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             param = [
                 "type":"learn",
                 "step_id": WWMHelperClass.step_id,
@@ -312,7 +312,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 ] as [String : Any]
         }else{
             param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id" : self.category_Id,
                 "emotion_id" : self.emotion_Id,
                 "audio_id" : self.audio_Id,
@@ -567,7 +567,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
             vc.type = self.type
             vc.prepTime = self.prepTime
@@ -584,7 +584,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }else{
 
             let param = [
-                "type": WWMHelperClass.selectedType,
+                "type": self.appPreffrence.getType(),
                 "category_id": self.category_Id,
                 "emotion_id": self.emotion_Id,
                 "audio_id": self.audio_Id,
@@ -646,7 +646,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func navigateToDashboard() {
         
-        if WWMHelperClass.selectedType == "learn"{
+        if self.appPreference.getType() == "learn"{
             if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
                 self.nextVC()
             }else{
@@ -668,20 +668,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             
         }else{
             self.navigationController?.isNavigationBarHidden = false
-            
-            if let tabController = self.tabBarController as? WWMTabBarVC {
-                tabController.selectedIndex = 4
-                for index in 0..<tabController.tabBar.items!.count {
-                    let item = tabController.tabBar.items![index]
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                    if index == 4 {
-                        item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                    }
-                }
-            }
-            self.navigationController?.popToRootViewController(animated: false)
+            self.callHomeVC(index: 4)
         }
-
     }
     
     @IBAction func btnNextAction(_ sender: Any) {

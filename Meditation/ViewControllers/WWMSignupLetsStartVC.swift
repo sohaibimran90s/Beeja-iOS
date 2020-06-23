@@ -56,7 +56,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "I_KNOW_HOW", itemName: "")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMeditationListVC") as! WWMMeditationListVC
         vc.type = "timer"
-        WWMHelperClass.selectedType = "timer"
+        self.appPreference.setType(value: "timer")
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func btnGuideAction(_ sender: UIButton) {
@@ -64,7 +64,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "GUIDE_ME", itemName: "")
 
         guided_type = ""
-        WWMHelperClass.selectedType = "guided"
+        self.appPreference.setType(value: "guided")
         self.meditationApi(type: "guided")
     }
     
@@ -73,7 +73,7 @@ class WWMSignupLetsStartVC: WWMBaseViewController {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "SPLASH_PAGE", itemId: "LIKE_TO_LEARN", itemName: "")
         guided_type = ""
-        WWMHelperClass.selectedType = "learn"
+        self.appPreference.setType(value: "learn")
         self.meditationApi(type: "learn")
     }
     
