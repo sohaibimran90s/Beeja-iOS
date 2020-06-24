@@ -281,6 +281,14 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
         alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnCross.addTarget(self, action: #selector(btnCrossAction(_:)), for: .touchUpInside)
         
+        //textfield delegate
+        alertUpgradePopupView.textField1.delegate = self
+        alertUpgradePopupView.textField2.delegate = self
+        alertUpgradePopupView.textField3.delegate = self
+        alertUpgradePopupView.textField4.delegate = self
+        alertUpgradePopupView.textField5.delegate = self
+        alertUpgradePopupView.textField6.delegate = self
+        
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
     
@@ -294,7 +302,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
         let redeemCode = "\(alertUpgradePopupView.textField1.text ?? "")\(alertUpgradePopupView.textField2.text ?? "")\(alertUpgradePopupView.textField3.text ?? "")\(alertUpgradePopupView.textField4.text ?? "")\(alertUpgradePopupView.textField5.text ?? "")\(alertUpgradePopupView.textField6.text ?? "")"
 
         if redeemCode.count == 6{
-            obj.getRedeemCodeAPI(redeemCode: redeemCode)
+            obj.getRedeemCodeAPI(redeemCode: redeemCode, type: "popUp", controller: self.alertUpgradePopupView)
         }else{
             WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
         }
@@ -588,5 +596,67 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
+    }
+}
+
+extension WWMSleepAudioVC: UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // On inputing value to textfield
+        if ((textField.text?.count)! < 1  && string.count > 0){
+            if(textField == alertUpgradePopupView.textField1)
+            {
+                alertUpgradePopupView.textField2.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField2)
+            {
+                alertUpgradePopupView.textField3.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField3)
+            {
+                alertUpgradePopupView.textField4.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField4)
+            {
+                alertUpgradePopupView.textField5.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField5)
+            {
+                alertUpgradePopupView.textField6.becomeFirstResponder()
+            }
+
+            textField.text = string
+            return false
+        }
+        else if ((textField.text?.count)! >= 1  && string.count == 0){
+            // on deleting value from Textfield
+            if(textField == alertUpgradePopupView.textField2)
+            {
+                alertUpgradePopupView.textField1.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField3)
+            {
+                alertUpgradePopupView.textField2.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField4)
+            {
+                alertUpgradePopupView.textField3.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField5)
+            {
+                alertUpgradePopupView.textField4.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField6)
+            {
+                alertUpgradePopupView.textField5.becomeFirstResponder()
+            }
+            textField.text = ""
+            return false
+        }
+        else if ((textField.text?.count)! >= 1  )
+        {
+            textField.text = string
+            return false
+        }
+        return true
     }
 }

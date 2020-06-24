@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMGuidedUpgradeBeejaPopUp: UIView {
+class WWMGuidedUpgradeBeejaPopUp: UIView, UITextFieldDelegate {
     @IBOutlet weak var viewLifeTime: UIView!
     @IBOutlet weak var viewAnnually: UIView!
     @IBOutlet weak var viewMonthly: UIView!
