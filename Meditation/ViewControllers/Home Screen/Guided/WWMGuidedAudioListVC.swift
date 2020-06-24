@@ -43,16 +43,12 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
-    
-    var tap = UITapGestureRecognizer()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpNavigationBarForAudioGuided(title: self.type)
         self.lblEmotionTitle.text = emotionData.emotion_Name
-        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
-        
         self.fetchGuidedAudioDataFromDB()
     }
     
@@ -234,13 +230,13 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         alertUpgradePopupView.btnLifeTime.addTarget(self, action: #selector(btnLifeTimeAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnRestore.addTarget(self, action: #selector(btnRestoreAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnContinue.addTarget(self, action: #selector(btnContinueAction(_:)), for: .touchUpInside)
-        alertUpgradePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         //redeem coupon
         alertUpgradePopupView.viewRedeemCoupon.isHidden = true
         alertUpgradePopupView.viewACoupon.isHidden = false
         alertUpgradePopupView.btnACoupon.addTarget(self, action: #selector(btnACouponAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnCross.addTarget(self, action: #selector(btnCrossAction(_:)), for: .touchUpInside)
 
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
@@ -261,7 +257,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         }
     }
     
-    @objc func checkTapAction(sender : UITapGestureRecognizer) {
+     @objc func btnCrossAction(_ sender: Any){
         alertUpgradePopupView.viewRedeemCoupon.isHidden = true
         alertUpgradePopupView.viewACoupon.isHidden = false
     }//redeem coupon end*
@@ -350,10 +346,6 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
             }
         }
-    }
-    
-    @objc func btnCloseAction(_ sender: Any){
-        
     }
     
     // MARK:- Get Product Data from Itunes

@@ -798,8 +798,37 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
         alertUpgradePopupView.btnRestore.addTarget(self, action: #selector(btnRestoreAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnContinue.addTarget(self, action: #selector(btnContinueAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        
+        //redeem coupon
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+        alertUpgradePopupView.btnACoupon.addTarget(self, action: #selector(btnACouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnCross.addTarget(self, action: #selector(btnCrossAction(_:)), for: .touchUpInside)
+        
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
+    
+    @objc func btnACouponAction(_ sender: Any){
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = false
+        alertUpgradePopupView.viewACoupon.isHidden = true
+    }
+    
+    @objc func btnRCouponAction(_ sender: Any){
+        let obj = WWMUpgradeBeejaVC()
+        let redeemCode = "\(alertUpgradePopupView.textField1.text ?? "")\(alertUpgradePopupView.textField2.text ?? "")\(alertUpgradePopupView.textField3.text ?? "")\(alertUpgradePopupView.textField4.text ?? "")\(alertUpgradePopupView.textField5.text ?? "")\(alertUpgradePopupView.textField6.text ?? "")"
+
+        if redeemCode.count == 6{
+            obj.getRedeemCodeAPI(redeemCode: redeemCode)
+        }else{
+            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
+        }
+    }
+    
+     @objc func btnCrossAction(_ sender: Any){
+        alertUpgradePopupView.viewRedeemCoupon.isHidden = true
+        alertUpgradePopupView.viewACoupon.isHidden = false
+    }//redeem coupon end*
     
     @objc func btnAnnuallyAction(_ sender: Any){
         self.boolGetIndex = false
