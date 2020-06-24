@@ -104,7 +104,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         let redeemCode = "\(self.textField1.text ?? "")\(self.textField2.text ?? "")\(self.textField3.text ?? "")\(self.textField4.text ?? "")\(self.textField5.text ?? "")\(self.textField6.text ?? "")"
 
         if redeemCode.count == 6{
-            self.getRedeemCodeAPI(redeemCode: redeemCode)
+            self.getRedeemCodeAPI(redeemCode: redeemCode, type: "vc", controller: WWMGuidedUpgradeBeejaPopUp())
         }else{
             WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
         }
@@ -330,15 +330,20 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
 
 extension WWMUpgradeBeejaVC{
     
-    func getRedeemCodeAPI(redeemCode: String) {
+    func getRedeemCodeAPI(redeemCode: String, type: String, controller: WWMGuidedUpgradeBeejaPopUp){
         
         let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
         print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            if let _ = result["success"] as? Bool {
-                self.callHomeVC(index: 2)
+            if result["success"] as? Bool ?? false {
+                if type == "vc"{
+                    self.callHomeVC1()
+                }else{
+                    controller.removeFromSuperview()
+                    self.callHomeVC(index: 2)
+                }
             }else{
                 WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
             }
@@ -422,5 +427,67 @@ extension WWMUpgradeBeejaVC{
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
+    }
+}
+
+extension WWMUpgradeBeejaVC: UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // On inputing value to textfield
+        if ((textField.text?.count)! < 1  && string.count > 0){
+            if(textField == textField1)
+            {
+                textField2.becomeFirstResponder()
+            }
+            if(textField == textField2)
+            {
+                textField3.becomeFirstResponder()
+            }
+            if(textField == textField3)
+            {
+                textField4.becomeFirstResponder()
+            }
+            if(textField == textField4)
+            {
+                textField5.becomeFirstResponder()
+            }
+            if(textField == textField5)
+            {
+                textField6.becomeFirstResponder()
+            }
+
+            textField.text = string
+            return false
+        }
+        else if ((textField.text?.count)! >= 1  && string.count == 0){
+            // on deleting value from Textfield
+            if(textField == textField2)
+            {
+                textField1.becomeFirstResponder()
+            }
+            if(textField == textField3)
+            {
+                textField2.becomeFirstResponder()
+            }
+            if(textField == textField4)
+            {
+                textField3.becomeFirstResponder()
+            }
+            if(textField == textField5)
+            {
+                textField4.becomeFirstResponder()
+            }
+            if(textField == textField6)
+            {
+                textField5.becomeFirstResponder()
+            }
+            textField.text = ""
+            return false
+        }
+        else if ((textField.text?.count)! >= 1  )
+        {
+            textField.text = string
+            return false
+        }
+        return true
     }
 }

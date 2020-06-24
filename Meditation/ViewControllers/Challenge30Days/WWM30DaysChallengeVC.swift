@@ -12,6 +12,7 @@ import XLPagerTabStrip
 class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHC: NSLayoutConstraint!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblReminder: UILabel!
     @IBOutlet weak var lblMeditationCount: UILabel!
@@ -101,6 +102,15 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.lblLine.isHidden = true
             self.btnStartChallenge.isHidden = true
             self.lblBelowTitle.text = ""
+        }
+        
+        print(self.viewCollectionViewHC.constant)
+        if WWMHelperClass.hasTopNotch{
+            self.collectionViewHC.constant = 290
+            self.viewCollectionViewHC.constant = self.viewCollectionViewHC.constant + 30
+            self.viewMeditationDaysHC.constant = self.viewMeditationDaysHC.constant + 30
+        }else{
+            self.collectionViewHC.constant = 260
         }
         
         let intro_completed = self.appPreference.get30IntroCompleted()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WWMGuidedUpgradeBeejaPopUp: UIView {
+class WWMGuidedUpgradeBeejaPopUp: UIView, UITextFieldDelegate {
     @IBOutlet weak var viewLifeTime: UIView!
     @IBOutlet weak var viewAnnually: UIView!
     @IBOutlet weak var viewMonthly: UIView!
@@ -23,9 +23,9 @@ class WWMGuidedUpgradeBeejaPopUp: UIView {
     //aply coupon outlets
     @IBOutlet weak var viewACoupon: UIView!
     @IBOutlet weak var viewRedeemCoupon: UIView!
-    @IBOutlet weak var viewACouponHC: NSLayoutConstraint!
     @IBOutlet weak var btnACoupon: UIButton!
     @IBOutlet weak var btnRCoupon: UIButton!
+    @IBOutlet weak var btnCross: UIButton!
     @IBOutlet weak var textField1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var textField3: UITextField!

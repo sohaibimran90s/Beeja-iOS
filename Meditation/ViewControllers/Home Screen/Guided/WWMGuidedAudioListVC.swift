@@ -43,16 +43,12 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
-    
-    var tap = UITapGestureRecognizer()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setUpNavigationBarForAudioGuided(title: self.type)
         self.lblEmotionTitle.text = emotionData.emotion_Name
-        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
-        
         self.fetchGuidedAudioDataFromDB()
     }
     
@@ -234,13 +230,21 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         alertUpgradePopupView.btnLifeTime.addTarget(self, action: #selector(btnLifeTimeAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnRestore.addTarget(self, action: #selector(btnRestoreAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnContinue.addTarget(self, action: #selector(btnContinueAction(_:)), for: .touchUpInside)
-        alertUpgradePopupView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         //redeem coupon
         alertUpgradePopupView.viewRedeemCoupon.isHidden = true
         alertUpgradePopupView.viewACoupon.isHidden = false
         alertUpgradePopupView.btnACoupon.addTarget(self, action: #selector(btnACouponAction(_:)), for: .touchUpInside)
         alertUpgradePopupView.btnRCoupon.addTarget(self, action: #selector(btnRCouponAction(_:)), for: .touchUpInside)
+        alertUpgradePopupView.btnCross.addTarget(self, action: #selector(btnCrossAction(_:)), for: .touchUpInside)
+        
+        //textfield delegate
+        alertUpgradePopupView.textField1.delegate = self
+        alertUpgradePopupView.textField2.delegate = self
+        alertUpgradePopupView.textField3.delegate = self
+        alertUpgradePopupView.textField4.delegate = self
+        alertUpgradePopupView.textField5.delegate = self
+        alertUpgradePopupView.textField6.delegate = self
 
         window.rootViewController?.view.addSubview(alertUpgradePopupView)
     }
@@ -255,13 +259,17 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         let redeemCode = "\(alertUpgradePopupView.textField1.text ?? "")\(alertUpgradePopupView.textField2.text ?? "")\(alertUpgradePopupView.textField3.text ?? "")\(alertUpgradePopupView.textField4.text ?? "")\(alertUpgradePopupView.textField5.text ?? "")\(alertUpgradePopupView.textField6.text ?? "")"
 
         if redeemCode.count == 6{
-            obj.getRedeemCodeAPI(redeemCode: redeemCode)
+            obj.getRedeemCodeAPI(redeemCode: redeemCode, type: "popUp", controller: self.alertUpgradePopupView)
+//            if status{
+//                alertUpgradePopupView.removeFromSuperview()
+//                self.callHomeVC(index: 2)
+//            }
         }else{
             WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
         }
     }
     
-    @objc func checkTapAction(sender : UITapGestureRecognizer) {
+     @objc func btnCrossAction(_ sender: Any){
         alertUpgradePopupView.viewRedeemCoupon.isHidden = true
         alertUpgradePopupView.viewACoupon.isHidden = false
     }//redeem coupon end*
@@ -350,10 +358,6 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
             }
         }
-    }
-    
-    @objc func btnCloseAction(_ sender: Any){
-        
     }
     
     // MARK:- Get Product Data from Itunes
@@ -556,21 +560,68 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
     }
 }
 
-extension WWMGuidedAudioListVC{
-
-    func getRedeemCodeAPI(redeemCode: String) {
-        
-        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
-        print("param... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            
-            if let _ = result["success"] as? Bool {
-                self.callHomeVC(index: 2)
-            }else{
-                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
+extension WWMGuidedAudioListVC: UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // On inputing value to textfield
+        if ((textField.text?.count)! < 1  && string.count > 0){
+            if(textField == alertUpgradePopupView.textField1)
+            {
+                alertUpgradePopupView.textField2.becomeFirstResponder()
             }
+            if(textField == alertUpgradePopupView.textField2)
+            {
+                alertUpgradePopupView.textField3.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField3)
+            {
+                alertUpgradePopupView.textField4.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField4)
+            {
+                alertUpgradePopupView.textField5.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField5)
+            {
+                alertUpgradePopupView.textField6.becomeFirstResponder()
+            }
+
+            textField.text = string
+            return false
         }
+        else if ((textField.text?.count)! >= 1  && string.count == 0){
+            // on deleting value from Textfield
+            if(textField == alertUpgradePopupView.textField2)
+            {
+                alertUpgradePopupView.textField1.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField3)
+            {
+                alertUpgradePopupView.textField2.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField4)
+            {
+                alertUpgradePopupView.textField3.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField5)
+            {
+                alertUpgradePopupView.textField4.becomeFirstResponder()
+            }
+            if(textField == alertUpgradePopupView.textField6)
+            {
+                alertUpgradePopupView.textField5.becomeFirstResponder()
+            }
+            textField.text = ""
+            return false
+        }
+        else if ((textField.text?.count)! >= 1  )
+        {
+            textField.text = string
+            return false
+        }
+        return true
     }
 }
+
+
+
 
