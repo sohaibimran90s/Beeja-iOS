@@ -671,7 +671,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
-    func pushViewController(table_cell_tag: Int, collection_cell_tag: Int){
+    func pushViewController(table_cell_tag: Int, collection_cell_tag: Int) {
         
         print(self.cat_name)
         if reachable.isConnectedToNetwork() {
@@ -694,7 +694,10 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 vc.max_limit = self.max_limit
                 vc.meditation_key = self.meditation_key
                 
-                self.navigationController?.pushViewController(vc, animated: true)
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
                 
                 return
             }else{
@@ -742,7 +745,10 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 vc.emotion_Id = "\(data.emotion_Id)"
                 vc.emotion_Name = data.emotion_Name
                 vc.seconds = data.audio_list[collection_cell_tag].audio_Duration
-                self.navigationController?.pushViewController(vc, animated: true)
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
