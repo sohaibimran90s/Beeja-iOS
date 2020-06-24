@@ -33,12 +33,20 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     //banner outlet
-    @IBOutlet weak var bannerHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var bannerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBannersHC: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBannersTC: NSLayoutConstraint!
     @IBOutlet weak var tableViewBanners: UITableView!
-    var bannerDataArray: [[String: Any]] = []
+    @IBOutlet weak var tableViewCB: UITableView!
+    @IBOutlet weak var tableViewContinueTC: NSLayoutConstraint!
+    @IBOutlet weak var tableViewContinueHC: NSLayoutConstraint!
+    @IBOutlet weak var viewSwitchTC: UIView!
+    
+    var bannerLaunchData: [[String: Any]] = []
+    var bannerProgressData: [[String: Any]] = []
     var bannerDescBool = false
+    var bannerDescBool1 = false
     var bannerSelectdIndex = 0
+    var bannerSelectdIndex1 = 0
     
     var player: AVPlayer?
     let playerController = AVPlayerViewController()
@@ -72,14 +80,9 @@ class WWMHomeTabVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
-//        Crashlytics.crashlytics().setUserID("userId Ehsan Test")
-//        fatalError()
-//        Crashlytics.sharedInstance().crash()
         self.podData = []
         self.podcastData()
         
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.locale = Locale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         
@@ -89,8 +92,14 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.currentDateString = dateFormatter.string(from: Date())
         self.currentDate = dateFormatter.date(from: currentDateString)!
-
-
+        self.setupView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationMeditationHistory(notification:)), name: Notification.Name("notificationMeditationHistory"), object: nil)
+        
+        self.banner1API()
+    }
+    
+    func setupView(){
         self.backViewTableView.layer.cornerRadius = 8
         self.btnBuyNow.layer.borderWidth = 2
         self.btnBuyNow.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
@@ -101,8 +110,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         let attributeString = NSMutableAttributedString(string: KSHOWALL,
                                                         attributes: attributes)
         btnPodcastShowAll.setAttributedTitle(attributeString, for: .normal)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationMeditationHistory(notification:)), name: Notification.Name("notificationMeditationHistory"), object: nil)
     }
     
     @objc func notificationMeditationHistory(notification: Notification) {
@@ -113,7 +120,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillAppear(true)
         
         //UIApplication.shared.isStatusBarHidden = true
-        self.banner1API()
         timerCount = Int.random(in: 0...4)
         WWMHelperClass.timerCount = timerCount
         //print("timercount... \(timerCount)")
@@ -290,16 +296,19 @@ class WWMHomeTabVC: WWMBaseViewController {
     //banner api
     func banner1API() {
         
-        self.bannerTopConstraint.constant = 0
-        self.bannerHeightConstraint.constant = 1
+        self.tableViewBannersTC.constant = 0
+        self.tableViewBannersHC.constant = 1
+        self.tableViewBanners.isHidden = true
+        self.tableViewContinueTC.constant = 0
+        self.tableViewContinueHC.constant = 1
+        self.tableViewCB.isHidden = true
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 //print("result")
-                if let result = result["result"] as? [Any]{
+                if let result = result["result"] as? [String: Any]{
                     self.appPreffrence.setBanners(value: result)
-                    //print(self.appPreffrence.getBanners().count)
                     self.bannerData()
                 }
             }
@@ -312,26 +321,48 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func bannerData(){
-        self.bannerDataArray.removeAll()
-        if self.appPreffrence.getBanners().count > 0{
-            self.bannerTopConstraint.constant = 22
-            for data in self.appPreffrence.getBanners() {
+        self.bannerLaunchData.removeAll()
+        if let launchData = self.appPreffrence.getBanners()["launch"] as? [[String: Any]]{
+            print(launchData)
+            if launchData.count > 0{
+                self.tableViewBannersTC.constant = 22
+                self.tableViewBannersHC.constant = 1
+                self.tableViewBanners.isHidden = false
                 
-                if let dict = data as? [String: Any]{
-                    if dict["description"] as? String != ""{
+                for data in launchData {
+                    if data["description"] as? String != ""{
                         self.bannerDescBool = true
                     }else{
                         self.bannerDescBool = false
                     }
-                    self.bannerDataArray.append(dict)
-
+                    self.bannerLaunchData.append(data)
                 }
-                
-                //print("bannerDataArray \(bannerDataArray.count)")
                 
                 self.tableViewBanners.delegate = self
                 self.tableViewBanners.dataSource = self
                 self.tableViewBanners.reloadData()
+            }
+        }
+        
+        if let progressData = self.appPreffrence.getBanners()["in_progress"] as? [[String: Any]]{
+            print(progressData)
+            if progressData.count > 0{
+                self.tableViewContinueTC.constant = 10
+                self.tableViewContinueHC.constant = 1
+                self.tableViewCB.isHidden = false
+                
+                for data in progressData {
+                    if data["description"] as? String != ""{
+                        self.bannerDescBool1 = true
+                    }else{
+                        self.bannerDescBool1 = false
+                    }
+                    self.bannerProgressData.append(data)
+                }
+                
+                self.tableViewCB.delegate = self
+                self.tableViewCB.dataSource = self
+                self.tableViewCB.reloadData()
             }
         }
     }
@@ -693,10 +724,17 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tableViewBanners{
             //print(self.bannerDataArray.count)
-            if self.bannerDataArray.count > 1{
-                return self.bannerDataArray.count + 1
+            if self.bannerLaunchData.count > 1{
+                return self.bannerLaunchData.count + 1
             }else{
-                return self.bannerDataArray.count
+                return self.bannerLaunchData.count
+            }
+        }else if tableView == tableViewCB{
+            //print(self.bannerDataArray.count)
+            if self.bannerProgressData.count > 1{
+                return self.bannerProgressData.count + 1
+            }else{
+                return self.bannerProgressData.count
             }
         }else{
            return self.podData.count - 1
@@ -709,16 +747,17 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             
             //des: We've launched a new challenge to take your practise to the next level. Get set go!
             
-            if self.bannerDataArray.count == 1{
-                cell.lblChallTitle.text = (self.bannerDataArray[indexPath.row]["name"] as? String)?.capitalized
-                cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row]["title"] as? String
-                cell.lblChallDes.text = self.bannerDataArray[indexPath.row]["description"] as? String
-                cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+            if self.bannerLaunchData.count == 1{
+                cell.lblChallTitle.text = (self.bannerLaunchData[indexPath.row]["name"] as? String)?.capitalized
+                cell.lblChallSubTitle.text = self.bannerLaunchData[indexPath.row]["title"] as? String
+                cell.lblChallDes.text = "We've launched a new challenge to take your practice to next level. Get set go!"
+                    //self.bannerLaunchData[indexPath.row]["description"] as? String
+                cell.imgView.sd_setImage(with: URL(string: self.bannerLaunchData[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
                 //bannerDescBool false means doesnt contain description
                 if !self.bannerDescBool{
-                    self.bannerHeightConstraint.constant = 84 * 1
+                    self.tableViewBannersHC.constant = 84 * 1
                 }else{
-                    self.bannerHeightConstraint.constant = 126 * 1
+                    self.tableViewBannersHC.constant = 126 * 1
                 }
             }else{
                 if indexPath.row == 0{
@@ -731,10 +770,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgHeightConstraint.constant = 0
                     cell.stackViewLeadingConstraint.constant = 0
                 }else{
-                    cell.lblChallTitle.text = (self.bannerDataArray[indexPath.row - 1]["name"] as? String)?.capitalized
-                    cell.lblChallSubTitle.text = self.bannerDataArray[indexPath.row - 1]["title"] as? String
-                    cell.lblChallDes.text = self.bannerDataArray[indexPath.row - 1]["description"] as? String
-                    cell.imgView.sd_setImage(with: URL(string: self.bannerDataArray[indexPath.row - 1]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+                    cell.lblChallTitle.text = (self.bannerLaunchData[indexPath.row - 1]["name"] as? String)?.capitalized
+                    cell.lblChallSubTitle.text = self.bannerLaunchData[indexPath.row - 1]["title"] as? String
+                    cell.lblChallDes.text = self.bannerLaunchData[indexPath.row - 1]["description"] as? String
+                    cell.imgView.sd_setImage(with: URL(string: self.bannerLaunchData[indexPath.row - 1]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
                     
                     cell.lblChallTitle.textColor = UIColor(red: 240/255, green: 163/255, blue: 103/255, alpha: 1.0)
                     cell.imgWidthConstraint.constant = 40
@@ -743,10 +782,61 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 }
                 
                 if self.bannerSelectdIndex == 0{
-                    self.bannerHeightConstraint.constant = 84 * 1
+                    self.tableViewBannersHC.constant = 84 * 1
                     cell.imgArrow.image = UIImage(named: "downArrow")
                 }else{
-                    self.bannerHeightConstraint.constant = 84 * 3
+                    self.tableViewBannersHC.constant = 84 * 3
+                    if indexPath.row == 0{
+                        cell.imgArrow.image = UIImage(named: "upArrow")
+                    }else{
+                        cell.imgArrow.image = UIImage(named: "rightArrow_Icon")
+                    }
+                }
+            }
+            
+            return cell
+        }else if tableView == tableViewCB{
+            
+            let cell = self.tableViewBanners.dequeueReusableCell(withIdentifier: "WWMBannerTVC") as! WWMBannerTVC
+            
+            if self.bannerProgressData.count == 1{
+                cell.lblChallTitle.text = (self.bannerProgressData[indexPath.row]["name"] as? String)?.capitalized
+                cell.lblChallSubTitle.text = self.bannerProgressData[indexPath.row]["title"] as? String
+                cell.lblChallDes.text = self.bannerProgressData[indexPath.row]["description"] as? String
+                cell.imgView.sd_setImage(with: URL(string: self.bannerProgressData[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+                //bannerDescBool1 false means doesnt contain description
+                if !self.bannerDescBool1{
+                    self.tableViewBannersHC.constant = 84 * 1
+                }else{
+                    self.tableViewBannersHC.constant = 126 * 1
+                }
+            }else{
+                if indexPath.row == 0{
+                    cell.lblChallTitle.text = "2 Challenges: In-Progress"
+                    cell.lblChallSubTitle.text = "Tap to view details"
+                    cell.lblChallDes.text = ""
+                    
+                    cell.lblChallTitle.textColor = UIColor.white
+                    cell.imgWidthConstraint.constant = 0
+                    cell.imgHeightConstraint.constant = 0
+                    cell.stackViewLeadingConstraint.constant = 0
+                }else{
+                    cell.lblChallTitle.text = (self.bannerProgressData[indexPath.row - 1]["name"] as? String)?.capitalized
+                    cell.lblChallSubTitle.text = self.bannerProgressData[indexPath.row - 1]["title"] as? String
+                    cell.lblChallDes.text = self.bannerProgressData[indexPath.row - 1]["description"] as? String
+                    cell.imgView.sd_setImage(with: URL(string: self.bannerProgressData[indexPath.row - 1]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
+                    
+                    cell.lblChallTitle.textColor = UIColor(red: 240/255, green: 163/255, blue: 103/255, alpha: 1.0)
+                    cell.imgWidthConstraint.constant = 40
+                    cell.imgHeightConstraint.constant = 40
+                    cell.stackViewLeadingConstraint.constant = 16
+                }
+                
+                if self.bannerSelectdIndex1 == 0{
+                    self.tableViewBannersHC.constant = 84 * 1
+                    cell.imgArrow.image = UIImage(named: "downArrow")
+                }else{
+                    self.tableViewBannersHC.constant = 84 * 3
                     if indexPath.row == 0{
                         cell.imgArrow.image = UIImage(named: "upArrow")
                     }else{
@@ -781,24 +871,40 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         //reverse it when array comes from background
-        if self.bannerDataArray.count == 1{
-            if !self.bannerDescBool{
-                return 84
+        if tableView == self.tableViewBanners{
+            if self.bannerLaunchData.count > 1{
+                if !self.bannerDescBool{
+                    return 84
+                }else{
+                    return 126
+                }
+                
             }else{
-                return 126
+                return 84
             }
-            
-        }else{
-            return 84
         }
+        
+        if tableView == self.tableViewCB{
+            if self.bannerProgressData.count > 1{
+                if !self.bannerDescBool1{
+                    return 84
+                }else{
+                    return 126
+                }
+                
+            }else{
+                return 84
+            }
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             if tableView == self.tableViewBanners{
                 
-                if self.bannerDataArray.count == 1{
-                    self.bannerClicked(guided_type: self.bannerDataArray[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerDataArray[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerDataArray[indexPath.row]["emotion_id"] as? Int ?? 0)")
+                if self.bannerLaunchData.count == 1{
+                    self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)")
                 }else{
                     
                     if indexPath.row == 0{
@@ -810,7 +916,25 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewBanners.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerDataArray[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerDataArray[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerDataArray[indexPath.row - 1]["emotion_id"] as? Int ?? 0)")
+                        self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)")
+                    }
+                }
+            }else if tableView == self.tableViewCB{
+                
+                if self.bannerProgressData.count == 1{
+                    self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row]["emotion_id"] as? Int ?? 0)")
+                }else{
+                    
+                    if indexPath.row == 0{
+                        if self.bannerSelectdIndex1 == 0{
+                            self.bannerSelectdIndex1 = 1
+                        }else{
+                            self.bannerSelectdIndex1 = 0
+                        }
+                        self.tableViewBanners.reloadData()
+                    }else{
+                        
+                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)")
                     }
                 }
             }else{

@@ -314,7 +314,7 @@ extension WWMBaseViewController{
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: context1, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 //print("result")
-                if let result = result["result"] as? [Any]{
+                if let result = result["result"] as? [String: Any]{
                     self.appPreference.setBanners(value: result)
                 }
             }

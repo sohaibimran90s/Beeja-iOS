@@ -316,7 +316,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let _ = result["success"] as? Bool {
                 //print("result")
-                if let result = result["result"] as? [Any]{
+                if let result = result["result"] as? [String: Any]{
                     self.appPreffrence.setBanners(value: result)
                 }
             }
