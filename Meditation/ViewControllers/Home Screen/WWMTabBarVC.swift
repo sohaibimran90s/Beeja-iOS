@@ -94,7 +94,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
             self.meditationlistAPI()
-            self.banner1API()
         }
         
         self.delegate = self
@@ -308,19 +307,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         self.setupTabBarSeparators()
 
-    }
-
-    //bannerAPI
-    func banner1API() {
-        let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [String: Any]{
-                    self.appPreffrence.setBanners(value: result)
-                }
-            }
-        }
     }
     
     //meditationAPI

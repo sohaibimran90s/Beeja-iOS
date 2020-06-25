@@ -236,7 +236,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                     
                     //print("userProfile WWMLoginWithEmailVC... \(userProfile)")
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI(context1: "WWMLoginWithEmailVC")
                         self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     
@@ -409,9 +408,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     //print("userProfile WWMLoginVC... \(userProfile)")
                     
-                    DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI(context1: "WWMLoginWithEmailVC")
-                    }
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")

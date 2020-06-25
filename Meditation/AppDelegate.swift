@@ -1113,6 +1113,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         var str = KGOODMORNING
         if type == "challenge21days"{
             str = KCHALLENGEREMINDER
+        }else if type == "30Days"{
+            str = "It’s time to start 30-Days challenge"
         }else{
             if arrTemp?.count == 2 {
                 let hours = Int(arrTemp?[0] ?? "0") ?? 0

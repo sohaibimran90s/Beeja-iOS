@@ -243,7 +243,6 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                     //print("userProfile WWMWelcomeBackVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI(context1: "WWMWelcomeBackVC")
                         self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     

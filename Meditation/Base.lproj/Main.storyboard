@@ -212,7 +212,7 @@
                                                     <fragment content="Terms of Use">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                            <font key="NSFont" metaFont="menu" size="14"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -238,7 +238,7 @@
                                                     <fragment content="Privacy Policy">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                            <font key="NSFont" metaFont="menu" size="14"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -6051,6 +6051,7 @@
                                                             <outlet property="imgViewTitle" destination="lDv-Oe-7P9" id="IXg-ip-Irz"/>
                                                             <outlet property="imgViewTitle1" destination="1V7-7i-gsz" id="nAq-Fp-Sup"/>
                                                             <outlet property="imgViewTitle1_" destination="SDo-j8-noM" id="dQV-Ne-0Oz"/>
+                                                            <outlet property="lblDate" destination="MY2-10-ajX" id="Lwp-nN-MES"/>
                                                             <outlet property="lblTitle" destination="yQr-6X-cqC" id="mov-G0-GE3"/>
                                                             <outlet property="lblTitle1" destination="eSI-Yo-gz4" id="gGw-RH-RgG"/>
                                                             <outlet property="lblTitle1_" destination="fHR-1X-4gD" id="D0v-RL-V3j"/>
@@ -6159,6 +6160,7 @@
                                                             <outlet property="imgViewBack1" destination="gUu-EC-0bn" id="LD3-6m-3nY"/>
                                                             <outlet property="imgViewTitle" destination="ygU-Nf-rY2" id="ZVH-8m-6E7"/>
                                                             <outlet property="imgViewTitle1" destination="34H-PP-u79" id="5pf-ft-P4Y"/>
+                                                            <outlet property="lblDate" destination="Yio-JI-KvP" id="Omy-lC-0wa"/>
                                                             <outlet property="lblTitle" destination="w99-OA-rgx" id="teE-ap-Zw8"/>
                                                             <outlet property="lblTitle1" destination="jk6-LT-I2r" id="5on-ZD-Sjw"/>
                                                         </connections>
@@ -14097,6 +14099,8 @@
                         <outlet property="btnPlayVideo" destination="CwN-Bf-X8R" id="97J-zF-URh"/>
                         <outlet property="btnPodcastShowAll" destination="2i8-2b-4ri" id="4gn-u8-j4G"/>
                         <outlet property="collectionView" destination="eWT-Qb-yz7" id="tfF-72-E4J"/>
+                        <outlet property="imgBackTCB" destination="3jw-Yd-5vp" id="wtD-tZ-cnI"/>
+                        <outlet property="imgBackTLB" destination="L3k-Re-7za" id="yJF-Sg-gP9"/>
                         <outlet property="imgGiftIcon" destination="9aR-gL-i6P" id="cqy-0Y-xNv"/>
                         <outlet property="imgPlayIcon" destination="imt-Xk-MZZ" id="5jk-Ah-8VQ"/>
                         <outlet property="introView" destination="Ew8-5c-Oq0" id="Fxb-S2-TVa"/>

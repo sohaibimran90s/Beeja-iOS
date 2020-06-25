@@ -44,6 +44,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     
     var challengePopupView = WWMAlertController()
     var challenge_type = ""
+    var vc = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -206,25 +207,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "30days"{
             videoURL = self.appPreference.get30DaysURL()
-            
-            
-            //we to remove it once assests upload
-            guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else {
-                debugPrint("video.mp4 not found")
-                return
-            }
-            
-            player1 = AVPlayer(url: URL(fileURLWithPath: path))
-            player1?.actionAtItemEnd = AVPlayer.ActionAtItemEnd.none;
-            self.playerLayer = AVPlayerLayer(player: player1)
-            playerLayer.frame = self.view.frame
-            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
-            self.viewVideo.layer.addSublayer(playerLayer)
-            player1?.seek(to: CMTime.zero)
-            
-            player1?.play()
-            self.videoCompleted = 1
-            return//*end
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
@@ -257,11 +239,15 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.timer.invalidate()
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
-            self.navigateToDashboard()
+            self.callHomeVC(index: 2)
         }else if (value == "21_days" || value == "30days") {
             if challenge_type == "30days"{
-                self.appPreference.set21ChallengeName(value: "30 Day Challenge")
-                self.callHomeVC1()
+                if vc == "HomeTabVC"{
+                    self.callHomeVC(index: 0)
+                }else{
+                    self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                    self.callHomeVC1()
+                }
             }else{
                 self.navigationController?.popViewController(animated: false)
             }
@@ -334,8 +320,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any){
+        self.callHomeVC(index: 2)
         self.challengePopupView.removeFromSuperview()
-        self.navigateToDashboard()
     }
     
     func challengeIntroVideoCompleted() {
@@ -357,15 +343,10 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 //print("success... \(result)")
                 ///WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if self.challenge_type == ""{
-                   self.getGuidedListAPI()
+                    self.getGuidedListAPI()
                 }else{
                     self.getLearnAPI()
                 }
-                
-                DispatchQueue.global(qos: .background).async {
-                    self.bannerAPI(context1: "WWMWalkThoughVC")
-                }
-                //self.navigateToDashboard()
             }else {
                 
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -382,13 +363,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             //WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-    
-    func navigateToDashboard() {
-        
-        self.navigationController?.isNavigationBarHidden = false
-        self.callHomeVC(index: 2)
-    }
-
     
     //App enter in forground.
     @objc func applicationWillEnterForeground(_ notification: Notification) {
@@ -884,7 +858,7 @@ extension WWMWalkThoghVC{
                     self.appPreference.set21ChallengeName(value: "30 Day Challenge")
                     self.callHomeVC1()
                 }else{
-                   self.navigateToDashboard()
+                   self.callHomeVC(index: 2)
                 }
                 
                 return
@@ -895,7 +869,7 @@ extension WWMWalkThoghVC{
         if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
             self.callHomeVC1()
         }else{
-           self.navigateToDashboard()
+           self.callHomeVC(index: 2)
         }
     }
 }
