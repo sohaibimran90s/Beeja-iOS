@@ -22,6 +22,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBOutlet weak var lblChallTypeSpiritual: UILabel!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblPracticalCount: UILabel!
+    @IBOutlet weak var lblSpiritualCount: UILabel!
     
     var delegate: WWMGuidedDashboardDelegate?
     var check7Days = false
@@ -110,6 +112,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         self.lblPracticalSessionCount.isHidden = false
                         self.lblPracticalSessionCount.text = "\(complete_count ?? "0")"
+                        lblPracticalCount.text = "\(complete_count ?? "0") days done, you’re doing great!"
                     }
                 }
                 if (dict as AnyObject).meditation_type == "spiritual"{
@@ -118,6 +121,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         self.lblSpiritualSessionCount.isHidden = false
                         self.lblSpiritualSessionCount.text = "\(complete_count ?? "0")"
+                        lblSpiritualCount.text = "\(complete_count ?? "0") days done, you’re doing great!"
                     }
                 }
             }
