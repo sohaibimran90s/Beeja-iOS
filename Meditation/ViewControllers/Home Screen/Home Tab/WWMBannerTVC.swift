@@ -13,6 +13,7 @@ class WWMBannerTVC: UITableViewCell {
     @IBOutlet weak var lblChallTitle: UILabel!
     @IBOutlet weak var lblChallSubTitle: UILabel!
     @IBOutlet weak var lblChallDes: UILabel!
+    @IBOutlet weak var lblLine: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var imgArrow: UIImageView!
     @IBOutlet weak var imgHeightConstraint: NSLayoutConstraint!
