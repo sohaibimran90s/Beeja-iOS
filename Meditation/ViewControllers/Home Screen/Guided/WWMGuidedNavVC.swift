@@ -256,7 +256,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 let guidedEmotionsDataDB = WWMHelperClass.fetchGuidedFilterEmotionsDB(guided_id: (dict as AnyObject).guided_id ?? "0", dbName: "DBGuidedEmotionsData", name: "guided_id")
                 //print("guidedEmotionsDataDB count... \(guidedEmotionsDataDB.count)")
                 
-                for dict1 in guidedEmotionsDataDB{
+                for dict1 in guidedEmotionsDataDB {
                     
                     //print("meditation_type... \((dict as AnyObject).meditation_type) intro_completed... \((dict1 as AnyObject).intro_completed) guided_name... \((dict1 as AnyObject).guided_name)")
                     
@@ -311,6 +311,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["emotion_list"] = jsonEmotions
                 jsonEmotions.removeAll()
                 let guidedData = WWMGuidedData.init(json: jsonString)
+                print("PT - \(guidedData.cat_Name) - \(guidedData.cat_Id)")
                 self.arrGuidedList.append(guidedData)
             }
             
@@ -318,6 +319,9 @@ class WWMGuidedNavVC: WWMBaseViewController {
             for view in self.containerView.subviews{
                 view.removeFromSuperview()
             }
+            
+            //re-ordering the data
+            arrGuidedList = arrGuidedList.sorted(by: { $0.cat_Id < $1.cat_Id })
             
             WWMHelperClass.challenge7DayCount = self.challenge7DayCount
             //print("self.typeTitle+++ \(self.typeTitle)")
