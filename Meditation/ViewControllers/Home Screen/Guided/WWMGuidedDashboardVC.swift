@@ -154,23 +154,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             }
         }
         
-        //to jump in particular index
-        let name = self.appPreference.get21ChallengeName()
-        if name != ""{
-            var index = 0
-            let name = self.appPreference.get21ChallengeName()
-            for dic in self.arrGuidedList1{
-
-                if name == dic.cat_Name{
-                    break
-                }
-                index = index + 1
-            }
-            
-            pagerTabStripController.moveToViewController(at: index, animated: true)
-            appPreference.set21ChallengeName(value: "")
-        }//end*
-        
         return arrVC as! [UIViewController]
     }
     
