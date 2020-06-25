@@ -260,10 +260,6 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
 
         if redeemCode.count == 6{
             obj.getRedeemCodeAPI(redeemCode: redeemCode, type: "popUp", controller: self.alertUpgradePopupView)
-//            if status{
-//                alertUpgradePopupView.removeFromSuperview()
-//                self.callHomeVC(index: 2)
-//            }
         }else{
             WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
         }

@@ -27,7 +27,7 @@ class WWMAppPreference: NSObject {
     }
     
     //set banner array save
-    func setBanners(value: [Any]) {
+    func setBanners(value: [String: Any]) {
         defaults.set(value, forKey: "banners")
     }
     
@@ -558,8 +558,8 @@ class WWMAppPreference: NSObject {
     }
     
     //get banner array save
-    func getBanners() -> [Any] {
-        return UserDefaults.standard.array(forKey: "banners") ?? []
+    func getBanners() -> [String: Any] {
+        return UserDefaults.standard.dictionary(forKey: "banners") ?? [:]
 
     }
     

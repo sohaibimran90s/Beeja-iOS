@@ -155,7 +155,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         }
         
         return arrVC as! [UIViewController]
-        // return [UIViewController]
     }
     
     func getUniqueChallenge(){
