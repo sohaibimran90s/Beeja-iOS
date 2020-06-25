@@ -331,7 +331,6 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                     //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI(context1: "WWMSignupEmailVC")
                         self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     

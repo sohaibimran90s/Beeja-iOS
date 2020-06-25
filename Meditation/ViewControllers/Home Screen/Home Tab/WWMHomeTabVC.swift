@@ -33,6 +33,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     //banner outlet
+    @IBOutlet weak var imgBackTCB: UIImageView!
+    @IBOutlet weak var imgBackTLB: UIImageView!
     @IBOutlet weak var tableViewBannersHC: NSLayoutConstraint!
     @IBOutlet weak var tableViewBannersTC: NSLayoutConstraint!
     @IBOutlet weak var tableViewBanners: UITableView!
@@ -43,8 +45,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     var bannerLaunchData: [[String: Any]] = []
     var bannerProgressData: [[String: Any]] = []
-    var bannerDescBool = false
-    var bannerDescBool1 = false
     var bannerSelectdIndex = 0
     var bannerSelectdIndex1 = 0
     
@@ -76,6 +76,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     var currentTimePlay = 0
     var seekDuration: Float64 = 10
     
+    var bannerLaunchHeight = 84
+    
     //MARK:- Viewcontroller Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +98,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationMeditationHistory(notification:)), name: Notification.Name("notificationMeditationHistory"), object: nil)
         
-        self.banner1API()
+        self.bannerAPI()
     }
     
     func setupView(){
@@ -199,11 +201,17 @@ class WWMHomeTabVC: WWMBaseViewController {
             audioBool = false
             self.currentTimePlay = 0
         }
-        
+        bannerSelectdIndex = 0
+        bannerSelectdIndex1 = 0
         self.player?.pause()
         self.stopPlayer()
         self.selectedAudio = "0"
         podcastMusicPlayerPopUp.removeFromSuperview()
+        
+        bannerSelectdIndex = 0
+        bannerSelectdIndex1 = 0
+        self.tableViewCB.reloadData()
+        self.tableViewBanners.reloadData()
     }
     
     //MARK: Stop Payer
@@ -549,7 +557,7 @@ class WWMHomeTabVC: WWMBaseViewController {
 
 extension WWMHomeTabVC{
     //banner api
-    func banner1API() {
+    func bannerAPI() {
         
         self.tableViewBannersTC.constant = 0
         self.tableViewBannersHC.constant = 1
@@ -557,22 +565,22 @@ extension WWMHomeTabVC{
         self.tableViewContinueTC.constant = 0
         self.tableViewContinueHC.constant = 1
         self.tableViewCB.isHidden = true
+        self.imgBackTCB.isHidden = true
+        self.imgBackTLB.isHidden = true
         
-        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        //self.appPreference.getUserID()
+        let param = ["user_id": "74072"] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
+            if let success = result["success"] as? Bool {
                 //print("result")
-                if let result = result["result"] as? [String: Any]{
-                    self.appPreffrence.setBanners(value: result)
-                    self.bannerData()
+                if success{
+                    if let result = result["result"] as? [String: Any]{
+                        self.appPreffrence.setBanners(value: result)
+                        self.bannerData()
+                    }
                 }
             }
         }
-        
-        //banner top constraint 22
-        //banner height constraint 185
-        
-        bannerData()
     }
     
     func bannerData(){
@@ -585,13 +593,9 @@ extension WWMHomeTabVC{
                 self.tableViewBannersTC.constant = 22
                 self.tableViewBannersHC.constant = 1
                 self.tableViewBanners.isHidden = false
+                self.imgBackTLB.isHidden = false
                 
                 for data in launchData {
-                    //                    if data["description"] as? String != ""{
-                    //                        self.bannerDescBool = true
-                    //                    }else{
-                    //                        self.bannerDescBool = false
-                    //                    }
                     self.bannerLaunchData.append(data)
                 }
                 
@@ -608,16 +612,12 @@ extension WWMHomeTabVC{
                 self.tableViewContinueTC.constant = 8
                 self.tableViewContinueHC.constant = 1
                 self.tableViewCB.isHidden = false
+                self.imgBackTCB.isHidden = false
                 
                 for data in progressData {
-                    //                    if data["description"] as? String != ""{
-                    //                        self.bannerDescBool1 = true
-                    //                    }else{
-                    //                        self.bannerDescBool1 = false
-                    //                    }
                     self.bannerProgressData.append(data)
                 }
-                
+            
                 self.tableViewCB.delegate = self
                 self.tableViewCB.dataSource = self
                 self.tableViewCB.reloadData()
@@ -785,11 +785,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 }
                 
                 if self.bannerSelectdIndex == 0{
-                    self.tableViewBannersHC.constant = 84 + CGFloat(130 * (self.bannerProgressData.count + 1))
+                    self.tableViewBannersHC.constant = CGFloat(bannerLaunchHeight * (self.bannerProgressData.count + 1))
                     cell.imgArrow.image = UIImage(named: "downArrow")
                 }else{
                     
-                    self.tableViewBannersHC.constant = 84 + CGFloat(130 * (self.bannerProgressData.count + 1))
+                    self.tableViewBannersHC.constant = CGFloat(bannerLaunchHeight * (self.bannerProgressData.count + 1))
                     if indexPath.row == 0{
                         cell.imgArrow.image = UIImage(named: "upArrow")
                     }else{
@@ -876,7 +876,18 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         //reverse it when array comes from background
         if tableView == self.tableViewBanners{
-            return 130
+            if self.bannerLaunchData.count > 1{
+                if indexPath.row == 0{
+                    bannerLaunchHeight = 84
+                    return 84
+                }else{
+                    bannerLaunchHeight = 130
+                    return 130
+                }
+            }else{
+                bannerLaunchHeight = 130
+                return 130
+            }
         }
         
         if tableView == self.tableViewCB{
@@ -890,7 +901,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             if tableView == self.tableViewBanners{
                 
                 if self.bannerLaunchData.count == 1{
-                    self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)")
+                    self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "launch")
                 }else{
                     
                     if indexPath.row == 0{
@@ -902,13 +913,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewBanners.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)")
+                        self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "launch")
                     }
                 }
             }else if tableView == self.tableViewCB{
                 
                 if self.bannerProgressData.count == 1{
-                    self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row]["emotion_id"] as? Int ?? 0)")
+                    self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "progress")
                 }else{
                     
                     if indexPath.row == 0{
@@ -920,7 +931,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewCB.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)")
+                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "progress")
                     }
                 }
             }else{
@@ -938,53 +949,50 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    func bannerClicked(guided_type: String, guided_id: String, emotion_id: String) {
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
+    func bannerClicked(guided_type: String, guided_id: String, emotion_id: String, type: String) {
         
-        self.appPreference.setType(value: "guided")
-        self.appPreference.setGuideTypeFor3DTouch(value: "guided")
-        self.view.endEditing(true)
-        self.type = "guided"
+        if guided_type == "30 Day Challenge"{
+            if type == "launch"{
+                let introURL = self.appPreffrence.get30DaysURL()
+                if introURL != ""{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                    
+                    vc.challenge_type = "30days"
+                    vc.value = "30days"
+                    vc.vc = "HomeTabVC"
+                    self.navigationController?.pushViewController(vc, animated: false)
+                }else{
+                    self.type = "learn"
+                    self.appPreference.setType(value: "learn")
+                    self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                    appPreference.set21ChallengeName(value: "30 Day Challenge")
+                    self.callHomeVC(index: 2)
+                }
+            }else{
+                self.type = "learn"
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                appPreference.set21ChallengeName(value: "30 Day Challenge")
+                self.callHomeVC(index: 2)
+            }
+        }else if guided_type == "21 Days challenge"{
+            self.type = "guided"
+            self.appPreference.setType(value: "guided")
+            self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+            
+            appPreference.set21ChallengeName(value: "21 Days challenge")
+            self.callHomeVC(index: 2)
+        }else{
+            self.type = "learn"
+            self.appPreference.setType(value: "learn")
+            self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+            self.callHomeVC(index: 2)
+        }
+        
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
         }
-        
-        if guided_type == "Challenge expired"{
-            appPreference.set21ChallengeName(value: "Practical")
-            self.appPreference.setGuideType(value: "Practical")
-            if guided_id == "0"{
-                print(emotion_id)
-                self.retakeChallengeApi(guided_id: emotion_id)
-            }else{
-                print(guided_id)
-                self.retakeChallengeApi(guided_id: guided_id)
-            }
-        }else{
-            appPreference.set21ChallengeName(value: guided_type)
-            self.appPreference.setGuideType(value: self.guided_type)
-            self.reloadTabs21DaysController()
-        }
-    }
-    
-    func reloadTabs21DaysController(){
-        self.navigationController?.isNavigationBarHidden = false
-        
-         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationReloadGuidedTabs"), object: nil)
-        
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 2
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 2 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                }
-            }
-        }
-        self.navigationController?.popToRootViewController(animated: false)
-    }
-    //banner scenario
-
+    }//banner scenario
     
     func podCastXib(index: Int){
         podcastMusicPlayerPopUp = UINib(nibName: "WWWMPodCastPlayerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWWMPodCastPlayerView
@@ -1487,7 +1495,7 @@ extension WWMHomeTabVC{
                             }
                             
                             WWMHelperClass.saveDb()
-                            self.reloadTabs21DaysController()
+                            self.callHomeVC(index: 2)
                         }
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
                         //print("guided data tabbarvc in background thread...")

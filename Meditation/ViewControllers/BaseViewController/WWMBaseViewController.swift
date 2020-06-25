@@ -200,6 +200,7 @@ class WWMBaseViewController: UIViewController {
     }
     
     func callHomeVC(index: Int){
+        self.navigationController?.isNavigationBarHidden = false
         if let tabController = self.tabBarController as? WWMTabBarVC {
             tabController.selectedIndex = index
             for index in 0..<tabController.tabBar.items!.count {
@@ -304,19 +305,6 @@ extension WWMBaseViewController{
                 
                 let data = result["result"] as? [String]
                 self.appPreference.setInvitationCount(value: data?.count ?? 0)
-            }
-        }
-    }
-    
-    //bannerAPI
-    func bannerAPI(context1: String) {
-        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: context1, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [String: Any]{
-                    self.appPreference.setBanners(value: result)
-                }
             }
         }
     }
