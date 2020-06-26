@@ -64,6 +64,8 @@ class WWMSleepAudioVC: WWMBaseViewController {
     }
     
     @IBAction func btnBackClicked(_ sender: UIButton){
+        self.appPreference.set21ChallengeName(value: "Playlist")
+
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.popViewController(animated: true)
     }
