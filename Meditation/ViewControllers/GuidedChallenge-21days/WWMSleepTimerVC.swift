@@ -612,7 +612,9 @@ class WWMSleepTimerVC: WWMBaseViewController {
             "complete_percentage": complete_percentage,
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
-            "journal_type": ""
+            "journal_type": "",
+            "challenge_days30_day":"",
+            "challenge_days30_status":""
             ] as [String : Any]
         
         
@@ -624,19 +626,16 @@ class WWMSleepTimerVC: WWMBaseViewController {
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        //print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
                         
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
-                        
-                        WWMHelperClass.complete_percentage = "0"
-                        //self.navigateToDashboard()
                     }else {
                         self.saveToDB(param: param)
                     }
                 }else{
                     self.saveToDB(param: param)
                 }
+                WWMHelperClass.complete_percentage = "0"
             }//background thread meditation api*
             
             DispatchQueue.main.async {

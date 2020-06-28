@@ -355,7 +355,6 @@ class WWMHomeTabVC: WWMBaseViewController {
             }
         }
         
-        
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
         
         self.present(activityViewController, animated: true, completion: nil)
@@ -401,6 +400,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.guided_type = ""
         
         self.view.endEditing(true)
+        self.appPreffrence.set21ChallengeName(value: "")
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.userData.type = "timer"
@@ -422,6 +422,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.type = "guided"
         
         self.view.endEditing(true)
+        self.appPreffrence.set21ChallengeName(value: "")
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
@@ -441,6 +442,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "learn"
         self.guided_type = ""
+        self.appPreffrence.set21ChallengeName(value: "")
         
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
@@ -568,8 +570,7 @@ extension WWMHomeTabVC{
         self.imgBackTCB.isHidden = true
         self.imgBackTLB.isHidden = true
         
-        //self.appPreference.getUserID()
-        let param = ["user_id": "74072"] as [String : Any]
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if let success = result["success"] as? Bool {
                 //print("result")
@@ -584,7 +585,6 @@ extension WWMHomeTabVC{
     }
     
     func bannerData(){
-        
         
         if let launchData = self.appPreffrence.getBanners()["launch"] as? [[String: Any]]{
             print(launchData)

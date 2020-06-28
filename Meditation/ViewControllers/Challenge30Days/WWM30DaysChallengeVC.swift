@@ -36,14 +36,13 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
-    var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-    var i = 0
+    var completed30DayCount = 0
+    var checkExpireRetake = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setUpView()
-        print(self.daysListData.count)
     }
     
     // MARK: - IndicatorInfoProvider
@@ -52,7 +51,11 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     func setUpView(){
-        if self.i == 0{
+        
+        
+        
+        
+        if self.checkExpireRetake == 0{
             //Working
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
@@ -74,7 +77,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
                 self.btnShare.isHidden = false
             }
             
-        }else if self.i == 1{
+        }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
             self.viewRetake.isHidden = true
@@ -113,6 +116,24 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.collectionViewHC.constant = 260
         }
         
+        self.checkIntroCompleted()
+    }
+    
+    //to check if the challenge is expired or not
+    func day30Count() -> Int{
+        
+        for index in 0..<self.daysListData.count{
+            if self.daysListData[index].date_completed != ""{
+                self.completed30DayCount = self.completed30DayCount + 1
+            }
+            
+            return self.completed30DayCount
+        }
+        return 0
+    }
+    
+    //to check if to show intro button or not
+    func checkIntroCompleted(){
         let intro_completed = self.appPreference.get30IntroCompleted()
         if intro_completed{
             self.btnIntro.isHidden = true
@@ -131,6 +152,23 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
                 self.btnReminder.isHidden = false
                 self.lblReminder.isHidden = false
             }
+        }
+        
+        self.setLblTitle()
+    }
+    
+    //to check if 12 steps completed today
+    func setLblTitle(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
+        if self.appPreference.getDate12Step() == dateFormatter.string(from: Date()){
+            self.lblTitle.text = "Tomorrow is the first day of your challenge"
+        }else{
+            self.lblTitle.text = "Continue on your meditation journey and challenge yourself to create life-long habits."
         }
     }
     
@@ -171,6 +209,11 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
+        
+        if self.appPreference.get21CompletedDaysCount() != 12{
+            return
+        }
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.challenge_type = "30days"
@@ -182,7 +225,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
 extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.array.count
+        return self.daysListData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -193,16 +236,19 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         let imgLock = cell.viewWithTag(5) as! UIImageView
         let viewBackLbl = cell.viewWithTag(2)!
         let lblChallNo = cell.viewWithTag(3) as! UILabel
-        
+    
         viewBackLbl.layer.borderWidth = 2.0
-        lblChallNo.text = "\(self.array[indexPath.item])"
+        lblChallNo.text = "\(self.daysListData[indexPath.item].day_name)"
         
         imgLock.layer.cornerRadius = 8
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
+        if indexPath.item == 29{
+            imgLeft.isHidden = true
+        }
         
-        /*if self.daysListData[indexPath.item].completed{
+        if self.daysListData[indexPath.item].completed{
             viewBackLbl.backgroundColor = UIColor.init(hexString: "#00eba9")!
             viewBackLbl.layer.borderColor = UIColor.clear.cgColor
             imgLeft.image = UIImage(named: "lineGreen")
@@ -220,21 +266,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         }else{
             imgLeft.isHidden = false
             imgLock.isHidden = true
-        }*/
-        
-        //we have to remove this once api will done*
-        viewBackLbl.layer.borderColor = UIColor.white.cgColor
-        viewBackLbl.backgroundColor = UIColor.clear
-        imgLeft.image = UIImage(named: "lineWhite")
-        lblChallNo.textColor = UIColor.white
-        
-        if self.array[indexPath.item]%7 == 0 || self.array[indexPath.item] == 30{
-            imgLeft.isHidden = true
-            imgLock.isHidden = false
-        }else{
-            imgLeft.isHidden = false
-            imgLock.isHidden = true
-        }//end*
+        }
         
         return cell
     }
@@ -248,11 +280,71 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         appPreference.set21ChallengeName(value: "30 Day Challenge")
+        self.pushViewController(sender_Tag: indexPath.item)
+    }
+    
+    func pushViewController(sender_Tag: Int){
         
-        let intro_completed = self.appPreference.get30IntroCompleted()
-        if intro_completed{
+        let obj = WWMLearnStepListVC()
+        var flag = 0
+        var position = 0
+        
+        print(self.daysListData[position].day_name)
+        
+        if self.daysListData[sender_Tag].completed{
+            self.appPreference.setType(value: "learn")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            return
+        }else{
+            for i in 0..<sender_Tag{
+                let date_completed = self.daysListData[i].date_completed
+                if date_completed != ""{
+                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                    if dateCompare.0 == 1{
+                        flag = 1
+                        break
+                    }
+                }
+            }
+        }
+        
+        //its mean you have done todays challenge
+        if flag == 1{
+            obj.xibCall(title1: KLEARNONESTEP)
+            return
+        }
+        
+        for i in 0..<sender_Tag{
+            if !self.daysListData[i].completed{
+                flag = 2
+                position = i
+                break
+            }
+        }
+        
+        //its mean you have not done previous step
+        if flag == 2{
+            obj.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.daysListData[position].day_name) \(KLEARNJUMPSTEP1)")
+        }else{
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+            
+            WWMHelperClass.day_30_name = self.daysListData[position].day_name
+            vc.daysListData = self.daysListData[position]
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func check(sender_Tag: Int) -> Int{
+        for i in 0..<sender_Tag{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed != ""{
+                return 1
+            }
+        }
+        return 0
     }
 }
