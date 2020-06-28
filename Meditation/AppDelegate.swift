@@ -581,7 +581,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     self.syncAddJournalData()
                 }
             }
-            
         }else {
             syncAddJournalData()
         }

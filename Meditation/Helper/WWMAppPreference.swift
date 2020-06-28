@@ -22,6 +22,11 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "practicalChallenge")
     }
     
+    //set learn 12steps last date
+    func setDate12Step(value: String) {
+        defaults.set(value, forKey: "date12Step")
+    }
+    
     func setSpiritualChallenge(value:Bool) {
         defaults.set(value, forKey: "spiritualChallenge")
     }
@@ -81,8 +86,18 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    //set to check 12 days completed all
+    func set12CompletedDaysCount(value: Int) {
+        defaults.set(value, forKey: "12CompletedDaysCount")
+    }
+    
     func set30DaysURL(value: String) {
         defaults.set(value, forKey: "30_days_url")
+    }
+    
+    //set to check if 30 days is expired or not
+    func set30DaysIsExpired(value: Bool) {
+        defaults.set(value, forKey: "30_days_isExpired")
     }
     
     func set30DaysReminder(value: String) {
@@ -233,6 +248,16 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
     }
     
+    //get to check 21 days completed all
+    func get21CompletedDaysCount() -> Int {
+        return UserDefaults.standard.integer(forKey: "21CompletedDaysCount") 
+    }
+    
+    //get learn 12steps last date
+    func getDate12Step() -> String{
+        return UserDefaults.standard.string(forKey: "date12Step") ?? ""
+    }
+    
     func getSubscriptionId() -> String {
         return UserDefaults.standard.string(forKey: "subscription_id") ?? ""
     }
@@ -251,6 +276,11 @@ class WWMAppPreference: NSObject {
     
     func getEmail() -> String{
         return UserDefaults.standard.string(forKey: "email") ?? ""
+    }
+    
+    //set to check if 30 days is expired or not
+    func get30DaysIsExpired() -> Bool {
+        return defaults.bool(forKey: "30_days_isExpired")
     }
 
     func getLastTimeStamp21DaysBool() -> Bool{

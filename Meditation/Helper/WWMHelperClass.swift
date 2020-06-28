@@ -39,6 +39,10 @@ class WWMHelperClass {
     static var xlpager = ""
     static var checkNinetyFivePer = 0
     
+    //30 days
+    static var day_30_name = ""
+    static var day_30_status = ""
+    
     //Analytic %age
     static var complete_percentage: String = "0"
     
