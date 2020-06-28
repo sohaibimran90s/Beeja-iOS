@@ -122,6 +122,7 @@ extension WWMPlayListVC: UITableViewDelegate, UITableViewDataSource{
         let data = self.guidedData.cat_EmotionList[indexPath.row]
         cell.imgView.sd_setImage(with: URL.init(string: data.emotion_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.emotion_Name
+        cell.lblSubTitle.text = "Day \(indexPath.row + 1) · 15mins"
         return cell
     }
     
