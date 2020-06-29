@@ -132,7 +132,6 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
                     //print("userProfile WWMSignupEmailVC... \(userProfile)")
                     
                     DispatchQueue.global(qos: .background).async {
-                        self.bannerAPI(context1: "WWMSignUpFacebookVC")
                         self.getInviteAcceptAPI(context1: "WWMLoginVC")
                     }
                     

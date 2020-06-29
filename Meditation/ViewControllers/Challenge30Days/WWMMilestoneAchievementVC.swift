@@ -28,26 +28,10 @@ class WWMMilestoneAchievementVC: WWMBaseViewController {
     }
     
     @IBAction func btnHomeAction(_ sender: UIButton){
-        self.navigateToDashboard(index: 2)
+        self.callHomeVC(index: 2)
     }
     
     @IBAction func btnProgressAction(_ sender: UIButton){
-        self.navigateToDashboard(index: 4)
-    }
-    
-    func navigateToDashboard(index: Int) {
-        self.navigationController?.isNavigationBarHidden = false
-        
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = index
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 4 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                }
-            }
-        }
-        self.navigationController?.popToRootViewController(animated: false)
+        self.callHomeVC(index: 4)
     }
 }

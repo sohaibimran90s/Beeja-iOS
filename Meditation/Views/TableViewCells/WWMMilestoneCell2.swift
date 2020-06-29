@@ -12,6 +12,7 @@ class WWMMilestoneCell2: UITableViewCell {
 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblTitle1: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var imgViewTitle: UIImageView!
     @IBOutlet weak var imgViewTitle1: UIImageView!
     @IBOutlet weak var imgViewBack: UIImageView!

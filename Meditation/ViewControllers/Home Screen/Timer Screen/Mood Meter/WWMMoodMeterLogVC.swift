@@ -136,12 +136,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
     
     @IBAction func btnSkipAction(_ sender: Any) {
         self.txtViewLog.text = ""
-        
-        DispatchQueue.global(qos: .background).async {
-            self.completeMeditationAPI()
-        }
-        
-        self.logExperience()
+        self.completeMeditationAPI()
     }
     
     @IBAction func btnBurnMoodAction(_ sender: Any) {
@@ -194,11 +189,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }else {
         
             self.getPrePostMoodData()
-            
-            DispatchQueue.global(qos: .background).async {
-                self.completeMeditationAPI()
-            }
-            self.logExperience()
+            self.completeMeditationAPI()
         }
     }
     
@@ -242,78 +233,64 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         }
         
         var param: [String: Any] = [:]
-        
-        if self.appPreference.getType() == "learn"{
-            param = [
-                "type":"learn",
-                "step_id": WWMHelperClass.step_id,
-                "mantra_id": WWMHelperClass.mantra_id,
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.userData.guided_type,
-                "duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text ?? "",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1",
-                "journal_type": ""
-                ] as [String : Any]
-        }else{
-            param = [
-                "type": self.appPreffrence.getType(),
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.appPreffrence.getGuideType(),
-                "watched_duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text ?? "",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1",
-                "journal_type": ""
-                ] as [String : Any]
-        }
-        
-        //print("param meterlog... \(param)")
+        param = [
+            "type": self.appPreffrence.getType(),
+            "step_id": WWMHelperClass.step_id,
+            "mantra_id": WWMHelperClass.mantra_id,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.appPreffrence.getGuideType(),
+            "duration" : self.watched_duration,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":txtViewLog.text ?? "",
+            "prep_time":prepTime,
+            "meditation_time":meditationTime,
+            "rest_time":restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": WWMHelperClass.complete_percentage,
+            "is_complete": "1",
+            "journal_type": "",
+            "title": "",
+            "challenge_days30_day":WWMHelperClass.day_30_name,
+            "challenge_days30_status":WWMHelperClass.day_30_status
+            ] as [String : Any]
+        print("param...+++++++++ \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    //print("success moodmeterlogvc background api run")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
-
-                    WWMHelperClass.complete_percentage = "0"
                     
-                    //self.logExperience()
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }else {
                     self.saveToDB(param: param)
+                    
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }
             }else {
                 self.saveToDB(param: param)
+                
+                DispatchQueue.main.async {
+                    self.logExperience()
+                }
             }
+            WWMHelperClass.complete_percentage = "0"
+            WWMHelperClass.day_30_name = ""
+            WWMHelperClass.day_30_status = ""
         }
     }
-    
     
     func saveToDB(param:[String:Any]) {
         let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete

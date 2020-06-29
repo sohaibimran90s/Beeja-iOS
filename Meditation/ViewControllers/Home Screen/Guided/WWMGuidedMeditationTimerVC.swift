@@ -654,57 +654,34 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
         
         var param: [String: Any] = [:]
-        if type == "learn"{
-            param = [
-                "type": type,
-                "step_id": step_id,
-                "mantra_id": mantra_id,
-                "category_id" : category_id,
-                "emotion_id" : emotion_id,
-                "audio_id" : audio_id,
-                "guided_type" : guided_type,
-                "duration" : watched_duration,
-                "rating" : rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
-                ] as [String : Any]
-        }else{
-            param = [
-                "type": type,
-                "category_id": category_id,
-                "emotion_id": emotion_id,
-                "audio_id": audio_id,
-                "guided_type": self.appPreference.getGuideType(),
-                "watched_duration": watched_duration,
-                "rating": rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag,
-                "title": "",
-                "journal_type": ""
-                ] as [String : Any]
-        }
-        
-        //print("meter param WWMGuidedMeditationTimerVC... \(param)")
+        param = [
+            "type": type,
+            "step_id": step_id,
+            "mantra_id": mantra_id,
+            "category_id": category_id,
+            "emotion_id": emotion_id,
+            "audio_id": audio_id,
+            "guided_type": self.appPreference.getGuideType(),
+            "duration" : watched_duration,
+            "watched_duration": watched_duration,
+            "rating": rating,
+            "user_id": user_id,
+            "meditation_type": meditation_type,
+            "date_time": date_time,
+            "tell_us_why": tell_us_why,
+            "prep_time": prep_time,
+            "meditation_time": meditation_time,
+            "rest_time": rest_time,
+            "meditation_id": meditation_id,
+            "level_id": level_id,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": complete_percentage,
+            "is_complete": self.ninetyFiveCompletedFlag,
+            "title": "",
+            "journal_type": "",
+            "challenge_days30_day":"",
+            "challenge_days30_status":""
+            ] as [String : Any]
         
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
@@ -712,24 +689,25 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        //print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
-
                         self.appPreference.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
-                        
-                        WWMHelperClass.complete_percentage = "0"
-                        //self.navigateToDashboard()
+                        DispatchQueue.main.async {
+                            self.navigateToDashboard()
+                        }
                     }else {
                         self.saveToDB(param: param)
+                        DispatchQueue.main.async {
+                            self.navigateToDashboard()
+                        }
                     }
                 }else{
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }
+                WWMHelperClass.complete_percentage = "0"
             }//background thread meditation api*
-            
-            DispatchQueue.main.async {
-                self.navigateToDashboard()
-            }
         }
     }
     

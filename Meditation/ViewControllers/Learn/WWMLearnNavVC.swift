@@ -67,6 +67,12 @@ class WWMLearnNavVC: WWMBaseViewController {
                 jsonData["max_limit"] = dict.max_limit
                 jsonData["max_limit"] = dict.max_limit
                 jsonData["is_expired"] = dict.is_expired
+                
+                if dict.name == "30 Day Challenge"{
+                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
+                }
+                
+                var completedCount = 0
 
                 let getLearnDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
                 for steps in getLearnDataDB{
@@ -82,9 +88,20 @@ class WWMLearnNavVC: WWMBaseViewController {
                     jsonStepString["min_limit"] = steps.min_limit
                     jsonStepString["max_limit"] = steps.max_limit
                     
+                    if steps.id == "12"{
+                        if steps.date_completed != ""{
+                            let date12StepArray = steps.date_completed?.components(separatedBy: " ")
+                            self.appPreference.setDate12Step(value: date12StepArray![0])
+                        }
+                    }
+                    
+                    if steps.date_completed != ""{
+                        completedCount = completedCount + 1
+                    }
+                    
                     jsonSteps.append(jsonStepString)
                 }
-                
+                self.appPreference.set12CompletedDaysCount(value: completedCount)
                 jsonData["step_list"] = jsonSteps
                 
                 let getThirtyDaysDataDB = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
@@ -119,9 +136,9 @@ class WWMLearnNavVC: WWMBaseViewController {
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
-                
                 let learnData = WWMLearnData.init(json: jsonData)
                 self.arrLearnList.append(learnData)
+                jsonThirtyDays.removeAll()
                 
                 //print("jsonData... \(jsonData)")
             }

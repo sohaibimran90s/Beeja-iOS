@@ -321,6 +321,10 @@ class WWMStartTimerVC: WWMBaseViewController {
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
             }
 
+            if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                WWMHelperClass.day_30_status = "complete"
+                self.appPreffrence.setType(value: "learn")
+            }
             
             vc.meditationMaxTime = self.meditationTime
             vc.meditationName = self.meditationName
@@ -470,6 +474,10 @@ class WWMStartTimerVC: WWMBaseViewController {
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
                     
+                    if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                        WWMHelperClass.day_30_status = "complete"
+                        self.appPreffrence.setType(value: "learn")
+                    }
                     
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
@@ -516,6 +524,10 @@ class WWMStartTimerVC: WWMBaseViewController {
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
                     
+                    if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                        WWMHelperClass.day_30_status = "complete"
+                        self.appPreffrence.setType(value: "learn")
+                    }
                     
                     vc.meditationMaxTime = self.meditationTime
                     vc.meditationName = self.meditationName
@@ -624,6 +636,11 @@ class WWMStartTimerVC: WWMBaseViewController {
                     WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( meditationPlayPercentageCompleteStatus)")
                 }else{
                     WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
+                }
+                
+                if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    WWMHelperClass.day_30_status = "complete"
+                    self.appPreffrence.setType(value: "learn")
                 }
                 
                 vc.meditationMaxTime = self.meditationTime
@@ -814,19 +831,14 @@ class WWMStartTimerVC: WWMBaseViewController {
     
     func pushNavigationController(){
         
-        //print("ninetyFiveCompletedFlag+++ \(ninetyFiveCompletedFlag)")
         if self.ninetyFiveCompletedFlag == "0"{
-            
-            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
-                      
+                                  
              if self.flag == 1{
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
              }else{
                  WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
               }
-            
-            //print("meditation_time... \(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0) restTime... \(self.restTime) prepTime... \(self.prepTime)")
-                      
+                                  
             self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "\(self.restTime)", emotion_id: "0", tell_us_why: "", prep_time: "\(self.prepTime)", meditation_time: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", watched_duration: "0", level_id: self.levelID, complete_percentage: "\(self.meditationLTMPlayPercentage)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: self.meditationID, date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "timer", guided_type: "", audio_id: "0", step_id: "", mantra_id: "")
             
         }else{
@@ -835,7 +847,10 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
             self.timer.invalidate()
             
-            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics)")
+            if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                WWMHelperClass.day_30_status = "complete"
+                self.appPreffrence.setType(value: "learn")
+            }
             
             if self.flag == 1{
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\( self.meditationPlayPercentageCompleteStatus)")
@@ -873,90 +888,81 @@ class WWMStartTimerVC: WWMBaseViewController {
         if nintyFivePercentDB.count > 0{
             WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
         }
-
+        
         var param: [String: Any] = [:]
-        if type == "learn"{
-            param = [
-                "type": type,
-                "step_id": step_id,
-                "mantra_id": mantra_id,
-                "category_id" : category_id,
-                "emotion_id" : emotion_id,
-                "audio_id" : audio_id,
-                "guided_type" : guided_type,
-                "duration" : watched_duration,
-                "rating" : rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag
-                ] as [String : Any]
-        }else{
-            param = [
-                "type": type,
-                "category_id": category_id,
-                "emotion_id": emotion_id,
-                "audio_id": audio_id,
-                "guided_type": guided_type,
-                "watched_duration": watched_duration,
-                "rating": rating,
-                "user_id": user_id,
-                "meditation_type": meditation_type,
-                "date_time": date_time,
-                "tell_us_why": tell_us_why,
-                "prep_time": prep_time,
-                "meditation_time": meditation_time,
-                "rest_time": rest_time,
-                "meditation_id": meditation_id,
-                "level_id": level_id,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": complete_percentage,
-                "is_complete": self.ninetyFiveCompletedFlag,
-                "title": "",
-                "journal_type": ""
-                ] as [String : Any]
-        }
-
-        //print("meter param WWMStartTimerVC... \(param)")
-
+        param = [
+            "type": type,
+            "step_id": step_id,
+            "mantra_id": mantra_id,
+            "category_id": category_id,
+            "emotion_id": emotion_id,
+            "audio_id": audio_id,
+            "guided_type": guided_type,
+            "duration" : watched_duration,
+            "watched_duration": watched_duration,
+            "rating": rating,
+            "user_id": user_id,
+            "meditation_type": meditation_type,
+            "date_time": date_time,
+            "tell_us_why": tell_us_why,
+            "prep_time": prep_time,
+            "meditation_time": meditation_time,
+            "rest_time": rest_time,
+            "meditation_id": meditation_id,
+            "level_id": level_id,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": complete_percentage,
+            "is_complete": self.ninetyFiveCompletedFlag,
+            "title": "",
+            "journal_type": "",
+            "challenge_days30_day":"",
+            "challenge_days30_status":""
+            ] as [String : Any]
+        
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     
                     if let _ = result["success"] as? Bool {
-                        //print("success... WWMStartTimerVC meditationcomplete api in background")
                         self.appPreffrence.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
                         
-                        WWMHelperClass.complete_percentage = "0"
-                        //self.navigateToDashboard()
+                        DispatchQueue.main.async {
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                                self.appPreference.setType(value: "learn")
+                                self.callHomeVC1()
+                            }else{
+                                self.navigateToDashboard()
+                            }
+                        }
                     }else {
                         self.saveToDB(param: param)
+                        
+                        DispatchQueue.main.async {
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                                self.appPreference.setType(value: "learn")
+                                self.callHomeVC1()
+                            }else{
+                                self.navigateToDashboard()
+                            }
+                        }
                     }
                 }else{
                     self.saveToDB(param: param)
-                }
-            }//background thread meditation api*
-            
-            DispatchQueue.main.async {
-                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-                    self.appPreference.setType(value: "learn")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                           UIApplication.shared.keyWindow?.rootViewController = vc
-                }else{
-                    self.navigateToDashboard()
+                    
+                    DispatchQueue.main.async {
+                        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                            self.appPreference.setType(value: "learn")
+                            self.callHomeVC1()
+                        }else{
+                            self.navigateToDashboard()
+                        }
+                    }
                 }
                 
-            }
+                WWMHelperClass.complete_percentage = "0"
+            }//background thread meditation api*
         }
     }
     

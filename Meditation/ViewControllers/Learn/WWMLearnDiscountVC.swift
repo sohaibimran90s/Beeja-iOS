@@ -42,7 +42,7 @@ class WWMLearnDiscountVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
-        
+        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
         self.navigationController?.isNavigationBarHidden = false
         
         if let tabController = self.tabBarController as? WWMTabBarVC {

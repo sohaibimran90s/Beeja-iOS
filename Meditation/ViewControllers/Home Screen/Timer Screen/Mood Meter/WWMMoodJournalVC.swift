@@ -81,11 +81,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "SKIPPED", itemName: "")
         
         self.txtViewLog.text = ""
-        
-        DispatchQueue.global(qos: .background).async {
-            self.completeMeditationAPI()
-        }
-        self.logExperience()
+        self.completeMeditationAPI()
     }
     
     @IBAction func btnSubmitAction(_ sender: Any) {
@@ -107,12 +103,9 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 }
             }
             
-            DispatchQueue.global(qos: .background).async {
-                self.completeMeditationAPI()
-            }
+            self.completeMeditationAPI()
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
-            self.logExperience()
         }
     }
 
@@ -123,80 +116,60 @@ class WWMMoodJournalVC: WWMBaseViewController {
         if nintyFivePercentDB.count > 0{
             WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
         }
-
+        
         var param: [String: Any] = [:]
-        
-        //print("WWMHelperClass.selectedType... \(WWMHelperClass.selectedType)")
-        
-        if self.appPreference.getType() == "learn"{
-            param = [
-                "type":"learn",
-                "step_id": WWMHelperClass.step_id,
-                "mantra_id": WWMHelperClass.mantra_id,
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.userData.guided_type,
-                "duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text ?? "",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
-                ] as [String : Any]
-
-        }else{
-            param = [
-                "type": self.appPreffrence.getType(),
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.appPreffrence.getGuideType(),
-                "watched_duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":txtViewLog.text ?? "",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1",
-                "title": "",
-                "journal_type": ""
-                ] as [String : Any]
-        }
-        
-        //print("journal param... \(param)")
+        param = [
+            "type": self.appPreffrence.getType(),
+            "step_id": WWMHelperClass.step_id,
+            "mantra_id": WWMHelperClass.mantra_id,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.appPreffrence.getGuideType(),
+            "duration" : self.watched_duration,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":txtViewLog.text ?? "",
+            "prep_time":prepTime,
+            "meditation_time":meditationTime,
+            "rest_time":restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": WWMHelperClass.complete_percentage,
+            "is_complete": "1",
+            "title": "",
+            "journal_type": "",
+            "challenge_days30_day":WWMHelperClass.day_30_name,
+            "challenge_days30_status":WWMHelperClass.day_30_status
+            ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 if let _ = result["success"] as? Bool {
-                    //print("success moodjournalvc background meditationcomplete api...")
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
-                    
-                    WWMHelperClass.complete_percentage = "0"
-                    //self.logExperience()
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }else {
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }
-                
             }else {
                 self.saveToDB(param: param)
+                DispatchQueue.main.async {
+                    self.logExperience()
+                }
             }
+            WWMHelperClass.complete_percentage = "0"
+            WWMHelperClass.day_30_name = ""
+            WWMHelperClass.day_30_status = ""
         }
     }
     
@@ -297,12 +270,9 @@ extension WWMMoodJournalVC: UITextViewDelegate{
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
-            DispatchQueue.global(qos: .background).async {
-                self.completeMeditationAPI()
-            }
+            self.completeMeditationAPI()
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
-            self.logExperience()
         }
     }
 }

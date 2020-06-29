@@ -131,10 +131,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                             self.view.isUserInteractionEnabled = false
                             
                         }
-                        //                        else{
-                        //                            self.getFreeMoodMeterAlert(freeMoodMeterCount: String(getPreMoodCount), title: KSUBSPLANEXP, subTitle: "You have \(getPreMoodCount) pre mood and \(getPreJournalCount) journal entries left. Subscribe for more.", type: "Pre")
-                        //                            self.view.isUserInteractionEnabled = true
-                        //                        }
                     }else{
                         let getPostMoodCount = self.appPreference.getPostMoodCount()
                         let getPostJournalCount = self.appPreference.getPostJournalCount()
@@ -218,8 +214,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 DispatchQueue.global(qos: .background).async {
                     self.completeMeditationAPI()
                 }
-                self.navigateToDashboard()
-                
             }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
                 self.alertPopupView1.removeFromSuperview()
                 self.view.isUserInteractionEnabled = false
@@ -286,76 +280,60 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
         
         var param: [String: Any] = [:]
-        if self.appPreference.getType() == "learn"{
-            param = [
-                "type":"learn",
-                "step_id": WWMHelperClass.step_id,
-                "mantra_id": WWMHelperClass.mantra_id,
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.userData.guided_type,
-                "duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":"",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
-                ] as [String : Any]
-        }else{
-            param = [
-                "type": self.appPreffrence.getType(),
-                "category_id" : self.category_Id,
-                "emotion_id" : self.emotion_Id,
-                "audio_id" : self.audio_Id,
-                "guided_type" : self.appPreffrence.getGuideType(),
-                "watched_duration" : self.watched_duration,
-                "rating" : self.rating,
-                "user_id":self.appPreference.getUserID(),
-                "meditation_type":type,
-                "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why":"",
-                "prep_time":prepTime,
-                "meditation_time":meditationTime,
-                "rest_time":restTime,
-                "meditation_id": self.meditationID,
-                "level_id":self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1",
-                "title": "",
-                "journal_type": ""
-                ] as [String : Any]
-        }
-        
-        //print("meter param... \(param)")
+        param = [
+            "type": self.appPreffrence.getType(),
+            "step_id": WWMHelperClass.step_id,
+            "mantra_id": WWMHelperClass.mantra_id,
+            "category_id" : self.category_Id,
+            "emotion_id" : self.emotion_Id,
+            "audio_id" : self.audio_Id,
+            "guided_type" : self.appPreffrence.getGuideType(),
+            "duration" : self.watched_duration,
+            "watched_duration" : self.watched_duration,
+            "rating" : self.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":"",
+            "prep_time":prepTime,
+            "meditation_time":meditationTime,
+            "rest_time":restTime,
+            "meditation_id": self.meditationID,
+            "level_id":self.levelID,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": WWMHelperClass.complete_percentage,
+            "is_complete": "1",
+            "title": "",
+            "journal_type": "",
+            "challenge_days30_day":WWMHelperClass.day_30_name,
+            "challenge_days30_status":WWMHelperClass.day_30_status
+            ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
-                    //print("success... moodmetervc meditationcomplete api in background")
                     self.meditationHistoryListAPI()
-
-                    WWMHelperClass.complete_percentage = "0"
-                    
-                    //self.navigateToDashboard()
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }else {
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }
-                
             }else {
                 self.saveToDB(param: param)
+                DispatchQueue.main.async {
+                    self.navigateToDashboard()
+                }
             }
+            
+            WWMHelperClass.complete_percentage = "0"
+            WWMHelperClass.day_30_name = ""
+            WWMHelperClass.day_30_status = ""
         }
     }
     
@@ -566,7 +544,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_POST", itemId: "SKIPPED", itemName: "")
         }
         
-        
         if self.appPreference.getType() == "learn"{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
             vc.type = self.type
@@ -582,56 +559,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             vc.watched_duration = self.watched_duration
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-
-            let param = [
-                "type": self.appPreffrence.getType(),
-                "category_id": self.category_Id,
-                "emotion_id": self.emotion_Id,
-                "audio_id": self.audio_Id,
-                "guided_type": self.appPreffrence.getGuideType(),
-                "watched_duration": self.watched_duration,
-                "rating": self.rating,
-                "user_id": self.appPreference.getUserID(),
-                "meditation_type": self.type,
-                "date_time": "\(Int(Date().timeIntervalSince1970*1000))",
-                "tell_us_why": "",
-                "prep_time": self.prepTime,
-                "meditation_time": self.meditationTime,
-                "rest_time": self.restTime,
-                "meditation_id": self.meditationID,
-                "level_id": self.levelID,
-                "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
-                "complete_percentage": WWMHelperClass.complete_percentage,
-                "is_complete": "1"
-                ] as [String : Any]
-            
-            //print("meter param... \(param)")
-            
-            
-            //background thread meditation api*
-            DispatchQueue.global(qos: .background).async {
-                WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                    if sucess {
-                        if let _ = result["success"] as? Bool {
-                            //print("success... moodmetervc meditationcomplete api in background")
-                            self.appPreffrence.setSessionAvailableData(value: true)
-                            self.getGuidedListAPI()
-                            self.meditationHistoryListAPI()
-                            
-                            WWMHelperClass.complete_percentage = "0"
-                            //self.navigateToDashboard()
-                        }else {
-                            self.saveToDB(param: param)
-                        }
-                        
-                    }else {
-                        self.saveToDB(param: param)
-                    }
-                }
-            }//background thread meditation api*
-
-            self.navigateToDashboard()
-            
+            self.completeMeditationAPI()
         }
     }
     
@@ -699,8 +627,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         DispatchQueue.global(qos: .background).async {
                             self.completeMeditationAPI()
                         }
-                        self.navigateToDashboard()
-                        
                     }else if (self.appPreference.getPreMoodCount() == 0) && (self.appPreference.getPreJournalCount() > 0){
                         
                         self.callWWMMoodMeterLogVC()
@@ -709,8 +635,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         DispatchQueue.global(qos: .background).async {
                             self.completeMeditationAPI()
                         }
-                        self.navigateToDashboard()
-                        
                     }else{
                         
                         self.callWWMMoodMeterLogVC()
@@ -736,8 +660,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         DispatchQueue.global(qos: .background).async {
                             self.completeMeditationAPI()
                         }
-                        self.navigateToDashboard()
-                        
                     }else if (self.appPreference.getPostMoodCount() == 0) && (self.appPreference.getPostJournalCount() > 0){
                         
                         self.callWWMMoodMeterLogVC()
@@ -746,8 +668,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                         DispatchQueue.global(qos: .background).async {
                             self.completeMeditationAPI()
                         }
-                        self.navigateToDashboard()
-                        
                     }else{
                         
                         self.callWWMMoodMeterLogVC()

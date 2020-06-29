@@ -94,7 +94,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             self.getDictionaryAPI()
             self.meditationHistoryListAPI()
             self.meditationlistAPI()
-            self.banner1API()
         }
         
         self.delegate = self
@@ -308,19 +307,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         self.setupTabBarSeparators()
 
-    }
-
-    //bannerAPI
-    func banner1API() {
-        let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_BANNERS, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if let _ = result["success"] as? Bool {
-                //print("result")
-                if let result = result["result"] as? [String: Any]{
-                    self.appPreffrence.setBanners(value: result)
-                }
-            }
-        }
     }
     
     //meditationAPI
@@ -1013,6 +999,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if dict["name"] as? String == "30 Day Challenge"{
                             self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
                         //print("30intro_completed... \(self.appPreffrence.get30IntroCompleted()) 30intro_url... \(self.appPreffrence.get30DaysURL())")

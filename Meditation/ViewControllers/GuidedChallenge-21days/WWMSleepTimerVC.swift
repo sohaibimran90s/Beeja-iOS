@@ -612,37 +612,39 @@ class WWMSleepTimerVC: WWMBaseViewController {
             "complete_percentage": complete_percentage,
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
-            "journal_type": ""
+            "journal_type": "",
+            "challenge_days30_day":"",
+            "challenge_days30_status":""
             ] as [String : Any]
         
         
         //print("meter param WWMGuidedMeditationTimerVC... \(param)")
         
         //background thread meditation api*
-        DispatchQueue.global(qos: .background).async {
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMSleepTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMSleepTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                
+                if let _ = result["success"] as? Bool {
                     
-                    if let _ = result["success"] as? Bool {
-                        //print("success... WWMGuidedMeditationTimerVC meditationcomplete api in background")
-                        
-                        self.appPreference.setSessionAvailableData(value: true)
-                        self.meditationHistoryListAPI()
-                        
-                        WWMHelperClass.complete_percentage = "0"
-                        //self.navigateToDashboard()
-                    }else {
-                        self.saveToDB(param: param)
+                    self.appPreference.setSessionAvailableData(value: true)
+                    self.meditationHistoryListAPI()
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
                     }
-                }else{
+                }else {
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }
-            }//background thread meditation api*
-            
-            DispatchQueue.main.async {
-                self.navigateToDashboard()
+            }else{
+                self.saveToDB(param: param)
+                DispatchQueue.main.async {
+                    self.navigateToDashboard()
+                }
             }
-        }
+            WWMHelperClass.complete_percentage = "0"
+        }//background thread meditation api*
     }
     
     func saveToDB(param:[String:Any]) {

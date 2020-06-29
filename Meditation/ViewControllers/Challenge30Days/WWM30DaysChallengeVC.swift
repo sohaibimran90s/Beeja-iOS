@@ -36,14 +36,12 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
-    var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-    var i = 0
+    var checkExpireRetake = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.setUpView()
-        print(self.daysListData.count)
     }
     
     // MARK: - IndicatorInfoProvider
@@ -52,7 +50,18 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     func setUpView(){
-        if self.i == 0{
+        
+        //to check if 30 challenge is expire or not
+        if self.appPreference.get30DaysIsExpired(){
+            self.checkExpireRetake = 1
+        }
+        
+        //to check if 30 challenge is to retake
+        if day30Count() == 30{
+            self.checkExpireRetake = 2
+        }
+        
+        if self.checkExpireRetake == 0{
             //Working
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
@@ -74,7 +83,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
                 self.btnShare.isHidden = false
             }
             
-        }else if self.i == 1{
+        }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
             self.viewRetake.isHidden = true
@@ -104,7 +113,6 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.lblBelowTitle.text = ""
         }
         
-        print(self.viewCollectionViewHC.constant)
         if WWMHelperClass.hasTopNotch{
             self.collectionViewHC.constant = 290
             self.viewCollectionViewHC.constant = self.viewCollectionViewHC.constant + 30
@@ -112,6 +120,33 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         }else{
             self.collectionViewHC.constant = 260
         }
+        
+        self.checkIntroCompleted()
+    }
+    
+    //to check if the challenge is expired or not
+    func day30Count() -> Int{
+        var completed30DayCount = 0
+        for index in 0..<self.daysListData.count{
+            if self.daysListData[index].date_completed != ""{
+                completed30DayCount = completed30DayCount + 1
+            }
+            
+            return completed30DayCount
+        }
+        return 0
+    }
+    
+    //to check if to show intro button or not
+    func checkIntroCompleted(){
+        
+        let underLineColor: UIColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+        let underLineStyle = NSUnderlineStyle.single.rawValue
+        let labelAtributes:[NSAttributedString.Key : Any]  = [NSAttributedString.Key.underlineStyle: underLineStyle,
+            NSAttributedString.Key.underlineColor: underLineColor
+        ]
+        let underlineAttributedString = NSAttributedString(string: "Set a Daily Reminder", attributes: labelAtributes)
+        lblReminder.attributedText = underlineAttributedString
         
         let intro_completed = self.appPreference.get30IntroCompleted()
         if intro_completed{
@@ -132,16 +167,33 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
                 self.lblReminder.isHidden = false
             }
         }
+        
+        self.setLblTitle()
+    }
+    
+    //to check if 12 steps completed today
+    func setLblTitle(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
+        if self.appPreference.getDate12Step() == dateFormatter.string(from: Date()){
+            self.lblTitle.text = "Tomorrow is the first day of your challenge"
+        }else{
+            self.lblTitle.text = "Continue on your meditation journey and challenge yourself to create life-long habits."
+        }
     }
     
     //MARK: Challenge Expired button
     @IBAction func btnExpiredClicked(_ sender: UIButton){
-        
+        self.retakeChallengeApi()
     }
     
     //MARK: Challenge Retake button
     @IBAction func btnRetakeClicked(_ sender: UIButton){
-        
+        self.retakeChallengeApi()
     }
     
     //MARK: Set a Reminder button
@@ -158,8 +210,11 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         if !reachable.isConnectedToNetwork() {
             WWMHelperClass.showPopupAlertController(sender: self, message: Validatation_JournalOfflineMsg, title: kAlertTitle)
         }else{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMShareLoveVC") as! WWMShareLoveVC
-            self.navigationController?.pushViewController(vc, animated: true)
+            
+            if self.appPreference.getExpiryDate(){
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMShareLoveVC") as! WWMShareLoveVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
@@ -171,6 +226,11 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
+        
+        if self.appPreference.get21CompletedDaysCount() != 12{
+            return
+        }
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.challenge_type = "30days"
@@ -182,7 +242,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
 extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.array.count
+        return self.daysListData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -193,16 +253,19 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         let imgLock = cell.viewWithTag(5) as! UIImageView
         let viewBackLbl = cell.viewWithTag(2)!
         let lblChallNo = cell.viewWithTag(3) as! UILabel
-        
+    
         viewBackLbl.layer.borderWidth = 2.0
-        lblChallNo.text = "\(self.array[indexPath.item])"
+        lblChallNo.text = "\(self.daysListData[indexPath.item].day_name)"
         
         imgLock.layer.cornerRadius = 8
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
+        if indexPath.item == 29{
+            imgLeft.isHidden = true
+        }
         
-        /*if self.daysListData[indexPath.item].completed{
+        if self.daysListData[indexPath.item].completed{
             viewBackLbl.backgroundColor = UIColor.init(hexString: "#00eba9")!
             viewBackLbl.layer.borderColor = UIColor.clear.cgColor
             imgLeft.image = UIImage(named: "lineGreen")
@@ -220,21 +283,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         }else{
             imgLeft.isHidden = false
             imgLock.isHidden = true
-        }*/
-        
-        //we have to remove this once api will done*
-        viewBackLbl.layer.borderColor = UIColor.white.cgColor
-        viewBackLbl.backgroundColor = UIColor.clear
-        imgLeft.image = UIImage(named: "lineWhite")
-        lblChallNo.textColor = UIColor.white
-        
-        if self.array[indexPath.item]%7 == 0 || self.array[indexPath.item] == 30{
-            imgLeft.isHidden = true
-            imgLock.isHidden = false
-        }else{
-            imgLeft.isHidden = false
-            imgLock.isHidden = true
-        }//end*
+        }
         
         return cell
     }
@@ -248,11 +297,342 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         appPreference.set21ChallengeName(value: "30 Day Challenge")
+        self.pushViewController(sender_Tag: indexPath.item)
+    }
+    
+    func pushViewController(sender_Tag: Int){
         
-        let intro_completed = self.appPreference.get30IntroCompleted()
-        if intro_completed{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+        let obj = WWMLearnStepListVC()
+        var flag = 0
+        var position = 0
+        
+        print(self.daysListData[position].day_name)
+        
+        if self.daysListData[sender_Tag].completed{
+            self.appPreference.setType(value: "learn")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+            
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            return
+        }else{
+            for i in 0..<sender_Tag{
+                let date_completed = self.daysListData[i].date_completed
+                if date_completed != ""{
+                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                    if dateCompare.0 == 1{
+                        flag = 1
+                        break
+                    }
+                }
+            }
+        }
+        
+        //its mean you have done todays challenge
+        if flag == 1{
+            obj.xibCall(title1: KLEARNONESTEP)
+            return
+        }
+        
+        for i in 0..<sender_Tag{
+            if !self.daysListData[i].completed{
+                flag = 2
+                position = i
+                break
+            }
+        }
+        
+        //its mean you have not done previous step
+        if flag == 2{
+            obj.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.daysListData[position].day_name) \(KLEARNJUMPSTEP1)")
+        }else{
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+            
+            WWMHelperClass.day_30_name = self.daysListData[position].day_name
+            vc.daysListData = self.daysListData[position]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func check(sender_Tag: Int) -> Int{
+        for i in 0..<sender_Tag{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed != ""{
+                return 1
+            }
+        }
+        return 0
+    }
+}
+
+extension WWM30DaysChallengeVC{
+    func retakeChallengeApi() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "user_id"  : self.appPreference.getUserID(),
+            "type"     : "30days"
+            ] as [String : Any]
+        
+        print("retakeChallenge param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE1, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                //print("retake api... \(result)")
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                self.getLearnAPI()
+            }else {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getLearnAPI() {
+        
+        //self.learnStepsListData.removeAll()
+        let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            if let _ = result["success"] as? Bool {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                
+                if let total_paid = result["total_paid"] as? Double{
+                    WWMHelperClass.total_paid = Int(round(total_paid))
+                }
+                
+                if let data = result["data"] as? [[String: Any]]{
+                    print("learn result... \(result) getLearnAPI count... \(data.count)")
+                    
+                    let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
+                    if getDBLearn.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBLearn")
+                    }
+                    
+                    let getStepsData = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
+                    if getStepsData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBSteps")
+                    }
+                    
+                    let getThirtyDaysData = WWMHelperClass.fetchDB(dbName: "DBThirtyDays") as! [DBThirtyDays]
+                    if getThirtyDaysData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                    }
+                    
+                    for dict in data{
+                        
+                        let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
+                        
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        //print("timeInterval.... \(timeInterval)")
+                        dbLearnData.last_time_stamp = "\(timeInterval)"
+                        
+                        if dict["name"] as? String == "30 Day Challenge"{
+                            self.appPreference.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreference.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreference.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
+                        }
+                                                
+                        if let name = dict["name"] as? String{
+                            dbLearnData.name = name
+                        }
+                        
+                        if let intro_url = dict["intro_url"] as? String{
+                            dbLearnData.intro_url = intro_url
+                        }
+                        
+                        if let intro_completed = dict["intro_completed"] as? Bool{
+                            dbLearnData.intro_completed = intro_completed
+                        }
+                        
+                        if let min_limit = dict["min_limit"] as? String{
+                            dbLearnData.min_limit = min_limit
+                        }
+                        
+                        if let max_limit = dict["max_limit"] as? String{
+                            dbLearnData.max_limit = max_limit
+                        }
+                        
+                        if let is_expired = dict["is_expired"] as? Bool{
+                            dbLearnData.is_expired = is_expired
+                        }else{
+                            dbLearnData.is_expired = false
+                        }
+                        
+                        if let step_list = dict["step_list"] as? [[String: Any]]{
+                            for dict in step_list{
+                                let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
+                                if let completed = dict["completed"] as? Bool{
+                                    dbStepsData.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbStepsData.date_completed = date_completed
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbStepsData.description1 = description
+                                }
+                                
+                                if let id = dict["id"]{
+                                    dbStepsData.id = "\(id)"
+                                }
+                                
+                                if let outro_audio = dict["outro_audio"] as? String{
+                                    dbStepsData.outro_audio = outro_audio
+                                }
+                                
+                                if let step_audio = dict["step_audio"] as? String{
+                                    dbStepsData.step_audio = step_audio
+                                }
+                                
+                                if let step_name = dict["step_name"] as? String{
+                                    dbStepsData.step_name = step_name
+                                }
+                                
+                                if let timer_audio = dict["timer_audio"] as? String{
+                                    dbStepsData.timer_audio = timer_audio
+                                }
+                                
+                                if let title = dict["title"] as? String{
+                                    dbStepsData.title = title
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbStepsData.min_limit = min_limit
+                                }else{
+                                    dbStepsData.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbStepsData.max_limit = max_limit
+                                }else{
+                                    dbStepsData.max_limit = "98"
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                                
+                            }
+                        }
+                        
+                        if let day_list = dict["day_list"] as? [[String: Any]]{
+                            for dict in day_list{
+                                let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
+                                                                
+                                if let id = dict["id"]{
+                                    dbThirtyDays.id = "\(id)"
+                                }
+                                
+                                if let day_name = dict["day_name"] as? String{
+                                    dbThirtyDays.day_name = day_name
+                                }
+                                
+                                if let auther_name = dict["auther_name"] as? String{
+                                    dbThirtyDays.auther_name = auther_name
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbThirtyDays.description1 = description
+                                }
+                                
+                                if let is_milestone = dict["is_milestone"] as? Bool{
+                                    dbThirtyDays.is_milestone = is_milestone
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbThirtyDays.min_limit = min_limit
+                                }else{
+                                    dbThirtyDays.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbThirtyDays.max_limit = max_limit
+                                }else{
+                                    dbThirtyDays.max_limit = "98"
+                                }
+                                
+                                if let prep_time = dict["prep_time"] as? String{
+                                    dbThirtyDays.prep_time = prep_time
+                                }else{
+                                    dbThirtyDays.prep_time = "60"
+                                }
+                                
+                                if let meditation_time = dict["meditation_time"] as? String{
+                                    dbThirtyDays.meditation_time = meditation_time
+                                }else{
+                                    dbThirtyDays.meditation_time = "1200"
+                                }
+                                
+                                if let rest_time = dict["rest_time"] as? String{
+                                    dbThirtyDays.rest_time = rest_time
+                                }else{
+                                    dbThirtyDays.rest_time = "120"
+                                }
+                                
+                                if let prep_min = dict["prep_min"] as? String{
+                                    dbThirtyDays.prep_min = prep_min
+                                }else{
+                                    dbThirtyDays.prep_min = "0"
+                                }
+                                
+                                if let prep_max = dict["prep_max"] as? String{
+                                    dbThirtyDays.prep_max = prep_max
+                                }else{
+                                    dbThirtyDays.prep_max = "300"
+                                }
+                                
+                                if let rest_min = dict["rest_min"] as? String{
+                                    dbThirtyDays.rest_min = rest_min
+                                }else{
+                                    dbThirtyDays.prep_max = "0"
+                                }
+                                
+                                if let rest_max = dict["rest_max"] as? String{
+                                    dbThirtyDays.rest_max = rest_max
+                                }else{
+                                    dbThirtyDays.prep_max = "600"
+                                }
+                                
+                                if let med_min = dict["med_min"] as? String{
+                                    dbThirtyDays.med_min = med_min
+                                }else{
+                                    dbThirtyDays.med_min = "0"
+                                }
+                                
+                                if let med_max = dict["med_max"] as? String{
+                                    dbThirtyDays.med_max = med_max
+                                }else{
+                                    dbThirtyDays.med_max = "2400"
+                                }
+                                
+                                if let completed = dict["completed"] as? Bool{
+                                    dbThirtyDays.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbThirtyDays.date_completed = date_completed
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                            }
+                        }
+                        
+                        WWMHelperClass.saveDb()
+                    }
+                }
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                self.callHomeVC1()
+            }
         }
     }
 }
