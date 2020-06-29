@@ -28,7 +28,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(guidedData.cat_EmotionList.count)
+        //print(guidedData.cat_EmotionList.count)
     }
     
     // MARK: - IndicatorInfoProvider

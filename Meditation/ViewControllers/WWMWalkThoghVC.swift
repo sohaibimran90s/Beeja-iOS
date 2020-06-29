@@ -662,6 +662,7 @@ extension WWMWalkThoghVC{
                         if dict["name"] as? String == "30 Day Challenge"{
                             self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                                                 
                         if let name = dict["name"] as? String{

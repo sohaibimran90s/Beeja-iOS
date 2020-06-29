@@ -586,7 +586,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
     }
     
-    
     func syncAddJournalData() {
         let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
         if data.count > 0 {
