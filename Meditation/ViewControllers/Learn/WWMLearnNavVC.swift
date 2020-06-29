@@ -131,8 +131,6 @@ class WWMLearnNavVC: WWMBaseViewController {
                 if dict.name == "30 Day Challenge"{
                     self.appPreference.set30IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
-                    
-                    //print("30intro_completed... \(self.appPreference.get30IntroCompleted()) 30intro_url... \(self.appPreference.get30DaysURL())")
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
