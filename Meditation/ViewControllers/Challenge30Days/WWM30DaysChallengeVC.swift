@@ -139,6 +139,15 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     
     //to check if to show intro button or not
     func checkIntroCompleted(){
+        
+        let underLineColor: UIColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+        let underLineStyle = NSUnderlineStyle.single.rawValue
+        let labelAtributes:[NSAttributedString.Key : Any]  = [NSAttributedString.Key.underlineStyle: underLineStyle,
+            NSAttributedString.Key.underlineColor: underLineColor
+        ]
+        let underlineAttributedString = NSAttributedString(string: "Set a Daily Reminder", attributes: labelAtributes)
+        lblReminder.attributedText = underlineAttributedString
+        
         let intro_completed = self.appPreference.get30IntroCompleted()
         if intro_completed{
             self.btnIntro.isHidden = true
