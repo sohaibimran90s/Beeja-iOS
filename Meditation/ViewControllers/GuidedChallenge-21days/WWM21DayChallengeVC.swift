@@ -736,7 +736,6 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                 self.appPreference.setType(value: "guided")
                 WWMHelperClass.days21StepNo = "Step \(data.step_id)"
                 WWMHelperClass.stepsCompleted = data.completed
-                //print("data.stepNo*** \(data.step_id) data.emotion_Id*** \(data.emotion_Id)  data.completed*** \(data.completed)")
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
                 vc.audioData = data.audio_list[collection_cell_tag]

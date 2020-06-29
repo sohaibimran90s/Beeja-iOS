@@ -36,7 +36,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
-    var checkExpireRetake = 1
+    var checkExpireRetake = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,8 +221,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     //Start Challenge
     @IBAction func btnStartChalClicked(_ sender: UIButton){
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.pushViewController(sender_Tag: self.startChallengeFunc())
     }
     
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
@@ -236,6 +235,16 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         vc.challenge_type = "30days"
         vc.value = "30days"
         self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    func startChallengeFunc() -> Int{
+        for i in 0..<self.daysListData.count{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed == ""{
+                return i
+            }
+        }
+        return 0
     }
 }
 
@@ -302,67 +311,63 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func pushViewController(sender_Tag: Int){
         
-        let obj = WWMLearnStepListVC()
-        var flag = 0
-        var position = 0
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         
-        print(self.daysListData[position].day_name)
+        WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
+        vc.daysListData = self.daysListData[sender_Tag]
+        self.navigationController?.pushViewController(vc, animated: true)
         
-        if self.daysListData[sender_Tag].completed{
-            self.appPreference.setType(value: "learn")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
-            
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-            return
-        }else{
-            for i in 0..<sender_Tag{
-                let date_completed = self.daysListData[i].date_completed
-                if date_completed != ""{
-                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                    if dateCompare.0 == 1{
-                        flag = 1
-                        break
-                    }
-                }
-            }
-        }
-        
-        //its mean you have done todays challenge
-        if flag == 1{
-            obj.xibCall(title1: KLEARNONESTEP)
-            return
-        }
-        
-        for i in 0..<sender_Tag{
-            if !self.daysListData[i].completed{
-                flag = 2
-                position = i
-                break
-            }
-        }
-        
-        //its mean you have not done previous step
-        if flag == 2{
-            obj.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.daysListData[position].day_name) \(KLEARNJUMPSTEP1)")
-        }else{
-            
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-            
-            WWMHelperClass.day_30_name = self.daysListData[position].day_name
-            vc.daysListData = self.daysListData[position]
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-    func check(sender_Tag: Int) -> Int{
-        for i in 0..<sender_Tag{
-            let date_completed = self.daysListData[i].date_completed
-            if date_completed != ""{
-                return 1
-            }
-        }
-        return 0
+//        let obj = WWMLearnStepListVC()
+//        var flag = 0
+//        var position = 0
+//
+//        print(self.daysListData[position].day_name)
+//
+//        if self.daysListData[sender_Tag].completed{
+//            self.appPreference.setType(value: "learn")
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
+//
+//            self.navigationController?.pushViewController(vc, animated: true)
+//
+//            return
+//        }else{
+//            for i in 0..<sender_Tag{
+//                let date_completed = self.daysListData[i].date_completed
+//                if date_completed != ""{
+//                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+//                    if dateCompare.0 == 1{
+//                        flag = 1
+//                        break
+//                    }
+//                }
+//            }
+//        }
+//
+//        //its mean you have done todays challenge
+//        if flag == 1{
+//            obj.xibCall(title1: KLEARNONESTEP)
+//            return
+//        }
+//
+//        for i in 0..<sender_Tag{
+//            if !self.daysListData[i].completed{
+//                flag = 2
+//                position = i
+//                break
+//            }
+//        }
+//
+//        //its mean you have not done previous step
+//        if flag == 2{
+//            obj.xibCall(title1: "\(KLEARNJUMPSTEP) \(self.daysListData[position].day_name) \(KLEARNJUMPSTEP1)")
+//        }else{
+//
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+//
+//            WWMHelperClass.day_30_name = self.daysListData[position].day_name
+//            vc.daysListData = self.daysListData[position]
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
     }
 }
 

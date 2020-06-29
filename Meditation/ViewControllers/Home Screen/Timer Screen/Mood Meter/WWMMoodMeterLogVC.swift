@@ -287,7 +287,6 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 }
             }
             WWMHelperClass.complete_percentage = "0"
-            WWMHelperClass.day_30_name = ""
             WWMHelperClass.day_30_status = ""
         }
     }
