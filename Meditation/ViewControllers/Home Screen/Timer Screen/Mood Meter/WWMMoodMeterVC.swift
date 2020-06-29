@@ -315,17 +315,25 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }else {
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.navigateToDashboard()
+                    }
                 }
             }else {
                 self.saveToDB(param: param)
+                DispatchQueue.main.async {
+                    self.navigateToDashboard()
+                }
             }
             
             WWMHelperClass.complete_percentage = "0"
             WWMHelperClass.day_30_name = ""
             WWMHelperClass.day_30_status = ""
-            self.navigateToDashboard()
         }
     }
     

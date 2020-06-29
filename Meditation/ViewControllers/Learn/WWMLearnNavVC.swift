@@ -68,6 +68,10 @@ class WWMLearnNavVC: WWMBaseViewController {
                 jsonData["max_limit"] = dict.max_limit
                 jsonData["is_expired"] = dict.is_expired
                 
+                if dict.name == "30 Day Challenge"{
+                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
+                }
+                
                 var completedCount = 0
 
                 let getLearnDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]

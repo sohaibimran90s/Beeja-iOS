@@ -81,11 +81,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
         WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "SKIPPED", itemName: "")
         
         self.txtViewLog.text = ""
-        
-        DispatchQueue.global(qos: .background).async {
-            self.completeMeditationAPI()
-        }
-        self.logExperience()
+        self.completeMeditationAPI()
     }
     
     @IBAction func btnSubmitAction(_ sender: Any) {
@@ -107,12 +103,9 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 }
             }
             
-            DispatchQueue.global(qos: .background).async {
-                self.completeMeditationAPI()
-            }
+            self.completeMeditationAPI()
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
-            self.logExperience()
         }
     }
 
@@ -159,11 +152,20 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }else {
                     self.saveToDB(param: param)
+                    DispatchQueue.main.async {
+                        self.logExperience()
+                    }
                 }
             }else {
                 self.saveToDB(param: param)
+                DispatchQueue.main.async {
+                    self.logExperience()
+                }
             }
             WWMHelperClass.complete_percentage = "0"
             WWMHelperClass.day_30_name = ""
@@ -268,12 +270,9 @@ extension WWMMoodJournalVC: UITextViewDelegate{
         if  txtViewLog.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KTIMETOUPDATEJOUR, title: kAlertTitle)
         }else {
-            DispatchQueue.global(qos: .background).async {
-                self.completeMeditationAPI()
-            }
+            self.completeMeditationAPI()
             // Analytics
             WWMHelperClass.sendEventAnalytics(contentType: "JOURNALENTRY", itemId: "POPULATED", itemName: "")
-            self.logExperience()
         }
     }
 }

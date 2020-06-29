@@ -999,6 +999,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if dict["name"] as? String == "30 Day Challenge"{
                             self.appPreffrence.set30IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
                         //print("30intro_completed... \(self.appPreffrence.get30IntroCompleted()) 30intro_url... \(self.appPreffrence.get30DaysURL())")

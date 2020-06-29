@@ -75,7 +75,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         if self.type == "Guided"{
             for data in self.arrGuidedList1 {
                 
-                print(data.cat_mode)
+                //print(data.cat_mode)
                 if data.cat_mode == "challenge"{
                     //WWM21DayChallengeVC
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC

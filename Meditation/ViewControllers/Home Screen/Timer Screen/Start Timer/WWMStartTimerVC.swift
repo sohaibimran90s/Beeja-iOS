@@ -927,26 +927,42 @@ class WWMStartTimerVC: WWMBaseViewController {
                     if let _ = result["success"] as? Bool {
                         self.appPreffrence.setSessionAvailableData(value: true)
                         self.meditationHistoryListAPI()
+                        
+                        DispatchQueue.main.async {
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                                self.appPreference.setType(value: "learn")
+                                self.callHomeVC1()
+                            }else{
+                                self.navigateToDashboard()
+                            }
+                        }
                     }else {
                         self.saveToDB(param: param)
+                        
+                        DispatchQueue.main.async {
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                                self.appPreference.setType(value: "learn")
+                                self.callHomeVC1()
+                            }else{
+                                self.navigateToDashboard()
+                            }
+                        }
                     }
                 }else{
                     self.saveToDB(param: param)
+                    
+                    DispatchQueue.main.async {
+                        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                            self.appPreference.setType(value: "learn")
+                            self.callHomeVC1()
+                        }else{
+                            self.navigateToDashboard()
+                        }
+                    }
                 }
                 
                 WWMHelperClass.complete_percentage = "0"
             }//background thread meditation api*
-            
-            DispatchQueue.main.async {
-                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
-                    self.appPreference.setType(value: "learn")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                    UIApplication.shared.keyWindow?.rootViewController = vc
-                }else{
-                    self.navigateToDashboard()
-                }
-                
-            }
         }
     }
     

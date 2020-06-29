@@ -28,7 +28,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(type)
+        //print(type)
         self.btnMantra.layer.cornerRadius = 20
         self.btnMantra.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnMantra.layer.borderWidth = 2.0
@@ -84,7 +84,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBAction func btnMantraAction(_ sender: UIButton){
         if self.guidedData.cat_EmotionList.count > 0{
             let randomIndex = Int(arc4random_uniform(UInt32(self.guidedData.cat_EmotionList.count)))
-            print(randomIndex)
+            //print(randomIndex)
             
             let data = self.guidedData.cat_EmotionList[randomIndex]
             let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")

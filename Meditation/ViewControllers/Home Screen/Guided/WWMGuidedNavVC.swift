@@ -287,7 +287,7 @@ class WWMGuidedNavVC: WWMBaseViewController {
                 jsonString["emotion_list"] = jsonEmotions
                 jsonEmotions.removeAll()
                 let guidedData = WWMGuidedData.init(json: jsonString)
-                print("PT - \(guidedData.cat_Name) - \(guidedData.cat_Id)")
+                //print("PT - \(guidedData.cat_Name) - \(guidedData.cat_Id)")
                 self.arrGuidedList.append(guidedData)
             }
             
