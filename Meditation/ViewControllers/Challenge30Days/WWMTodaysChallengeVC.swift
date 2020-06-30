@@ -42,8 +42,8 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
         self.appPreference.set21ChallengeName(value: "30 Day Challenge")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
 
+        vc.daysListData = daysListData
         self.navigationController?.pushViewController(vc, animated: false)
-        //self.callHomeController()
     }
     
     func callHomeController(){

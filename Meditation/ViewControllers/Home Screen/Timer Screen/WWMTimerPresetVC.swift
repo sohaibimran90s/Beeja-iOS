@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WWMTimerPresetVCDelegate {
-    func choosePresetName(index: Int)
+    func choosePresetName(index: Int, isChallengePreset: Bool)
 }
 
 class WWMTimerPresetVC: UIViewController {
@@ -30,7 +30,13 @@ class WWMTimerPresetVC: UIViewController {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableViewHeightConstraint.constant = CGFloat(80 * self.LevelData.count + 30)
+        
+        if self.appPreffrence.get21ChallengeName() == "30 Day Challenge"{
+            self.appPreffrence.setType(value: "learn")
+            self.tableViewHeightConstraint.constant = CGFloat(80 * self.LevelData.count + 1 + 76)
+        }else{
+            self.tableViewHeightConstraint.constant = CGFloat(80 * self.LevelData.count + 30)
+        }
     }
     
     @IBAction func crossBtnClicked(_ sender: UIButton) {
@@ -50,7 +56,6 @@ extension WWMTimerPresetVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")!
-        
         
         let label:UILabel = cell.viewWithTag(1) as! UILabel
         label.layer.borderWidth = 2
@@ -79,7 +84,17 @@ extension WWMTimerPresetVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.dismiss(animated: true) {
-            self.delegate?.choosePresetName(index: indexPath.row)
+            
+            print(indexPath.row)
+            if self.appPreffrence.get21ChallengeName() == "30 Day Challenge"{
+                if indexPath.row == 0{
+                    self.delegate?.choosePresetName(index: indexPath.row, isChallengePreset: true)
+                }else{
+                    self.delegate?.choosePresetName(index: indexPath.row - 1, isChallengePreset: false)
+                }
+            }else{
+                self.delegate?.choosePresetName(index: indexPath.row, isChallengePreset: false)
+            }
         }
     }
     
