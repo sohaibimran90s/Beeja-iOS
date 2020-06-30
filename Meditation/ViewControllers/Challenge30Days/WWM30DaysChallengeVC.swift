@@ -36,7 +36,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
     
-    var checkExpireRetake = 1
+    var checkExpireRetake = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,13 +221,14 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     //Start Challenge
     @IBAction func btnStartChalClicked(_ sender: UIButton){
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.pushViewController(sender_Tag: self.startChallengeFunc())
     }
     
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
         
         if self.appPreference.get21CompletedDaysCount() != 12{
+            let obj = WWMLearnStepListVC()
+            obj.xibCall(title1: "Please complete 12 steps first")
             return
         }
         
@@ -236,6 +237,17 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         vc.challenge_type = "30days"
         vc.value = "30days"
         self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    //start challenge from button
+    func startChallengeFunc() -> Int{
+        for i in 0..<self.daysListData.count{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed == ""{
+                return i
+            }
+        }
+        return 0
     }
 }
 
@@ -261,7 +273,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
-        if indexPath.item == 29{
+        if indexPath.item == self.daysListData.count - 1{
             imgLeft.isHidden = true
         }
         
@@ -306,7 +318,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         var flag = 0
         var position = 0
         
-        print(self.daysListData[position].day_name)
+        //print(self.daysListData[position].day_name)
         
         if self.daysListData[sender_Tag].completed{
             self.appPreference.setType(value: "learn")
@@ -353,16 +365,6 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
             vc.daysListData = self.daysListData[position]
             self.navigationController?.pushViewController(vc, animated: true)
         }
-    }
-    
-    func check(sender_Tag: Int) -> Int{
-        for i in 0..<sender_Tag{
-            let date_completed = self.daysListData[i].date_completed
-            if date_completed != ""{
-                return 1
-            }
-        }
-        return 0
     }
 }
 

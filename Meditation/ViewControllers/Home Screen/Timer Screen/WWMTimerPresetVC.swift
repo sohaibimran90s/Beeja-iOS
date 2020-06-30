@@ -18,8 +18,8 @@ class WWMTimerPresetVC: UIViewController {
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     var delegate: WWMTimerPresetVCDelegate?
-    
     var LevelData  = [DBLevelData]()
+    let appPreffrence = WWMAppPreference()
     
     private var finishedLoadingInitialTableCells = false
     
@@ -30,8 +30,6 @@ class WWMTimerPresetVC: UIViewController {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-
         self.tableViewHeightConstraint.constant = CGFloat(80 * self.LevelData.count + 30)
     }
     
@@ -42,18 +40,34 @@ class WWMTimerPresetVC: UIViewController {
 
 extension WWMTimerPresetVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.LevelData.count
+        
+        if self.appPreffrence.get21ChallengeName() == "30 Day Challenge"{
+            return self.LevelData.count + 1
+        }else{
+            return self.LevelData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell")!
         
-        let data = self.LevelData[indexPath.row]
+        
         let label:UILabel = cell.viewWithTag(1) as! UILabel
         label.layer.borderWidth = 2
         label.layer.cornerRadius = 20
         label.layer.borderColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
-        label.text = data.levelName
+        
+        if self.appPreffrence.get21ChallengeName() == "30 Day Challenge"{
+            if indexPath.row == 0{
+                label.text = "30 Day Challenge"
+            }else{
+                let data = self.LevelData[indexPath.row - 1]
+                label.text = data.levelName
+            }
+        }else{
+            let data = self.LevelData[indexPath.row]
+            label.text = data.levelName
+        }
         
         return cell
     }

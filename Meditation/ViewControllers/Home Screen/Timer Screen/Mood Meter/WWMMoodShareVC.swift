@@ -66,13 +66,31 @@ class WWMMoodShareVC: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func btnSkipAction(_ sender: Any) {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "VIBES", itemId: "SKIPPED", itemName: "IOS")
+        
+        print("getType... \(self.appPreference.getType())")
+        if self.appPreference.getType() == "learn"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                   self.movetoDashboard()
+                }
+                WWMHelperClass.day_30_name = ""
+            }else{
+                self.movetoDashboard()
+            }
+        }else if self.appPreference.getType() == "guided"{
+            if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
                 
-        if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
-            
-            WWMHelperClass.days21StepNo = ""
-            WWMHelperClass.stepsCompleted = false
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
-            self.navigationController?.pushViewController(vc, animated: true)
+                WWMHelperClass.days21StepNo = ""
+                WWMHelperClass.stepsCompleted = false
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                self.movetoDashboard()
+            }
         }else{
             self.movetoDashboard()
         }
