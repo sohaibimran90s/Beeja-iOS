@@ -227,6 +227,8 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
         
         if self.appPreference.get21CompletedDaysCount() != 12{
+            let obj = WWMLearnStepListVC()
+            obj.xibCall(title1: "Please complete 12 steps first")
             return
         }
         
@@ -271,7 +273,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
-        if indexPath.item == 29{
+        if indexPath.item == self.daysListData.count - 1{
             imgLeft.isHidden = true
         }
         
@@ -316,7 +318,7 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         var flag = 0
         var position = 0
         
-        print(self.daysListData[position].day_name)
+        //print(self.daysListData[position].day_name)
         
         if self.daysListData[sender_Tag].completed{
             self.appPreference.setType(value: "learn")
