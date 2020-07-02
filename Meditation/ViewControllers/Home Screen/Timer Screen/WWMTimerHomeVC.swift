@@ -28,15 +28,15 @@ class WWMTimerHomeVC: WWMBaseViewController {
     @IBOutlet weak var viewPrePost: UIView!
     
     var selectedMeditationData  = DBMeditationData()
-    var selectedLevelData  = DBLevelData()
+    var selectedLevelData = DBLevelData()
+    var daysListData = ThirtyDaysListData()
     var settingData = DBSettings()
-    
     let gradientLayer = CAGradientLayer()
-    
     var prepTime = 0
     var meditationTime = 0
     var restTime = 0
     var min = 0
+    var isChallengePreset = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,7 +137,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
     }
     
     @objc func getSettingData() {
-        print(self.userData.name)
+        //print(self.userData.name)
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
@@ -178,23 +178,44 @@ class WWMTimerHomeVC: WWMBaseViewController {
     }
     
     func setUpSliderTimesAccordingToLevels() {
-        self.sliderPrepTime.minimumValue = Float(selectedLevelData.minPrep)
-        self.sliderPrepTime.maximumValue = Float(selectedLevelData.maxPrep)
-        self.sliderPrepTime.value = Float(selectedLevelData.prepTime)
-        self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
-        self.prepTime = Int(self.sliderPrepTime.value)
-        
-        self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
-        self.sliderMeditationTime.maximumValue = Float(selectedLevelData.maxMeditation)
-        self.sliderMeditationTime.value = Float(selectedLevelData.meditationTime)
-        self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
-        self.meditationTime = Int(self.sliderMeditationTime.value)
-        
-        self.sliderRestTime.minimumValue = Float(selectedLevelData.minRest)
-        self.sliderRestTime.maximumValue = Float(selectedLevelData.maxRest)
-        self.sliderRestTime.value = Float(selectedLevelData.restTime)
-        self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
-        self.restTime = Int(self.sliderRestTime.value)
+        if self.isChallengePreset{
+            self.btnChoosePreset.setTitle("30 Day Challenge", for: .normal)
+            self.sliderPrepTime.minimumValue = Float(Int(self.daysListData.prep_min) ?? 0)
+            self.sliderPrepTime.maximumValue = Float(Int(self.daysListData.prep_max) ?? 0)
+            self.sliderPrepTime.value = Float(Int(self.daysListData.prep_time) ?? 0)
+            self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
+            self.prepTime = Int(self.sliderPrepTime.value)
+            
+            self.sliderMeditationTime.minimumValue = Float(Int(self.daysListData.med_min) ?? 0)
+            self.sliderMeditationTime.maximumValue = Float(Int(self.daysListData.med_max) ?? 0)
+            self.sliderMeditationTime.value = Float(Int(self.daysListData.meditation_time) ?? 0)
+            self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
+            self.meditationTime = Int(self.sliderMeditationTime.value)
+            
+            self.sliderRestTime.minimumValue = Float(Int(self.daysListData.rest_min) ?? 0)
+            self.sliderRestTime.maximumValue = Float(Int(self.daysListData.rest_max) ?? 0)
+            self.sliderRestTime.value = Float(Int(self.daysListData.rest_time) ?? 0)
+            self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+            self.restTime = Int(self.sliderRestTime.value)
+        }else{
+            self.sliderPrepTime.minimumValue = Float(selectedLevelData.minPrep)
+            self.sliderPrepTime.maximumValue = Float(selectedLevelData.maxPrep)
+            self.sliderPrepTime.value = Float(selectedLevelData.prepTime)
+            self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
+            self.prepTime = Int(self.sliderPrepTime.value)
+            
+            self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
+            self.sliderMeditationTime.maximumValue = Float(selectedLevelData.maxMeditation)
+            self.sliderMeditationTime.value = Float(selectedLevelData.meditationTime)
+            self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
+            self.meditationTime = Int(self.sliderMeditationTime.value)
+            
+            self.sliderRestTime.minimumValue = Float(selectedLevelData.minRest)
+            self.sliderRestTime.maximumValue = Float(selectedLevelData.maxRest)
+            self.sliderRestTime.value = Float(selectedLevelData.restTime)
+            self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
+            self.restTime = Int(self.sliderRestTime.value)
+        }
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -332,23 +353,6 @@ class WWMTimerHomeVC: WWMBaseViewController {
     
     @IBAction func btnPresetLevelAction(_ sender: Any) {
         
-//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        for index in 0..<selectedMeditationData.levels!.count+1 {
-//            if index == selectedMeditationData.levels!.count {
-//                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-//            }else {
-//                let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-//                alert.addAction(UIAlertAction.init(title: levels![index].levelName, style: .default, handler: { (UIAlertAction) in
-//                self.ActionSheetAction(index: index)
-//            }))
-//            }
-//        }
-//
-//        alert.view.tintColor = UIColor.black
-//        self.present(alert, animated: true, completion: {
-//            print("completion block")
-//        })
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerPresetVC") as! WWMTimerPresetVC
         if let levels = self.selectedMeditationData.levels?.array as? [DBLevelData] {
             vc.LevelData = levels
@@ -358,23 +362,10 @@ class WWMTimerHomeVC: WWMBaseViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true, completion: nil)
     }
-    
-    func ActionSheetAction(index:Int) {
-        let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]
-        for indexLevel in 0..<levels!.count {
-            let level = levels![indexLevel]
-                if index == indexLevel {
-                    selectedLevelData = level
-                    self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
-                }
-        }
-        self.setUpSliderTimesAccordingToLevels()
-                
-    }
 }
 
 extension WWMTimerHomeVC: WWMTimerPresetVCDelegate{
-    func choosePresetName(index: Int) {
+    func choosePresetName(index: Int, isChallengePreset: Bool) {
         if let levels = self.selectedMeditationData.levels?.array as? [DBLevelData]{
             for indexLevel in 0..<levels.count {
                 let level = levels[indexLevel]
@@ -383,7 +374,9 @@ extension WWMTimerHomeVC: WWMTimerPresetVCDelegate{
                     self.btnChoosePreset.setTitle("\(selectedLevelData.levelName ?? "")  ", for: .normal)
                 }
             }
+            self.isChallengePreset = isChallengePreset
             self.setUpSliderTimesAccordingToLevels()
+            //is30DaysPresetSelected
         }
     }
 }

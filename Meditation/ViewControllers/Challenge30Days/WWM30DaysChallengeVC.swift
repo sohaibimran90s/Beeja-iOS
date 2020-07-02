@@ -322,8 +322,10 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         
         if self.daysListData[sender_Tag].completed{
             self.appPreference.setType(value: "learn")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnGetSetVC") as! WWMLearnGetSetVC
-            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
+                       
+            WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
+            vc.daysListData = self.daysListData[sender_Tag]
             self.navigationController?.pushViewController(vc, animated: true)
             
             return

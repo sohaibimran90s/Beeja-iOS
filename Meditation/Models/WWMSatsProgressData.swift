@@ -71,7 +71,8 @@ class WWMSatsProgressData: NSObject {
         //days30Challenge
         if let days_30 = json["30_days_challenge"] as? [[String:Any]]{
             for dict in days_30{
-                print("dict... \(dict)")
+                let days30Data = WWMSatsProgress30Days.init(json: dict)
+                days30Challenge.append(days30Data)
             }
         }
     }
@@ -123,7 +124,7 @@ class WWMSatsProgress30Days: NSObject {
     
     var completed_date = ""
     var day_id = 1
-    var emotion_id = ""
+    var is_milestone = false
     var status = false
     
     override init() {
@@ -132,7 +133,7 @@ class WWMSatsProgress30Days: NSObject {
     init(json:[String:Any]) {
         completed_date = json["completed_date"] as? String ?? ""
         day_id = json["day_id"] as? Int ?? 1
-        emotion_id = json["emotion_id"] as? String ?? ""
+        is_milestone = json["is_milestone"] as? Bool ?? false
         status = json["status"] as? Bool ?? false
     }
 }
