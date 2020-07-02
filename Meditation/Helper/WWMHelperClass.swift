@@ -41,7 +41,7 @@ class WWMHelperClass {
     
     //30 days
     static var day_30_name = ""
-    static var day_30_status = ""
+    static var day_type = ""
     
     //Analytic %age
     static var complete_percentage: String = "0"
@@ -309,7 +309,6 @@ class WWMHelperClass {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let currentDateString = dateFormatter.string(from: Date())
@@ -324,7 +323,6 @@ class WWMHelperClass {
                 dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
             }
             
-//            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
             currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
             let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate

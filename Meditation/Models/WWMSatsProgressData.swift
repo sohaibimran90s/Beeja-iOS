@@ -125,7 +125,7 @@ class WWMSatsProgress30Days: NSObject {
     var completed_date = ""
     var day_id = 1
     var is_milestone = false
-    var status = false
+    var completed = false
     
     override init() {
     }
@@ -134,7 +134,7 @@ class WWMSatsProgress30Days: NSObject {
         completed_date = json["completed_date"] as? String ?? ""
         day_id = json["day_id"] as? Int ?? 1
         is_milestone = json["is_milestone"] as? Bool ?? false
-        status = json["status"] as? Bool ?? false
+        completed = json["completed"] as? Bool ?? false
     }
 }
 

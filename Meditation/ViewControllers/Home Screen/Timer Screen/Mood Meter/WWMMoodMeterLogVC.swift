@@ -258,8 +258,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             "is_complete": "1",
             "journal_type": "",
             "title": "",
-            "challenge_days30_day":WWMHelperClass.day_30_name,
-            "challenge_days30_status":WWMHelperClass.day_30_status
+            "challenge_day_id":WWMHelperClass.day_30_name,
+            "challenge_type":WWMHelperClass.day_type
             ] as [String : Any]
         print("param...+++++++++ \(param)")
         
@@ -287,7 +287,8 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 }
             }
             WWMHelperClass.complete_percentage = "0"
-            WWMHelperClass.day_30_status = ""
+            WWMHelperClass.day_type = ""
+            WWMHelperClass.day_30_name = ""
         }
     }
     

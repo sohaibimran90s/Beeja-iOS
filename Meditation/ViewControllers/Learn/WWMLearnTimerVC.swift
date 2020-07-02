@@ -349,8 +349,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":"",
-            "challenge_days30_status":""
+            "challenge_day_id":"",
+            "challenge_type":""
             ] as [String : Any]
         
         //background thread meditation api*
@@ -591,12 +591,9 @@ class WWMLearnTimerVC: WWMBaseViewController {
             let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
             if nintyFivePercentDB.count > 0{
                 self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
-                
-                //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
             }
             
         }//offline data meditation*
-        
         
         if isPlayer {
             if self.totalAudioLength != ""{
@@ -627,9 +624,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        //print("id+++++ \(id) data+++++ \(data)")
-        
+                
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {
                 // update

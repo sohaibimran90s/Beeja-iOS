@@ -35,8 +35,8 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     let reachable = Reachabilities()
     var itemInfo: IndicatorInfo = "View"
     var daysListData: [ThirtyDaysListData] = []
-    
     var checkExpireRetake = 0
+    var lastChallengeDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
             self.viewReminder.isHidden = false
-            self.lblMeditationCount.text = "Day 2/30"
+            self.lblMeditationCount.text = "Day \(day30Count())/30"
             self.lblMeditationCountTopConstraint.constant = 16
             self.viewCollectionViewHC.constant = 403
             self.viewMeditationDaysHC.constant = 530
@@ -274,10 +274,6 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         imgLock.layer.borderColor = UIColor.black.cgColor
         imgLock.layer.borderWidth = 2
         
-        if indexPath.item == self.daysListData.count - 1{
-            imgLeft.isHidden = true
-        }
-        
         if self.daysListData[indexPath.item].completed{
             viewBackLbl.backgroundColor = UIColor.init(hexString: "#00eba9")!
             viewBackLbl.layer.borderColor = UIColor.clear.cgColor
@@ -298,6 +294,34 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
             imgLock.isHidden = true
         }
         
+        if indexPath.item == self.daysListData.count - 1{
+            imgLeft.isHidden = true
+        }
+        
+        //to display the current highlighted view to play
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.locale = Locale(identifier: formatter.locale.identifier)
+        formatter.dateFormat = "yyyy-MM-dd"
+        let lastDateString: String = getLastChallengeDate().0
+        
+        if lastDateString != ""{
+            let lastDate = formatter.date(from: lastDateString)
+            let currentDateString = formatter.string(from: Date())
+            let currentDate = formatter.date(from: currentDateString)
+            
+            if indexPath.item < self.daysListData.count - 1{
+                if currentDate! > lastDate!{
+                    if indexPath.item == getLastChallengeDate().1 + 1{
+                        viewBackLbl.layer.borderColor = UIColor.init(hexString: "#00eba9")?.cgColor
+                        viewBackLbl.backgroundColor = UIColor.clear
+                        imgLeft.image = UIImage(named: "lineWhite")
+                        lblChallNo.textColor = UIColor.white
+                    }
+                }
+            }
+        }
+        
         return cell
     }
     
@@ -313,18 +337,31 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
         self.pushViewController(sender_Tag: indexPath.item)
     }
     
+    //last challenge date played
+    func getLastChallengeDate() -> (String, Int){
+        
+        var index1 = 0
+        for index in 0..<self.daysListData.count{
+            if self.daysListData[index].date_completed != ""{
+                let dateString = self.daysListData[index].date_completed.components(separatedBy: " ")
+                self.lastChallengeDate = dateString[0]
+                index1 = index
+            }
+        }
+        return (self.lastChallengeDate, index1)
+    }
+    
     func pushViewController(sender_Tag: Int){
         
         let obj = WWMLearnStepListVC()
         var flag = 0
         var position = 0
-        
-        //print(self.daysListData[position].day_name)
-        
+                
         if self.daysListData[sender_Tag].completed{
             self.appPreference.setType(value: "learn")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-                       
+            
+            WWMHelperClass.day_type = "30days"
             WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
             vc.daysListData = self.daysListData[sender_Tag]
             self.navigationController?.pushViewController(vc, animated: true)
@@ -364,8 +401,9 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
             
-            WWMHelperClass.day_30_name = self.daysListData[position].day_name
-            vc.daysListData = self.daysListData[position]
+            WWMHelperClass.day_type = "30days"
+            WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
+            vc.daysListData = self.daysListData[sender_Tag]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -377,12 +415,14 @@ extension WWM30DaysChallengeVC{
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_id"  : self.appPreference.getUserID(),
-            "type"     : "30days"
+            "guided_id": "",
+            "type"     : "30days",
+            "action"   : "flushdata"
             ] as [String : Any]
         
         print("retakeChallenge param... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE1, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 //print("retake api... \(result)")
                 self.appPreference.setType(value: "learn")

@@ -1164,7 +1164,9 @@ extension WWM21DayChallengeVC{
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "user_id"       : self.appPreference.getUserID(),
-            "guided_id"     : guided_id
+            "guided_id"     : guided_id,
+            "type"          : "",
+            "action"        : "flushdata"
             ] as [String : Any]
         
         //print("retakeChallenge param... \(param)")
@@ -1401,8 +1403,6 @@ extension WWM21DayChallengeVC{
                             WWMHelperClass.saveDb()
                             self.reloadTabs21DaysController()
                         }
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

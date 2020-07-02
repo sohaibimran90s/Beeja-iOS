@@ -23,6 +23,12 @@ class WWMLearnNavVC: WWMBaseViewController {
         if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
             self.appPreference.setType(value: "learn")
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationLearn(notification:)), name: Notification.Name("notificationLearn"), object: nil)
+        self.fetchLearnDataFromDB()
+    }
+    
+    @objc func notificationLearn(notification: Notification) {
         self.fetchLearnDataFromDB()
     }
     
@@ -123,7 +129,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                     jsonThirtyDaysString["med_min"] = day_list.med_min
                     jsonThirtyDaysString["med_max"] = day_list.med_max
                     jsonThirtyDaysString["completed"] = day_list.completed
-                    jsonThirtyDaysString["completed"] = day_list.date_completed
+                    jsonThirtyDaysString["date_completed"] = day_list.date_completed
                     
                     jsonThirtyDays.append(jsonThirtyDaysString)
                 }
@@ -137,8 +143,6 @@ class WWMLearnNavVC: WWMBaseViewController {
                 let learnData = WWMLearnData.init(json: jsonData)
                 self.arrLearnList.append(learnData)
                 jsonThirtyDays.removeAll()
-                
-                //print("jsonData... \(jsonData)")
             }
             
             for view in self.containerView.subviews{

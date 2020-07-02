@@ -81,7 +81,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         //community
         let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.locale = Locale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         
@@ -455,14 +454,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_DICTIONARY, context: "URL_DICTIONARY", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
-                //print("get dictionary result... \(result)")
                 
                 let systemDate = Int(Date().timeIntervalSince1970)
                 
-                //let result = ["getVibesImages": 1569801600, "getSubscriptionPlans": 1572393600, "wisdom": 1583366400, "getProfile": 1583366400, "community": nil, "guidedData": 1583366400, "mantras": 1569801600, "getmoods": 1569801600, "combinedMantra": 1569801600, "steps": 1569801600, "getMeditationData": 1583366400, "stepFaq": 1569801600]
                 //community data*
                 if let communtiyTimeStamp = result["community"] as? Int{
-                    //print("communtiyTimeStamp.....++ \(communtiyTimeStamp) systemDate...++ \(systemDate)")
                     
                     self.fetchCommunityDataFromDB(time_stamp: communtiyTimeStamp)
                 }else{
@@ -521,20 +517,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func forceLogoutAPI() {
-                
-        
-//        let param = [
-//            "email" : "naushad.ali@iris-worldwide.com",
-//            "user_id": "632281"
-//        ]
         
         let param = [
             "email" : self.appPreffrence.getEmail(),
             "user_id": self.appPreffrence.getUserID()
         ]
-        
-        //print("param forcelogout+++ \(param)")
-        
+                
         WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
             if sucess {
                 print(result["success"] as? Bool ?? true)
@@ -916,8 +904,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         WWMHelperClass.saveDb()
                         self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                     }
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                    //print("guided data tabbarvc in background thread...")
                 }
             }
         }

@@ -143,9 +143,11 @@ class WWMMoodJournalVC: WWMBaseViewController {
             "is_complete": "1",
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":WWMHelperClass.day_30_name,
-            "challenge_days30_status":WWMHelperClass.day_30_status
+            "challenge_day_id":WWMHelperClass.day_30_name,
+            "challenge_type":WWMHelperClass.day_type
             ] as [String : Any]
+        
+        //print(param)
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -169,7 +171,7 @@ class WWMMoodJournalVC: WWMBaseViewController {
             }
             WWMHelperClass.complete_percentage = "0"
             WWMHelperClass.day_30_name = ""
-            WWMHelperClass.day_30_status = ""
+            WWMHelperClass.day_type = ""
         }
     }
     

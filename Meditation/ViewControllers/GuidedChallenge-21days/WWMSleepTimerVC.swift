@@ -613,13 +613,11 @@ class WWMSleepTimerVC: WWMBaseViewController {
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":"",
-            "challenge_days30_status":""
+            "challenge_day_id":"",
+            "challenge_type":""
             ] as [String : Any]
         
-        
         //print("meter param WWMGuidedMeditationTimerVC... \(param)")
-        
         //background thread meditation api*
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMSleepTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {

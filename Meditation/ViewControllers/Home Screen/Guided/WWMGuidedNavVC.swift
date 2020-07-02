@@ -52,14 +52,14 @@ class WWMGuidedNavVC: WWMBaseViewController {
                     
                     //print("data....++++++===== \(String(describing: data.data)) id++++++++==== \(String(describing: data.id))")
                     
-                    self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0", challenge_days30_day: jsonResult["challenge_days30_day"] as? String ?? "", challenge_days30_status: jsonResult["challenge_days30_status"] as? String ?? "")
+                    self.completeMeditationAPI(mood_id: jsonResult["mood_id"] as? String ?? "", user_id: jsonResult["user_id"] as? String ?? "", rest_time: "\(jsonResult["rest_time"] as? Int ?? 0)", emotion_id: jsonResult["emotion_id"] as? String ?? "", tell_us_why: jsonResult["tell_us_why"] as? String ?? "", prep_time: "\(jsonResult["prep_time"] as? Int ?? 0)", meditation_time: "\(jsonResult["meditation_time"] as? Int ?? 0)", watched_duration: jsonResult["watched_duration"] as? String ?? "", level_id: jsonResult["level_id"] as? String ?? "", complete_percentage: "\(jsonResult["complete_percentage"] as? Int ?? 0)", rating: jsonResult["rating"] as? String ?? "", meditation_type: jsonResult["meditation_type"] as? String ?? "", category_id: jsonResult["category_id"] as? String ?? "", meditation_id: jsonResult["meditation_id"] as? String ?? "", date_time: jsonResult["date_time"] as? String ?? "", type: jsonResult["type"] as? String ?? "", guided_type: jsonResult["guided_type"] as? String ?? "", audio_id: jsonResult["audio_id"] as? String ?? "", step_id: "\(jsonResult["step_id"] as? Int ?? 1)", mantra_id: "\(jsonResult["mantra_id"] as? Int ?? 1)", id: "\(data.id ?? "")", is_complete: jsonResult["is_complete"] as? String ?? "0", challenge_day_id: jsonResult["challenge_day_id"] as? String ?? "", challenge_type: jsonResult["challenge_type"] as? String ?? "")
                     
                 }
             }
         }
     }
     
-    func completeMeditationAPI(mood_id: String, user_id: String, rest_time: String, emotion_id: String, tell_us_why: String, prep_time: String, meditation_time: String, watched_duration: String, level_id: String, complete_percentage: String, rating: String, meditation_type: String, category_id: String, meditation_id: String, date_time: String, type: String, guided_type: String, audio_id: String, step_id: String, mantra_id: String, id: String, is_complete: String, challenge_days30_day: String, challenge_days30_status: String) {
+    func completeMeditationAPI(mood_id: String, user_id: String, rest_time: String, emotion_id: String, tell_us_why: String, prep_time: String, meditation_time: String, watched_duration: String, level_id: String, complete_percentage: String, rating: String, meditation_type: String, category_id: String, meditation_id: String, date_time: String, type: String, guided_type: String, audio_id: String, step_id: String, mantra_id: String, id: String, is_complete: String, challenge_day_id: String, challenge_type: String) {
         
         var param: [String: Any] = [:]
         param = [
@@ -87,8 +87,8 @@ class WWMGuidedNavVC: WWMBaseViewController {
             "is_complete": is_complete,
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":challenge_days30_day,
-            "challenge_days30_status":challenge_days30_status
+            "challenge_day_id":challenge_day_id,
+            "challenge_type":challenge_type
             ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -309,8 +309,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
             vc.view.frame = CGRect.init(x: 0, y: 0, width: self.containerView.frame.size.width, height: self.containerView.frame.size.height)
             self.containerView.addSubview((vc.view)!)
             vc.didMove(toParent: self)
-            
-            //NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationGuided"), object: nil)
         }else{
             self.getGuidedListAPI()
         }
@@ -534,8 +532,6 @@ class WWMGuidedNavVC: WWMBaseViewController {
                             WWMHelperClass.saveDb()
                             self.fetchGuidedDataFromDB()
                         }
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

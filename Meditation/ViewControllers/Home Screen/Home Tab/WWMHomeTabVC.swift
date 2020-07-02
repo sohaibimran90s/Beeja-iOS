@@ -348,7 +348,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         let imageToShare = [text,image!] as [Any]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            print(success ? "SUCCESS!" : "FAILURE")
+            //print(success ? "SUCCESS!" : "FAILURE")
             
             if success{
                 self.xibJournalPopupCall()
@@ -497,7 +497,7 @@ class WWMHomeTabVC: WWMBaseViewController {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             } catch {
-                print(error.localizedDescription)
+                //print(error.localizedDescription)
             }
         }
         return nil
@@ -559,7 +559,7 @@ extension WWMHomeTabVC{
     func bannerData(){
         
         if let launchData = self.appPreffrence.getBanners()["launch"] as? [[String: Any]]{
-            print(launchData)
+            //print(launchData)
             self.bannerLaunchData.removeAll()
             if launchData.count > 0{
                 self.tableViewBannersTC.constant = 22
@@ -578,7 +578,7 @@ extension WWMHomeTabVC{
         }
         
         if let progressData = self.appPreffrence.getBanners()["in_progress"] as? [[String: Any]]{
-            print(progressData)
+            //print(progressData)
             self.bannerProgressData.removeAll()
             if progressData.count > 0{
                 self.tableViewContinueTC.constant = 8
@@ -700,7 +700,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tableViewBanners{
-            print("self.bannerLaunchData.count \(self.bannerLaunchData.count) self.bannerProgressData.count \(self.bannerProgressData.count)")
+            //print("self.bannerLaunchData.count \(self.bannerLaunchData.count) self.bannerProgressData.count \(self.bannerProgressData.count)")
             if self.bannerLaunchData.count > 1{
                 return self.bannerLaunchData.count + 1
             }else{
@@ -1279,33 +1279,6 @@ extension WWMHomeTabVC{
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
         }
     }
-        
-    func retakeChallengeApi(guided_id: String) {
-        self.view.endEditing(true)
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = [
-            "user_id"       : self.appPreference.getUserID(),
-            "guided_id"     : guided_id
-            ] as [String : Any]
-        
-        //print("retakeChallenge param... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                //print("retake api... \(result)")
-                self.getGuidedListAPI()
-            }else {
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-                if error != nil {
-                    if error?.localizedDescription == "The Internet connection appears to be offline."{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                    }else{
-                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                    }
-                }
-            }
-        }
-    }
     
     func getGuidedListAPI() {
 
@@ -1516,8 +1489,6 @@ extension WWMHomeTabVC{
                             WWMHelperClass.saveDb()
                             self.callHomeVC(index: 2)
                         }
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }

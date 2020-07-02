@@ -322,7 +322,6 @@ class WWMStartTimerVC: WWMBaseViewController {
             }
 
             if appPreference.get21ChallengeName() == "30 Day Challenge"{
-                WWMHelperClass.day_30_status = "complete"
                 self.appPreffrence.setType(value: "learn")
             }
             
@@ -475,7 +474,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }
                     
                     if appPreference.get21ChallengeName() == "30 Day Challenge"{
-                        WWMHelperClass.day_30_status = "complete"
                         self.appPreffrence.setType(value: "learn")
                     }
                     
@@ -525,7 +523,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }
                     
                     if appPreference.get21ChallengeName() == "30 Day Challenge"{
-                        WWMHelperClass.day_30_status = "complete"
                         self.appPreffrence.setType(value: "learn")
                     }
                     
@@ -614,16 +611,9 @@ class WWMStartTimerVC: WWMBaseViewController {
                 let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
-                    
-                    //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
-                    
                 }
-                
-                //print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }
-            
-            //print("self.meditationTimeAnalytics... \(self.meditationTimeAnalytics) meditationTimeSecondsAnalytics... \(self.meditationTimeSecondsAnalytics) seconds********* \(seconds)")
-            
+                        
             self.lblTimer.text = self.secondsToMinutesSeconds(second: seconds)
             
         }else if timerType == "Rest"{
@@ -639,7 +629,6 @@ class WWMStartTimerVC: WWMBaseViewController {
                 }
                 
                 if appPreference.get21ChallengeName() == "30 Day Challenge"{
-                    WWMHelperClass.day_30_status = "complete"
                     self.appPreffrence.setType(value: "learn")
                 }
                 
@@ -848,7 +837,6 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.timer.invalidate()
             
             if appPreference.get21ChallengeName() == "30 Day Challenge"{
-                WWMHelperClass.day_30_status = "complete"
                 self.appPreffrence.setType(value: "learn")
             }
             
@@ -915,8 +903,8 @@ class WWMStartTimerVC: WWMBaseViewController {
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":"",
-            "challenge_days30_status":""
+            "challenge_day_id":"",
+            "challenge_type":""
             ] as [String : Any]
         
         //background thread meditation api*
@@ -961,6 +949,8 @@ class WWMStartTimerVC: WWMBaseViewController {
                     }
                 }
                 
+                WWMHelperClass.day_30_name = ""
+                WWMHelperClass.day_type = ""
                 WWMHelperClass.complete_percentage = "0"
             }//background thread meditation api*
         }

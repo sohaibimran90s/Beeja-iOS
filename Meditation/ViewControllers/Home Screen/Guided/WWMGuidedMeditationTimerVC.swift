@@ -679,8 +679,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
             "journal_type": "",
-            "challenge_days30_day":"",
-            "challenge_days30_status":""
+            "challenge_day_id":"",
+            "challenge_type":""
             ] as [String : Any]
         
         //background thread meditation api*

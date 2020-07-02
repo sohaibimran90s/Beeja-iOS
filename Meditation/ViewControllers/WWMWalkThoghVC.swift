@@ -589,9 +589,6 @@ extension WWMWalkThoghVC{
                         }
                         WWMHelperClass.hideLoaderAnimate(on: self.view)
                         self.fetchGuidedDataFromDB()
-                        
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuided"), object: nil)
-                        //print("guided data tabbarvc in background thread...")
                     }
                 }
             }
