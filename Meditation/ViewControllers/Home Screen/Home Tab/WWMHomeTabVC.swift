@@ -873,7 +873,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             if tableView == self.tableViewBanners{
                 
                 if self.bannerLaunchData.count == 1{
-                    self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "launch")
+                    self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "launch", intro_video: self.bannerLaunchData[indexPath.row]["intro_video"] as? String ?? "")
                 }else{
                     
                     if indexPath.row == 0{
@@ -885,13 +885,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewBanners.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "launch")
+                        self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "launch", intro_video: self.bannerLaunchData[indexPath.row - 1]["intro_video"] as? String ?? "")
                     }
                 }
             }else if tableView == self.tableViewCB{
                 
                 if self.bannerProgressData.count == 1{
-                    self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "progress")
+                    self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "progress", intro_video: self.bannerProgressData[indexPath.row]["intro_video"] as? String ?? "")
                 }else{
                     
                     if indexPath.row == 0{
@@ -903,7 +903,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewCB.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "progress")
+                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "progress", intro_video: self.bannerProgressData[indexPath.row - 1]["intro_video"] as? String ?? "")
                     }
                 }
             }else{
@@ -921,7 +921,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    func bannerClicked(guided_type: String, guided_id: String, emotion_id: String, type: String) {
+    func bannerClicked(guided_type: String, guided_id: String, emotion_id: String, type: String, intro_video: String) {
         
         if type == "launch"{
             if guided_type == "30 Day Challenge"{
@@ -941,10 +941,20 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     appPreference.set21ChallengeName(value: "30 Day Challenge")
                 }
             }else if guided_type == "8 Weeks Challenge"{
-                self.type = "learn"
-                self.appPreference.setType(value: "learn")
-                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
-                appPreference.set21ChallengeName(value: "30 Day Challenge")
+                if intro_video != ""{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+                    
+                    vc.challenge_type = "30days"
+                    vc.value = "30days"
+                    vc.vc = "HomeTabVC"
+                    self.navigationController?.pushViewController(vc, animated: false)
+                    return
+                }else{
+                    self.type = "learn"
+                    self.appPreference.setType(value: "learn")
+                    self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                    appPreference.set21ChallengeName(value: "30 Day Challenge")
+                }
             }else if guided_type == "21 Days challenge"{
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")
