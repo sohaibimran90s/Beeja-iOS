@@ -165,7 +165,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 if arrGuidedList1.count > 0{
                     
                     for dict1 in arrGuidedList1{
-                        //print("dict1.cat_Name+++ \(dict1.cat_Name) dict.cat_name+++ \(dict.cat_Name)")
                         if dict1.cat_Name.contains(dict.cat_Name){
                             flag = 1
                         }

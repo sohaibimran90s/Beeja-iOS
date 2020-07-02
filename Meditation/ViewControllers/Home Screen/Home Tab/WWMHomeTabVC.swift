@@ -458,34 +458,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     //MARK:- API Calling
     
-    func meditationApi() {
-        let param = [
-            "meditation_id" : self.userData.meditation_id,
-            "level_id"      : self.userData.level_id,
-            "user_id"       : self.appPreference.getUserID(),
-            "type"          : self.type,
-            "guided_type"   : self.guided_type
-            ] as [String : Any]
-        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                
-                //print("result hometabvc meditation data... \(result) success meditationdata api WWMHomeTabVC background thread")
-                
-                if let userProfile = result["userprofile"] as? [String:Any] {
-                    if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
-                        self.appPreference.setIsProfileCompleted(value: isProfileCompleted)
-                        self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                        
-                        Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
-                        self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
-                        self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
-                    }
-                }
-             }
-        }
-    }
-    
-    
      func fetchMeditationHistDataFromDB() {
         
         self.data.removeAll()
@@ -931,7 +903,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                         self.tableViewCB.reloadData()
                     }else{
                         
-                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "progress")
+                        self.bannerClicked(guided_type: self.bannerProgressData[indexPath.row - 1]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerProgressData[indexPath.row - 1]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerProgressData[indexPath.row - 1]["emotion_id"] as? Int ?? 0)", type: "progress")
                     }
                 }
             }else{
@@ -951,8 +923,8 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     
     func bannerClicked(guided_type: String, guided_id: String, emotion_id: String, type: String) {
         
-        if guided_type == "30 Day Challenge"{
-            if type == "launch"{
+        if type == "launch"{
+            if guided_type == "30 Day Challenge"{
                 let introURL = self.appPreffrence.get30DaysURL()
                 if introURL != ""{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -961,36 +933,59 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     vc.value = "30days"
                     vc.vc = "HomeTabVC"
                     self.navigationController?.pushViewController(vc, animated: false)
+                    return
                 }else{
                     self.type = "learn"
                     self.appPreference.setType(value: "learn")
                     self.appPreference.setGuideTypeFor3DTouch(value: "learn")
                     appPreference.set21ChallengeName(value: "30 Day Challenge")
-                    self.callHomeVC(index: 2)
                 }
-            }else{
+            }else if guided_type == "8 Weeks Challenge"{
                 self.type = "learn"
                 self.appPreference.setType(value: "learn")
                 self.appPreference.setGuideTypeFor3DTouch(value: "learn")
                 appPreference.set21ChallengeName(value: "30 Day Challenge")
-                self.callHomeVC(index: 2)
+            }else if guided_type == "21 Days challenge"{
+                self.type = "guided"
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+                appPreference.set21ChallengeName(value: "21 Days challenge")
+            }else if guided_type == "7 Days challenge"{
+                self.type = "guided"
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+                appPreference.set21ChallengeName(value: "7 Days challenge")
             }
-        }else if guided_type == "21 Days challenge"{
-            self.type = "guided"
-            self.appPreference.setType(value: "guided")
-            self.appPreference.setGuideTypeFor3DTouch(value: "guided")
-            
-            appPreference.set21ChallengeName(value: "21 Days challenge")
-            self.callHomeVC(index: 2)
+            self.callHomeVC1()
+            DispatchQueue.global(qos: .background).async {
+                 self.meditationApi()
+             }
         }else{
-            self.type = "learn"
-            self.appPreference.setType(value: "learn")
-            self.appPreference.setGuideTypeFor3DTouch(value: "learn")
-            self.callHomeVC(index: 2)
-        }
-        
-        DispatchQueue.global(qos: .background).async {
-            self.meditationApi()
+            if guided_type == "30 Day Challenge"{
+                self.type = "learn"
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                appPreference.set21ChallengeName(value: "30 Day Challenge")
+            }else if guided_type == "8 Weeks Challenge"{
+                self.type = "learn"
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                appPreference.set21ChallengeName(value: "30 Day Challenge")
+            }else if guided_type == "21 Days challenge"{
+                self.type = "guided"
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+                appPreference.set21ChallengeName(value: "21 Days challenge")
+            }else if guided_type == "7 Days challenge"{
+                self.type = "guided"
+                self.appPreference.setType(value: "guided")
+                self.appPreference.setGuideTypeFor3DTouch(value: "guided")
+                appPreference.set21ChallengeName(value: "7 Days challenge")
+            }
+            self.callHomeVC1()
+            DispatchQueue.global(qos: .background).async {
+                 self.meditationApi()
+             }
         }
     }//banner scenario
     
@@ -1260,6 +1255,18 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
 }
 
 extension WWMHomeTabVC{
+    
+    func meditationApi() {
+        let param = [
+            "meditation_id" : self.userData.meditation_id,
+            "level_id"      : self.userData.level_id,
+            "user_id"       : self.appPreference.getUserID(),
+            "type"          : self.type,
+            "guided_type"   : self.guided_type
+            ] as [String : Any]
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        }
+    }
         
     func retakeChallengeApi(guided_id: String) {
         self.view.endEditing(true)
