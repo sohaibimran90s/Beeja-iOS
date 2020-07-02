@@ -33,7 +33,7 @@ class WWMWebServices {
         
         if (appPreffrence.getUserData() as? [String: Any]) != nil{
             userData = WWMUserData.init(json:appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
         }
         
         let os = ProcessInfo().operatingSystemVersion
@@ -61,13 +61,13 @@ class WWMWebServices {
             //print("JSON string = \(theJSONText!)")
         }
         
-        print("X_Params.... \(X_Params)")
+        //print("X_Params.... \(X_Params)")
         
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
         
         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
         let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-        print("Request URL: \(urlString) Data: \(myString!)")
+        //print("Request URL: \(urlString) Data: \(myString!)")
         if param.count>0 {
             request.httpBody = jsonData
         }
@@ -98,7 +98,7 @@ class WWMWebServices {
             //Authorization
             
         } catch {
-            print("Failed")
+            //print("Failed")
             print(error)
         }
         
@@ -117,15 +117,15 @@ class WWMWebServices {
             if data != nil && response != nil {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    let results = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
-                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                    print("Result: \(myString ?? "")")
+                    //let results = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    //let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
+                    //let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    //print("Result: \(myString ?? "")")
                     
                     completionHandler(json  as! Dictionary<String, Any>, nil, true)
                     return
                 }catch {
-                    print(error.localizedDescription)
+                    //print(error.localizedDescription)
                     completionHandler([:], error, false)
                     return;
                 }
@@ -153,7 +153,7 @@ class WWMWebServices {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
-        print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
+        //print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
         guard let url = URL(string: stringUrl) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -175,7 +175,7 @@ class WWMWebServices {
             //Authorization
             
         } catch {
-            print("Failed")
+            //print("Failed")
             print(error)
         }
         
@@ -212,9 +212,9 @@ class WWMWebServices {
                         completionHandler([:], nil, false)
                         return
                     }
-                    let jsonString = String(data: data, encoding: .utf8)!
-                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
-                    print(json)
+                    //let jsonString = String(data: data, encoding: .utf8)!
+                    //print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    //print(json)
                     completionHandler(json as! [String:Any], nil, true)
                     
                 }else{
@@ -222,9 +222,9 @@ class WWMWebServices {
                         completionHandler([:], nil, false)
                         return
                     }
-                    let jsonString = String(data: data, encoding: .utf8)!
-                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
-                    print(json)
+                    //let jsonString = String(data: data, encoding: .utf8)!
+                    //print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    //print(json)
                     completionHandler(json as! [String:Any], nil, true)
                 }
             }else{
@@ -249,7 +249,7 @@ class WWMWebServices {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
-        print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
+        //print("\n\ncomplete Url :-------------- ",stringUrl," \n\n-------------: complete Url")
         guard let url = URL(string: stringUrl) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -271,7 +271,7 @@ class WWMWebServices {
             //Authorization
 
         } catch {
-            print("Failed")
+            //print("Failed")
             print(error)
         }
         // RSA Implementation end
@@ -308,9 +308,9 @@ class WWMWebServices {
                         completionHandler([:], nil, false)
                         return
                     }
-                    let jsonString = String(data: data, encoding: .utf8)!
-                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
-                    print(json)
+                    //let jsonString = String(data: data, encoding: .utf8)!
+                    //print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    //print(json)
                     completionHandler(json as! [String:Any], nil, true)
                     
                 }else{
@@ -318,9 +318,9 @@ class WWMWebServices {
                         completionHandler([:], nil, false)
                         return
                     }
-                    let jsonString = String(data: data, encoding: .utf8)!
-                    print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
-                    print(json)
+                    //let jsonString = String(data: data, encoding: .utf8)!
+                    //print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    //print(json)
                     completionHandler(json as! [String:Any], nil, true)
                 }
             }else{
@@ -347,8 +347,8 @@ class WWMWebServices {
         
         // let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
         // let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-        print("Request URL: \(urlString)")
-        print("Data: \(param)")
+        //print("Request URL: \(urlString)")
+        //print("Data: \(param)")
         //        if param.count>0 {
         //            request.httpBody = jsonData
         //        }
@@ -362,7 +362,7 @@ class WWMWebServices {
         
         if (appPreffrence.getUserData() as? [String: Any]) != nil{
             userData = WWMUserData.init(json:appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
         }
         
         
@@ -391,7 +391,7 @@ class WWMWebServices {
             //print("JSON string = \(theJSONText!)")
         }
         
-        print("X_Params.... \(X_Params)")
+        //print("X_Params.... \(X_Params)")
         
         let headers = [
             "Content-Type": "application/json",
@@ -412,12 +412,12 @@ class WWMWebServices {
                     let results = try? JSONSerialization.jsonObject(with: data!, options: [])
                     let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
                     let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                    print("Result: \(myString ?? "")")
+                    //print("Result: \(myString ?? "")")
                     
                     completionHandler(json  as! Dictionary<String, Any>, nil, true)
                     return
                 }catch {
-                    print(error.localizedDescription)
+                    //print(error.localizedDescription)
                     completionHandler([:], error, false)
                     return;
                 }
@@ -436,7 +436,7 @@ class WWMWebServices {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
-        print("Request URL: \(urlString)")
+        //print("Request URL: \(urlString)")
         request.httpMethod = "GET"
         
         var x_Params: [String: Any] = [:]
@@ -447,7 +447,7 @@ class WWMWebServices {
         
         if (appPreffrence.getUserData() as? [String: Any]) != nil{
             userData = WWMUserData.init(json:appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
         }
         
         let os = ProcessInfo().operatingSystemVersion
@@ -493,15 +493,15 @@ class WWMWebServices {
             if data != nil && response != nil {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    let results = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
-                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                    print("Result: \(myString ?? "")")
+                    //let results = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    //let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
+                    //let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    //print("Result: \(myString ?? "")")
                     
                     completionHandler(json  as! Dictionary<String, Any>, nil, true)
                     return
                 }catch {
-                    print(error.localizedDescription)
+                    //print(error.localizedDescription)
                     completionHandler([:], error, false)
                     return;
                 }
