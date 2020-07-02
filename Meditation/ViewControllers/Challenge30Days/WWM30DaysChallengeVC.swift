@@ -234,6 +234,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
+        vc.emotionKey = "30days"
         vc.challenge_type = "30days"
         vc.value = "30days"
         self.navigationController?.pushViewController(vc, animated: false)

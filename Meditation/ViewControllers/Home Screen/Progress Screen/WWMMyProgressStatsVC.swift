@@ -1112,13 +1112,8 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
         
         self.tableViewHeightConstraint.constant = 190 * CGFloat(self.milestoneData.milestoneEnabledData.count + self.milestoneData.milestoneDisabledData.count)
         
-        
-         //print("self.milestoneData.milestoneEnabledData.count.... \(self.milestoneData.milestoneEnabledData.count) self.milestoneData.milestonedisabledData.count.... \(self.milestoneData.milestoneDisabledData.count)")
-
         if self.milestoneData.milestoneEnabledData.count > indexPath.row{
-            
-            //print("**** \(indexPath.row)")
-            
+                        
             if indexPath.row%2 == 0{
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "WWMMilestoneCell2") as! WWMMilestoneCell2
                 
@@ -1142,11 +1137,16 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
                     cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays2")
                     cell.lblTitle.text = "Consecutive\nDays"
-                }else{
+                }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "sessions"{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession1")
                     cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
                     cell.lblTitle.text = "Sessions"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "mileChallenge")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
+                    cell.lblTitle.text = "Challenges"
                 }
                 
                 if indexPath.row == 0{
@@ -1157,6 +1157,7 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                 
                 cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
                 cell.lblTitle1_.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
+                cell.lblDate.text = self.milestoneData.milestoneEnabledData[indexPath.row].complete_date
                 return cell
             }else{
 
@@ -1172,12 +1173,17 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
                     cell.lblTitle.text = "Consecutive\nDays"
-                }else{
+                }else if self.milestoneData.milestoneEnabledData[indexPath.row].type == "sessions"{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession2")
                     cell.lblTitle.text = "Sessions"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "mileChallenge")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
+                    cell.lblTitle.text = "Completed\n\(self.milestoneData.milestoneEnabledData[indexPath.row].type)"
                 }
                 cell.lblTitle1.text = self.milestoneData.milestoneEnabledData[indexPath.row].title
+                cell.lblDate.text = self.milestoneData.milestoneEnabledData[indexPath.row].complete_date
                 cell.imgViewBack.image = UIImage(named: "slice")
                 return cell
                 
@@ -1210,15 +1216,22 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays2")
                     cell.imgViewTitle1_.image = UIImage(named: "mileConsecutiveDays2")
                     cell.lblTitle.text = "Consecutive\nDays"
-                }else{
+                }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "sessions"{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession1")
                     cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
                     cell.lblTitle.text = "Sessions"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "mileChallenge")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession1")
+                    cell.imgViewTitle1_.image = UIImage(named: "mileSession1")
+                    cell.lblTitle.text = "Challenges"
                 }
+                
                 cell.imgViewBack1.image = UIImage(named: "slice_back1")
                 cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPathRow1].title
                 cell.lblTitle1_.text = self.milestoneData.milestoneDisabledData[indexPathRow1].title
+                cell.lblDate.text = self.milestoneData.milestoneDisabledData[indexPathRow1].complete_date
                 return cell
 
             }else{
@@ -1235,13 +1248,18 @@ extension WWMMyProgressStatsVC: UITableViewDelegate, UITableViewDataSource{
                     cell.imgViewTitle.image = UIImage(named: "consecutive_days")
                     cell.imgViewTitle1.image = UIImage(named: "mileConsecutiveDays1")
                     cell.lblTitle.text = "Consecutive\nDays"
-                }else{
+                }else if self.milestoneData.milestoneDisabledData[indexPathRow1].type == "sessions"{
                     cell.imgViewTitle.image = UIImage(named: "session")
                     cell.imgViewTitle1.image = UIImage(named: "mileSession2")
                     cell.lblTitle.text = "Sessions"
+                }else{
+                    cell.imgViewTitle.image = UIImage(named: "mileChallenge")
+                    cell.imgViewTitle1.image = UIImage(named: "mileSession2")
+                    cell.lblTitle.text = "Challenges"
                 }
                 cell.imgViewBack1.image = UIImage(named: "slice1")
                 cell.lblTitle1.text = self.milestoneData.milestoneDisabledData[indexPath.row - (self.milestoneData.milestoneEnabledData.count)].title
+                cell.lblDate.text = self.milestoneData.milestoneDisabledData[indexPath.row - (self.milestoneData.milestoneEnabledData.count)].complete_date
                 return cell
             }
         }

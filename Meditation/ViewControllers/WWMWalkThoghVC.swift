@@ -37,11 +37,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
     //21day challenge variables
     var emotionKey: String = ""
     var emotionId: String = ""
-    
     var id = ""
     var category = ""
     var subCategory = ""
-    
     var challengePopupView = WWMAlertController()
     var challenge_type = ""
     var vc = ""
@@ -49,7 +47,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("watched walk... \(self.watched_duration) id... \(self.id) category... \(self.category) subCategory... \(self.subCategory) emotionKey... \(emotionKey) emotionId... \(emotionId) guided_id... \(self.id) videoURL... \(self.videoURL)")
         var prefersStatusBarHidden: Bool {
             return true
         }

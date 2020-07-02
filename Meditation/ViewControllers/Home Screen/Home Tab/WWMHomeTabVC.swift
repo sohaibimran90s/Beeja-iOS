@@ -930,6 +930,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.challenge_type = "30days"
+                    vc.emotionKey = "30days"
                     vc.value = "30days"
                     vc.vc = "HomeTabVC"
                     self.navigationController?.pushViewController(vc, animated: false)
@@ -945,6 +946,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
                     vc.challenge_type = "30days"
+                    vc.emotionKey = "30days"
                     vc.value = "30days"
                     vc.vc = "HomeTabVC"
                     self.navigationController?.pushViewController(vc, animated: false)

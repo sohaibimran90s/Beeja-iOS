@@ -40,6 +40,7 @@ class WWMMilestoneEnabledData: NSObject{
     var type: String = ""
     var status: Bool = false
     var sortOrder: Int = 0
+    var complete_date = ""
     
     init(json: [String: Any]) {
         self.id = json["id"] as? Int ?? 0
@@ -47,6 +48,7 @@ class WWMMilestoneEnabledData: NSObject{
         self.type = json["type"] as? String ?? ""
         self.status = json["status"] as? Bool ?? false
         self.sortOrder = json["sortOrder"] as? Int ?? 0
+        self.complete_date = json["complete_date"] as? String ?? ""
     }
 }
 
@@ -56,6 +58,7 @@ class WWMMilestoneDisabledData: NSObject{
     var type: String = ""
     var status: Bool = false
     var sortOrder: Int = 0
+    var complete_date = ""
     
     init(json: [String: Any]) {
         self.id = json["id"] as? Int ?? 0
@@ -63,5 +66,6 @@ class WWMMilestoneDisabledData: NSObject{
         self.type = json["type"] as? String ?? ""
         self.status = json["status"] as? Bool ?? false
         self.sortOrder = json["sortOrder"] as? Int ?? 0
+        self.complete_date = json["complete_date"] as? String ?? ""
     }
 }

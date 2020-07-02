@@ -113,29 +113,17 @@ let URL_SETMYOWN                  = URL_BASE + "setMyOwn"//
 let URL_SETTINGS                  = URL_BASE + "settings"//
 let URL_MILESTONE                  = URL_BASE + "milestone"//
 let URL_ACCEPT_CHALLENGE                 = URL_BASE + "accept/challenge"
-
 let URL_HANDSHAKE                  = URL_BASE + "handshake"//
-
 let URL_GETWISDOM                  = URL_BASE + "getWisdom"//
-
 let URL_WISHDOMFEEDBACK            = URL_BASE + "wisdomFeedback"
-
 let URL_GETGUIDEDDATA                 = URL_BASE + "dictionary/newguided"//
-
 let URL_GETGUIDEDAudio                = URL_BASE + "guidedAudio"//
-
 let URL_MEDITATIONHISTORY          = URL_BASE + "meditationHistory"
-
 let URL_STEPS        =  URL_BASE + "steps"
-
 let URL_MANTRAS      = URL_BASE + "mantras"
-
 let URL_COMBINEDMANTRA = URL_BASE + "combinedMantra"
-
 let URL_STEPFAQ         = URL_BASE + "dictionary/setp_faqs"
-
 let URL_DICTIONARY  = URL_BASE + "dictionary"
-
 let URL_FORCELOGOUT = URL_BASE + "check_user"//
 let URL_MEDITATIONLIST = URL_BASE + "meditationlist"
 let URL_ONBOARDING = URL_BASE + "onboarding"
