@@ -80,7 +80,7 @@ class WWMShareLoveVC: WWMBaseViewController {
     func getInviteAccept1API() {
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_INVITEACCEPTUSERS, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             

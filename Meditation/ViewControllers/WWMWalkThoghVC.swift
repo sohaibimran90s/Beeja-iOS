@@ -331,8 +331,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             "guided_id": self.id,
             "challenge_type": self.challenge_type
             ] as [String : Any]
-        
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ACCEPT_CHALLENGE, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
             

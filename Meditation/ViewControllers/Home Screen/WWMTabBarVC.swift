@@ -1539,8 +1539,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     func meditationlistAPI() {
         let param = [
         "user_id":self.appPreffrence.getUserID(), "type": self.appPreffrence.getType()] as [String : Any]
-        
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONLIST, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             

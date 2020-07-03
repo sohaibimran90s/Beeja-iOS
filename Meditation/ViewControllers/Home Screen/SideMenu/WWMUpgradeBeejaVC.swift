@@ -333,7 +333,7 @@ extension WWMUpgradeBeejaVC{
     func getRedeemCodeAPI(redeemCode: String, type: String, controller: WWMGuidedUpgradeBeejaPopUp){
         
         let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode] as [String : Any]
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             

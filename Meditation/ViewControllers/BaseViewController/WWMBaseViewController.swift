@@ -297,7 +297,7 @@ extension WWMBaseViewController{
     func getInviteAcceptAPI(context1: String) {
         
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]
-        print("param... \(param)")
+        //print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_INVITEACCEPTUSERS, context: context1, headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
