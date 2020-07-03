@@ -420,7 +420,7 @@ extension WWM30DaysChallengeVC{
             "action"   : "flushdata"
             ] as [String : Any]
         
-        print("retakeChallenge param... \(param)")
+        //print("retakeChallenge param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
