@@ -340,9 +340,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 //print("success... \(result)")
                 ///WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if self.challenge_type == ""{
-                    self.getGuidedListAPI()
+                    self.getGuidedListAPI1()
                 }else{
-                    self.getLearnAPI()
+                    self.getLearnAPI1()
                 }
             }else {
                 
@@ -377,7 +377,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
 extension WWMWalkThoghVC{
    
     //21 days guided
-    func getGuidedListAPI() {
+    func getGuidedListAPI1() {
         
         /// WWMHelperClass.showLoaderAnimate(on: self.view)
         
@@ -615,7 +615,7 @@ extension WWMWalkThoghVC{
     }
     
     //MARK: getLearnSetps API call
-    func getLearnAPI() {
+    func getLearnAPI1() {
         
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]

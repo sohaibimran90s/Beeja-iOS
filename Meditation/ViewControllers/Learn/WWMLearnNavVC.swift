@@ -158,12 +158,12 @@ class WWMLearnNavVC: WWMBaseViewController {
             vc.didMove(toParent: self)
             
         }else{
-            self.getLearnAPI()
+            self.getLearnAPI1()
         }
     }
     
     //MARK: getLearnSetps API call
-    func getLearnAPI() {
+    func getLearnAPI1() {
         
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]

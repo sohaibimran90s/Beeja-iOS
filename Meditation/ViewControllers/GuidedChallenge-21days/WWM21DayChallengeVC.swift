@@ -1178,7 +1178,7 @@ extension WWM21DayChallengeVC{
                 self.appPreference.setGuideType(value: "21 Days challenge")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
                 
-                self.getGuidedListAPI()
+                self.getGuidedListAPI1()
             }else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if error != nil {
@@ -1192,7 +1192,7 @@ extension WWM21DayChallengeVC{
         }
     }
     
-    func getGuidedListAPI() {
+    func getGuidedListAPI1() {
 
         let param = ["user_id":self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in

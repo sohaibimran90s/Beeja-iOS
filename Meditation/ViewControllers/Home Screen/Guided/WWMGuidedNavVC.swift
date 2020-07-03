@@ -94,6 +94,16 @@ class WWMGuidedNavVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
+                if type == "guided"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getGuidedListAPI()
+                    }
+                }else if challenge_day_id != ""{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
+                }
+                
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
@@ -310,12 +320,12 @@ class WWMGuidedNavVC: WWMBaseViewController {
             self.containerView.addSubview((vc.view)!)
             vc.didMove(toParent: self)
         }else{
-            self.getGuidedListAPI()
+            self.getGuidedListAPI1()
         }
        
     }
     
-    func getGuidedListAPI() {
+    func getGuidedListAPI1() {
         
         let param = ["user_id":self.appPreference.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in

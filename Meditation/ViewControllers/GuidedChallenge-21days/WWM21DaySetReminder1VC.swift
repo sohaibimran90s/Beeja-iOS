@@ -28,6 +28,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     var flag = 0
     var defaultDate = ""
     var isSetting = false
+    var min_limit = ""
+    var max_limit = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +133,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                 settingData.thirtyDaysReminder = self.defaultDate
             }
             settingData.isThirtyDaysReminder = true
+            self.callSettingAPI()
             
             if isSetting{
                 self.callHomeVC1()
@@ -167,6 +170,18 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         }
     }
     
+    func callSettingAPI(){
+        WWMHelperClass.saveDb()
+        if self.appPreference.isLogin(){
+            DispatchQueue.global(qos: .background).async {
+                let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+                       if data.count > 0 {
+                           self.settingAPI()
+                }
+            }
+        }
+    }
+    
     func callHomeController(selectedIndex: Int){
         self.navigationController?.isNavigationBarHidden = false
         
@@ -184,10 +199,6 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     }
     
     // MARK:- UITextField Delegate Methods
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-    }
-    
     @IBAction func btnPickerViewAction(_ sender: UIButton){
         let datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .time
@@ -295,5 +306,134 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         nowComponents.timeZone = NSTimeZone.local
         now = calendar.date(from: nowComponents)!
         return now as Date
+    }
+}
+
+extension WWM21DaySetReminder1VC{
+    // MARK:- API Calling
+    func settingAPI() {
+        
+        var meditation_data = [[String:Any]]()
+        let meditationData = self.settingData.meditationData?.array as? [DBMeditationData]
+        
+        if meditationData?.count ?? 0 > 0{
+            for dic in meditationData!{
+                
+                var min_limit = ""
+                var max_limit = ""
+                
+                if dic.meditationName == "Beeja"{
+                    self.min_limit = dic.min_limit ?? "94"
+                    self.max_limit = dic.max_limit ?? "97"
+                }
+                
+                let levels = dic.levels?.array as? [DBLevelData]
+                var levelDic = [[String:Any]]()
+                for level in levels! {
+                    let leveldata = [
+                        "level_id": level.levelId,
+                        "isSelected": level.isLevelSelected,
+                        "name": level.levelName ?? "",
+                        "prep_time": "\(level.prepTime)",
+                        "meditation_time": "\(level.meditationTime)",
+                        "rest_time": "\(level.restTime)",
+                        "prep_min": "\(level.minPrep)",
+                        "prep_max": "\(level.maxPrep)",
+                        "med_min": "\(level.minMeditation)",
+                        "med_max": "\(level.maxMeditation)",
+                        "rest_min": "\(level.minRest)",
+                        "rest_max": "\(level.maxRest)"
+                        ] as [String : Any]
+                    levelDic.append(leveldata)
+                }
+                
+                if dic.min_limit == "" || dic.min_limit == nil{
+                    //print("++++++ \(self.min_limit) \(self.max_limit)")
+                    
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "min_limit" : self.min_limit,
+                                "max_limit" : self.max_limit,
+                                "setmyown" : dic.setmyown,
+                                "levels":levelDic] as [String : Any]
+                    meditation_data.append(data)
+                }else{
+                    //print("++++++ \(String(describing: dic.min_limit)) +++++ \(dic.max_limit)")
+                    
+                    let data = ["meditation_id":dic.meditationId,
+                                "meditation_name":dic.meditationName ?? "",
+                                "isSelected":dic.isMeditationSelected,
+                                "min_limit" : dic.min_limit ?? "94",
+                                "max_limit" : dic.max_limit ?? "97",
+                                "setmyown" : dic.setmyown,
+                                "levels":levelDic] as [String : Any]
+                    meditation_data.append(data)
+                }
+            }
+            
+            //"IsMilestoneAndRewards"
+            
+            if self.settingData.startChime == "JAY GURU DEVA"{
+                self.settingData.startChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.endChime == "JAY GURU DEVA"{
+                self.settingData.endChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.finishChime == "JAY GURU DEVA"{
+                self.settingData.finishChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.ambientChime == "JAY GURU DEVA"{
+                self.settingData.ambientChime = "JAI GURU DEVA"
+            }
+            
+            if self.settingData.intervalChime == "JAY GURU DEVA"{
+                self.settingData.intervalChime = "JAI GURU DEVA"
+            }
+            
+            let group = [
+                "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
+                "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
+                "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
+                "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
+                "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
+                "moodMeterEnable": self.settingData.moodMeterEnable,
+                "IsMorningReminder": self.settingData.isMorningReminder,
+                "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+                "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
+                "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+                "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
+                "MantraID":self.settingData.mantraID,
+                "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
+                "IsLearnReminder":self.settingData.isLearnReminder,
+                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
+                "meditation_data" : meditation_data
+                ] as [String : Any]
+            
+            let param = [
+                "user_id": self.appPreference.getUserID(),
+                "isJson": true,
+                "group": group
+                ] as [String : Any]
+            
+            //print("settings param... \(param)")
+            
+            WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        print(success)
+                    }
+                }else {
+                    if error != nil {
+                    }
+                }
+            }
+        }
     }
 }

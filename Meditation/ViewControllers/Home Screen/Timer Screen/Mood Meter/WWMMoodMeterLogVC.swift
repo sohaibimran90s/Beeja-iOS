@@ -269,6 +269,16 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
                     
+                    if self.appPreffrence.getType() == "guided"{
+                        DispatchQueue.global(qos: .background).async {
+                            self.getGuidedListAPI()
+                        }
+                    }else if WWMHelperClass.day_30_name != ""{
+                        DispatchQueue.global(qos: .background).async {
+                            self.getLearnAPI()
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
                         self.logExperience()
                     }

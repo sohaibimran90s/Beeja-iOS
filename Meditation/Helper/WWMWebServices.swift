@@ -223,7 +223,7 @@ class WWMWebServices {
                         return
                     }
                     //let jsonString = String(data: data, encoding: .utf8)!
-                    //print("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
+                    // ("\n\n---------------------------\n\n"+jsonString+"\n\n---------------------------\n\n")
                     //print(json)
                     completionHandler(json as! [String:Any], nil, true)
                 }

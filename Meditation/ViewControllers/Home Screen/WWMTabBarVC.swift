@@ -1796,12 +1796,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             
                             self.setDataToDb(json: result["settings"] as! [String:Any])
-                            //print("api result setting form getprofile... \(result["settings"] as! [String:Any])")
                             
                             //*receiptValidation
                             let formatter = DateFormatter()
                             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//                            formatter.locale = Locale(identifier: "en_US_POSIX")
                             formatter.locale = Locale.current
                             formatter.locale = Locale(identifier: formatter.locale.identifier)
                             

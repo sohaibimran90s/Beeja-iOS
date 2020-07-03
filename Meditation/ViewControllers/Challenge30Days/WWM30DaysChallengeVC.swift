@@ -428,7 +428,7 @@ extension WWM30DaysChallengeVC{
                 self.appPreference.setType(value: "learn")
                 self.appPreference.setGuideTypeFor3DTouch(value: "learn")
                 self.appPreference.set21ChallengeName(value: "30 Day Challenge")
-                self.getLearnAPI()
+                self.getLearnAPI1()
             }else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if error != nil {
@@ -442,7 +442,7 @@ extension WWM30DaysChallengeVC{
         }
     }
     
-    func getLearnAPI() {
+    func getLearnAPI1() {
         
         //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreference.getUserID()] as [String : Any]

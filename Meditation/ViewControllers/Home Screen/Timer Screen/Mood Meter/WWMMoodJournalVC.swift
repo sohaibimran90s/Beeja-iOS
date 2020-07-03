@@ -154,6 +154,17 @@ class WWMMoodJournalVC: WWMBaseViewController {
                 if let _ = result["success"] as? Bool {
                     self.appPreffrence.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
+                    
+                    if self.appPreffrence.getType() == "guided"{
+                        DispatchQueue.global(qos: .background).async {
+                            self.getGuidedListAPI()
+                        }
+                    }else if WWMHelperClass.day_30_name != ""{
+                        DispatchQueue.global(qos: .background).async {
+                            self.getLearnAPI()
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
                         self.logExperience()
                     }

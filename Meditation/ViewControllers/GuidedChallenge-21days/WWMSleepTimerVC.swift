@@ -623,7 +623,6 @@ class WWMSleepTimerVC: WWMBaseViewController {
             if sucess {
                 
                 if let _ = result["success"] as? Bool {
-                    
                     self.appPreference.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
                     DispatchQueue.main.async {

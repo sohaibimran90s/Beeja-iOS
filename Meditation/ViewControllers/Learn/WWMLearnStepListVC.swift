@@ -114,6 +114,16 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMTabBarVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
+                if type == "guided"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getGuidedListAPI()
+                    }
+                }else if challenge_day_id != ""{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
+                }
+                
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
