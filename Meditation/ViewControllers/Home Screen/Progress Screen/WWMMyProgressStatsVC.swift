@@ -134,14 +134,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     func notificationPopUp(titles: String, titleDescript: String, textNextMileStone: String, imgLogo: String, imgLogo1: String, redC: CGFloat, greenC: CGFloat, blueC: CGFloat) {
         
-        
         self.playSound(name: "MM_BEEJA_MEDITATION_COMPLETE_V1")
-        
         alertNotificationView = UINib(nibName: "WWMMilestonePopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMMilestonePopUp
         let window = UIApplication.shared.keyWindow!
         
         alertNotificationView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
         alertNotificationView.lblHourMeditated.text = titles
         alertNotificationView.lblHourDescript.text = titleDescript
         alertNotificationView.lblNextMileText.text = textNextMileStone
@@ -149,7 +146,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         alertNotificationView.imgViewLogo.image = UIImage(named: imgLogo)
         alertNotificationView.imgViewLogo1.image = UIImage(named: imgLogo1)
         alertNotificationView.btnDismiss.addTarget(self, action: #selector(btnDissmissPopUp), for: .touchUpInside)
-        
         WWMHelperClass.milestoneType = ""
         window.rootViewController?.view.addSubview(alertNotificationView)
     }

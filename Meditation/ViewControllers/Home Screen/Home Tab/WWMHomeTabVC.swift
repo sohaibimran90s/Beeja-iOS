@@ -731,7 +731,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 cell.lblChallDes.text = self.bannerLaunchData[indexPath.row]["description"] as? String
                 cell.imgView.sd_setImage(with: URL(string: self.bannerLaunchData[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
 
-                self.tableViewBannersHC.constant = 84 * 1
+                self.tableViewBannersHC.constant = 130 * 1
             }else{
                 if indexPath.row == 0{
                     cell.lblChallTitle.text = "\(self.bannerLaunchData.count) Challenges: Launched"

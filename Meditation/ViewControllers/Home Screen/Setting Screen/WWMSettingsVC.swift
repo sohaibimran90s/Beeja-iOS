@@ -22,8 +22,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-    var arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
-    var arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+    var arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
+    var arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
@@ -63,8 +63,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             if settingData.thirtyDaysReminder != ""{
-                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
-                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Days Reminder", "30 Days Reminder Time"]
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
             }else{
                 self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
                 self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
