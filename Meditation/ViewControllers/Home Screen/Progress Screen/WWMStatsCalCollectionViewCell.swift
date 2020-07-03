@@ -14,4 +14,5 @@ class WWMStatsCalCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var viewDateCircle: UIView!
     @IBOutlet weak var imgViewRight: UIImageView!
     @IBOutlet weak var imgViewLeft: UIImageView!
+    @IBOutlet weak var imgMilestone: UIImageView!
 }

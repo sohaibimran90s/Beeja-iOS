@@ -100,7 +100,6 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             if !data.intro_completed{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-                //print("emotionKey... \(data.emotion_key) emotionId... \(data.emotion_Id) user_id... \(self.appPreference.getUserID()) data.intro_url \(data.intro_url)")
                 vc.value = "curatedCards"
                 vc.emotionId = "\(data.emotion_Id)"
                 vc.id = "\(self.guidedData.cat_Id)"

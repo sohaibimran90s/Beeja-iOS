@@ -14,10 +14,10 @@ class WWM30DaysGearUpVC: WWMBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func btnReadyAction(_ sender: UIButton){
-        
+        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        self.callHomeVC1()
     }
 }

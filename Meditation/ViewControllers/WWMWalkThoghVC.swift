@@ -24,14 +24,11 @@ class WWMWalkThoghVC: WWMBaseViewController {
     var watched_duration = ""
     let reachable = Reachabilities()
     let appPreffrence = WWMAppPreference()
-    
     var lat = ""
     var long = ""
-    
     var player1: AVPlayer?
     var videoSliderOnOff = false
     var timer = Timer()
-    
     var playerLayer = AVPlayerLayer()
 
     //21day challenge variables
@@ -142,7 +139,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             //print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
         
-        
         if value == "SignupLetsStart"{
             //videoURL = self.appPreffrence.getHomePageURL()
             guard let path = Bundle.main.path(forResource: "walkthough", ofType:"mp4") else { 
@@ -172,10 +168,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
             self.slider.value = 0.0
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
             
-            
-            //*
-            
-            
             player1?.play()
             self.videoCompleted = 1
             return
@@ -192,12 +184,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
             playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
             self.viewVideo.layer.addSublayer(playerLayer)
             player1?.seek(to: CMTime.zero)
-            
             player1?.play()
             self.videoCompleted = 1
             return
-            
-        
         }else if value == "learnStepList"{
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "curatedCards"{
@@ -207,9 +196,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
-        
-        //print("walkthough videoURL... \(videoURL)")
-        
+
         if videoURL != "" {
             //print("videourl... \(videoURL)")
             viewVideo.configure(url: "\(videoURL)")
@@ -270,7 +257,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                 self.navigationController?.popViewController(animated: true)
             }else if (value == "curatedCards" || value == "30days"){
                 self.challengeIntroVideoCompleted()
-                //self.challengePopup()
             }else if value == "21_days"{
                 self.navigationController?.popViewController(animated: false)
             }else{
@@ -336,8 +322,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ACCEPT_CHALLENGE, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
             
             if success {
-                //print("success... \(result)")
-                ///WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if self.challenge_type == ""{
                     self.getGuidedListAPI1()
                 }else{
@@ -356,7 +340,6 @@ class WWMWalkThoghVC: WWMBaseViewController {
                     
                 }
             }
-            //WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
     
@@ -377,9 +360,7 @@ extension WWMWalkThoghVC{
    
     //21 days guided
     func getGuidedListAPI1() {
-        
-        /// WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+                
         let param = ["user_id":self.appPreffrence.getUserID()] as [String : Any]
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETGUIDEDDATA, context: "WWMGuidedAudioListVC Appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -616,7 +597,6 @@ extension WWMWalkThoghVC{
     //MARK: getLearnSetps API call
     func getLearnAPI1() {
         
-        //self.learnStepsListData.removeAll()
         let param = ["user_id": self.appPreffrence.getUserID()] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -627,7 +607,6 @@ extension WWMWalkThoghVC{
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
-                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
@@ -649,7 +628,6 @@ extension WWMWalkThoghVC{
                         let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
                         
                         let timeInterval = Int(Date().timeIntervalSince1970)
-                        //print("timeInterval.... \(timeInterval)")
                         dbLearnData.last_time_stamp = "\(timeInterval)"
                         
                         if dict["name"] as? String == "30 Day Challenge"{
@@ -736,7 +714,6 @@ extension WWMWalkThoghVC{
                                 }
                                 
                                 WWMHelperClass.saveDb()
-                                
                             }
                         }
                         
@@ -847,21 +824,22 @@ extension WWMWalkThoghVC{
                 }
                 
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
-                
                 if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
                     self.appPreference.set21ChallengeName(value: "30 Day Challenge")
-                    self.callHomeVC1()
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }else{
                    self.callHomeVC(index: 2)
                 }
-                
                 return
             }
         }
         
         WWMHelperClass.hideLoaderAnimate(on: self.view)
         if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
-            self.callHomeVC1()
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
+            self.navigationController?.pushViewController(vc, animated: true)
         }else{
            self.callHomeVC(index: 2)
         }

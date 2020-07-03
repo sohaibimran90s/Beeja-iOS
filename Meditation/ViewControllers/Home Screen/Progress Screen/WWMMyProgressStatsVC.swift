@@ -739,7 +739,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             
             return cell
         }else{
-
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell1", for: indexPath) as! WWMStatsCalCollectionViewCell
             
             if indexPath.item == 0{
@@ -769,8 +768,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     cell.imgViewLeft.image = UIImage(named: "singleLineLeft1")
                     cell.imgViewRight.image = UIImage(named: "singleLineRight1")
                 }
+                
+                if data.is_milestone{
+                    cell.imgMilestone.isHidden = false
+                }else{
+                    cell.imgMilestone.isHidden = true
+                }
+                
             }else{
                 var data = WWMSatsProgress21DaysChallengeData()
+                
+                cell.imgMilestone.isHidden = true
                 if self.challType == "Practical"{
                     data = statsData.days21PracticalChallenge[indexPath.row]
                     

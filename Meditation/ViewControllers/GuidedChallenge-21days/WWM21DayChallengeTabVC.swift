@@ -169,9 +169,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         if reachable.isConnectedToNetwork() {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                            
-                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                            
+                                                        
                             vc.value = "curatedCards"
                             vc.emotionId = ""
                             vc.id = (dict as AnyObject).guided_id ?? ""
@@ -217,9 +215,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         if reachable.isConnectedToNetwork() {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                            
-                            //print("emotion_key meditation_key... \((dict as AnyObject).meditation_key) guided_id... \((dict as AnyObject).guided_id) user_id... \(self.appPreference.getUserID()) data.intro_url \((dict as AnyObject).intro_url)) self.name... \(self.name)")
-                            
+                                                        
                             vc.value = "curatedCards"
                             vc.emotionId = ""
                             vc.id = (dict as AnyObject).guided_id ?? ""

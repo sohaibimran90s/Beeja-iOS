@@ -731,10 +731,10 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 cell.lblChallDes.text = self.bannerLaunchData[indexPath.row]["description"] as? String
                 cell.imgView.sd_setImage(with: URL(string: self.bannerLaunchData[indexPath.row]["image"] as? String ?? ""), placeholderImage: UIImage(named: "onboardingImg1"))
 
-                self.tableViewBannersHC.constant = 130 * 1
+                self.tableViewBannersHC.constant = 84 * 1
             }else{
                 if indexPath.row == 0{
-                    cell.lblChallTitle.text = "2 Challenges: In-Progress"
+                    cell.lblChallTitle.text = "\(self.bannerLaunchData.count) Challenges: Launched"
                     cell.lblChallSubTitle.text = "Tap to view details"
                     cell.lblChallDes.text = ""
                     cell.lblLine.isHidden = false
@@ -757,11 +757,11 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 }
                 
                 if self.bannerSelectdIndex == 0{
-                    self.tableViewBannersHC.constant = CGFloat(bannerLaunchHeight * (self.bannerProgressData.count + 1))
+                    cell.lblLine.isHidden = true
+                    self.tableViewBannersHC.constant = 84 * 1
                     cell.imgArrow.image = UIImage(named: "downArrow")
                 }else{
-                    
-                    self.tableViewBannersHC.constant = CGFloat(bannerLaunchHeight * (self.bannerProgressData.count + 1))
+                    self.tableViewBannersHC.constant = 84 + CGFloat(130 * (self.bannerLaunchData.count))
                     if indexPath.row == 0{
                         cell.imgArrow.image = UIImage(named: "upArrow")
                     }else{
@@ -786,7 +786,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             }else{
                 if indexPath.row == 0{
                     cell.lblLine.isHidden = false
-                    cell.lblChallTitle.text = "2 Challenges: In-Progress"
+                    cell.lblChallTitle.text = "\(self.bannerProgressData.count) Challenges: In-Progress"
                     cell.lblChallSubTitle.text = "Tap to view details"
                     cell.lblChallDes.text = ""
                     
