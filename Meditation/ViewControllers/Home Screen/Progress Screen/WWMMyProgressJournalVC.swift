@@ -238,6 +238,15 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     @IBAction func btnAddJournalAction(_ sender: Any) {
         
+        // Ehsan
+        let vc = UIStoryboard(name: "Journal", bundle: nil).instantiateViewController(withIdentifier: "AddJournal") as! AddJournalVC
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .overFullScreen
+        vc.isAddJournal = true
+        self.present(navController, animated: false, completion: nil)
+        
+        return
+        
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
             
             

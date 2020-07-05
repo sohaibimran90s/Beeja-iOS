@@ -308,8 +308,11 @@ class WWMConOnboardingVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 //print("result signupletsstartvc meditation data... \(result)")
-                self.appPreference.setType(value: type)
-                self.appPreference.setGuideType(value: "Guided")
+                //self.appPreference.setType(value: type)
+                //self.appPreference.setGuideType(value: "Guided")
+                self.appPreference.setType(value: "guided")
+                self.appPreference.set21ChallengeName(value: type.capitalized)
+                
                 self.appPreference.setGuideTypeFor3DTouch(value: type)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     self.appPreference.setGetProfile(value: true)

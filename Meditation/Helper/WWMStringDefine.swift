@@ -98,6 +98,9 @@ let URL_JOURNALMYPROGRESS        = URL_BASE + "journalMyProgress"
 let URL_STATSMYPROGRESS        = URL_BASE + "statsMyProgress"
 let URL_MOODPROGRESS               = URL_BASE + "moodProgress"//
 let URL_ADDJOURNAL               = URL_BASE + "addJournal"
+let URL_UPLOADASSETS               = URL_BASE + "saveJournalAssets"
+//https://uat.beejameditation.com/api/v2/saveJournalAssets
+
 let URL_MEDITATIONCOMPLETE               = URL_BASE + "meditationComplete"//
 let URL_RESETPASSWORD            = URL_BASE + "reset_password"
 let URL_SUPPORT                  = URL_BASE + "support"
