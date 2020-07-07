@@ -20,11 +20,6 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.setUpUI()
-
-        let name = self.appPreference.get21ChallengeName()
-        if name != "" {
-            self.reloadTab(isTrue: true, vcName: "30 Day Challenge")
-        }
     }
 
     func setUpUI() {
