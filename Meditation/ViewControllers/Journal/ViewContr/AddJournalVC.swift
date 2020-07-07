@@ -16,6 +16,27 @@ enum JournalOption {
     case AudioToTextEntry
 }
 
+struct MeditationComplete{
+    var moodData = WWMMoodMeterData()
+    var selectedIndex = "-1"
+    var type = ""   // Pre | Post
+    var prepTime = 0
+    var meditationTime = 0
+    var restTime = 0
+    var meditationID = ""
+    var levelID = ""
+    var backgroundvedioView = WWMBackgroundVedioView()
+    var player: AVPlayer?
+    var popupTitle: String = ""
+    var hidShowMoodMeter = "Show"
+    var category_Id = "0"
+    var emotion_Id = "0"
+    var audio_Id = "0"
+    var watched_duration = "0"
+    var rating = "0"
+    var checkAnalyticStr = ""
+}
+
 class AddJournalVC: UIViewController {
 
     @IBOutlet weak var textBtn: UIButton!
@@ -33,6 +54,10 @@ class AddJournalVC: UIViewController {
     var selectedJournalOpt: JournalOption?
     let appPreference = WWMAppPreference()
     var isAddJournal = false
+    
+    //=========== for API call Meditation complete
+    var mediCompleteObj = MeditationComplete()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,10 +85,18 @@ class AddJournalVC: UIViewController {
         imageContainerView.isHidden = true
         
         self.selectedJournalOpt = JournalOption.TextEntry
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.setHidesBackButton(true, animated: false);
     }
     
     @objc func closeButtonAction() {
-        self.dismiss(animated: false, completion: nil)
+        if (self.isAddJournal) {
+            self.dismiss(animated: false, completion: nil)
+        }
+        else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func addTextJournal(sender: UIButton) {
@@ -150,16 +183,6 @@ class AddJournalVC: UIViewController {
 
         guard let textJournal = self.textContainerVC?.textJournalExperienceLog() else {return}
 
-        if (textJournal.title == ""){
-            self.errorAlert(title: "", msg: "Please fill title to experience journal log.")
-            return
-        }
-
-        if (textJournal.textDescription == ""){
-            self.errorAlert(title: "", msg: "Please fill description to experience journal log.")
-            return
-        }
-                    
         var jsonBody: Any = ""
         if (self.isAddJournal) {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
@@ -167,7 +190,7 @@ class AddJournalVC: UIViewController {
         }
         else {
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-                                                  textDescrip: textJournal.textDescription ?? "")
+                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -185,7 +208,10 @@ class AddJournalVC: UIViewController {
     
     func uploadTextAssets(journalId: Int, textJournalObj: TextJournal) {
         
-        guard let imgArray = textJournalObj.image, imgArray.count > 0 else {return}
+        guard let imgArray = textJournalObj.image, imgArray.count > 0 else {
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            return
+        }
             
         var imgDataArray: [Data] = []
         for img in imgArray {
@@ -199,7 +225,12 @@ class AddJournalVC: UIViewController {
             WWMHelperClass.hideLoaderAnimate(on: self.view)
 
             if (isSuccess) {
-                self.dismiss(animated: false, completion: nil)
+                if (self.isAddJournal){
+                    self.dismiss(animated: false, completion: nil)
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
             }
             else {
                self.errorAlert(title: "", msg: errorMsg)
@@ -211,18 +242,8 @@ class AddJournalVC: UIViewController {
     //MARK: API Call ImageJournal
 
     func imageJournalLog() {
-
+        
         guard let imageJournal = self.imageContainerVC?.imageJournalExperienceLog() else {return}
-
-        if (imageJournal.title == ""){
-            self.errorAlert(title: "", msg: "Please fill title to experience journal log.")
-            return
-        }
-
-        if (imageJournal.images!.count == 0){
-            self.errorAlert(title: "", msg: "Please add image.")
-            return
-        }
 
         var jsonBody: Any = ""
         if (self.isAddJournal) {
@@ -230,8 +251,8 @@ class AddJournalVC: UIViewController {
                                                       title: "", textDescrip: imageJournal.title ?? "")
         }
         else {
-            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
-                                                      title: "", textDescrip: imageJournal.title ?? "")
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
+                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -251,14 +272,22 @@ class AddJournalVC: UIViewController {
         guard let imgObjArray = imageJournalObj.images, imgObjArray.count > 0 else {return}
             
         var imgDataArray: [Data] = []
-        for imgObj in imgObjArray {
+        for imgObj in imgObjArray { // convert all UIImage into Data and collect into Array
             
             let thumbImg = imgObj.thumbImg
             let imageData = thumbImg.jpegData(compressionQuality: 1.0)!
             imgDataArray.append(imageData)
         }
         
-        let jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: "image")
+        var jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: "image")
+        
+        var index = 1
+        for img in imgObjArray {    // add all captions in json body. Though its not fixed so we need to run loop to add it.
+            let captionStr = img.captionTitle
+            jsonBody["caption" + String(index)] = captionStr as AnyObject
+            index += 1
+        }
+        
         DataManager.sharedInstance.uploadImages(imageDataArray: imgDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)

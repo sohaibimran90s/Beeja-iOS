@@ -128,12 +128,27 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
         self.checkIfAccountPaid()
     }
     
-    func textJournalExperienceLog() -> TextJournal{
+    func textJournalExperienceLog() -> TextJournal?{
+        
+        if (self.titleField.text == ""){
+            let msg = "Please fill title to experience journal log."
+            Alert.alertWithOneButton(title: "", message: msg, container: self) { (alert, index) in
+            }
+            return nil
+        }
+
+        if (self.textJournalObj?.textDescription == ""){
+            let msg = "Please fill description to experience journal log."
+            Alert.alertWithOneButton(title: "", message: msg, container: self) { (alert, index) in
+            }
+            return nil
+        }
+        
         
         self.textJournalObj?.title = self.titleField.text
         self.textJournalObj?.image = self.addedImages
         
-        return self.textJournalObj ?? TextJournal(title: "", textDescription: "", image: [])
+        return self.textJournalObj
     }
 }
 
