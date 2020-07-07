@@ -20,6 +20,11 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.setUpUI()
+
+        let name = self.appPreference.get21ChallengeName()
+        if name != "" {
+            self.reloadTab(isTrue: true, vcName: "30 Day Challenge")
+        }
     }
 
     func setUpUI() {
@@ -73,12 +78,21 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.learnStepsListData = data.step_list
                 arrVC.add(vc)
-            }else if data.name == "30 Day Challenge"{
+            } else if data.name == "30 Day Challenge"{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
                 
                 print("thirty_day_list*** \(data.thirty_day_list.count)")
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.daysListData = data.thirty_day_list
+                arrVC.add(vc)
+            }
+                
+            //TODO
+            else if data.name == "8 Weeks Challenge" {
+                //WWM8WeeksGridsViewController
+                let story = UIStoryboard.init(name: "8week", bundle: nil)
+                let vc = story.instantiateViewController(withIdentifier: "WWM8WeeksGridsViewController") as! WWM8WeeksGridsViewController
+                vc.itemInfo = IndicatorInfo.init(title: data.name)
                 arrVC.add(vc)
             }
         }

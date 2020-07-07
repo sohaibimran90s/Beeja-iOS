@@ -140,10 +140,23 @@ class WWMLearnNavVC: WWMBaseViewController {
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
+
                 let learnData = WWMLearnData.init(json: jsonData)
                 self.arrLearnList.append(learnData)
                 jsonThirtyDays.removeAll()
             }
+            
+            //TODO
+            jsonData["name"] = "8 Weeks Challenge"
+            jsonData["intro_url"] = ""
+            jsonData["intro_completed"] = ""
+            jsonData["min_limit"] = ""
+            jsonData["max_limit"] = ""
+            jsonData["max_limit"] = ""
+            jsonData["is_expired"] = ""
+            let learnData = WWMLearnData.init(json: jsonData)
+            self.arrLearnList.append(learnData)
+            
             
             for view in self.containerView.subviews{
                 view.removeFromSuperview()
