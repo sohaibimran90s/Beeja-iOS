@@ -412,7 +412,6 @@
 		6152F4D724908F8A0094A47C /* WWMLearnData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6152F4D624908F8A0094A47C /* WWMLearnData.swift */; };
 		615635D924B4879500537AC2 /* DBEightWeek+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615635D724B4879500537AC2 /* DBEightWeek+CoreDataClass.swift */; };
 		615635DA24B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615635D824B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift */; };
-		615635DC24B4910300537AC2 /* EightWeekModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615635DB24B4910300537AC2 /* EightWeekModel.swift */; };
 		615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */; };
 		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
@@ -1052,7 +1051,6 @@
 		6152F4D624908F8A0094A47C /* WWMLearnData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnData.swift; sourceTree = "<group>"; };
 		615635D724B4879500537AC2 /* DBEightWeek+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBEightWeek+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		615635D824B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBEightWeek+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		615635DB24B4910300537AC2 /* EightWeekModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EightWeekModel.swift; sourceTree = "<group>"; };
 		615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 3.xcdatamodel"; sourceTree = "<group>"; };
 		615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1747,7 +1745,6 @@
 				2EC81C5721E75444003B0EEE /* MoodMeterData.geojson */,
 				2E4371D02203033300EF5D62 /* MeditationData.geojson */,
 				2E4CE2882208591300059396 /* CalendarData.geojson */,
-				615635DB24B4910300537AC2 /* EightWeekModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3245,7 +3242,6 @@
 				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */,
 				61416E8F22BBB3B400C9339E /* PieChartView.swift in Sources */,
-				615635DC24B4910300537AC2 /* EightWeekModel.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,
 				2EB0865D22817069008BF6E4 /* WWMGuidedAudioListVC.swift in Sources */,
