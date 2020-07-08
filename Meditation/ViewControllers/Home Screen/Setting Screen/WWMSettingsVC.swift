@@ -1340,6 +1340,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
                 WWMHelperClass.deletefromDb(dbName: "DBLearn")
                 WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+                WWMHelperClass.deletefromDb(dbName: "DBEightWeek")
                 WWMHelperClass.challenge7DayCount = 0
                 self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
                 self.appPreffrence.setType(value: "")

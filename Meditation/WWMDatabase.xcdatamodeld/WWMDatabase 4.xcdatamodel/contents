@@ -20,6 +20,27 @@
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="DBEightWeek" representedClassName="DBEightWeek" syncable="YES">
+        <attribute name="auther_name" optional="YES" attributeType="String"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="date_completed" optional="YES" attributeType="String"/>
+        <attribute name="day_name" optional="YES" attributeType="String"/>
+        <attribute name="description1" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="is_milestone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="med_max" optional="YES" attributeType="String"/>
+        <attribute name="med_min" optional="YES" attributeType="String"/>
+        <attribute name="meditation_time" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
+        <attribute name="prep_max" optional="YES" attributeType="String"/>
+        <attribute name="prep_min" optional="YES" attributeType="String"/>
+        <attribute name="prep_time" optional="YES" attributeType="String"/>
+        <attribute name="rest_max" optional="YES" attributeType="String"/>
+        <attribute name="rest_min" optional="YES" attributeType="String"/>
+        <attribute name="rest_time" optional="YES" attributeType="String"/>
+        <attribute name="two_step_complete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="DBGetVibesImages" representedClassName="DBGetVibesImages" syncable="YES">
         <attribute name="images" optional="YES" attributeType="String"/>
         <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
@@ -239,5 +260,6 @@
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="103"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="163"/>
+        <element name="DBEightWeek" positionX="0" positionY="153" width="128" height="328"/>
     </elements>
 </model>
