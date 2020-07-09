@@ -958,7 +958,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
-                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
+                    print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
@@ -1022,69 +1022,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             dbLearnData.is_expired = false
                         }
                         
-                        if let step_list = dict["step_list"] as? [[String: Any]]{
-                            for dict in step_list{
-                                let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
-                                if let completed = dict["completed"] as? Bool{
-                                    dbStepsData.completed = completed
-                                }
-                                
-                                if let date_completed = dict["date_completed"] as? String{
-                                    dbStepsData.date_completed = date_completed
-                                }
-                                
-                                if let description = dict["description"] as? String{
-                                    dbStepsData.description1 = description
-                                }
-                                
-                                if let id = dict["id"]{
-                                    dbStepsData.id = "\(id)"
-                                }
-                                
-                                if let outro_audio = dict["outro_audio"] as? String{
-                                    dbStepsData.outro_audio = outro_audio
-                                }
-                                
-                                if let step_audio = dict["step_audio"] as? String{
-                                    dbStepsData.step_audio = step_audio
-                                }
-                                
-                                if let step_name = dict["step_name"] as? String{
-                                    dbStepsData.step_name = step_name
-                                }
-                                
-                                if let timer_audio = dict["timer_audio"] as? String{
-                                    dbStepsData.timer_audio = timer_audio
-                                }
-                                
-                                if let title = dict["title"] as? String{
-                                    dbStepsData.title = title
-                                }
-                                
-                                if let min_limit = dict["min_limit"] as? String{
-                                    dbStepsData.min_limit = min_limit
-                                }else{
-                                    dbStepsData.min_limit = "95"
-                                }
-                                
-                                if let max_limit = dict["max_limit"] as? String{
-                                    dbStepsData.max_limit = max_limit
-                                }else{
-                                    dbStepsData.max_limit = "98"
-                                }
-                                
-                                WWMHelperClass.saveDb()
-                                
-                            }
-                        }
-                        
-                        var count = 0
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
-                                
-                                count = count + 1
-                                print("tabbar dict \(dict) count \(count)")
                                 
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
@@ -1184,8 +1124,65 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                         }
                         
-                        if let day_list = dict["daywise_list"] as? [[String: Any]]{
-                            for dict in day_list{
+                        if let step_list = dict["step_list"] as? [[String: Any]]{
+                            for dict in step_list{
+                                let dbStepsData = WWMHelperClass.fetchEntity(dbName: "DBSteps") as! DBSteps
+                                if let completed = dict["completed"] as? Bool{
+                                    dbStepsData.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbStepsData.date_completed = date_completed
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbStepsData.description1 = description
+                                }
+                                
+                                if let id = dict["id"]{
+                                    dbStepsData.id = "\(id)"
+                                }
+                                
+                                if let outro_audio = dict["outro_audio"] as? String{
+                                    dbStepsData.outro_audio = outro_audio
+                                }
+                                
+                                if let step_audio = dict["step_audio"] as? String{
+                                    dbStepsData.step_audio = step_audio
+                                }
+                                
+                                if let step_name = dict["step_name"] as? String{
+                                    dbStepsData.step_name = step_name
+                                }
+                                
+                                if let timer_audio = dict["timer_audio"] as? String{
+                                    dbStepsData.timer_audio = timer_audio
+                                }
+                                
+                                if let title = dict["title"] as? String{
+                                    dbStepsData.title = title
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbStepsData.min_limit = min_limit
+                                }else{
+                                    dbStepsData.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbStepsData.max_limit = max_limit
+                                }else{
+                                    dbStepsData.max_limit = "98"
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                                
+                            }
+                        }
+                        
+                        //8 week
+                        if let daywise_list = dict["daywise_list"] as? [[String: Any]]{
+                            for dict in daywise_list{
                                 let dbEightWeek = WWMHelperClass.fetchEntity(dbName: "DBEightWeek") as! DBEightWeek
                                                                 
                                 if let id = dict["id"]{
@@ -1204,8 +1201,16 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     dbEightWeek.description1 = description
                                 }
                                 
-                                if let is_milestone = dict["is_milestone"] as? Bool{
-                                    dbEightWeek.is_milestone = is_milestone
+                                if let secondDescription = dict["second_description"] as? String{
+                                    dbEightWeek.secondDescription = secondDescription
+                                }else{
+                                    dbEightWeek.secondDescription = ""
+                                }
+                                
+                                if let image = dict["image"] as? String{
+                                    dbEightWeek.image = image
+                                }else{
+                                    dbEightWeek.image = ""
                                 }
                                 
                                 if let min_limit = dict["min_limit"] as? String{
@@ -1218,60 +1223,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     dbEightWeek.max_limit = max_limit
                                 }else{
                                     dbEightWeek.max_limit = "98"
-                                }
-                                
-                                if let prep_time = dict["prep_time"] as? String{
-                                    dbEightWeek.prep_time = prep_time
-                                }else{
-                                    dbEightWeek.prep_time = "60"
-                                }
-                                
-                                if let meditation_time = dict["meditation_time"] as? String{
-                                    dbEightWeek.meditation_time = meditation_time
-                                }else{
-                                    dbEightWeek.meditation_time = "1200"
-                                }
-                                
-                                if let rest_time = dict["rest_time"] as? String{
-                                    dbEightWeek.rest_time = rest_time
-                                }else{
-                                    dbEightWeek.rest_time = "120"
-                                }
-                                
-                                if let prep_min = dict["prep_min"] as? String{
-                                    dbEightWeek.prep_min = prep_min
-                                }else{
-                                    dbEightWeek.prep_min = "0"
-                                }
-                                
-                                if let prep_max = dict["prep_max"] as? String{
-                                    dbEightWeek.prep_max = prep_max
-                                }else{
-                                    dbEightWeek.prep_max = "300"
-                                }
-                                
-                                if let rest_min = dict["rest_min"] as? String{
-                                    dbEightWeek.rest_min = rest_min
-                                }else{
-                                    dbEightWeek.prep_max = "0"
-                                }
-                                
-                                if let rest_max = dict["rest_max"] as? String{
-                                    dbEightWeek.rest_max = rest_max
-                                }else{
-                                    dbEightWeek.prep_max = "600"
-                                }
-                                
-                                if let med_min = dict["med_min"] as? String{
-                                    dbEightWeek.med_min = med_min
-                                }else{
-                                    dbEightWeek.med_min = "0"
-                                }
-                                
-                                if let med_max = dict["med_max"] as? String{
-                                    dbEightWeek.med_max = med_max
-                                }else{
-                                    dbEightWeek.med_max = "2400"
                                 }
                                 
                                 if let completed = dict["completed"] as? Bool{
@@ -1291,10 +1242,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         WWMHelperClass.saveDb()
-                        
-                        if count == 30{
-                            return
-                        }
                     }
                 }
             }
@@ -1792,8 +1739,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             var userData = WWMUserData.sharedInstance
                             userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
                             
-                            
-                            //print("userData****** \(userData) result****** \(result) userprofile....\(result["user_profile"] as! [String : Any])")
+                            print("user_id****** \(self.appPreffrence.getUserID())")
                             
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
