@@ -30,7 +30,7 @@ class RequestBody: NSObject {
                         "mood_color":"",
                         "mood_text":"",
                         "mood_id":"",
-                        "med_type":"pre",
+                        "med_type": appPreference.getType(),
                         "journal_type":"textEntry",
                         ] as [String : Any];
         

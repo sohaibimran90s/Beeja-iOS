@@ -210,6 +210,12 @@ class AddJournalVC: UIViewController {
         
         guard let imgArray = textJournalObj.image, imgArray.count > 0 else {
             WWMHelperClass.hideLoaderAnimate(on: self.view)
+            if (self.isAddJournal){
+                self.dismiss(animated: false, completion: nil)
+            }
+            else {
+                self.navigationController!.popToRootViewController(animated: true)
+            }
             return
         }
             
