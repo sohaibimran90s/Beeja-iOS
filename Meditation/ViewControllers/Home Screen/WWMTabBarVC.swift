@@ -1078,10 +1078,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                         }
                         
+                        var count = 0
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
-                                                                
+                                
+                                count = count + 1
+                                print("tabbar dict \(dict) count \(count)")
+                                
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
                                 }
@@ -1287,6 +1291,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         }
                         
                         WWMHelperClass.saveDb()
+                        
+                        if count == 30{
+                            return
+                        }
                     }
                 }
             }

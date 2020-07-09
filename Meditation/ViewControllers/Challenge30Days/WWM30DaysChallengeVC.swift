@@ -226,12 +226,6 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     
     @IBAction func btnIntroVideoClicked(_ sender: UIButton){
         
-        if self.appPreference.get21CompletedDaysCount() != 12{
-            let obj = WWMLearnStepListVC()
-            obj.xibCall(title1: "Please complete 12 steps first")
-            return
-        }
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.emotionKey = "30days"

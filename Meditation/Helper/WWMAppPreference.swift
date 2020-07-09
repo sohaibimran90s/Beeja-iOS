@@ -248,11 +248,6 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
     }
     
-    //get to check 21 days completed all
-    func get21CompletedDaysCount() -> Int {
-        return UserDefaults.standard.integer(forKey: "21CompletedDaysCount") 
-    }
-    
     //get learn 12steps last date
     func getDate12Step() -> String{
         return UserDefaults.standard.string(forKey: "date12Step") ?? ""

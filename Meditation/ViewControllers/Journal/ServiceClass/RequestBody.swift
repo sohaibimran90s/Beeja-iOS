@@ -30,15 +30,15 @@ class RequestBody: NSObject {
                         "mood_color":"",
                         "mood_text":"",
                         "mood_id":"",
-                        "med_type":"guided",
-                        "journal_type":appPreference.getType(),
+                        "med_type":"pre",
+                        "journal_type":"textEntry",
                         ] as [String : Any];
         
         return jsonBody;
     }
 
 
-    static func journalAssetsBody(journalId: Int, type: String) -> Any//[String : AnyObject]
+    static func journalAssetsBody(journalId: Int, type: String) -> [String : AnyObject]
     {
         let jsonBody = ["journal_id":journalId,
                         "journal_type":type,
@@ -47,35 +47,36 @@ class RequestBody: NSObject {
         return jsonBody;
     }
     
-    static func meditationCompleteBody(appPreference: WWMAppPreference, title: String, textDescrip: String) -> Any
+    static func meditationCompleteBody(appPreference: WWMAppPreference, title: String,
+                                       textDescrip: String, medCompObj: MeditationComplete) -> Any
     {
         let jsonBody = [
-                        "type": "guided",
-                        "category_id": 0,
-                        "emotion_id": 0,
-                        "audio_id": 0,
-                        "guided_type": "Guided",
-                        "watched_duration": 0,
-                        "rating": 0,
-                        "meditation_type": "pre",
+                        "type": appPreference.getType(),
+                        "category_id": medCompObj.category_Id,
+                        "emotion_id": medCompObj.emotion_Id,
+                        "audio_id": medCompObj.audio_Id,
+                        "guided_type": appPreference.getGuideType(),
+                        "watched_duration": medCompObj.watched_duration,
+                        "rating": medCompObj.rating,
+                        "meditation_type": medCompObj.type,
                         "date_time": "\(Int(Date().timeIntervalSince1970*1000))",
-                        "mood_color": "#17EFB3",
-                        "mood_text": "Content",
+                            "mood_color": "",
+                            "mood_text": "",
                         "title":title,
                         "tell_us_why": textDescrip,
-                        "prep_time": 0,
-                        "meditation_time": 0,
-                        "rest_time": 0,
-                        "meditation_id": 0,
-                        "level_id": 0,
+                        "prep_time": medCompObj.prepTime,
+                        "meditation_time": medCompObj.meditationTime,
+                        "rest_time": medCompObj.restTime,
+                        "meditation_id": medCompObj.meditationID,
+                        "level_id": medCompObj.levelID,
                         "user_id": appPreference.getUserID(),
                         "mood_id": appPreference.getMoodId(),
-                        "step_id": 0,
-                        "complete_percentage": "0",
-                        "is_complete": 0,
-                        "mantra_id": "1",
-                        "duration": 0,
-                        "journal_type": appPreference.getType()
+                            "step_id": 0,
+                            "complete_percentage": "0",
+                            "is_complete": 0,
+                            "mantra_id": "1",
+                            "duration": 0,
+                        "journal_type": "textEntry"
                         ] as [String : Any];
         
         return jsonBody;
