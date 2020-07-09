@@ -86,7 +86,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                     dateFormatter.dateFormat = "HH:mm"
                     let date1 = dateFormatter.string(from: date)
                     self.defaultDate = date1
-                    print("date1 \(date1) dateAsString \(dateAsString) defaultDate \(defaultDate)")
+                    //print("date1 \(date1) dateAsString \(dateAsString) defaultDate \(defaultDate)")
                 }
             }
         }

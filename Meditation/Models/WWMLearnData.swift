@@ -19,6 +19,7 @@ class WWMLearnData: NSObject {
     var is_expired = false
     var step_list = [LearnStepsListData]()
     var thirty_day_list = [ThirtyDaysListData]()
+    var eightWeekList = [EightWeekModel]()
     
     override init() {
     }
@@ -44,6 +45,14 @@ class WWMLearnData: NSObject {
             for dict in day_list {
                 let thirtyDaysData = ThirtyDaysListData.init(json: dict)
                 self.thirty_day_list.append(thirtyDaysData)
+            }
+        }
+        
+        //8 week
+        if let day_list = json["daywise_list"] as? [[String:Any]]{
+            for dict in day_list {
+                let eightWeekData = EightWeekModel.init(json: dict)
+                self.eightWeekList.append(eightWeekData)
             }
         }
     }
@@ -125,3 +134,33 @@ class ThirtyDaysListData: NSObject{
     }
 }
 
+class EightWeekModel: NSObject{
+    var id: Int = 0
+    var day_name: String = ""
+    var auther_name: String = ""
+    var Description: String = ""
+    var secondDescription: String = ""
+    var backImage: String = ""
+    var min_limit = "94"
+    var max_limit = "97"
+    var completed: Bool = false
+    var date_completed = ""
+    var two_step_complete = false
+    
+    override init() {
+    }
+    
+    init(json: [String: Any]) {
+        self.id = Int("\(json["id"] ?? "0")") ?? 0
+        self.day_name = json["day_name"] as? String ?? ""
+        self.auther_name = json["auther_name"] as? String ?? ""
+        self.Description = json["description"] as? String ?? ""
+        self.secondDescription = json["second_description"] as? String ?? ""
+        self.backImage = json["image"] as? String ?? ""
+        self.min_limit = json["min_limit"] as? String ?? ""
+        self.max_limit = json["max_limit"] as? String ?? ""
+        self.completed = json["completed"] as? Bool ?? false
+        self.date_completed = json["date_completed"] as? String ?? ""
+        self.two_step_complete = json["two_step_complete"] as? Bool ?? false
+    }
+}

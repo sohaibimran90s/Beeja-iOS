@@ -20,6 +20,19 @@
     <entity name="DBContactUs" representedClassName="DBContactUs" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="DBEightWeek" representedClassName="DBEightWeek" syncable="YES">
+        <attribute name="auther_name" optional="YES" attributeType="String"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="date_completed" optional="YES" attributeType="String"/>
+        <attribute name="day_name" optional="YES" attributeType="String"/>
+        <attribute name="description1" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="max_limit" optional="YES" attributeType="String"/>
+        <attribute name="min_limit" optional="YES" attributeType="String"/>
+        <attribute name="secondDescription" optional="YES" attributeType="String"/>
+        <attribute name="two_step_complete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="DBGetVibesImages" representedClassName="DBGetVibesImages" syncable="YES">
         <attribute name="images" optional="YES" attributeType="String"/>
         <attribute name="last_time_stamp" optional="YES" attributeType="String"/>
@@ -217,6 +230,7 @@
         <element name="DBAllMeditationData" positionX="-18" positionY="135" width="128" height="163"/>
         <element name="DBCommunityData" positionX="-18" positionY="135" width="128" height="73"/>
         <element name="DBContactUs" positionX="-54" positionY="0" width="128" height="60"/>
+        <element name="DBEightWeek" positionX="0" positionY="153" width="128" height="208"/>
         <element name="DBGetVibesImages" positionX="-9" positionY="144" width="128" height="88"/>
         <element name="DBGuidedAudioData" positionX="0" positionY="153" width="128" height="178"/>
         <element name="DBGuidedData" positionX="-18" positionY="135" width="128" height="238"/>

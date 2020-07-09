@@ -16,6 +16,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     var itemInfo: IndicatorInfo = "View"
     var selectedIndex: Int?
+    var daysListData: [DBEightWeek] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

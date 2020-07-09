@@ -16,15 +16,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var lblMonthYear: UILabel!
     @IBOutlet weak var btnPreviousMonth: UIButton!
     @IBOutlet weak var btnNextMonth: UIButton!
-    
     @IBOutlet weak var btnLeft: UIButton!
     @IBOutlet weak var btnRight: UIButton!
     @IBOutlet weak var btnAddSession: UIButton!
     @IBOutlet weak var viewAddSession: UIView!
-    
     @IBOutlet weak var btnAddSessionHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnAddSessionTopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var collectionViewCal: UICollectionView!
     @IBOutlet weak var collectionView21Chall: UICollectionView!
     @IBOutlet weak var viewHourMeditate: UICircularProgressRing!
@@ -38,6 +35,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewAvMinutes: UICircularProgressRing!
     @IBOutlet weak var viewDays: UICircularProgressRing!
     @IBOutlet weak var viewSomeGoals: UIView!
+    @IBOutlet weak var view8Week: UIView!
+    @IBOutlet weak var view21Header: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
@@ -95,7 +94,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         DispatchQueue.global(qos: .background).async {
             self.getGuidedListAPI()
             self.getLearnAPI()
@@ -163,7 +162,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.btnChallenge21Days.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnChallenge21Days.layer.borderWidth = 2
         
-        
         //check weather 30 days or not
         if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
             self.stackViewPraSpiritual.isHidden = true
@@ -189,6 +187,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             self.lbl21DaysTitle.text = "21 Days meditation Challenge"
         }
         
+        self.view8Week.isHidden = true
         self.viewHourMeditate.maxValue = 100
         self.viewAvMinutes.maxValue = 100
         self.viewDays.maxValue = 100
@@ -414,7 +413,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         }
     }
 
-
     func viewHighlighted(){
         
         if (addSessionView.lblSec.text == "0 sec" && addSessionView.lblMin.text == "0 min" && addSessionView.lblHrs.text == "0 hrs"){
@@ -611,10 +609,12 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.isLeft = false
         self.setData()
     }
+    
     @IBAction func btnRightAction(_ sender: Any) {
         self.isLeft = true
         self.setData()
     }
+    
     @IBAction func btnNextMonthAction(_ sender: Any) {
         monthValue = monthValue+1
          let nextMonth = Calendar.current.date(byAdding: .month, value: monthValue, to: Date())
@@ -632,9 +632,17 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if collectionView == collectionView21Chall{
-            if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn") && (self.statsData.days30Challenge.count > 0){
+            if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"){
                 
-                return self.statsData.days30Challenge.count
+                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    if self.statsData.days30Challenge.count > 0{
+                        return self.statsData.days30Challenge.count
+                    }else{
+                        return 0
+                    }
+                }else{
+                    return 0
+                }
             }else if (self.appPreference.getType() == "guided" || self.appPreference.getType() == "Guided") && (self.statsData.days21PracticalChallenge.count != 0 || self.statsData.days21SpiritualChallenge.count != 0) {
                 
                 if self.challType == "Practical"{
@@ -643,7 +651,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     return self.statsData.days21SpiritualChallenge.count
                 }
             }
-            
         } else if collectionView == collectionViewCal{
             if self.statsData.consecutive_days.count > 35{
                 self.calenderHegihtConstraint.constant = 330
@@ -714,7 +721,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     cell.lblDate.textColor = UIColor.black
                 }
             })
-            
             
             if indexPath.row == dayAdded {
                 if !(data.meditation_status == 0 && data.meditation_status2 == 0) && !(statsData.consecutive_days[indexPath.row+1].meditation_status == 0 && statsData.consecutive_days[indexPath.row+1].meditation_status2 == 0) {
@@ -936,23 +942,8 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     
                     self.collectionView21Chall.reloadData()
                 }else if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"){
-                    if self.statsData.days30Challenge.count > 0{
-                        
-                        //print(self.statsData.days30Challenge.count)
-                        
-                        self.stackViewPraSpiritual.isHidden = true
-                        self.constraint21DaysHeader.constant = 90
-                        self.lbl21DaysTitle.text = "30 Days meditation Challenge"
-                        self.viewChallenge21Days.isHidden = false
-                        self.viewChallenge21DaysHeightConstraint.constant = 410
-                        self.btnChallenge21Days.isHidden = false
-                        self.viewSuperChallenge21Days.isHidden = false
-                        self.constraintSuperView21Days.constant = 520
-                        self.challengeCalHC.constant = 300
-                        self.lblPracLine.isHidden = true
-                        self.lblSpiriLine.isHidden = true
-                        self.collectionView21Chall.reloadData()
-                    }else{
+                    
+                    if self.appPreference.get21ChallengeName() == "8 Week Challenge"{
                         self.viewChallenge21Days.isHidden = true
                         self.viewChallenge21DaysHeightConstraint.constant = 0
                         self.btnChallenge21Days.isHidden = true
@@ -962,6 +953,35 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                         self.stackViewPraSpiritual.isHidden = false
                         self.constraint21DaysHeader.constant = 110
                         self.lbl21DaysTitle.text = ""
+                    }else if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                        if self.statsData.days30Challenge.count > 0{
+                            
+                            //print(self.statsData.days30Challenge.count)
+                            self.stackViewPraSpiritual.isHidden = true
+                            self.constraint21DaysHeader.constant = 90
+                            self.lbl21DaysTitle.text = "30 Days meditation Challenge"
+                            self.viewChallenge21Days.isHidden = false
+                            self.viewChallenge21DaysHeightConstraint.constant = 410
+                            self.btnChallenge21Days.isHidden = false
+                            self.viewSuperChallenge21Days.isHidden = false
+                            self.constraintSuperView21Days.constant = 520
+                            self.challengeCalHC.constant = 300
+                            self.lblPracLine.isHidden = true
+                            self.lblSpiriLine.isHidden = true
+                            self.collectionView21Chall.reloadData()
+                        }else{
+                            self.viewChallenge21Days.isHidden = true
+                            self.viewChallenge21DaysHeightConstraint.constant = 0
+                            self.btnChallenge21Days.isHidden = true
+                            self.viewSuperChallenge21Days.isHidden = true
+                            self.constraintSuperView21Days.constant = 0
+                            self.calenderTopConstraint.constant = 0
+                            self.stackViewPraSpiritual.isHidden = false
+                            self.constraint21DaysHeader.constant = 110
+                            self.lbl21DaysTitle.text = ""
+                        }
+                        self.view8Week.isHidden = true
+                        self.imgBg21Days.isHidden = false
                     }
                 }
                 

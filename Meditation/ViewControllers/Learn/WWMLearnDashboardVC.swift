@@ -60,11 +60,8 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
     // MARK: - PagerTabStripDataSource
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let arrVC = NSMutableArray()
-        
-         
-        
         for data in self.arrLearnList {
-            //print("data.step_list--- \(data.step_list.count)")
+            print("data.step_list--- \(data.name)")
             
             if data.name == "12 Steps"{
                 //WWM21DayChallengeVC
@@ -80,10 +77,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.daysListData = data.thirty_day_list
                 arrVC.add(vc)
-            }
-                
-            //TODO
-            else if data.name == "8 Weeks Challenge" {
+            }else if data.name == "8 Weeks" {
                 //WWM8WeeksGridsViewController
                 let story = UIStoryboard.init(name: "8week", bundle: nil)
                 let vc = story.instantiateViewController(withIdentifier: "WWM8WeeksGridsViewController") as! WWM8WeeksGridsViewController

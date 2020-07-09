@@ -178,7 +178,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
+        //print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
         if self.appPreference.getDate12Step() == dateFormatter.string(from: Date()){
             self.lblTitle.text = "Tomorrow is the first day of your challenge"
         }else{
@@ -468,6 +468,11 @@ extension WWM30DaysChallengeVC{
                         WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
                     }
                     
+                    let getEightWeekData = WWMHelperClass.fetchDB(dbName: "DBEightWeek") as! [DBEightWeek]
+                    if getEightWeekData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBEightWeek")
+                    }
+                    
                     for dict in data{
                         
                         let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
@@ -660,6 +665,67 @@ extension WWM30DaysChallengeVC{
                                 
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbThirtyDays.date_completed = date_completed
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                            }
+                        }
+                        
+                        //8 week
+                        if let daywise_list = dict["daywise_list"] as? [[String: Any]]{
+                            for dict in daywise_list{
+                                let dbEightWeek = WWMHelperClass.fetchEntity(dbName: "DBEightWeek") as! DBEightWeek
+                                                                
+                                if let id = dict["id"]{
+                                    dbEightWeek.id = "\(id)"
+                                }
+                                
+                                if let day_name = dict["day_name"] as? String{
+                                    dbEightWeek.day_name = day_name
+                                }
+                                
+                                if let auther_name = dict["auther_name"] as? String{
+                                    dbEightWeek.auther_name = auther_name
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbEightWeek.description1 = description
+                                }
+                                
+                                if let secondDescription = dict["second_description"] as? String{
+                                    dbEightWeek.secondDescription = secondDescription
+                                }else{
+                                    dbEightWeek.secondDescription = ""
+                                }
+                                
+                                if let image = dict["image"] as? String{
+                                    dbEightWeek.image = image
+                                }else{
+                                    dbEightWeek.image = ""
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbEightWeek.min_limit = min_limit
+                                }else{
+                                    dbEightWeek.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbEightWeek.max_limit = max_limit
+                                }else{
+                                    dbEightWeek.max_limit = "98"
+                                }
+                                
+                                if let completed = dict["completed"] as? Bool{
+                                    dbEightWeek.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbEightWeek.date_completed = date_completed
+                                }
+                                
+                                if let two_step_complete = dict["two_step_complete"] as? Bool{
+                                    dbEightWeek.two_step_complete = two_step_complete
                                 }
                                 
                                 WWMHelperClass.saveDb()

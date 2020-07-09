@@ -5218,18 +5218,61 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6bJ-lK-iip">
+                                                        <rect key="frame" x="26" y="16" width="323" height="70"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="highResEtherealInkTextures6" translatesAutoresizingMaskIntoConstraints="NO" id="cpN-0J-4eW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="323" height="70"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </imageView>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="DfM-EW-Qra">
+                                                                <rect key="frame" x="293" y="28" width="14" height="14"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="14" id="k7k-Xh-l37"/>
+                                                                    <constraint firstAttribute="height" constant="14" id="vUP-M9-sQA"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kib-In-n9L">
+                                                                <rect key="frame" x="16" y="27" width="261" height="16"/>
+                                                                <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="cpN-0J-4eW" secondAttribute="trailing" id="4ym-d7-fHZ"/>
+                                                            <constraint firstItem="cpN-0J-4eW" firstAttribute="top" secondItem="6bJ-lK-iip" secondAttribute="top" id="6xe-WL-24b"/>
+                                                            <constraint firstItem="cpN-0J-4eW" firstAttribute="leading" secondItem="6bJ-lK-iip" secondAttribute="leading" id="IT3-qk-XaC"/>
+                                                            <constraint firstItem="DfM-EW-Qra" firstAttribute="leading" secondItem="kib-In-n9L" secondAttribute="trailing" constant="16" id="Y9X-Ey-9Q7"/>
+                                                            <constraint firstItem="kib-In-n9L" firstAttribute="leading" secondItem="6bJ-lK-iip" secondAttribute="leading" constant="16" id="i2s-J3-vwb"/>
+                                                            <constraint firstAttribute="height" constant="70" id="lye-4H-oHV"/>
+                                                            <constraint firstItem="kib-In-n9L" firstAttribute="centerY" secondItem="6bJ-lK-iip" secondAttribute="centerY" id="qGb-RI-wSi"/>
+                                                            <constraint firstAttribute="trailing" secondItem="DfM-EW-Qra" secondAttribute="trailing" constant="16" id="u45-Nw-Ptc"/>
+                                                            <constraint firstItem="DfM-EW-Qra" firstAttribute="centerY" secondItem="6bJ-lK-iip" secondAttribute="centerY" id="uzG-m3-glV"/>
+                                                            <constraint firstAttribute="bottom" secondItem="cpN-0J-4eW" secondAttribute="bottom" id="wWQ-A0-YiQ"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="self.layer.cornerRadius">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" red="0.23529411759999999" green="0.1019607843" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="Fb7-CZ-aLe" firstAttribute="top" secondItem="FZ2-jG-icF" secondAttribute="bottom" id="F3Z-pk-6LA"/>
                                                     <constraint firstAttribute="trailing" secondItem="Nan-Wq-7US" secondAttribute="trailing" id="Hq9-zJ-J1k"/>
                                                     <constraint firstItem="Fb7-CZ-aLe" firstAttribute="leading" secondItem="Azw-XK-dTq" secondAttribute="leading" constant="4" id="KTO-Xo-ehk"/>
+                                                    <constraint firstItem="6bJ-lK-iip" firstAttribute="top" secondItem="Azw-XK-dTq" secondAttribute="top" constant="16" id="NAK-Jg-507"/>
                                                     <constraint firstAttribute="trailing" secondItem="FZ2-jG-icF" secondAttribute="trailing" id="XYk-Kv-5sb"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6bJ-lK-iip" secondAttribute="trailing" constant="26" id="cpA-Jv-uQt"/>
                                                     <constraint firstAttribute="trailing" secondItem="Fb7-CZ-aLe" secondAttribute="trailing" constant="4" id="g7a-dP-p2w"/>
                                                     <constraint firstItem="Nan-Wq-7US" firstAttribute="leading" secondItem="Azw-XK-dTq" secondAttribute="leading" id="hWI-ld-psz"/>
                                                     <constraint firstItem="FZ2-jG-icF" firstAttribute="leading" secondItem="Azw-XK-dTq" secondAttribute="leading" id="ipU-UF-Gkc"/>
                                                     <constraint firstAttribute="bottom" secondItem="Nan-Wq-7US" secondAttribute="bottom" id="lOt-2g-lGz"/>
                                                     <constraint firstItem="FZ2-jG-icF" firstAttribute="top" secondItem="Azw-XK-dTq" secondAttribute="top" id="lsr-SP-kjf"/>
+                                                    <constraint firstItem="6bJ-lK-iip" firstAttribute="leading" secondItem="Azw-XK-dTq" secondAttribute="leading" constant="26" id="oEY-S8-9wc"/>
                                                     <constraint firstAttribute="height" constant="485" id="x8h-61-3G8"/>
                                                     <constraint firstItem="Nan-Wq-7US" firstAttribute="top" secondItem="Azw-XK-dTq" secondAttribute="top" id="y0c-Vk-R3h"/>
                                                 </constraints>
@@ -6256,6 +6299,8 @@
                         <outlet property="stackViewPraSpiritual" destination="yUG-9W-NbK" id="3cw-3g-P06"/>
                         <outlet property="tableView" destination="xsh-YS-eWj" id="kr7-aG-VLe"/>
                         <outlet property="tableViewHeightConstraint" destination="jhS-2w-QDO" id="ImX-GP-lZz"/>
+                        <outlet property="view21Header" destination="FZ2-jG-icF" id="Tk4-P6-QE1"/>
+                        <outlet property="view8Week" destination="6bJ-lK-iip" id="BFT-wB-e3e"/>
                         <outlet property="viewAddSession" destination="5k9-zs-9Mg" id="FZd-fV-rDl"/>
                         <outlet property="viewAvMinutes" destination="jC5-BU-y5U" id="IjY-cN-umJ"/>
                         <outlet property="viewBottom" destination="JAn-HB-hVm" id="LVA-T4-2HA"/>
@@ -6269,7 +6314,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSN-ff-myb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3889" y="6085"/>
+            <point key="canvasLocation" x="3888.8000000000002" y="6084.5577211394311"/>
         </scene>
         <!--Podcast ListVC-->
         <scene sceneID="uYc-WV-fhu">
@@ -6310,13 +6355,15 @@
                                                             <rect key="frame" x="66" y="23.5" width="293" height="51"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Will Williams Podcast with Howard Donald from Take That" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-HT-MQB">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="32"/>
+
+                                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="37.5"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STW-Yp-M8T">
-                                                                    <rect key="frame" x="0.0" y="32" width="293" height="19"/>
+
+                                                                    <rect key="frame" x="0.0" y="37.5" width="293" height="19"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -9766,7 +9813,8 @@
                                                 <rect key="frame" x="2" y="15" width="92.5" height="122"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEa-Ph-xff">
-                                                        <rect key="frame" x="17.5" y="30" width="58" height="19.5"/>
+
+                                                        <rect key="frame" x="17.5" y="30" width="58" height="21.5"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -9775,7 +9823,8 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£5.99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6I-Ub-zF2">
-                                                        <rect key="frame" x="18.5" y="59.5" width="55.5" height="25"/>
+
+                                                        <rect key="frame" x="21" y="61.5" width="50.5" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                         <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -9784,7 +9833,8 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyF-Ag-nr2">
-                                                        <rect key="frame" x="22.5" y="94.5" width="48" height="12.5"/>
+
+                                                        <rect key="frame" x="23.5" y="95" width="46" height="12"/>
                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="10"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
