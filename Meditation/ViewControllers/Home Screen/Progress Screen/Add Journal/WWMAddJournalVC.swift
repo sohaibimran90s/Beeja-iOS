@@ -63,7 +63,7 @@ class WWMAddJournalVC: WWMBaseViewController {
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "WWMAddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.dismiss(animated: true, completion: nil)
-            }else {
+            } else {
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)

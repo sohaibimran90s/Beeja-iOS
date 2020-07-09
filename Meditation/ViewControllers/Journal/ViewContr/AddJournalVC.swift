@@ -201,6 +201,11 @@ class AddJournalVC: UIViewController {
             else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.errorAlert(title: "Error!", msg: error)
+                
+                //Prashant
+                //save request in core-data
+                self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                //----------------
             }
         }
     }
@@ -269,6 +274,11 @@ class AddJournalVC: UIViewController {
             else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.errorAlert(title: "Error!", msg: error)
+                
+                //Prashant
+                //save request in core-data
+                self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                //----------------
             }
         }
     }
@@ -325,5 +335,15 @@ class AddJournalVC: UIViewController {
         }
     }
    
+    //Prashant
+    //MARK:- Save to core data
+    func saveJournalDatatoDB(param:[String:Any]) {
+        let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalData") as! DBJournalData
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        dbJournal.journalData = myString
+        WWMHelperClass.saveDb()
+    }
+    //----------------
 }
 
