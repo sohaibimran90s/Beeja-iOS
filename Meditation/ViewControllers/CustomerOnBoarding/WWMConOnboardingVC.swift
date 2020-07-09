@@ -292,6 +292,14 @@ class WWMConOnboardingVC: WWMBaseViewController {
         }
     }
     
+    func setMeditationType(_ type: String) {
+        self.appPreference.setType(value: type)
+        self.appPreference.setGuideType(value: "Guided")
+        //self.appPreference.setType(value: "guided")
+        //self.appPreference.set21ChallengeName(value: type.capitalized)
+        self.appPreference.setGuideTypeFor3DTouch(value: type)
+    }
+    
     func meditationApi(type: String) {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()
@@ -301,19 +309,15 @@ class WWMConOnboardingVC: WWMBaseViewController {
             "level_id"      : 1,
             "user_id"       : self.appPreference.getUserID(),
             "type"          : type,
-            "guided_type"   : "Guided", // 'guided_type'
+            "guided_type"   : "Guided", //'guided_type'
             "personalise"   : DataManager.sharedInstance.postData
             ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_MEDITATIONDATA, context: "WWMConOnboardingVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 //print("result signupletsstartvc meditation data... \(result)")
-                self.appPreference.setType(value: type)
-                self.appPreference.setGuideType(value: "Guided")
-//                self.appPreference.setType(value: "guided")
-//                self.appPreference.set21ChallengeName(value: type.capitalized)
+                self.setMeditationType(type)
                 
-                self.appPreference.setGuideTypeFor3DTouch(value: type)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     self.appPreference.setGetProfile(value: true)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC

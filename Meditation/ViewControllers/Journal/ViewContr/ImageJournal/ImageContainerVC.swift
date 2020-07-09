@@ -8,16 +8,6 @@
 
 import UIKit
 
-//class CellImageObject {
-//    var thumbImg: UIImage
-//    var deleteIconActive: Bool
-//    
-//    init(thumbImg: UIImage, deleteIconActive: Bool) {
-//        self.thumbImg = thumbImg
-//        self.deleteIconActive = deleteIconActive
-//    }
-//}
-
 struct ImageJournal {
 
     var title: String?
@@ -65,11 +55,10 @@ class ImageContainerVC: UIViewController {
                     image = UIImage()
                 }
                 
-                let imgObj = CellImageObject(thumbImg: image ?? UIImage(), deleteIconActive: false)
+                let imgObj = CellImageObject(caption: "", thumbImg: image ?? UIImage(), deleteIconActive: false)
                 self.imageList.append(imgObj)
             }
         }
-
     }
         
     
@@ -101,6 +90,10 @@ class ImageContainerVC: UIViewController {
     
     @IBAction func saveImageAction(sender: UIButton) {
         
+        if (self.actualImageList.count == 5) {
+            return
+        }
+        
         if (!(self.isPurchasedAccount) && (self.actualImageList.count > 0)) {
             Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
                                      btn2: "Buy", container: self, completion: { (alertController, index) in
@@ -115,19 +108,26 @@ class ImageContainerVC: UIViewController {
             return
         }
         
-        self.addImageBtn.isHidden = false
+        
+        if (self.titleTextField.text == ""){
+            Alert.alertWithOneButton(title: "", message: "Please fill title to save.", container: self) { (alert, index) in
+            }
+            return
+        }
 
+        
         if let image = self.mainImageView.image {
             
-            let imgObj = CellImageObject(thumbImg: image, deleteIconActive: true)
+            let imgObj = CellImageObject(caption: self.titleTextField.text ?? "", thumbImg: image, deleteIconActive: true)
             self.mainImageView.image = nil
+            self.titleTextField.text = ""
 
             self.actualImageList.append(imgObj)
-            //let index = imgObj.index
-            //self.imageList[index] = imgObj
             self.loadImageObjectList()
             self.thumbCollectionView.reloadData()
             self.paymentRequiredCheck()
+            
+            self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
         }
     }
     
@@ -136,6 +136,7 @@ class ImageContainerVC: UIViewController {
         self.loadImageObjectList()
         self.thumbCollectionView.reloadData()
         self.paymentRequiredCheck()
+        self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
     }
     
     func paymentRequiredCheck() {
@@ -148,10 +149,16 @@ class ImageContainerVC: UIViewController {
         self.saveBtn.setAttributedTitle(attributedString, for: .normal)
     }
     
-    func imageJournalExperienceLog() -> ImageJournal{
+    func imageJournalExperienceLog() -> ImageJournal?{
         
+        if (self.actualImageList.count == 0) {
+            Alert.alertWithOneButton(title: "", message: "Please add image.", container: self) { (alert, index) in
+            }
+            return nil
+        }
+                
         var imageJournal = ImageJournal()
-        imageJournal.title = self.titleTextField.text
+        imageJournal.title = self.actualImageList[0].captionTitle//self.titleTextField.text
         imageJournal.images = self.actualImageList
         return imageJournal
     }
@@ -184,6 +191,12 @@ extension ImageContainerVC: UICollectionViewDataSource, UICollectionViewDelegate
         cell.setItemOnCell(index: indexPath.row, imageObj: self.imageList[indexPath.row])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        //let imgObj = self.imageList[indexPath.row]
+    }
+
 }
 
 extension ImageContainerVC: UICollectionViewDelegate {

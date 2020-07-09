@@ -66,7 +66,7 @@ class DataManager: NSObject {
         }
     }
 
-    func uploadImages(imageDataArray: [Data], parameter: Any, completion:@escaping(Bool, String) -> Void) {
+    func uploadImages(imageDataArray: [Data], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
 
         Alamofire.upload(multipartFormData: { multipartFormData in
             // import image to request
@@ -75,8 +75,8 @@ class DataManager: NSObject {
                                          fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpeg")
             }
             
-            let param = parameter as! [String: AnyObject]
-            for (key, value) in param {
+            //let param = parameter as! [String: AnyObject]
+            for (key, value) in parameter {
                 
                 let valueStr = String(describing: value)
                 if let data = valueStr.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)) {

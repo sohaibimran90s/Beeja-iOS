@@ -13,10 +13,12 @@ protocol ThumbCollectionCellDelegate {
 }
 
 class CellImageObject {
+    var captionTitle: String
     var thumbImg: UIImage
     var deleteIconActive: Bool
     
-    init(thumbImg: UIImage, deleteIconActive: Bool) {
+    init(caption: String, thumbImg: UIImage, deleteIconActive: Bool) {
+        self.captionTitle = caption
         self.thumbImg = thumbImg
         self.deleteIconActive = deleteIconActive
     }
