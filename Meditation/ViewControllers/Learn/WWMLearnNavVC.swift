@@ -183,7 +183,7 @@ class WWMLearnNavVC: WWMBaseViewController {
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
-            //print("learn result... \(result)")
+            print("learn result... \(result)")
             if let _ = result["success"] as? Bool {
                 if let total_paid = result["total_paid"] as? Double{
                     //print("total_paid double.. \(total_paid)")
@@ -299,10 +299,13 @@ class WWMLearnNavVC: WWMBaseViewController {
                             }
                         }
                         
+                        var count = 0
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
-                                
+                            
+                                count = count + 1
+                                print("learn dict \(dict) count \(count)")
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
                                 }
@@ -403,6 +406,9 @@ class WWMLearnNavVC: WWMBaseViewController {
                         
                         WWMHelperClass.saveDb()
                         self.fetchLearnDataFromDB()
+                        if count == 30{
+                            return
+                        }
                     }
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearnSteps"), object: nil)
