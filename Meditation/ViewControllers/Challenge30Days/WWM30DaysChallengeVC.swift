@@ -178,7 +178,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
+        //print("getDate12Step... \(self.appPreference.getDate12Step() ) date... \(dateFormatter.string(from: Date()))")
         if self.appPreference.getDate12Step() == dateFormatter.string(from: Date()){
             self.lblTitle.text = "Tomorrow is the first day of your challenge"
         }else{
@@ -451,7 +451,7 @@ extension WWM30DaysChallengeVC{
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
-                    print("learn result... \(result) getLearnAPI count... \(data.count)")
+                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {

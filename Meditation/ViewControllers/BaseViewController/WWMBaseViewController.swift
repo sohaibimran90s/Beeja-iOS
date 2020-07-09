@@ -655,10 +655,13 @@ extension WWMBaseViewController{
                             }
                         }
                         
+                        var count = 0
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
-                                                                
+                                 
+                                count = count + 1
+                                //print("baseviewcontroller dict \(dict) count \(count)")
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
                                 }
@@ -864,6 +867,9 @@ extension WWMBaseViewController{
                         }
                         
                         WWMHelperClass.saveDb()
+                        if count == 30{
+                            return
+                        }
                     }
                 }
                  NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearn"), object: nil)
