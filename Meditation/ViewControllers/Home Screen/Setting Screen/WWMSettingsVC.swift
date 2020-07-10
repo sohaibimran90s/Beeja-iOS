@@ -1249,26 +1249,29 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             let group = [
-                "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
-                "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
-                "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
-                "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
-                "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
-                "moodMeterEnable": self.settingData.moodMeterEnable,
-                "IsMorningReminder": self.settingData.isMorningReminder,
-                "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-                "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
-                "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-                "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
-                "MantraID":self.settingData.mantraID,
-                "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
-                "IsLearnReminder":self.settingData.isLearnReminder,
-                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
-                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
-                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
-                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
-                "meditation_data" : meditation_data
-                ] as [String : Any]
+            "startChime": self.settingData.startChime!,
+            "endChime": self.settingData.endChime!,
+            "finishChime": self.settingData.finishChime!,
+            "intervalChime": self.settingData.intervalChime!,
+            "ambientSound": self.settingData.ambientChime!,
+            "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
+            "isEightWeekReminder":self.settingData.isEightWeekReminder,
+            "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
+            "meditation_data" : meditation_data
+            ] as [String : Any]
+
             
             let param = [
                 "user_id": self.appPreference.getUserID(),

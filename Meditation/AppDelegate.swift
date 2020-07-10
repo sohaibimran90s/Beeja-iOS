@@ -698,6 +698,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 "thirtyDaysReminder":settingData.thirtyDaysReminder ?? "",
                 "isTwentyoneDaysReminder":settingData.isTwentyoneDaysReminder,
                 "twentyoneDaysReminder":settingData.twentyoneDaysReminder ?? "",
+                "isEightWeekReminder":settingData.isEightWeekReminder,
+                "eightWeekReminder":settingData.eightWeekReminder ?? "",
                 "meditation_data" : meditation_data
                 ] as [String : Any]
             

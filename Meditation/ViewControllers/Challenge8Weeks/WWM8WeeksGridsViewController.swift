@@ -13,15 +13,26 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
 
     @IBOutlet weak var btnContinue: UIButton!
     @IBOutlet weak var collectionBoxes: UICollectionView!
+    @IBOutlet weak var lblReminder: UILabel!
+    @IBOutlet weak var lblTodaysMed: UILabel!
+    @IBOutlet weak var lblTodaysMedTC: NSLayoutConstraint!
+    @IBOutlet weak var btnReminder: UIButton!
+    @IBOutlet weak var btnReminderTC: NSLayoutConstraint!
+    @IBOutlet weak var btnIntro: UIButton!
+    @IBOutlet weak var viewExpired: UIView!
+    @IBOutlet weak var viewExpiredTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewRetake: UIView!
+    @IBOutlet weak var viewRetakeTopConstraint: NSLayoutConstraint!
     
     var itemInfo: IndicatorInfo = "View"
     var selectedIndex: Int?
     var daysListData: [DBEightWeek] = []
+    var checkExpireRetake = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         UISetup()
-        // Do any additional setup after loading the view.
     }
     
     //MARK:- UISettings
@@ -29,7 +40,91 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         btnContinue.layer.borderColor = UIColor(hexString: "#00EBA9")?.cgColor
         btnContinue.layer.borderWidth = 2.0
     }
-
+    
+    func check8WeekStatus(){
+        //to check if 8 challenge is expire or not
+        if self.appPreference.get8WeekIsExpired(){
+            self.checkExpireRetake = 1
+        }
+        
+        //to check if 8 challenge is to retake
+        if week8Count() == 63{
+            self.checkExpireRetake = 2
+        }
+        
+        if self.checkExpireRetake == 0{
+            //Working
+            self.viewExpired.isHidden = true
+            self.viewRetake.isHidden = true
+            self.lblTodaysMedTC.constant = 25
+        }else if self.checkExpireRetake == 1{
+            //Expired
+            self.viewExpired.isHidden = false
+            self.viewRetake.isHidden = true
+            self.lblTodaysMedTC.constant = 55
+        }else{
+            //Retake
+            self.viewExpired.isHidden = true
+            self.viewRetake.isHidden = false
+             self.lblTodaysMedTC.constant = 55
+        }
+        
+        self.checkIntroCompleted()
+    }
+    
+    //to check if the challenge is expired or not
+    func week8Count() -> Int{
+        var completed30DayCount = 0
+        for index in 0..<self.daysListData.count{
+            if self.daysListData[index].date_completed != ""{
+                completed30DayCount = completed30DayCount + 1
+            }
+            
+            return completed30DayCount
+        }
+        return 0
+    }
+    
+    //to check if to show intro button or not
+    func checkIntroCompleted(){
+                
+        let intro_completed = self.appPreference.get8IntroCompleted()
+        if intro_completed{
+            self.btnIntro.isHidden = true
+        }else{
+            self.btnIntro.isHidden = false
+        }
+        
+        var settingData = DBSettings()
+        let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
+        if data.count > 0 {
+            settingData = data[0]
+            if settingData.eightWeekReminder != ""{
+                self.btnReminder.isHidden = true
+                self.lblReminder.isHidden = true
+                self.btnReminder.frame.size.height = 0
+                self.btnReminderTC.constant = 0
+            }else{
+                self.btnReminder.isHidden = false
+                self.lblReminder.isHidden = false
+                self.btnReminder.frame.size.height = 29
+                self.btnReminderTC.constant = 16
+            }
+        }
+    }
+    
+    @IBAction func btnIntroAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func btnReminderAction(_ sender: UIButton) {
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+        
+        vc.isSetting = true
+        vc.type = "8_week"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+   
     // MARK: - IndicatorInfoProvider
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         itemInfo

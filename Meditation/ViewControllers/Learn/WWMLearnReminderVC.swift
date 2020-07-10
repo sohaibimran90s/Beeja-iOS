@@ -281,6 +281,8 @@ class WWMLearnReminderVC: WWMBaseViewController {
             "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
             "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
             "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
+            "isEightWeekReminder":self.settingData.isEightWeekReminder,
+            "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
         

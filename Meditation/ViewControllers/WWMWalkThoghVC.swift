@@ -640,6 +640,12 @@ extension WWMWalkThoghVC{
                             self.appPreffrence.set30DaysURL(value: dict["intro_url"] as? String ?? "")
                             self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
+                        
+                        if dict["name"] as? String == "8 Weeks"{
+                            self.appPreffrence.set8IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreffrence.set8WeekURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreffrence.set8WeekIsExpired(value: dict["is_expired"] as? Bool ?? false)
+                        }
                                                 
                         if let name = dict["name"] as? String{
                             dbLearnData.name = name

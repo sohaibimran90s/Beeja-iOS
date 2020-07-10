@@ -95,9 +95,17 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "30_days_url")
     }
     
+    func set8WeekURL(value: String) {
+        defaults.set(value, forKey: "8_week_url")
+    }
+    
     //set to check if 30 days is expired or not
     func set30DaysIsExpired(value: Bool) {
         defaults.set(value, forKey: "30_days_isExpired")
+    }
+    
+    func set8WeekIsExpired(value: Bool) {
+        defaults.set(value, forKey: "8_week_isExpired")
     }
     
     func set30DaysReminder(value: String) {
@@ -127,6 +135,10 @@ class WWMAppPreference: NSObject {
     
     func set30IntroCompleted(value: Bool) {
         defaults.set(value, forKey: "30DaysIntroCompleted")
+    }
+    
+    func set8IntroCompleted(value: Bool) {
+        defaults.set(value, forKey: "8WeekIntroCompleted")
     }
     
     func setForceLogout(value: String) {
@@ -277,6 +289,10 @@ class WWMAppPreference: NSObject {
     func get30DaysIsExpired() -> Bool {
         return defaults.bool(forKey: "30_days_isExpired")
     }
+    
+    func get8WeekIsExpired() -> Bool {
+        return defaults.bool(forKey: "8_week_isExpired")
+    }
 
     func getLastTimeStamp21DaysBool() -> Bool{
         return defaults.bool(forKey: "lastTimeStamp21Days")
@@ -314,6 +330,10 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.string(forKey: "30_days_url") ?? ""
     }
     
+    func get8WeekURL() -> String {
+        return UserDefaults.standard.string(forKey: "8_week_url") ?? ""
+    }
+    
     func get30DaysReminder() -> String {
         return UserDefaults.standard.string(forKey: "30DaysReminder") ?? ""
     }
@@ -340,6 +360,10 @@ class WWMAppPreference: NSObject {
     
     func get30IntroCompleted() -> Bool {
         return defaults.bool(forKey: "30DaysIntroCompleted")
+    }
+    
+    func get8IntroCompleted() -> Bool {
+        return defaults.bool(forKey: "8WeekIntroCompleted")
     }
     
     func getSessionAvailableData() -> Bool{

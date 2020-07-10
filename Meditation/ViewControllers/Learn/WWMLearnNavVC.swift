@@ -140,6 +140,11 @@ class WWMLearnNavVC: WWMBaseViewController {
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
                 }
                 
+                if dict.name == "8 Weeks"{
+                    self.appPreference.set8IntroCompleted(value: dict.intro_completed)
+                    self.appPreference.set8WeekURL(value: dict.intro_url ?? "")
+                }
+                
                 jsonData["day_list"] = jsonThirtyDays
                 
                 let getEightWeekDB = WWMHelperClass.fetchDB(dbName: "DBEightWeek") as! [DBEightWeek]
