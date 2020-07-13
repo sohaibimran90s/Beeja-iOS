@@ -274,11 +274,6 @@ class AddJournalVC: UIViewController {
             else {
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 self.errorAlert(title: "Error!", msg: error)
-                
-                //Prashant
-                //save request in core-data
-                self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
-                //----------------
             }
         }
     }
