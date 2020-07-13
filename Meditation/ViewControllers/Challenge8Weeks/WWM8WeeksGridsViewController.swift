@@ -15,6 +15,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBOutlet weak var collectionBoxes: UICollectionView!
     @IBOutlet weak var lblReminder: UILabel!
     @IBOutlet weak var lblTodaysMed: UILabel!
+    @IBOutlet weak var lblDaysCount: UILabel!
+    @IBOutlet weak var lbl7DaysRevealText: UILabel!
     @IBOutlet weak var lblTodaysMedTC: NSLayoutConstraint!
     @IBOutlet weak var btnReminder: UIButton!
     @IBOutlet weak var btnReminderTC: NSLayoutConstraint!
@@ -26,7 +28,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     var itemInfo: IndicatorInfo = "View"
     var selectedIndex: Int?
-    var daysListData: [DBEightWeek] = []
+    var daysListData: [EightWeekModel] = []
     var checkExpireRetake = 0
     
     override func viewDidLoad() {
@@ -39,6 +41,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     func UISetup() {
         btnContinue.layer.borderColor = UIColor(hexString: "#00EBA9")?.cgColor
         btnContinue.layer.borderWidth = 2.0
+        
+        self.check8WeekStatus()
     }
     
     func check8WeekStatus(){
@@ -57,19 +61,34 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
             self.lblTodaysMedTC.constant = 25
+            self.lblTodaysMed.isHidden = false
+            
+            self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
             self.viewRetake.isHidden = true
-            self.lblTodaysMedTC.constant = 55
+            self.lblTodaysMedTC.constant = 10
+            self.lblTodaysMed.isHidden = true
+            self.lblReminder.isHidden =  true
+            self.btnIntro.isHidden = true
+            self.btnReminder.isHidden = true
+            self.btnContinue.isHidden = true
+            self.lblDaysCount.isHidden = true
+            self.lbl7DaysRevealText.isHidden = true
         }else{
             //Retake
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = false
-             self.lblTodaysMedTC.constant = 55
+             self.lblTodaysMedTC.constant = 10
+            self.lblTodaysMed.isHidden = true
+            self.lblReminder.isHidden =  true
+            self.btnReminder.isHidden = true
+            self.btnIntro.isHidden = true
+            self.btnContinue.isHidden = true
+            self.lblDaysCount.isHidden = true
+            self.lbl7DaysRevealText.isHidden = true
         }
-        
-        self.checkIntroCompleted()
     }
     
     //to check if the challenge is expired or not
@@ -99,11 +118,18 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            if settingData.eightWeekReminder != ""{
-                self.btnReminder.isHidden = true
-                self.lblReminder.isHidden = true
-                self.btnReminder.frame.size.height = 0
-                self.btnReminderTC.constant = 0
+            if let _ = settingData.eightWeekReminder{
+                if (settingData.eightWeekReminder != "" || settingData.eightWeekReminder != nil){
+                    self.btnReminder.isHidden = true
+                    self.lblReminder.isHidden = true
+                    self.btnReminder.frame.size.height = 0
+                    self.btnReminderTC.constant = 0
+                }else{
+                    self.btnReminder.isHidden = false
+                    self.lblReminder.isHidden = false
+                    self.btnReminder.frame.size.height = 29
+                    self.btnReminderTC.constant = 16
+                }
             }else{
                 self.btnReminder.isHidden = false
                 self.lblReminder.isHidden = false
@@ -132,7 +158,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     //MARK:- CollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        63
+        self.daysListData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -167,5 +193,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         btnContinue.alpha = 1.0
         btnContinue.isEnabled = true
         collectionBoxes.reloadData()
+    }
+    
+    @IBAction func btnContinueAction(_ sender: UIButton) {
     }
 }

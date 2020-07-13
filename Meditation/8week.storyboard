@@ -280,6 +280,9 @@
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="btnContinueAction:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="Brs-w9-AOg"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -346,6 +349,8 @@
                         <outlet property="btnReminder" destination="qf4-u3-cXe" id="aIH-XJ-hld"/>
                         <outlet property="btnReminderTC" destination="Gyz-Gx-UGP" id="Ief-vM-epf"/>
                         <outlet property="collectionBoxes" destination="6k2-Ge-NfA" id="7xW-2m-Y7D"/>
+                        <outlet property="lbl7DaysRevealText" destination="ESy-Ny-jbJ" id="Dt6-hP-Bfc"/>
+                        <outlet property="lblDaysCount" destination="u5G-LG-kGL" id="gqV-nJ-dud"/>
                         <outlet property="lblReminder" destination="8MI-rf-xC8" id="Xan-T6-gdd"/>
                         <outlet property="lblTodaysMed" destination="KOr-Le-lqY" id="iJb-F1-0zv"/>
                         <outlet property="lblTodaysMedTC" destination="WxN-zE-YlJ" id="cYy-Hn-b0p"/>

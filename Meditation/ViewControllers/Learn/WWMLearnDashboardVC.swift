@@ -73,14 +73,15 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
             } else if data.name == "30 Day Challenge"{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysChallengeVC") as! WWM30DaysChallengeVC
                 
-                print("thirty_day_list*** \(data.thirty_day_list.count)")
+                //print("thirty_day_list*** \(data.thirty_day_list.count)")
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 vc.daysListData = data.thirty_day_list
                 arrVC.add(vc)
-            }else if data.name == "8 Weeks" {
+            }else if data.name == "8 Weeks Challenge" {
                 //WWM8WeeksGridsViewController
                 let story = UIStoryboard.init(name: "8week", bundle: nil)
                 let vc = story.instantiateViewController(withIdentifier: "WWM8WeeksGridsViewController") as! WWM8WeeksGridsViewController
+                vc.daysListData = data.eightWeekList
                 vc.itemInfo = IndicatorInfo.init(title: data.name)
                 arrVC.add(vc)
             }
