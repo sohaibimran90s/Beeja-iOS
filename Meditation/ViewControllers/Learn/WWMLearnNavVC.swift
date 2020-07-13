@@ -63,9 +63,10 @@ class WWMLearnNavVC: WWMBaseViewController {
             var jsonSteps: [[String: Any]] = []
             var jsonThirtyDaysString: [String: Any] = [:]
             var jsonThirtyDays: [[String: Any]] = []
+            var jsonEightWeekString: [String: Any] = [:]
+            var jsonEightWeekArray: [[String: Any]] = []
             
             for dict in getLearnDataDB {
-                
                 jsonData["name"] = dict.name
                 jsonData["intro_url"] = dict.intro_url
                 jsonData["intro_completed"] = dict.intro_completed
@@ -140,23 +141,31 @@ class WWMLearnNavVC: WWMBaseViewController {
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
+                
+                let getEightWeekDB = WWMHelperClass.fetchDB(dbName: "DBEightWeek") as! [DBEightWeek]
+                for dayWiseList in getEightWeekDB{
+                    jsonEightWeekString["id"] = dayWiseList.id
+                    jsonEightWeekString["day_name"] = dayWiseList.day_name
+                    jsonEightWeekString["auther_name"] = dayWiseList.auther_name
+                    jsonEightWeekString["description"] = dayWiseList.description1
+                    jsonEightWeekString["second_description"] = dayWiseList.secondDescription
+                    jsonEightWeekString["min_limit"] = dayWiseList.min_limit
+                    jsonEightWeekString["max_limit"] = dayWiseList.max_limit
+                    jsonEightWeekString["two_step_complete"] = dayWiseList.two_step_complete
+                    jsonEightWeekString["completed"] = dayWiseList.completed
+                    jsonEightWeekString["date_completed"] = dayWiseList.date_completed
+                    jsonEightWeekString["image"] = dayWiseList.image
+                    
+                    jsonEightWeekArray.append(jsonEightWeekString)
+                }
+                
+                jsonData["daywise_list"] = jsonEightWeekArray
 
                 let learnData = WWMLearnData.init(json: jsonData)
                 self.arrLearnList.append(learnData)
                 jsonThirtyDays.removeAll()
+                jsonEightWeekArray.removeAll()
             }
-            
-            //TODO
-            jsonData["name"] = "8 Weeks Challenge"
-            jsonData["intro_url"] = ""
-            jsonData["intro_completed"] = ""
-            jsonData["min_limit"] = ""
-            jsonData["max_limit"] = ""
-            jsonData["max_limit"] = ""
-            jsonData["is_expired"] = ""
-            let learnData = WWMLearnData.init(json: jsonData)
-            self.arrLearnList.append(learnData)
-            
             
             for view in self.containerView.subviews{
                 view.removeFromSuperview()
@@ -192,8 +201,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                 
                 if let data = result["data"] as? [[String: Any]]{
                     
-                    //print("getLearnAPI count... \(data.count)")
-                    
+                    print("getLearnAPI count... \(data.count)")
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
                         WWMHelperClass.deletefromDb(dbName: "DBLearn")
@@ -209,6 +217,11 @@ class WWMLearnNavVC: WWMBaseViewController {
                         WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
                     }
                     
+                    let getEightWeekData = WWMHelperClass.fetchDB(dbName: "DBEightWeek") as! [DBEightWeek]
+                    if getEightWeekData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBEightWeek")
+                    }
+                    
                     for dict in data{
                         
                         let dbLearnData = WWMHelperClass.fetchEntity(dbName: "DBLearn") as! DBLearn
@@ -218,6 +231,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                         dbLearnData.last_time_stamp = "\(timeInterval)"
                         
                         if let name = dict["name"] as? String{
+                            print(name)
                             dbLearnData.name = name
                         }
                         
@@ -299,13 +313,10 @@ class WWMLearnNavVC: WWMBaseViewController {
                             }
                         }
                         
-                        var count = 0
                         if let day_list = dict["day_list"] as? [[String: Any]]{
                             for dict in day_list{
                                 let dbThirtyDays = WWMHelperClass.fetchEntity(dbName: "DBThirtyDays") as! DBThirtyDays
                             
-                                count = count + 1
-                                print("learn dict \(dict) count \(count)")
                                 if let id = dict["id"]{
                                     dbThirtyDays.id = "\(id)"
                                 }
@@ -404,11 +415,69 @@ class WWMLearnNavVC: WWMBaseViewController {
                             }
                         }
                         
+                        //8 week
+                        if let daywise_list = dict["daywise_list"] as? [[String: Any]]{
+                            for dict in daywise_list{
+                                let dbEightWeek = WWMHelperClass.fetchEntity(dbName: "DBEightWeek") as! DBEightWeek
+                                                                
+                                if let id = dict["id"]{
+                                    dbEightWeek.id = "\(id)"
+                                }
+                                
+                                if let day_name = dict["day_name"] as? String{
+                                    dbEightWeek.day_name = day_name
+                                }
+                                
+                                if let auther_name = dict["auther_name"] as? String{
+                                    dbEightWeek.auther_name = auther_name
+                                }
+                                
+                                if let description = dict["description"] as? String{
+                                    dbEightWeek.description1 = description
+                                }
+                                
+                                if let secondDescription = dict["second_description"] as? String{
+                                    dbEightWeek.secondDescription = secondDescription
+                                }else{
+                                    dbEightWeek.secondDescription = ""
+                                }
+                                
+                                if let image = dict["image"] as? String{
+                                    dbEightWeek.image = image
+                                }else{
+                                    dbEightWeek.image = ""
+                                }
+                                
+                                if let min_limit = dict["min_limit"] as? String{
+                                    dbEightWeek.min_limit = min_limit
+                                }else{
+                                    dbEightWeek.min_limit = "95"
+                                }
+                                
+                                if let max_limit = dict["max_limit"] as? String{
+                                    dbEightWeek.max_limit = max_limit
+                                }else{
+                                    dbEightWeek.max_limit = "98"
+                                }
+                                
+                                if let completed = dict["completed"] as? Bool{
+                                    dbEightWeek.completed = completed
+                                }
+                                
+                                if let date_completed = dict["date_completed"] as? String{
+                                    dbEightWeek.date_completed = date_completed
+                                }
+                                
+                                if let two_step_complete = dict["two_step_complete"] as? Bool{
+                                    dbEightWeek.two_step_complete = two_step_complete
+                                }
+                                
+                                WWMHelperClass.saveDb()
+                            }
+                        }
+                        
                         WWMHelperClass.saveDb()
                         self.fetchLearnDataFromDB()
-                        if count == 30{
-                            return
-                        }
                     }
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearnSteps"), object: nil)

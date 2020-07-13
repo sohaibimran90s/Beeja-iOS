@@ -187,7 +187,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
     
     func getOnboardingDataAPI(completionHandler: @escaping (OnboardingData, Bool) -> Void) {
         
-        let url = URL(string: "https://uat.beejameditation.com/api/v2/consumer/onboarding")!
+        let url = URL(string: URL_CONSUMERONBOARDING)!
         
         let task = URLSession.shared.dataTask(with: url){(data, response, error) in
             

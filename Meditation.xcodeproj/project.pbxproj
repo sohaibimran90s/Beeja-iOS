@@ -410,6 +410,8 @@
 		6148E1E4246C4C230034179F /* WWMSleepAudioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6148E1E3246C4C230034179F /* WWMSleepAudioVC.swift */; };
 		6148E1E6246C54310034179F /* WWMSleepAudioTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6148E1E5246C54310034179F /* WWMSleepAudioTVC.swift */; };
 		6152F4D724908F8A0094A47C /* WWMLearnData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6152F4D624908F8A0094A47C /* WWMLearnData.swift */; };
+		615635D924B4879500537AC2 /* DBEightWeek+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615635D724B4879500537AC2 /* DBEightWeek+CoreDataClass.swift */; };
+		615635DA24B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615635D824B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift */; };
 		615C4A65239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */; };
 		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
@@ -1047,6 +1049,8 @@
 		6148E1E3246C4C230034179F /* WWMSleepAudioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepAudioVC.swift; sourceTree = "<group>"; };
 		6148E1E5246C54310034179F /* WWMSleepAudioTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepAudioTVC.swift; sourceTree = "<group>"; };
 		6152F4D624908F8A0094A47C /* WWMLearnData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnData.swift; sourceTree = "<group>"; };
+		615635D724B4879500537AC2 /* DBEightWeek+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBEightWeek+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		615635D824B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBEightWeek+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		615C4A62239A2E7A008753E3 /* WWMDatabase 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WWMDatabase 3.xcdatamodel"; sourceTree = "<group>"; };
 		615C4A63239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1281,6 +1285,8 @@
 		2E43717E21FF402400EF5D62 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				615635D724B4879500537AC2 /* DBEightWeek+CoreDataClass.swift */,
+				615635D824B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift */,
 				61F6330A248FC1A900573536 /* DBThirtyDays+CoreDataClass.swift */,
 				61F6330B248FC1A900573536 /* DBThirtyDays+CoreDataProperties.swift */,
 				61F63306248F74A700573536 /* DBLearn+CoreDataClass.swift */,
@@ -3140,6 +3146,7 @@
 				61416F4A22BBB5A400C9339E /* MoodResponse.swift in Sources */,
 				CEB6C11824B24F9900D5538B /* ThumbImgCollectionCell.swift in Sources */,
 				61C08B6D2459ADA000FEC661 /* WWMWisdomFeedbackVC.swift in Sources */,
+				615635D924B4879500537AC2 /* DBEightWeek+CoreDataClass.swift in Sources */,
 				61416F3A22BBB56900C9339E /* BarLineScatterCandleBubbleChartDataProvider.swift in Sources */,
 				61416E9722BBB3DA00C9339E /* Animator.swift in Sources */,
 				617C284623525DA400A3F544 /* DBGuidedAudioData+CoreDataClass.swift in Sources */,
@@ -3317,6 +3324,7 @@
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
 				2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */,
+				615635DA24B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift in Sources */,
 				6147F56322CCDCEF00A749D5 /* WWMMilestonePopUp.swift in Sources */,
 				2E4B1B9E21B5044B002F8A25 /* AppDelegate.swift in Sources */,
 				2E99BAEF21E47B58009F0909 /* WWMForgotPasswordVC.swift in Sources */,
