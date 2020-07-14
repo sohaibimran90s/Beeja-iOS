@@ -734,6 +734,18 @@ extension WWM30DaysChallengeVC{
                                     dbEightWeek.two_step_complete = two_step_complete
                                 }
                                 
+                                if let is_pre_opened = dict["is_pre_opened"] as? Bool{
+                                    dbEightWeek.is_pre_opened = is_pre_opened
+                                }
+                                
+                                if let second_session_required = dict["second_session_required"] as? Bool{
+                                    dbEightWeek.second_session_required = second_session_required
+                                }
+                                
+                                if let second_session_completed = dict["second_session_completed"] as? Bool{
+                                    dbEightWeek.second_session_completed = second_session_completed
+                                }
+                                
                                 WWMHelperClass.saveDb()
                             }
                         }
