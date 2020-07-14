@@ -20,7 +20,7 @@ class WWMLearnNavVC: WWMBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
             self.appPreference.setType(value: "learn")
         }
         
@@ -75,12 +75,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                 jsonData["max_limit"] = dict.max_limit
                 jsonData["is_expired"] = dict.is_expired
                 
-                if dict.name == "30 Day Challenge"{
-                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
-                }
-                
                 var completedCount = 0
-
                 let getLearnDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
                 for steps in getLearnDataDB{
                     jsonStepString["step_name"] = steps.step_name
@@ -138,11 +133,13 @@ class WWMLearnNavVC: WWMBaseViewController {
                 if dict.name == "30 Day Challenge"{
                     self.appPreference.set30IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
+                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
                 }
                 
                 if dict.name == "8 Weeks"{
                     self.appPreference.set8IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set8WeekURL(value: dict.intro_url ?? "")
+                    self.appPreference.set8WeekIsExpired(value: dict.is_expired)
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays

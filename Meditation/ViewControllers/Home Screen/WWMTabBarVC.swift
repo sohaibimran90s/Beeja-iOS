@@ -385,6 +385,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             settingDB.thirtyDaysReminder = json["thirtyDaysReminder"] as? String ?? ""
             settingDB.isTwentyoneDaysReminder = json["isTwentyoneDaysReminder"] as? Bool ?? false
             settingDB.twentyoneDaysReminder = json["twentyoneDaysReminder"] as? String ?? ""
+            settingDB.isEightWeekReminder = json["isEightWeekReminder"] as? Bool ?? false
+            settingDB.eightWeekReminder = json["eightWeekReminder"] as? String ?? ""
             settingDB.prepTime = "10"
             settingDB.meditationTime = "90"
             settingDB.restTime = "20"

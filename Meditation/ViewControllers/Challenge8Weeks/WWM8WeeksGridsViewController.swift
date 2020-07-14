@@ -118,8 +118,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            if let _ = settingData.eightWeekReminder{
-                if (settingData.eightWeekReminder != "" || settingData.eightWeekReminder != nil){
+            if let reminder = settingData.eightWeekReminder{
+                //print("reminder... \(reminder.isEmpty)")
+                if !reminder.isEmpty{
                     self.btnReminder.isHidden = true
                     self.lblReminder.isHidden = true
                     self.btnReminder.frame.size.height = 0

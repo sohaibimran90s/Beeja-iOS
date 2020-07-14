@@ -22,8 +22,10 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let arrTimeChimes = ["Prep Time","Start Chime","Meditation Time","End Chime","Rest Time","Completion Chime","Interval Chime","Ambient Sound"]
     let arrPreset = ["Beginner","Rounding","Advanced","Adv. Rounding"]
     
-    var arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
-    var arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
+    //premium user()mantra
+    var arrLearn = ["Mantra", "Enable Learn Reminder", "Learn Reminder Time"]
+    //free user
+    var arrLearn1 = ["Enable Learn Reminder", "Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
     
     let arrSettings = ["Enable Morning Reminder","Morning Reminder Time","Enable Afternoon Reminder","Afternoon Reminder Time","Mood Meter","Milestones & Rewards","Rate Review","Tell A Friend","Reset Password","Help","Privacy Policy","Terms & Conditions","Logout"]
 
@@ -61,16 +63,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             if let meditationData = settingData.meditationData?.array as?  [DBMeditationData] {
                 arrMeditationData = meditationData
             }
-            
-            if settingData.thirtyDaysReminder != ""{
+
+            if settingData.thirtyDaysReminder != "" && settingData.eightWeekReminder != ""{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
+            }else if settingData.thirtyDaysReminder != ""{
                 self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
                 self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
+            }else if settingData.eightWeekReminder != ""{
+                self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
+                self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
             }else{
                 self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time"]
                 self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time"]
             }
+            self.tblViewSetting.reloadData()
         }
-        self.tblViewSetting.reloadData()
     }
     
     
@@ -498,6 +506,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         if !settingData.isThirtyDaysReminder{
                             cell.lblTime.isHidden = true
                         }
+                    }else if indexPath.row == 6 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 103
+                        cell.btnSwitch.isOn = settingData.isEightWeekReminder
+                    }else if indexPath.row == 7 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.eightWeekReminder
+                        
+                        if !settingData.isEightWeekReminder{
+                            cell.lblTime.isHidden = true
+                        }
                     }
                 }else if indexPath.section == 1 {
                     
@@ -598,6 +622,22 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTime.text = settingData.thirtyDaysReminder
                         
                         if !settingData.isThirtyDaysReminder{
+                            cell.lblTime.isHidden = true
+                        }
+                    }else if indexPath.row == 5 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                        cell.btnSwitch.tag = 103
+                        cell.btnSwitch.isOn = settingData.isEightWeekReminder
+                    }else if indexPath.row == 6 {
+                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                        cell.lblTime.isHidden = false
+                        cell.checkImage.isHidden = true
+                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        
+                        if !settingData.isEightWeekReminder{
                             cell.lblTime.isHidden = true
                         }
                     }
@@ -818,6 +858,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
+                    }else if indexPath.row == 7{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.type = "8_week"
+                            vc.isSetting = true
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
                     }
                 }else if indexPath.section == 1{
                     if indexPath.row == 7 {
@@ -869,6 +917,14 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
                             
                             vc.type = "30_days"
+                            vc.isSetting = true
+                            self.navigationController?.pushViewController(vc, animated: false)
+                        }
+                    }else if indexPath.row == 6{
+                        if settingData.isThirtyDaysReminder {
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminder1VC") as! WWM21DaySetReminder1VC
+                            
+                            vc.type = "8_week"
                             vc.isSetting = true
                             self.navigationController?.pushViewController(vc, animated: false)
                         }
@@ -1162,6 +1218,16 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "30DAYS_REMINDER", itemName: "OFF")
             }
             settingData.isThirtyDaysReminder = btn.isOn
+            callPushNotification()
+        }else if btn.tag == 103 {
+            // Enable 8 week Reminder
+            
+            if btn.isOn {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "8WEEK_REMINDER", itemName: "ON")
+            }else {
+                WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "8WEEK_REMINDER", itemName: "OFF")
+            }
+            settingData.isEightWeekReminder = btn.isOn
             callPushNotification()
         }
         self.tblViewSetting.reloadData()

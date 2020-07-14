@@ -848,6 +848,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             self.identifyReminderType(type: "afternoon")
             self.identifyReminderType(type: "learn")
             self.identifyReminderType(type: "30Days")
+            self.identifyReminderType(type: "8Week")
         }
     }
     
@@ -972,6 +973,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }else if type == "30Days"{
             reminderTime = settingData.thirtyDaysReminder ?? ""
             isReminder = settingData.isThirtyDaysReminder
+        }else if type == "8Week"{
+            reminderTime = settingData.eightWeekReminder ?? ""
+            isReminder = settingData.isEightWeekReminder
         }else if type == "learn"{
             reminderTime = settingData.learnReminderTime ?? ""
             isReminder = settingData.isLearnReminder
@@ -1108,6 +1112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             arrTemp = settingData.afterNoonReminderTime?.components(separatedBy: ":")
         }else if type == "30Days"{
             arrTemp = settingData.thirtyDaysReminder?.components(separatedBy: ":")
+        }else if type == "8Week"{
+            arrTemp = settingData.eightWeekReminder?.components(separatedBy: ":")
         }
         
         var str = KGOODMORNING
@@ -1115,6 +1121,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             str = KCHALLENGEREMINDER
         }else if type == "30Days"{
             str = "It’s time to start 30-Days challenge"
+        }else if type == "8Week"{
+            str = "It’s time to start 8-Week challenge"
         }else{
             if arrTemp?.count == 2 {
                 let hours = Int(arrTemp?[0] ?? "0") ?? 0
@@ -1147,6 +1155,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }else if type == "30Days"{
             content.threadIdentifier = "local-notifications-Challenge30DaysReminder"
             identifire = "ChallengeReminder"
+        }else if type == "8Week"{
+            content.threadIdentifier = "local-notifications-Challenge8WeekReminder"
+            identifire = "ChallengeEightReminder"
         }else{
             content.threadIdentifier = "local-notifications-Challenge21DaysReminder"
             identifire = "ChallengeReminder"

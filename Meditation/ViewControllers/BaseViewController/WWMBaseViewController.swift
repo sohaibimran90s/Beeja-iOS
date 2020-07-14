@@ -98,7 +98,7 @@ class WWMBaseViewController: UIViewController {
             btnBack.setImage(UIImage.init(named: "Back_Arrow_Icon"), for: .normal)
             btnBack.addTarget(self, action: #selector(btnBackAction(_:)), for: .touchUpInside)
             
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.navigationItem.leftBarButtonItems = [btnBackItem, leftBarButtonItem]
             }else{
                 self.navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -229,7 +229,7 @@ class WWMBaseViewController: UIViewController {
         }
         
         if self.title1 == "Settings"{
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.navigationController?.popViewController(animated: true)
                 let controllers = self.navigationController?.viewControllers
                  for vc in controllers! {

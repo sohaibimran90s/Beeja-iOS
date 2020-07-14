@@ -354,7 +354,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 self.navigationController?.popToRootViewController(animated: false)
             }else {
                 
-                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                     self.nextVC()
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
