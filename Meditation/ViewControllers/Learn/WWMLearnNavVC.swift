@@ -140,6 +140,11 @@ class WWMLearnNavVC: WWMBaseViewController {
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
                 }
                 
+                if dict.name == "8 Weeks"{
+                    self.appPreference.set8IntroCompleted(value: dict.intro_completed)
+                    self.appPreference.set8WeekURL(value: dict.intro_url ?? "")
+                }
+                
                 jsonData["day_list"] = jsonThirtyDays
                 
                 let getEightWeekDB = WWMHelperClass.fetchDB(dbName: "DBEightWeek") as! [DBEightWeek]
@@ -470,6 +475,18 @@ class WWMLearnNavVC: WWMBaseViewController {
                                 
                                 if let two_step_complete = dict["two_step_complete"] as? Bool{
                                     dbEightWeek.two_step_complete = two_step_complete
+                                }
+                                
+                                if let is_pre_opened = dict["is_pre_opened"] as? Bool{
+                                    dbEightWeek.is_pre_opened = is_pre_opened
+                                }
+                                
+                                if let second_session_required = dict["second_session_required"] as? Bool{
+                                    dbEightWeek.second_session_required = second_session_required
+                                }
+                                
+                                if let second_session_completed = dict["second_session_completed"] as? Bool{
+                                    dbEightWeek.second_session_completed = second_session_completed
                                 }
                                 
                                 WWMHelperClass.saveDb()

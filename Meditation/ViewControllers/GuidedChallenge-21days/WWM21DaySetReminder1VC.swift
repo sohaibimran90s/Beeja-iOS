@@ -30,7 +30,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     var isSetting = false
     var min_limit = ""
     var max_limit = ""
-    
+    //8_week
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,6 +88,41 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                     self.defaultDate = date1
                     //print("date1 \(date1) dateAsString \(dateAsString) defaultDate \(defaultDate)")
                 }
+            }else if type == "8_week"{
+                let reminderTime = self.settingData.eightWeekReminder ?? ""
+                if reminderTime != ""{
+                    let reminderTimeArray = reminderTime.components(separatedBy: ":")
+                    self.hourBtn.setTitle("\(reminderTimeArray[0])", for: .normal)
+                    self.minBtn.setTitle("\(reminderTimeArray[1])", for: .normal)
+                    
+                    if !reminderTime.contains("PM") || !reminderTime.contains("pm") || !reminderTime.contains("AM") || !reminderTime.contains("am"){
+                        if reminderTime.contains("PM") || reminderTime.contains("pm"){
+                            self.amPmBtn.setTitle("pm", for: .normal)
+                        }else{
+                            self.amPmBtn.setTitle("am", for: .normal)
+                        }
+                    }else{
+                        switch Int(reminderTimeArray[0]) ?? 0{
+                        case 12...23:
+                            self.amPmBtn.setTitle("pm", for: .normal)
+                        default:
+                            self.amPmBtn.setTitle("am", for: .normal)
+                        }
+                    }
+                }else{
+                    let dateAsString = "\(self.hourBtn.titleLabel?.text ?? "4"):\(self.minBtn.titleLabel?.text ?? "00") \(self.amPmBtn.titleLabel?.text ?? "pm")"
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale.current
+                    dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+                    
+                    dateFormatter.dateFormat = "h:mm a"
+                    let date = dateFormatter.date(from: dateAsString)!
+                    
+                    dateFormatter.dateFormat = "HH:mm"
+                    let date1 = dateFormatter.string(from: date)
+                    self.defaultDate = date1
+                }
             }
         }
         
@@ -141,6 +176,20 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                 self.callHomeController(selectedIndex: 4)
             }
             return
+        }else if self.type == "8_week"{
+            self.appPreference.set21ChallengeName(value: "8 Week Challenge")
+            if flag == 0{
+                settingData.eightWeekReminder = self.defaultDate
+            }
+            settingData.isEightWeekReminder = true
+            self.callSettingAPI()
+            
+            if isSetting{
+                self.callHomeVC1()
+            }else{
+                self.callHomeController(selectedIndex: 4)
+            }
+            return
         }
         
         if isSetting{
@@ -155,6 +204,14 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         
         if self.type == "30_days"{
             self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+            if isSetting{
+                self.callHomeVC1()
+            }else{
+                self.callHomeController(selectedIndex: 4)
+            }
+            return
+        }else if self.type == "8_week"{
+            self.appPreference.set21ChallengeName(value: "8 Week Challenge")
             if isSetting{
                 self.callHomeVC1()
             }else{
@@ -216,6 +273,8 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             self.appPreference.setReminder21DaysTime(value: dateFormatter.string(from: sender.date))
         }else if self.type == "30_days"{
             settingData.thirtyDaysReminder = dateFormatter.string(from: sender.date)
+        }else if self.type == "8_week"{
+            settingData.eightWeekReminder = dateFormatter.string(from: sender.date)
         }
         
         dateFormatter.dateFormat = "HH:mm a"
@@ -318,10 +377,7 @@ extension WWM21DaySetReminder1VC{
         
         if meditationData?.count ?? 0 > 0{
             for dic in meditationData!{
-                
-                var min_limit = ""
-                var max_limit = ""
-                
+                                
                 if dic.meditationName == "Beeja"{
                     self.min_limit = dic.min_limit ?? "94"
                     self.max_limit = dic.max_limit ?? "97"
@@ -395,26 +451,28 @@ extension WWM21DaySetReminder1VC{
             }
             
             let group = [
-                "startChime": self.settingData.startChime ?? kChimes_BURMESE_BELL,
-                "endChime": self.settingData.endChime ?? kChimes_BURMESE_BELL,
-                "finishChime": self.settingData.finishChime ?? kChimes_BURMESE_BELL,
-                "intervalChime": self.settingData.intervalChime ?? kChimes_BURMESE_BELL,
-                "ambientSound": self.settingData.ambientChime ?? kAmbient_WAVES_CHIMES,
-                "moodMeterEnable": self.settingData.moodMeterEnable,
-                "IsMorningReminder": self.settingData.isMorningReminder,
-                "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-                "MorningReminderTime": self.settingData.morningReminderTime ?? "8:00",
-                "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-                "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "13:30",
-                "MantraID":self.settingData.mantraID,
-                "LearnReminderTime":self.settingData.learnReminderTime ?? "14:00",
-                "IsLearnReminder":self.settingData.isLearnReminder,
-                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
-                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
-                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
-                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
-                "meditation_data" : meditation_data
-                ] as [String : Any]
+            "startChime": self.settingData.startChime!,
+            "endChime": self.settingData.endChime!,
+            "finishChime": self.settingData.finishChime!,
+            "intervalChime": self.settingData.intervalChime!,
+            "ambientSound": self.settingData.ambientChime!,
+            "moodMeterEnable": self.settingData.moodMeterEnable,
+            "IsMorningReminder": self.settingData.isMorningReminder,
+            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "MantraID":self.settingData.mantraID,
+            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "IsLearnReminder":self.settingData.isLearnReminder,
+            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
+            "isEightWeekReminder":self.settingData.isEightWeekReminder,
+            "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
+            "meditation_data" : meditation_data
+            ] as [String : Any]
             
             let param = [
                 "user_id": self.appPreference.getUserID(),

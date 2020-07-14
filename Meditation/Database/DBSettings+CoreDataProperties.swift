@@ -37,6 +37,8 @@ extension DBSettings {
     @NSManaged public var learnReminderTime: String?
     @NSManaged public var isThirtyDaysReminder: Bool
     @NSManaged public var thirtyDaysReminder: String?
+    @NSManaged public var eightWeekReminder: String?
+    @NSManaged public var isEightWeekReminder: Bool
     @NSManaged public var isTwentyoneDaysReminder: Bool
     @NSManaged public var twentyoneDaysReminder: String?
 }

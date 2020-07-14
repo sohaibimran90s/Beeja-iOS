@@ -16,13 +16,21 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     @IBOutlet weak var imgView: UIImageView!
     
     var daysListData = ThirtyDaysListData()
+    var week8Data = EightWeekModel()
+    var type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.lblDayNo.text = "Day \(daysListData.day_name)"
-        self.lblDescription.text = "\(daysListData.Description)"
-        self.lblAuthor.text = "\(daysListData.auther_name)"
+        if self.type == ""{
+            self.lblDayNo.text = "Day \(daysListData.day_name)"
+            self.lblDescription.text = "\(daysListData.Description)"
+            self.lblAuthor.text = "\(daysListData.auther_name)"
+        }else{
+            self.lblDayNo.text = "Day \(week8Data.day_name)"
+            self.lblDescription.text = "\(week8Data.Description)"
+            self.lblAuthor.text = "\(week8Data.auther_name)"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +47,11 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     }
     
     @IBAction func btnChallengeAction(_ sender: UIButton){
-        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        if type == ""{
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        }else{
+            self.appPreference.set21ChallengeName(value: "8Weeks")
+        }
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
 
         vc.daysListData = daysListData

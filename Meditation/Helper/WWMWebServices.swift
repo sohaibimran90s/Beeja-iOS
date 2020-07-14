@@ -61,12 +61,12 @@ class WWMWebServices {
             //print("JSON string = \(theJSONText!)")
         }
         
-        //print("X_Params.... \(X_Params)")
+        print("X_Params.... \(X_Params)")
         
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
         
         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
-        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        //let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
         //print("Request URL: \(urlString) Data: \(myString!)")
         if param.count>0 {
             request.httpBody = jsonData
@@ -119,8 +119,8 @@ class WWMWebServices {
                     let json = try JSONSerialization.jsonObject(with: data!, options: [])
                     //let results = try? JSONSerialization.jsonObject(with: data!, options: [])
                     //let jsonData: Data? = try? JSONSerialization.data(withJSONObject: results! , options: .prettyPrinted)
-                    //let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                    //print("Result: \(myString ?? "")")
+                    let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                    print("Result: \(myString ?? "")")
                     
                     completionHandler(json  as! Dictionary<String, Any>, nil, true)
                     return
@@ -139,9 +139,6 @@ class WWMWebServices {
         })
         postDataTask.resume()
     }
-    
-    
-    
     
     class func request(params : [String:Any], urlString : String, imgData : Data?, image: UIImage?, isHeader : Bool , completionHandler: @escaping ASCompletionBlockAsDictionary) -> Void {
         

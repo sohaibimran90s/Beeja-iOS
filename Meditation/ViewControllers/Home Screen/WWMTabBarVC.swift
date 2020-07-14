@@ -994,7 +994,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
-                        //print("30intro_completed... \(self.appPreffrence.get30IntroCompleted()) 30intro_url... \(self.appPreffrence.get30DaysURL())")
+                        if dict["name"] as? String == "8 Weeks"{
+                            self.appPreffrence.set8IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
+                            self.appPreffrence.set8WeekURL(value: dict["intro_url"] as? String ?? "")
+                            self.appPreffrence.set8WeekIsExpired(value: dict["is_expired"] as? Bool ?? false)
+                        }
                         
                         if let name = dict["name"] as? String{
                             dbLearnData.name = name
@@ -1235,6 +1239,18 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 
                                 if let two_step_complete = dict["two_step_complete"] as? Bool{
                                     dbEightWeek.two_step_complete = two_step_complete
+                                }
+                                
+                                if let is_pre_opened = dict["is_pre_opened"] as? Bool{
+                                    dbEightWeek.is_pre_opened = is_pre_opened
+                                }
+                                
+                                if let second_session_required = dict["second_session_required"] as? Bool{
+                                    dbEightWeek.second_session_required = second_session_required
+                                }
+                                
+                                if let second_session_completed = dict["second_session_completed"] as? Bool{
+                                    dbEightWeek.second_session_completed = second_session_completed
                                 }
                                 
                                 WWMHelperClass.saveDb()
