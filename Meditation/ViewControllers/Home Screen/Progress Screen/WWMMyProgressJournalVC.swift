@@ -19,10 +19,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     var alertPopupView1 = WWMAlertController()
     
     var alertJournalPopup = WWMJouranlPopUp()
-   // var alertPopupView = WWMAlertController()
+    // var alertPopupView = WWMAlertController()
     var tap = UITapGestureRecognizer()
     let reachable = Reachabilities()
-
+    
     var itemInfo: IndicatorInfo = "View"
     
     override func viewDidLoad() {
@@ -82,9 +82,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                 cell.lblMeditationType.text = "Journal Entry"
             }
             
-//            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
-//                cell.lblMeditationType.text = "Why meditate"
-//            }
+            //            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+            //                cell.lblMeditationType.text = "Why meditate"
+            //            }
             
             let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
             
@@ -115,7 +115,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
         let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
-
+        
         vc.lblTitle = cell.lblMeditationType.text ?? ""
         vc.lblDesc = cell.lblJournalDesc.text ?? ""
         vc.lblDateDay1 = cell.lblDateDay.text ?? ""
@@ -124,7 +124,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -133,8 +133,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     func getJournalList() {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = ["user_id":self.appPreference.getUserID(),
-        "med_type" : self.appPreference.getType()]
+        let param = ["user_id": "69801", //self.appPreference.getUserID(),
+                     "med_type" : "guided"] //self.appPreference.getType()]
         
         //print("jounallist.... \(param)")
         
@@ -179,11 +179,14 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                     self.journalData.removeAll()
                     var journal = WWMJournalProgressData()
                     for dict in arrJournal {
-                    journal = WWMJournalProgressData.init(json: dict)
-                    self.journalData.append(journal)
+                        journal = WWMJournalProgressData.init(json: dict)
+//                        if let imageData = dict["assets_images"] as? [String : Any] {
+//                            journal.assets_images = WWMJournalImageData.init(json: imageData)
+//                        }
+                        self.journalData.append(journal)
                     }
                     self.tableViewJournal.reloadData()
-                          
+                    
                 }else {
                     self.fetchDataFromDB()
                 }
@@ -208,9 +211,9 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                         self.journalData.removeAll()
                         var journal = WWMJournalProgressData()
                         for dict in jsonResult {
-                        journal = WWMJournalProgressData.init(json: dict)
-                        if self.journalData.count < 10 {
-                            self.journalData.append(journal)
+                            journal = WWMJournalProgressData.init(json: dict)
+                            if self.journalData.count < 10 {
+                                self.journalData.append(journal)
                             }
                         }
                     }
@@ -223,7 +226,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         }
         self.tableViewJournal.reloadData()
     }
-
+    
     
     func convertToDictionaryArray(text: String) -> [[String: Any]]? {
         if let data = text.data(using: .utf8) {
@@ -258,10 +261,10 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                 //self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: "\(KYOUHAVE) \(getPostJournalCount) \(KNOFREEJOURNALMSG)", type: "Post")
                 
                 if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-                     xibJournalView()
-                   
+                    xibJournalView()
+                    
                 }else{
-                     self.alertPopupView1.removeFromSuperview()
+                    self.alertPopupView1.removeFromSuperview()
                     
                 }
             }
@@ -290,15 +293,15 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     @objc func btnAlertDoneAction(_ sender: Any){
         
-     if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-        let getPostJournalCount = self.appPreference.getPostJournalCount()
-        if getPostJournalCount == 0{
-            self.alertPopupView1.removeFromSuperview()
+        if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+            let getPostJournalCount = self.appPreference.getPostJournalCount()
+            if getPostJournalCount == 0{
+                self.alertPopupView1.removeFromSuperview()
+            }else{
+                xibJournalView()
+            }
         }else{
-            xibJournalView()
-        }
-     }else{
-          self.alertPopupView1.removeFromSuperview()
+            self.alertPopupView1.removeFromSuperview()
         }
     }
     
@@ -392,7 +395,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     func addJournalAPI() {
         self.view.endEditing(true)
-
+        
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "PROGRESS_JOURNAL", itemId: "ENTRY_RECORDED", itemName: "")
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -412,7 +415,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             if sucess {
                 self.xibJournalPopupCall()
                 self.journalView.removeFromSuperview()
-
+                
             }else {
                 self.journalView.removeFromSuperview()
                 self.saveJournalDatatoDB(param: param)
@@ -425,7 +428,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-
+    
     func saveJournalDatatoDB(param:[String:Any]) {
         let dbJournal = WWMHelperClass.fetchEntity(dbName: "DBJournalData") as! DBJournalData
         let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
@@ -453,16 +456,16 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         
         
-//        let alert = UIAlertController(title: title as String,
-//                                      message: message as String,
-//                                      preferredStyle: UIAlertController.Style.alert)
-//        
-//        
-//        let OKAction = UIAlertAction(title: "OK",
-//                                     style: .default, handler: nil)
-//        
-//        alert.addAction(OKAction)
-//        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
+        //        let alert = UIAlertController(title: title as String,
+        //                                      message: message as String,
+        //                                      preferredStyle: UIAlertController.Style.alert)
+        //
+        //
+        //        let OKAction = UIAlertAction(title: "OK",
+        //                                     style: .default, handler: nil)
+        //
+        //        alert.addAction(OKAction)
+        //        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
         
     }
 }

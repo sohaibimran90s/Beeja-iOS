@@ -13,15 +13,52 @@ class WWMJournalProgressData: NSObject {
     var date_time = String()
     var mood_status = String()
     
+    //Prashant
+    var meditation_type = String()
+    var title = String()
+    var assets_images = [WWMJournalImageData]()
+    //--------------------
+    
     override init() {
         
     }
+    
     init(json:[String:Any]) {
         text = json["text"] as? String ?? ""
         date_time = json["date_time"] as? String ?? ""
         mood_status = json["mood_status"] as? String ?? ""
+        
+        //Prashant
+        meditation_type = json["meditation_type"] as? String ?? ""
+        title = json["title"] as? String ?? ""
+        assets_images = json["assets_images"] as? [WWMJournalImageData] ?? [WWMJournalImageData]()
+        //----------------------
     }
 }
+
+//Prashant
+class WWMJournalImageData: NSObject {
+    var id = Int()
+    var journal_id = Int()
+    var caption = String()
+    var name = String()
+    var type = String()
+    
+    override init() {
+        
+    }
+    
+    init(json:[String:Any]) {
+        id = json["id"] as? Int ?? 0
+        journal_id = json["journal_id"] as? Int ?? 0
+        caption = json["caption"] as? String ?? ""
+        name = json["name"] as? String ?? ""
+        type = json["type"] as? String ?? ""
+    }
+}
+//---------------------
+
+
 
 
 //"id": 16,
