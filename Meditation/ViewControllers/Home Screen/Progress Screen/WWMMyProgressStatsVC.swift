@@ -950,7 +950,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                         self.viewSuperChallenge21Days.isHidden = true
                         self.constraintSuperView21Days.constant = 0
                         self.calenderTopConstraint.constant = 0
-                        self.stackViewPraSpiritual.isHidden = false
+                        self.stackViewPraSpiritual.isHidden = true
                         self.constraint21DaysHeader.constant = 110
                         self.lbl21DaysTitle.text = ""
                     }else if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
