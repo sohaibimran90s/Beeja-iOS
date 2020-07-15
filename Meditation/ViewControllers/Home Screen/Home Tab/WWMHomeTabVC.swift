@@ -946,9 +946,9 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 if introURL != ""{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
-                    vc.challenge_type = "8Weeks"
-                    vc.emotionKey = "8Weeks"
-                    vc.value = "8Weeks"
+                    vc.challenge_type = "8weeks"
+                    vc.emotionKey = "8weeks"
+                    vc.value = "8weeks"
                     vc.vc = "HomeTabVC"
                     self.navigationController?.pushViewController(vc, animated: false)
                     return

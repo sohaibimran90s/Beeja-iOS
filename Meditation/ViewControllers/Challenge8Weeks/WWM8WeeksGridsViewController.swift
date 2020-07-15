@@ -66,13 +66,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.lblTodaysMed.isHidden = false
             btnContinue.alpha = 1.0
             btnContinue.isEnabled = true
-            self.lblDaysCount.text = "\(self.week8Count())/\(self.daysListData.count)"
-            
-            //remove this line when intro_url inserted
-            self.btnIntro.isHidden = true
-            
-            //uncomment this line when intro_url inserted
-            //self.checkIntroCompleted()
+            self.lblDaysCount.text = "\(self.completed8WeekCount)/\(self.daysListData.count)"
+                    
+            self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
@@ -150,9 +146,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBAction func btnIntroAction(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-        vc.emotionKey = "8Weeks"
-        vc.challenge_type = "8Weeks"
-        vc.value = "8Weeks"
+        vc.emotionKey = "8weeks"
+        vc.challenge_type = "8weeks"
+        vc.value = "8weeks"
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -265,10 +261,10 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let sb = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         
-        WWMHelperClass.day_type = "8Weeks"
+        WWMHelperClass.day_type = "8weeks"
         WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
         vc.week8Data = self.daysListData[sender_Tag]
-        vc.type = "8Weeks"
+        vc.type = "8weeks"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
