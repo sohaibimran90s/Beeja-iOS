@@ -321,7 +321,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                 WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
             }
 
-            if appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.appPreffrence.setType(value: "learn")
             }
             
@@ -473,7 +473,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
                     
-                    if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    if appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                         self.appPreffrence.setType(value: "learn")
                     }
                     
@@ -522,7 +522,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                         WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                     }
                     
-                    if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    if appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                         self.appPreffrence.setType(value: "learn")
                     }
                     
@@ -628,7 +628,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
                 }
                 
-                if appPreference.get21ChallengeName() == "30 Day Challenge"{
+                if appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                     self.appPreffrence.setType(value: "learn")
                 }
                 
@@ -836,7 +836,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             self.playAudioFile(fileName: settingData.finishChime ?? kChimes_HARP)
             self.timer.invalidate()
             
-            if appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.appPreffrence.setType(value: "learn")
             }
             
@@ -917,7 +917,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                         self.meditationHistoryListAPI()
                         
                         DispatchQueue.main.async {
-                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                                 self.appPreference.setType(value: "learn")
                                 self.callHomeVC1()
                             }else{
@@ -928,7 +928,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                         self.saveToDB(param: param)
                         
                         DispatchQueue.main.async {
-                            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                                 self.appPreference.setType(value: "learn")
                                 self.callHomeVC1()
                             }else{
@@ -940,7 +940,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                     self.saveToDB(param: param)
                     
                     DispatchQueue.main.async {
-                        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                        if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                             self.appPreference.setType(value: "learn")
                             self.callHomeVC1()
                         }else{

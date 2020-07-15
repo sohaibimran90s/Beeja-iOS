@@ -34,6 +34,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.appPreference.setGetProfile(value: false)
         self.setNavigationBar(isShow: false, title: "")
         self.setupView()
         
@@ -59,7 +60,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                     self.hourBtn.setTitle("\(reminderTimeArray[0])", for: .normal)
                     self.minBtn.setTitle("\(reminderTimeArray[1])", for: .normal)
                     
-                    if !reminderTime.contains("PM") || !reminderTime.contains("pm") || !reminderTime.contains("AM") || !reminderTime.contains("am"){
+                    if reminderTime.contains("PM") || reminderTime.contains("pm") || reminderTime.contains("AM") || reminderTime.contains("am"){
                         if reminderTime.contains("PM") || reminderTime.contains("pm"){
                             self.amPmBtn.setTitle("pm", for: .normal)
                         }else{
@@ -95,7 +96,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
                     self.hourBtn.setTitle("\(reminderTimeArray[0])", for: .normal)
                     self.minBtn.setTitle("\(reminderTimeArray[1])", for: .normal)
                     
-                    if !reminderTime.contains("PM") || !reminderTime.contains("pm") || !reminderTime.contains("AM") || !reminderTime.contains("am"){
+                    if reminderTime.contains("PM") || reminderTime.contains("pm") || reminderTime.contains("AM") || reminderTime.contains("am"){
                         if reminderTime.contains("PM") || reminderTime.contains("pm"){
                             self.amPmBtn.setTitle("pm", for: .normal)
                         }else{
@@ -129,8 +130,10 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         if type == "21_days"{
             self.lblSubTitle.text = "Set a notification for your 7 day sequence"
             self.dateToAddInCurrent()
-        }else{
+        }else if type == "30_days"{
             self.lblSubTitle.text = "Set a notification for your 30 day sequence"
+        }else{
+            self.lblSubTitle.text = "Set a notification for your 8 week challenge"
         }
     }
     
@@ -177,7 +180,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             }
             return
         }else if self.type == "8_week"{
-            self.appPreference.set21ChallengeName(value: "8 Week Challenge")
+            self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             if flag == 0{
                 settingData.eightWeekReminder = self.defaultDate
             }
@@ -211,7 +214,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             }
             return
         }else if self.type == "8_week"{
-            self.appPreference.set21ChallengeName(value: "8 Week Challenge")
+            self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             if isSetting{
                 self.callHomeVC1()
             }else{
@@ -232,8 +235,10 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         if self.appPreference.isLogin(){
             DispatchQueue.global(qos: .background).async {
                 let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-                       if data.count > 0 {
-                           self.settingAPI()
+                if data.count > 0 {
+                    DispatchQueue.global(qos: .background).async {
+                        self.settingAPI()
+                    }
                 }
             }
         }
@@ -480,7 +485,7 @@ extension WWM21DaySetReminder1VC{
                 "group": group
                 ] as [String : Any]
             
-            //print("settings param... \(param)")
+            print("settings param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {

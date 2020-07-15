@@ -65,7 +65,13 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.lblTodaysMed.isHidden = false
             btnContinue.alpha = 1.0
             btnContinue.isEnabled = true
-            self.checkIntroCompleted()
+            self.lblDaysCount.text = "\(self.week8Count())/\(self.daysListData.count)"
+            
+            //remove this line when intro_url inserted
+            self.btnIntro.isHidden = true
+            
+            //uncomment this line when intro_url inserted
+            //self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
@@ -118,8 +124,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
         if data.count > 0 {
             settingData = data[0]
-            if let _ = settingData.eightWeekReminder{
-                if (settingData.eightWeekReminder != "" || settingData.eightWeekReminder != nil){
+            if let reminder = settingData.eightWeekReminder{
+                //print("reminder... \(reminder.isEmpty)")
+                if !reminder.isEmpty{
                     self.btnReminder.isHidden = true
                     self.lblReminder.isHidden = true
                     self.btnReminder.frame.size.height = 0
@@ -140,6 +147,12 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     }
     
     @IBAction func btnIntroAction(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+
+        vc.emotionKey = "8Weeks"
+        vc.challenge_type = "8Weeks"
+        vc.value = "8Weeks"
+        self.navigationController?.pushViewController(vc, animated: false)
     }
     
     @IBAction func btnReminderAction(_ sender: UIButton) {
@@ -164,20 +177,32 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell8Weeks", for: indexPath) as! Cell8Weeks
         
-        if self.daysListData[indexPath.item].two_step_complete && self.daysListData[indexPath.item].completed{
-            cell.contentView.isHidden = true
-            cell.isUserInteractionEnabled = false
+        if self.daysListData[indexPath.item].second_session_required{
+            if self.daysListData[indexPath.item].completed && self.daysListData[indexPath.item].second_session_completed{
+                cell.contentView.isHidden = true
+                cell.isUserInteractionEnabled = false
+            }else{
+                cell.contentView.isHidden = false
+                cell.isUserInteractionEnabled = true
+            }
         }else{
-            cell.contentView.isHidden = false
-            cell.isUserInteractionEnabled = true
+            if self.daysListData[indexPath.item].completed{
+                cell.contentView.isHidden = true
+                cell.isUserInteractionEnabled = false
+            }else{
+                cell.contentView.isHidden = false
+                cell.isUserInteractionEnabled = true
+            }
         }
         
         //2. set selected
-        if self.daysListData[indexPath.item].two_step_complete && !self.daysListData[indexPath.item].completed{
-            cell.viewSquare.layer.borderColor = UIColor(hexString: "#00EBA9")?.cgColor
-            cell.viewSquare.layer.borderWidth = 2
-        }else{
-           cell.viewSquare.layer.borderWidth = 0
+        if self.daysListData[indexPath.item].second_session_required{
+            if self.daysListData[indexPath.item].completed && !self.daysListData[indexPath.item].second_session_completed{
+                cell.viewSquare.layer.borderColor = UIColor(hexString: "#00EBA9")?.cgColor
+                cell.viewSquare.layer.borderWidth = 2
+            }else{
+                cell.viewSquare.layer.borderWidth = 0
+            }
         }
             
         return cell
@@ -191,8 +216,12 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         
         selectedIndex = indexPath.item
         
-        if check2TypePlay().0{
-            self.pushViewController(sender_Tag: check2TypePlay().1)
+        if self.daysListData[indexPath.item].second_session_required{
+            if check2TypePlay().0{
+                self.pushViewController(sender_Tag: check2TypePlay().1)
+            }else{
+                self.pushViewController(sender_Tag: indexPath.item)
+            }
         }else{
             self.pushViewController(sender_Tag: indexPath.item)
         }
@@ -200,7 +229,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     func check2TypePlay() -> (Bool, Int){
         for i in 0..<self.daysListData.count{
-            if self.daysListData[i].two_step_complete && !self.daysListData[i].completed{
+            if self.daysListData[i].completed && !self.daysListData[i].second_session_completed{
                 return (true, i)
             }
         }
@@ -213,31 +242,19 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let obj = WWMLearnStepListVC()
         var flag = 0
         
-        if self.daysListData[sender_Tag].completed || check2TypePlay().0{
-            self.appPreference.setType(value: "learn")
-            let sb = UIStoryboard.init(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
-            WWMHelperClass.day_type = "8Weeks"
-            WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
-            vc.week8Data = self.daysListData[sender_Tag]
-            vc.type = "8Weeks"
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-            return
-        }else{
-            for i in 0..<sender_Tag{
-                let date_completed = self.daysListData[i].date_completed
-                if date_completed != ""{
-                    let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                    if dateCompare.0 == 1{
-                        flag = 1
-                        break
-                    }
+        //to check if todays challenge completed or not
+        for i in 0..<sender_Tag{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed != ""{
+                let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
+                if dateCompare.0 == 1{
+                    flag = 1
+                    break
                 }
             }
         }
         
-        //its mean you have done todays challenge
+        //return 1 means you have done todays challenge
         if flag == 1{
             obj.xibCall(title1: KLEARNONESTEP)
             return

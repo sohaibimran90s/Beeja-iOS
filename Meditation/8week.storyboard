@@ -149,13 +149,6 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxA-Lf-VfO">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="636"/>
-                                                <state key="normal" title="Button"/>
-                                                <connections>
-                                                    <action selector="btnIntroAction:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="rjk-TQ-4l6"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a panel for todays meditation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOr-Le-lqY">
                                                 <rect key="frame" x="54" y="25" width="267.5" height="16"/>
                                                 <fontDescription key="fontDescription" name="Maax" family="Maax" pointSize="16"/>
@@ -282,6 +275,12 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="btnContinueAction:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="Brs-w9-AOg"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxA-Lf-VfO">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="636"/>
+                                                <connections>
+                                                    <action selector="btnIntroAction:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="Iwv-h6-va0"/>
                                                 </connections>
                                             </button>
                                         </subviews>

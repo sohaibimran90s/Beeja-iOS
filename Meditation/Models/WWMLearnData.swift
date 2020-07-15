@@ -145,7 +145,9 @@ class EightWeekModel: NSObject{
     var max_limit = "97"
     var completed: Bool = false
     var date_completed = ""
-    var two_step_complete = false
+    var is_pre_opened: Bool = false
+    var second_session_required: Bool = false
+    var second_session_completed: Bool = false
     
     override init() {
     }
@@ -161,6 +163,8 @@ class EightWeekModel: NSObject{
         self.max_limit = json["max_limit"] as? String ?? ""
         self.completed = json["completed"] as? Bool ?? false
         self.date_completed = json["date_completed"] as? String ?? ""
-        self.two_step_complete = json["two_step_complete"] as? Bool ?? false
+        self.is_pre_opened = json["is_pre_opened"] as? Bool ?? false
+        self.second_session_required = json["second_session_required"] as? Bool ?? false
+        self.second_session_completed = json["second_session_completed"] as? Bool ?? false
     }
 }

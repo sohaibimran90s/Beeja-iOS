@@ -943,7 +943,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                     self.collectionView21Chall.reloadData()
                 }else if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"){
                     
-                    if self.appPreference.get21ChallengeName() == "8 Week Challenge"{
+                    if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                         self.viewChallenge21Days.isHidden = true
                         self.viewChallenge21DaysHeightConstraint.constant = 0
                         self.btnChallenge21Days.isHidden = true

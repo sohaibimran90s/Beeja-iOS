@@ -42,7 +42,11 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     }
     
     @IBAction func btnCrossAction(_ sender: UIButton){
-        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        if type == ""{
+            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+        }else{
+            self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -50,7 +54,7 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
         if type == ""{
             self.appPreference.set21ChallengeName(value: "30 Day Challenge")
         }else{
-            self.appPreference.set21ChallengeName(value: "8Weeks")
+            self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
         }
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTimerHomeVC") as! WWMTimerHomeVC
 

@@ -20,7 +20,7 @@ class WWMLearnNavVC: WWMBaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
             self.appPreference.setType(value: "learn")
         }
         
@@ -75,12 +75,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                 jsonData["max_limit"] = dict.max_limit
                 jsonData["is_expired"] = dict.is_expired
                 
-                if dict.name == "30 Day Challenge"{
-                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
-                }
-                
                 var completedCount = 0
-
                 let getLearnDataDB = WWMHelperClass.fetchDB(dbName: "DBSteps") as! [DBSteps]
                 for steps in getLearnDataDB{
                     jsonStepString["step_name"] = steps.step_name
@@ -138,11 +133,14 @@ class WWMLearnNavVC: WWMBaseViewController {
                 if dict.name == "30 Day Challenge"{
                     self.appPreference.set30IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set30DaysURL(value: dict.intro_url ?? "")
+                    self.appPreference.set30DaysIsExpired(value: dict.is_expired)
                 }
                 
-                if dict.name == "8 Weeks"{
+                if dict.name == "8 Weeks Challenge"{
+                    print(dict.intro_completed)
                     self.appPreference.set8IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set8WeekURL(value: dict.intro_url ?? "")
+                    self.appPreference.set8WeekIsExpired(value: dict.is_expired)
                 }
                 
                 jsonData["day_list"] = jsonThirtyDays
@@ -156,10 +154,12 @@ class WWMLearnNavVC: WWMBaseViewController {
                     jsonEightWeekString["second_description"] = dayWiseList.secondDescription
                     jsonEightWeekString["min_limit"] = dayWiseList.min_limit
                     jsonEightWeekString["max_limit"] = dayWiseList.max_limit
-                    jsonEightWeekString["two_step_complete"] = dayWiseList.two_step_complete
                     jsonEightWeekString["completed"] = dayWiseList.completed
                     jsonEightWeekString["date_completed"] = dayWiseList.date_completed
                     jsonEightWeekString["image"] = dayWiseList.image
+                    jsonEightWeekString["is_pre_opened"] = dayWiseList.is_pre_opened
+                    jsonEightWeekString["second_session_required"] = dayWiseList.second_session_required
+                    jsonEightWeekString["second_session_completed"] = dayWiseList.second_session_completed
                     
                     jsonEightWeekArray.append(jsonEightWeekString)
                 }
@@ -472,11 +472,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbEightWeek.date_completed = date_completed
                                 }
-                                
-                                if let two_step_complete = dict["two_step_complete"] as? Bool{
-                                    dbEightWeek.two_step_complete = two_step_complete
-                                }
-                                
+                                                                
                                 if let is_pre_opened = dict["is_pre_opened"] as? Bool{
                                     dbEightWeek.is_pre_opened = is_pre_opened
                                 }

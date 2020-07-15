@@ -942,12 +942,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     appPreference.set21ChallengeName(value: "30 Day Challenge")
                 }
             }else if guided_type == "8 Weeks Challenge"{
-                if intro_video != ""{
+                let introURL = self.appPreffrence.get8WeekURL()
+                if introURL != ""{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                     
-                    vc.challenge_type = "30days"
-                    vc.emotionKey = "30days"
-                    vc.value = "30days"
+                    vc.challenge_type = "8Weeks"
+                    vc.emotionKey = "8Weeks"
+                    vc.value = "8Weeks"
                     vc.vc = "HomeTabVC"
                     self.navigationController?.pushViewController(vc, animated: false)
                     return
@@ -955,7 +956,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.type = "learn"
                     self.appPreference.setType(value: "learn")
                     self.appPreference.setGuideTypeFor3DTouch(value: "learn")
-                    appPreference.set21ChallengeName(value: "30 Day Challenge")
+                    appPreference.set21ChallengeName(value: "8 Weeks Challenge")
                 }
             }else if guided_type == "21 Days challenge"{
                 self.type = "guided"
@@ -982,7 +983,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 self.type = "learn"
                 self.appPreference.setType(value: "learn")
                 self.appPreference.setGuideTypeFor3DTouch(value: "learn")
-                appPreference.set21ChallengeName(value: "30 Day Challenge")
+                appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             }else if guided_type == "21 Days challenge"{
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")

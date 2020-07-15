@@ -635,7 +635,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func navigateToDashboard() {
         
         if self.appPreference.getType() == "learn"{
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.nextVC()
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC

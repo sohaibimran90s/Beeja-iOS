@@ -261,7 +261,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             "challenge_day_id":WWMHelperClass.day_30_name,
             "challenge_type":WWMHelperClass.day_type
             ] as [String : Any]
-        //print("param...+++++++++ \(param)")
+        print("param...+++++++++ \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -354,7 +354,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                 self.navigationController?.popToRootViewController(animated: false)
             }else {
                 
-                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                     self.nextVC()
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
