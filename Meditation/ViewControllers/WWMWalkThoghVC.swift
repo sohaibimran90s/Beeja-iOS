@@ -63,7 +63,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         self.btnCrossSkip.isHidden = false
         
-        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days" || value == "30days"){
+        if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days" || value == "30days" || value == "8Weeks"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
             btnCrossSkip.setTitle("", for: .normal)
         }else if value == "SignupLetsStart"{
@@ -193,6 +193,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "30days"{
             videoURL = self.appPreference.get30DaysURL()
+        }else if value == "8Weeks"{
+            videoURL = self.appPreference.get8WeekURL()
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
@@ -224,12 +226,16 @@ class WWMWalkThoghVC: WWMBaseViewController {
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
             self.callHomeVC(index: 2)
-        }else if (value == "21_days" || value == "30days") {
-            if challenge_type == "30days"{
+        }else if (value == "21_days" || value == "30days" || value == "8Weeks") {
+            if challenge_type == "30days" || challenge_type == "8Weeks"{
                 if vc == "HomeTabVC"{
                     self.callHomeVC(index: 0)
                 }else{
-                    self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                    if value == "30days"{
+                        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                    }else{
+                        self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+                    }
                     self.callHomeVC1()
                 }
             }else{
@@ -255,7 +261,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             }
             if value == "help" || value == "learnStepList"{
                 self.navigationController?.popViewController(animated: true)
-            }else if (value == "curatedCards" || value == "30days"){
+            }else if (value == "curatedCards" || value == "30days" || value == "8Weeks"){
                 self.challengeIntroVideoCompleted()
             }else if value == "21_days"{
                 self.navigationController?.popViewController(animated: false)
@@ -317,7 +323,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
             "guided_id": self.id,
             "challenge_type": self.challenge_type
             ] as [String : Any]
-        //print("param... \(param)")
+        print("param... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ACCEPT_CHALLENGE, context: "WWMWalkThoughVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, success) in
             
@@ -641,7 +647,7 @@ extension WWMWalkThoghVC{
                             self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
-                        if dict["name"] as? String == "8 Weeks"{
+                        if dict["name"] as? String == "8 Weeks Challenge"{
                             self.appPreffrence.set8IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreffrence.set8WeekURL(value: dict["intro_url"] as? String ?? "")
                             self.appPreffrence.set8WeekIsExpired(value: dict["is_expired"] as? Bool ?? false)
@@ -881,10 +887,6 @@ extension WWMWalkThoghVC{
                                 
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbEightWeek.date_completed = date_completed
-                                }
-                                
-                                if let two_step_complete = dict["two_step_complete"] as? Bool{
-                                    dbEightWeek.two_step_complete = two_step_complete
                                 }
                                 
                                 if let is_pre_opened = dict["is_pre_opened"] as? Bool{

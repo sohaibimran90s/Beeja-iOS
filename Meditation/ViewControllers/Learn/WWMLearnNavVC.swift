@@ -136,7 +136,8 @@ class WWMLearnNavVC: WWMBaseViewController {
                     self.appPreference.set30DaysIsExpired(value: dict.is_expired)
                 }
                 
-                if dict.name == "8 Weeks"{
+                if dict.name == "8 Weeks Challenge"{
+                    print(dict.intro_completed)
                     self.appPreference.set8IntroCompleted(value: dict.intro_completed)
                     self.appPreference.set8WeekURL(value: dict.intro_url ?? "")
                     self.appPreference.set8WeekIsExpired(value: dict.is_expired)
@@ -153,10 +154,12 @@ class WWMLearnNavVC: WWMBaseViewController {
                     jsonEightWeekString["second_description"] = dayWiseList.secondDescription
                     jsonEightWeekString["min_limit"] = dayWiseList.min_limit
                     jsonEightWeekString["max_limit"] = dayWiseList.max_limit
-                    jsonEightWeekString["two_step_complete"] = dayWiseList.two_step_complete
                     jsonEightWeekString["completed"] = dayWiseList.completed
                     jsonEightWeekString["date_completed"] = dayWiseList.date_completed
                     jsonEightWeekString["image"] = dayWiseList.image
+                    jsonEightWeekString["is_pre_opened"] = dayWiseList.is_pre_opened
+                    jsonEightWeekString["second_session_required"] = dayWiseList.second_session_required
+                    jsonEightWeekString["second_session_completed"] = dayWiseList.second_session_completed
                     
                     jsonEightWeekArray.append(jsonEightWeekString)
                 }
@@ -469,11 +472,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbEightWeek.date_completed = date_completed
                                 }
-                                
-                                if let two_step_complete = dict["two_step_complete"] as? Bool{
-                                    dbEightWeek.two_step_complete = two_step_complete
-                                }
-                                
+                                                                
                                 if let is_pre_opened = dict["is_pre_opened"] as? Bool{
                                     dbEightWeek.is_pre_opened = is_pre_opened
                                 }

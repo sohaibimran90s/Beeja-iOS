@@ -996,7 +996,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
-                        if dict["name"] as? String == "8 Weeks"{
+                        if dict["name"] as? String == "8 Weeks Challenge"{
                             self.appPreffrence.set8IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreffrence.set8WeekURL(value: dict["intro_url"] as? String ?? "")
                             self.appPreffrence.set8WeekIsExpired(value: dict["is_expired"] as? Bool ?? false)
@@ -1237,10 +1237,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                 
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbEightWeek.date_completed = date_completed
-                                }
-                                
-                                if let two_step_complete = dict["two_step_complete"] as? Bool{
-                                    dbEightWeek.two_step_complete = two_step_complete
                                 }
                                 
                                 if let is_pre_opened = dict["is_pre_opened"] as? Bool{

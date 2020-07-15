@@ -756,7 +756,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         if self.appPreference.isLogin(){
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.appPreference.setType(value: "learn")
                 self.type = "learn"
                 self.meditationApi()
@@ -1162,7 +1162,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             content.threadIdentifier = "local-notifications-Challenge21DaysReminder"
             identifire = "ChallengeReminder"
         }
-        
         
         var toDateComponents = Calendar.current.dateComponents([.hour,.minute], from: date)
         toDateComponents.second = 0

@@ -26,7 +26,6 @@ extension DBEightWeek {
     @NSManaged public var id: String?
     @NSManaged public var max_limit: String?
     @NSManaged public var min_limit: String?
-    @NSManaged public var two_step_complete: Bool
     @NSManaged public var image: String?
     @NSManaged public var is_pre_opened: Bool
     @NSManaged public var second_session_required: Bool

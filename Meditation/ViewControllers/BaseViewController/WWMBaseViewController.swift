@@ -573,7 +573,7 @@ extension WWMBaseViewController{
                             self.appPreference.set30DaysIsExpired(value: dict["is_expired"] as? Bool ?? false)
                         }
                         
-                        if dict["name"] as? String == "8 Weeks"{
+                        if dict["name"] as? String == "8 Weeks Challenge"{
                             self.appPreference.set8IntroCompleted(value: dict["intro_completed"] as? Bool ?? false)
                             self.appPreference.set8WeekURL(value: dict["intro_url"] as? String ?? "")
                             self.appPreference.set8WeekIsExpired(value: dict["is_expired"] as? Bool ?? false)
@@ -814,10 +814,6 @@ extension WWMBaseViewController{
                                 
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbEightWeek.date_completed = date_completed
-                                }
-                                
-                                if let two_step_complete = dict["two_step_complete"] as? Bool{
-                                    dbEightWeek.two_step_complete = two_step_complete
                                 }
                                 
                                 if let is_pre_opened = dict["is_pre_opened"] as? Bool{
