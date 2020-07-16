@@ -172,12 +172,6 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             }
             settingData.isThirtyDaysReminder = true
             self.callSettingAPI()
-            
-            if isSetting{
-                self.callHomeVC1()
-            }else{
-                self.callHomeController(selectedIndex: 4)
-            }
             return
         }else if self.type == "8_week"{
             self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
@@ -186,12 +180,6 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             }
             settingData.isEightWeekReminder = true
             self.callSettingAPI()
-            
-            if isSetting{
-                self.callHomeVC1()
-            }else{
-                self.callHomeController(selectedIndex: 4)
-            }
             return
         }
         
@@ -236,9 +224,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             DispatchQueue.global(qos: .background).async {
                 let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
                 if data.count > 0 {
-                    DispatchQueue.global(qos: .background).async {
-                        self.settingAPI()
-                    }
+                    self.settingAPI()
                 }
             }
         }
@@ -382,7 +368,7 @@ extension WWM21DaySetReminder1VC{
         
         if meditationData?.count ?? 0 > 0{
             for dic in meditationData!{
-                                
+                
                 if dic.meditationName == "Beeja"{
                     self.min_limit = dic.min_limit ?? "94"
                     self.max_limit = dic.max_limit ?? "97"
@@ -456,28 +442,28 @@ extension WWM21DaySetReminder1VC{
             }
             
             let group = [
-            "startChime": self.settingData.startChime!,
-            "endChime": self.settingData.endChime!,
-            "finishChime": self.settingData.finishChime!,
-            "intervalChime": self.settingData.intervalChime!,
-            "ambientSound": self.settingData.ambientChime!,
-            "moodMeterEnable": self.settingData.moodMeterEnable,
-            "IsMorningReminder": self.settingData.isMorningReminder,
-            "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-            "MorningReminderTime": self.settingData.morningReminderTime!,
-            "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
-            "MantraID":self.settingData.mantraID,
-            "LearnReminderTime":self.settingData.learnReminderTime!,
-            "IsLearnReminder":self.settingData.isLearnReminder,
-            "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
-            "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
-            "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
-            "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
-            "isEightWeekReminder":self.settingData.isEightWeekReminder,
-            "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
-            "meditation_data" : meditation_data
-            ] as [String : Any]
+                "startChime": self.settingData.startChime!,
+                "endChime": self.settingData.endChime!,
+                "finishChime": self.settingData.finishChime!,
+                "intervalChime": self.settingData.intervalChime!,
+                "ambientSound": self.settingData.ambientChime!,
+                "moodMeterEnable": self.settingData.moodMeterEnable,
+                "IsMorningReminder": self.settingData.isMorningReminder,
+                "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
+                "MorningReminderTime": self.settingData.morningReminderTime!,
+                "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
+                "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+                "MantraID":self.settingData.mantraID,
+                "LearnReminderTime":self.settingData.learnReminderTime!,
+                "IsLearnReminder":self.settingData.isLearnReminder,
+                "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
+                "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
+                "isTwentyoneDaysReminder":self.settingData.isTwentyoneDaysReminder,
+                "twentyoneDaysReminder":self.settingData.twentyoneDaysReminder ?? "",
+                "isEightWeekReminder":self.settingData.isEightWeekReminder,
+                "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
+                "meditation_data" : meditation_data
+                ] as [String : Any]
             
             let param = [
                 "user_id": self.appPreference.getUserID(),
@@ -488,12 +474,12 @@ extension WWM21DaySetReminder1VC{
             print("settings param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    if let success = result["success"] as? Bool {
-                        print(success)
-                    }
-                }else {
-                    if error != nil {
+                
+                DispatchQueue.main.async {
+                    if self.isSetting{
+                        self.callHomeVC1()
+                    }else{
+                        self.callHomeController(selectedIndex: 4)
                     }
                 }
             }

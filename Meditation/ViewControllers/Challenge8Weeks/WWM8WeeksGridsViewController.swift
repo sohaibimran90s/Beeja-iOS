@@ -20,6 +20,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBOutlet weak var lblTodaysMedTC: NSLayoutConstraint!
     @IBOutlet weak var btnReminder: UIButton!
     @IBOutlet weak var btnReminderTC: NSLayoutConstraint!
+    @IBOutlet weak var imgPuzzleTC: NSLayoutConstraint!
     @IBOutlet weak var btnIntro: UIButton!
     @IBOutlet weak var viewExpired: UIView!
     @IBOutlet weak var viewExpiredTopConstraint: NSLayoutConstraint!
@@ -27,7 +28,6 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBOutlet weak var viewRetakeTopConstraint: NSLayoutConstraint!
     
     var itemInfo: IndicatorInfo = "View"
-    var selectedIndex: Int?
     var daysListData: [EightWeekModel] = []
     var checkExpireRetake = 0
     var completed8WeekCount = 0
@@ -35,6 +35,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appPreference.set21ChallengeName(value: "8 Weeks Challenge")
         UISetup()
     }
     
@@ -65,13 +66,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.lblTodaysMed.isHidden = false
             btnContinue.alpha = 1.0
             btnContinue.isEnabled = true
-            self.lblDaysCount.text = "\(self.week8Count())/\(self.daysListData.count)"
-            
-            //remove this line when intro_url inserted
-            self.btnIntro.isHidden = true
-            
-            //uncomment this line when intro_url inserted
-            //self.checkIntroCompleted()
+            self.lblDaysCount.text = "\(self.completed8WeekCount)/\(self.daysListData.count)"
+            self.imgPuzzleTC.constant = 25
+            self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
             //Expired
             self.viewExpired.isHidden = false
@@ -84,6 +81,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.btnContinue.isHidden = true
             self.lblDaysCount.isHidden = true
             self.lbl7DaysRevealText.isHidden = true
+            self.imgPuzzleTC.constant = 16
         }else{
             //Retake
             self.viewExpired.isHidden = true
@@ -96,7 +94,18 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.btnContinue.isHidden = true
             self.lblDaysCount.isHidden = true
             self.lbl7DaysRevealText.isHidden = true
+            self.imgPuzzleTC.constant = 16
         }
+    }
+    
+    //MARK: Challenge Expired button
+    @IBAction func btnExpiredClicked(_ sender: UIButton){
+        self.retakeChallengeApi()
+    }
+    
+    //MARK: Challenge Retake button
+    @IBAction func btnRetakeClicked(_ sender: UIButton){
+        self.retakeChallengeApi()
     }
     
     //to check if the challenge is expired or not
@@ -131,27 +140,31 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
                     self.lblReminder.isHidden = true
                     self.btnReminder.frame.size.height = 0
                     self.btnReminderTC.constant = 0
+                    self.imgPuzzleTC.constant = 10
                 }else{
                     self.btnReminder.isHidden = false
                     self.lblReminder.isHidden = false
                     self.btnReminder.frame.size.height = 29
                     self.btnReminderTC.constant = 16
+                    self.imgPuzzleTC.constant = 25
                 }
             }else{
                 self.btnReminder.isHidden = false
                 self.lblReminder.isHidden = false
                 self.btnReminder.frame.size.height = 29
                 self.btnReminderTC.constant = 16
+                self.imgPuzzleTC.constant = 25
             }
         }
     }
     
     @IBAction func btnIntroAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
-        vc.emotionKey = "8Weeks"
-        vc.challenge_type = "8Weeks"
-        vc.value = "8Weeks"
+        vc.emotionKey = "8weeks"
+        vc.challenge_type = "8weeks"
+        vc.value = "8weeks"
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -209,13 +222,11 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 45, height: 45)
+        return CGSize(width: self.collectionBoxes.frame.size.width/7 - 3, height: self.collectionBoxes.frame.size.width/7 - 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        selectedIndex = indexPath.item
-        
+                
         if self.daysListData[indexPath.item].second_session_required{
             if check2TypePlay().0{
                 self.pushViewController(sender_Tag: check2TypePlay().1)
@@ -235,6 +246,21 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         }
         
         return (false, -1)
+    }
+    
+    @IBAction func btnContinueAction(_ sender: UIButton) {
+        self.pushViewController(sender_Tag: self.startChallengeFunc())
+    }
+    
+    //start challenge from button
+    func startChallengeFunc() -> Int{
+        for i in 0..<self.daysListData.count{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed == ""{
+                return i
+            }
+        }
+        return 0
     }
     
     func pushViewController(sender_Tag: Int){
@@ -264,18 +290,45 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         let sb = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "WWMTodaysChallengeVC") as! WWMTodaysChallengeVC
         
-        WWMHelperClass.day_type = "8Weeks"
+        WWMHelperClass.day_type = "8weeks"
         WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
         vc.week8Data = self.daysListData[sender_Tag]
-        vc.type = "8Weeks"
+        vc.type = "8weeks"
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    @IBAction func btnContinueAction(_ sender: UIButton) {
-        if check2TypePlay().0{
-            self.pushViewController(sender_Tag: check2TypePlay().1)
-        }else{
-            self.pushViewController(sender_Tag: self.selectedIndex!)
+}
+
+extension WWM8WeeksGridsViewController{
+    func retakeChallengeApi() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "user_id"  : self.appPreference.getUserID(),
+            "guided_id": "",
+            "type"     : "8weeks",
+            "action"   : "flushdata"
+            ] as [String : Any]
+        
+        //print("retakeChallenge param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                //print("retake api... \(result)")
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+                let obj = WWM30DaysChallengeVC()
+                obj.getLearnAPI1()
+            }else {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
         }
     }
 }

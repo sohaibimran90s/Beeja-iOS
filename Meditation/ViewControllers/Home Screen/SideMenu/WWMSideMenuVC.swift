@@ -151,8 +151,12 @@ class WWMSideMenuVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.popViewController(animated: false)
+        if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+            self.callHomeVC1()
+        }else{
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.popViewController(animated: false)
+        }
     }
     
     @IBAction func btnOurStoryAction(_ sender: Any) {

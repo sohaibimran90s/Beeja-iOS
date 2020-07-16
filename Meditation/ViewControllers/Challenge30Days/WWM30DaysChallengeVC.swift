@@ -37,10 +37,12 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     var daysListData: [ThirtyDaysListData] = []
     var checkExpireRetake = 0
     var lastChallengeDate = ""
-    
+    var completed30DayCount = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        appPreference.set21ChallengeName(value: "30 Day Challenge")
         self.setUpView()
     }
     
@@ -66,7 +68,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
             self.viewExpired.isHidden = true
             self.viewRetake.isHidden = true
             self.viewReminder.isHidden = false
-            self.lblMeditationCount.text = "Day \(day30Count())/30"
+            self.lblMeditationCount.text = "Day \(completed30DayCount)/30"
             self.lblMeditationCountTopConstraint.constant = 16
             self.viewCollectionViewHC.constant = 403
             self.viewMeditationDaysHC.constant = 530
@@ -126,15 +128,12 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     
     //to check if the challenge is expired or not
     func day30Count() -> Int{
-        var completed30DayCount = 0
         for index in 0..<self.daysListData.count{
             if self.daysListData[index].date_completed != ""{
                 completed30DayCount = completed30DayCount + 1
             }
-            
-            return completed30DayCount
         }
-        return 0
+        return completed30DayCount
     }
     
     //to check if to show intro button or not

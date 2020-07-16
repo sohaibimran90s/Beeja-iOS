@@ -38,7 +38,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stU-wV-hXR">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="636"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="13O-aj-xnp">
                                                 <rect key="frame" x="8" y="8" width="359" height="60"/>
@@ -64,6 +64,9 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecH-M4-mFP">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
+                                                        <connections>
+                                                            <action selector="btnExpiredClicked:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="rmH-TN-CNs"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
@@ -127,6 +130,9 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-d2-iNk">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="70"/>
+                                                        <connections>
+                                                            <action selector="btnRetakeClicked:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="WRy-il-hU9"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.20245612160000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -176,13 +182,13 @@
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="puzzleFullGrid" translatesAutoresizingMaskIntoConstraints="NO" id="1zX-hF-N74">
-                                                <rect key="frame" x="45" y="113" width="285" height="365"/>
+                                                <rect key="frame" x="45" y="113" width="285" height="348"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="1zX-hF-N74" secondAttribute="height" multiplier="32:41" id="QPX-4E-dVW"/>
+                                                    <constraint firstAttribute="height" constant="348" id="Efe-zf-XGc"/>
                                                 </constraints>
                                             </imageView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6k2-Ge-NfA">
-                                                <rect key="frame" x="45" y="113" width="285" height="365"/>
+                                                <rect key="frame" x="45" y="113" width="285" height="348"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Bnk-5b-Cv5">
                                                     <size key="itemSize" width="30" height="30"/>
@@ -247,19 +253,19 @@
                                                 </connections>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 56 days completed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5G-LG-kGL">
-                                                <rect key="frame" x="99" y="503" width="177" height="17"/>
+                                                <rect key="frame" x="99" y="486" width="177" height="17"/>
                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Psst, we’ve revealed 7 for you to ;)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESy-Ny-jbJ">
-                                                <rect key="frame" x="60.5" y="530" width="254.5" height="16"/>
+                                                <rect key="frame" x="60.5" y="513" width="254.5" height="16"/>
                                                 <fontDescription key="fontDescription" name="Maax" family="Maax" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ncd-CW-Amj">
-                                                <rect key="frame" x="104" y="571" width="167" height="40"/>
+                                                <rect key="frame" x="104" y="554" width="167" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="167" id="4DF-Ju-oSt"/>
                                                     <constraint firstAttribute="height" constant="40" id="9sl-yQ-hWJ"/>
@@ -278,7 +284,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxA-Lf-VfO">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="636"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                                                 <connections>
                                                     <action selector="btnIntroAction:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="Iwv-h6-va0"/>
                                                 </connections>
@@ -348,6 +354,7 @@
                         <outlet property="btnReminder" destination="qf4-u3-cXe" id="aIH-XJ-hld"/>
                         <outlet property="btnReminderTC" destination="Gyz-Gx-UGP" id="Ief-vM-epf"/>
                         <outlet property="collectionBoxes" destination="6k2-Ge-NfA" id="7xW-2m-Y7D"/>
+                        <outlet property="imgPuzzleTC" destination="cjP-D5-PIG" id="eGd-yA-uKu"/>
                         <outlet property="lbl7DaysRevealText" destination="ESy-Ny-jbJ" id="Dt6-hP-Bfc"/>
                         <outlet property="lblDaysCount" destination="u5G-LG-kGL" id="gqV-nJ-dud"/>
                         <outlet property="lblReminder" destination="8MI-rf-xC8" id="Xan-T6-gdd"/>
