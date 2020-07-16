@@ -16,7 +16,8 @@ class WWMJournalProgressData: NSObject {
     //Prashant
     var meditation_type = String()
     var title = String()
-    var assets_images = [WWMJournalImageData]()
+    var assets_images = [WWMJournalMediaData]()
+    var assets_audios = [WWMJournalMediaData]()
     //--------------------
     
     override init() {
@@ -31,13 +32,27 @@ class WWMJournalProgressData: NSObject {
         //Prashant
         meditation_type = json["meditation_type"] as? String ?? ""
         title = json["title"] as? String ?? ""
-        assets_images = json["assets_images"] as? [WWMJournalImageData] ?? [WWMJournalImageData]()
+        
+        if let arrImages = json["assets_images"] as? [[String:Any]]{
+            for dict in arrImages {
+                let imageData = WWMJournalMediaData.init(json: dict)
+                self.assets_images.append(imageData)
+            }
+        }
+        
+        if let arrAudios = json["assets_audios"] as? [[String:Any]]{
+            for dict in arrAudios {
+                let audioData = WWMJournalMediaData.init(json: dict)
+                self.assets_audios.append(audioData)
+            }
+        }
         //----------------------
     }
 }
 
 //Prashant
-class WWMJournalImageData: NSObject {
+//Images / Audio
+class WWMJournalMediaData: NSObject {
     var id = Int()
     var journal_id = Int()
     var caption = String()

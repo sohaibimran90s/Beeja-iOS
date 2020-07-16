@@ -55,86 +55,105 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? WWMJournalTableViewCell {
-            cell.viewShadow.layer.shadowColor = UIColor.black.cgColor
-            cell.viewShadow.layer.shadowOpacity = 0.3
-            cell.viewShadow.layer.shadowRadius = 5.0
-            cell.viewShadow.layer.cornerRadius = 5.0
-            cell.viewShadow.layer.masksToBounds = false
-            
-            let data = journalData[indexPath.row]
-            //print("journal data... \(data)")
-            
-            cell.lblJournalDesc.adjustsFontSizeToFitWidth = false
-            cell.lblJournalDesc.lineBreakMode = .byTruncatingTail
-            
-            cell.lblJournalDesc.text = data.text
-            
-            if data.mood_status.lowercased() == "post" {
-                cell.lblMeditationType.text = KPOSTMEDITATION
-            }else if data.mood_status.lowercased() == "pre" {
-                cell.lblMeditationType.text = KPREMEDITATION
-            }else if cell.lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
-                cell.lblMeditationType.text = "How to journal"
-            }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
-                cell.lblMeditationType.text = "Why Journal"
-            }else{
-                cell.lblMeditationType.text = "Journal Entry"
-            }
-            
-            //            if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
-            //                cell.lblMeditationType.text = "Why meditate"
-            //            }
-            
-            let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
-            
-            let dateFormatter = DateFormatter()
-            //dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
-            dateFormatter.locale = Locale.current
-            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
-            dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
-            
-            dateFormatter.dateFormat = "EEEE, hh:mm a" //Spegicify your format that you want
-            let strWeekDayAndtime = dateFormatter.string(from: date)
-            cell.lblWeekDayAndTime.text = strWeekDayAndtime
-            
-            dateFormatter.dateFormat = "dd"
-            
-            cell.lblDateDay.text = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "MMM"
-            cell.lblDateMonth.text = dateFormatter.string(from: date)
-            
-            return cell
-        }
         
+        //Prashant
+        let data = journalData[indexPath.row]
+        if data.assets_images.count > 0 {
+            let cellImage = tableView.dequeueReusableCell(withIdentifier: "WWMJournalImageTableViewCell") as! WWMJournalImageTableViewCell
+            cellImage.assignValues(data: data)
+            return cellImage
+        }
+        else if data.assets_audios.count > 0 {
+            let cellAudio = tableView.dequeueReusableCell(withIdentifier: "WWMJournalAudioTableViewCell") as! WWMJournalAudioTableViewCell
+            cellAudio.assignValues(data: data)
+            return cellAudio
+        }
+        //------------------------
+            
+        else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? WWMJournalTableViewCell {
+                cell.viewShadow.layer.shadowColor = UIColor.black.cgColor
+                cell.viewShadow.layer.shadowOpacity = 0.3
+                cell.viewShadow.layer.shadowRadius = 5.0
+                cell.viewShadow.layer.cornerRadius = 5.0
+                cell.viewShadow.layer.masksToBounds = false
+                
+                cell.lblJournalDesc.adjustsFontSizeToFitWidth = false
+                cell.lblJournalDesc.lineBreakMode = .byTruncatingTail
+                
+                cell.lblJournalDesc.text = data.text
+                
+                if data.mood_status.lowercased() == "post" {
+                    cell.lblMeditationType.text = KPOSTMEDITATION
+                }else if data.mood_status.lowercased() == "pre" {
+                    cell.lblMeditationType.text = KPREMEDITATION
+                }else if cell.lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
+                    cell.lblMeditationType.text = "How to journal"
+                }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+                    cell.lblMeditationType.text = "Why Journal"
+                }else{
+                    cell.lblMeditationType.text = "Journal Entry"
+                }
+                
+                let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale.current
+                dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+                dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+                
+                dateFormatter.dateFormat = "EEEE, hh:mm a" //Spegicify your format that you want
+                let strWeekDayAndtime = dateFormatter.string(from: date)
+                cell.lblWeekDayAndTime.text = strWeekDayAndtime
+                
+                dateFormatter.dateFormat = "dd"
+                
+                cell.lblDateDay.text = dateFormatter.string(from: date)
+                
+                dateFormatter.dateFormat = "MMM"
+                cell.lblDateMonth.text = dateFormatter.string(from: date)
+                
+                return cell
+            }
+        }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
-        let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
-        
-        vc.lblTitle = cell.lblMeditationType.text ?? ""
-        vc.lblDesc = cell.lblJournalDesc.text ?? ""
-        vc.lblDateDay1 = cell.lblDateDay.text ?? ""
-        vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
-        vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
+//        let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
+//
+//        vc.lblTitle = cell.lblMeditationType.text ?? ""
+//        vc.lblDesc = cell.lblJournalDesc.text ?? ""
+//        vc.lblDateDay1 = cell.lblDateDay.text ?? ""
+//        vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
+//        vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
+//
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        //Prashant
+        let data = journalData[indexPath.row]
+        if data.assets_images.count > 0 {
+            return 200
+        }
+        else if data.assets_audios.count > 0 {
+            return 160
+        }
+        else {
+            return 105
+        }
+        //------------------------------
     }
     
     
     func getJournalList() {
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        let param = ["user_id": "69801", //self.appPreference.getUserID(),
-                     "med_type" : "guided"] //self.appPreference.getType()]
+        let param = ["user_id" : self.appPreference.getUserID(),
+                     "med_type" : self.appPreference.getType()]
         
         //print("jounallist.... \(param)")
         
@@ -177,9 +196,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                     }
                     
                     self.journalData.removeAll()
-                    var journal = WWMJournalProgressData()
                     for dict in arrJournal {
-                        journal = WWMJournalProgressData.init(json: dict)
+                        let journal = WWMJournalProgressData.init(json: dict)
 //                        if let imageData = dict["assets_images"] as? [String : Any] {
 //                            journal.assets_images = WWMJournalImageData.init(json: imageData)
 //                        }
@@ -209,9 +227,8 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                     if let jsonResult = self.convertToDictionaryArray(text: dict.data ?? "") {
                         
                         self.journalData.removeAll()
-                        var journal = WWMJournalProgressData()
                         for dict in jsonResult {
-                            journal = WWMJournalProgressData.init(json: dict)
+                            let journal = WWMJournalProgressData.init(json: dict)
                             if self.journalData.count < 10 {
                                 self.journalData.append(journal)
                             }
