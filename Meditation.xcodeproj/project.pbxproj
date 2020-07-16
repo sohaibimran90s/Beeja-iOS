@@ -624,9 +624,12 @@
 		E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */; };
 		E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */; };
 		E82B462124C02592009FE325 /* JournalDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E82B462024C02592009FE325 /* JournalDetails.storyboard */; };
+		E82B462324C04A9C009FE325 /* WWMMyProgressJournalImageDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82B462224C04A9C009FE325 /* WWMMyProgressJournalImageDetailVC.swift */; };
+		E82B462524C04AB9009FE325 /* WWMMyProgressJournalAudioDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82B462424C04AB9009FE325 /* WWMMyProgressJournalAudioDetailVC.swift */; };
 		E838011724B44C3E008CDB89 /* Cell8Weeks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011524B44C3D008CDB89 /* Cell8Weeks.swift */; };
 		E838011824B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */; };
 		E838011A24B44C91008CDB89 /* 8week.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E838011924B44C90008CDB89 /* 8week.storyboard */; };
+		E86F6CFB24C0726700445D92 /* WWMJournalImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F6CFA24C0726700445D92 /* WWMJournalImagesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1293,9 +1296,12 @@
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
 		E82B462024C02592009FE325 /* JournalDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JournalDetails.storyboard; sourceTree = "<group>"; };
+		E82B462224C04A9C009FE325 /* WWMMyProgressJournalImageDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressJournalImageDetailVC.swift; sourceTree = "<group>"; };
+		E82B462424C04AB9009FE325 /* WWMMyProgressJournalAudioDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMyProgressJournalAudioDetailVC.swift; sourceTree = "<group>"; };
 		E838011524B44C3D008CDB89 /* Cell8Weeks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell8Weeks.swift; sourceTree = "<group>"; };
 		E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM8WeeksGridsViewController.swift; sourceTree = "<group>"; };
 		E838011924B44C90008CDB89 /* 8week.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = 8week.storyboard; sourceTree = "<group>"; };
+		E86F6CFA24C0726700445D92 /* WWMJournalImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJournalImagesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1557,6 +1563,9 @@
 				2EE247AF21E5D9FA00857C25 /* WWMMyProgressJournalVC.swift */,
 				2E7360E022159B1800D04EE4 /* Add Journal */,
 				613FC56C23D708EB0086280B /* WWMMyProgressJournalDetailVC.swift */,
+				E82B462224C04A9C009FE325 /* WWMMyProgressJournalImageDetailVC.swift */,
+				E82B462424C04AB9009FE325 /* WWMMyProgressJournalAudioDetailVC.swift */,
+				E86F6CFA24C0726700445D92 /* WWMJournalImagesTableViewCell.swift */,
 			);
 			path = "Progress Screen";
 			sourceTree = "<group>";
@@ -3369,6 +3378,7 @@
 				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,
 				612FB2032462B72B001DA174 /* WWM21DayChallengeTabVC.swift in Sources */,
 				61416E7222BBB37C00C9339E /* Highlight.swift in Sources */,
+				E82B462524C04AB9009FE325 /* WWMMyProgressJournalAudioDetailVC.swift in Sources */,
 				61416F5522BBB5E500C9339E /* RippleEffect.swift in Sources */,
 				2E9CCCB5225C67C5001465AD /* DBAddSession+CoreDataClass.swift in Sources */,
 				6120F13A24863BF300F790A7 /* WWM30DaysChallengeVC.swift in Sources */,
@@ -3467,6 +3477,7 @@
 				613C6F6D22DEF9E70012113B /* WWMChooseMantraListVC.swift in Sources */,
 				61416ECF22BBB45600C9339E /* XAxis.swift in Sources */,
 				2E99BAED21E38860009F0909 /* WWMLoginWithEmailVC.swift in Sources */,
+				E82B462324C04A9C009FE325 /* WWMMyProgressJournalImageDetailVC.swift in Sources */,
 				2E93D2DA21F1F1F100163E57 /* WWMMoodJournalVC.swift in Sources */,
 				2E5DF5752265BC6E00CF2935 /* WWMWisdomData.swift in Sources */,
 				615635DA24B4879500537AC2 /* DBEightWeek+CoreDataProperties.swift in Sources */,
@@ -3528,6 +3539,7 @@
 				612D929C22DDD6D400F0F477 /* WWMLearnDiscountVC.swift in Sources */,
 				61416ECB22BBB45600C9339E /* Legend.swift in Sources */,
 				61426B2522DC5E51006FE825 /* WWMPodcastListVC.swift in Sources */,
+				E86F6CFB24C0726700445D92 /* WWMJournalImagesTableViewCell.swift in Sources */,
 				2EB0865B22817069008BF6E4 /* WWMGuidedNavVC.swift in Sources */,
 				2E93D2F921F5CABE00163E57 /* WWMStringDefine.swift in Sources */,
 				61416E4922BBB29500C9339E /* IShapeRenderer.swift in Sources */,

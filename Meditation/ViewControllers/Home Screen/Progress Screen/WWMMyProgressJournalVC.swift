@@ -121,16 +121,53 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
-//        let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
-//
-//        vc.lblTitle = cell.lblMeditationType.text ?? ""
-//        vc.lblDesc = cell.lblJournalDesc.text ?? ""
-//        vc.lblDateDay1 = cell.lblDateDay.text ?? ""
-//        vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
-//        vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
-//
-//        self.navigationController?.pushViewController(vc, animated: true)
+        //Prashant
+        //1. text only
+        let data = journalData[indexPath.row]
+        if data.assets_images.count == 0 && data.assets_audios.count == 0 {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
+            let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
+
+            vc.lblTitle = cell.lblMeditationType.text ?? ""
+            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDateDay1 = cell.lblDateDay.text ?? ""
+            vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
+            vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
+
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if data.assets_images.count > 0 {
+            //2. image and text
+            let story = UIStoryboard.init(name: "JournalDetails", bundle: nil)
+            let vc = story.instantiateViewController(withIdentifier: "WWMMyProgressJournalImageDetailVC") as! WWMMyProgressJournalImageDetailVC
+            let cell = tableView.cellForRow(at: indexPath) as! WWMJournalImageTableViewCell
+            
+            vc.lblTitle = cell.lblMeditationType.text ?? ""
+            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDateDay1 = cell.lblDateDay.text ?? ""
+            vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
+            vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
+            vc.arrImages = data.assets_images
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if data.assets_audios.count > 0 {
+            //3. audio and text
+            let story = UIStoryboard.init(name: "JournalDetails", bundle: nil)
+            let vc = story.instantiateViewController(withIdentifier: "WWMMyProgressJournalAudioDetailVC") as! WWMMyProgressJournalAudioDetailVC
+            let cell = tableView.cellForRow(at: indexPath) as! WWMJournalAudioTableViewCell
+            
+            vc.lblTitle = cell.lblMeditationType.text ?? ""
+            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDateDay1 = cell.lblDateDay.text ?? ""
+            vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
+            vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
+            vc.arrAudio = data.assets_audios
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        //--------------------------
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
