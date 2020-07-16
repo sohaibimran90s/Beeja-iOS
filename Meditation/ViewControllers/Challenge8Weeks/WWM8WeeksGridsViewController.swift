@@ -144,7 +144,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     }
     
     @IBAction func btnIntroAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.emotionKey = "8weeks"
         vc.challenge_type = "8weeks"

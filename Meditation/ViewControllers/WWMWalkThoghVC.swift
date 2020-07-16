@@ -911,23 +911,35 @@ extension WWMWalkThoghVC{
                 
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
-                    self.appPreference.set21ChallengeName(value: "30 Day Challenge")
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    if self.value == "30days"{
+                        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+                        self.callHomeVC1()
+                    }
+                    
                 }else{
                    self.callHomeVC(index: 2)
                 }
                 return
+            }else{
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
+                    if self.value == "30days"{
+                        self.appPreference.set21ChallengeName(value: "30 Day Challenge")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+                        self.callHomeVC1()
+                    }
+                }else{
+                   self.callHomeVC(index: 2)
+                }
             }
         }
-        
         WWMHelperClass.hideLoaderAnimate(on: self.view)
-        if self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"{
-            self.appPreference.set21ChallengeName(value: "30 Day Challenge")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM30DaysGearUpVC") as! WWM30DaysGearUpVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-           self.callHomeVC(index: 2)
-        }
     }
 }

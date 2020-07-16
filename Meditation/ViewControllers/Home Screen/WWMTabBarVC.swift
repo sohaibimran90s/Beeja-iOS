@@ -45,13 +45,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.updateDiskStatus()
-        
+                
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        
         let navigationVCCommunity = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCCommunity") as! UINavigationController//
         let navigationVCProgress = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCProgress") as! UINavigationController//
         let navigationVCWisdom = storyBoard.instantiateViewController(withIdentifier: "WWMNavigationVCWisdom") as! UINavigationController//
@@ -100,18 +97,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         if !reachable.isConnectedToNetwork() {
             if self.appPreffrence.isLogout() {
-                
-                var userData = WWMUserData()
-                userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-                print(userData)
-                
                 let userData1 = self.appPreffrence.getUserData()
-            
                 self.lat = userData1["latitude"] as? String ?? ""
                 self.long = userData1["longitude"] as? String ?? ""
                 self.city = userData1["city"] as? String ?? ""
                 self.country = userData1["country"] as? String ?? ""
-                
                 self.getUserProfileData(lat: self.lat, long: self.long)
             }else {
                 self.connectionLost()
@@ -121,8 +111,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             locManager.desiredAccuracy = kCLLocationAccuracyBest
             locManager.requestWhenInUseAuthorization()
             locManager.startUpdatingLocation()
-            
-            
             
             if CLLocationManager.locationServicesEnabled() {
                 switch CLLocationManager.authorizationStatus() {
@@ -141,7 +129,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             }
         }
     }
-    
     
     func setupTabBarSeparators() {
         let itemWidth = floor(self.tabBar.frame.size.width / CGFloat(self.tabBar.items!.count))
@@ -201,30 +188,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 guard let placeMark = placemarks?.first else {
                     if self.appPreffrence.isLogout() {
                         
-                        var userData = WWMUserData()
-                        userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-                        //print(userData)
-                        
                         let userData1 = self.appPreffrence.getUserData()
-                        
-//                        self.lat = userData.latitude
-//                        self.long = userData.longitude
-//                        self.city = userData.city
-//                        self.country = userData.country
-                        
                         self.lat = userData1["latitude"] as? String ?? ""
                         self.long = userData1["longitude"] as? String ?? ""
                         self.city = userData1["city"] as? String ?? ""
                         self.country = userData1["country"] as? String ?? ""
-                        
-                        
-                        //print("lat.. \(self.lat) long... \(self.long) city.. \(self.city) country... \(self.country)")
                     }
-                    
                     self.getUserProfileData(lat: self.lat, long: self.long)
                     return
                 }
-                
                 
                 // Location name
                 if let locationName = placeMark.location {
@@ -1749,15 +1721,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if success {
                             
                             WWMHelperClass.hideLoaderAnimate(on: self.view)
-                            
-                            var userData = WWMUserData.sharedInstance
-                            userData = WWMUserData.init(json: result["user_profile"] as! [String : Any])
-                            
-                            print("user_id****** \(self.appPreffrence.getUserID())")
+                            print("user_id****** \(self.appPreffrence.getUserID()) result***** \(result)")
                             
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
-                            
                             self.appPreffrence.setGetProfile(value: false)
                             self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
                             self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
@@ -1766,7 +1733,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                             self.appPreffrence.setOffers(value: result["offers"] as! [String])
-                            
                             
                             if let userProfile = result["user_profile"] as? [String : Any]{
                                 //setEmail
@@ -1782,9 +1748,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             }
                             
                             self.appPreffrence.setSessionAvailableData(value: result["session_available"] as? Bool ?? false)
-                            
-                            //print("getPreMoodBool.... \(self.appPreffrence.getPrePostJournalBool()) userSubscription.expiry_date... \(userSubscription.expiry_date) self.appPreffrence.getIsSubscribedBool... \(self.appPreffrence.getIsSubscribedBool())")
-                            
                             self.appPreffrence.SetExpireDateBackend(value: userSubscription.expiry_date)
                             self.appPreffrence.setSubscriptionPlan(value: userSubscription.subscription_plan)
                             self.appPreffrence.setSubscriptionId(value: "\(userSubscription.subscription_id)")
@@ -1866,7 +1829,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                             }
                                         }
                                     }
-                                    
                                 }
                             }else{
                                 self.appPreffrence.setExpiryDate(value: true)
@@ -1936,7 +1898,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }
     }
     
-    
     func receiptValidation() {
         let appsToreUrlString = kURL_INAPPS_RECEIPT
         let receiptUrl = Bundle.main.appStoreReceiptURL
@@ -1953,7 +1914,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 let dataTask = session.dataTask(with: request as URLRequest) { (data, response, err) in
                     if data != nil{
                         let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-                        print(json ?? "")
+                        //print(json ?? "")
                         
                         if json != nil{
                             if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
@@ -2104,7 +2065,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         if self.appPreffrence.isLogout() {
             var userData = WWMUserData.sharedInstance
             userData = WWMUserData.init(json: self.appPreffrence.getUserData())
-            print(userData)
+            //print(userData)
             let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
             if data.count > 0 {
                 NotificationCenter.default.post(name: NSNotification.Name.init("GETSettingData"), object: nil)
@@ -2198,16 +2159,6 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()
         })
-    }
-    
-    // MARK: update disk space status
-    func updateDiskStatus() {
-         
-        let usedSpace = String(format:NSLocalizedString("Used %@", comment: ""), DiskStatus.usedDiskSpace)
-        let freeSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.freeDiskSpace)
-        let totalSpace = String(format:NSLocalizedString("Free %@", comment: ""), DiskStatus.totalDiskSpace)
-        
-        //print("usedSpace... \(usedSpace) freeSpace... \(freeSpace) totalSpace... \(totalSpace) ramSpace... \(ProcessInfo.processInfo.physicalMemory/1073741824)")
     }
 }
 
