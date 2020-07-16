@@ -4101,7 +4101,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Report" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fX-OA-bC4">
-                                                            <rect key="frame" x="107" y="35" width="106.5" height="23.5"/>
+                                                            <rect key="frame" x="104.5" y="35" width="111" height="25"/>
                                                             <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -4110,7 +4110,7 @@
                                                             </variation>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nzh-U7-3pG">
-                                                            <rect key="frame" x="80" y="58.5" width="160" height="30"/>
+                                                            <rect key="frame" x="80" y="60" width="160" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="BuL-LT-KzP"/>
                                                                 <constraint firstAttribute="width" constant="160" id="cXZ-7a-XY7"/>
@@ -4194,7 +4194,7 @@
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="84.5" height="40"/>
                                                                                                         <subviews>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBn-gZ-nOY" customClass="EFCountingLabel" customModule="EFCountingLabel">
-                                                                                                                <rect key="frame" x="43.5" y="10.5" width="18" height="19"/>
+                                                                                                                <rect key="frame" x="42.5" y="12" width="19.5" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4203,7 +4203,7 @@
                                                                                                                 </variation>
                                                                                                             </label>
                                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7CM-qJ-TIJ">
-                                                                                                                <rect key="frame" x="23.5" y="15" width="10" height="10"/>
+                                                                                                                <rect key="frame" x="22.5" y="15" width="10" height="10"/>
                                                                                                                 <color key="backgroundColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="width" constant="10" id="7hZ-hV-7oo"/>
@@ -4216,7 +4216,7 @@
                                                                                                                 </userDefinedRuntimeAttributes>
                                                                                                             </view>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OUE-xH-hv4">
-                                                                                                                <rect key="frame" x="61.5" y="10.5" width="16" height="19"/>
+                                                                                                                <rect key="frame" x="62" y="12" width="12" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4240,7 +4240,7 @@
                                                                                                         <rect key="frame" x="84.5" y="0.0" width="84.5" height="40"/>
                                                                                                         <subviews>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuP-Mz-qQz" customClass="EFCountingLabel" customModule="EFCountingLabel">
-                                                                                                                <rect key="frame" x="43.5" y="10.5" width="18" height="19"/>
+                                                                                                                <rect key="frame" x="42.5" y="12" width="19.5" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4249,7 +4249,7 @@
                                                                                                                 </variation>
                                                                                                             </label>
                                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aKv-z1-kcm">
-                                                                                                                <rect key="frame" x="23.5" y="15" width="10" height="10"/>
+                                                                                                                <rect key="frame" x="22.5" y="15" width="10" height="10"/>
                                                                                                                 <color key="backgroundColor" red="1" green="0.75294117650000003" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="height" constant="10" id="nxn-Td-KF3"/>
@@ -4262,7 +4262,7 @@
                                                                                                                 </userDefinedRuntimeAttributes>
                                                                                                             </view>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ha-X6-Dz4">
-                                                                                                                <rect key="frame" x="61.5" y="10.5" width="16" height="19"/>
+                                                                                                                <rect key="frame" x="62" y="12" width="12" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4286,7 +4286,7 @@
                                                                                                         <rect key="frame" x="169" y="0.0" width="84.5" height="40"/>
                                                                                                         <subviews>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOq-b6-hgh" customClass="EFCountingLabel" customModule="EFCountingLabel">
-                                                                                                                <rect key="frame" x="43.5" y="10.5" width="18" height="19"/>
+                                                                                                                <rect key="frame" x="42.5" y="12" width="19.5" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4295,7 +4295,7 @@
                                                                                                                 </variation>
                                                                                                             </label>
                                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ir0-AB-Q7B">
-                                                                                                                <rect key="frame" x="23.5" y="15" width="10" height="10"/>
+                                                                                                                <rect key="frame" x="22.5" y="15" width="10" height="10"/>
                                                                                                                 <color key="backgroundColor" red="0.15686274510000001" green="0.30196078430000001" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="width" constant="10" id="Dn8-Pp-erk"/>
@@ -4308,7 +4308,7 @@
                                                                                                                 </userDefinedRuntimeAttributes>
                                                                                                             </view>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unJ-r8-X0s">
-                                                                                                                <rect key="frame" x="61.5" y="10.5" width="16" height="19"/>
+                                                                                                                <rect key="frame" x="62" y="12" width="12" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4332,7 +4332,7 @@
                                                                                                         <rect key="frame" x="253.5" y="0.0" width="84.5" height="40"/>
                                                                                                         <subviews>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nu-KS-iK3" customClass="EFCountingLabel" customModule="EFCountingLabel">
-                                                                                                                <rect key="frame" x="43.5" y="10.5" width="18" height="19"/>
+                                                                                                                <rect key="frame" x="42.5" y="12" width="19.5" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -4341,7 +4341,7 @@
                                                                                                                 </variation>
                                                                                                             </label>
                                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9eG-tF-WLB">
-                                                                                                                <rect key="frame" x="23.5" y="15" width="10" height="10"/>
+                                                                                                                <rect key="frame" x="22.5" y="15" width="10" height="10"/>
                                                                                                                 <color key="backgroundColor" red="0.85882352939999995" green="0.2156862745" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="width" constant="10" id="0qu-ao-Vnv"/>
@@ -4354,7 +4354,7 @@
                                                                                                                 </userDefinedRuntimeAttributes>
                                                                                                             </view>
                                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S4F-Wo-kgw" customClass="EFCountingLabel" customModule="EFCountingLabel">
-                                                                                                                <rect key="frame" x="61.5" y="10.5" width="16" height="19"/>
+                                                                                                                <rect key="frame" x="62" y="12" width="12" height="16"/>
                                                                                                                 <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                 <nil key="highlightedColor"/>
@@ -9617,7 +9617,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_LoginBack" translatesAutoresizingMaskIntoConstraints="NO" id="P9b-Ow-8gW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="P9b-Ow-8gW">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6F-7J-Akn">
@@ -20691,7 +20691,6 @@ Take a moment to tune in and relax.</string>
         <image name="Background_AudioGuide" width="375" height="667"/>
         <image name="Background_LetsStart" width="270" height="480"/>
         <image name="Background_LevelType" width="270" height="480"/>
-        <image name="Background_LoginBack" width="375" height="667"/>
         <image name="Background_LoginEmail" width="270" height="480"/>
         <image name="Background_OKBlue" width="375" height="667"/>
         <image name="Background_Setting" width="375" height="667"/>
