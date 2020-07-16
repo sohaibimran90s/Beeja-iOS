@@ -3,7 +3,7 @@
 //  Meditation
 //
 //  Created by Ehsan on 16/5/20.
-//  Copyright © 2020 Cedita. All rights reserved.
+//  Copyright © 2020 Ehsan. All rights reserved.
 //
 
 import UIKit

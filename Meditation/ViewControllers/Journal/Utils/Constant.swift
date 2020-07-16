@@ -21,5 +21,21 @@ class Constant: NSObject {
     NSAttributedString.Key.underlineColor:Light_Green,
     NSAttributedString.Key.underlineStyle : 1] as [NSAttributedString.Key : Any]
     
+    
+    static let FILENAME = "myRecording.m4a"
+    
+    static let kNotificationInAudioJournal = "StopAudioEngineAndRecorderInAudioJournal"
+    static let kNotificationInAudioToTextJournal = "StopAudioEngineAndSpeechRecognizerInAudioToTextJournal"
+
+    
+    
+    struct JournalType {
+        static let TEXT: String = "text"
+        static let IMAGE:String = "image"
+        static let VOICE:String = "audio"
+        static let VOICE_TO_TEXT:String = "voiceToText"
+    }
+
+
 }
 

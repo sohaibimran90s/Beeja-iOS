@@ -81,6 +81,10 @@
 	<string> We use your location to improve your Beeja app experience and to let you know about events taking place near you.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Please allow access to Camera and Gallery to upload images to Community #meditateanywhere</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your microphone will be used to record your speech when you press the &quot;Start Recording&quot; button.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

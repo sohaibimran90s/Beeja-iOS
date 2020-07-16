@@ -21,7 +21,7 @@ class RequestBody: NSObject {
 //    "journal_type":"text from audio"
 //
     
-    static func addJournalBody(appPreference: WWMAppPreference, title: String, textDescrip: String) -> Any
+    static func addJournalBody(appPreference: WWMAppPreference, title: String, textDescrip: String, type: String) -> Any
     {
         let jsonBody = ["user_id":appPreference.getUserID(),
                         "tell_us_why":textDescrip,
@@ -31,7 +31,7 @@ class RequestBody: NSObject {
                         "mood_text":"",
                         "mood_id":"",
                         "med_type": appPreference.getType(),
-                        "journal_type":"textEntry",
+                        "journal_type": type,
                         ] as [String : Any];
         
         return jsonBody;
@@ -48,7 +48,7 @@ class RequestBody: NSObject {
     }
     
     static func meditationCompleteBody(appPreference: WWMAppPreference, title: String,
-                                       textDescrip: String, medCompObj: MeditationComplete) -> Any
+                                       textDescrip: String, medCompObj: MeditationComplete, type: String) -> Any
     {
         let jsonBody = [
                         "type": appPreference.getType(),
@@ -76,7 +76,7 @@ class RequestBody: NSObject {
                             "is_complete": 0,
                             "mantra_id": "1",
                             "duration": 0,
-                        "journal_type": "textEntry"
+                        "journal_type": type
                         ] as [String : Any];
         
         return jsonBody;

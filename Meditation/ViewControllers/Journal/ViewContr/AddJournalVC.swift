@@ -43,18 +43,26 @@ class AddJournalVC: UIViewController {
     @IBOutlet weak var imageBtn: UIButton!
     @IBOutlet weak var voiceBtn: UIButton!
     @IBOutlet weak var voiceToTextBtn: UIButton!
-    
+    @IBOutlet weak var logExprnctBtn: UIButton!
+
     @IBOutlet weak var textContainerView: UIView!
     @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var audioContainerView: UIView!
+    @IBOutlet weak var audioToTextContainerView: UIView!
 
     
-    var kPurchasedAlready = false
     var textContainerVC: TextContainerVC?
     var imageContainerVC: ImageContainerVC?
+    var audioContainerVC: AudioContainerVC?
+    var audioToTextContainerVC: AudioToTextContainerVC?
+
     var selectedJournalOpt: JournalOption?
     let appPreference = WWMAppPreference()
     var isAddJournal = false
     
+    //var kPurchasedAlready = false
+    let kDataManager = DataManager.sharedInstance
+
     //=========== for API call Meditation complete
     var mediCompleteObj = MeditationComplete()
     
@@ -83,13 +91,23 @@ class AddJournalVC: UIViewController {
         
         textBtn.isSelected = true
         imageContainerView.isHidden = true
-        
+        audioContainerView.isHidden = true
+        audioToTextContainerView.isHidden = true
+
         self.selectedJournalOpt = JournalOption.TextEntry
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false);
+        
+        
+        voiceBtn.setImage(UIImage(named: (kDataManager.isPaidAc) ? "VoiceDisabled.png" : "VoiceLockedDis.png"), for: UIControl.State.normal)
+        voiceToTextBtn.setImage(UIImage(named: (kDataManager.isPaidAc) ? "VoicetoTextDisabled.png" : "VoicetoTextLockedDis.png"), for: UIControl.State.normal)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+    }
+
     @objc func closeButtonAction() {
         if (self.isAddJournal) {
             self.dismiss(animated: false, completion: nil)
@@ -134,27 +152,110 @@ class AddJournalVC: UIViewController {
             voiceToTextBtn.isSelected = false
             textContainerView.isHidden = false
             imageContainerView.isHidden = true
+            audioContainerView.isHidden = true
+            audioToTextContainerView.isHidden = true
+            self.checkForPaidAccount()//New
+            
         case .ImageEntry:
             textBtn.isSelected = false
             imageBtn.isSelected = true
             voiceBtn.isSelected = false
             voiceToTextBtn.isSelected = false
             textContainerView.isHidden = true
+            audioContainerView.isHidden = true
+            audioToTextContainerView.isHidden = true
             imageContainerView.isHidden = false
+            self.checkForPaidAccount()//New
+            
         case .AudioEntry:
             textBtn.isSelected = false
             imageBtn.isSelected = false
             voiceBtn.isSelected = true
             voiceToTextBtn.isSelected = false
+            textContainerView.isHidden = true
+            imageContainerView.isHidden = true
+            audioContainerView.isHidden = false
+            audioToTextContainerView.isHidden = true
+            self.checkForPaidAccount()//New
+            
         case .AudioToTextEntry:
             textBtn.isSelected = false
             imageBtn.isSelected = false
             voiceBtn.isSelected = false
             voiceToTextBtn.isSelected = true
+            textContainerView.isHidden = true
+            imageContainerView.isHidden = true
+            audioContainerView.isHidden = true
+            audioToTextContainerView.isHidden = false
+            self.checkForPaidAccount()//New
+            
         default:
             print("default")
         }
+        
+        NotificationCenter.default.post(name: Notification.Name(Constant.kNotificationInAudioJournal), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(Constant.kNotificationInAudioToTextJournal), object: nil)
     }
+
+    func checkForPaidAccount() { //New
+        
+        var logBtnTitle = ""
+        let journal = self.selectedJournalOpt
+        switch journal {
+        case .TextEntry:
+            logBtnTitle = "Log Experience"
+
+        case .ImageEntry:
+            logBtnTitle = "Log Experience"
+
+        case .AudioEntry:
+            self.voiceBtnUpdate()
+            self.voiceToTextBtnUpdate()
+            logBtnTitle = (kDataManager.isPaidAc) ? "Log Experience" : "Upgrade to Premium"
+            self.audioContainerVC?.updateAudioView()
+
+        case .AudioToTextEntry:
+            self.voiceToTextBtnUpdate()
+            self.voiceBtnUpdate()
+            logBtnTitle = (kDataManager.isPaidAc) ? "Log Experience" : "Upgrade to Premium"
+            self.audioToTextContainerVC?.updateAudioToTextView()
+            
+        default:
+            print("default")
+        }
+        
+        logExprnctBtn.setTitle(logBtnTitle, for: UIControl.State.normal)
+    }
+
+    func voiceBtnUpdate() {
+        let selectedBtnImg = (kDataManager.isPaidAc) ? "Voice.png" : "VoiceLockedEn.png"
+        voiceBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)//New
+        
+        let normalBtnImg = (kDataManager.isPaidAc) ? "VoiceDisabled.png" : "VoiceLockedDis.png"
+        voiceBtn.setImage(UIImage(named: normalBtnImg), for: UIControl.State.normal)
+    }
+    
+    func voiceToTextBtnUpdate() {
+        let selectedBtnImg = (kDataManager.isPaidAc) ? "VoicetoText.png" : "VoicetoTextLockedEn.png"
+        voiceToTextBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)//New
+        
+        let normalBtnImg = (kDataManager.isPaidAc) ? "VoicetoTextDisabled.png" : "VoicetoTextLockedDis.png"
+        voiceToTextBtn.setImage(UIImage(named: normalBtnImg), for: UIControl.State.normal)
+    }
+    
+    func upgradeToPremium() {
+        Alert.alertWithTwoButton(title: "Warnning", message: "Purchase For this section.", btn1: "Cancel",
+                                 btn2: "Buy", container: self, completion: { (alertController, index) in
+                                    
+                                    if (index == 1) {
+                                        self.kDataManager.isPaidAc = true
+                                        self.audioContainerVC?.purchasedUpdate()
+                                        self.audioToTextContainerVC?.purchasedUpdate()
+                                        self.checkForPaidAccount()
+                                    }
+        })
+    }
+
     
     @IBAction func logExperienceAction(sender: UIButton) {
                 
@@ -166,12 +267,29 @@ class AddJournalVC: UIViewController {
         case .ImageEntry:
             self.imageJournalLog()
 
-        //case .AudioEntry:
-        //case .AudioToTextEntry:
+        case .AudioEntry:
+            if (kDataManager.isPaidAc){
+                self.audioJournalLog()
+            }
+            else {
+                //self.upgradeToPremium()
+                Utilities.paymentController(container: self)
+            }
+            
+        case .AudioToTextEntry:
+            if (kDataManager.isPaidAc){
+                self.audioToTextJournalLog()
+            }
+            else {
+                //self.upgradeToPremium()
+                Utilities.paymentController(container: self)
+            }
+
         default:
             print("default")
         }
     }
+
     
     func errorAlert(title: String, msg: String) {
         Alert.alertWithOneButton(title: title, message: msg, container: self) { (alert, index) in
@@ -186,11 +304,12 @@ class AddJournalVC: UIViewController {
         var jsonBody: Any = ""
         if (self.isAddJournal) {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-                                                  textDescrip: textJournal.textDescription ?? "")
+                                                  textDescrip: textJournal.textDescription ?? "",
+                                                  type: Constant.JournalType.TEXT)
         }
         else {
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj)
+                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -230,8 +349,8 @@ class AddJournalVC: UIViewController {
             imgDataArray.append(imageData)
         }
         
-        let jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: "image")
-        DataManager.sharedInstance.uploadImages(imageDataArray: imgDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
+        let jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: Constant.JournalType.IMAGE)
+        DataManager.sharedInstance.uploadAssets(imageDataArray: imgDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
 
@@ -259,11 +378,13 @@ class AddJournalVC: UIViewController {
         var jsonBody: Any = ""
         if (self.isAddJournal) {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
-                                                      title: "", textDescrip: imageJournal.title ?? "")
+                                                      title: "", textDescrip: imageJournal.title ?? "",
+                                                      type: Constant.JournalType.IMAGE)
         }
         else {
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
-                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj)
+                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj,
+                                                          type: Constant.JournalType.IMAGE)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -290,7 +411,7 @@ class AddJournalVC: UIViewController {
             imgDataArray.append(imageData)
         }
         
-        var jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: "image")
+        var jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: Constant.JournalType.IMAGE)
         
         var index = 1
         for img in imgObjArray {    // add all captions in json body. Though its not fixed so we need to run loop to add it.
@@ -299,12 +420,84 @@ class AddJournalVC: UIViewController {
             index += 1
         }
         
-        DataManager.sharedInstance.uploadImages(imageDataArray: imgDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
+        DataManager.sharedInstance.uploadAssets(imageDataArray: imgDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
             
             WWMHelperClass.hideLoaderAnimate(on: self.view)
 
             if (isSuccess) {
-                self.dismiss(animated: false, completion: nil)
+                if (self.isAddJournal){
+                    self.dismiss(animated: false, completion: nil)
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
+            }
+            else {
+               self.errorAlert(title: "", msg: errorMsg)
+            }
+        }
+    }
+
+
+    //MARK: API Call AudioJournal
+    func audioJournalLog() {
+        
+        guard let audioJournal = self.audioContainerVC?.audioJournalExperienceLog() else {return}
+        
+        var jsonBody: Any = ""
+        if (self.isAddJournal) {
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
+                                                  title: "",
+                                                  textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
+        }
+        else {
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
+                                                          title: "",
+                                                          textDescrip: audioJournal.caption ?? "",
+                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE)
+        }
+
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+            
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            if (isSuccess) {
+                self.uploadAudioAssets(journalId: journalId, audioJournalObj: audioJournal)
+            }
+            else {
+                self.errorAlert(title: "Error!", msg: error)
+            }
+        }
+    }
+    
+    func uploadAudioAssets(journalId: Int, audioJournalObj: AudioJournal) {
+        
+        guard let fileUrl = audioJournalObj.audioFilePath else {return}
+        var audioDataArray: [Data] = []
+
+        do {
+            let audioData = try Data(contentsOf:fileUrl, options: [.alwaysMapped , .uncached ] )
+            audioDataArray.append(audioData)
+        }
+        catch {
+            print(error)
+            return
+        }
+        
+        var jsonBody = RequestBody.journalAssetsBody(journalId: journalId, type: Constant.JournalType.VOICE)
+        jsonBody["caption"] = audioJournalObj.caption as AnyObject?
+        
+        DataManager.sharedInstance.uploadAssets(imageDataArray: audioDataArray, parameter: jsonBody) { (isSuccess, errorMsg) in
+            
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+
+            if (isSuccess) {
+                if (self.isAddJournal){
+                    self.dismiss(animated: false, completion: nil)
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
             }
             else {
                self.errorAlert(title: "", msg: errorMsg)
@@ -314,8 +507,45 @@ class AddJournalVC: UIViewController {
 
 
         
+//MARK: API Call AudioToTextJournal
+    func audioToTextJournalLog() {
+        
+        guard let audioToTextJournal = self.audioToTextContainerVC?.audioToTextJournalExperienceLog() else {return}
 
-    
+        var jsonBody: Any = ""
+        if (self.isAddJournal) {
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
+                                                  title: audioToTextJournal.caption ?? "",
+                                                  textDescrip: audioToTextJournal.transcribingText ?? "",
+                                                  type: Constant.JournalType.VOICE_TO_TEXT)
+        }
+        else {
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
+                                                          title: audioToTextJournal.caption ?? "",
+                                                          textDescrip: audioToTextJournal.transcribingText ?? "",
+                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE_TO_TEXT)
+        }
+
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+            
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            if (isSuccess) {
+                if (self.isAddJournal){
+                    self.dismiss(animated: false, completion: nil)
+                }
+                else {
+                    self.navigationController!.popToRootViewController(animated: true)
+                }
+            }
+            else {
+                self.errorAlert(title: "Error!", msg: error)
+            }
+        }
+    }
+
+
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == "TextEntryIdentifier" {
@@ -328,6 +558,19 @@ class AddJournalVC: UIViewController {
                 self.imageContainerVC = viewController2
             }
         }
+        else if segue.identifier == "AudioEntryIdentifier" {
+            if let viewController2 = segue.destination as? AudioContainerVC {
+                self.audioContainerVC = viewController2
+            }
+        }
+        else if segue.identifier == "AudioToTextEntryIdentifier" {
+            if let viewController2 = segue.destination as? AudioToTextContainerVC {
+                self.audioToTextContainerVC = viewController2
+            }
+        }
+
+        
+
     }
    
     //Prashant
