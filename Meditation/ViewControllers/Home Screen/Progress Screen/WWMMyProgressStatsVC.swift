@@ -36,6 +36,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     @IBOutlet weak var viewDays: UICircularProgressRing!
     @IBOutlet weak var viewSomeGoals: UIView!
     @IBOutlet weak var view8Week: UIView!
+    @IBOutlet weak var lbl8Count: UILabel!
     @IBOutlet weak var view21Header: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
@@ -90,7 +91,6 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
 
     var challType = "Practical"
     var itemInfo: IndicatorInfo = "View"
-    var array1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -944,17 +944,50 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 }else if (self.appPreference.getType() == "learn" || self.appPreference.getType() == "Learn"){
                     
                     if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
-                        self.viewChallenge21Days.isHidden = true
-                        self.viewChallenge21DaysHeightConstraint.constant = 0
-                        self.btnChallenge21Days.isHidden = true
-                        self.viewSuperChallenge21Days.isHidden = false
-                        self.constraintSuperView21Days.constant = 80
-                        self.calenderTopConstraint.constant = 0
-                        self.stackViewPraSpiritual.isHidden = true
-                        self.constraint21DaysHeader.constant = 0
-                        self.lbl21DaysTitle.text = ""
-                        self.view8Week.isHidden = false
-                        self.imgBg21Days.isHidden = true
+                        
+                        if self.statsData.week8Challenge.count > 0{
+                            let data = self.statsData.week8Challenge[0]
+                            if data.total_complete_count > 0{
+                                self.viewChallenge21Days.isHidden = true
+                                self.viewChallenge21DaysHeightConstraint.constant = 0
+                                self.btnChallenge21Days.isHidden = true
+                                self.viewSuperChallenge21Days.isHidden = false
+                                self.constraintSuperView21Days.constant = 86
+                                self.calenderTopConstraint.constant = 0
+                                self.stackViewPraSpiritual.isHidden = true
+                                self.constraint21DaysHeader.constant = 0
+                                self.lbl21DaysTitle.text = ""
+                                self.view8Week.isHidden = false
+                                self.imgBg21Days.isHidden = true
+                                
+                                var myMutableString = NSMutableAttributedString()
+                                let lblText = "8 Week Challenge: \(data.total_complete_count) days completed You're off to a great start so dive back in"
+                                myMutableString = NSMutableAttributedString(string: lblText, attributes: [NSAttributedString.Key.font:UIFont(name: "Maax-Bold", size: 13.0)!])
+                                myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(hexString: "#F0A367")!, range: NSRange(location:0,length:18))
+                                // set label Attribute
+                                self.lbl8Count.attributedText = myMutableString
+                            }else{
+                                self.viewChallenge21Days.isHidden = true
+                                self.viewChallenge21DaysHeightConstraint.constant = 0
+                                self.btnChallenge21Days.isHidden = true
+                                self.viewSuperChallenge21Days.isHidden = true
+                                self.constraintSuperView21Days.constant = 0
+                                self.calenderTopConstraint.constant = 0
+                                self.stackViewPraSpiritual.isHidden = false
+                                self.constraint21DaysHeader.constant = 110
+                                self.lbl21DaysTitle.text = ""
+                            }
+                        }else{
+                            self.viewChallenge21Days.isHidden = true
+                            self.viewChallenge21DaysHeightConstraint.constant = 0
+                            self.btnChallenge21Days.isHidden = true
+                            self.viewSuperChallenge21Days.isHidden = true
+                            self.constraintSuperView21Days.constant = 0
+                            self.calenderTopConstraint.constant = 0
+                            self.stackViewPraSpiritual.isHidden = false
+                            self.constraint21DaysHeader.constant = 110
+                            self.lbl21DaysTitle.text = ""
+                        }
                     }else if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
                         if self.statsData.days30Challenge.count > 0{
                             

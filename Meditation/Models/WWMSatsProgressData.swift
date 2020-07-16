@@ -20,6 +20,7 @@ class WWMSatsProgressData: NSObject {
     var days21PracticalChallenge = [WWMSatsProgress21DaysChallengeData]()
     var days21SpiritualChallenge = [WWMSatsProgress21DaysChallengeData]()
     var days30Challenge = [WWMSatsProgress30Days]()
+    var week8Challenge = [StatsProgress8Week]()
     
     override init() {
         cons_days = 0
@@ -74,6 +75,12 @@ class WWMSatsProgressData: NSObject {
                 let days30Data = WWMSatsProgress30Days.init(json: dict)
                 days30Challenge.append(days30Data)
             }
+        }
+        
+        //8 Weeks
+        if let week_8 = json["8_weeks_challenge"] as? [String:Any]{
+            let week8Data = StatsProgress8Week.init(json: week_8)
+            week8Challenge.append(week8Data)
         }
     }
 }
@@ -135,6 +142,20 @@ class WWMSatsProgress30Days: NSObject {
         day_id = json["day_id"] as? Int ?? 1
         is_milestone = json["is_milestone"] as? Bool ?? false
         completed = json["completed"] as? Bool ?? false
+    }
+}
+
+class StatsProgress8Week: NSObject {
+    
+    var completed_date = ""
+    var total_complete_count = 0
+    
+    override init() {
+    }
+    
+    init(json:[String:Any]) {
+        completed_date = json["completed_date"] as? String ?? ""
+        total_complete_count = json["total_complete_count"] as? Int ?? 1
     }
 }
 

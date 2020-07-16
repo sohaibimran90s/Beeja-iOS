@@ -96,6 +96,16 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         }
     }
     
+    //MARK: Challenge Expired button
+    @IBAction func btnExpiredClicked(_ sender: UIButton){
+        self.retakeChallengeApi()
+    }
+    
+    //MARK: Challenge Retake button
+    @IBAction func btnRetakeClicked(_ sender: UIButton){
+        self.retakeChallengeApi()
+    }
+    
     //to check if the challenge is expired or not
     func week8Count() -> Int{
         
@@ -274,6 +284,41 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.pushViewController(sender_Tag: check2TypePlay().1)
         }else{
             self.pushViewController(sender_Tag: self.selectedIndex!)
+        }
+    }
+}
+
+extension WWM8WeeksGridsViewController{
+    func retakeChallengeApi() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        let param = [
+            "user_id"  : self.appPreference.getUserID(),
+            "guided_id": "",
+            "type"     : "8weeks",
+            "action"   : "flushdata"
+            ] as [String : Any]
+        
+        //print("retakeChallenge param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_RETAKE, context: "WWM21DayChallengeVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                //print("retake api... \(result)")
+                self.appPreference.setType(value: "learn")
+                self.appPreference.setGuideTypeFor3DTouch(value: "learn")
+                self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+                let obj = WWM30DaysChallengeVC()
+                obj.getLearnAPI1()
+            }else {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
         }
     }
 }

@@ -64,6 +64,9 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecH-M4-mFP">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
+                                                        <connections>
+                                                            <action selector="btnExpiredClicked:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="rmH-TN-CNs"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
@@ -127,6 +130,9 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-d2-iNk">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="70"/>
+                                                        <connections>
+                                                            <action selector="btnRetakeClicked:" destination="QtG-Xu-6WX" eventType="touchUpInside" id="WRy-il-hU9"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.070588235289999995" blue="0.32156862749999998" alpha="0.20245612160000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
