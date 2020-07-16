@@ -30,7 +30,7 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("learnStepsListData+++ \(learnStepsListData.count)")
+        appPreference.set21ChallengeName(value: "12 Steps")
         self.offlineDatatoServerCall()
         
         DispatchQueue.global(qos: .background).async {

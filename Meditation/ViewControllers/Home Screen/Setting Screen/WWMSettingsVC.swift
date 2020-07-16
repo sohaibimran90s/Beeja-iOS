@@ -45,6 +45,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     let appPreffrence = WWMAppPreference()
     var min_limit = ""
     var max_limit = ""
+    //check wheather eight/30 chall selected 0 means 30 and 1 means 8 week
+    var chalSelected = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +73,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
                 self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 30 Day Reminder", "30 Day Reminder Time"]
             }else if settingData.eightWeekReminder != ""{
+                chalSelected = 1
                 self.arrLearn = ["Mantra","Enable Learn Reminder","Learn Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
                 self.arrLearn1 = ["Enable Learn Reminder","Learn Reminder Time", "Enable 8 Week Reminder", "8 Week Reminder Time"]
             }else{
@@ -491,20 +494,40 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             cell.lblTime.isHidden = true
                         }
                     }else if indexPath.row == 4 {
-                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
-                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
-                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
-                        cell.btnSwitch.tag = 102
-                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                        if self.chalSelected == 1{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                            cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                            cell.btnSwitch.tag = 103
+                            cell.btnSwitch.isOn = settingData.isEightWeekReminder
+                        }else{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                            cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                            cell.btnSwitch.tag = 102
+                            cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                        }
                     }else if indexPath.row == 5 {
-                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
-                        cell.lblTitle.text = self.arrLearn[indexPath.row-1]
-                        cell.lblTime.isHidden = false
-                        cell.checkImage.isHidden = true
-                        cell.lblTime.text = settingData.thirtyDaysReminder
-                        
-                        if !settingData.isThirtyDaysReminder{
-                            cell.lblTime.isHidden = true
+                        if self.chalSelected == 1{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                            cell.lblTime.isHidden = false
+                            cell.checkImage.isHidden = true
+                            cell.lblTime.text = settingData.eightWeekReminder
+                            
+                            if !settingData.isEightWeekReminder{
+                                cell.lblTime.isHidden = true
+                            }
+                        }else{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn[indexPath.row-1]
+                            cell.lblTime.isHidden = false
+                            cell.checkImage.isHidden = true
+                            cell.lblTime.text = settingData.thirtyDaysReminder
+                            
+                            if !settingData.isThirtyDaysReminder{
+                                cell.lblTime.isHidden = true
+                            }
                         }
                     }else if indexPath.row == 6 {
                         cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
@@ -609,20 +632,40 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                             cell.lblTime.isHidden = true
                         }
                     }else if indexPath.row == 3 {
-                        cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
-                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
-                        cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
-                        cell.btnSwitch.tag = 102
-                        cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                        if self.chalSelected == 1{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                            cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                            cell.btnSwitch.tag = 103
+                            cell.btnSwitch.isOn = settingData.isEightWeekReminder
+                        }else{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                            cell.btnSwitch.addTarget(self, action: #selector(btnSwitchAction(_:)), for: .valueChanged)
+                            cell.btnSwitch.tag = 102
+                            cell.btnSwitch.isOn = settingData.isThirtyDaysReminder
+                        }
                     }else if indexPath.row == 4 {
-                        cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
-                        cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
-                        cell.lblTime.isHidden = false
-                        cell.checkImage.isHidden = true
-                        cell.lblTime.text = settingData.thirtyDaysReminder
-                        
-                        if !settingData.isThirtyDaysReminder{
-                            cell.lblTime.isHidden = true
+                        if self.chalSelected == 1{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                            cell.lblTime.isHidden = false
+                            cell.checkImage.isHidden = true
+                            cell.lblTime.text = settingData.eightWeekReminder
+                            
+                            if !settingData.isEightWeekReminder{
+                                cell.lblTime.isHidden = true
+                            }
+                        }else{
+                            cell = tableView.dequeueReusableCell(withIdentifier: "CellTime") as! WWMSettingTableViewCell
+                            cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
+                            cell.lblTime.isHidden = false
+                            cell.checkImage.isHidden = true
+                            cell.lblTime.text = settingData.thirtyDaysReminder
+                            
+                            if !settingData.isThirtyDaysReminder{
+                                cell.lblTime.isHidden = true
+                            }
                         }
                     }else if indexPath.row == 5 {
                         cell = tableView.dequeueReusableCell(withIdentifier: "CellToggle") as! WWMSettingTableViewCell
@@ -635,7 +678,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                         cell.lblTitle.text = self.arrLearn1[indexPath.row-1]
                         cell.lblTime.isHidden = false
                         cell.checkImage.isHidden = true
-                        cell.lblTime.text = settingData.thirtyDaysReminder
+                        cell.lblTime.text = settingData.eightWeekReminder
                         
                         if !settingData.isEightWeekReminder{
                             cell.lblTime.isHidden = true

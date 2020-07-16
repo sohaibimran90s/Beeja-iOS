@@ -476,6 +476,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    //set view controller for setting api
+    func setVCName(value:String) {
+        defaults.set(value, forKey: "vcName")
+    }
+    
+    //to check if the setting api called for challenges reminder
+    func setChallReminderStatus(value:Bool) {
+        defaults.set(value, forKey: "challReminderStatus")
+    }
+    
     func setTimerMin_limit(value:String) {
         defaults.set(value, forKey: "timer_min_limit")
         defaults.synchronize()
@@ -505,6 +515,15 @@ class WWMAppPreference: NSObject {
         return UserDefaults.standard.bool(forKey: "checkEnterSignupLogin")
     }
     
+    //get view controller for setting api
+    func getVCName() -> String {
+        return UserDefaults.standard.string(forKey: "vcName") ?? ""
+    }
+    
+    //to check if the setting api called for challenges reminder
+    func getChallReminderStatus() -> Bool {
+        return UserDefaults.standard.bool(forKey: "challReminderStatus")
+    }
     
     func getUserID() -> String {
         return UserDefaults.standard.string(forKey: "User_Id") ?? ""
