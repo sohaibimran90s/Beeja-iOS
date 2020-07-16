@@ -29,7 +29,8 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
     var noOfLinesInTextView = 5
     var textCellHeight = 80
     var textCellDefaultHeight = 80
-    var isPurchasedAccount = false
+    let kDataManager = DataManager.sharedInstance
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,20 +45,14 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
         
         self.textJournalObj = TextJournal(title: "", textDescription: "", image: [])
         
-        self.isPurchasedAccount = false
+        //self.isPurchasedAccount = false
         self.checkIfAccountPaid()
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
-    */
 
     func keyReturnPressed(text: String) {
         self.textJournalObj?.textDescription = text
@@ -84,15 +79,16 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
     
     @IBAction func addImageAction(sender: UIButton) {
         
-        if (!(self.isPurchasedAccount) && (self.addedImages.count > 0)) {
-            Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
+        if (!(kDataManager.isPaidAc) && (self.addedImages.count > 0)) {
+            /*Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
                                      btn2: "Buy", container: self, completion: { (alertController, index) in
                                         
                                         if (index == 1) {
                                             self.isPurchasedAccount = true
                                             self.checkIfAccountPaid()
                                         }
-            })
+            })*/
+            Utilities.paymentController(container: self)
             return
         }
 
@@ -108,7 +104,7 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
     
     func checkIfAccountPaid() {
         var titleTxt = "   Add an image"
-        if (!(self.isPurchasedAccount) && (self.addedImages.count > 0)) {
+        if (!(kDataManager.isPaidAc) && (self.addedImages.count > 0)) {
             titleTxt = "   Upgrade to add more images"
         }
         

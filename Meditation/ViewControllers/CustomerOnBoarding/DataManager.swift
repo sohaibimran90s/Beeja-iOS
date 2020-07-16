@@ -3,7 +3,7 @@
 //  MeditationDemo
 //
 //  Created by Ehsan on 16/5/20.
-//  Copyright © 2020 Cedita. All rights reserved.
+//  Copyright © 2020 Ehsan. All rights reserved.
 //
 
 import UIKit
@@ -11,6 +11,8 @@ import Alamofire
 
 class DataManager: NSObject {
     static let sharedInstance = DataManager ()
+    var isPaidAc = true
+    
     var postData: [Any] = []
 
     func getOptionList(selectedOptionList: [OptionsData], currentPage: GetData) {
@@ -65,14 +67,21 @@ class DataManager: NSObject {
             }
         }
     }
+//    multipartFormData.append(imageData, withName: "audios[]",
+//                             fileName: "\(Date().timeIntervalSince1970).m4a", mimeType: "audio/m4a")
 
-    func uploadImages(imageDataArray: [Data], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
+    func uploadAssets(imageDataArray: [Data], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
 
+        let assetsType = parameter["journal_type"] as! String
+        let withName = (assetsType == "audio") ? "audios[]" : "images[]"
+        //let exten = (assetsType == "audio") ? "m4a" : "jpeg"
+        let mineType = (assetsType == "audio") ? "audio/m4a" : "image/jpeg"
+        
         Alamofire.upload(multipartFormData: { multipartFormData in
             // import image to request
             for imageData in imageDataArray {
-                multipartFormData.append(imageData, withName: "images[]",
-                                         fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpeg")
+                multipartFormData.append(imageData, withName: withName,
+                                         fileName: "\(Date().timeIntervalSince1970)", mimeType: mineType)
             }
             
             //let param = parameter as! [String: AnyObject]

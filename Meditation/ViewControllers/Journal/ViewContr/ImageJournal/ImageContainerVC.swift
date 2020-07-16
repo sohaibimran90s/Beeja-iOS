@@ -25,8 +25,8 @@ class ImageContainerVC: UIViewController {
     var imagePicker = UIImagePickerController()
     var actualImageList: [CellImageObject] = []
     var imageList: [CellImageObject] = []
-    var isPurchasedAccount = false
     //var textJournalObj: TextJournal?
+    let kDataManager = DataManager.sharedInstance
 
     
     override func viewDidLoad() {
@@ -34,7 +34,6 @@ class ImageContainerVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.isPurchasedAccount = false
         self.loadImageObjectList()
         
     }
@@ -50,7 +49,7 @@ class ImageContainerVC: UIViewController {
                 self.imageList.append(obj)
             }
             else {
-                var image = (self.isPurchasedAccount) ? UIImage() : UIImage(named: "Locked.png")
+                var image = (kDataManager.isPaidAc) ? UIImage() : UIImage(named: "Locked.png")
                 if (index == 0){ // first thumb icon should be blank (free thumb icon)
                     image = UIImage()
                 }
@@ -94,8 +93,8 @@ class ImageContainerVC: UIViewController {
             return
         }
         
-        if (!(self.isPurchasedAccount) && (self.actualImageList.count > 0)) {
-            Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
+        if (!(kDataManager.isPaidAc) && (self.actualImageList.count > 0)) {
+            /*Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
                                      btn2: "Buy", container: self, completion: { (alertController, index) in
                                         
                                         if (index == 1) {
@@ -104,7 +103,8 @@ class ImageContainerVC: UIViewController {
                                             self.loadImageObjectList()
                                             self.thumbCollectionView.reloadData()
                                         }
-            })
+            })*/
+            Utilities.paymentController(container: self)
             return
         }
         
@@ -141,7 +141,7 @@ class ImageContainerVC: UIViewController {
     
     func paymentRequiredCheck() {
         var titleTxt = "Save Image"
-        if (!(self.isPurchasedAccount) && (self.actualImageList.count > 0)) {
+        if (!(kDataManager.isPaidAc) && (self.actualImageList.count > 0)) {
             titleTxt = "Upgrade to save more images"
         }
         
@@ -194,7 +194,21 @@ extension ImageContainerVC: UICollectionViewDataSource, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //let imgObj = self.imageList[indexPath.row]
+        let imgObj = self.imageList[indexPath.row]
+        if (imgObj.thumbImg == UIImage(named: "Locked.png") || imgObj.thumbImg == UIImage()) {
+            self.addImageBtn.isHidden = false
+            self.mainImageView.image = nil
+            self.titleTextField.text = ""
+            self.titleTextField.isUserInteractionEnabled = true
+            self.saveBtn.isEnabled = true
+        }
+        else {
+            self.addImageBtn.isHidden = true
+            self.mainImageView.image = imgObj.thumbImg
+            self.titleTextField.text = imgObj.captionTitle
+            self.titleTextField.isUserInteractionEnabled = false
+            self.saveBtn.isEnabled = false
+        }
     }
 
 }
