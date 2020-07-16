@@ -623,6 +623,7 @@
 		E0783208235E3BCA00B352ED /* home.json in Resources */ = {isa = PBXBuildFile; fileRef = E07831F0235E3BCA00B352ED /* home.json */; };
 		E825C0FA24498292004A0F16 /* WWMProgressNavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */; };
 		E825C0FC24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */; };
+		E82B462124C02592009FE325 /* JournalDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E82B462024C02592009FE325 /* JournalDetails.storyboard */; };
 		E838011724B44C3E008CDB89 /* Cell8Weeks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011524B44C3D008CDB89 /* Cell8Weeks.swift */; };
 		E838011824B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */; };
 		E838011A24B44C91008CDB89 /* 8week.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E838011924B44C90008CDB89 /* 8week.storyboard */; };
@@ -1291,6 +1292,7 @@
 		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
+		E82B462024C02592009FE325 /* JournalDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JournalDetails.storyboard; sourceTree = "<group>"; };
 		E838011524B44C3D008CDB89 /* Cell8Weeks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell8Weeks.swift; sourceTree = "<group>"; };
 		E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM8WeeksGridsViewController.swift; sourceTree = "<group>"; };
 		E838011924B44C90008CDB89 /* 8week.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = 8week.storyboard; sourceTree = "<group>"; };
@@ -2410,6 +2412,7 @@
 				63F888D824C01066001F424A /* ServiceClass */,
 				63F888DA24C01066001F424A /* Extension */,
 				63F888DE24C01066001F424A /* Journal.storyboard */,
+				E82B462024C02592009FE325 /* JournalDetails.storyboard */,
 				63F888DF24C01066001F424A /* ViewContr */,
 				63F888F024C01066001F424A /* Utils */,
 				63F888F824C01066001F424A /* Resource */,
@@ -3000,6 +3003,7 @@
 				63F8898224C01066001F424A /* VoiceLockedEn@2x.png in Resources */,
 				616AC90323BDC14900BB14BE /* CHIME 2.mp3 in Resources */,
 				2E316FDA2228082500018538 /* WWMAddSessionView.xib in Resources */,
+				E82B462124C02592009FE325 /* JournalDetails.storyboard in Resources */,
 				6144293B224B4BCF00C6682C /* WWMPromptMsg.xib in Resources */,
 				2E316FDE222812B300018538 /* WWMMoodProgressDurationView.xib in Resources */,
 				63F8899624C01066001F424A /* VoicetoTextLockedDis.png in Resources */,
