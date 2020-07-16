@@ -20,6 +20,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBOutlet weak var lblTodaysMedTC: NSLayoutConstraint!
     @IBOutlet weak var btnReminder: UIButton!
     @IBOutlet weak var btnReminderTC: NSLayoutConstraint!
+    @IBOutlet weak var imgPuzzleTC: NSLayoutConstraint!
     @IBOutlet weak var btnIntro: UIButton!
     @IBOutlet weak var viewExpired: UIView!
     @IBOutlet weak var viewExpiredTopConstraint: NSLayoutConstraint!
@@ -27,7 +28,6 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     @IBOutlet weak var viewRetakeTopConstraint: NSLayoutConstraint!
     
     var itemInfo: IndicatorInfo = "View"
-    var selectedIndex: Int?
     var daysListData: [EightWeekModel] = []
     var checkExpireRetake = 0
     var completed8WeekCount = 0
@@ -67,7 +67,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             btnContinue.alpha = 1.0
             btnContinue.isEnabled = true
             self.lblDaysCount.text = "\(self.completed8WeekCount)/\(self.daysListData.count)"
-                    
+            self.imgPuzzleTC.constant = 25
             self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
             //Expired
@@ -81,6 +81,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.btnContinue.isHidden = true
             self.lblDaysCount.isHidden = true
             self.lbl7DaysRevealText.isHidden = true
+            self.imgPuzzleTC.constant = 16
         }else{
             //Retake
             self.viewExpired.isHidden = true
@@ -93,6 +94,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.btnContinue.isHidden = true
             self.lblDaysCount.isHidden = true
             self.lbl7DaysRevealText.isHidden = true
+            self.imgPuzzleTC.constant = 16
         }
     }
     
@@ -138,17 +140,20 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
                     self.lblReminder.isHidden = true
                     self.btnReminder.frame.size.height = 0
                     self.btnReminderTC.constant = 0
+                    self.imgPuzzleTC.constant = 10
                 }else{
                     self.btnReminder.isHidden = false
                     self.lblReminder.isHidden = false
                     self.btnReminder.frame.size.height = 29
                     self.btnReminderTC.constant = 16
+                    self.imgPuzzleTC.constant = 25
                 }
             }else{
                 self.btnReminder.isHidden = false
                 self.lblReminder.isHidden = false
                 self.btnReminder.frame.size.height = 29
                 self.btnReminderTC.constant = 16
+                self.imgPuzzleTC.constant = 25
             }
         }
     }
@@ -217,13 +222,11 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 45, height: 45)
+        return CGSize(width: self.collectionBoxes.frame.size.width/7 - 3, height: self.collectionBoxes.frame.size.width/7 - 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        selectedIndex = indexPath.item
-        
+                
         if self.daysListData[indexPath.item].second_session_required{
             if check2TypePlay().0{
                 self.pushViewController(sender_Tag: check2TypePlay().1)
@@ -243,6 +246,21 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         }
         
         return (false, -1)
+    }
+    
+    @IBAction func btnContinueAction(_ sender: UIButton) {
+        self.pushViewController(sender_Tag: self.startChallengeFunc())
+    }
+    
+    //start challenge from button
+    func startChallengeFunc() -> Int{
+        for i in 0..<self.daysListData.count{
+            let date_completed = self.daysListData[i].date_completed
+            if date_completed == ""{
+                return i
+            }
+        }
+        return 0
     }
     
     func pushViewController(sender_Tag: Int){
@@ -277,14 +295,6 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         vc.week8Data = self.daysListData[sender_Tag]
         vc.type = "8weeks"
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func btnContinueAction(_ sender: UIButton) {
-        if check2TypePlay().0{
-            self.pushViewController(sender_Tag: check2TypePlay().1)
-        }else{
-            self.pushViewController(sender_Tag: self.selectedIndex!)
-        }
     }
 }
 
