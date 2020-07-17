@@ -57,6 +57,7 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+        stopPlayer()
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -73,6 +74,7 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
         else {
             //stop player
             btnStart.setImage(UIImage(named: "play.png"), for: .normal)
+            stopPlayer()
         }
     }
     
@@ -91,7 +93,6 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
                 let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
                 let duration1 = Int(round(duration))
                 let totalAudioLength = self.secondToMinuteSecond(second : duration1)
-                //print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
                 
                 self.endTimeLbl.text = "\(totalAudioLength)"
                 self.beginTimeLbl.text = "00:00"
@@ -99,15 +100,11 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
                 self.slider.value = 0.0
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 
-                
                 if self.beginTimeLbl.text == self.endTimeLbl.text{
                     self.beginTimeLbl.text = self.endTimeLbl.text
                     self.btnStart.isHidden = false
                     self.isPlayComplete = true
-//                    self.btnReplay.setImage(UIImage(named: "replay"), for: .normal)
                 }
-                
-                
                 self.player?.play()
                 
             } catch let error as NSError {
@@ -127,6 +124,18 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
             if !self.isPlayComplete{
                 self.beginTimeLbl.text = "00:00"
             }
+        }
+    }
+    
+    //MARK: Stop Payer
+    func stopPlayer() {
+        if let play = self.player {
+            //print("stopped")
+            play.pause()
+            self.player = nil
+            //print("player deallocated")
+        } else {
+            //print("player was already deallocated")
         }
     }
 }
