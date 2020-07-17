@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tuh-ss-LOz">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,7 +11,7 @@
         <!--PaymentVC-->
         <scene sceneID="O2a-a6-qHQ">
             <objects>
-                <viewController storyboardIdentifier="PaymentView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tuh-ss-LOz" customClass="PaymentVC" customModule="MeditationDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaymentView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tuh-ss-LOz" customClass="PaymentVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2uK-uQ-BPT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="920"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -444,6 +445,9 @@ after broadcast</string>
                                                         <integer key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="upgradeNowActionWithSender:" destination="Tuh-ss-LOz" eventType="touchUpInside" id="QrU-VX-BIP"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.11780286815068493" green="0.11838025449905988" blue="0.42040577575208171" alpha="1" colorSpace="calibratedRGB"/>

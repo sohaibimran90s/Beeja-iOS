@@ -11,7 +11,7 @@ import Alamofire
 
 class DataManager: NSObject {
     static let sharedInstance = DataManager ()
-    var isPaidAc = true
+    var isPaidAc = false
     
     var postData: [Any] = []
 
