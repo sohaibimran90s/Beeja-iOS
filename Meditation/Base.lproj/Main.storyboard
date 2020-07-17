@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kMk-qb-zHJ">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -7230,15 +7230,8 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lga-Lz-B4N">
                                                             <rect key="frame" x="0.0" y="95" width="325" height="55"/>
                                                             <subviews>
-                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2nk-bv-NSd">
-                                                                    <rect key="frame" x="70" y="10" width="225" height="2"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <color key="tintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <color key="progressTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <color key="trackTintColor" red="0.29474720360000001" green="0.31781178710000002" blue="0.50395572190000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                </progressView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxg-VV-C18">
-                                                                    <rect key="frame" x="70" y="20" width="26" height="14"/>
+                                                                    <rect key="frame" x="54" y="34" width="26" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -7247,7 +7240,7 @@
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZl-z6-afk">
-                                                                    <rect key="frame" x="269" y="20" width="26" height="14"/>
+                                                                    <rect key="frame" x="269" y="34" width="26" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -7255,26 +7248,32 @@
                                                                         <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="14"/>
                                                                     </variation>
                                                                 </label>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brh-Oi-1xl">
-                                                                    <rect key="frame" x="48" y="4" width="14" height="14"/>
+                                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-0.5" minValue="-0.5" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1Dk-jg-iIu">
+                                                                    <rect key="frame" x="52" y="0.0" width="245" height="31"/>
+                                                                    <color key="minimumTrackTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="thumbTintColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </slider>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZD8-X3-N6x">
+                                                                    <rect key="frame" x="30" y="7" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="14" id="5R2-PV-eYu"/>
-                                                                        <constraint firstAttribute="height" constant="14" id="kdf-9i-kzW"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="AMq-YZ-aPt"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="cJ4-7x-79D"/>
                                                                     </constraints>
-                                                                    <state key="normal" image="shape"/>
+                                                                    <state key="normal" image="play.png"/>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="2nk-bv-NSd" secondAttribute="trailing" constant="30" id="6rz-RU-gqU"/>
-                                                                <constraint firstItem="Bxg-VV-C18" firstAttribute="leading" secondItem="brh-Oi-1xl" secondAttribute="trailing" constant="8" id="KLa-lK-5Ea"/>
-                                                                <constraint firstItem="Bxg-VV-C18" firstAttribute="leading" secondItem="2nk-bv-NSd" secondAttribute="leading" id="LNq-1F-YEM"/>
-                                                                <constraint firstItem="TZl-z6-afk" firstAttribute="trailing" secondItem="2nk-bv-NSd" secondAttribute="trailing" id="O6T-82-cfp"/>
-                                                                <constraint firstItem="2nk-bv-NSd" firstAttribute="top" secondItem="lga-Lz-B4N" secondAttribute="top" constant="10" id="cMi-Hm-B1D"/>
-                                                                <constraint firstItem="TZl-z6-afk" firstAttribute="top" secondItem="2nk-bv-NSd" secondAttribute="bottom" constant="8" id="hcY-aS-BxK"/>
-                                                                <constraint firstItem="Bxg-VV-C18" firstAttribute="top" secondItem="2nk-bv-NSd" secondAttribute="bottom" constant="8" id="iPb-my-ThQ"/>
-                                                                <constraint firstItem="2nk-bv-NSd" firstAttribute="leading" secondItem="lga-Lz-B4N" secondAttribute="leading" constant="70" id="jJJ-F9-4Ye"/>
-                                                                <constraint firstItem="brh-Oi-1xl" firstAttribute="centerY" secondItem="2nk-bv-NSd" secondAttribute="centerY" id="wXB-Mt-yga"/>
+                                                                <constraint firstItem="TZl-z6-afk" firstAttribute="trailing" secondItem="1Dk-jg-iIu" secondAttribute="trailing" id="2KJ-V2-zuV"/>
+                                                                <constraint firstItem="ZD8-X3-N6x" firstAttribute="centerY" secondItem="1Dk-jg-iIu" secondAttribute="centerY" id="2RK-Ng-b8w"/>
+                                                                <constraint firstItem="TZl-z6-afk" firstAttribute="top" secondItem="1Dk-jg-iIu" secondAttribute="bottom" constant="4" id="71B-Rv-rQR"/>
+                                                                <constraint firstItem="Bxg-VV-C18" firstAttribute="leading" secondItem="1Dk-jg-iIu" secondAttribute="leading" id="BDt-i9-BPX"/>
+                                                                <constraint firstItem="Bxg-VV-C18" firstAttribute="top" secondItem="1Dk-jg-iIu" secondAttribute="bottom" constant="4" id="LbZ-LF-IZk"/>
+                                                                <constraint firstAttribute="trailing" secondItem="1Dk-jg-iIu" secondAttribute="trailing" constant="30" id="M2v-aq-b8v"/>
+                                                                <constraint firstItem="1Dk-jg-iIu" firstAttribute="leading" secondItem="ZD8-X3-N6x" secondAttribute="trailing" constant="8" id="ZAu-sV-cl2"/>
+                                                                <constraint firstItem="ZD8-X3-N6x" firstAttribute="leading" secondItem="lga-Lz-B4N" secondAttribute="leading" constant="30" id="qaX-FQ-iuR"/>
+                                                                <constraint firstItem="1Dk-jg-iIu" firstAttribute="top" secondItem="lga-Lz-B4N" secondAttribute="top" id="yG8-Gr-uXo"/>
                                                                 <constraint firstAttribute="height" constant="55" id="z1D-lP-y1e"/>
                                                             </constraints>
                                                         </view>
@@ -7300,7 +7299,6 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="btnPlay" destination="brh-Oi-1xl" id="hKh-tz-TMO"/>
                                             <outlet property="lblDateDay" destination="HA9-Fy-Oag" id="omb-A6-7IU"/>
                                             <outlet property="lblDateMonth" destination="ey9-Zj-Gd9" id="46F-IR-UXE"/>
                                             <outlet property="lblJournalDesc" destination="lhO-r6-BhW" id="Sk4-Nn-01d"/>
@@ -7308,7 +7306,6 @@
                                             <outlet property="lblTotalTime" destination="TZl-z6-afk" id="ajQ-24-di2"/>
                                             <outlet property="lblTrackTime" destination="Bxg-VV-C18" id="JBR-Ro-Nzk"/>
                                             <outlet property="lblWeekDayAndTime" destination="YCP-EN-k9f" id="EZ1-bJ-iK0"/>
-                                            <outlet property="progressTrack" destination="2nk-bv-NSd" id="g5i-CQ-atK"/>
                                             <outlet property="viewAudio" destination="lga-Lz-B4N" id="M4k-Az-vYj"/>
                                             <outlet property="viewShadow" destination="o6t-B7-7id" id="uus-bl-ahO"/>
                                         </connections>
@@ -9978,7 +9975,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly | Annual | Lifetime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgn-Zu-Qih">
-                                <rect key="frame" x="20" y="91" width="335" height="17.5"/>
+                                <rect key="frame" x="20" y="91" width="335" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.92156862750000001" blue="0.66274509800000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -9987,20 +9984,20 @@
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nHX-xU-TcX">
-                                <rect key="frame" x="20" y="128.5" width="335" height="229.5"/>
+                                <rect key="frame" x="20" y="111" width="335" height="247"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1E-Qt-DKZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="43"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorTick_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="3fE-i4-Dfc">
-                                                <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                                                <rect key="frame" x="20" y="1.5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="7fv-f3-FqQ"/>
                                                     <constraint firstAttribute="height" constant="40" id="URG-bG-KI0"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Increase your dynamism and creativity" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGM-T4-x9E">
-                                                <rect key="frame" x="80" y="12.5" width="235" height="14.5"/>
+                                                <rect key="frame" x="80" y="14.5" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -10019,17 +10016,17 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMO-K5-7Km">
-                                        <rect key="frame" x="0.0" y="47.5" width="335" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="51" width="335" height="43"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorTick_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="dXZ-d0-e37">
-                                                <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                                                <rect key="frame" x="20" y="1.5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="EZs-2q-TZs"/>
                                                     <constraint firstAttribute="height" constant="40" id="UZD-Yc-4ra"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unlock meditations to boost your body's performance" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPp-Im-zs1">
-                                                <rect key="frame" x="80" y="5.5" width="235" height="29"/>
+                                                <rect key="frame" x="80" y="7" width="235" height="29"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -10048,17 +10045,17 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uwd-od-cJg">
-                                        <rect key="frame" x="0.0" y="95" width="335" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="102" width="335" height="43"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorTick_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="6YM-fy-8Ki">
-                                                <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                                                <rect key="frame" x="20" y="1.5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="0vP-7M-BED"/>
                                                     <constraint firstAttribute="height" constant="40" id="aze-dH-7o4"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track your feelings with our moodometer" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-ck-dfu">
-                                                <rect key="frame" x="80" y="12.5" width="235" height="14.5"/>
+                                                <rect key="frame" x="80" y="14.5" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -10077,17 +10074,17 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8f4-FO-MHW">
-                                        <rect key="frame" x="0.0" y="142.5" width="335" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="153" width="335" height="43"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorTick_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="QUz-vi-jHw">
-                                                <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                                                <rect key="frame" x="20" y="1.5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="7jr-pQ-zbG"/>
                                                     <constraint firstAttribute="width" constant="40" id="uNZ-cK-F5Y"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Learn to meditate self-sufficiently" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ru3-DW-U7f">
-                                                <rect key="frame" x="80" y="12.5" width="235" height="14.5"/>
+                                                <rect key="frame" x="80" y="14.5" width="235" height="14.5"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -10106,17 +10103,17 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYy-hf-d52">
-                                        <rect key="frame" x="0.0" y="190" width="335" height="39.5"/>
+                                        <rect key="frame" x="0.0" y="204" width="335" height="43"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorTick_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="DRh-oJ-RIa">
-                                                <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                                                <rect key="frame" x="20" y="1.5" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="Rsy-Fz-hwh"/>
                                                     <constraint firstAttribute="width" constant="40" id="W8N-oJ-JCk"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rewire yourself happy with our daily grateful diary" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRj-w3-qtq">
-                                                <rect key="frame" x="80" y="5.5" width="235" height="29"/>
+                                                <rect key="frame" x="80" y="7" width="235" height="29"/>
                                                 <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -11779,7 +11776,7 @@
             </objects>
             <point key="canvasLocation" x="3685.5999999999999" y="4870.614692653674"/>
         </scene>
-        <!--Delegate-->
+        <!--Mood MeterVC-->
         <scene sceneID="jCU-Tx-cZc">
             <objects>
                 <viewController storyboardIdentifier="WWMMoodMeterVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="2Rx-r1-2CX" customClass="WWMMoodMeterVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
@@ -16618,7 +16615,7 @@ Best enjoyed with headphones.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="editBackgroundImg" translatesAutoresizingMaskIntoConstraints="NO" id="qcD-A7-2N2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667.00000000000011"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nhd-9N-zMd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -19005,7 +19002,7 @@ By Will Williams</string>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UhE-tO-XsT">
-                                <rect key="frame" x="303" y="6" width="52" height="64"/>
+                                <rect key="frame" x="303" y="6" width="52" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="52" id="mQa-nj-r18"/>
                                 </constraints>
@@ -20781,6 +20778,7 @@ Take a moment to tune in and relax.</string>
         <image name="oval2" width="70" height="70"/>
         <image name="pause_Icon" width="46" height="46"/>
         <image name="play" width="60" height="64"/>
+        <image name="play.png" width="11" height="12"/>
         <image name="play_Icon" width="46" height="46"/>
         <image name="podcastBg" width="367" height="372"/>
         <image name="podcastPlayIcon" width="34" height="34"/>
@@ -20795,7 +20793,6 @@ Take a moment to tune in and relax.</string>
         <image name="selected_Wisdom" width="31" height="20"/>
         <image name="selected_home" width="25" height="26"/>
         <image name="selected_learn" width="17" height="30"/>
-        <image name="shape" width="16" height="16"/>
         <image name="shareLoveBI1" width="375" height="231"/>
         <image name="signupFacebook" width="295" height="40"/>
         <image name="signupGoogle" width="295" height="40"/>

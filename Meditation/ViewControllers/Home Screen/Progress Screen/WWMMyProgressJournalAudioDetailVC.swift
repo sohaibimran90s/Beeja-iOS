@@ -16,6 +16,11 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
     @IBOutlet weak var lblDateDay: UILabel!
     @IBOutlet weak var lblMeditationType: UILabel!
     
+    @IBOutlet weak var btnStart: UIButton!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var beginTimeLbl: UILabel!
+    @IBOutlet weak var endTimeLbl: UILabel!
+    
     var lblTitle: String = ""
     var lblDesc: String = ""
     var lblDateDay1: String = ""
