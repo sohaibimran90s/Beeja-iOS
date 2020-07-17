@@ -57,10 +57,10 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
-        stopPlayer()
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
+        stopPlayer()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -132,10 +132,9 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
         if let play = self.player {
             //print("stopped")
             play.pause()
-            self.player = nil
-            //print("player deallocated")
+            print("player deallocated")
         } else {
-            //print("player was already deallocated")
+            print("player was already deallocated")
         }
     }
 }
