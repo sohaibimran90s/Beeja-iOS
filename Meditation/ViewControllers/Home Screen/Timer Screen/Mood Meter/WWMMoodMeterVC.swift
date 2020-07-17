@@ -229,55 +229,59 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }
     }
     
-//    func callWWMMoodMeterLogVC(){
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-//
-//        //print("type..... \(self.type) apppre... \(self.appPreffrence.getPrePostJournalBool()) postmoddcount.. \(self.appPreference.getPostMoodCount()) getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
-//
-//        vc.selectedIndex = String(selectedIndex)
-//        if self.type == "pre"{
-//            if !self.appPreffrence.getPrePostJournalBool(){
-//                vc.moodData = arrMoodData[selectedIndex]
-//                vc.selectedIndex = String(selectedIndex)
-//            }else{
-//                if self.appPreference.getPreMoodCount() > 0{
-//                    vc.moodData = arrMoodData[selectedIndex]
-//                    vc.selectedIndex = String(selectedIndex)
-//                }
-//            }
-//        }else{
-//            if !self.appPreffrence.getPrePostJournalBool(){
-//                vc.moodData = arrMoodData[selectedIndex]
-//                vc.selectedIndex = String(selectedIndex)
-//            }else{
-//                if self.appPreference.getPostMoodCount() > 0{
-//                    vc.moodData = arrMoodData[selectedIndex]
-//                    vc.selectedIndex = String(selectedIndex)
-//                }
-//            }
-//        }
-//
-//        vc.type = self.type
-//        vc.prepTime = self.prepTime
-//        vc.meditationTime = self.meditationTime
-//        vc.restTime = self.restTime
-//        vc.meditationID = self.meditationID
-//        vc.levelID = self.levelID
-//        vc.category_Id = self.category_Id
-//        vc.emotion_Id = self.emotion_Id
-//        vc.audio_Id = self.audio_Id
-//        vc.rating = self.rating
-//        vc.watched_duration = self.watched_duration
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
-    
     func callWWMMoodMeterLogVC(){
+        let moodID = Int(self.appPreference.getMoodId()) ?? 0
+        if (moodID < 37 ) {
+            self.callAddJournalVC()
+        } else {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
+
+            //print("type..... \(self.type) apppre... \(self.appPreffrence.getPrePostJournalBool()) postmoddcount.. \(self.appPreference.getPostMoodCount()) getPreMoodCount.. \(self.appPreference.getPreMoodCount())")
+
+            vc.selectedIndex = String(selectedIndex)
+            if self.type == "pre"{
+                if !self.appPreffrence.getPrePostJournalBool(){
+                    vc.moodData = arrMoodData[selectedIndex]
+                    vc.selectedIndex = String(selectedIndex)
+                }else{
+                    if self.appPreference.getPreMoodCount() > 0{
+                        vc.moodData = arrMoodData[selectedIndex]
+                        vc.selectedIndex = String(selectedIndex)
+                    }
+                }
+            }else{
+                if !self.appPreffrence.getPrePostJournalBool(){
+                    vc.moodData = arrMoodData[selectedIndex]
+                    vc.selectedIndex = String(selectedIndex)
+                }else{
+                    if self.appPreference.getPostMoodCount() > 0{
+                        vc.moodData = arrMoodData[selectedIndex]
+                        vc.selectedIndex = String(selectedIndex)
+                    }
+                }
+            }
+
+            vc.type = self.type
+            vc.prepTime = self.prepTime
+            vc.meditationTime = self.meditationTime
+            vc.restTime = self.restTime
+            vc.meditationID = self.meditationID
+            vc.levelID = self.levelID
+            vc.category_Id = self.category_Id
+            vc.emotion_Id = self.emotion_Id
+            vc.audio_Id = self.audio_Id
+            vc.rating = self.rating
+            vc.watched_duration = self.watched_duration
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func callAddJournalVC(){
         
         let vc = UIStoryboard(name: "Journal", bundle: nil).instantiateViewController(withIdentifier: "AddJournal") as! AddJournalVC
         //let navController = UINavigationController(rootViewController: vc)
         //navController.modalPresentationStyle = .overFullScreen
         vc.isAddJournal = false
-        
         
         //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
         
