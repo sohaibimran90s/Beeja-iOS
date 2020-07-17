@@ -105,10 +105,15 @@ class WWMJournalAudioTableViewCell: UITableViewCell {
     @IBOutlet weak var lblMeditationType: UILabel!
     
     @IBOutlet weak var viewAudio: UIView!
-    @IBOutlet weak var progressTrack: UIProgressView!
-    @IBOutlet weak var lblTrackTime: UILabel!
-    @IBOutlet weak var lblTotalTime: UILabel!
-    @IBOutlet weak var btnPlay: UIButton!
+    @IBOutlet weak var btnStart: UIButton!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var beginTimeLbl: UILabel!
+    @IBOutlet weak var endTimeLbl: UILabel!
+    
+    var player: AVPlayer?
+    var isPlayComplete: Bool = false
+    var isPlay: Bool = false
+    var timer = Timer()
     
     func assignValues(data: WWMJournalProgressData) {
         viewShadow.layer.shadowColor = UIColor.black.cgColor
@@ -151,7 +156,28 @@ class WWMJournalAudioTableViewCell: UITableViewCell {
         
         dateFormatter.dateFormat = "MMM"
         lblDateMonth.text = dateFormatter.string(from: date)
+        
+        
+        //audio setup
+        let playerItem = AVPlayerItem.init(url:URL.init(string: data.assets_audios[0].name)!)
+        self.player = AVPlayer(playerItem: playerItem)
+        
+        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+        let duration1 = Int(round(duration))
+        let totalAudioLength = self.secondToMinuteSecond(second : duration1)
+        
+        self.endTimeLbl.text = "\(totalAudioLength)"
     }
+    
+    func secondToMinuteSecond(second : Int) -> String {
+        return String.init(format: "%02d:%02d", second/60,second%60)
+    }
+    
+    @IBAction func clickPlayButton() {
+        
+    }
+    
+    
 }
 
 
