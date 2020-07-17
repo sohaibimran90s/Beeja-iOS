@@ -28,6 +28,11 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
     var lblWeekDayAndTime1: String = ""
     var arrAudio = [WWMJournalMediaData]()
     
+    var player: AVPlayer?
+    var isPlayComplete: Bool = false
+    var isPlay: Bool = false
+    var timer = Timer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +43,16 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
         self.lblDateDay.text = self.lblDateDay1
         self.lblDateMonth.text = self.lblDateMonth1
         self.lblWeekDayAndTime.text = self.lblWeekDayAndTime1
+        
+        
+        let playerItem = AVPlayerItem.init(url:URL.init(string: self.arrAudio[0].name)!)
+        self.player = AVPlayer(playerItem: playerItem)
+        
+        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+        let duration1 = Int(round(duration))
+        let totalAudioLength = self.secondToMinuteSecond(second : duration1)
+        
+        self.endTimeLbl.text = "\(totalAudioLength)"
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -46,5 +61,72 @@ class WWMMyProgressJournalAudioDetailVC: WWMBaseViewController {
     
     @IBAction func btnDoneAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func clickPlayPauseButton() {
+        btnStart.isSelected = !btnStart.isSelected
+        if btnStart.isSelected {
+            //start player
+            btnStart.setImage(UIImage(named: "pauseIcon.png"), for: .normal)
+            audioPlay()
+        }
+        else {
+            //stop player
+            btnStart.setImage(UIImage(named: "play.png"), for: .normal)
+        }
+    }
+    
+    func audioPlay(){
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                let playerItem = AVPlayerItem.init(url:URL.init(string: self.arrAudio[0].name)!)
+                self.player = AVPlayer(playerItem: playerItem)
+                
+//                NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+                
+                self.isPlay = true
+                
+                let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+                let duration1 = Int(round(duration))
+                let totalAudioLength = self.secondToMinuteSecond(second : duration1)
+                //print("duration... \(duration)... duration1.... \(duration1)... totalAudioLength.... \(totalAudioLength)")
+                
+                self.endTimeLbl.text = "\(totalAudioLength)"
+                self.beginTimeLbl.text = "00:00"
+                self.slider.maximumValue = Float(duration1)
+                self.slider.value = 0.0
+                self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+                
+                
+                if self.beginTimeLbl.text == self.endTimeLbl.text{
+                    self.beginTimeLbl.text = self.endTimeLbl.text
+                    self.btnStart.isHidden = false
+                    self.isPlayComplete = true
+//                    self.btnReplay.setImage(UIImage(named: "replay"), for: .normal)
+                }
+                
+                
+                self.player?.play()
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc func updateTime(_ timer: Timer) {
+        let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
+        //print("currentTime... \(currentTime)")
+        self.slider.value = Float(currentTime)
+        self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
+        
+        if self.beginTimeLbl.text == self.endTimeLbl.text{
+            self.timer.invalidate()
+            if !self.isPlayComplete{
+                self.beginTimeLbl.text = "00:00"
+            }
+        }
     }
 }
