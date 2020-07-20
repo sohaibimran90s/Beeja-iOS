@@ -51,7 +51,7 @@ class WWMMyProgressJournalImageDetailVC: WWMBaseViewController, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WWMJournalImagesTableViewCell") as! WWMJournalImagesTableViewCell
-        cell.imgJournal.sd_setImage(with: URL(string: arrImages[0].name), placeholderImage: UIImage(named: "highResEtherealInkTextures6"))
+        cell.imgJournal.sd_setImage(with: URL(string: arrImages[indexPath.row].name), placeholderImage: UIImage(named: "guidedPopUpBg"))
         return cell
     }
     

@@ -90,7 +90,7 @@ class WWMJournalImageTableViewCell: UITableViewCell {
         
         
         //handling image
-        imgJournal.sd_setImage(with: URL(string: data.assets_images[0].name), placeholderImage: UIImage(named: "onboardingImg1"))
+        imgJournal.sd_setImage(with: URL(string: data.assets_images[0].name), placeholderImage: UIImage(named: "guidedPopUpBg"))
         imgMultiple.isHidden = data.assets_images.count == 1 ? true : false
     }
 }
