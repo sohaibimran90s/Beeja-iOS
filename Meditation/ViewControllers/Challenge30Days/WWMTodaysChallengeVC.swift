@@ -18,16 +18,17 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     var daysListData = ThirtyDaysListData()
     var week8Data = EightWeekModel()
     var type = ""
+    var dayNo = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if self.type == ""{
-            self.lblDayNo.text = "Day \(daysListData.day_name)"
+            self.lblDayNo.text = "Day \(dayNo)"
             self.lblDescription.text = "\(daysListData.Description)"
             self.lblAuthor.text = "\(daysListData.auther_name)"
         }else{
-            self.lblDayNo.text = "Day \(week8Data.day_name)"
+            self.lblDayNo.text = "Day \(dayNo)"
             self.lblDescription.text = "\(week8Data.Description)"
             self.lblAuthor.text = "\(week8Data.auther_name)"
         }

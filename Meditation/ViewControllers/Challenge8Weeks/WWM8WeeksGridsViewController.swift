@@ -66,7 +66,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             self.lblTodaysMed.isHidden = false
             btnContinue.alpha = 1.0
             btnContinue.isEnabled = true
-            self.lblDaysCount.text = "\(self.completed8WeekCount)/\(self.daysListData.count)"
+            self.lblDaysCount.text = "\(self.completed8WeekCount)/\(self.daysListData.count - 7)"
             self.imgPuzzleTC.constant = 25
             self.checkIntroCompleted()
         }else if self.checkExpireRetake == 1{
@@ -217,6 +217,11 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
                 cell.viewSquare.layer.borderWidth = 0
             }
         }
+        
+        if self.daysListData[indexPath.item].is_pre_opened{
+            cell.contentView.isHidden = true
+            cell.isUserInteractionEnabled = false
+        }
             
         return cell
     }
@@ -293,6 +298,11 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         WWMHelperClass.day_type = "8weeks"
         WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
         vc.week8Data = self.daysListData[sender_Tag]
+        if completed8WeekCount == 0{
+           vc.dayNo = self.completed8WeekCount + 1
+        }else{
+           vc.dayNo = self.completed8WeekCount
+        }
         vc.type = "8weeks"
         self.navigationController?.pushViewController(vc, animated: true)
     }
