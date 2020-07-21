@@ -31,6 +31,10 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
         //print(guidedData.cat_EmotionList.count)
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
+//    }
+    
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -94,6 +98,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
             vc.min_limit = self.min_limit
             vc.max_limit = self.max_limit
             vc.meditation_key = self.meditation_key
+            self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             
@@ -120,24 +125,24 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     //7_days
                     
                     if self.guidedData.cat_Name == "Practical"{
-                        appPreference.set21ChallengeName(value: "Practical")
                         self.practicalAction(name: "7 Days challenge", type: "practical")
                     }else{
-                        appPreference.set21ChallengeName(value: "Spiritual")
                         self.spiritualAction(name: "7 Days challenge", type: "spiritual")
                     }
+                    
+                    self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
                     
                     //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
 
                 }else{
                     
                     if self.guidedData.cat_Name == "Practical"{
-                        appPreference.set21ChallengeName(value: "Practical")
                         self.practicalAction(name: "21 Days challenge", type: "practical")
                     }else{
-                        appPreference.set21ChallengeName(value: "Spiritual")
                         self.spiritualAction(name: "21 Days challenge", type: "spiritual")
                     }
+                    
+                    self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
 
                     //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
                 }

@@ -15320,7 +15320,7 @@ Best enjoyed with headphones.</string>
         <!--Sleep AudioVC-->
         <scene sceneID="AEU-uy-JPp">
             <objects>
-                <viewController storyboardIdentifier="WWMSleepAudioVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KX0-aa-dJk" customClass="WWMSleepAudioVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WWMSleepAudioVC" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KX0-aa-dJk" customClass="WWMSleepAudioVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bqs-LH-7KS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
