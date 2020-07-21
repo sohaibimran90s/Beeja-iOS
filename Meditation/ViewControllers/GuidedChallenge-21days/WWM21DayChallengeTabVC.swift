@@ -82,7 +82,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
-                            self.appPreference.set21ChallengeName(value: subCategory?.capitalized ?? "Practical")
+                            self.appPreference.set21ChallengeName(value: self.name)
                             vc.cat_name = self.name
                             vc.name = self.name
                             vc.subCategory = subCategory ?? "practical"
@@ -154,9 +154,9 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     let getChallengeStatus = self.appPreference.getPracticalChallenge()
                     if getChallengeStatus{
                         //print("Challenge already accepted")
-                        self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        self.appPreference.set21ChallengeName(value: self.name)
                         vc.cat_name = self.name
                         vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name
@@ -199,9 +199,9 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     let getChallengeStatus = self.appPreference.getSpiritualChallenge()
                     if getChallengeStatus{
                         //print("Challenge already accepted")
-                        self.appPreference.set21ChallengeName(value: self.name)
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
+                        self.appPreference.set21ChallengeName(value: self.name)
                         vc.cat_name = self.name
                         vc.intro_url = (dict as AnyObject).intro_url ?? ""
                         vc.name = self.name

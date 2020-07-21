@@ -99,8 +99,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     
     @IBAction func btnBack21DaysAction(_ sender: UIButton) {
         
-        delegate?.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
-        self.reloadTabs21DaysController()
+        self.appPreference.set21ChallengeName(value: self.cat_name)
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     @IBAction func btnRetakeAction(_ sender: UIButton) {

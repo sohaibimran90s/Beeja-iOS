@@ -22,19 +22,11 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
     var max_limit = "97"
     var meditation_key = "practical"
     var name = ""
-    
-    var delegate: WWMGuidedDashboardDelegate?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //print(guidedData.cat_EmotionList.count)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
-//    }
-    
+        
     // MARK: - IndicatorInfoProvider
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -199,7 +191,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     vc.subCategory = type
                     vc.category = name
                     vc.id = (dict as AnyObject).guided_id ?? ""
-                    self.navigationController?.pushViewController(vc, animated: false)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
         }
@@ -222,7 +214,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     vc.subCategory = type
                     vc.category = name
                     vc.id = (dict as AnyObject).guided_id ?? ""
-                    self.navigationController?.pushViewController(vc, animated: false)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
         }

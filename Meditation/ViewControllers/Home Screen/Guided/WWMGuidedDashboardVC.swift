@@ -24,10 +24,10 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationGuidedListCount"), object: nil, userInfo: ["guidedCount": self.arrGuidedList.count])
         self.setUpUI()
         
-        let name = self.appPreference.get21ChallengeName()
-        if name != ""{
-            self.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
-        }
+//        let name = self.appPreference.get21ChallengeName()
+//        if name != ""{
+//            self.guidedEmotionReload(isTrue: true, vcName: "WWMGuidedEmotionVC")
+//        }
     }
     
     func setUpUI() {
@@ -80,7 +80,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     //WWM21DayChallengeVC
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
 
-                    vc.delegate = self
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name.capitalized)
                     vc.name = data.cat_Name
                     vc.meditationType = data.cat_meditation_type
@@ -113,7 +112,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedEmotionVC") as! WWMGuidedEmotionVC
                                 
                     //print("data.cat_name... \(data.cat_Name)")
-                    vc.delegate = self
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
                     vc.name = data.cat_Name
                     vc.guidedData = data
@@ -132,7 +130,6 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                     //WWM21DayChallengeVC
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeTabVC") as! WWM21DayChallengeTabVC
 
-                    vc.delegate = self
                     vc.itemInfo = IndicatorInfo.init(title: data.cat_Name.capitalized)
                     vc.name = data.cat_Name
                     vc.meditationType = data.cat_meditation_type
@@ -167,7 +164,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 index = index + 1
             }
             
-            pagerTabStripController.moveToViewController(at: index, animated: true)
+            pagerTabStripController.moveToViewController(at: index, animated: false)
             appPreference.set21ChallengeName(value: "")
         }//end*
         
