@@ -229,7 +229,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         
                         let rootViewController = self.window!.rootViewController as! UINavigationController
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        //let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                         rootViewController.pushViewController(profileViewController, animated: false)
                     }
                         
@@ -268,7 +269,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         
                         let rootViewController = self.window!.rootViewController as! UINavigationController
                         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        //let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                        let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                         rootViewController.pushViewController(profileViewController, animated: false)
                     }
                         

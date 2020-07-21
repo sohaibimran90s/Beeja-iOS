@@ -267,7 +267,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func pushToViewController(){
         if self.appPreference.isLogin() {
             if !self.appPreference.isProfileComplete() {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }else if self.appPreference.isLogout() {
                 
