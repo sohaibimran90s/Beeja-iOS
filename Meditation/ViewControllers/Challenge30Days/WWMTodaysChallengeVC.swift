@@ -24,11 +24,16 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
         super.viewDidLoad()
         
         if self.type == ""{
-            self.lblDayNo.text = "Day \(dayNo)"
+            self.lblDayNo.text = "Day \(daysListData.day_name)"
             self.lblDescription.text = "\(daysListData.Description)"
             self.lblAuthor.text = "\(daysListData.auther_name)"
         }else{
-            self.lblDayNo.text = "Day \(dayNo)"
+            
+            if week8Data.date_completed != ""{
+                self.lblDayNo.text = "Day \(week8Data.day_name)"
+            }else{
+                self.lblDayNo.text = "Day \(dayNo)"
+            }
             self.lblDescription.text = "\(week8Data.Description)"
             self.lblAuthor.text = "\(week8Data.auther_name)"
         }

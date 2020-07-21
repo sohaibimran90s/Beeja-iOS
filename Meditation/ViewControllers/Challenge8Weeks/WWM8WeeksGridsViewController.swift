@@ -298,11 +298,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         WWMHelperClass.day_type = "8weeks"
         WWMHelperClass.day_30_name = self.daysListData[sender_Tag].day_name
         vc.week8Data = self.daysListData[sender_Tag]
-        if completed8WeekCount == 0{
-           vc.dayNo = self.completed8WeekCount + 1
-        }else{
-           vc.dayNo = self.completed8WeekCount
-        }
+        vc.dayNo = self.completed8WeekCount + 1
         vc.type = "8weeks"
         self.navigationController?.pushViewController(vc, animated: true)
     }
