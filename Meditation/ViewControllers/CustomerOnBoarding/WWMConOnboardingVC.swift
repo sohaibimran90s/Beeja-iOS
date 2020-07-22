@@ -298,7 +298,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
     func setMeditationType(_ type: String) {
         self.appPreference.setType(value: type)
         self.appPreference.setGuideType(value: "Guided")
-        self.appPreference.setGuideTypeFor3DTouch(value: type
+        self.appPreference.setGuideTypeFor3DTouch(value: type)
         
 //        var groupType = "timer"
 //        switch type {

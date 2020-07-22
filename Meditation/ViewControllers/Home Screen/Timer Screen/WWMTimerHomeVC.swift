@@ -188,37 +188,45 @@ class WWMTimerHomeVC: WWMBaseViewController {
     func setUpSliderTimesAccordingToLevels() {
         if self.isChallengePreset{
             self.btnChoosePreset.setTitle("30 Day Challenge", for: .normal)
-            self.sliderPrepTime.minimumValue = Float(Int(self.daysListData.prep_min) ?? 0)
+            self.sliderPrepTime.minimumValue = Float(Int(self.daysListData.prep_time) ?? 0)
             self.sliderPrepTime.maximumValue = Float(Int(self.daysListData.prep_max) ?? 0)
             self.sliderPrepTime.value = Float(Int(self.daysListData.prep_time) ?? 0)
             self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
             self.prepTime = Int(self.sliderPrepTime.value)
             
-            self.sliderMeditationTime.minimumValue = Float(Int(self.daysListData.med_min) ?? 0)
+            self.sliderMeditationTime.minimumValue = Float(Int(self.daysListData.meditation_time) ?? 0)
             self.sliderMeditationTime.maximumValue = Float(Int(self.daysListData.med_max) ?? 0)
             self.sliderMeditationTime.value = Float(Int(self.daysListData.meditation_time) ?? 0)
             self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
             self.meditationTime = Int(self.sliderMeditationTime.value)
             
-            self.sliderRestTime.minimumValue = Float(Int(self.daysListData.rest_min) ?? 0)
+            self.sliderRestTime.minimumValue = Float(Int(self.daysListData.rest_time) ?? 0)
             self.sliderRestTime.maximumValue = Float(Int(self.daysListData.rest_max) ?? 0)
             self.sliderRestTime.value = Float(Int(self.daysListData.rest_time) ?? 0)
             self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
             self.restTime = Int(self.sliderRestTime.value)
         }else{
-            self.sliderPrepTime.minimumValue = Float(selectedLevelData.minPrep)
+            
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                self.sliderPrepTime.minimumValue = Float(selectedLevelData.prepTime)
+                self.sliderMeditationTime.minimumValue = Float(selectedLevelData.meditationTime)
+                self.sliderRestTime.minimumValue = Float(selectedLevelData.restTime)
+            }else{
+                self.sliderPrepTime.minimumValue = Float(selectedLevelData.minPrep)
+                self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
+                self.sliderRestTime.minimumValue = Float(selectedLevelData.minRest)
+            }
+            
             self.sliderPrepTime.maximumValue = Float(selectedLevelData.maxPrep)
             self.sliderPrepTime.value = Float(selectedLevelData.prepTime)
             self.lblPrepTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderPrepTime.value))
             self.prepTime = Int(self.sliderPrepTime.value)
             
-            self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
             self.sliderMeditationTime.maximumValue = Float(selectedLevelData.maxMeditation)
             self.sliderMeditationTime.value = Float(selectedLevelData.meditationTime)
             self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
             self.meditationTime = Int(self.sliderMeditationTime.value)
             
-            self.sliderRestTime.minimumValue = Float(selectedLevelData.minRest)
             self.sliderRestTime.maximumValue = Float(selectedLevelData.maxRest)
             self.sliderRestTime.value = Float(selectedLevelData.restTime)
             self.lblRestTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderRestTime.value))
