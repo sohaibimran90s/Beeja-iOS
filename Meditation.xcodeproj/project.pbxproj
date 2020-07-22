@@ -2538,9 +2538,12 @@
 		63F888F924C01066001F424A /* JournalImage */ = {
 			isa = PBXGroup;
 			children = (
+				63F8891024C01066001F424A /* TextImg */,
+				63F888FC24C01066001F424A /* ImageImg */,
+				63F8891824C01066001F424A /* VoiceImg */,
+				63F8893224C01066001F424A /* VoiceToTextImg */,
 				63F888FA24C01066001F424A /* Add.png */,
 				63F888FB24C01066001F424A /* Pause@2x.png */,
-				63F888FC24C01066001F424A /* ImageImg */,
 				63F8890924C01066001F424A /* CloseBtn@2x.png */,
 				63F8890A24C01066001F424A /* RecordIcon@3x.png */,
 				63F8890B24C01066001F424A /* Add@2x.png */,
@@ -2548,9 +2551,7 @@
 				63F8890D24C01066001F424A /* RecordIcon@2x.png */,
 				63F8890E24C01066001F424A /* CloseBtn@3x.png */,
 				63F8890F24C01066001F424A /* Pause@3x.png */,
-				63F8891024C01066001F424A /* TextImg */,
 				63F8891724C01066001F424A /* StopIcon.png */,
-				63F8891824C01066001F424A /* VoiceImg */,
 				63F8892924C01066001F424A /* deleteIcon.png */,
 				63F8892A24C01066001F424A /* CloseBtn.png */,
 				63F8892B24C01066001F424A /* imagePlaceholder.png */,
@@ -2560,7 +2561,6 @@
 				63F8892F24C01066001F424A /* deleteIcon@3x.png */,
 				63F8893024C01066001F424A /* Delete.png */,
 				63F8893124C01066001F424A /* Delete@2x.png */,
-				63F8893224C01066001F424A /* VoiceToTextImg */,
 				63F8893F24C01066001F424A /* Delete@3x.png */,
 			);
 			path = JournalImage;
