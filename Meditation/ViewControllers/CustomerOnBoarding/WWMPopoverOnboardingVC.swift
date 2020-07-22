@@ -59,31 +59,37 @@ class WWMPopoverOnboardingVC: WWMBaseViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    //    self.appPreference.setType(value: "learn")
-    //    self.appPreference.setType(value: "guided")
-    //    self.appPreference.setType(value: "timer")
     func setMeditationType(_ type: String) {
-        self.appPreference.setType(value: type)
-        self.appPreference.setGuideType(value: "Guided")
-        self.appPreference.setGuideTypeFor3DTouch(value: type)
+//    self.appPreference.setType(value: "learn")
+//    self.appPreference.setType(value: "guided")
+//    self.appPreference.setType(value: "timer")
+//        self.appPreference.setType(value: type)
+//        self.appPreference.setGuideType(value: "Guided")
+//        self.appPreference.setGuideTypeFor3DTouch(value: type)
         
-//        var groupType = "timer"
-//        switch type {
-//          case "pratical", "8 week", "8week", "21", "21day", "moments", "playlist", "7", "guided":
-//            groupType = "guided"
-//          case "learn":
-//            groupType = "learn"
-//          default:
-//            groupType = "timer"
-//        }
-//
-//        var finalType = type
-//        if (type == "21day") {
-//            finalType = "21"
-//        }
-//        self.appPreference.setType(value: groupType)
-//        self.appPreference.set21ChallengeName(value: finalType.capitalized)
-//        self.appPreference.setGuideTypeFor3DTouch(value: finalType)
+        var groupType = "timer"
+        switch type {
+          case "pratical", "8 week", "8week", "21", "21day", "moments", "playlist", "7", "guided":
+            groupType = "guided"
+          case "learn":
+            groupType = "learn"
+          default:
+            groupType = "timer"
+        }
+
+        self.appPreference.setType(value: groupType)
+        self.appPreference.setGuideTypeFor3DTouch(value: groupType)
+
+        if (groupType == "guided") {
+            //var finalType = type
+            if (type == "21day" || type == "21" ) {
+                self.appPreference.set21ChallengeName(value: "21 Days challenge")
+            } else if (type == "8 week" || type == "8week" ) {
+                self.appPreference.set21ChallengeName(value: "8 Weeks challenge")
+            } else {
+                self.appPreference.set21ChallengeName(value: type.capitalized)
+            }
+        }
     }
     
     func meditationApi(type: String) {
