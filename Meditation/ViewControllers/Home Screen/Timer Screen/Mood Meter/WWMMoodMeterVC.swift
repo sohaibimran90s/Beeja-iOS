@@ -394,10 +394,6 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
                     self.navigateToDashboard()
                 }
             }
-            
-            WWMHelperClass.complete_percentage = "0"
-            WWMHelperClass.day_30_name = ""
-            WWMHelperClass.day_type = ""
         }
     }
     
@@ -639,7 +635,15 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     func navigateToDashboard() {
         
         if self.appPreference.getType() == "learn"{
-            if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+            if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    self.nextVC()
+                }
+            }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                 self.nextVC()
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
@@ -648,6 +652,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         }else{
             self.nextVC()
         }
+        
+        WWMHelperClass.complete_percentage = "0"
+        WWMHelperClass.day_30_name = ""
+        WWMHelperClass.day_type = ""
+        
     }
     
     func nextVC(){
