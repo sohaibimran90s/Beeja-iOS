@@ -2,8 +2,8 @@
 //  Utilities.swift
 //  DLP
 //
-//  Created by Invenco  on 08/09/18.
-//  Copyright © 2018 Invenco Solutions . All rights reserved.
+//  Created by Ehsan on 18/12/19.
+//  Copyright © 2019 Ehsan. All rights reserved.
 //
 
 import UIKit
@@ -34,7 +34,7 @@ class Utilities: NSObject {
 
     class func paymentController(container: AnyObject) {
         let vc = UIStoryboard(name: "Payment", bundle: nil).instantiateViewController(withIdentifier: "PaymentView") as! PaymentVC
-        vc.modalPresentationStyle = .overFullScreen
+        vc.modalPresentationStyle = .fullScreen
         container.present(vc, animated: true, completion: nil)
     }
 }

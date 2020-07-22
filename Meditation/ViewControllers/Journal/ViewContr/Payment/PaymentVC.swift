@@ -30,7 +30,8 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
     var continueRestoreValue: String = ""
     var selectedProductIndex = 2
     var boolGetIndex = false
-    
+    let kDataManager = DataManager.sharedInstance
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,9 +39,10 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
 //        view.insetsLayoutMarginsFromSafeArea = false
 
         self.monthlyView.layer.borderColor = UIColor.clear.cgColor
-        self.annualView.layer.borderColor = UIColor.clear.cgColor
+        self.annualView.layer.borderColor = Constant.Light_Green.cgColor
         self.lifetimeView.layer.borderColor = UIColor.clear.cgColor
         self.updateNowBtn.layer.borderColor = Constant.Light_Green.cgColor
+
         
         self.boolGetIndex = true
         self.requestProductInfo()
@@ -49,6 +51,7 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
     }
     
     @IBAction func closeButtonAction(sender: UIButton) {
+        //kDataManager.isPaidAc = true
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -207,14 +210,17 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
+                self.appPreference.setExpiryDate(value: true)
+
                 if self.continueRestoreValue == "1"{
                   
                     if !self.restoreBool{
                         
                         KUSERDEFAULTS.set("1", forKey: "restore")
                         self.restoreBool = true
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
+                        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        //UIApplication.shared.keyWindow?.rootViewController = vc
+                        self.dismiss(animated: true, completion: nil)
                         
                         return
                     }
@@ -224,8 +230,9 @@ class PaymentVC: WWMBaseViewController, SKProductsRequestDelegate, SKPaymentTran
                         
                         KUSERDEFAULTS.set("0", forKey: "restore")
                         self.restoreBool = true
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
-                        UIApplication.shared.keyWindow?.rootViewController = vc
+                        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+                        //UIApplication.shared.keyWindow?.rootViewController = vc
+                        self.dismiss(animated: true, completion: nil)
                         
                         return
                     }

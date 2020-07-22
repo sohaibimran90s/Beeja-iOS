@@ -77,6 +77,13 @@ class ImageContainerVC: UIViewController {
         self.mainImageView.image = image
     }
         
+    func updateUI() {
+        self.paymentRequiredCheck()
+        self.loadImageObjectList()
+        self.thumbCollectionView.reloadData()
+    }
+    
+    
     @IBAction func addImageAction(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             imagePicker.delegate = self
@@ -123,9 +130,10 @@ class ImageContainerVC: UIViewController {
             self.titleTextField.text = ""
 
             self.actualImageList.append(imgObj)
-            self.loadImageObjectList()
-            self.thumbCollectionView.reloadData()
-            self.paymentRequiredCheck()
+//            self.loadImageObjectList()
+//            self.thumbCollectionView.reloadData()
+//            self.paymentRequiredCheck()
+            self.updateUI()
             
             self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
         }
@@ -133,9 +141,10 @@ class ImageContainerVC: UIViewController {
     
     func deleteItem(index: Int) {
         self.actualImageList.remove(at: index)
-        self.loadImageObjectList()
-        self.thumbCollectionView.reloadData()
-        self.paymentRequiredCheck()
+//        self.loadImageObjectList()
+//        self.thumbCollectionView.reloadData()
+//        self.paymentRequiredCheck()
+        self.updateUI()
         self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
     }
     

@@ -83,7 +83,7 @@ class AudioContainerVC: UIViewController {
     
     // Call this function from AddJournalVC to remove overlay if already paid.
     func purchasedUpdate() {
-        kDataManager.isPaidAc = true
+        //kDataManager.isPaidAc = true
         self.overlayView.isHidden = (kDataManager.isPaidAc) ? true : false
     }
     

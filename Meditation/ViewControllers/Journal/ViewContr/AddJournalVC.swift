@@ -72,7 +72,7 @@ class AddJournalVC: UIViewController {
 
         // Do any additional setup after loading the view.
         self.title = "Add Text Entry"
-        
+
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -98,14 +98,29 @@ class AddJournalVC: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.setHidesBackButton(true, animated: false);
-        
-        
-        voiceBtn.setImage(UIImage(named: (kDataManager.isPaidAc) ? "VoiceDisabled.png" : "VoiceLockedDis.png"), for: UIControl.State.normal)
-        voiceToTextBtn.setImage(UIImage(named: (kDataManager.isPaidAc) ? "VoicetoTextDisabled.png" : "VoicetoTextLockedDis.png"), for: UIControl.State.normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        kDataManager.isPaidAc = self.appPreference.getExpiryDate()
+
+        if (kDataManager.isPaidAc) {
+
+            self.textContainerVC?.checkIfAccountPaid()
+            self.imageContainerVC?.updateUI()
+            self.audioContainerVC?.purchasedUpdate()
+            self.audioToTextContainerVC?.purchasedUpdate()
+            
+            self.checkForPaidAccount()
+            
+            voiceBtn.setImage(UIImage(named: "VoiceDisabled.png"), for: UIControl.State.normal)
+            voiceToTextBtn.setImage(UIImage(named: "VoicetoTextDisabled.png"), for: UIControl.State.normal)
+        }
+        else {
+            voiceBtn.setImage(UIImage(named: "VoiceLockedDis.png"), for: UIControl.State.normal)
+            voiceToTextBtn.setImage(UIImage(named: "VoicetoTextLockedDis.png"), for: UIControl.State.normal)
+        }
     }
 
     @objc func closeButtonAction() {
@@ -229,7 +244,7 @@ class AddJournalVC: UIViewController {
 
     func voiceBtnUpdate() {
         let selectedBtnImg = (kDataManager.isPaidAc) ? "Voice.png" : "VoiceLockedEn.png"
-        voiceBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)//New
+        voiceBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)
         
         let normalBtnImg = (kDataManager.isPaidAc) ? "VoiceDisabled.png" : "VoiceLockedDis.png"
         voiceBtn.setImage(UIImage(named: normalBtnImg), for: UIControl.State.normal)
@@ -237,13 +252,13 @@ class AddJournalVC: UIViewController {
     
     func voiceToTextBtnUpdate() {
         let selectedBtnImg = (kDataManager.isPaidAc) ? "VoicetoText.png" : "VoicetoTextLockedEn.png"
-        voiceToTextBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)//New
+        voiceToTextBtn.setImage(UIImage(named: selectedBtnImg), for: UIControl.State.selected)
         
         let normalBtnImg = (kDataManager.isPaidAc) ? "VoicetoTextDisabled.png" : "VoicetoTextLockedDis.png"
         voiceToTextBtn.setImage(UIImage(named: normalBtnImg), for: UIControl.State.normal)
     }
     
-    func upgradeToPremium() {
+    /*func upgradeToPremium() {
         Alert.alertWithTwoButton(title: "Warnning", message: "Purchase For this section.", btn1: "Cancel",
                                  btn2: "Buy", container: self, completion: { (alertController, index) in
                                     
@@ -254,7 +269,7 @@ class AddJournalVC: UIViewController {
                                         self.checkForPaidAccount()
                                     }
         })
-    }
+    }*/
 
     
     @IBAction func logExperienceAction(sender: UIButton) {
