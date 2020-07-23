@@ -925,6 +925,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         
         if type == "launch"{
             if guided_type == "30 Day Challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "30DAYS")
                 let introURL = self.appPreffrence.get30DaysURL()
                 if introURL != ""{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -942,6 +943,7 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     appPreference.set21ChallengeName(value: "30 Day Challenge")
                 }
             }else if guided_type == "8 Weeks Challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "8WEEK")
                 let introURL = self.appPreffrence.get8WeekURL()
                 if introURL != ""{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
@@ -959,11 +961,13 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                     appPreference.set21ChallengeName(value: "8 Weeks Challenge")
                 }
             }else if guided_type == "21 Days challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "21DAYS")
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
                 appPreference.set21ChallengeName(value: "21 Days challenge")
             }else if guided_type == "7 Days challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "7DAYS")
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
@@ -975,21 +979,25 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
              }
         }else{
             if guided_type == "30 Day Challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "30DAYS")
                 self.type = "learn"
                 self.appPreference.setType(value: "learn")
                 self.appPreference.setGuideTypeFor3DTouch(value: "learn")
                 appPreference.set21ChallengeName(value: "30 Day Challenge")
             }else if guided_type == "8 Weeks Challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "8WEEK")
                 self.type = "learn"
                 self.appPreference.setType(value: "learn")
                 self.appPreference.setGuideTypeFor3DTouch(value: "learn")
                 appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             }else if guided_type == "21 Days challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "21DAYS")
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
                 appPreference.set21ChallengeName(value: "21 Days challenge")
             }else if guided_type == "7 Days challenge"{
+                WWMHelperClass.sendEventAnalytics(contentType: "HOME_BANNER", itemId: "START", itemName: "7DAYS")
                 self.type = "guided"
                 self.appPreference.setType(value: "guided")
                 self.appPreference.setGuideTypeFor3DTouch(value: "guided")
