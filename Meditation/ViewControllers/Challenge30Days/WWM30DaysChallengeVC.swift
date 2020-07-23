@@ -327,6 +327,8 @@ extension WWM30DaysChallengeVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         appPreference.set21ChallengeName(value: "30 Day Challenge")
+        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_LEAR", itemName: "30DAYS")
+        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_30DAYS", itemName: "\(indexPath.item)")
         self.pushViewController(sender_Tag: indexPath.item)
     }
     

@@ -82,6 +82,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                             
+                            WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_\(subCategory ?? "PRAC")", itemName: "7DAYS")
                             self.appPreference.set21ChallengeName(value: self.name)
                             vc.cat_name = self.name
                             vc.name = self.name
@@ -97,7 +98,6 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         }else{
             self.lblChallTypePractical.text = "21 DAY CHALLENGE"
             self.lblChallTypeSpiritual.text = "21 DAY CHALLENGE"
-            
         }
     }
     
@@ -154,6 +154,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     let getChallengeStatus = self.appPreference.getPracticalChallenge()
                     if getChallengeStatus{
                         //print("Challenge already accepted")
+                        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_PRAC", itemName: "21DAYS")
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
                         self.appPreference.set21ChallengeName(value: self.name)
@@ -168,6 +169,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         //print("Challenge not accepted yet")
                         
                         if reachable.isConnectedToNetwork() {
+                            WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_PRAC", itemName: "21DAYS")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                                                         
                             vc.value = "curatedCards"
@@ -199,6 +201,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                     let getChallengeStatus = self.appPreference.getSpiritualChallenge()
                     if getChallengeStatus{
                         //print("Challenge already accepted")
+                        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_SPIR", itemName: "21DAYS")
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
                         
                         self.appPreference.set21ChallengeName(value: self.name)
@@ -214,6 +217,7 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         //print("Challenge not accepted yet")
                         
                         if reachable.isConnectedToNetwork() {
+                            WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_SPIR", itemName: "21DAYS")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
                                                         
                             vc.value = "curatedCards"
@@ -238,10 +242,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
     }
     
     // MARK: - IndicatorInfoProvider
-    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         
-        print(self.name)
         return itemInfo
     }
 }

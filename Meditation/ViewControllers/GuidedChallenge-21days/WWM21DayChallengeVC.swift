@@ -549,7 +549,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedIndex = indexPath.row
-        print(self.arrGuidedList[0].cat_EmotionList[selectedIndex].completed)
+        //print(self.arrGuidedList[0].cat_EmotionList[selectedIndex].completed)
         //tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         self.tableView.reloadData()
     }
@@ -615,9 +615,11 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                             //print("7 days challenge accepted")
                             self.xibCall1(title1: "You have accepted 7 Days Challenge")
                         }else{
+                            WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_\(self.subCategory.uppercased())", itemName: "21DAYS")
                             self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                         }
                     }else{
+                        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_\(self.subCategory.uppercased())", itemName: "7DAYS")
                         self.pushViewController(table_cell_tag: collectionView.tag, collection_cell_tag: indexPath.item)
                     }
                     //*
@@ -675,7 +677,8 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func pushViewController(table_cell_tag: Int, collection_cell_tag: Int) {
         
-        print(self.cat_name)
+        //print(self.cat_name)
+        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_21DAYS", itemName: "\(table_cell_tag)")
         if reachable.isConnectedToNetwork() {
             var flag = 0
             var position = 0

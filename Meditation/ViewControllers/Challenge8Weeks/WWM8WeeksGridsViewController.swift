@@ -270,6 +270,9 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     func pushViewController(sender_Tag: Int){
         
+        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_LEAR", itemName: "8WEEKS")
+        WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_8WEEKS", itemName: "\(sender_Tag)")
+        
         let obj = WWMLearnStepListVC()
         var flag = 0
         

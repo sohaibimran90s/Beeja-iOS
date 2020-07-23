@@ -96,6 +96,8 @@ class WWMEditProfileVC: WWMBaseViewController {
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
+            WWMHelperClass.sendEventAnalytics(contentType: "MY_PROFILE", itemId: "IMAGE", itemName: "")
+            
             //print("%@",self.imageData)
             //print("Get Image Data")
         }
@@ -109,6 +111,7 @@ class WWMEditProfileVC: WWMBaseViewController {
             self.imageData = image.jpegData(compressionQuality: 0.75)!
             self.profileImg.backgroundColor = UIColor.clear
             self.profileImg.image = image
+            WWMHelperClass.sendEventAnalytics(contentType: "MY_PROFILE", itemId: "IMAGE", itemName: "")
             //print("%@",self.imageData)
             //print("Get Image Data")
         }
@@ -300,7 +303,7 @@ extension WWMEditProfileVC: UIPickerViewDelegate, UIPickerViewDataSource{
            if success {
                 //print("success... \(result)")
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
-                
+                WWMHelperClass.sendEventAnalytics(contentType: "MY_PROFILE", itemId: "UPDATE", itemName: "")
                 self.appPreference.setGender(value: result["gender"] as? String ?? "")
                 self.appPreference.setDob(value: result["dob"] as? String ?? "")
             
