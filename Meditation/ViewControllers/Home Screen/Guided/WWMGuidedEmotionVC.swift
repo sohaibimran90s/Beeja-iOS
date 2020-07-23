@@ -104,7 +104,9 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 if data.tile_type == "2" {
                     vc.category = "7 Days challenge"
                     vc.subCategory = self.name.lowercased()
+                    WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "\(self.name.uppercased())_CURA_CHALL_START", itemName: "7DAYS")
                 }else{
+                    WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "\(self.name.uppercased())_CURA_CHALL_START", itemName: "21DAYS")
                     vc.category = "21 Days challenge"
                     vc.subCategory = self.name.lowercased()
                 }
@@ -123,7 +125,8 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     }
                     
                     self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
-                    
+                    WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "\(self.name.uppercased())_CURA_CHALL_START", itemName: "7DAYS")
+
                     //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
 
                 }else{
@@ -135,6 +138,8 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                     }
                     
                     self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
+                    WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "\(self.name.uppercased())_CURA_CHALL_START", itemName: "21DAYS")
+
 
                     //print("data.tile_type*** \(data.tile_type) name_tile \(self.guidedData.cat_Name)")
                 }
