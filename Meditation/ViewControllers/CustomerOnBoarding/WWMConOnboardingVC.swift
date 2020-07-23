@@ -319,6 +319,8 @@ class WWMConOnboardingVC: WWMBaseViewController {
                 self.appPreference.set21ChallengeName(value: "21 Days challenge")
             } else if (type == "8 week" || type == "8week" ) {
                 self.appPreference.set21ChallengeName(value: "8 Weeks challenge")
+            } else if (type == "playlist") {
+                self.appPreference.set21ChallengeName(value: "My Playlist")
             } else {
                 self.appPreference.set21ChallengeName(value: type.capitalized)
             }
