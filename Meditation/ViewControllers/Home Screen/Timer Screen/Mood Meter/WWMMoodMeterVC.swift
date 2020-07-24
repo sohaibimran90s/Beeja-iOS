@@ -230,10 +230,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     func callWWMMoodMeterLogVC(){
+        //positive mood
         let moodID = Int(self.appPreference.getMoodId()) ?? 0
         if (moodID < 37 ) {
             self.callAddJournalVC()
+            
         } else {
+        //negative mood
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
 
             //print("type..... \(self.type) apppre... \(self.appPreffrence.getPrePostJournalBool()) postmoddcount.. \(self.appPreference.getPostMoodCount()) getPreMoodCount.. \(self.appPreference.getPreMoodCount())")

@@ -353,7 +353,10 @@ class AddJournalVC: UIViewController {
                 self.dismiss(animated: false, completion: nil)
             }
             else {
-                self.navigationController!.popToRootViewController(animated: true)
+                //Prashant
+                self.navigateToDashboard()
+//                self.navigationController!.popToRootViewController(animated: true)
+                //-------------------------
             }
             return
         }
@@ -374,7 +377,10 @@ class AddJournalVC: UIViewController {
                     self.dismiss(animated: false, completion: nil)
                 }
                 else {
-                    self.navigationController!.popToRootViewController(animated: true)
+                    //Prashant
+                    self.navigateToDashboard()
+//                    self.navigationController!.popToRootViewController(animated: true)
+                    //-------------------------
                 }
             }
             else {
@@ -444,7 +450,10 @@ class AddJournalVC: UIViewController {
                     self.dismiss(animated: false, completion: nil)
                 }
                 else {
-                    self.navigationController!.popToRootViewController(animated: true)
+                    //Prashant
+                    self.navigateToDashboard()
+//                    self.navigationController!.popToRootViewController(animated: true)
+                    //-------------------------
                 }
             }
             else {
@@ -511,7 +520,10 @@ class AddJournalVC: UIViewController {
                     self.dismiss(animated: false, completion: nil)
                 }
                 else {
-                    self.navigationController!.popToRootViewController(animated: true)
+                    //Prashant
+                    self.navigateToDashboard()
+//                    self.navigationController!.popToRootViewController(animated: true)
+                    //-------------------------
                 }
             }
             else {
@@ -550,7 +562,10 @@ class AddJournalVC: UIViewController {
                     self.dismiss(animated: false, completion: nil)
                 }
                 else {
-                    self.navigationController!.popToRootViewController(animated: true)
+                    //Prashant
+                    self.navigateToDashboard()
+//                    self.navigationController!.popToRootViewController(animated: true)
+                    //-------------------------
                 }
             }
             else {
@@ -598,5 +613,84 @@ class AddJournalVC: UIViewController {
         WWMHelperClass.saveDb()
     }
     //----------------
+    
+    
+    //Prashant
+    //MARK:- mood share
+    func navigateToDashboard() {
+        
+        //print("self.type..... \(self.type)")
+        if self.appPreference.getType() == "learn"{
+            if self.mediCompleteObj.type == "pre" {
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popToRootViewController(animated: false)
+            }else {
+                
+                if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
+                        
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        self.nextVC()
+                    }
+                }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+                    self.nextVC()
+                }else{
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }else{
+            if self.mediCompleteObj.type == "pre" {
+                self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.popToRootViewController(animated: false)
+            }else {
+                self.nextVC()
+             }
+        }
+        
+        WWMHelperClass.complete_percentage = "0"
+        WWMHelperClass.day_type = ""
+        WWMHelperClass.day_30_name = ""
+    }
+    
+    func nextVC(){
+        if !self.mediCompleteObj.moodData.show_burn && self.mediCompleteObj.moodData.id != -1 {
+            let story = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = story.instantiateViewController(withIdentifier: "WWMMoodShareVC") as! WWMMoodShareVC
+            vc.moodData = self.mediCompleteObj.moodData
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
+            
+            if (self.appPreference.get21ChallengeName() == "7 Days challenge") && (WWMHelperClass.days21StepNo == "Step 7" || WWMHelperClass.days21StepNo == "Step 14" || WWMHelperClass.days21StepNo == "Step 21") && WWMHelperClass.stepsCompleted == false{
+                
+                WWMHelperClass.days21StepNo = ""
+                WWMHelperClass.stepsCompleted = false
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }else{
+                self.callHomeController()
+            }
+        }
+
+    }
+    
+    func callHomeController(){
+        self.navigationController?.isNavigationBarHidden = false
+        
+        if let tabController = self.tabBarController as? WWMTabBarVC {
+            tabController.selectedIndex = 4
+            for index in 0..<tabController.tabBar.items!.count {
+                let item = tabController.tabBar.items![index]
+                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
+                if index == 4 {
+                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
+                }
+            }
+        }
+        self.navigationController?.popToRootViewController(animated: false)
+    }
 }
 
