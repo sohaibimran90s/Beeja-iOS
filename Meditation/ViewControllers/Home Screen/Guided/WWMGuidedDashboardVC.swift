@@ -164,6 +164,10 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
                 index = index + 1
             }
             
+            if index > self.arrGuidedList1.count - 1{
+                index = 0
+            }
+            
             pagerTabStripController.moveToViewController(at: index, animated: false)
             appPreference.set21ChallengeName(value: "")
         }//end*

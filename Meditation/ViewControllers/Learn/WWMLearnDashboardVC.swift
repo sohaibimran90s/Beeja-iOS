@@ -100,6 +100,10 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
                 index = index + 1
             }
             
+            if index > self.arrLearnList.count - 1{
+                index = 0
+            }
+            
             pagerTabStripController.moveToViewController(at: index, animated: true)
             appPreference.set21ChallengeName(value: "")
         }//end*
