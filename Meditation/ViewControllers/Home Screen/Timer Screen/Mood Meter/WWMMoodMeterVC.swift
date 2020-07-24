@@ -324,6 +324,14 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         vc.mediCompleteObj.audio_Id = self.audio_Id
         vc.mediCompleteObj.rating = self.rating
         vc.mediCompleteObj.watched_duration = self.watched_duration
+        vc.mediCompleteObj.category_Id = self.category_Id
+        vc.mediCompleteObj.emotion_Id = self.emotion_Id
+        vc.mediCompleteObj.audio_Id = self.audio_Id
+        vc.mediCompleteObj.watched_duration = self.watched_duration
+        vc.mediCompleteObj.rating = self.rating
+        vc.mediCompleteObj.type = self.type
+        vc.mediCompleteObj.meditationID = self.meditationID
+        vc.mediCompleteObj.levelID = self.levelID
         self.navigationController?.pushViewController(vc, animated: true)
         //self.present(navController, animated: false, completion: nil)
     }

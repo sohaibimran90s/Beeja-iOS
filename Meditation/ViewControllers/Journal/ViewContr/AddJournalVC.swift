@@ -354,7 +354,8 @@ class AddJournalVC: UIViewController {
             }
             else {
                 //Prashant
-                self.navigateToDashboard()
+                //self.navigateToDashboard()
+                self.completeMeditationAPI()
 //                self.navigationController!.popToRootViewController(animated: true)
                 //-------------------------
             }
@@ -378,7 +379,8 @@ class AddJournalVC: UIViewController {
                 }
                 else {
                     //Prashant
-                    self.navigateToDashboard()
+                    //self.navigateToDashboard()
+                    self.completeMeditationAPI()
 //                    self.navigationController!.popToRootViewController(animated: true)
                     //-------------------------
                 }
@@ -451,7 +453,8 @@ class AddJournalVC: UIViewController {
                 }
                 else {
                     //Prashant
-                    self.navigateToDashboard()
+                    //self.navigateToDashboard()
+                    self.completeMeditationAPI()
 //                    self.navigationController!.popToRootViewController(animated: true)
                     //-------------------------
                 }
@@ -521,7 +524,8 @@ class AddJournalVC: UIViewController {
                 }
                 else {
                     //Prashant
-                    self.navigateToDashboard()
+                    //self.navigateToDashboard()
+                    self.completeMeditationAPI()
 //                    self.navigationController!.popToRootViewController(animated: true)
                     //-------------------------
                 }
@@ -531,8 +535,6 @@ class AddJournalVC: UIViewController {
             }
         }
     }
-
-
         
 //MARK: API Call AudioToTextJournal
     func audioToTextJournalLog() {
@@ -563,7 +565,8 @@ class AddJournalVC: UIViewController {
                 }
                 else {
                     //Prashant
-                    self.navigateToDashboard()
+                    //self.navigateToDashboard()
+                    self.completeMeditationAPI()
 //                    self.navigationController!.popToRootViewController(animated: true)
                     //-------------------------
                 }
@@ -598,9 +601,6 @@ class AddJournalVC: UIViewController {
                 self.audioToTextContainerVC = viewController2
             }
         }
-
-        
-
     }
    
     //Prashant
@@ -614,6 +614,102 @@ class AddJournalVC: UIViewController {
     }
     //----------------
     
+    func completeMeditationAPI() {
+        
+        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+        if nintyFivePercentDB.count > 0{
+            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
+        }
+                
+        var param: [String: Any] = [:]
+        param = [
+            "type": self.appPreference.getType(),
+            "step_id": WWMHelperClass.step_id,
+            "mantra_id": WWMHelperClass.mantra_id,
+            "category_id" : mediCompleteObj.category_Id,
+            "emotion_id" : mediCompleteObj.emotion_Id,
+            "audio_id" : mediCompleteObj.audio_Id,
+            "guided_type" : self.appPreference.getGuideType(),
+            "duration" : mediCompleteObj.watched_duration,
+            "watched_duration" : mediCompleteObj.watched_duration,
+            "rating" : mediCompleteObj.rating,
+            "user_id":self.appPreference.getUserID(),
+            "meditation_type":mediCompleteObj.type,
+            "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
+            "tell_us_why":"",
+            "prep_time":mediCompleteObj.prepTime,
+            "meditation_time":mediCompleteObj.meditationTime,
+            "rest_time":mediCompleteObj.restTime,
+            "meditation_id": mediCompleteObj.meditationID,
+            "level_id":mediCompleteObj.levelID,
+            "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "complete_percentage": WWMHelperClass.complete_percentage,
+            "is_complete": "1",
+            "title": "",
+            "journal_type": "",
+            "challenge_day_id":WWMHelperClass.day_30_name,
+            "challenge_type":WWMHelperClass.day_type
+
+            ] as [String : Any]
+        
+        //print("param meterlog... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                self.appPreference.setSessionAvailableData(value: true)
+                self.meditationHistoryListAPI()
+                WWMHelperClass.complete_percentage = "0"
+                self.navigationController?.isNavigationBarHidden = true
+                self.navigateToDashboard()
+            }else {
+                self.saveToDB(param: param)
+                self.navigationController?.isNavigationBarHidden = true
+                self.navigateToDashboard()
+            }
+        }
+    }
+    
+    func saveToDB(param:[String:Any]) {
+        let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: param, options:.prettyPrinted)
+        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+        meditationDB.meditationData = myString
+        WWMHelperClass.saveDb()
+        //self.logExperience()
+    }
+
+    
+    //MeditationHistoryList API
+        func meditationHistoryListAPI() {
+            
+            let param = ["user_id": self.appPreference.getUserID()]
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    if let data = result["data"] as? [String: Any]{
+                        if let records = data["records"] as? [[String: Any]]{
+                            
+                            let meditationHistoryData = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+                            if meditationHistoryData.count > 0 {
+                                WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+                            }
+                            
+                            for dict in records{
+                                let dbMeditationHistory = WWMHelperClass.fetchEntity(dbName: "DBMeditationHistory") as! DBMeditationHistory
+                                let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                                let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                                dbMeditationHistory.data = myString
+                                WWMHelperClass.saveDb()
+                                
+                            }
+                        }
+                    }
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationMeditationHistory"), object: nil)
+                    //print("url MedHist....****** \(URL_MEDITATIONHISTORY+"/page=1") param MedHist....****** \(param) result medHist....****** \(result)")
+                    //print("success WWMStartTimerVC meditationhistoryapi in background thread")
+                }
+            }
+        
+    }
     
     //Prashant
     //MARK:- mood share
