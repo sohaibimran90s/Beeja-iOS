@@ -31,6 +31,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     var daysListData: [EightWeekModel] = []
     var checkExpireRetake = 0
     var completed8WeekCount = 0
+    var isTwoTimePlay = false
+    var twoTimeDay = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,9 +235,12 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
                 
         if self.daysListData[indexPath.item].second_session_required{
+            self.isTwoTimePlay = true
             if check2TypePlay().0{
+                self.twoTimeDay = 2
                 self.pushViewController(sender_Tag: check2TypePlay().1)
             }else{
+                self.twoTimeDay = 1
                 self.pushViewController(sender_Tag: indexPath.item)
             }
         }else{
@@ -303,6 +308,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         vc.week8Data = self.daysListData[sender_Tag]
         vc.dayNo = self.completed8WeekCount + 1
         vc.type = "8weeks"
+        vc.isTwoTimePlay = self.isTwoTimePlay
+        vc.twoTimeDay = self.twoTimeDay
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

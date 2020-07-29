@@ -19,6 +19,8 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     var week8Data = EightWeekModel()
     var type = ""
     var dayNo = 1
+    var isTwoTimePlay = false
+    var twoTimeDay = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,11 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
             if week8Data.date_completed != ""{
                 self.lblDayNo.text = "Day \(week8Data.day_name)"
             }else{
-                self.lblDayNo.text = "Day \(dayNo)"
+                if isTwoTimePlay{
+                    self.lblDayNo.text = "Day \(dayNo)/\(self.twoTimeDay)"
+                }else{
+                    self.lblDayNo.text = "Day \(dayNo)"
+                }
             }
             self.lblDescription.text = "\(week8Data.Description)"
             self.lblAuthor.text = "\(week8Data.auther_name)"
