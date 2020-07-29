@@ -163,9 +163,7 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
                             
                         }else {
                             
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                            
-                            vc.value = "SignupLetsStart"
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }

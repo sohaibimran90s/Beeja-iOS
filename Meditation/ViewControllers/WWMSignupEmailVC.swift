@@ -188,9 +188,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                     self.appPreference.setHomePageURL(value: userProfile["home_page_url"] as! String)
                     self.appPreference.setLearnPageURL(value: userProfile["learn_page_url"] as! String)
                     
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                    
-                    vc.value = "SignupLetsStart"
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
                     GIDSignIn.sharedInstance()?.signOut()
@@ -367,9 +365,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                             // UIApplication.shared.keyWindow?.rootViewController = AppDelegate.sharedDelegate().animatedTabBarController()
                         }else {
                             
-                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                            
-                            vc.value = "SignupLetsStart"
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }
