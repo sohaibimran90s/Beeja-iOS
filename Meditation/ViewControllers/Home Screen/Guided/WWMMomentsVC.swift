@@ -143,6 +143,9 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")
             
+            
+            self.appPreference.set21ChallengeName(value: "Moments")
+            
             if guidedAudioDataDB.count > 1{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepAudioVC") as! WWMSleepAudioVC
                 vc.emotionData = data

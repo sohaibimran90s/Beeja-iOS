@@ -168,10 +168,10 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.lblName.text = "\(kMORNING)\n\(firstName)"
         }else if hour < 18 {
             //print("good afternoon")
-            self.lblName.text = "\(kAFTERNOON)\n\(firstName)"
+            self.lblName.text = "\(kHey)\n\(firstName)"
         }else{
             //print("good evening")
-            self.lblName.text = "\(kEVENING)\n\(firstName)"
+            self.lblName.text = "\(kHey)\n\(firstName)"
         }
     }
     

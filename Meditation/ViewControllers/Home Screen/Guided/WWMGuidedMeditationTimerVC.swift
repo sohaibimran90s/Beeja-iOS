@@ -753,6 +753,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     func navigateToDashboard() {
         
+        self.appPreference.set21ChallengeName(value: "Moments")
+        
         self.navigationController?.isNavigationBarHidden = false
         if let tabController = self.tabBarController as? WWMTabBarVC {
             tabController.selectedIndex = 2
