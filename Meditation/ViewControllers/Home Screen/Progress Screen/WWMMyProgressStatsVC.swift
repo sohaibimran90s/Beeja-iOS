@@ -265,7 +265,9 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         if self.appPreference.getType() == "learn"{
             self.appPreference.set21ChallengeName(value: "30 Day Challenge")
             self.appPreference.setType(value: "learn")
-        }else{
+        }
+        else{
+            self.appPreference.set21ChallengeName(value: "21 Days challenge")
             self.appPreffrence.setType(value: "guided")
         }
         

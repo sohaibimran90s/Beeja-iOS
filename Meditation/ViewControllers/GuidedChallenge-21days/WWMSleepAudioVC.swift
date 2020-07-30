@@ -182,57 +182,60 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             
-            if self.appPreference.getGuidedSleep() == "Guided" {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
-                
-                let data = self.arrAudioList[indexPath.row]
-                vc.audioData = data
-                vc.cat_id = "\(self.cat_Id)"
-                vc.cat_Name = self.cat_Name
-                vc.emotion_Id = "\(self.emotionData.emotion_Id)"
-                vc.emotion_Name = self.emotionData.emotion_Name
-                vc.min_limit = self.min_limit
-                vc.max_limit = self.max_limit
-                vc.meditation_key = self.meditation_key
-                
-                if self.appPreffrence.getExpiryDate(){
-                    vc.seconds = data.audio_Duration
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }else{
-                    if data.audio_Duration > 900{
-                        xibCall()
-                    }else{
-                        vc.seconds = 900
+            DispatchQueue.main.async {
+                if self.appPreference.getGuidedSleep() == "Guided" {
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC
+                    
+                    let data = self.arrAudioList[indexPath.row]
+                    vc.audioData = data
+                    vc.cat_id = "\(self.cat_Id)"
+                    vc.cat_Name = self.cat_Name
+                    vc.emotion_Id = "\(self.emotionData.emotion_Id)"
+                    vc.emotion_Name = self.emotionData.emotion_Name
+                    vc.min_limit = self.min_limit
+                    vc.max_limit = self.max_limit
+                    vc.meditation_key = self.meditation_key
+                    
+                    if self.appPreffrence.getExpiryDate(){
+                        vc.seconds = data.audio_Duration
                         self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        if data.audio_Duration > 900{
+                            self.xibCall()
+                        }else{
+                            vc.seconds = 900
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
                     }
-                }
-            }else{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepTimerVC") as! WWMSleepTimerVC
-                
-                let data = self.arrAudioList[indexPath.row]
-                vc.audioData = self.arrAudioList[indexPath.row]
-                vc.cat_id = self.cat_Id
-                vc.cat_Name = self.cat_Name
-                vc.emotion_Id = "\(self.emotionData.emotion_Id)"
-                vc.emotion_Name = self.emotionData.emotion_Name
-                vc.category = self.type
-                vc.subCategory = "\(subTitle) audio track"
-                vc.min_limit = self.min_limit
-                vc.max_limit = self.max_limit
-                vc.meditation_key = self.meditation_key
-                            
-                if self.appPreffrence.getExpiryDate(){
-                    vc.seconds = data.audio_Duration
-                    self.navigationController?.pushViewController(vc, animated: true)
                 }else{
-                    if data.audio_Duration > 900{
-                        xibCall()
-                    }else{
-                        vc.seconds = 900
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepTimerVC") as! WWMSleepTimerVC
+                    
+                    let data = self.arrAudioList[indexPath.row]
+                    vc.audioData = self.arrAudioList[indexPath.row]
+                    vc.cat_id = self.cat_Id
+                    vc.cat_Name = self.cat_Name
+                    vc.emotion_Id = "\(self.emotionData.emotion_Id)"
+                    vc.emotion_Name = self.emotionData.emotion_Name
+                    vc.category = self.type
+                    vc.subCategory = "\(self.subTitle) audio track"
+                    vc.min_limit = self.min_limit
+                    vc.max_limit = self.max_limit
+                    vc.meditation_key = self.meditation_key
+                                
+                    if self.appPreffrence.getExpiryDate(){
+                        vc.seconds = data.audio_Duration
                         self.navigationController?.pushViewController(vc, animated: true)
+                    }else{
+                        if data.audio_Duration > 900{
+                            self.xibCall()
+                        }else{
+                            vc.seconds = 900
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
                     }
                 }
             }
+            
         }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }

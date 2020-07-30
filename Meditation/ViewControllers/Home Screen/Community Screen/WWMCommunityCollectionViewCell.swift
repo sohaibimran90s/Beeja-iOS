@@ -17,5 +17,6 @@ class WWMCommunityCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imgLock: UIImageView!
     @IBOutlet weak var lblFreeDuration: UILabel!
     @IBOutlet weak var thumbImg: UIImageView!
+    @IBOutlet weak var contraintImageHeight: NSLayoutConstraint!
 
 }

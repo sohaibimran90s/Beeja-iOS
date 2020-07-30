@@ -80,6 +80,12 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.wisdomData1[indexPath.row]
         
+        if indexPath.item == 0 {
+            cell.contraintImageHeight.constant = 180
+        } else {
+            cell.contraintImageHeight.constant = 140
+        }
+        
         cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.video_Name
         
