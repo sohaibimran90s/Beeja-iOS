@@ -35,9 +35,9 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarBackgroundColor = .clear
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 28)!
+            settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 25)!
         }
-        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 26)!
+        settings.style.buttonBarItemFont = UIFont.init(name: "Maax-Medium", size: 23)!
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
