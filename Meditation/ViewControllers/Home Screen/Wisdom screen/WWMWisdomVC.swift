@@ -81,7 +81,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         let data = self.wisdomData1[indexPath.row]
         
         if indexPath.item == 0 {
-            cell.contraintImageHeight.constant = 180
+            cell.contraintImageHeight.constant = 200
         } else {
             cell.contraintImageHeight.constant = 140
         }
@@ -196,7 +196,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             return CGSize.init(width: width, height: width + 60)
         }else {
             let width = (self.view.frame.size.width-16)
-            let height = ((self.view.frame.size.width-26)/2) + 60
+            let height = ((self.view.frame.size.width-26)/2) + 94
             return CGSize.init(width: width, height: height)
         }
     }
