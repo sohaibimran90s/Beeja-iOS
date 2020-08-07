@@ -80,7 +80,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     func setUpView(){
         if WWMHelperClass.hasTopNotch{
             self.btnCrossTrailC.constant = 20
-            self.btnCrossTopC.constant = 30
+            self.btnCrossTopC.constant = 52
         }else{
             self.btnCrossTrailC.constant = 16
             self.btnCrossTopC.constant = 26
