@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import IQKeyboardManagerSwift
 
 enum JournalOption {
     case TextEntry
@@ -60,7 +61,6 @@ class AddJournalVC: UIViewController {
     let appPreference = WWMAppPreference()
     var isAddJournal = false
     
-    //var kPurchasedAlready = false
     let kDataManager = DataManager.sharedInstance
 
     //=========== for API call Meditation complete
@@ -72,6 +72,7 @@ class AddJournalVC: UIViewController {
 
         // Do any additional setup after loading the view.
         self.title = "Add Text Entry"
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KDONE
 
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -87,7 +88,6 @@ class AddJournalVC: UIViewController {
         
 
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        //self.view.backgroundColor = UIColor(red: 0/255, green: 15/255, blue: 84/255, alpha: 1.0)
         
         textBtn.isSelected = true
         imageContainerView.isHidden = true
@@ -124,6 +124,10 @@ class AddJournalVC: UIViewController {
     }
 
     @objc func closeButtonAction() {
+        
+        NotificationCenter.default.post(name: Notification.Name(Constant.kNotificationInAudioJournal), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(Constant.kNotificationInAudioToTextJournal), object: nil)
+
         if (self.isAddJournal) {
             self.dismiss(animated: false, completion: nil)
         }
@@ -258,19 +262,6 @@ class AddJournalVC: UIViewController {
         voiceToTextBtn.setImage(UIImage(named: normalBtnImg), for: UIControl.State.normal)
     }
     
-    /*func upgradeToPremium() {
-        Alert.alertWithTwoButton(title: "Warnning", message: "Purchase For this section.", btn1: "Cancel",
-                                 btn2: "Buy", container: self, completion: { (alertController, index) in
-                                    
-                                    if (index == 1) {
-                                        self.kDataManager.isPaidAc = true
-                                        self.audioContainerVC?.purchasedUpdate()
-                                        self.audioToTextContainerVC?.purchasedUpdate()
-                                        self.checkForPaidAccount()
-                                    }
-        })
-    }*/
-
     
     @IBAction func logExperienceAction(sender: UIButton) {
                 
@@ -287,7 +278,6 @@ class AddJournalVC: UIViewController {
                 self.audioJournalLog()
             }
             else {
-                //self.upgradeToPremium()
                 Utilities.paymentController(container: self)
             }
             
@@ -296,7 +286,6 @@ class AddJournalVC: UIViewController {
                 self.audioToTextJournalLog()
             }
             else {
-                //self.upgradeToPremium()
                 Utilities.paymentController(container: self)
             }
 
