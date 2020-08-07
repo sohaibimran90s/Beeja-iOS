@@ -35,5 +35,6 @@ extension DBThirtyDays {
     @NSManaged public var med_max: String?
     @NSManaged public var completed: Bool
     @NSManaged public var date_completed: String?
+    @NSManaged public var image: String?
 
 }

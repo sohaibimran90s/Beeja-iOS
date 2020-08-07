@@ -108,6 +108,7 @@ class ThirtyDaysListData: NSObject{
     var med_max = "2400"
     var completed: Bool = false
     var date_completed = ""
+    var img: String = ""
     
     override init() {
     }
@@ -131,6 +132,7 @@ class ThirtyDaysListData: NSObject{
         self.med_max = json["med_max"] as? String ?? "2400"
         self.completed = json["completed"] as? Bool ?? false
         self.date_completed = json["date_completed"] as? String ?? ""
+        self.img = json["image"] as? String ?? ""
     }
 }
 

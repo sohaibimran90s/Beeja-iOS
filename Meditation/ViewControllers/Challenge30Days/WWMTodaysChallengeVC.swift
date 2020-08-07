@@ -29,6 +29,7 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
             self.lblDayNo.text = "Day \(daysListData.day_name)"
             self.lblDescription.text = "\(daysListData.Description)"
             self.lblAuthor.text = "\(daysListData.auther_name)"
+            self.imgView.sd_setImage(with: URL.init(string: daysListData.img), placeholderImage: UIImage.init(named: "Background_AudioGuide"), options: .scaleDownLargeImages, completed: nil)
         }else{
             
             if week8Data.date_completed != ""{
@@ -42,6 +43,7 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
             }
             self.lblDescription.text = "\(week8Data.Description)"
             self.lblAuthor.text = "\(week8Data.auther_name)"
+            self.imgView.sd_setImage(with: URL.init(string: week8Data.backImage), placeholderImage: UIImage.init(named: "Background_AudioGuide"), options: .scaleDownLargeImages, completed: nil)
         }
     }
     

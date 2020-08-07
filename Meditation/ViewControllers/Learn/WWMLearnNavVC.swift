@@ -126,6 +126,7 @@ class WWMLearnNavVC: WWMBaseViewController {
                     jsonThirtyDaysString["med_max"] = day_list.med_max
                     jsonThirtyDaysString["completed"] = day_list.completed
                     jsonThirtyDaysString["date_completed"] = day_list.date_completed
+                    jsonThirtyDaysString["image"] = day_list.image
                     
                     jsonThirtyDays.append(jsonThirtyDaysString)
                 }
@@ -414,6 +415,10 @@ class WWMLearnNavVC: WWMBaseViewController {
                                 
                                 if let date_completed = dict["date_completed"] as? String{
                                     dbThirtyDays.date_completed = date_completed
+                                }
+                                
+                                if let image = dict["image"] as? String{
+                                    dbThirtyDays.image = image
                                 }
                                 
                                 WWMHelperClass.saveDb()

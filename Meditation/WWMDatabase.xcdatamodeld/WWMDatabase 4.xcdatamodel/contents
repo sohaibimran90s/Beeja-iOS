@@ -193,6 +193,7 @@
         <attribute name="day_name" optional="YES" attributeType="String"/>
         <attribute name="description1" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="is_milestone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="max_limit" optional="YES" attributeType="String"/>
         <attribute name="med_max" optional="YES" attributeType="String"/>
@@ -253,7 +254,7 @@
         <element name="DBSettings" positionX="-36" positionY="36" width="128" height="403"/>
         <element name="DBStepFaq" positionX="-9" positionY="144" width="128" height="103"/>
         <element name="DBSteps" positionX="9" positionY="162" width="128" height="208"/>
-        <element name="DBThirtyDays" positionX="-18" positionY="135" width="128" height="313"/>
+        <element name="DBThirtyDays" positionX="-18" positionY="135" width="128" height="328"/>
         <element name="DBTimerData" positionX="18" positionY="126" width="128" height="120"/>
         <element name="DBWisdomData" positionX="9" positionY="162" width="128" height="103"/>
         <element name="DBWisdomVideoData" positionX="18" positionY="171" width="128" height="163"/>

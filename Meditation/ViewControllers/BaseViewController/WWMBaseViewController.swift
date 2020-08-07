@@ -760,6 +760,10 @@ extension WWMBaseViewController{
                                     dbThirtyDays.date_completed = date_completed
                                 }
                                 
+                                if let image = dict["image"] as? String{
+                                    dbThirtyDays.image = image
+                                }
+                                
                                 WWMHelperClass.saveDb()
                             }
                         }
