@@ -190,7 +190,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }else if value == "learnStepList"{
             videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "curatedCards"{
-            videoURL = self.appPreffrence.getLearnPageURL()
+            //videoURL = self.appPreffrence.getLearnPageURL()
         }else if value == "30days"{
             videoURL = self.appPreference.get30DaysURL()
         }else if value == "8weeks"{

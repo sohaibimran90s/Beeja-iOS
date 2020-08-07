@@ -100,7 +100,7 @@ class WWMGuidedEmotionVC: WWMBaseViewController,IndicatorInfoProvider,UICollecti
                 vc.value = "curatedCards"
                 vc.emotionId = "\(data.emotion_Id)"
                 vc.id = "\(self.guidedData.cat_Id)"
-                vc.videoURL = data.intro_url
+                vc.videoURL = self.guidedData.intro_url
                 if data.tile_type == "2" {
                     vc.category = "7 Days challenge"
                     vc.subCategory = self.name.lowercased()
