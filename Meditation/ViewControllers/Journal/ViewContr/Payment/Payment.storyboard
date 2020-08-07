@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tuh-ss-LOz">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tuh-ss-LOz">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,20 +20,20 @@
                                 <rect key="frame" x="0.0" y="-44" width="375" height="997"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PaymentBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wct-6T-Ljm">
-                                        <rect key="frame" x="0.0" y="-45" width="375" height="1064"/>
+                                        <rect key="frame" x="0.0" y="-45" width="375" height="1882"/>
                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jLO-VQ-acs">
-                                        <rect key="frame" x="0.0" y="669.5" width="375" height="228"/>
+                                        <rect key="frame" x="0.0" y="1487.5" width="375" height="228"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="e1v-6w-2X0">
-                                                <rect key="frame" x="20" y="20" width="270.5" height="14.5"/>
+                                                <rect key="frame" x="20" y="20" width="270.5" height="24"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="KzA-Nj-yBn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Access to 150+ longer Guided meditations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LK-xB-xRp">
-                                                        <rect key="frame" x="26" y="0.0" width="244.5" height="14.5"/>
+                                                        <rect key="frame" x="42" y="0.0" width="228.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -41,14 +41,14 @@
                                                 </subviews>
                                             </stackView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sky-wA-IYm">
-                                                <rect key="frame" x="20" y="45" width="15" height="16"/>
+                                                <rect key="frame" x="20" y="54.5" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="HX1-dx-LqI"/>
                                                     <constraint firstAttribute="width" constant="15" id="sno-do-d8j"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lae-g3-KnD">
-                                                <rect key="frame" x="45" y="45" width="263" height="30"/>
+                                                <rect key="frame" x="45" y="54.5" width="263" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="263" id="Ipi-Cp-zjd"/>
                                                     <constraint firstAttribute="height" constant="30" id="f6r-EM-Slp"/>
@@ -60,14 +60,14 @@ series (including your own mantra)</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="b9S-t4-Tb9">
-                                                <rect key="frame" x="20" y="85" width="15" height="16"/>
+                                                <rect key="frame" x="20" y="94.5" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="8rw-tg-QpE"/>
                                                     <constraint firstAttribute="height" constant="16" id="DPI-hB-4NH"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6q-os-kfp">
-                                                <rect key="frame" x="46" y="85" width="312" height="30"/>
+                                                <rect key="frame" x="46" y="94.5" width="312" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="25s-9W-FGX"/>
                                                     <constraint firstAttribute="width" constant="312" id="V2I-IQ-Lga"/>
@@ -79,13 +79,13 @@ Wisdom,  Bedtime Tales &amp; Advanced Sleep</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="De2-bK-FW5">
-                                                <rect key="frame" x="20" y="126" width="327" height="14.5"/>
+                                                <rect key="frame" x="20" y="135.5" width="327" height="24"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="hOh-60-s0j">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Habit building challenges to re-inforce your learning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c16-jk-Rkp">
-                                                        <rect key="frame" x="26" y="0.0" width="301" height="14.5"/>
+                                                        <rect key="frame" x="42" y="0.0" width="285" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -93,13 +93,13 @@ Wisdom,  Bedtime Tales &amp; Advanced Sleep</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3IT-B9-nbl">
-                                                <rect key="frame" x="20" y="151" width="315.5" height="14.5"/>
+                                                <rect key="frame" x="20" y="170" width="315.5" height="24"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="efg-DR-Ka0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Download content to enjoy your experience offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z97-bK-I3r">
-                                                        <rect key="frame" x="26" y="0.0" width="289.5" height="14.5"/>
+                                                        <rect key="frame" x="42" y="0.0" width="273.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -107,14 +107,14 @@ Wisdom,  Bedtime Tales &amp; Advanced Sleep</string>
                                                 </subviews>
                                             </stackView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="kAc-Ub-kZP">
-                                                <rect key="frame" x="20" y="178" width="15" height="16"/>
+                                                <rect key="frame" x="20" y="206.5" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="BNU-lv-but"/>
                                                     <constraint firstAttribute="height" constant="16" id="FOI-w8-wWa"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfe-LB-XmK">
-                                                <rect key="frame" x="46" y="178" width="312" height="30"/>
+                                                <rect key="frame" x="46" y="206.5" width="312" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="312" id="dZ8-lB-cRU"/>
                                                     <constraint firstAttribute="height" constant="30" id="yIq-mL-Rlv"/>
@@ -167,44 +167,44 @@ after broadcast</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="NP3-rQ-ePb">
-                                        <rect key="frame" x="19.5" y="131" width="336" height="65.5"/>
+                                        <rect key="frame" x="11.5" y="131" width="352" height="883.5"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zOz-QG-MGt">
-                                                <rect key="frame" x="0.0" y="0.0" width="336" height="14.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zOz-QG-MGt">
+                                                <rect key="frame" x="0.0" y="0.0" width="352" height="813.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="HF1-JD-9D6">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="HF1-JD-9D6">
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="813.5"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Journal using voice notes to really capture the feeling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-wf-Njd">
-                                                        <rect key="frame" x="26" y="0.0" width="310" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Journal using voice notes to really capture the feeling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-wf-Njd">
+                                                        <rect key="frame" x="42" y="0.0" width="310" height="813.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wSg-Me-G6a">
-                                                <rect key="frame" x="0.0" y="25.5" width="260.5" height="14.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wSg-Me-G6a">
+                                                <rect key="frame" x="0.0" y="824.5" width="276.5" height="24"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yol-xT-v5m">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yol-xT-v5m">
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add 2-5 pictures to any entry you create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haj-uz-vKg">
-                                                        <rect key="frame" x="26" y="0.0" width="234.5" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Add 2-5 pictures to any entry you create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haj-uz-vKg">
+                                                        <rect key="frame" x="42" y="0.0" width="234.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="w3w-r5-Ht9">
-                                                <rect key="frame" x="0.0" y="51" width="307.5" height="14.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="w3w-r5-Ht9">
+                                                <rect key="frame" x="0.0" y="859.5" width="323.5" height="24"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="mzw-4S-S1f">
-                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="mzw-4S-S1f">
+                                                        <rect key="frame" x="0.0" y="0.0" width="32" height="24"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transcribe your voice notes to save time &amp; effort" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lE4-FW-kF6">
-                                                        <rect key="frame" x="26" y="0.0" width="281.5" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Transcribe your voice notes to save time &amp; effort" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lE4-FW-kF6">
+                                                        <rect key="frame" x="42" y="0.0" width="281.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -214,7 +214,7 @@ after broadcast</string>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7f-LC-QCM">
-                                        <rect key="frame" x="14" y="234.5" width="347" height="370"/>
+                                        <rect key="frame" x="14" y="1052.5" width="347" height="370"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a suitable plan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pln-RA-zQF">
                                                 <rect key="frame" x="58.5" y="33" width="230" height="25"/>
@@ -464,7 +464,7 @@ after broadcast</string>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other benefits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOI-nO-smx">
-                                        <rect key="frame" x="119" y="634.5" width="137" height="24"/>
+                                        <rect key="frame" x="119" y="1452.5" width="137" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="137" id="5Qc-vF-Ok6"/>
                                             <constraint firstAttribute="height" constant="24" id="hqj-Ds-eUa"/>
