@@ -17,6 +17,8 @@ class WWMWalkThoghVC: WWMBaseViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var beginTimeLbl: UILabel!
     @IBOutlet weak var endTimeLbl: UILabel!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     
     var videoURL: String = ""
     var value: String = "help"
@@ -44,24 +46,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var prefersStatusBarHidden: Bool {
-            return true
-        }
-                
-        self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
-        self.sliderBackView.isHidden = true
-        self.sliderBackView.isUserInteractionEnabled = false
-        
-        let videoFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-        viewVideo.frame = videoFrame
-        
-        setNavigationBar(isShow:false,title:"")
-        NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
-        self.btnCrossSkip.isHidden = false
+        setUpView()
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards" || value == "21_days" || value == "30days" || value == "8weeks"){
             self.btnCrossSkip.setBackgroundImage(UIImage(named: "close_small"), for: .normal)
@@ -90,6 +75,35 @@ class WWMWalkThoghVC: WWMBaseViewController {
         }
         
         self.playVideo()
+    }
+    
+    func setUpView(){
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 30
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 26
+        }
+        
+        var prefersStatusBarHidden: Bool {
+            return true
+        }
+                
+        self.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
+        self.sliderBackView.isHidden = true
+        self.sliderBackView.isUserInteractionEnabled = false
+        
+        let videoFrame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        viewVideo.frame = videoFrame
+        
+        setNavigationBar(isShow:false,title:"")
+        NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        self.btnCrossSkip.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

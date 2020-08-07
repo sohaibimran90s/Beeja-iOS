@@ -2788,6 +2788,7 @@
                         <viewLayoutGuide key="safeArea" id="2Yg-Ah-4xw"/>
                     </view>
                     <connections>
+                        <outlet property="btnCloseTrailC" destination="UH5-J4-MlY" id="gmo-cU-Mfx"/>
                         <outlet property="btnPremium" destination="nlS-md-1fB" id="rVR-y9-qPZ"/>
                         <outlet property="freeView" destination="PjA-mi-BLL" id="MNY-dQ-aiV"/>
                         <outlet property="lblDaysLeft" destination="xEU-BU-biF" id="0R1-Hd-Vj5"/>
@@ -8429,6 +8430,8 @@
                     <connections>
                         <outlet property="beginTimeLbl" destination="O6Y-N8-YL1" id="DHc-X4-E5s"/>
                         <outlet property="btnCrossSkip" destination="3oB-M2-pEC" id="VZM-mg-w3h"/>
+                        <outlet property="btnCrossTopC" destination="1Yp-Ee-S3M" id="tyL-VV-4jQ"/>
+                        <outlet property="btnCrossTrailC" destination="AcM-Kh-FZM" id="mRH-nt-xIf"/>
                         <outlet property="endTimeLbl" destination="zYt-zu-d9J" id="RQi-Ss-26w"/>
                         <outlet property="slider" destination="H5f-gS-FI4" id="T0w-i5-Guq"/>
                         <outlet property="sliderBackView" destination="kVl-Ni-gy8" id="6ZT-PK-oZm"/>
@@ -14498,6 +14501,8 @@
                         <outlet property="imgBackTCB" destination="3jw-Yd-5vp" id="wtD-tZ-cnI"/>
                         <outlet property="imgBackTLB" destination="L3k-Re-7za" id="yJF-Sg-gP9"/>
                         <outlet property="imgGiftIcon" destination="9aR-gL-i6P" id="cqy-0Y-xNv"/>
+                        <outlet property="imgMenuTopC" destination="yGt-rf-8S1" id="gRM-Cb-CY3"/>
+                        <outlet property="imgMenuTrailC" destination="GRv-TK-9iP" id="inV-bS-soe"/>
                         <outlet property="imgPlayIcon" destination="imt-Xk-MZZ" id="5jk-Ah-8VQ"/>
                         <outlet property="introView" destination="Ew8-5c-Oq0" id="Fxb-S2-TVa"/>
                         <outlet property="lblIntroText" destination="a5z-u0-aKm" id="TFR-HT-rvC"/>

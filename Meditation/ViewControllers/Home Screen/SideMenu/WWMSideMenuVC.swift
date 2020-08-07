@@ -14,22 +14,18 @@ class WWMSideMenuVC: WWMBaseViewController {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblVersion: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
-    
     @IBOutlet weak var freeView: UIView!
     @IBOutlet weak var lblFreeAccount: UILabel!
     @IBOutlet weak var btnPremium: UIButton!
-    
     @IBOutlet weak var premiumView: UIView!
     @IBOutlet weak var lblDaysLeft: UILabel!
     @IBOutlet weak var lblPremium: UILabel!
-
+    @IBOutlet weak var btnCloseTrailC: NSLayoutConstraint!
 
     var guideStart = WWMGuidedStart()
     var guided_type = ""
     var type = ""
-    
     let appPreffrence = WWMAppPreference()
-    
     var city = ""
     var country = ""
     var lat = ""
@@ -39,18 +35,14 @@ class WWMSideMenuVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if self.userData.city != ""  && self.userData.country != "" {
-            //self.lblLocation.text = "\(self.userData.city), \(self.userData.country)"
-        }else {
-            //self.lblLocation.text = "\(self.userData.city) \(self.userData.country)"
+        if WWMHelperClass.hasTopNotch{
+            self.btnCloseTrailC.constant = 20
+        }else{
+            self.btnCloseTrailC.constant = 16
         }
-
-        print(WWMHelperClass.getVersion())
         self.lblVersion.text = WWMHelperClass.getVersion()
-        
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.title = ""

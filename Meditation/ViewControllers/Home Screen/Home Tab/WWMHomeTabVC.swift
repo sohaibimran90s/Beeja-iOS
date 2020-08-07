@@ -31,7 +31,8 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imgMenuTC: NSLayoutConstraint!
+    @IBOutlet weak var imgMenuTopC: NSLayoutConstraint!
+    @IBOutlet weak var imgMenuTrailC: NSLayoutConstraint!
     
     //banner outlet
     @IBOutlet weak var imgBackTCB: UIImageView!
@@ -103,6 +104,12 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func setupView(){
+        
+        if WWMHelperClass.hasTopNotch{
+            self.imgMenuTrailC.constant = 20
+        }else{
+            self.imgMenuTrailC.constant = 16
+        }
         self.backViewTableView.layer.cornerRadius = 8
         self.btnBuyNow.layer.borderWidth = 2
         self.btnBuyNow.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
