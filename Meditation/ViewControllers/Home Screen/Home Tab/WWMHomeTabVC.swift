@@ -153,7 +153,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     func setUpImage(firstName: String){
         self.introView.backgroundColor = UIColor(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0)
-        self.viewVideoHeightConstraint.constant = 110
         self.lblStartedText.text = KHOMELBL
         self.backImgVideo.image = UIImage(named: "")
         self.lblIntroText.isHidden = true
@@ -167,12 +166,15 @@ class WWMHomeTabVC: WWMBaseViewController {
         if hour < 12 {
             //print("good morning")
             self.lblName.text = "\(kMORNING)\n\(firstName)"
+            self.viewVideoHeightConstraint.constant = 110
         }else if hour < 18 {
             //print("good afternoon")
-            self.lblName.text = "\(kHey)\n\(firstName)"
+            self.lblName.text = "\(kHey) \(firstName)"
+            self.viewVideoHeightConstraint.constant = 72
         }else{
             //print("good evening")
-            self.lblName.text = "\(kHey)\n\(firstName)"
+            self.lblName.text = "\(kHey) \(firstName)"
+            self.viewVideoHeightConstraint.constant = 72
         }
     }
     

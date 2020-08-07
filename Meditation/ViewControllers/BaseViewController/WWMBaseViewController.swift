@@ -54,7 +54,7 @@ class WWMBaseViewController: UIViewController {
         
         self.title1 = title
         if title == "Settings"{
-            sideMenuBtn.setImage(UIImage.init(named: "Close_Icon"), for: .normal)
+            sideMenuBtn.setImage(UIImage.init(named: "crossMenu"), for: .normal)
         }else{
             sideMenuBtn.setImage(UIImage.init(named: "waveMenu"), for: .normal)
         }
