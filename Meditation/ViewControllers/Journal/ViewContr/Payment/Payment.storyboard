@@ -29,18 +29,18 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="e1v-6w-2X0">
                                                 <rect key="frame" x="20" y="20" width="270.5" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="KzA-Nj-yBn">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="KzA-Nj-yBn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access to 150+ longer Guided meditations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LK-xB-xRp">
-                                                        <rect key="frame" x="25" y="0.0" width="245.5" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Access to 150+ longer Guided meditations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LK-xB-xRp">
+                                                        <rect key="frame" x="26" y="0.0" width="244.5" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sky-wA-IYm">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sky-wA-IYm">
                                                 <rect key="frame" x="20" y="45" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="HX1-dx-LqI"/>
@@ -59,7 +59,7 @@ series (including your own mantra)</string>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="b9S-t4-Tb9">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="b9S-t4-Tb9">
                                                 <rect key="frame" x="20" y="85" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="8rw-tg-QpE"/>
@@ -81,11 +81,11 @@ Wisdom,  Bedtime Tales &amp; Advanced Sleep</string>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="De2-bK-FW5">
                                                 <rect key="frame" x="20" y="126" width="327" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="hOh-60-s0j">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="hOh-60-s0j">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Habit building challenges to re-inforce your learning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c16-jk-Rkp">
-                                                        <rect key="frame" x="25" y="0.0" width="302" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Habit building challenges to re-inforce your learning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c16-jk-Rkp">
+                                                        <rect key="frame" x="26" y="0.0" width="301" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -95,18 +95,18 @@ Wisdom,  Bedtime Tales &amp; Advanced Sleep</string>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3IT-B9-nbl">
                                                 <rect key="frame" x="20" y="151" width="315.5" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="efg-DR-Ka0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="efg-DR-Ka0">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download content to enjoy your experience offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z97-bK-I3r">
-                                                        <rect key="frame" x="25" y="0.0" width="290.5" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Download content to enjoy your experience offline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z97-bK-I3r">
+                                                        <rect key="frame" x="26" y="0.0" width="289.5" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="kAc-Ub-kZP">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="kAc-Ub-kZP">
                                                 <rect key="frame" x="20" y="178" width="15" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="15" id="BNU-lv-but"/>
@@ -167,16 +167,16 @@ after broadcast</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="NP3-rQ-ePb">
-                                        <rect key="frame" x="20" y="131" width="335" height="65.5"/>
+                                        <rect key="frame" x="19.5" y="131" width="336" height="65.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zOz-QG-MGt">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="336" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="HF1-JD-9D6">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="HF1-JD-9D6">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Journal using voice notes to really capture the feeling" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFC-wf-Njd">
-                                                        <rect key="frame" x="25" y="0.0" width="310" height="14.5"/>
+                                                        <rect key="frame" x="26" y="0.0" width="310" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -184,13 +184,13 @@ after broadcast</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wSg-Me-G6a">
-                                                <rect key="frame" x="0.0" y="25.5" width="259.5" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="260.5" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yol-xT-v5m">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yol-xT-v5m">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add 2-5 pictures to any entry you create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haj-uz-vKg">
-                                                        <rect key="frame" x="25" y="0.0" width="234.5" height="14.5"/>
+                                                        <rect key="frame" x="26" y="0.0" width="234.5" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -198,13 +198,13 @@ after broadcast</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="w3w-r5-Ht9">
-                                                <rect key="frame" x="0.0" y="51" width="306.5" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="51" width="307.5" height="14.5"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedChkMark.png" translatesAutoresizingMaskIntoConstraints="NO" id="mzw-4S-S1f">
-                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green_tick.png" translatesAutoresizingMaskIntoConstraints="NO" id="mzw-4S-S1f">
+                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="14.5"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transcribe your voice notes to save time &amp; effort" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lE4-FW-kF6">
-                                                        <rect key="frame" x="25" y="0.0" width="281.5" height="14.5"/>
+                                                        <rect key="frame" x="26" y="0.0" width="281.5" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -485,7 +485,7 @@ after broadcast</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="jLO-VQ-acs" firstAttribute="centerX" secondItem="ZdX-eW-zau" secondAttribute="centerX" id="2vj-EZ-p3G"/>
                                     <constraint firstItem="H7f-LC-QCM" firstAttribute="top" secondItem="NP3-rQ-ePb" secondAttribute="bottom" constant="38" id="5YM-Bc-dbv"/>
@@ -535,6 +535,6 @@ after broadcast</string>
     <resources>
         <image name="CloseBtn.png" width="13.5" height="13.5"/>
         <image name="PaymentBG.png" width="375" height="941"/>
-        <image name="selectedChkMark.png" width="15" height="12"/>
+        <image name="green_tick.png" width="16" height="12"/>
     </resources>
 </document>

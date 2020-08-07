@@ -25,7 +25,6 @@ class ImageContainerVC: UIViewController {
     var imagePicker = UIImagePickerController()
     var actualImageList: [CellImageObject] = []
     var imageList: [CellImageObject] = []
-    //var textJournalObj: TextJournal?
     let kDataManager = DataManager.sharedInstance
 
     
@@ -101,38 +100,30 @@ class ImageContainerVC: UIViewController {
         }
         
         if (!(kDataManager.isPaidAc) && (self.actualImageList.count > 0)) {
-            /*Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
-                                     btn2: "Buy", container: self, completion: { (alertController, index) in
-                                        
-                                        if (index == 1) {
-                                            self.isPurchasedAccount = true
-                                            self.paymentRequiredCheck()
-                                            self.loadImageObjectList()
-                                            self.thumbCollectionView.reloadData()
-                                        }
-            })*/
             Utilities.paymentController(container: self)
             return
         }
         
         
-        if (self.titleTextField.text == ""){
-            Alert.alertWithOneButton(title: "", message: "Please fill title to save.", container: self) { (alert, index) in
-            }
-            return
-        }
+//        if (self.titleTextField.text == ""){
+//            Alert.alertWithOneButton(title: "", message: "Please fill title to save.", container: self) { (alert, index) in
+//            }
+//            return
+//        }
 
         
         if let image = self.mainImageView.image {
             
-            let imgObj = CellImageObject(caption: self.titleTextField.text ?? "", thumbImg: image, deleteIconActive: true)
+            var title = self.titleTextField.text ?? ""
+            if (title == ""){
+                title = "Untitled"
+            }
+            
+            let imgObj = CellImageObject(caption: title, thumbImg: image, deleteIconActive: true)
             self.mainImageView.image = nil
             self.titleTextField.text = ""
 
             self.actualImageList.append(imgObj)
-//            self.loadImageObjectList()
-//            self.thumbCollectionView.reloadData()
-//            self.paymentRequiredCheck()
             self.updateUI()
             
             self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
@@ -141,9 +132,6 @@ class ImageContainerVC: UIViewController {
     
     func deleteItem(index: Int) {
         self.actualImageList.remove(at: index)
-//        self.loadImageObjectList()
-//        self.thumbCollectionView.reloadData()
-//        self.paymentRequiredCheck()
         self.updateUI()
         self.addImageBtn.isHidden = (self.actualImageList.count == 5) ? true : false
     }

@@ -51,7 +51,6 @@ class AudioContainerVC: UIViewController {
         // Do any additional setup after loading the view.
         self.captionField.setLeftPaddingPoints(20)
         
-        //self.checkRecordPermission()
         self.stopRecordBtn.isHidden = true
         self.overlayView.isHidden = (kDataManager.isPaidAc) ? true : false
         self.stopRecordBtn.layer.borderColor = UIColor.white.cgColor
@@ -83,7 +82,6 @@ class AudioContainerVC: UIViewController {
     
     // Call this function from AddJournalVC to remove overlay if already paid.
     func purchasedUpdate() {
-        //kDataManager.isPaidAc = true
         self.overlayView.isHidden = (kDataManager.isPaidAc) ? true : false
     }
     

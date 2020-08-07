@@ -38,14 +38,9 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
         // Do any additional setup after loading the view.
         
         self.titleField.setLeftPaddingPoints(20)
-        //self.titleField.layer.cornerRadius = 5
-        //self.textTableView.layer.cornerRadius = 5
-        //self.view.backgroundColor = UIColor(red: 0/255, green: 15/255, blue: 84/255, alpha: 1.0)
         self.textTableView.contentInset = UIEdgeInsets(top: -30, left: 0, bottom: 0, right: 0)
         
         self.textJournalObj = TextJournal(title: "", textDescription: "", image: [])
-        
-        //self.isPurchasedAccount = false
         self.checkIfAccountPaid()
     }
     
@@ -80,14 +75,6 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
     @IBAction func addImageAction(sender: UIButton) {
         
         if (!(kDataManager.isPaidAc) && (self.addedImages.count > 0)) {
-            /*Alert.alertWithTwoButton(title: "Warnning", message: "Purchase for more access.", btn1: "Cancel",
-                                     btn2: "Buy", container: self, completion: { (alertController, index) in
-                                        
-                                        if (index == 1) {
-                                            self.isPurchasedAccount = true
-                                            self.checkIfAccountPaid()
-                                        }
-            })*/
             Utilities.paymentController(container: self)
             return
         }
