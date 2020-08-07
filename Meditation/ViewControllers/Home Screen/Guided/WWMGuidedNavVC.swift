@@ -213,12 +213,14 @@ class WWMGuidedNavVC: WWMBaseViewController {
             for dict in guidedDataDB {
                 
                 if (dict as AnyObject).meditation_type as? String == "practical"{
+                    self.appPreference.setPracticalIntroURL(value: (dict as AnyObject).intro_url ?? "")
                     if (dict as AnyObject).intro_completed{
                         self.appPreference.setPracticalChallenge(value: true)
                     }
                 }
                 
                 if (dict as AnyObject).meditation_type as? String == "spiritual"{
+                    self.appPreference.setSpiritualIntroURL(value: (dict as AnyObject).intro_url ?? "")
                     if (dict as AnyObject).intro_completed{
                         self.appPreference.setSpiritualChallenge(value: true)
                     }

@@ -77,11 +77,12 @@ class WWMBaseViewController: UIViewController {
         fixedSpace.width = 26.0
         
         // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
-        let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
-        negativeSpace.width = -7.0
+//        let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
+//        negativeSpace.width = -7.0
         
         barButtonGuided.setTitle("Guided", for: .normal)
         barButtonGuided.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
+        barButtonGuided.titleLabel?.textAlignment = .left
         
         barButtonSleep.setTitle("Sleep", for: .normal)
         barButtonSleep.titleLabel?.font = UIFont.init(name: "Maax-Bold", size: 24)
@@ -110,7 +111,8 @@ class WWMBaseViewController: UIViewController {
             barButtonSleep.alpha = 0.5
             let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
             let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
-            self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
+            //self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
+            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, fixedSpace, leftBarButtonItem1]
             
         }else if title == "sleep" {
             
@@ -119,9 +121,8 @@ class WWMBaseViewController: UIViewController {
             barButtonSleep.alpha = 1.0
             let leftBarButtonItem = UIBarButtonItem.init(customView: barButtonGuided)
             let leftBarButtonItem1 = UIBarButtonItem.init(customView: barButtonSleep)
-            
-            self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
-            
+            //self.navigationItem.leftBarButtonItems = [negativeSpace, leftBarButtonItem, fixedSpace, leftBarButtonItem1]
+            self.navigationItem.leftBarButtonItems = [leftBarButtonItem, fixedSpace, leftBarButtonItem1]
         }else{
             
             navigationController?.navigationBar.barTintColor = UIColor(hexString: "#001252")

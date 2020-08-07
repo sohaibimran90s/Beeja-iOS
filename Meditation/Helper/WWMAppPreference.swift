@@ -95,6 +95,14 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "30_days_url")
     }
     
+    func setPracticalIntroURL(value: String) {
+        defaults.set(value, forKey: "practical_intro_url")
+    }
+    
+    func setSpiritualIntroURL(value: String) {
+        defaults.set(value, forKey: "spiritual_intro_url")
+    }
+    
     func set8WeekURL(value: String) {
         defaults.set(value, forKey: "8_week_url")
     }
@@ -332,6 +340,14 @@ class WWMAppPreference: NSObject {
     
     func get8WeekURL() -> String {
         return UserDefaults.standard.string(forKey: "8_week_url") ?? ""
+    }
+    
+    func getPracticalIntroURL() -> String {
+        return UserDefaults.standard.string(forKey: "practical_intro_url") ?? ""
+    }
+    
+    func getSpiritualIntroURL() -> String {
+        return UserDefaults.standard.string(forKey: "spiritual_intro_url") ?? ""
     }
     
     func get30DaysReminder() -> String {

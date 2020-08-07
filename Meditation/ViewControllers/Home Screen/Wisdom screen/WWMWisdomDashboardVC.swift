@@ -38,11 +38,11 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemTitleColor = UIColor.white
-        settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        settings.style.buttonBarLeftContentInset = 0
-        settings.style.buttonBarRightContentInset = 0
-        settings.style.buttonBarMinimumInteritemSpacing = 1.0
-        settings.style.buttonBarItemLeftRightMargin = 0
+        settings.style.buttonBarItemsShouldFillAvailableWidth = false
+        settings.style.buttonBarLeftContentInset = 10
+        settings.style.buttonBarRightContentInset = 10
+        settings.style.buttonBarMinimumInteritemSpacing = 0
+        settings.style.buttonBarItemLeftRightMargin = 5
         
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }

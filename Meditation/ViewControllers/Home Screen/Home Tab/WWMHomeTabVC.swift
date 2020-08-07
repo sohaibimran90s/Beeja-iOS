@@ -31,6 +31,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     @IBOutlet weak var backViewTableView: UIView!
     @IBOutlet weak var medHisViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var imgMenuTC: NSLayoutConstraint!
     
     //banner outlet
     @IBOutlet weak var imgBackTCB: UIImageView!
