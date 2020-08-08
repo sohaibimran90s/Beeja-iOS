@@ -16,6 +16,8 @@ class WWMTimerPresetVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     
     var delegate: WWMTimerPresetVCDelegate?
     var LevelData  = [DBLevelData]()
@@ -26,10 +28,7 @@ class WWMTimerPresetVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.init(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).withAlphaComponent(0.9)
-
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        self.setUpView()
         
         if self.appPreffrence.get21ChallengeName() == "30 Day Challenge"{
             self.appPreffrence.setType(value: "learn")
@@ -37,6 +36,21 @@ class WWMTimerPresetVC: UIViewController {
         }else{
             self.tableViewHeightConstraint.constant = CGFloat(80 * self.LevelData.count + 30)
         }
+    }
+    
+    func setUpView(){
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 52
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 26
+        }
+        
+        self.view.backgroundColor = UIColor.init(red: 0.0/255.0, green: 18.0/255.0, blue: 82.0/255.0, alpha: 1.0).withAlphaComponent(0.9)
+
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
     
     @IBAction func crossBtnClicked(_ sender: UIButton) {

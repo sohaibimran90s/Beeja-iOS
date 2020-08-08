@@ -16,6 +16,8 @@ class WWMSleepAudioVC: WWMBaseViewController {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblSubTitle: UILabel!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     
     //variables
     var emotionData = WWMGuidedEmotionData()
@@ -45,13 +47,25 @@ class WWMSleepAudioVC: WWMBaseViewController {
     var continueRestoreValue: String = ""
     var boolGetIndex = false
     var restoreBool = false
-    
     var min_limit = "94"
     var max_limit = "97"
     var meditation_key = "practical"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setUpView()
+        self.fetchGuidedAudioDataFromDB()
+    }
+    
+    func setUpView(){
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 8
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 16
+        }
         
         self.setNavigationBar(isShow: false, title: "")
         self.lblTitle.text = self.type
@@ -60,7 +74,6 @@ class WWMSleepAudioVC: WWMBaseViewController {
         if self.imgURL != ""{
             self.imgView.sd_setImage(with: URL.init(string: self.imgURL), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         }
-        self.fetchGuidedAudioDataFromDB()
     }
     
     @IBAction func btnBackClicked(_ sender: UIButton){
@@ -144,9 +157,6 @@ class WWMSleepAudioVC: WWMBaseViewController {
             self.tableView.reloadData()
         }
     }
-    
-    
-    
 }
 
 extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{

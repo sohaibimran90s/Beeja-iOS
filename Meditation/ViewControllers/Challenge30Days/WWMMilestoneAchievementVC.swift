@@ -13,6 +13,8 @@ class WWMMilestoneAchievementVC: WWMBaseViewController {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var btnHome: UIButton!
     @IBOutlet weak var btnProgress: UIButton!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     let name = "Abc"
     
     override func viewDidLoad() {
@@ -23,6 +25,14 @@ class WWMMilestoneAchievementVC: WWMBaseViewController {
     }
     
     func setUpView(){
+        
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 52
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 26
+        }
         self.btnProgress.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnProgress.layer.borderWidth = 1.0
     }

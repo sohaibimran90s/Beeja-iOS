@@ -14,6 +14,8 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var lblAuthor: UILabel!
     @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     
     var daysListData = ThirtyDaysListData()
     var week8Data = EightWeekModel()
@@ -25,6 +27,7 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setUpView()
         if self.type == ""{
             self.lblDayNo.text = "Day \(daysListData.day_name)"
             self.lblDescription.text = "\(daysListData.Description)"
@@ -44,6 +47,16 @@ class WWMTodaysChallengeVC: WWMBaseViewController {
             self.lblDescription.text = "\(week8Data.Description)"
             self.lblAuthor.text = "\(week8Data.auther_name)"
             self.imgView.sd_setImage(with: URL.init(string: week8Data.backImage), placeholderImage: UIImage.init(named: "Background_AudioGuide"), options: .scaleDownLargeImages, completed: nil)
+        }
+    }
+    
+    func setUpView(){
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 52
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 26
         }
     }
     
