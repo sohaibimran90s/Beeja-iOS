@@ -164,6 +164,10 @@ class ImageContainerVC: UIViewController {
 extension ImageContainerVC: ThumbCollectionCellDelegate{
 
     func deleteThumbImage(index: Int) {
+        self.mainImageView.image = nil
+        self.titleTextField.text = ""
+        self.titleTextField.isUserInteractionEnabled = true
+        self.saveBtn.isEnabled = true
         self.deleteItem(index: index)
     }
 }
