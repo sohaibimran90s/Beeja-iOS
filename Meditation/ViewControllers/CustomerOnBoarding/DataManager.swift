@@ -77,7 +77,10 @@ class DataManager: NSObject {
         //let exten = (assetsType == "audio") ? "m4a" : "jpeg"
         let mineType = (assetsType == "audio") ? "audio/m4a" : "image/jpeg"
         
-        Alamofire.upload(multipartFormData: { multipartFormData in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 420
+        manager.upload(multipartFormData: { multipartFormData in
+        //Alamofire.upload(multipartFormData: { multipartFormData in
             // import image to request
             for imageData in imageDataArray {
                 multipartFormData.append(imageData, withName: withName,

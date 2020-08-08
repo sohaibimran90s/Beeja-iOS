@@ -165,6 +165,7 @@ class AddJournalVC: UIViewController {
         let journal = self.selectedJournalOpt
         switch journal {
         case .TextEntry:
+            self.title = "Add Text Entry"
             textBtn.isSelected = true
             imageBtn.isSelected = false
             voiceBtn.isSelected = false
@@ -176,6 +177,7 @@ class AddJournalVC: UIViewController {
             self.checkForPaidAccount()//New
             
         case .ImageEntry:
+            self.title = "Add Image Entry"
             textBtn.isSelected = false
             imageBtn.isSelected = true
             voiceBtn.isSelected = false
@@ -187,6 +189,7 @@ class AddJournalVC: UIViewController {
             self.checkForPaidAccount()//New
             
         case .AudioEntry:
+            self.title = "Add Voice Entry"
             textBtn.isSelected = false
             imageBtn.isSelected = false
             voiceBtn.isSelected = true
@@ -198,6 +201,7 @@ class AddJournalVC: UIViewController {
             self.checkForPaidAccount()//New
             
         case .AudioToTextEntry:
+            self.title = "Add Voice to Text Entry"
             textBtn.isSelected = false
             imageBtn.isSelected = false
             voiceBtn.isSelected = false
@@ -353,7 +357,7 @@ class AddJournalVC: UIViewController {
             
         var imgDataArray: [Data] = []
         for img in imgArray {
-            let imageData = img.jpegData(compressionQuality: 1.0)!
+            let imageData = img.jpegData(compressionQuality: 0.20)!
             imgDataArray.append(imageData)
         }
         
@@ -419,7 +423,7 @@ class AddJournalVC: UIViewController {
         for imgObj in imgObjArray { // convert all UIImage into Data and collect into Array
             
             let thumbImg = imgObj.thumbImg
-            let imageData = thumbImg.jpegData(compressionQuality: 1.0)!
+            let imageData = thumbImg.jpegData(compressionQuality: 0.20)!
             imgDataArray.append(imageData)
         }
         
