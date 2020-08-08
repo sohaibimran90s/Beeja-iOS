@@ -20,6 +20,8 @@ class WWMShareLoveVC: WWMBaseViewController {
     @IBOutlet weak var tableViewInvitesList: UITableView!
     @IBOutlet weak var tableViewInvitesListHC: NSLayoutConstraint!
     @IBOutlet weak var tableViewInvitesListTC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
     
     var data: [String] = []
 
@@ -31,6 +33,15 @@ class WWMShareLoveVC: WWMBaseViewController {
     }
     
     func setUpView(){
+        
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 22
+            self.btnCrossTopC.constant = 6
+        }else{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 8
+        }
+        
         self.btnInviteFriends.layer.cornerRadius = 20
         self.lblCopyCode.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.lblCopyCode.layer.borderWidth = 1.0
@@ -43,7 +54,6 @@ class WWMShareLoveVC: WWMBaseViewController {
         self.tableViewInvitesListTC.constant = 0
         
         self.lblCopyCode.text = "Copy Code: \(self.appPreference.getInvitationCode())"
-        
         self.getInviteAccept1API()
     }
     
