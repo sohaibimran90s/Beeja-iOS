@@ -12,17 +12,27 @@ class WWMLearnCongratsVC: WWMBaseViewController {
 
     @IBOutlet weak var lblStep: UILabel!
     @IBOutlet weak var lblStepDescription: UILabel!
-
+    @IBOutlet weak var btnCrossTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCrossTopC: NSLayoutConstraint!
+    
     var watched_duration = ""
     var alertPrompt = WWMPromptMsg()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    func setUpView(){
         self.lblStep.text = "\(KSTEP) \(WWMHelperClass.step_id)"
         self.lblStepDescription.text = "\(KSTEPCONGMSG) \(WWMHelperClass.step_id) \(KSTEPCONGMSG1)"
-        //print("wathced duration.... \(Int(watched_duration) ?? 0)")
         
+        if WWMHelperClass.hasTopNotch{
+            self.btnCrossTrailC.constant = 20
+            self.btnCrossTopC.constant = 8
+        }else{
+            self.btnCrossTrailC.constant = 16
+            self.btnCrossTopC.constant = 10
+        }
     }
     
     @IBAction func btnCrossClicked(_ sender: UIButton) {
