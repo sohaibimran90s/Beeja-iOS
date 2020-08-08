@@ -69,16 +69,19 @@ class AddJournalVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.title = "Add Text Entry"
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = KDONE
-
+        
+        self.logExprnctBtn.layer.cornerRadius = 20
+        self.logExprnctBtn.layer.borderColor = UIColor(hexString: "#00EBA9")?.cgColor
+        self.logExprnctBtn.layer.borderWidth = 2.0
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
-
+        
         let button: UIButton = UIButton(type: UIButton.ButtonType.custom)
         button.setImage(UIImage(named: "CloseBtn.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(closeButtonAction), for: UIControl.Event.touchUpInside)
@@ -86,14 +89,14 @@ class AddJournalVC: UIViewController {
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
         
-
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Maax-Bold", size: 16.0)!]
         
         textBtn.isSelected = true
         imageContainerView.isHidden = true
         audioContainerView.isHidden = true
         audioToTextContainerView.isHidden = true
-
+        
         self.selectedJournalOpt = JournalOption.TextEntry
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)

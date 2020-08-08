@@ -95,7 +95,10 @@ class TextContainerVC: UIViewController, TextCellDelegate, ImageCellDelegate {
             titleTxt = "   Upgrade to add more images"
         }
         
-        let attributedString = NSMutableAttributedString(string:titleTxt, attributes:Constant.underLineAttrs)
+        let underLineColor: UIColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+        let underLineStyle = NSUnderlineStyle.single.rawValue
+        let attributedString = NSMutableAttributedString(string:titleTxt, attributes: [NSAttributedString.Key.underlineStyle: underLineStyle,
+        NSAttributedString.Key.underlineColor: underLineColor])
         self.addImageBtn.setAttributedTitle(attributedString, for: .normal)
     }
 

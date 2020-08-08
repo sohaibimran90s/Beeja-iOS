@@ -1825,7 +1825,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oriental Escape" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="dO8-QI-rSn">
-                                                    <rect key="frame" x="12" y="77" width="153" height="23.5"/>
+                                                    <rect key="frame" x="12" y="76" width="153" height="25"/>
                                                     <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1875,7 +1875,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewn-ri-p8H">
-                                        <rect key="frame" x="163.5" y="15.5" width="48.5" height="19"/>
+                                        <rect key="frame" x="162.5" y="15" width="50.5" height="20"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -6363,16 +6363,16 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SrI-ER-GVE">
-                                                            <rect key="frame" x="66" y="21" width="293" height="56.5"/>
+                                                            <rect key="frame" x="66" y="23.5" width="293" height="51"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Will Williams Podcast with Howard Donald from Take That" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeP-HT-MQB">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="37.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="32"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STW-Yp-M8T">
-                                                                    <rect key="frame" x="0.0" y="37.5" width="293" height="19"/>
+                                                                    <rect key="frame" x="0.0" y="32" width="293" height="19"/>
                                                                     <fontDescription key="fontDescription" name="Maax-Regular" family="Maax" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -6434,7 +6434,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNy-Ab-Ct7">
-                                        <rect key="frame" x="143" y="15.5" width="89.5" height="19"/>
+                                        <rect key="frame" x="141.5" y="15" width="92" height="20"/>
                                         <fontDescription key="fontDescription" name="Maax-Bold" family="Maax" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -17027,7 +17027,7 @@ Best enjoyed with headphones.</string>
         <!--My Progress Journal DetailVC-->
         <scene sceneID="7fH-dK-Z8T">
             <objects>
-                <viewController storyboardIdentifier="WWMMyProgressJournalDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dic-kT-LAP" customClass="WWMMyProgressJournalDetailVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WWMMyProgressJournalDetailVC" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dic-kT-LAP" customClass="WWMMyProgressJournalDetailVC" customModule="Meditation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BM6-ju-LHJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
