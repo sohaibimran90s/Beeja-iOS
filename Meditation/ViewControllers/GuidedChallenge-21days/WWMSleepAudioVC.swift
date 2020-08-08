@@ -64,7 +64,7 @@ class WWMSleepAudioVC: WWMBaseViewController {
             self.btnCrossTopC.constant = 8
         }else{
             self.btnCrossTrailC.constant = 16
-            self.btnCrossTopC.constant = 16
+            self.btnCrossTopC.constant = 10
         }
         
         self.setNavigationBar(isShow: false, title: "")
