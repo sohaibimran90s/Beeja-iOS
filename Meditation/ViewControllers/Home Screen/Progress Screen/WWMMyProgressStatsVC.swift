@@ -279,6 +279,18 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         UIApplication.shared.keyWindow?.rootViewController = vc
     }
     
+    @IBAction func btn8WeekClicked(_ sender: UIButton){
+        self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+        self.appPreference.setType(value: "learn")
+        
+        DispatchQueue.global(qos: .background).async {
+            self.meditationApi()
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
+    
     func navigateToDashboard() {
         self.navigationController?.isNavigationBarHidden = false
         
