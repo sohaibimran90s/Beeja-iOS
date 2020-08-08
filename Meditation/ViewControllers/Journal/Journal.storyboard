@@ -396,7 +396,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="ISy-wT-UEv"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="Maax-Medium" family="Maax" pointSize="14"/>
                                         <state key="normal" title="Save Image">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
