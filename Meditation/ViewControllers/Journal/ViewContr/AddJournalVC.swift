@@ -315,11 +315,13 @@ class AddJournalVC: UIViewController {
 
         var jsonBody: Any = ""
         if (self.isAddJournal) {
+            WWMHelperClass.sendEventAnalytics(contentType: "PRE_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_TEXT_ENTRY")
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
                                                   textDescrip: textJournal.textDescription ?? "",
                                                   type: Constant.JournalType.TEXT)
         }
         else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_TEXT_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
                                                           textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
         }
@@ -397,11 +399,13 @@ class AddJournalVC: UIViewController {
 
         var jsonBody: Any = ""
         if (self.isAddJournal) {
+            WWMHelperClass.sendEventAnalytics(contentType: "PRE_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_IMAGE_ENTRY")
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                       title: "", textDescrip: imageJournal.title ?? "",
                                                       type: Constant.JournalType.IMAGE)
         }
         else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_IMAGE_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
                                                           textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj,
                                                           type: Constant.JournalType.IMAGE)
@@ -470,11 +474,13 @@ class AddJournalVC: UIViewController {
         
         var jsonBody: Any = ""
         if (self.isAddJournal) {
+            WWMHelperClass.sendEventAnalytics(contentType: "PRE_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                   title: "",
                                                   textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
         }
         else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
                                                           title: "",
                                                           textDescrip: audioJournal.caption ?? "",
@@ -540,12 +546,14 @@ class AddJournalVC: UIViewController {
 
         var jsonBody: Any = ""
         if (self.isAddJournal) {
+            WWMHelperClass.sendEventAnalytics(contentType: "PRE_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                   title: audioToTextJournal.caption ?? "",
                                                   textDescrip: audioToTextJournal.transcribingText ?? "",
                                                   type: Constant.JournalType.VOICE_TO_TEXT)
         }
         else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
                                                           title: audioToTextJournal.caption ?? "",
                                                           textDescrip: audioToTextJournal.transcribingText ?? "",

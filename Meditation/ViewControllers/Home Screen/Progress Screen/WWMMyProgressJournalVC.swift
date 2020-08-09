@@ -125,6 +125,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         //1. text only
         let data = journalData[indexPath.row]
         if data.assets_images.count == 0 && data.assets_audios.count == 0 {
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNAL ", itemId: "JOURNAL_DETAIL_VIEW", itemName: "VIEW_TEXT_ENTRY")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMyProgressJournalDetailVC") as! WWMMyProgressJournalDetailVC
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
 
@@ -138,6 +139,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         }
         else if data.assets_images.count > 0 {
             //2. image and text
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNAL ", itemId: "JOURNAL_DETAIL_VIEW", itemName: "VIEW_IMAGE_ENTRY")
             let story = UIStoryboard.init(name: "JournalDetails", bundle: nil)
             let vc = story.instantiateViewController(withIdentifier: "WWMMyProgressJournalImageDetailVC") as! WWMMyProgressJournalImageDetailVC
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalImageTableViewCell
@@ -153,6 +155,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         }
         else if data.assets_audios.count > 0 {
             //3. audio and text
+            WWMHelperClass.sendEventAnalytics(contentType: "JOURNAL ", itemId: "JOURNAL_DETAIL_VIEW", itemName: "VIEW_VOICE_ENTRY")
             let story = UIStoryboard.init(name: "JournalDetails", bundle: nil)
             let vc = story.instantiateViewController(withIdentifier: "WWMMyProgressJournalAudioDetailVC") as! WWMMyProgressJournalAudioDetailVC
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalAudioTableViewCell
