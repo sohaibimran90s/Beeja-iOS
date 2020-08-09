@@ -27,6 +27,8 @@ class Constant: NSObject {
     
     static let kNotificationInAudioJournal = "StopAudioEngineAndRecorderInAudioJournal"
     static let kNotificationInAudioToTextJournal = "StopAudioEngineAndSpeechRecognizerInAudioToTextJournal"
+    static let kCancel = "Cancel"
+    static let kGoToSetting = "Go To Settings"
 
     
     

@@ -44,6 +44,7 @@ class AudioContainerVC: UIViewController {
     var audioView = AudioVisualizerView()
     let waveAudioEngine = WaveAudioEngine()
     let kDataManager = DataManager.sharedInstance
+    let kAudioPermissionMsg = "Don't have access to use your microphone. Please allow it from the settings."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,7 @@ class AudioContainerVC: UIViewController {
         self.captionField.setLeftPaddingPoints(20)
         
         self.stopRecordBtn.isHidden = true
+        self.recordPauseBtn.isEnabled = false
         self.overlayView.isHidden = (kDataManager.isPaidAc) ? true : false
         self.stopRecordBtn.layer.borderColor = UIColor.white.cgColor
         
@@ -103,9 +105,11 @@ class AudioContainerVC: UIViewController {
         switch AVAudioSession.sharedInstance().recordPermission {
         case AVAudioSessionRecordPermission.granted:
             isAudioRecordingGranted = true
+            self.checkPermission()
             break
         case AVAudioSessionRecordPermission.denied:
             isAudioRecordingGranted = false
+            self.checkPermission()
             break
         case AVAudioSessionRecordPermission.undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission({ (allowed) in
@@ -114,10 +118,36 @@ class AudioContainerVC: UIViewController {
                     } else {
                         self.isAudioRecordingGranted = false
                     }
+                
+                    OperationQueue.main.addOperation() {
+                        self.checkPermission()
+                    }
             })
             break
         default:
             break
+        }
+     }
+    
+    func checkPermission() {
+        self.recordPauseBtn.isEnabled = self.isAudioRecordingGranted
+        if (!self.isAudioRecordingGranted) {
+            
+            Alert.alertWithTwoButton(title: "Opss!", message: kAudioPermissionMsg,
+                                     btn1: Constant.kCancel, btn2: Constant.kGoToSetting, container: self)
+            { (alert, index) in
+                
+                if (index == 1) {
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                            //print("Settings opened: \(success)") // Prints true
+                        })
+                    }
+                }
+            }
         }
     }
 
@@ -321,7 +351,7 @@ class AudioContainerVC: UIViewController {
     func audioJournalExperienceLog() -> AudioJournal?{
         
         if (self.audioJournalArr.count == 0) {
-            Alert.alertWithOneButton(title: "", message: "Please add audio.", container: self) { (alert, index) in
+            Alert.alertWithOneButton(title: "", message: "No audio recorded.", container: self) { (alert, index) in
             }
             return nil
         }

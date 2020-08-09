@@ -85,7 +85,8 @@ class AddJournalVC: UIViewController {
         let button: UIButton = UIButton(type: UIButton.ButtonType.custom)
         button.setImage(UIImage(named: "CloseBtn.png"), for: UIControl.State.normal)
         button.addTarget(self, action: #selector(closeButtonAction), for: UIControl.Event.touchUpInside)
-        //button.frame = CGRectMake(0, 0, 53, 31)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.contentHorizontalAlignment = .right
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
         

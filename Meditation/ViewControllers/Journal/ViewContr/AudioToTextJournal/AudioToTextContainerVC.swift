@@ -45,7 +45,7 @@ class AudioToTextContainerVC: UIViewController {
     let waveAudioEngine = WaveAudioEngine()
     
     let kDataManager = DataManager.sharedInstance
-
+    let kSpeechPermissionMsg = "Don't have access to use your Speech recognization. Please allow it from the settings."
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -116,11 +116,33 @@ class AudioToTextContainerVC: UIViewController {
             }
             
             OperationQueue.main.addOperation() {
-                self.recordBtn.isEnabled = isButtonEnabled
+                //self.recordBtn.isEnabled = isButtonEnabled
+                self.checkSpeechPermission(isGranted: isButtonEnabled)
             }
         }
-
     }
+    
+    func checkSpeechPermission(isGranted: Bool) {
+        self.recordBtn.isEnabled = isGranted
+        if (!isGranted) {
+            Alert.alertWithTwoButton(title: "Opss!", message: kSpeechPermissionMsg,
+                                     btn1: Constant.kCancel, btn2: Constant.kGoToSetting, container: self)
+            { (alert, index) in
+                
+                if (index == 1) {
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                            //print("Settings opened: \(success)") // Prints true
+                        })
+                    }
+                }
+            }
+        }
+    }
+
     
     fileprivate func setupAudioWaveView() {
         audioView.frame = CGRect(x: 0, y: self.recordCtrBGView.frame.height - 30, width: self.recordCtrBGView.frame.width, height: 40)
