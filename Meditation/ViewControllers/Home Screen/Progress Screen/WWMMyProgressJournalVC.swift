@@ -301,15 +301,13 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         // Ehsan
         let vc = UIStoryboard(name: "Journal", bundle: nil).instantiateViewController(withIdentifier: "AddJournal") as! AddJournalVC
         let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .overFullScreen
+        navController.modalPresentationStyle = .fullScreen //.overFullScreen
         vc.isAddJournal = true
         self.present(navController, animated: false, completion: nil)
         
         return
         
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-            
-            
             let getPostJournalCount = self.appPreference.getPostJournalCount()
             if getPostJournalCount == 0{
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: KNOFREEJOURNAL, type: "post")
