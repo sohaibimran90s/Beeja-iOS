@@ -28,10 +28,10 @@ class WWMMilestoneAchievementVC: WWMBaseViewController {
         
         if WWMHelperClass.hasTopNotch{
             self.btnCrossTrailC.constant = 20
-            self.btnCrossTopC.constant = 52
+            self.btnCrossTopC.constant = 8
         }else{
             self.btnCrossTrailC.constant = 16
-            self.btnCrossTopC.constant = 26
+            self.btnCrossTopC.constant = 8
         }
         self.btnProgress.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.btnProgress.layer.borderWidth = 1.0
