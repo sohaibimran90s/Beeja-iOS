@@ -11,15 +11,15 @@ import AVFoundation
 import Accelerate
 
 class WaveAudioEngine: NSObject {
-
+    
     let audioEngine = AVAudioEngine()
     private var renderTs: Double = 0
     private var recordingTs: Double = 0
     private var silenceTs: Double = 0
-    //let settings = [AVFormatIDKey: kAudioFormatLinearPCM, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: true, AVSampleRateKey: Float64(44100), AVNumberOfChannelsKey: 1] as [String : Any]
-     let settings = [AVFormatIDKey: kAudioFormatLinearPCM, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: true, AVSampleRateKey: AVAudioSession.sharedInstance().sampleRate, AVNumberOfChannelsKey: 1] as [String : Any]
     
-     func startAudioEngine(audioView: AudioVisualizerView) {
+    let settings = [AVFormatIDKey: kAudioFormatLinearPCM, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: true, AVSampleRateKey: AVAudioSession.sharedInstance().sampleRate, AVNumberOfChannelsKey: 1] as [String : Any]
+    
+    func startAudioEngine(audioView: AudioVisualizerView) {
         let inputNode = self.audioEngine.inputNode
         guard let format = self.format() else {
             return
@@ -66,29 +66,14 @@ class WaveAudioEngine: NSObject {
             return
         }
     }
-
+    
     private func format() -> AVAudioFormat? {
         let format = AVAudioFormat(settings: self.settings)
         return format
     }
-
     
-         func stopAudioEngine() {
-            
-            self.audioEngine.inputNode.removeTap(onBus: 0)
-            self.audioEngine.stop()
-//            do {
-//                try AVAudioSession.sharedInstance().setActive(false)
-//            } catch  let error as NSError {
-//                print(error.localizedDescription)
-//                return
-//            }
-            
-            
-            //audioView.removeFromSuperview()
-            //audioView = AudioVisualizerView()
-            //setupAudioView()
-        }
-
-
+    func stopAudioEngine() {
+        self.audioEngine.inputNode.removeTap(onBus: 0)
+        self.audioEngine.stop()
+    }
 }
