@@ -20,6 +20,8 @@ class WWMLearnCongratsVC: WWMBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setUpView()
     }
     
     func setUpView(){
@@ -28,10 +30,10 @@ class WWMLearnCongratsVC: WWMBaseViewController {
         
         if WWMHelperClass.hasTopNotch{
             self.btnCrossTrailC.constant = 20
-            self.btnCrossTopC.constant = 8
+            self.btnCrossTopC.constant = 52
         }else{
             self.btnCrossTrailC.constant = 16
-            self.btnCrossTopC.constant = 10
+            self.btnCrossTopC.constant = 26
         }
     }
     

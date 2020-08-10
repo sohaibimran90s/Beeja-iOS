@@ -365,6 +365,8 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             "meditation_id": self.meditationID,
             "level_id":self.levelID,
             "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
+            "mood_color": "",
+            "mood_text": "",
             "complete_percentage": WWMHelperClass.complete_percentage,
             "is_complete": "1",
             "title": "",
@@ -615,23 +617,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             WWMHelperClass.sendEventAnalytics(contentType: "MOODMETER_POST", itemId: "SKIPPED", itemName: "")
         }
         
-        if self.appPreference.getType() == "learn"{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
-            vc.type = self.type
-            vc.prepTime = self.prepTime
-            vc.meditationTime = self.meditationTime
-            vc.restTime = self.restTime
-            vc.meditationID = self.meditationID
-            vc.levelID = self.levelID
-            vc.category_Id = self.category_Id
-            vc.emotion_Id = self.emotion_Id
-            vc.audio_Id = self.audio_Id
-            vc.rating = self.rating
-            vc.watched_duration = self.watched_duration
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            self.completeMeditationAPI()
-        }
+        self.completeMeditationAPI()
     }
     
     func saveToDB(param:[String:Any]) {

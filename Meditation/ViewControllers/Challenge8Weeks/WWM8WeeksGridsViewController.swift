@@ -259,7 +259,18 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     }
     
     @IBAction func btnContinueAction(_ sender: UIButton) {
-        self.pushViewController(sender_Tag: self.startChallengeFunc())
+        if self.daysListData[self.startChallengeFunc()].second_session_required{
+            self.isTwoTimePlay = true
+            if check2TypePlay().0{
+                self.twoTimeDay = 2
+                self.pushViewController(sender_Tag: check2TypePlay().1)
+            }else{
+                self.twoTimeDay = 1
+                self.pushViewController(sender_Tag: self.startChallengeFunc())
+            }
+        }else{
+            self.pushViewController(sender_Tag: self.startChallengeFunc())
+        }
     }
     
     //start challenge from button
