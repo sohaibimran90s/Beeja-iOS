@@ -351,7 +351,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func showForceUpdate() {
-        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "AppDelegate") { (result, error, success) in
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/updatetwo.json", context: "AppDelegate") { (result, error, success) in
             if success {
                 
                 //print("appdelegate result... \(result)")

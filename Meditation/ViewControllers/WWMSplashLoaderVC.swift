@@ -51,7 +51,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     }
     
     func showForceUpdate() {
-        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/update.json", context: "WWMSplashLoaderVC") { (result, error, success) in
+        WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/updatetwo.json", context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
                 
                 //set url from backend using constant*
