@@ -738,7 +738,8 @@ class AddJournalVC: UIViewController {
                 }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
                     self.nextVC()
                 }else{
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
+                    let story = UIStoryboard.init(name: "Main", bundle: nil)
+                    let vc = story.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
