@@ -10,6 +10,8 @@ import UIKit
 import FirebaseCrashlytics
 import GoogleSignIn
 import FBSDKLoginKit
+import AuthenticationServices
+
 
 class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInDelegate,GIDSignInUIDelegate {
     
@@ -26,6 +28,9 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
     @IBOutlet weak var viewSocialLogin: UIView!
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var btnBackTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var loginScrollView: UIScrollView!
+    
     var tap = UITapGestureRecognizer()
     
     var isFromWelcomeBack = false
@@ -142,6 +147,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         self.setNavigationBar(isShow: false, title: "")
         self.btnLogin.layer.borderWidth = 2.0
         self.btnLogin.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.setupAppleSignInButton()
     }
     
     @objc func KeyPadTap() -> Void {
@@ -457,6 +463,53 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
+    }
+
+    private func setupAppleSignInButton() {
+        let signInButton = ASAuthorizationAppleIDButton()
+        signInButton.addTarget(self, action: #selector(WWMLoginWithEmailVC.signInButtonTapped), for: .touchDown)
+        
+        signInButton.translatesAutoresizingMaskIntoConstraints = false
+        self.loginScrollView.addSubview(signInButton)
+        
+        NSLayoutConstraint.activate([
+            signInButton.centerXAnchor.constraint(equalToSystemSpacingAfter: self.loginScrollView.centerXAnchor, multiplier: 1),
+            signInButton.centerYAnchor.constraint(equalToSystemSpacingBelow: self.loginScrollView.centerYAnchor, multiplier: 1),
+            signInButton.heightAnchor.constraint(equalToConstant: 40),
+            signInButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+    @objc private func signInButtonTapped() {
+        let authorizationProvider = ASAuthorizationAppleIDProvider()
+        let request = authorizationProvider.createRequest()
+        request.requestedScopes = [.email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension WWMLoginWithEmailVC: ASAuthorizationControllerDelegate {
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            return
+        }
+        
+        print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
+        
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("AppleID Credential failed with error: \(error.localizedDescription)")
+    }
+}
+
+extension WWMLoginWithEmailVC: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }
 

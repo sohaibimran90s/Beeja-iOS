@@ -11,6 +11,7 @@ import GoogleSignIn
 import FBSDKLoginKit
 import Lottie
 import FirebaseCrashlytics
+import AuthenticationServices
 
 class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
 
