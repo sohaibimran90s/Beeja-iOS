@@ -499,8 +499,15 @@ extension WWMLoginWithEmailVC: ASAuthorizationControllerDelegate {
             return
         }
         
-        print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
         
+        let userIdentifier = appleIDCredential.user
+        let userFirstName = appleIDCredential.fullName?.givenName
+        let userLastName = appleIDCredential.fullName?.familyName
+        let userEmail = appleIDCredential.email
+        
+        
+        print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
+
     }
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("AppleID Credential failed with error: \(error.localizedDescription)")
