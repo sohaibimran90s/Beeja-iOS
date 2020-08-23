@@ -483,7 +483,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
     @objc private func signInButtonTapped() {
         let authorizationProvider = ASAuthorizationAppleIDProvider()
         let request = authorizationProvider.createRequest()
-        request.requestedScopes = [.email]
+        request.requestedScopes = [.fullName, .email]
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
