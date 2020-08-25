@@ -66,16 +66,37 @@ class WWMSupportVC: WWMBaseViewController {
     }
     
     func submitQueryAPI() {
-        //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        
+        //Prashant
+        //=====================================================================
+        
+        /*
+         Platform - [iOS/Android]OS
+         Version - [Version No]
+         Beeja App Version - [App version No]
+         Subscription status - [Free/Premium]
+         Premium Subscription - [NA/Monthly/Annually/Lifetime]
+         */
+        
+        let platform = "iOS"
+        let version = UIDevice.current.systemVersion
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let subscriptionStatus = UserDefaults.standard.string(forKey: "UserSubscription") ?? ""
+        let subscriptionPlan = UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
+        
+        let queryBody = "\(txtViewQuery.text!)\n\n\nPlatform - \(platform)\nVersion - \(version)\nBeeja App Version - \(appVersion!)\nSubscription status - \(subscriptionStatus)\nPremium Subscription - \(subscriptionPlan)"
+        
         let param = [
                       "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
                       "email" : txtViewEmail.text!,
-                      "body" : txtViewQuery.text!
+                      "body" : queryBody
             ] as [String : Any]
         
-        //print("contact param... \(param)")
+        //=====================================================================
+        
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, context: "WWMSupportVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
