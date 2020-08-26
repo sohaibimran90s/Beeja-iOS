@@ -107,6 +107,10 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func btnLoginWithAppleAction(_ sender: UIButton) {
+        
+    }
+    
     @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
         let loginManager = LoginManager()
@@ -161,7 +165,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     @IBAction func btnStartBe(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupSocialVC") as! WWMSignupSocialVC
             self.navigationController?.pushViewController(vc, animated: true)
         })
     }

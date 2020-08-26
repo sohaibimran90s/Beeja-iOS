@@ -632,6 +632,7 @@
 		E838011724B44C3E008CDB89 /* Cell8Weeks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011524B44C3D008CDB89 /* Cell8Weeks.swift */; };
 		E838011824B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */; };
 		E838011A24B44C91008CDB89 /* 8week.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E838011924B44C90008CDB89 /* 8week.storyboard */; };
+		E853FF4624F5385C009934E8 /* WWMSignupSocialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E853FF4524F5385C009934E8 /* WWMSignupSocialVC.swift */; };
 		E86F6CFB24C0726700445D92 /* WWMJournalImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F6CFA24C0726700445D92 /* WWMJournalImagesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -1307,6 +1308,7 @@
 		E838011524B44C3D008CDB89 /* Cell8Weeks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell8Weeks.swift; sourceTree = "<group>"; };
 		E838011624B44C3E008CDB89 /* WWM8WeeksGridsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM8WeeksGridsViewController.swift; sourceTree = "<group>"; };
 		E838011924B44C90008CDB89 /* 8week.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = 8week.storyboard; sourceTree = "<group>"; };
+		E853FF4524F5385C009934E8 /* WWMSignupSocialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSignupSocialVC.swift; sourceTree = "<group>"; };
 		E86F6CFA24C0726700445D92 /* WWMJournalImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJournalImagesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1847,6 +1849,7 @@
 				2EB1F11121DF619100F98EC2 /* WWMSplashLoaderVC.swift */,
 				613071F522D9AED1009CBCA1 /* WWMWalkThoghVC.swift */,
 				612DFCB52351BD050055ED96 /* WWMSignUpFacebookVC.swift */,
+				E853FF4524F5385C009934E8 /* WWMSignupSocialVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3385,6 +3388,7 @@
 				61416E8D22BBB3B400C9339E /* PieRadarChartViewBase.swift in Sources */,
 				61416F2A22BBB53000C9339E /* IBubbleChartDataSet.swift in Sources */,
 				63F8894E24C01066001F424A /* ImageContainerVC.swift in Sources */,
+				E853FF4624F5385C009934E8 /* WWMSignupSocialVC.swift in Sources */,
 				611D9BAC23CC95F900D894AE /* WWMProfileUpdatedPopUp.swift in Sources */,
 				61416EB422BBB42600C9339E /* ChartUtils.swift in Sources */,
 				E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */,

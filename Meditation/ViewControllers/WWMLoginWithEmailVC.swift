@@ -147,7 +147,6 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         self.setNavigationBar(isShow: false, title: "")
         self.btnLogin.layer.borderWidth = 2.0
         self.btnLogin.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        self.setupAppleSignInButton()
     }
     
     @objc func KeyPadTap() -> Void {
@@ -193,6 +192,12 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
     }
     
     // MARK: Button Action
+    
+    @IBAction func clickSignup() {
+        let story = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = story.instantiateViewController(withIdentifier: "WWMSignupSocialVC") as! WWMSignupSocialVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @IBAction func btnLoginAction(_ sender: UIButton) {
         if !isFromWelcomeBack {
