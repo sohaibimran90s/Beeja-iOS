@@ -343,8 +343,10 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                
+                Logger.logger.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
     }
     
@@ -363,8 +365,9 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex )")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
     }
     
@@ -383,12 +386,17 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                
+                Logger.logger.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
     }
     
     @objc func btnRestoreAction(_ sender: Any){
+        
+        Logger.logger.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+        
         self.continueRestoreValue = "1"
         if (SKPaymentQueue.canMakePayments()){
             SKPaymentQueue.default().restoreCompletedTransactions()
@@ -404,6 +412,8 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             }else if self.selectedProductIndex == 1{
                 WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
             }
+            
+            Logger.logger.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             
             self.continueRestoreValue = "0"
             if reachable.isConnectedToNetwork() {
@@ -422,14 +432,19 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             
             productRequest.delegate = self
             productRequest.start()
+            
+            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
         }
         else {
             //print("Cannot perform In App Purchases.")
+            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
         }
     }
     
     func showActions() {
         if transactionInProgress {
+            
+            Logger.logger.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in progress return")
             return
         }
         
@@ -458,6 +473,9 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
             self.transactionInProgress = true
             //WWMHelperClass.showSVHud()
             WWMHelperClass.showLoaderAnimate(on: self.view)
+            
+            Logger.logger.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
+            WWMHelperClass.showLoaderAnimate(on: self.view)
         }else {
             self.requestProductInfo()
         }
@@ -468,16 +486,21 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
         if response.products.count != 0 {
             for product in response.products {
                 productsArray.append(product )
-                print(product.localizedTitle)
-                print(product.productIdentifier)
+                //print(product.localizedTitle)
+                //print(product.productIdentifier)
+                
+                Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
             }
         }
         else {
             //print("There are no products.")
+            
+            Logger.logger.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
-            print(response.invalidProductIdentifiers.description)
+            //print(response.invalidProductIdentifiers.description)
+            Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
         }
        // WWMHelperClass.dismissSVHud()
     }
@@ -508,6 +531,7 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 //"plan_id" : transaction.payment.productIdentifier
                 //"subscription_plan" : self.subscriptionPlan
                 
+                Logger.logger.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
                 
                 let param = [
                     "plan_id" : plan_id,
@@ -517,6 +541,8 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                     "transaction_id" : transaction.transactionIdentifier! as Any,
                     "amount" : self.subscriptionAmount
                     ] as [String : Any]
+                
+                Logger.logger.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "plan_id \(param)")
                 
                 //print("param,,,,... \(param)")
                 
@@ -531,8 +557,12 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 //WWMHelperClass.dismissSVHud()
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
+                Logger.logger.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction failed")
+                
             default:
-                print(transaction.transactionState.rawValue)
+                //print(transaction.transactionState.rawValue)
+                
+                Logger.logger.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
             }
         }
     }
@@ -544,6 +574,8 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
                    //print("result.... \(result)")
+                    
+                    Logger.logger.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
                 }
             }else {
                 
@@ -555,7 +587,10 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
                     
+                    Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
                 }
+                
+                Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "response fail")
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -568,7 +603,12 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
+                
+                Logger.logger.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                
                 if self.continueRestoreValue == "1"{
+                    
+                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("1", forKey: "restore")
@@ -579,6 +619,8 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                         return
                     }
                 }else{
+                    
+                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("0", forKey: "restore")
@@ -593,6 +635,9 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                 
                 //The Internet connection appears to be offline.
                 if error != nil {
+                    
+                    Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                         return
@@ -607,6 +652,8 @@ extension WWMSleepAudioVC: SKProductsRequestDelegate,SKPaymentTransactionObserve
                         return
                     }
                 }
+                
+                Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "api fail")
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)

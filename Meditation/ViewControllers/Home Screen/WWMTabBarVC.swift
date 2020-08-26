@@ -1725,7 +1725,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if success {
                             
                             WWMHelperClass.hideLoaderAnimate(on: self.view)
-                            print("user_id****** \(self.appPreffrence.getUserID()) result***** \(result)")
+                            //print("user_id****** \(self.appPreffrence.getUserID()) result***** \(result)")
                             
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
@@ -1920,6 +1920,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         let json = try? JSONSerialization.jsonObject(with: data!, options: [])
                         //print(json ?? "")
                         
+                        Logger.logger.generateLogs(type: "API: receiptValidation", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "json \(json ?? "")")
                         if json != nil{
                             if let date = self.getExpirationDateFromResponse(json as! NSDictionary) {
                                 //print("date...+++++ \(date)")
@@ -1945,11 +1946,18 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     let serverDate = WWMHelperClass.getExpireDate(expiryDate: formatter.string(from: date), formatter: formatter)
                                     //print("backend date \(expireDate) apple date++++ \(serverDate)")
                                     
+                                    Logger.logger.generateLogs(type: "API: receiptValidation", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "json not nil backendExpireDate \(expireDate) appleExpireDate \(serverDate)")
+                                    
                                     if serverDate > expireDate{
                                         //print("product_id... \(self.product_id) repurchased")
+                                        
+                                        Logger.logger.generateLogs(type: "API: receiptValidation", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "apple server date greater than backend server date")
+                                        
                                         self.getSubscriptionPlanId()
                                     }else{
                                         //print("expired")
+                                        
+                                        Logger.logger.generateLogs(type: "API: receiptValidation", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "backend server date greater than apple server date")
                                     }
                                 }
                             }
@@ -2008,6 +2016,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                     self.responseArray = result
                    //print("result.... \(result)")
                     
+                    Logger.logger.generateLogs(type: "API: getSubscriptionPlanId", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "self.responseArray \(self.responseArray)")
+                    
                     var getProductId: Bool = false
                     var plan_id: Int = 2
                     var subscriptionPlan: String = "annual"
@@ -2049,6 +2059,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         self.subscriptionSucessAPI(param: param)
                     }
                 }
+            }else{
+                Logger.logger.generateLogs(type: "API: getSubscriptionPlanId", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Response Fail")
             }
         }
     }
@@ -2060,7 +2072,11 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 //print("success.... upgrade beeja tab bar vc lat...\(self.lat) long... \(self.long)")
+                
+                Logger.logger.generateLogs(type: "API: subscriptionSucessAPI", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
                 self.getUserProfileData(lat: self.lat, long: self.long)
+            }else{
+                Logger.logger.generateLogs(type: "API: subscriptionSucessAPI", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Response Error")
             }
         }
     }

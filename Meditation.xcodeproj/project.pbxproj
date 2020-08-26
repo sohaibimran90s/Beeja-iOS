@@ -460,6 +460,7 @@
 		61C08B6D2459ADA000FEC661 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */; };
 		61C75BF424653D0000FBF4CB /* WWMSleepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */; };
 		61C75BF6246559C600FBF4CB /* WWMSleepTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */; };
+		61CF07A924F5A18600625C12 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CF07A824F5A18600625C12 /* Logger.swift */; };
 		61D110FE242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */; };
 		61D110FF242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */; };
 		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
@@ -1132,6 +1133,7 @@
 		61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepVC.swift; sourceTree = "<group>"; };
 		61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepTVC.swift; sourceTree = "<group>"; };
+		61CF07A824F5A18600625C12 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
@@ -1702,6 +1704,7 @@
 				2E93D2F621F5C98C00163E57 /* WWMWebServices.swift */,
 				2E93D2F821F5CABE00163E57 /* WWMStringDefine.swift */,
 				2E93D2FA21F5D14900163E57 /* WWMHelperClass.swift */,
+				61CF07A824F5A18600625C12 /* Logger.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -3405,6 +3408,7 @@
 				61416F3F22BBB56900C9339E /* LineChartDataProvider.swift in Sources */,
 				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */,
+				61CF07A924F5A18600625C12 /* Logger.swift in Sources */,
 				61416E8F22BBB3B400C9339E /* PieChartView.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,

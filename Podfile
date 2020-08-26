@@ -33,6 +33,7 @@ target 'Meditation' do
   pod 'EFCountingLabel', '~> 5.0.0'
   pod 'Alamofire', '~> 4.9.0'
   pod 'Firebase/Crashlytics'
+  pod 'CocoaLumberjack/Swift'
 
   # Recommended: Add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'

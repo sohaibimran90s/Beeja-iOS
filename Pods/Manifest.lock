@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.9.1)
+  - CocoaLumberjack/Core (3.6.2)
+  - CocoaLumberjack/Swift (3.6.2):
+    - CocoaLumberjack/Core
   - EFCountingLabel (5.0.0)
   - FBSDKCoreKit (6.2.0):
     - FBSDKCoreKit/Basics (= 6.2.0)
@@ -142,6 +145,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.0)
+  - CocoaLumberjack/Swift
   - EFCountingLabel (~> 5.0.0)
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -162,6 +166,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CocoaLumberjack
     - EFCountingLabel
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -207,6 +212,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  CocoaLumberjack: bd155f2dd06c0e0b03f876f7a3ee55693122ec94
   EFCountingLabel: c25faa62a975f8ef9b2cb0928e8675520e8e2739
   FBSDKCoreKit: a7bb9f5ac56c1e11d5f8ae0b90a3610f8744b43a
   FBSDKLoginKit: 5877adb09cc249870c352d92ecc3246cb925c771
@@ -241,6 +247,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: b3eba859a515e4d9d38503eec913f09c28450785
   XLPagerTabStrip: 832dc9b062d150598ac7e735a769f7986cb1c801
 
-PODFILE CHECKSUM: 051ea3989bbffb9f52c577d175c989f3e0ceef8f
+PODFILE CHECKSUM: b9ee25b3bea31f3e4ac291d41beb857aaace0baf
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
