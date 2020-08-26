@@ -16,18 +16,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBOutlet weak var viewMonthly: UIView!
     @IBOutlet weak var lblBilledText: UILabel!
 
-    //aply coupon outlets
-    @IBOutlet weak var viewACoupon: UIView!
-    @IBOutlet weak var viewRedeemCoupon: UIView!
-    @IBOutlet weak var viewACouponHC: NSLayoutConstraint!
-    @IBOutlet weak var btnACoupon: UIButton!
-    @IBOutlet weak var textField1: UITextField!
-    @IBOutlet weak var textField2: UITextField!
-    @IBOutlet weak var textField3: UITextField!
-    @IBOutlet weak var textField4: UITextField!
-    @IBOutlet weak var textField5: UITextField!
-    @IBOutlet weak var textField6: UITextField!
-    
     var tap = UITapGestureRecognizer()
     var selectedProductIndex = 2
     var transactionInProgress = false
@@ -51,7 +39,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
         self.view.addGestureRecognizer(self.tap)
         self.boolGetIndex = true
         self.setNavigationBar(isShow: false, title: "")
@@ -76,38 +63,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewMonthly.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewLifeTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewAnnually.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
-        self.viewRedeemCoupon.isHidden = true
-        self.viewACoupon.isHidden = false
-        
-        if WWMHelperClass.hasTopNotch{
-            self.viewACouponHC.constant = 66
-            self.viewACoupon.layer.cornerRadius = 33
-        }else{
-            self.viewACoupon.layer.cornerRadius = 28
-            self.viewACouponHC.constant = 56
-        }
-    }
-    
-    @objc func checkTapAction(sender : UITapGestureRecognizer) {
-        self.viewRedeemCoupon.isHidden = true
-        self.viewACoupon.isHidden = false
-    }
-    
-    //MARK: Apply Coupon code
-    @IBAction func btnACouponAction(_ sender: UIButton){
-        self.viewRedeemCoupon.isHidden = false
-        self.viewACoupon.isHidden = true
-    }
-    
-    @IBAction func btnRCouponAction(_ sender: UIButton){
-        let redeemCode = "\(self.textField1.text ?? "")\(self.textField2.text ?? "")\(self.textField3.text ?? "")\(self.textField4.text ?? "")\(self.textField5.text ?? "")\(self.textField6.text ?? "")"
-
-        if redeemCode.count == 6{
-            self.getRedeemCodeAPI(redeemCode: redeemCode, type: "vc", controller: WWMGuidedUpgradeBeejaPopUp())
-        }else{
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
-        }
     }
     
     // MARK:- Get Product Data from Itunes
@@ -355,26 +310,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
 
 extension WWMUpgradeBeejaVC{
     
-    func getRedeemCodeAPI(redeemCode: String, type: String, controller: WWMGuidedUpgradeBeejaPopUp){
-        
-        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode, "type": "30days"] as [String : Any]
-        //print("param... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            
-            if result["success"] as? Bool ?? false {
-                if type == "vc"{
-                    self.callHomeVC1()
-                }else{
-                    controller.removeFromSuperview()
-                    self.callHomeVC(index: 2)
-                }
-            }else{
-                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
-            }
-        }
-    }
-    
     func getSubscriptionPlanId(){
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
@@ -473,64 +408,3 @@ extension WWMUpgradeBeejaVC{
     }
 }
 
-extension WWMUpgradeBeejaVC: UITextFieldDelegate{
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // On inputing value to textfield
-        if ((textField.text?.count)! < 1  && string.count > 0){
-            if(textField == textField1)
-            {
-                textField2.becomeFirstResponder()
-            }
-            if(textField == textField2)
-            {
-                textField3.becomeFirstResponder()
-            }
-            if(textField == textField3)
-            {
-                textField4.becomeFirstResponder()
-            }
-            if(textField == textField4)
-            {
-                textField5.becomeFirstResponder()
-            }
-            if(textField == textField5)
-            {
-                textField6.becomeFirstResponder()
-            }
-
-            textField.text = string
-            return false
-        }
-        else if ((textField.text?.count)! >= 1  && string.count == 0){
-            // on deleting value from Textfield
-            if(textField == textField2)
-            {
-                textField1.becomeFirstResponder()
-            }
-            if(textField == textField3)
-            {
-                textField2.becomeFirstResponder()
-            }
-            if(textField == textField4)
-            {
-                textField3.becomeFirstResponder()
-            }
-            if(textField == textField5)
-            {
-                textField4.becomeFirstResponder()
-            }
-            if(textField == textField6)
-            {
-                textField5.becomeFirstResponder()
-            }
-            textField.text = ""
-            return false
-        }
-        else if ((textField.text?.count)! >= 1  )
-        {
-            textField.text = string
-            return false
-        }
-        return true
-    }
-}

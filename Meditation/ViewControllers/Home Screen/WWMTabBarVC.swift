@@ -393,9 +393,9 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             settingDB.prepTime = "\(dic.prepTime)"
                             settingDB.meditationTime = "\(dic.meditationTime)"
                             settingDB.restTime = "\(dic.restTime)"
-                            print(settingDB.prepTime ?? "")
-                            print(settingDB.meditationTime ?? "")
-                            print(settingDB.restTime ?? "")
+                            //print(settingDB.prepTime ?? "")
+                            //print(settingDB.meditationTime ?? "")
+                            //print(settingDB.restTime ?? "")
                         }
                         
                     }
@@ -499,7 +499,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 
         WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
             if sucess {
-                print(result["success"] as? Bool ?? true)
+                //print(result["success"] as? Bool ?? true)
                 if let sucess1 = result["success"] as? Bool{
                     if sucess1{
                         DispatchQueue.main.async {
@@ -932,7 +932,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 }
                 
                 if let data = result["data"] as? [[String: Any]]{
-                    print("learn result... \(result) getLearnAPI count... \(data.count)")
+                    //print("learn result... \(result) getLearnAPI count... \(data.count)")
                     
                     let getDBLearn = WWMHelperClass.fetchDB(dbName: "DBLearn") as! [DBLearn]
                     if getDBLearn.count > 0 {
