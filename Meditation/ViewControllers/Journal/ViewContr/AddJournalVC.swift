@@ -38,7 +38,7 @@ struct MeditationComplete{
     var checkAnalyticStr = ""
 }
 
-class AddJournalVC: UIViewController {
+class AddJournalVC: WWMBaseViewController {
 
     @IBOutlet weak var textBtn: UIButton!
     @IBOutlet weak var imageBtn: UIButton!
@@ -58,7 +58,6 @@ class AddJournalVC: UIViewController {
     var audioToTextContainerVC: AudioToTextContainerVC?
 
     var selectedJournalOpt: JournalOption?
-    let appPreference = WWMAppPreference()
     var isAddJournal = false
     
     let kDataManager = DataManager.sharedInstance
@@ -728,6 +727,11 @@ class AddJournalVC: UIViewController {
             }else {
                 
                 if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
+                    
                     if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
@@ -736,6 +740,9 @@ class AddJournalVC: UIViewController {
                         self.nextVC()
                     }
                 }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
                     self.nextVC()
                 }else{
                     let story = UIStoryboard.init(name: "Main", bundle: nil)
