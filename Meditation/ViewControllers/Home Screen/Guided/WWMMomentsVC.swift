@@ -28,7 +28,7 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print(type)
+        self.appPreference.set21ChallengeName(value: self.guidedData.cat_Name)
         self.btnMantra.layer.cornerRadius = 20
         self.btnMantra.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnMantra.layer.borderWidth = 2.0
@@ -70,16 +70,11 @@ class WWMMomentsVC: WWMBaseViewController, IndicatorInfoProvider {
                             self.arrToCheckSection.append("1")
                         }
                     }
-                    
                 }
             }
-            
             self.tableView.reloadData()
         }
-        
-        //print("self.guidedData.cat_EmotionList.count \(self.guidedData.cat_EmotionList.count) arra.count \(arrOfGuidedEmotionData.count)")
     }
-    
     
     @IBAction func btnMantraAction(_ sender: UIButton){
         if self.guidedData.cat_EmotionList.count > 0{
@@ -143,9 +138,6 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
         }else{
             let guidedAudioDataDB = WWMHelperClass.fetchGuidedAudioFilterDB(emotion_id: "\(data.emotion_Id)", dbName: "DBGuidedAudioData")
             
-            
-            self.appPreference.set21ChallengeName(value: "Moments")
-            
             if guidedAudioDataDB.count > 1{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSleepAudioVC") as! WWMSleepAudioVC
                 vc.emotionData = data
@@ -163,7 +155,6 @@ extension WWMMomentsVC: UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
-    
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100

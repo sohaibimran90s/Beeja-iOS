@@ -192,6 +192,8 @@ extension WWMSleepAudioVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             
+            self.appPreference.set21ChallengeName(value: self.cat_Name)
+            
             DispatchQueue.main.async {
                 if self.appPreference.getGuidedSleep() == "Guided" {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMGuidedMeditationTimerVC") as! WWMGuidedMeditationTimerVC

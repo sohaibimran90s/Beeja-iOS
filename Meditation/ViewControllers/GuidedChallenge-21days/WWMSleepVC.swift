@@ -25,7 +25,7 @@ class WWMSleepVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(type)
+        //print(type)
         self.btnMantra.layer.cornerRadius = 20
         self.btnMantra.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnMantra.layer.borderWidth = 2.0
