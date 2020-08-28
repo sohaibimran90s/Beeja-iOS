@@ -101,8 +101,11 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         
         self.appPreference.set21ChallengeName(value: self.cat_name)
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.popViewController(animated: true)
-        
+        if self.type == "curatedCards"{
+            self.navigationController?.popToRootViewController(animated: true)
+        }else{
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func btnRetakeAction(_ sender: UIButton) {

@@ -360,6 +360,10 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 if let _ = result["success"] as? Bool {
                     self.appPreference.setSessionAvailableData(value: true)
                     self.meditationHistoryListAPI()
+                    
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
                     DispatchQueue.main.async {
                         self.navigateToDashboard()
                     }

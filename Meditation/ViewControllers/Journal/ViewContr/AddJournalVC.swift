@@ -658,7 +658,7 @@ class AddJournalVC: WWMBaseViewController {
         
         //print("param meterlog... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "AddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setSessionAvailableData(value: true)
                 self.meditationHistoryListAPI()
@@ -687,7 +687,7 @@ class AddJournalVC: WWMBaseViewController {
         func meditationHistoryListAPI() {
             
             let param = ["user_id": self.appPreference.getUserID()]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "AddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let data = result["data"] as? [String: Any]{
                         if let records = data["records"] as? [[String: Any]]{
@@ -754,7 +754,12 @@ class AddJournalVC: WWMBaseViewController {
             if self.mediCompleteObj.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)
-            }else {
+            }else{
+                if self.appPreference.getType() == "guided"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getGuidedListAPI()
+                    }
+                }
                 self.nextVC()
              }
         }

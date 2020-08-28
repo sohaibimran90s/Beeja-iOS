@@ -605,7 +605,8 @@ extension WWMWalkThoghVC{
                 print(Int((dict as AnyObject).guided_id ?? "0") ?? 0)
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DayChallengeVC") as! WWM21DayChallengeVC
-                       
+                      
+                vc.type = "curatedCards"
                 vc.subCategory = self.subCategory
                 vc.category = self.category
                 vc.id = (dict as AnyObject).guided_id ?? ""
