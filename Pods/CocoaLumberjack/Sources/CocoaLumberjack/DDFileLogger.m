@@ -435,7 +435,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
     NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
 
-    return [NSString stringWithFormat:@"%@%@.log", formattedDate, @"Beeja"];
+    return [NSString stringWithFormat:@"%@%@.log", formattedDate, @"_Beeja"];
 }
 
 - (nullable NSString *)logFileHeader {

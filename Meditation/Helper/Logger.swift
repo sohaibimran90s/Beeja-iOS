@@ -16,6 +16,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     public let fileLogger: DDFileLogger = DDFileLogger()
     static let logger = Logger()
     let user_id = WWMAppPreference().getUserID()
+    let defaults = UserDefaults.standard
     
     func setUpLogger(){
         // File logger
@@ -23,6 +24,15 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         fileLogger.rollingFrequency = TimeInterval(60*60*24)
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger, with: .info)
+    }
+    
+    func setIsLogging(value: Bool){
+        defaults.set(value, forKey: "isLogging")
+        getLogContent()
+    }
+    
+    func getIsLogging() -> Bool{
+        return defaults.bool(forKey: "isLogging")
     }
     
     func generateLogs(type: String, user_id: String, filePath: String, line: Int, column: Int, function: String, logText: String){

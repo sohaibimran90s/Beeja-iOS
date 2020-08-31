@@ -1430,6 +1430,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)
                 self.appPreffrence.set21ChallengeName(value: "")
+                UserDefaults.standard.set(false, forKey: "isLogging")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

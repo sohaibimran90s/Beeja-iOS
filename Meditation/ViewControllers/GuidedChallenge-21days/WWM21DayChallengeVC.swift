@@ -827,7 +827,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
                 
-                Logger.logger.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
             //print(product.productIdentifier)
         }
@@ -849,7 +853,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
                 
-                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex )")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex )")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
             //print(product.productIdentifier)
         }
@@ -871,7 +879,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
                 
-                Logger.logger.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
             //print(product.productIdentifier)
         }
@@ -879,7 +891,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
     
     @objc func btnRestoreAction(_ sender: Any){
         
-        Logger.logger.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+        if Logger.logger.getIsLogging(){
+            Logger.logger.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+        }else{
+            Logger.logger.deleteLogFile()
+        }
         self.continueRestoreValue = "1"
         if (SKPaymentQueue.canMakePayments()){
             SKPaymentQueue.default().restoreCompletedTransactions()
@@ -896,7 +912,12 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
             }
             
-            Logger.logger.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
+            
             self.continueRestoreValue = "0"
             if reachable.isConnectedToNetwork() {
                 self.showActions()
@@ -918,18 +939,30 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             productRequest.delegate = self
             productRequest.start()
             
-            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
         }
         else {
             //print("Cannot perform In App Purchases.")
-            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
         }
     }
     
     func showActions() {
         if transactionInProgress {
             
-            Logger.logger.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in progress return")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in progress return")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
             return
         }
         
@@ -959,7 +992,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
             //WWMHelperClass.showSVHud()
             WWMHelperClass.showLoaderAnimate(on: self.view)
             
-             Logger.logger.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
         }else {
             self.requestProductInfo()
         }
@@ -973,19 +1010,31 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 //print(product.localizedTitle)
                 //print(product.productIdentifier)
                 
-                Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
         }
         else {
             //print("There are no products.")
             
-            Logger.logger.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "There are no products.")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "There are no products.")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
         }
         
         if response.invalidProductIdentifiers.count != 0 {
             //print(response.invalidProductIdentifiers.description)
             
-            Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
+            if Logger.logger.getIsLogging(){
+                Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
+            }else{
+                Logger.logger.deleteLogFile()
+            }
         }
         // WWMHelperClass.dismissSVHud()
     }
@@ -1016,7 +1065,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 //"plan_id" : transaction.payment.productIdentifier
                 //"subscription_plan" : self.subscriptionPlan
                 
-                Logger.logger.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
                 
                 let param = [
                     "plan_id" : plan_id,
@@ -1033,7 +1086,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                     self.subscriptionSucessAPI(param: param)
                 }
                 
-                Logger.logger.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "plan_id \(param)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "plan_id \(param)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
                 
             case SKPaymentTransactionState.failed:
                 //print("Transaction Failed");
@@ -1042,11 +1099,19 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 //WWMHelperClass.dismissSVHud()
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
-                Logger.logger.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction failed")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction failed")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             default:
                 //print(transaction.transactionState.rawValue)
                 
-                Logger.logger.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
         }
     }
@@ -1059,7 +1124,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                     self.responseArray = result
                     //print("result.... \(result)")
                     
-                    Logger.logger.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
+                    if Logger.logger.getIsLogging(){
+                        Logger.logger.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
+                    }else{
+                        Logger.logger.deleteLogFile()
+                    }
                 }
             }else {
                 
@@ -1071,11 +1140,19 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
                     
-                    Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    if Logger.logger.getIsLogging(){
+                        Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    }else{
+                        Logger.logger.deleteLogFile()
+                    }
                     
                 }
                 
-                Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "response fail")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "response fail")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -1089,11 +1166,19 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 
-                Logger.logger.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
                 
                 if self.continueRestoreValue == "1"{
                     
-                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    if Logger.logger.getIsLogging(){
+                        Logger.logger.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    }else{
+                        Logger.logger.deleteLogFile()
+                    }
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("1", forKey: "restore")
@@ -1105,7 +1190,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                     }
                 }else{
                     
-                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    if Logger.logger.getIsLogging(){
+                        Logger.logger.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    }else{
+                        Logger.logger.deleteLogFile()
+                    }
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("0", forKey: "restore")
@@ -1121,7 +1210,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 //The Internet connection appears to be offline.
                 if error != nil {
                     
-                    Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    if Logger.logger.getIsLogging(){
+                        Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    }else{
+                        Logger.logger.deleteLogFile()
+                    }
                     
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
@@ -1138,7 +1231,11 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                     }
                 }
                 
-                 Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "api fail")
+                if Logger.logger.getIsLogging(){
+                    Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "api fail")
+                }else{
+                    Logger.logger.deleteLogFile()
+                }
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)

@@ -46,6 +46,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     override func viewDidLoad() {
         super.viewDidLoad()
                 
+        print("logger*** \(Logger.logger.getLogContent())")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -566,6 +567,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)
                 self.appPreffrence.set21ChallengeName(value: "")
+                UserDefaults.standard.set(false, forKey: "isLogging")
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")
