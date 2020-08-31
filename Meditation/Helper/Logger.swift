@@ -49,10 +49,9 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func getLogContent(){
-        let logFileLogger = DDFileLogger()
-        print(logFileLogger.logFileManager.logsDirectory)
+        print(self.fileLogger.logFileManager.logsDirectory)
         
-        for path in logFileLogger.logFileManager.sortedLogFilePaths {
+        for path in self.fileLogger.logFileManager.sortedLogFilePaths {
             do {
                 let content = try String(contentsOfFile: path, encoding: .utf8)
                 print(content)
@@ -63,10 +62,9 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func deleteLogFile(){
-        let fileLogger: DDFileLogger = DDFileLogger()
-        fileLogger.rollLogFile(withCompletion: {
+        self.fileLogger.rollLogFile(withCompletion: {
             for filename: String in
-                fileLogger.logFileManager.sortedLogFilePaths {
+                self.fileLogger.logFileManager.sortedLogFilePaths {
                     do {
                         try FileManager.default.removeItem(atPath: filename)
                     } catch {

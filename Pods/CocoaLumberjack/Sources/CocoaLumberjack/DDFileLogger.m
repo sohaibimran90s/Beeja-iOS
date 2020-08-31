@@ -295,11 +295,16 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (BOOL)isLogFile:(NSString *)fileName {
-    NSString *appName = [self applicationName];
+    //NSString *appName = [self applicationName];
 
+    NSLog(@"words :: %@", fileName);
     // We need to add a space to the name as otherwise we could match applications that have the name prefix.
-    BOOL hasProperPrefix = [fileName hasPrefix:[appName stringByAppendingString:@" "]];
+    
+    NSDateFormatter *dateFormatter = [self logFileDateFormatter];
+    NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
+    BOOL hasProperPrefix = [fileName hasPrefix:[formattedDate stringByAppendingString:@"_"]];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
+    
 
     return (hasProperPrefix && hasProperSuffix);
 }
@@ -435,7 +440,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
     NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
 
-    return [NSString stringWithFormat:@"%@%@.log", formattedDate, @"_Beeja"];
+    return [NSString stringWithFormat:@"%@_%@.log", formattedDate, @"Beeja"];
 }
 
 - (nullable NSString *)logFileHeader {
