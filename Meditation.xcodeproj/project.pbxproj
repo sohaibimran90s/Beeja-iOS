@@ -1300,6 +1300,7 @@
 		E07831EF235E3BCA00B352ED /* graph.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = graph.json; sourceTree = "<group>"; };
 		E07831F0235E3BCA00B352ED /* home.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home.json; sourceTree = "<group>"; };
 		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
+		E819BDBB24FD27B500179410 /* MeditationDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeditationDebug.entitlements; sourceTree = "<group>"; };
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
 		E82B462024C02592009FE325 /* JournalDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JournalDetails.storyboard; sourceTree = "<group>"; };
@@ -1469,6 +1470,7 @@
 		2E4B1B9C21B5044B002F8A25 /* Meditation */ = {
 			isa = PBXGroup;
 			children = (
+				E819BDBB24FD27B500179410 /* MeditationDebug.entitlements */,
 				2E6C840722256DFC0070E799 /* Meditation.entitlements */,
 				2E43717E21FF402400EF5D62 /* Database */,
 				2EE247B421E6310C00857C25 /* ThirdParty */,
@@ -3828,7 +3830,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Meditation/MeditationDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
