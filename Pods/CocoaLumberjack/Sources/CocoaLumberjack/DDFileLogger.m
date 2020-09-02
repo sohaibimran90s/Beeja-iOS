@@ -297,7 +297,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 - (BOOL)isLogFile:(NSString *)fileName {
     //NSString *appName = [self applicationName];
 
-    NSLog(@"words :: %@", fileName);
+    //NSLog(@"words :: %@", fileName);
     // We need to add a space to the name as otherwise we could match applications that have the name prefix.
     
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
