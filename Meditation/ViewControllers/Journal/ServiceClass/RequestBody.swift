@@ -82,14 +82,14 @@ class RequestBody: NSObject {
         return jsonBody;
     }
     
-    static func logsBody(appPreference: WWMAppPreference, date_from: String, date_to: String) -> [String : AnyObject]
+    static func logsBody(appPreference: WWMAppPreference, dateFrom: String, dateTo: String) -> [String : AnyObject]
     {
         let jsonBody = ["user_id": appPreference.getUserID(),
                         "device_id": UIDevice.current.identifierForVendor!.uuidString,
                         "platform": "iOS",
                         "app_version": WWMHelperClass.getVersion(),
-                        "date_from": date_from,
-                        "date_to": date_from]  as [String : AnyObject]
+                        "date_from": dateFrom,
+                        "date_to": dateTo]  as [String : AnyObject]
         
         return jsonBody;
     }

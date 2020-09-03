@@ -79,8 +79,10 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             }
                      
             let finalLogData = self.sortedDataWithDate(logsDict: logsDict)
+            
+            let filtered = finalLogData.0.filter({ $0.key == "2020-09-03"})
 
-            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), date_from: finalLogData.1, date_to: finalLogData.2)
+            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: finalLogData.1, dateTo: finalLogData.2)
             
             print("logs param*** \(param)")
             
