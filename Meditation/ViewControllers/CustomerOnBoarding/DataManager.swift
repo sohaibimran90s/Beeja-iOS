@@ -121,7 +121,7 @@ class DataManager: NSObject {
         })
     }
 
-    func uploadLogs(logsDataArray: [String: Data], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
+    func uploadLogs(logsDataArray: [(key: String, value: Data)], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
 
         let withName = "log_files[]"
         let mineType = "text/plain"
@@ -132,9 +132,9 @@ class DataManager: NSObject {
         //Alamofire.upload(multipartFormData: { multipartFormData in
             // import image to request
             for (fileName, logData) in logsDataArray {
-                print("filename*** \(fileName)")
+                print("filename*** \(fileName) logData*** \(logData)")
                 multipartFormData.append(logData, withName: withName,
-                                         fileName: "\(fileName)", mimeType: mineType)
+                                         fileName: "\(fileName)_Beeja", mimeType: mineType)
             }
             
             //let param = parameter as! [String: AnyObject]

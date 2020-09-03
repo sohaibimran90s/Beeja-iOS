@@ -827,7 +827,7 @@ extension WWM21DayChallengeVC: SKProductsRequestDelegate,SKPaymentTransactionObs
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
                 
-                Logger.logger.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                Logger.logger.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
                 
             }
             //print(product.productIdentifier)

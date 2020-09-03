@@ -249,7 +249,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
-                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
             //print(product.productIdentifier)
         }
@@ -270,7 +270,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
-                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                Logger.logger.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
             //print(product.productIdentifier)
         }
@@ -292,14 +292,14 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
                 
-                Logger.logger.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+                Logger.logger.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
             //print(product.productIdentifier)
         }
     }
     
     @objc func btnRestoreAction(_ sender: Any){
-        Logger.logger.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+        Logger.logger.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
         
         self.continueRestoreValue = "1"
         if (SKPaymentQueue.canMakePayments()){
@@ -317,7 +317,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
             }
             
-            Logger.logger.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+            Logger.logger.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             
             self.continueRestoreValue = "0"
             if reachable.isConnectedToNetwork() {
@@ -325,7 +325,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             }else {
                 WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                 
-                Logger.logger.generateLogs(type: "Continue error", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "lost internet")
+                Logger.logger.generateLogs(type: "Continue error", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "lost internet")
             }
         }
     }
@@ -339,18 +339,18 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             productRequest.delegate = self
             productRequest.start()
             
-            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
+            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
         }
         else {
             //print("Cannot perform In App Purchases.")
-            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
+            Logger.logger.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
         }
     }
     
     func showActions() {
         if transactionInProgress {
             
-            Logger.logger.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in progress return")
+            Logger.logger.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "transaction in progress return")
             return
         }
         
@@ -372,7 +372,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
     @IBAction func btnDoneAction(_ sender: Any) {
         if  self.productsArray.count > 0 {
             
-            Logger.logger.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
+            Logger.logger.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
             WWMHelperClass.showLoaderAnimate(on: self.view)
             //print("self.productsArray[self.selectedProductIndex]... \(self.productsArray[self.selectedProductIndex])")
             
@@ -393,17 +393,17 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 productsArray.append(product )
                 //print(product.localizedTitle)
                 //print(product.productIdentifier)
-                Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
+                Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
             }
         }
         else {
-            Logger.logger.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "There are no products.")
+            Logger.logger.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "There are no products.")
             //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
             //print(response.invalidProductIdentifiers.description)
-            Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
+            Logger.logger.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
         }
        // WWMHelperClass.dismissSVHud()
     }
@@ -434,7 +434,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 //"plan_id" : transaction.payment.productIdentifier
                 //"subscription_plan" : self.subscriptionPlan
                 
-                Logger.logger.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
+                Logger.logger.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
                 
                 let param = [
                     "plan_id" : plan_id,
@@ -447,7 +447,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 
                 //print("param,,,,... \(param)")
                 
-                Logger.logger.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "plan_id \(param)")
+                Logger.logger.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "plan_id \(param)")
                 
                 if !self.restoreBool{
                     self.subscriptionSucessAPI(param: param)
@@ -460,11 +460,11 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 //WWMHelperClass.dismissSVHud()
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
-                Logger.logger.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction failed")
+                Logger.logger.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "transaction failed")
                 
             default:
                 //print(transaction.transactionState.rawValue)
-                Logger.logger.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
+                Logger.logger.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
             }
         }
     }
@@ -475,7 +475,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
-                    Logger.logger.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
+                    Logger.logger.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
                    //print("result.... \(result)")
                 }
             }else {
@@ -504,11 +504,11 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
                 
-                Logger.logger.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                Logger.logger.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "param \(param)")
                 
                 if self.continueRestoreValue == "1"{
                     
-                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "param \(param)")
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("1", forKey: "restore")
@@ -520,7 +520,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                     }
                 }else{
                     
-                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                    Logger.logger.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "param \(param)")
                     
                     if !self.restoreBool{
                         KUSERDEFAULTS.set("0", forKey: "restore")
@@ -536,7 +536,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                 //The Internet connection appears to be offline.
                 if error != nil {
                     
-                    Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
                     
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
@@ -553,7 +553,7 @@ extension WWMGuidedAudioListVC: SKProductsRequestDelegate,SKPaymentTransactionOb
                     }
                 }
                 
-                Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error)")
+                Logger.logger.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: "\(self)", line: #line, column: #column, function: #function, logText: "error)")
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)

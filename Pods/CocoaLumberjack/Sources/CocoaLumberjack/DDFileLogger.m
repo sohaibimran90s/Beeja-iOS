@@ -91,7 +91,7 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
         _fileDateFormatter = [[NSDateFormatter alloc] init];
         [_fileDateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
         [_fileDateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        [_fileDateFormatter setDateFormat: @"yyyyMMdd"];
+        [_fileDateFormatter setDateFormat: @"yyyy'-'MM'-'dd'--'HH'-'mm'-'ss'-'SSS'"];
 
         if (aLogsDirectory.length > 0) {
             _logsDirectory = [aLogsDirectory copy];
@@ -295,16 +295,11 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 }
 
 - (BOOL)isLogFile:(NSString *)fileName {
-    //NSString *appName = [self applicationName];
+    NSString *appName = [self applicationName];
 
-    //NSLog(@"words :: %@", fileName);
     // We need to add a space to the name as otherwise we could match applications that have the name prefix.
-    
-    NSDateFormatter *dateFormatter = [self logFileDateFormatter];
-    NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
-    BOOL hasProperPrefix = [fileName hasPrefix:[formattedDate stringByAppendingString:@"_"]];
+    BOOL hasProperPrefix = [fileName hasPrefix:[appName stringByAppendingString:@" "]];
     BOOL hasProperSuffix = [fileName hasSuffix:@".log"];
-    
 
     return (hasProperPrefix && hasProperSuffix);
 }
@@ -435,12 +430,12 @@ NSTimeInterval     const kDDRollingLeeway              = 1.0;              // 1s
 
 //if you change newLogFileName , then  change isLogFile method also accordingly
 - (NSString *)newLogFileName {
-    //NSString *appName = [self applicationName];
+    NSString *appName = [self applicationName];
 
     NSDateFormatter *dateFormatter = [self logFileDateFormatter];
     NSString *formattedDate = [dateFormatter stringFromDate:[NSDate date]];
 
-    return [NSString stringWithFormat:@"%@_%@.log", formattedDate, @"Beeja"];
+    return [NSString stringWithFormat:@"%@ %@.log", appName, formattedDate];
 }
 
 - (nullable NSString *)logFileHeader {
