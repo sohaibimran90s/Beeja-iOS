@@ -19,18 +19,19 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     let defaults = UserDefaults.standard
     
     func setUpLogger(){
-        
-        if getIsLogging(){
-            DDLog.add(DDTTYLogger.sharedInstance!)
-            fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
-            fileLogger.logFileManager.maximumNumberOfLogFiles = 30
-            DDLog.add(fileLogger, with: .info)
-        }
+        DDLog.add(DDTTYLogger.sharedInstance!)
+        fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 30
+        DDLog.add(fileLogger, with: .info)
     }
     
     func setIsLogging(value: Bool){
         defaults.set(value, forKey: "isLogging")
         getLogContent()
+        
+        if getIsLogging(){
+            setUpLogger()
+        }
     }
     
     func getIsLogging() -> Bool{
@@ -64,7 +65,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     func sendLogs() {
         
         if getIsLogging(){
-
+            
             let logURLs = self.fileLogger.logFileManager.sortedLogFilePaths
                 .map { URL.init(fileURLWithPath: $0, isDirectory: false) }
             
@@ -77,31 +78,42 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             if logsDict.isEmpty{
                 return
             }
-                     
-            let finalLogData = self.sortedDataWithDate(logsDict: logsDict)
             
-            let filtered = finalLogData.0.filter({ $0.key == "2020-09-03"})
-
-            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: finalLogData.1, dateTo: finalLogData.2)
+            let logData = self.sortedDataWithDate(logsDict: logsDict)
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            let now = Date()
+            let sevenDaysAgo = now.addingTimeInterval(-7 * 24 * 60 * 60)
+            let lastDate = dateFormatter.string(from: sevenDaysAgo)
+            let currentDate = dateFormatter.string(from: now)
+            
+            let finalLogData = logData.filter({ $0.key >= lastDate && $0.key <= currentDate})
+            
+            
+            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: lastDate, dateTo: currentDate)
             
             print("logs param*** \(param)")
             
-            DataManager.sharedInstance.uploadLogs(logsDataArray: finalLogData.0, parameter: param) { (isSuccess, ErrorMsg) in
+            DataManager.sharedInstance.uploadLogs(logsDataArray: finalLogData, parameter: param) { (isSuccess, ErrorMsg) in
                 
+                if isSuccess{
+                    self.deleteLogFile()
+                }
                 print("isSuccess \(isSuccess) ErrorMsg \(ErrorMsg)")
             }
         }
     }
-
-    func sortedDataWithDate(logsDict: [String: Data]) -> ([(key: String, value: Data)], dateFrom: String, dateTo: String){
+    
+    func sortedDataWithDate(logsDict: [String: Data]) -> [(key: String, value: Data)]{
         var dict: [String: Data] = [:]
         for (key, value) in logsDict{
             let keyName = logDate(dateArray: key.components(separatedBy: " "))
             dict[keyName] = value
-         }
+        }
         
-        let getMinMaxDate = dict.sorted { $0.key < $1.key }
-        return (getMinMaxDate, getMinMaxDate.map({ $0.key }).min()!, getMinMaxDate.map({ $0.key }).max()!)
+        return dict.sorted { $0.key < $1.key }
     }
     
     func logDate(dateArray: [String]) -> String{

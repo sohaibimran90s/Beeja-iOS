@@ -235,6 +235,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        Logger.logger.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
@@ -242,7 +243,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         Crashlytics.crashlytics().setUserID("userId \(userProfile["user_id"] as? Int ?? 0)")
                         
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
-
+                        
                         self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                         self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "Unauthorized request")
                         self.appPreference.setUserName(value: userProfile["name"] as? String ?? "Unauthorized request")

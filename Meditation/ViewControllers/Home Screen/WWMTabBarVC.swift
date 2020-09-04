@@ -568,6 +568,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                 self.appPreffrence.setSpiritualChallenge(value: false)
                 self.appPreffrence.set21ChallengeName(value: "")
                 UserDefaults.standard.set(false, forKey: "isLogging")
+                Logger.logger.setIsLogging(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

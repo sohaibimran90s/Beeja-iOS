@@ -240,6 +240,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
+                        Logger.logger.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                                                 

@@ -188,7 +188,6 @@ extension WWMSupportVC{
         
         if Logger.logger.getIsLogging(){
             alertLogsView.btnSwitch.isOn = true
-            Logger.logger.setUpLogger()
         }else{
             alertLogsView.btnSwitch.isOn = false
         }
@@ -204,7 +203,6 @@ extension WWMSupportVC{
     @objc func btnSwitchAction(mySwitch: UISwitch) {
         if mySwitch.isOn {
             Logger.logger.setIsLogging(value: true)
-            Logger.logger.setUpLogger()
             print("UISwitch is ON")
         } else {
             Logger.logger.setIsLogging(value: false)
