@@ -44,7 +44,7 @@ class WWMSupportVC: WWMBaseViewController {
         
         self.txtViewEmail.text = self.userData.email
         
-        hideShowLogBtn()
+        //hideShowLogBtn()
     }
     // MARK: Button Action
     
