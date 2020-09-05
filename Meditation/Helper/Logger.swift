@@ -19,10 +19,12 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     let defaults = UserDefaults.standard
     
     func setUpLogger(){
-        DDLog.add(DDTTYLogger.sharedInstance!)
-        fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 30
-        DDLog.add(fileLogger, with: .info)
+        if getIsLogging(){
+            DDLog.add(DDTTYLogger.sharedInstance!)
+            fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
+            fileLogger.logFileManager.maximumNumberOfLogFiles = 30
+            DDLog.add(fileLogger, with: .info)
+        }
     }
     
     func setIsLogging(value: Bool){
