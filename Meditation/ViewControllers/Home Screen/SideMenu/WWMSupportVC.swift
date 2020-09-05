@@ -211,7 +211,7 @@ extension WWMSupportVC{
     }
     
     @IBAction func btnSendLogsAction(_ sender: Any) {
-        Logger.logger.sendLogs()
+        Logger.logger.sendLogs(datefrom: alertLogsView.txtFDateFrom.text ?? "", dateTo: alertLogsView.txtFDateTo.text ?? "", vc: self)
     }
     
     @IBAction func btnDeleteLogsAction(_ sender: Any) {

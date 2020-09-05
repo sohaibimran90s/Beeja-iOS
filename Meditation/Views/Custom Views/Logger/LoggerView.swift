@@ -14,6 +14,8 @@ class LoggerView: UIView {
     @IBOutlet weak var btnDeleteLogs: UIButton!
     @IBOutlet weak var btnSwitch: UISwitch!
     @IBOutlet weak var lblStatus: UILabel!
+    @IBOutlet weak var txtFDateFrom: UITextField!
+    @IBOutlet weak var txtFDateTo: UITextField!
     
     @IBAction func btnClose(_ sender: UIButton) {
         self.removeFromSuperview()

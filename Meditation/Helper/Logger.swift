@@ -19,10 +19,12 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     let defaults = UserDefaults.standard
     
     func setUpLogger(){
-        DDLog.add(DDTTYLogger.sharedInstance!)
-        fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 30
-        DDLog.add(fileLogger, with: .info)
+        if getIsLogging(){
+            DDLog.add(DDTTYLogger.sharedInstance!)
+            fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
+            fileLogger.logFileManager.maximumNumberOfLogFiles = 30
+            DDLog.add(fileLogger, with: .info)
+        }
     }
     
     func setIsLogging(value: Bool){
@@ -62,9 +64,14 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         })
     }
     
-    func sendLogs() {
+    func sendLogs(datefrom: String, dateTo: String, vc: UIViewController) {
         
         if getIsLogging(){
+            
+            let getDAte = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
+            if !getDAte.0{
+                return
+            }
             
             let logURLs = self.fileLogger.logFileManager.sortedLogFilePaths
                 .map { URL.init(fileURLWithPath: $0, isDirectory: false) }
@@ -94,14 +101,16 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             
             let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: lastDate, dateTo: currentDate)
             
-            print("logs param*** \(param)")
-            
+            //print("logs param*** \(param)")
+            WWMHelperClass.showLoaderAnimate(on: vc.view)
             DataManager.sharedInstance.uploadLogs(logsDataArray: finalLogData, parameter: param) { (isSuccess, ErrorMsg) in
                 
+                WWMHelperClass.hideLoaderAnimate(on: vc.view)
                 if isSuccess{
                     self.deleteLogFile()
+                    self.alertMsg(msg: "Data uploaded successfully", vc: vc)
                 }
-                print("isSuccess \(isSuccess) ErrorMsg \(ErrorMsg)")
+                //print("isSuccess \(isSuccess) ErrorMsg \(ErrorMsg)")
             }
         }
     }
@@ -119,5 +128,43 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     func logDate(dateArray: [String]) -> String{
         let finalDate = dateArray[1].components(separatedBy: "--")
         return finalDate[0]
+    }
+    
+    func getDateFromTo(datefrom: String, dateTo: String, vc: UIViewController) -> (Bool, fromDate: String, toDate: String){
+        if datefrom == "" && dateTo == ""{
+            self.alertMsg(msg: "Please enter valid dates", vc: vc)
+        }else if datefrom == ""{
+            self.alertMsg(msg: "Please enter from date", vc: vc)
+        }else if dateTo == ""{
+            self.alertMsg(msg: "Please enter To date", vc: vc)
+        }else if !checkValidDate(dateToCheck: datefrom){
+            self.alertMsg(msg: "Please enter from date in the correct formet i.e YYYY-MM-dd", vc: vc)
+        }else if !checkValidDate(dateToCheck: dateTo){
+            self.alertMsg(msg: "Please enter to date in the correct formet i.e YYYY-MM-dd", vc: vc)
+        }else{
+            return (true, datefrom, dateTo)
+        }
+        
+        return (false, datefrom, dateTo)
+    }
+    
+    func alertMsg(msg: String, vc: UIViewController){
+        let alert = UIAlertController(title: msg, message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
+        vc.present(alert, animated: true, completion: nil)
+    }
+    
+    func checkValidDate(dateToCheck: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        if let date = dateFormatter.date(from: dateToCheck)
+            {
+                //print("true date:\(date)")
+                return true
+            }else{
+                //print("wrong date")
+                return false
+            }
     }
 }
