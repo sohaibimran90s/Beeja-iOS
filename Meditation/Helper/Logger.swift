@@ -68,8 +68,8 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         
         if getIsLogging(){
             
-            let getDAte = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
-            if !getDAte.0{
+            let getDate = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
+            if !getDate.0{
                 return
             }
             
@@ -90,22 +90,16 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+        
             
-            let now = Date()
-            let sevenDaysAgo = now.addingTimeInterval(-7 * 24 * 60 * 60)
-            let lastDate = dateFormatter.string(from: sevenDaysAgo)
-            let currentDate = dateFormatter.string(from: now)
+            let finalLogData = logData.filter({ $0.key >= getDate.1 && $0.key <= getDate.2})
+            print(finalLogData)
             
-            let finalLogData = logData.filter({ $0.key >= lastDate && $0.key <= currentDate})
-            
-            
-            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: lastDate, dateTo: currentDate)
+            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: getDate.1, dateTo: getDate.2)
             
             //print("logs param*** \(param)")
-            WWMHelperClass.showLoaderAnimate(on: vc.view)
             DataManager.sharedInstance.uploadLogs(logsDataArray: finalLogData, parameter: param) { (isSuccess, ErrorMsg) in
                 
-                WWMHelperClass.hideLoaderAnimate(on: vc.view)
                 if isSuccess{
                     self.deleteLogFile()
                     self.alertMsg(msg: "Data uploaded successfully", vc: vc)
