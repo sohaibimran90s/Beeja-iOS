@@ -145,7 +145,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     
     func alertMsg(msg: String, vc: UIViewController){
         let alert = UIAlertController(title: msg, message: "", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         vc.present(alert, animated: true, completion: nil)
     }
     
