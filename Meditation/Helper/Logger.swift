@@ -14,14 +14,14 @@ import UIKit
 class Logger: NSObject, MFMailComposeViewControllerDelegate {
     
     public let fileLogger: DDFileLogger = DDFileLogger()
-    static let logger = Logger()
+    static let shared = Logger()
     let user_id = WWMAppPreference().getUserID()
     let defaults = UserDefaults.standard
     
     func setUpLogger(){
         if getIsLogging(){
             DDLog.add(DDTTYLogger.sharedInstance!)
-            fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
+            fileLogger.rollingFrequency = TimeInterval(60*60*24)
             fileLogger.logFileManager.maximumNumberOfLogFiles = 30
             DDLog.add(fileLogger, with: .info)
         }
@@ -48,7 +48,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func getLogContent(){
-        print(self.fileLogger.logFileManager.logsDirectory)
+        //print(self.fileLogger.logFileManager.logsDirectory)
     }
     
     func deleteLogFile(){
@@ -64,7 +64,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         })
     }
     
-    func sendLogs() {
+    func sendLogs(datefrom: String, dateTo: String, vc: UIViewController) {
         
         if getIsLogging(){
             
@@ -78,6 +78,12 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             }
             
             if logsDict.isEmpty{
+                self.alertMsg(msg: "No Record Found", vc: vc)
+                return
+            }
+            
+            let getDate = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
+            if !getDate.0{
                 return
             }
             
@@ -85,25 +91,21 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+        
             
-            let now = Date()
-            let sevenDaysAgo = now.addingTimeInterval(-7 * 24 * 60 * 60)
-            let lastDate = dateFormatter.string(from: sevenDaysAgo)
-            let currentDate = dateFormatter.string(from: now)
+            let finalLogData = logData.filter({ $0.key >= getDate.1 && $0.key <= getDate.2})
+            //print(finalLogData)
             
-            let finalLogData = logData.filter({ $0.key >= lastDate && $0.key <= currentDate})
+            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: getDate.1, dateTo: getDate.2)
             
-            
-            let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: lastDate, dateTo: currentDate)
-            
-            print("logs param*** \(param)")
-            
+            //print("logs param*** \(param)")
             DataManager.sharedInstance.uploadLogs(logsDataArray: finalLogData, parameter: param) { (isSuccess, ErrorMsg) in
                 
                 if isSuccess{
                     self.deleteLogFile()
+                    self.alertMsg(msg: "Data uploaded successfully", vc: vc)
                 }
-                print("isSuccess \(isSuccess) ErrorMsg \(ErrorMsg)")
+                //print("isSuccess \(isSuccess) ErrorMsg \(ErrorMsg)")
             }
         }
     }
@@ -121,5 +123,42 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     func logDate(dateArray: [String]) -> String{
         let finalDate = dateArray[1].components(separatedBy: "--")
         return finalDate[0]
+    }
+    
+    func getDateFromTo(datefrom: String, dateTo: String, vc: UIViewController) -> (Bool, fromDate: String, toDate: String){
+        if datefrom == "" && dateTo == ""{
+            self.alertMsg(msg: "Please enter valid dates", vc: vc)
+        }else if datefrom == ""{
+            self.alertMsg(msg: "Please enter from date", vc: vc)
+        }else if dateTo == ""{
+            self.alertMsg(msg: "Please enter To date", vc: vc)
+        }else if !checkValidDate(dateToCheck: datefrom){
+            self.alertMsg(msg: "Please enter from date in the correct formet i.e YYYY-MM-dd", vc: vc)
+        }else if !checkValidDate(dateToCheck: dateTo){
+            self.alertMsg(msg: "Please enter to date in the correct formet i.e YYYY-MM-dd", vc: vc)
+        }else{
+            return (true, datefrom, dateTo)
+        }
+        
+        return (false, datefrom, dateTo)
+    }
+    
+    func alertMsg(msg: String, vc: UIViewController){
+        let alert = UIAlertController(title: msg, message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        vc.present(alert, animated: true, completion: nil)
+    }
+    
+    func checkValidDate(dateToCheck: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        if let _ = dateFormatter.date(from: dateToCheck){
+                //print("true date:\(date)")
+                return true
+            }else{
+                //print("wrong date")
+                return false
+            }
     }
 }
