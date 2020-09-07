@@ -186,7 +186,7 @@ extension WWMSupportVC{
         alertLogsView.btnDeleteLogs.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         alertLogsView.btnDeleteLogs.layer.cornerRadius = 20
         
-        if Logger.logger.getIsLogging(){
+        if Logger.shared.getIsLogging(){
             alertLogsView.btnSwitch.isOn = true
         }else{
             alertLogsView.btnSwitch.isOn = false
@@ -202,19 +202,19 @@ extension WWMSupportVC{
     
     @objc func btnSwitchAction(mySwitch: UISwitch) {
         if mySwitch.isOn {
-            Logger.logger.setIsLogging(value: true)
+            Logger.shared.setIsLogging(value: true)
             print("UISwitch is ON")
         } else {
-            Logger.logger.setIsLogging(value: false)
+            Logger.shared.setIsLogging(value: false)
             print("UISwitch is OFF")
         }
     }
     
     @IBAction func btnSendLogsAction(_ sender: Any) {
-        Logger.logger.sendLogs(datefrom: alertLogsView.txtFDateFrom.text ?? "", dateTo: alertLogsView.txtFDateTo.text ?? "", vc: self)
+        Logger.shared.sendLogs(datefrom: alertLogsView.txtFDateFrom.text ?? "", dateTo: alertLogsView.txtFDateTo.text ?? "", vc: self)
     }
     
     @IBAction func btnDeleteLogsAction(_ sender: Any) {
-        Logger.logger.deleteLogFile()
+        Logger.shared.deleteLogFile()
     }
 }

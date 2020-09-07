@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 //            ])
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
-        Logger.logger.setUpLogger()
+        Logger.shared.setUpLogger()
         
                 
         return true

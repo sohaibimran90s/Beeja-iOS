@@ -171,7 +171,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     
                     //print("userProfile WWMSignupEmailVC... \(userProfile)")
-                    Logger.logger.setIsLogging(value: true)
+                    Logger.shared.setIsLogging(value: true)
                     self.appPreference.setEmail(value: userProfile["email"] as? String ?? "")
                     self.appPreference.setUserToken(value: userProfile["token"] as? String ?? "")
                     self.appPreference.setUserID(value: "\(userProfile["user_id"] as? Int ?? 0)")
@@ -333,7 +333,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
-                        Logger.logger.setIsLogging(value: true)
+                        Logger.shared.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")

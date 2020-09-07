@@ -235,7 +235,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                     }
                     
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
-                        Logger.logger.setIsLogging(value: true)
+                        Logger.shared.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")

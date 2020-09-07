@@ -14,14 +14,14 @@ import UIKit
 class Logger: NSObject, MFMailComposeViewControllerDelegate {
     
     public let fileLogger: DDFileLogger = DDFileLogger()
-    static let logger = Logger()
+    static let shared = Logger()
     let user_id = WWMAppPreference().getUserID()
     let defaults = UserDefaults.standard
     
     func setUpLogger(){
         if getIsLogging(){
             DDLog.add(DDTTYLogger.sharedInstance!)
-            fileLogger.rollingFrequency = TimeInterval(60*60*0.05)
+            fileLogger.rollingFrequency = TimeInterval(60*60*24)
             fileLogger.logFileManager.maximumNumberOfLogFiles = 30
             DDLog.add(fileLogger, with: .info)
         }
@@ -48,7 +48,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     func getLogContent(){
-        print(self.fileLogger.logFileManager.logsDirectory)
+        //print(self.fileLogger.logFileManager.logsDirectory)
     }
     
     func deleteLogFile(){
@@ -94,7 +94,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         
             
             let finalLogData = logData.filter({ $0.key >= getDate.1 && $0.key <= getDate.2})
-            print(finalLogData)
+            //print(finalLogData)
             
             let param = RequestBody.logsBody(appPreference: WWMAppPreference(), dateFrom: getDate.1, dateTo: getDate.2)
             
