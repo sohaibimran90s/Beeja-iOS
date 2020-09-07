@@ -68,11 +68,6 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         
         if getIsLogging(){
             
-            let getDate = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
-            if !getDate.0{
-                return
-            }
-            
             let logURLs = self.fileLogger.logFileManager.sortedLogFilePaths
                 .map { URL.init(fileURLWithPath: $0, isDirectory: false) }
             
@@ -83,6 +78,12 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
             }
             
             if logsDict.isEmpty{
+                self.alertMsg(msg: "No Record Found", vc: vc)
+                return
+            }
+            
+            let getDate = self.getDateFromTo(datefrom: datefrom, dateTo: dateTo, vc: vc)
+            if !getDate.0{
                 return
             }
             
@@ -152,8 +153,7 @@ class Logger: NSObject, MFMailComposeViewControllerDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        if let date = dateFormatter.date(from: dateToCheck)
-            {
+        if let _ = dateFormatter.date(from: dateToCheck){
                 //print("true date:\(date)")
                 return true
             }else{
