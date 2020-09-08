@@ -41,6 +41,10 @@ class WWMSideMenuVC: WWMBaseViewController {
             self.btnCloseTrailC.constant = 16
         }
         self.lblVersion.text = WWMHelperClass.getVersion()
+        
+        DispatchQueue.global(qos: .background).async {
+            self.syncContactUsData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +75,17 @@ class WWMSideMenuVC: WWMBaseViewController {
          }
         
          self.lblName.text = self.appPreference.getUserName()
+    }
+    
+    func syncContactUsData() {
+        let data = WWMHelperClass.fetchDB(dbName: "DBContactUs") as! [DBContactUs]
+        if data.count > 0 {
+            WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    WWMHelperClass.deletefromDb(dbName: "DBContactUs")
+                }
+            }
+        }
     }
     
     func getProfileApiCalled(){

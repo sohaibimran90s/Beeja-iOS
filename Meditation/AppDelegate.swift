@@ -564,63 +564,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncDataWithServer() {
         if self.appPreference.isLogout() {
-            self.syncMeditationCompleteData()
-        }
-    }
-    
-    func syncMeditationCompleteData() {
-        let data = WWMHelperClass.fetchDB(dbName: "DBMeditationComplete") as! [DBMeditationComplete]
-        if data.count > 0 {
-            var arrData = [[String:Any]]()
-            for dict in data {
-                if let jsonResult = self.convertToDictionary(text: dict.meditationData ?? "") {
-                    arrData.append(jsonResult)
-                }
-            }
-            let param = ["offline_data":arrData]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    self.appPreffrence.setSessionAvailableData(value: true)
-                    WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
-                    self.syncAddJournalData()
-                }
-            }
-        }else {
-            syncAddJournalData()
-        }
-    }
-    
-    func syncAddJournalData() {
-        let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
-        if data.count > 0 {
-            var arrData = [[String:Any]]()
-            for dict in data {
-                if let jsonResult = self.convertToDictionary(text: dict.journalData ?? "") {
-                    arrData.append(jsonResult)
-                }
-            }
-            let param = ["offline_data":arrData]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    WWMHelperClass.deletefromDb(dbName: "DBJournalData")
-                    self.syncContactUsData()
-                }
-            }
-        }else {
-            self.syncContactUsData()
-        }
-    }
-    
-    func syncContactUsData() {
-        let data = WWMHelperClass.fetchDB(dbName: "DBContactUs") as! [DBContactUs]
-        if data.count > 0 {
-            WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_SUPPORT, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    WWMHelperClass.deletefromDb(dbName: "DBContactUs")
-                    self.syncSettingAPI()
-                }
-            }
-        }else {
             self.syncSettingAPI()
         }
     }
@@ -723,17 +666,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 }
             }
         }
-    }
-    
-    func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

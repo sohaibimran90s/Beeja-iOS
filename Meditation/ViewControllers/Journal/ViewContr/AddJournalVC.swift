@@ -477,8 +477,7 @@ class AddJournalVC: WWMBaseViewController {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                   title: "",
                                                   textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
-        }
-        else {
+        }else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
                                                           title: "",

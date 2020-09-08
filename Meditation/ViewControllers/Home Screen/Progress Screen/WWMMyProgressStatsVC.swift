@@ -96,6 +96,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         super.viewDidLoad()
 
         DispatchQueue.global(qos: .background).async {
+            self.syncAddJournalData()
             self.getGuidedListAPI()
             self.getLearnAPI()
         }
@@ -114,6 +115,28 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.viewAvMinutes.value = 0
         self.viewDays.value = 0
         
+        self.notificationPopUpCall()
+    }
+    
+    func syncAddJournalData() {
+        let data = WWMHelperClass.fetchDB(dbName: "DBJournalData") as! [DBJournalData]
+        if data.count > 0 {
+            var arrData = [[String:Any]]()
+            for dict in data {
+                if let jsonResult = self.convertToDictionary1(text: dict.journalData ?? "") {
+                    arrData.append(jsonResult)
+                }
+            }
+            let param = ["offline_data":arrData]
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_ADDJOURNAL, context: "AppDelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                if sucess {
+                    WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+                }
+            }
+        }
+    }
+    
+    func notificationPopUpCall(){
         if WWMHelperClass.milestoneType == "hours_meditate"{
             self.notificationPopUp(titles: "1 Hour Meditated", titleDescript: "You have just completed a Hours Meditated Milestone", textNextMileStone: "1 more hour needed!", imgLogo: "hour", imgLogo1: "hour1", redC: 0, greenC: 255, blueC: 215)
         }else if WWMHelperClass.milestoneType == "consecutive_days"{
