@@ -1739,6 +1739,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
                             self.appPreffrence.setGetProfile(value: false)
+                            self.appPreffrence.setInvitationURL(value: result["Invitation_url"] as? String ?? "")
                             self.appPreffrence.setHomePageURL(value: result["home_page_url"] as! String)
                             self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
                             self.appPreffrence.setInvitationCode(value: result["Invitation_code"] as! String)

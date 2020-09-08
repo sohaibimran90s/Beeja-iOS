@@ -137,6 +137,11 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "invitationCode")
     }
     
+    //Invitation_url
+    func setInvitationURL(value: String) {
+        defaults.set(value, forKey: "invitationURL")
+    }
+    
     func setInvitationCount(value: Int) {
         defaults.set(value, forKey: "invitationCount")
     }
@@ -258,6 +263,11 @@ class WWMAppPreference: NSObject {
     func setMoodId(value: String) {
         defaults.set(value, forKey: "mood_id")
         defaults.synchronize()
+    }
+    
+    //Invitation_url
+    func getInvitationURL() -> String {
+        return UserDefaults.standard.string(forKey: "invitationURL") ?? ""
     }
     
     func getOnBoardingData() -> [String : Any] {
