@@ -564,7 +564,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncDataWithServer() {
         if self.appPreference.isLogout() {
-            self.syncSettingAPI()
+            
+            DispatchQueue.global(qos: .background).async {
+                self.syncSettingAPI()
+            }
         }
     }
     
@@ -591,7 +594,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     let leveldata = [
                         "level_id": level.levelId,
                         "isSelected": level.isLevelSelected,
-                        "name": level.levelName!,
+                        "name": level.levelName ?? "",
                         "prep_time": "\(level.prepTime)",
                         "meditation_time": "\(level.meditationTime)",
                         "rest_time": "\(level.restTime)",
@@ -627,19 +630,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
             //"IsMilestoneAndRewards"
             let group = [
-                "startChime": settingData.startChime!,
-                "endChime": settingData.endChime!,
-                "finishChime": settingData.finishChime!,
-                "intervalChime": settingData.intervalChime!,
-                "ambientSound": settingData.ambientChime!,
+                "startChime": settingData.startChime ?? "JAI GURU DEVA",
+                "endChime": settingData.endChime ?? "JAI GURU DEVA",
+                "finishChime": settingData.finishChime ?? "JAI GURU DEVA",
+                "intervalChime": settingData.intervalChime ?? "JAI GURU DEVA",
+                "ambientSound": settingData.ambientChime ?? "JAI GURU DEVA",
                 "moodMeterEnable": settingData.moodMeterEnable,
                 "IsMorningReminder": settingData.isMorningReminder,
                 "IsMilestoneAndRewards": settingData.isMilestoneAndRewards,
-                "MorningReminderTime": settingData.morningReminderTime!,
+                "MorningReminderTime": settingData.morningReminderTime ?? "",
                 "IsAfternoonReminder": settingData.isAfterNoonReminder,
-                "AfternoonReminderTime": settingData.afterNoonReminderTime!,
+                "AfternoonReminderTime": settingData.afterNoonReminderTime ?? "",
                 "MantraID": settingData.mantraID,
-                "LearnReminderTime": settingData.learnReminderTime!,
+                "LearnReminderTime": settingData.learnReminderTime ?? "",
                 "IsLearnReminder": settingData.isLearnReminder,
                 "isThirtyDaysReminder":settingData.isThirtyDaysReminder,
                 "thirtyDaysReminder":settingData.thirtyDaysReminder ?? "",
@@ -659,11 +662,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             //print("param delegte ... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    if let _ = result["success"] as? Bool {
-                        //print("setting appdelegate... \(result) settingapi appdelegate with background")
-                    }
-                }
             }
         }
     }
@@ -876,7 +874,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     date = dateFormate.date(from: strDate)!
                     
                 }//phone is set to 24 hours end***
-                print(reminder21DaysTime )
+                //print(reminder21DaysTime )
                 
                 
                 var settingData = DBSettings()

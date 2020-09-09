@@ -198,7 +198,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
                 let leveldata = [
                     "level_id": level.levelId,
                     "isSelected": level.isLevelSelected,
-                    "name": level.levelName!,
+                    "name": level.levelName ?? "",
                     "prep_time": "\(level.prepTime)",
                     "meditation_time": "\(level.meditationTime)",
                     "rest_time": "\(level.restTime)",
@@ -235,19 +235,19 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
         }
         //"IsMilestoneAndRewards"
         let group = [
-            "startChime": self.settingData.startChime!,
-            "endChime": self.settingData.endChime!,
-            "finishChime": self.settingData.finishChime!,
-            "intervalChime": self.settingData.intervalChime!,
-            "ambientSound": self.settingData.ambientChime!,
+            "startChime": self.settingData.startChime ?? "JAI GURU DEVA",
+            "endChime": self.settingData.endChime ?? "JAI GURU DEVA",
+            "finishChime": self.settingData.finishChime ?? "JAI GURU DEVA",
+            "intervalChime": self.settingData.intervalChime ?? "JAI GURU DEVA",
+            "ambientSound": self.settingData.ambientChime ?? "JAI GURU DEVA",
             "moodMeterEnable": self.settingData.moodMeterEnable,
             "IsMorningReminder": self.settingData.isMorningReminder,
             "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "MorningReminderTime": self.settingData.morningReminderTime ?? "",
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "",
             "MantraID":self.settingData.mantraID,
-            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "",
             "IsLearnReminder":self.settingData.isLearnReminder,
             "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
             "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
@@ -265,11 +265,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMChooseMantraListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            if sucess {
-                if let success = result["success"] as? Bool {
-                    //print("WWMChooseMantraListVC")
-                }
-            }
+            
         }
     }
 }
