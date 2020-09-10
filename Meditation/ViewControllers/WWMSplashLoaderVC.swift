@@ -46,7 +46,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         animationView.loopMode = .playOnce
         self.view.addSubview(animationView)
         
-        //self.playSound(name: "LOADERSOUND")
         self.showForceUpdate()
     }
     
@@ -239,18 +238,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     }
     
     func loadSplashScreenafterDelay() {
-        //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSplashAnimationVC") as! WWMSplashAnimationVC
-        //self.navigationController?.pushViewController(vc, animated: false)
-        
         self.stopPlayer()
         self.pushToViewController()
-        
-//        if !self.appPreference.getWalkThoughStatus(){
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoughVC1") as! WWMWalkThoughVC1
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }else{
-//            self.pushToViewController()
-//        }
     }
     
     func stopPlayer() {
@@ -313,7 +302,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func getMoodMeterDataFromDB() {
         let moodData = WWMHelperClass.fetchDB(dbName: "DBMoodMeter") as! [DBMoodMeter]
         if moodData.count > 0 {
-            print(moodData[0])
+            //print(moodData[0])
             self.getMeditationDataAPI()
         }else {
             
@@ -332,19 +321,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             
             alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
             window.rootViewController?.view.addSubview(alertPopupView)
-            
-            
-//            let alert = UIAlertController(title: "Alert",
-//                                          message: "The Internet connection appears to be offline.",
-//                                          preferredStyle: UIAlertController.Style.alert)
-//            
-//            
-//            let OKAction = UIAlertAction.init(title: "Ok", style: .default) { (UIAlertAction) in
-//                self.getMoodMeterDataAPI()
-//            }
-//            alert.addAction(OKAction)
-//            UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true,completion: nil)
-        }
+            }
     }
     
     @IBAction func btnDoneAction(_ sender: Any) {
@@ -466,10 +443,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     
     func getMoodMeterDataAPI() {
         
-        DispatchQueue.global(qos: .utility).async {
-            self.getOnBoardingAPI()
-        }
-        
         if self.stopLoaderAudio{
             //print("less....")
             
@@ -493,24 +466,13 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
         }
     }
     
-    func getOnBoardingAPI(){
-        
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_ONBOARDING, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
-           
-            if sucess {
-                //print("URL_ONBOARDING result... \(result)")
-                self.appPreference.setOnBoardingData(value: result)
-            }
-        }
-    }
-    
-    
     func getMeditationDataAPI() {
         
         self.playSound(name: "LOADERSOUND")
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETMEDITATIONDATA, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
             
+            print("result+++ \(result)")
             self.executionTime = Date().timeIntervalSince(self.startDate)
             
             if sucess {
@@ -520,7 +482,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             }
         }
     }
-
 }
 
 extension WWMSplashLoaderVC{

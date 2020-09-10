@@ -34,12 +34,37 @@ class WWMWalkThoughVC1: WWMBaseViewController {
         
         if !reachable.isConnectedToNetwork() {
             self.offlineJsonFileCall()
-        }else{
-            if !self.appPreffrence.getOnBoardingData().isEmpty{
-                //print("not empty")
-                self.decodeModel(json: self.appPreffrence.getOnBoardingData() as AnyObject)
-            }else{
-                self.offlineJsonFileCall()
+            return
+        }
+        
+        apiCall()
+    }
+    
+    func apiCall(){
+        
+        if !self.appPreffrence.getOnBoardingData().isEmpty{
+            //print("not empty")
+            self.decodeModel(json: self.appPreffrence.getOnBoardingData() as AnyObject)
+            
+            return
+        }
+        
+        self.getOnBoardingAPI()
+    }
+    
+    func getOnBoardingAPI(){
+        
+        self.offlineJsonFileCall()
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_ONBOARDING, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
+           
+            if sucess {
+                self.appPreference.setOnBoardingData(value: result)
+                if !self.appPreffrence.getOnBoardingData().isEmpty{
+                    DispatchQueue.main.async {
+                        self.decodeModel(json: self.appPreffrence.getOnBoardingData() as AnyObject)
+                    }
+                }
             }
         }
     }

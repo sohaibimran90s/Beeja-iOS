@@ -2,28 +2,28 @@
 {
   "data":[
      {
-       "title": "First Onboarding",
-       "description": "First Onboarding Description",
+       "title": "Meditate",
+       "description": "",
        "imageName": "onboardingImg1"
      },
      {
-       "title": "Second Onboarding",
-       "description": "Second Onboarding Description",
+       "title": "Sleep",
+       "description": "",
        "imageName": "onboardingImg2"
      },
      {
-       "title": "Third Onboarding",
-       "description": "Third Onboarding Description",
+       "title": "Wisdom",
+       "description": "",
        "imageName": "onboardingImg3"
      },
      {
-       "title": "Fourth Onboarding",
-       "description": "Fourth Onboarding Description",
+       "title": "Progress",
+       "description": "",
        "imageName": "onboardingImg4"
      },
      {
-       "title": "Fifth Onboarding",
-       "description": "Fifth Onboarding Description",
+       "title": "Community",
+       "description": "",
        "imageName": "onboardingImg5"
      }
   ]
