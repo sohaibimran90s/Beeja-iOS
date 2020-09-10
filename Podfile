@@ -34,6 +34,7 @@ target 'Meditation' do
   pod 'Alamofire', '~> 4.9.0'
   pod 'Firebase/Crashlytics'
   pod 'CocoaLumberjack/Swift'
+  pod 'Branch'
 
   # Recommended: Add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
