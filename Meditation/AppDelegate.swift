@@ -18,7 +18,6 @@ import FirebaseCrashlytics
 //import Fabric
 import CallKit
 import FirebaseAnalytics
-import Branch
 
 
 @UIApplicationMain
@@ -126,12 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 //            ])
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
-        
-        //MARK:- Branch-deeplink
-        Branch.setUseTestBranchKey(true)
-        setupBranchSDK(launchOptions: launchOptions)
-        
-        
         Logger.shared.setUpLogger()
         
         return true
@@ -139,24 +132,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     
     //MARK:- Deeplink handling
-    
-    private func setupBranchSDK(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        
-        Branch.getInstance().initSession(launchOptions: launchOptions) { params, _ in
-            
-            if let params = params as? [String: AnyObject] {
-                // parameter check for cheetah web only handling
-                if let webOnly = params["web_only"], webOnly.boolValue == true {
-                    if let urlString = params["original_url"] as? String, let _ = URL(string: urlString) {
-                        UIApplication.shared.open(URL(string: urlString)!)
-                        return
-                    } else {
-                        
-                    }
-                }
-            }
-        }
-    }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
@@ -744,9 +719,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        //Branch-deeplink
-        Branch.getInstance().application(app, open: url, options: options)
        
         if url.absoluteString.contains("fb") {
             return ApplicationDelegate.shared.application(app, open: url, options: options)

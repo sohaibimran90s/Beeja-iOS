@@ -198,7 +198,6 @@ fi
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Branch/Branch.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EFCountingLabel/EFCountingLabel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework"
@@ -220,7 +219,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Branch/Branch.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EFCountingLabel/EFCountingLabel.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework"
