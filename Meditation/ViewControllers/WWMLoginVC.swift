@@ -316,10 +316,10 @@ extension WWMLoginVC: ASAuthorizationControllerDelegate {
         UserDefaults.standard.set(userIdentifier, forKey: "apple_id")
         
         if appleIDCredential.fullName != nil {
-            UserDefaults.standard.set(fullname, forKey: "apple_email")
+            UserDefaults.standard.set(fullname, forKey: "apple_fullname")
         }
         if userEmail != nil {
-            UserDefaults.standard.set(userEmail, forKey: "apple_fullname")
+            UserDefaults.standard.set(userEmail, forKey: "apple_email")
         }
         
         print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
