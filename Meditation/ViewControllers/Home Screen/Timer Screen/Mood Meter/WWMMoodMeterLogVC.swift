@@ -352,6 +352,11 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
             }else {
                 
                 if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
+                    
                     if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
@@ -360,6 +365,9 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
                         self.nextVC()
                     }
                 }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
                     self.nextVC()
                 }else{
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFAQsVC") as! WWMFAQsVC

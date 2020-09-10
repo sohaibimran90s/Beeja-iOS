@@ -121,5 +121,54 @@ class DataManager: NSObject {
         })
     }
 
+    func uploadLogs(logsDataArray: [(key: String, value: Data)], parameter: [String: AnyObject], completion:@escaping(Bool, String) -> Void) {
+
+        let withName = "log_files[]"
+        let mineType = "text/plain"
+        
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 420
+        manager.upload(multipartFormData: { multipartFormData in
+        //Alamofire.upload(multipartFormData: { multipartFormData in
+            // import image to request
+            for (fileName, logData) in logsDataArray {
+                print("filename*** \(fileName) logData*** \(logData)")
+                multipartFormData.append(logData, withName: withName,
+                                         fileName: "\(fileName)_Beeja", mimeType: mineType)
+            }
+            
+            //let param = parameter as! [String: AnyObject]
+            for (key, value) in parameter {
+                print("key... \(key) value... \(value)")
+                let valueStr = String(describing: value)
+                if let data = valueStr.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)) {
+                    multipartFormData.append(data, withName: key)
+                }
+            }
+
+        }, to: URL_UPLOADLOGS,
+
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload
+                        .validate()
+                        .responseJSON { response in
+                            switch response.result {
+                            case .success(let value):
+                                print("responseObject: \(value)")
+                                completion(true, "")
+                            case .failure(let responseError):
+                                print("responseError: \(responseError)")
+                                completion(false, responseError.localizedDescription)
+                            }
+                    }
+
+                case .failure(let error):
+                    print(error)
+                    completion(false, error.localizedDescription)
+                }
+        })
+    }
 
 }

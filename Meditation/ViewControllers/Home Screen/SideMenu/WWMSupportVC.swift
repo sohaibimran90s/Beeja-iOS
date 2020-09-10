@@ -15,8 +15,9 @@ class WWMSupportVC: WWMBaseViewController {
     @IBOutlet weak var txtViewEmail: UITextField!
     @IBOutlet weak var txtViewQuery: UITextView!
     @IBOutlet weak var btnSubmit: UIButton!
-    
+    @IBOutlet weak var btnLogs: UIButton!
     //var alertPopupView = WWMAlertController()
+    var alertLogsView = LoggerView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,8 @@ class WWMSupportVC: WWMBaseViewController {
         self.setNavigationBar(isShow: false, title: "")
         self.btnSubmit.layer.borderWidth = 2.0
         self.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        self.btnLogs.layer.borderWidth = 2.0
+        self.btnLogs.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         
         if self.userData.name == "You"{
             self.txtViewName.text = ""
@@ -40,6 +43,8 @@ class WWMSupportVC: WWMBaseViewController {
         }
         
         self.txtViewEmail.text = self.userData.email
+        
+        //hideShowLogBtn()
     }
     // MARK: Button Action
     
@@ -66,16 +71,37 @@ class WWMSupportVC: WWMBaseViewController {
     }
     
     func submitQueryAPI() {
-        //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        
+        //Prashant
+        //=====================================================================
+        
+        /*
+         Platform - [iOS/Android]OS
+         Version - [Version No]
+         Beeja App Version - [App version No]
+         Subscription status - [Free/Premium]
+         Premium Subscription - [NA/Monthly/Annually/Lifetime]
+         */
+        
+        let platform = "iOS"
+        let version = UIDevice.current.systemVersion
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let subscriptionStatus = UserDefaults.standard.string(forKey: "UserSubscription") ?? ""
+        let subscriptionPlan = UserDefaults.standard.string(forKey: "subscription_plan") ?? ""
+        
+        let queryBody = "\(txtViewQuery.text!)\n\n\nPlatform - \(platform)\nVersion - \(version)\nBeeja App Version - \(appVersion!)\nSubscription status - \(subscriptionStatus)\nPremium Subscription - \(subscriptionPlan)"
+        
         let param = [
                       "user_id" : self.appPreference.getUserID(),
                       "name" : txtViewName.text!,
                       "email" : txtViewEmail.text!,
-                      "body" : txtViewQuery.text!
+                      "body" : queryBody
             ] as [String : Any]
         
-        //print("contact param... \(param)")
+        //=====================================================================
+        
         
         WWMWebServices.requestAPIWithBody(param: param as [String : Any], urlString: URL_SUPPORT, context: "WWMSupportVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -130,5 +156,65 @@ extension WWMSupportVC: UITextViewDelegate{
         let newText = (txtViewQuery.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
+    }
+}
+
+extension WWMSupportVC{
+    //MARK: Logs
+    @IBAction func btnLogsAction(_ sender: UIButton) {
+        xibLogs()
+    }
+    
+    func hideShowLogBtn(){
+        #if DEBUG
+        self.btnLogs.isHidden = false
+        #else
+        self.btnLogs.isHidden = true
+        #endif
+    }
+    
+    func xibLogs(){
+        alertLogsView = UINib(nibName: "LoggerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! LoggerView
+        let window = UIApplication.shared.keyWindow!
+        alertLogsView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        alertLogsView.btnSendLogs.layer.borderWidth = 2.0
+        alertLogsView.btnSendLogs.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertLogsView.btnSendLogs.layer.cornerRadius = 20
+        
+        alertLogsView.btnDeleteLogs.layer.borderWidth = 2.0
+        alertLogsView.btnDeleteLogs.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertLogsView.btnDeleteLogs.layer.cornerRadius = 20
+        
+        if Logger.shared.getIsLogging(){
+            alertLogsView.btnSwitch.isOn = true
+        }else{
+            alertLogsView.btnSwitch.isOn = false
+        }
+        
+        alertLogsView.btnSendLogs.addTarget(self, action: #selector(btnSendLogsAction(_:)), for: .touchUpInside)
+        
+        alertLogsView.btnDeleteLogs.addTarget(self, action: #selector(btnDeleteLogsAction(_:)), for: .touchUpInside)
+        alertLogsView.btnSwitch.addTarget(self, action: #selector(btnSwitchAction), for: UIControl.Event.valueChanged)
+        
+        window.rootViewController?.view.addSubview(alertLogsView)
+    }
+    
+    @objc func btnSwitchAction(mySwitch: UISwitch) {
+        if mySwitch.isOn {
+            Logger.shared.setIsLogging(value: true)
+            print("UISwitch is ON")
+        } else {
+            Logger.shared.setIsLogging(value: false)
+            print("UISwitch is OFF")
+        }
+    }
+    
+    @IBAction func btnSendLogsAction(_ sender: Any) {
+        Logger.shared.sendLogs(datefrom: alertLogsView.txtFDateFrom.text ?? "", dateTo: alertLogsView.txtFDateTo.text ?? "", vc: self)
+    }
+    
+    @IBAction func btnDeleteLogsAction(_ sender: Any) {
+        Logger.shared.deleteLogFile()
     }
 }

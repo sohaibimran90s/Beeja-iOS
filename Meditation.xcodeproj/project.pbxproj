@@ -419,6 +419,8 @@
 		615C4A66239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */; };
 		615CEEAB234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */; };
 		615CEEAC234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */; };
+		615ED40624FFA35E004C7E2E /* LoggerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615ED40524FFA35E004C7E2E /* LoggerView.xib */; };
+		615ED40824FFA388004C7E2E /* LoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615ED40724FFA388004C7E2E /* LoggerView.swift */; };
 		61653C982478FD680006C398 /* WWMBannerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61653C972478FD680006C398 /* WWMBannerTVC.swift */; };
 		616AC90323BDC14900BB14BE /* CHIME 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 616AC90223BDC14900BB14BE /* CHIME 2.mp3 */; };
 		616E23D622C1EFE800352B85 /* WWMFinishTimerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */; };
@@ -460,6 +462,7 @@
 		61C08B6D2459ADA000FEC661 /* WWMWisdomFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */; };
 		61C75BF424653D0000FBF4CB /* WWMSleepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */; };
 		61C75BF6246559C600FBF4CB /* WWMSleepTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */; };
+		61CF07A924F5A18600625C12 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CF07A824F5A18600625C12 /* Logger.swift */; };
 		61D110FE242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */; };
 		61D110FF242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */; };
 		61DB127323E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */; };
@@ -1093,6 +1096,8 @@
 		615C4A64239A30E0008753E3 /* DBNintyFiveCompletionData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNintyFiveCompletionData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		615CEEA9234B84A8007A1E8F /* DBCommunityData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615CEEAA234B84A8007A1E8F /* DBCommunityData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBCommunityData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		615ED40524FFA35E004C7E2E /* LoggerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggerView.xib; sourceTree = "<group>"; };
+		615ED40724FFA388004C7E2E /* LoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerView.swift; sourceTree = "<group>"; };
 		61653C972478FD680006C398 /* WWMBannerTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMBannerTVC.swift; sourceTree = "<group>"; };
 		616AC90223BDC14900BB14BE /* CHIME 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "CHIME 2.mp3"; sourceTree = "<group>"; };
 		616E23D522C1EFE700352B85 /* WWMFinishTimerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMFinishTimerTVC.swift; sourceTree = "<group>"; };
@@ -1133,6 +1138,7 @@
 		61C08B6C2459AD9D00FEC661 /* WWMWisdomFeedbackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWMWisdomFeedbackVC.swift; sourceTree = "<group>"; };
 		61C75BF324653D0000FBF4CB /* WWMSleepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepVC.swift; sourceTree = "<group>"; };
 		61C75BF5246559C600FBF4CB /* WWMSleepTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepTVC.swift; sourceTree = "<group>"; };
+		61CF07A824F5A18600625C12 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		61D110FC242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61D110FD242DEC83005F3ACD /* DBNinetyFivePercent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBNinetyFivePercent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61DB127223E800B700AE6CF7 /* WWMGuidedEmotionCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMGuidedEmotionCVC.swift; sourceTree = "<group>"; };
@@ -1610,6 +1616,7 @@
 		2E5CCE9521C7A9F80085224B /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				615ED40424FFA2EE004C7E2E /* Logger */,
 				2E5DF5B02271B86D00CF2935 /* Guided */,
 				2E5CCE9621C7AA1C0085224B /* WWMSlider.swift */,
 				2E326ECC222EB5B600A0F1A1 /* WWMBackgroundVedioView.swift */,
@@ -1706,6 +1713,7 @@
 				2E93D2F621F5C98C00163E57 /* WWMWebServices.swift */,
 				2E93D2F821F5CABE00163E57 /* WWMStringDefine.swift */,
 				2E93D2FA21F5D14900163E57 /* WWMHelperClass.swift */,
+				61CF07A824F5A18600625C12 /* Logger.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -2407,6 +2415,15 @@
 			path = DataModule;
 			sourceTree = "<group>";
 		};
+		615ED40424FFA2EE004C7E2E /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				615ED40524FFA35E004C7E2E /* LoggerView.xib */,
+				615ED40724FFA388004C7E2E /* LoggerView.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		61A1964623C5C1180085E97F /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -2923,6 +2940,7 @@
 				CE212767247430F500815BD7 /* close.png in Resources */,
 				63F8896924C01066001F424A /* RecordIcon@3x.png in Resources */,
 				CE212764247430F500815BD7 /* smallArrow.png in Resources */,
+				615ED40624FFA35E004C7E2E /* LoggerView.xib in Resources */,
 				2E34A906228ED653005B4091 /* data17.json in Resources */,
 				63F8899B24C01066001F424A /* Delete@3x.png in Resources */,
 				2E4A473A220DB22B00DF0C68 /* WAVES & CHIMES.mp3 in Resources */,
@@ -3241,6 +3259,7 @@
 				63F8895224C01066001F424A /* TextContainerVC.swift in Sources */,
 				61416F0722BBB4C800C9339E /* LineRadarChartDataSet.swift in Sources */,
 				610D06D1234DBF090001E8A6 /* DBMantras+CoreDataClass.swift in Sources */,
+				615ED40824FFA388004C7E2E /* LoggerView.swift in Sources */,
 				2E316FDC222812A200018538 /* WWMMoodProgressDurationView.swift in Sources */,
 				612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */,
 				61416E2F22BBB23B00C9339E /* RadarChartRenderer.swift in Sources */,
@@ -3411,6 +3430,7 @@
 				61416F3F22BBB56900C9339E /* LineChartDataProvider.swift in Sources */,
 				2E59340C2264B4DA00ECD9B9 /* WWMWisdomNavVC.swift in Sources */,
 				61BBC36523507DA6000B5617 /* DBGetVibesImages+CoreDataClass.swift in Sources */,
+				61CF07A924F5A18600625C12 /* Logger.swift in Sources */,
 				61416E8F22BBB3B400C9339E /* PieChartView.swift in Sources */,
 				2E5CCE9221C79EBE0085224B /* WWMWisdomVC.swift in Sources */,
 				2E4CE28B2208599900059396 /* WWMSatsProgressData.swift in Sources */,

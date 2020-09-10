@@ -1358,19 +1358,19 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             let group = [
-            "startChime": self.settingData.startChime!,
-            "endChime": self.settingData.endChime!,
-            "finishChime": self.settingData.finishChime!,
-            "intervalChime": self.settingData.intervalChime!,
-            "ambientSound": self.settingData.ambientChime!,
+            "startChime": self.settingData.startChime ?? "JAI GURU DEVA",
+            "endChime": self.settingData.endChime ?? "JAI GURU DEVA",
+            "finishChime": self.settingData.finishChime ?? "JAI GURU DEVA",
+            "intervalChime": self.settingData.intervalChime ?? "JAI GURU DEVA",
+            "ambientSound": self.settingData.ambientChime ?? "JAI GURU DEVA",
             "moodMeterEnable": self.settingData.moodMeterEnable,
             "IsMorningReminder": self.settingData.isMorningReminder,
             "IsMilestoneAndRewards":self.settingData.isMilestoneAndRewards,
-            "MorningReminderTime": self.settingData.morningReminderTime!,
+            "MorningReminderTime": self.settingData.morningReminderTime ?? "",
             "IsAfternoonReminder": self.settingData.isAfterNoonReminder,
-            "AfternoonReminderTime": self.settingData.afterNoonReminderTime!,
+            "AfternoonReminderTime": self.settingData.afterNoonReminderTime ?? "",
             "MantraID":self.settingData.mantraID,
-            "LearnReminderTime":self.settingData.learnReminderTime!,
+            "LearnReminderTime":self.settingData.learnReminderTime ?? "",
             "IsLearnReminder":self.settingData.isLearnReminder,
             "isThirtyDaysReminder":self.settingData.isThirtyDaysReminder,
             "thirtyDaysReminder":self.settingData.thirtyDaysReminder ?? "",
@@ -1380,7 +1380,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
             "meditation_data" : meditation_data
             ] as [String : Any]
-
             
             let param = [
                 "user_id": self.appPreference.getUserID(),
@@ -1391,17 +1390,6 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
             //print("settings param... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-                if sucess {
-                    if let success = result["success"] as? Bool {
-                        print(success)
-                        //print("settingVC... \(result)")
-                        //self.tblViewSetting.reloadData()
-                    }
-                }else {
-                    if error != nil {
-                        //                     WWMHelperClass.showPopupAlertController(sender: self, message: (error?.localizedDescription)!, title: kAlertTitle)
-                    }
-                }
             }
         }
     }
@@ -1430,6 +1418,8 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)
                 self.appPreffrence.set21ChallengeName(value: "")
+                UserDefaults.standard.set(false, forKey: "isLogging")
+                Logger.shared.setIsLogging(value: false)
 
                 // Delete the Database :
                 WWMHelperClass.deletefromDb(dbName: "DBJournalData")

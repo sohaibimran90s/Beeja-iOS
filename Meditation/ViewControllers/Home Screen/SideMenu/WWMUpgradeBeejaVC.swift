@@ -16,18 +16,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     @IBOutlet weak var viewMonthly: UIView!
     @IBOutlet weak var lblBilledText: UILabel!
 
-    //aply coupon outlets
-    @IBOutlet weak var viewACoupon: UIView!
-    @IBOutlet weak var viewRedeemCoupon: UIView!
-    @IBOutlet weak var viewACouponHC: NSLayoutConstraint!
-    @IBOutlet weak var btnACoupon: UIButton!
-    @IBOutlet weak var textField1: UITextField!
-    @IBOutlet weak var textField2: UITextField!
-    @IBOutlet weak var textField3: UITextField!
-    @IBOutlet weak var textField4: UITextField!
-    @IBOutlet weak var textField5: UITextField!
-    @IBOutlet weak var textField6: UITextField!
-    
     var tap = UITapGestureRecognizer()
     var selectedProductIndex = 2
     var transactionInProgress = false
@@ -51,7 +39,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tap = UITapGestureRecognizer(target: self, action:  #selector(self.checkTapAction))
         self.view.addGestureRecognizer(self.tap)
         self.boolGetIndex = true
         self.setNavigationBar(isShow: false, title: "")
@@ -76,38 +63,6 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         self.viewMonthly.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewLifeTime.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         self.viewAnnually.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
-        self.viewRedeemCoupon.isHidden = true
-        self.viewACoupon.isHidden = false
-        
-        if WWMHelperClass.hasTopNotch{
-            self.viewACouponHC.constant = 66
-            self.viewACoupon.layer.cornerRadius = 33
-        }else{
-            self.viewACoupon.layer.cornerRadius = 28
-            self.viewACouponHC.constant = 56
-        }
-    }
-    
-    @objc func checkTapAction(sender : UITapGestureRecognizer) {
-        self.viewRedeemCoupon.isHidden = true
-        self.viewACoupon.isHidden = false
-    }
-    
-    //MARK: Apply Coupon code
-    @IBAction func btnACouponAction(_ sender: UIButton){
-        self.viewRedeemCoupon.isHidden = false
-        self.viewACoupon.isHidden = true
-    }
-    
-    @IBAction func btnRCouponAction(_ sender: UIButton){
-        let redeemCode = "\(self.textField1.text ?? "")\(self.textField2.text ?? "")\(self.textField3.text ?? "")\(self.textField4.text ?? "")\(self.textField5.text ?? "")\(self.textField6.text ?? "")"
-
-        if redeemCode.count == 6{
-            self.getRedeemCodeAPI(redeemCode: redeemCode, type: "vc", controller: WWMGuidedUpgradeBeejaPopUp())
-        }else{
-            WWMHelperClass.showPopupAlertController(sender: self, message: "Please enter correct coupon code", title: "")
-        }
     }
     
     // MARK:- Get Product Data from Itunes
@@ -118,14 +73,19 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             
             productRequest.delegate = self
             productRequest.start()
+            
+            Logger.shared.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productRequest…… \(productRequest)")
         }
         else {
             //print("Cannot perform In App Purchases.")
+            Logger.shared.generateLogs(type: "Request Product Info", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "Cannot perform In App Purchases")
         }
     }
     
     func showActions() {
         if transactionInProgress {
+            
+            Logger.shared.generateLogs(type: "Transaction In Progress", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in progress return")
             return
         }
         
@@ -153,6 +113,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
             SKPaymentQueue.default().add(payment)
             self.transactionInProgress = true
             //WWMHelperClass.showSVHud()
+            Logger.shared.generateLogs(type: "Purchase", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected product... \(self.productsArray[self.selectedProductIndex])")
             WWMHelperClass.showLoaderAnimate(on: self.view)
         }else {
             self.requestProductInfo()
@@ -177,6 +138,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_6_gbp_monthly_sub... \(self.selectedProductIndex)")
+                
+                Logger.shared.generateLogs(type: "Monthly", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex )")
             }
             //print(product.productIdentifier)
         }
@@ -198,8 +161,9 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_42_gbp_annual_sub... \(self.selectedProductIndex)")
+                Logger.shared.generateLogs(type: "Annually", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
-            print(product.productIdentifier)
+            //print(product.productIdentifier)
         }
     }
     
@@ -218,6 +182,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 self.selectedProductIndex = index
                 self.boolGetIndex = true
                 //print("selectedProductIndex get_240_gbp_lifetime_sub... \(self.selectedProductIndex)")
+                Logger.shared.generateLogs(type: "LifeTime", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
             }
             //print(product.productIdentifier)
         }
@@ -235,6 +200,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 WWMHelperClass.sendEventAnalytics(contentType: "BURGERMENU", itemId: "UPGRADE", itemName: "LIFETIME")
             }
             
+            Logger.shared.generateLogs(type: "Continue", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
+            
             self.continueRestoreValue = "0"
             if reachable.isConnectedToNetwork() {
                 self.showActions()
@@ -245,6 +212,7 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
     }
     
     @IBAction func btnRestoreAction(_ sender: UIButton) {
+        Logger.shared.generateLogs(type: "Restore", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "selected index... \(self.selectedProductIndex)")
         self.continueRestoreValue = "1"
         if (SKPaymentQueue.canMakePayments()){
             SKPaymentQueue.default().restoreCompletedTransactions()
@@ -258,16 +226,21 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
         if response.products.count != 0 {
             for product in response.products {
                 productsArray.append(product )
-                print(product.localizedTitle)
-                print(product.productIdentifier)
+                //print(product.localizedTitle)
+                //print(product.productIdentifier)
+                Logger.shared.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "productsArray... \(productsArray)")
             }
         }
         else {
+            
+            Logger.shared.generateLogs(type: "Error: SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "There are no products.")
             //print("There are no products.")
         }
         
         if response.invalidProductIdentifiers.count != 0 {
-            print(response.invalidProductIdentifiers.description)
+            
+            Logger.shared.generateLogs(type: "SKProductsRequest", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "\(response.invalidProductIdentifiers.description)")
+            //print(response.invalidProductIdentifiers.description)
         }
        // WWMHelperClass.dismissSVHud()
     }
@@ -295,9 +268,11 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                         }
                     }
                 }
+                
+                Logger.shared.generateLogs(type: "Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "subscriptionPlan \(subscriptionPlan) plan_id \(plan_id)")
+                
                 //"plan_id" : transaction.payment.productIdentifier
                 //"subscription_plan" : self.subscriptionPlan
-                
                 
                 let param = [
                     "plan_id" : plan_id,
@@ -314,6 +289,8 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                     self.subscriptionSucessAPI(param: param)
                 }
                 
+                Logger.shared.generateLogs(type: "Success: Updated Transactions", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "plan_id \(param)")
+                
             case SKPaymentTransactionState.failed:
                 //print("Transaction Failed");
                 SKPaymentQueue.default().finishTransaction(transaction)
@@ -321,8 +298,11 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
                 //WWMHelperClass.dismissSVHud()
                 WWMHelperClass.hideLoaderAnimate(on: self.view)
                 
+                Logger.shared.generateLogs(type: "Error: Transaction State Failed", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction failed")
             default:
-                print(transaction.transactionState.rawValue)
+                
+                Logger.shared.generateLogs(type: "Default: Transaction State", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "transaction in default \(transaction.transactionState.rawValue)")
+                //print(transaction.transactionState.rawValue)
             }
         }
     }
@@ -330,32 +310,14 @@ class WWMUpgradeBeejaVC: WWMBaseViewController,SKProductsRequestDelegate,SKPayme
 
 extension WWMUpgradeBeejaVC{
     
-    func getRedeemCodeAPI(redeemCode: String, type: String, controller: WWMGuidedUpgradeBeejaPopUp){
-        
-        let param = ["user_id": self.appPreference.getUserID(), "code": redeemCode, "type": "30days"] as [String : Any]
-        //print("param... \(param)")
-        
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_REDEEMCOUPONCODE, context: "WWMShareLoveVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
-            
-            if result["success"] as? Bool ?? false {
-                if type == "vc"{
-                    self.callHomeVC1()
-                }else{
-                    controller.removeFromSuperview()
-                    self.callHomeVC(index: 2)
-                }
-            }else{
-                WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: "")
-            }
-        }
-    }
-    
     func getSubscriptionPlanId(){
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_GETSUBSCRIPTIONPPLANS, context: "WWMUpgradeBeejaVC", headerType: kGETHeader, isUserToken: false) { (response, error, sucess) in
             if sucess {
                 if let result = response["result"] as? [[String: Any]]{
                     self.responseArray = result
+                    
+                    Logger.shared.generateLogs(type: "Success: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "responseArray \(self.responseArray)")
                    //print("result.... \(result)")
                 }
             }else {
@@ -368,7 +330,11 @@ extension WWMUpgradeBeejaVC{
                         WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
                     }
                     
+                    Logger.shared.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    
                 }
+                
+                Logger.shared.generateLogs(type: "Error: getSubscriptionPlanId", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "response fail")
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -381,7 +347,12 @@ extension WWMUpgradeBeejaVC{
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_SUBSCRIPTIONPURCHASE, context: "WWMUpgradeBeejaVC", headerType: kPOSTHeader, isUserToken: true) { (response, error, sucess) in
             if sucess {
+                
+                Logger.shared.generateLogs(type: "Success: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
+                
                 if self.continueRestoreValue == "1"{
+                    
+                    Logger.shared.generateLogs(type: "Success: continueRestoreValue: 1", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
                   
                     if !self.restoreBool{
                         
@@ -393,6 +364,8 @@ extension WWMUpgradeBeejaVC{
                         return
                     }
                 }else{
+                    
+                    Logger.shared.generateLogs(type: "Success: continueRestoreValue: 0", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "param \(param)")
                                         
                     if !self.restoreBool{
                         
@@ -408,6 +381,9 @@ extension WWMUpgradeBeejaVC{
                 
                 //The Internet connection appears to be offline.
                 if error != nil {
+                    
+                    Logger.shared.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "error?.localizedDescription \(error?.localizedDescription ?? "")")
+                    
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
                         WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                         
@@ -423,6 +399,8 @@ extension WWMUpgradeBeejaVC{
                         return
                     }
                 }
+                
+                Logger.shared.generateLogs(type: "Fail: SubscriptionSucessAPI", user_id: self.appPreference.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "api fail")
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -430,64 +408,3 @@ extension WWMUpgradeBeejaVC{
     }
 }
 
-extension WWMUpgradeBeejaVC: UITextFieldDelegate{
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // On inputing value to textfield
-        if ((textField.text?.count)! < 1  && string.count > 0){
-            if(textField == textField1)
-            {
-                textField2.becomeFirstResponder()
-            }
-            if(textField == textField2)
-            {
-                textField3.becomeFirstResponder()
-            }
-            if(textField == textField3)
-            {
-                textField4.becomeFirstResponder()
-            }
-            if(textField == textField4)
-            {
-                textField5.becomeFirstResponder()
-            }
-            if(textField == textField5)
-            {
-                textField6.becomeFirstResponder()
-            }
-
-            textField.text = string
-            return false
-        }
-        else if ((textField.text?.count)! >= 1  && string.count == 0){
-            // on deleting value from Textfield
-            if(textField == textField2)
-            {
-                textField1.becomeFirstResponder()
-            }
-            if(textField == textField3)
-            {
-                textField2.becomeFirstResponder()
-            }
-            if(textField == textField4)
-            {
-                textField3.becomeFirstResponder()
-            }
-            if(textField == textField5)
-            {
-                textField4.becomeFirstResponder()
-            }
-            if(textField == textField6)
-            {
-                textField5.becomeFirstResponder()
-            }
-            textField.text = ""
-            return false
-        }
-        else if ((textField.text?.count)! >= 1  )
-        {
-            textField.text = string
-            return false
-        }
-        return true
-    }
-}

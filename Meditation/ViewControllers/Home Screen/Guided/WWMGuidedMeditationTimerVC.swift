@@ -750,24 +750,11 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         }
     }
     
-    
     func navigateToDashboard() {
         
-        self.appPreference.set21ChallengeName(value: "Moments")
-        
-        self.navigationController?.isNavigationBarHidden = false
-        if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 2
-            for index in 0..<tabController.tabBar.items!.count {
-                let item = tabController.tabBar.items![index]
-                item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 2 {
-                    item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
-                }
-            }
-        }
-        self.navigationController?.popToRootViewController(animated: false)
-    }//meditationComplete*
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
+    }
     
     @IBAction func btnPauseAction(_ sender: Any) {
         self.btnPause.isEnabled = false

@@ -73,11 +73,10 @@ class WWMShareLoveVC: WWMBaseViewController {
     }
     
     func shareData(){
-        
-        let text = "Hey I love using the Beeja Meditation App and think you’d love its premium features too \(self.lblCopyCode.text?.replacingOccurrences(of: "Copy Code: ", with: "") ?? "")"
-        
-        let imageToShare = [text] as [Any]
-        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        let text = "Great news! \(self.appPreference.getUserName()) would like to send you the gift of 30 days FREE Premium access to the Beeja Meditation App. Download it here \(self.appPreference.getInvitationURL()) and use code \(self.lblCopyCode.text?.replacingOccurrences(of: "Copy Code: ", with: "") ?? ""). Enjoy :)"
+                
+        let textToShare = [text] as [Any]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
             print(success ? "SUCCESS!" : "FAILURE")
         }

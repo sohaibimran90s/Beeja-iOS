@@ -99,6 +99,7 @@ let URL_STATSMYPROGRESS        = URL_BASE + "statsMyProgress"
 let URL_MOODPROGRESS               = URL_BASE + "moodProgress"//
 let URL_ADDJOURNAL               = URL_BASE + "addJournal"
 let URL_UPLOADASSETS               = URL_BASE + "saveJournalAssets"
+let URL_UPLOADLOGS              = "https://uat.beejameditation.com/api/v4/logs/upload"
 //https://uat.beejameditation.com/api/v2/saveJournalAssets
 
 let URL_MEDITATIONCOMPLETE               = URL_BASE + "meditationComplete"//
@@ -337,7 +338,7 @@ let kNO = "NO"
 
 
 // If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
-let kBETA_ENABLED = true
+let kBETA_ENABLED = false
 
 /*dynamic webView URLs
  let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"

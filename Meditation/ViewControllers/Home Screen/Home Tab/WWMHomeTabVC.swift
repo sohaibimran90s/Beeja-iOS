@@ -392,7 +392,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @IBAction func btnTimerClicked(_ sender: UIButton) {
-        
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "TIMER", itemName: "")
         

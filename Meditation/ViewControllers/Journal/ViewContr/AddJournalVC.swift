@@ -38,7 +38,7 @@ struct MeditationComplete{
     var checkAnalyticStr = ""
 }
 
-class AddJournalVC: UIViewController {
+class AddJournalVC: WWMBaseViewController {
 
     @IBOutlet weak var textBtn: UIButton!
     @IBOutlet weak var imageBtn: UIButton!
@@ -58,7 +58,6 @@ class AddJournalVC: UIViewController {
     var audioToTextContainerVC: AudioToTextContainerVC?
 
     var selectedJournalOpt: JournalOption?
-    let appPreference = WWMAppPreference()
     var isAddJournal = false
     
     let kDataManager = DataManager.sharedInstance
@@ -478,8 +477,7 @@ class AddJournalVC: UIViewController {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                   title: "",
                                                   textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
-        }
-        else {
+        }else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
             jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
                                                           title: "",
@@ -659,7 +657,7 @@ class AddJournalVC: UIViewController {
         
         //print("param meterlog... \(param)")
         
-        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterLogVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "AddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreference.setSessionAvailableData(value: true)
                 self.meditationHistoryListAPI()
@@ -688,7 +686,7 @@ class AddJournalVC: UIViewController {
         func meditationHistoryListAPI() {
             
             let param = ["user_id": self.appPreference.getUserID()]
-            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "WWMHomeTabVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONHISTORY+"?page=1", context: "AddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
                 if sucess {
                     if let data = result["data"] as? [String: Any]{
                         if let records = data["records"] as? [[String: Any]]{
@@ -728,6 +726,11 @@ class AddJournalVC: UIViewController {
             }else {
                 
                 if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
+                    
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
+                    
                     if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
                         
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
@@ -736,6 +739,9 @@ class AddJournalVC: UIViewController {
                         self.nextVC()
                     }
                 }else if self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getLearnAPI()
+                    }
                     self.nextVC()
                 }else{
                     let story = UIStoryboard.init(name: "Main", bundle: nil)
@@ -747,7 +753,12 @@ class AddJournalVC: UIViewController {
             if self.mediCompleteObj.type == "pre" {
                 self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.popToRootViewController(animated: false)
-            }else {
+            }else{
+                if self.appPreference.getType() == "guided"{
+                    DispatchQueue.global(qos: .background).async {
+                        self.getGuidedListAPI()
+                    }
+                }
                 self.nextVC()
              }
         }
