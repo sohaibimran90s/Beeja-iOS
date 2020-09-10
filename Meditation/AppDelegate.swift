@@ -143,7 +143,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //Branch.getInstance().continue(userActivity)
         
         print("path = \(path)")
+        
+        let actionType = path.components(separatedBy: "/")[2]
+        print("Action Type", actionType)
+        
+        if actionType == "login" {
+            //navigate user to login screen
+            self.manageLogout()
+        }
+        
         return true
+    }
+    
+    func manageLogout() {
+        UserDefaults.standard.set(false, forKey: "isLogging")
+        Logger.shared.setIsLogging(value: false)
+
+        // Delete the Database :
+        WWMHelperClass.deletefromDb(dbName: "DBJournalData")
+        WWMHelperClass.deletefromDb(dbName: "DBContactUs")
+        WWMHelperClass.deletefromDb(dbName: "DBJournalList")
+        WWMHelperClass.deletefromDb(dbName: "DBMeditationComplete")
+        WWMHelperClass.deletefromDb(dbName: "DBSettings")
+        WWMHelperClass.deletefromDb(dbName: "DBAddSession")
+        WWMHelperClass.deletefromDb(dbName: "DBMeditationHistory")
+        WWMHelperClass.deletefromDb(dbName: "DBWisdomData")
+        WWMHelperClass.deletefromDb(dbName: "DBWisdomVideoData")
+        WWMHelperClass.deletefromDb(dbName: "DBCommunityData")
+        WWMHelperClass.deletefromDb(dbName: "DBStepFaq")
+        WWMHelperClass.deletefromDb(dbName: "DBGetVibesImages")
+        WWMHelperClass.deletefromDb(dbName: "DBSteps")
+        WWMHelperClass.deletefromDb(dbName: "DBGuidedData")
+        WWMHelperClass.deletefromDb(dbName: "DBGuidedEmotionsData")
+        WWMHelperClass.deletefromDb(dbName: "DBGuidedAudioData")
+        WWMHelperClass.deletefromDb(dbName: "DBNintyFiveCompletionData")
+        WWMHelperClass.deletefromDb(dbName: "DBNinetyFivePercent")
+        WWMHelperClass.deletefromDb(dbName: "DBLearn")
+        WWMHelperClass.deletefromDb(dbName: "DBThirtyDays")
+        WWMHelperClass.deletefromDb(dbName: "DBEightWeek")
+        WWMHelperClass.challenge7DayCount = 0
+        self.appPreffrence.setLastTimeStamp21DaysBool(value: false)
+        self.appPreffrence.setType(value: "")
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "logoutSuccessful"), object: nil)
+        
+        AccessToken.current = nil
+        GIDSignIn.sharedInstance()?.signOut()
+        GIDSignIn.sharedInstance()?.disconnect()
+        
+        
+        let story = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = story.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
+        let vcc = UINavigationController.init(rootViewController: vc)
+        UIApplication.shared.keyWindow?.rootViewController = vcc
+
     }
     
     
