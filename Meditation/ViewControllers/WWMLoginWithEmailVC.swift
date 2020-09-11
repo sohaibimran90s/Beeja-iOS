@@ -526,7 +526,7 @@ extension WWMLoginWithEmailVC: ASAuthorizationControllerDelegate {
             "deviceId": kDeviceID,
             "DeviceType": kDeviceType,
             "deviceToken" : self.appPreference.getDeviceToken(),
-            "loginType": kLoginTypeGoogle,
+            "loginType": kLoginTypeApple,
             "profile_image":"",
             "socialId":userId,
             "name":fullName,

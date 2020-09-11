@@ -13,8 +13,10 @@ import UIKit
 import GoogleSignIn
 import FBSDKLoginKit
 import FirebaseCrashlytics
+import AuthenticationServices
 
-class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate{
+  class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
 
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var lblUserLoginType: UILabel!
@@ -114,6 +116,8 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
             self.continueWithFacebook()
         }else if self.userData.loginType == kLoginTypeGoogle {
             self.continueWithGoogle()
+        }else if self.userData.loginType == kLoginTypeApple {
+            self.continueWithApple()
         }else {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
             vc.isFromWelcomeBack = true
@@ -173,12 +177,79 @@ class WWMWelcomeBackVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDele
                 "model": UIDevice.current.model,
                 "version": UIDevice.current.systemVersion
             ]
-            
-            
             self.loginWithSocial(param: param as Dictionary<String, Any>)
             
         }
     }
+    
+    //APPLE
+    
+    func continueWithApple() {
+        let authorizationProvider = ASAuthorizationAppleIDProvider()
+        let request = authorizationProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            return
+        }
+        
+        let userIdentifier = appleIDCredential.user
+        let userFirstName = appleIDCredential.fullName?.givenName
+        let userLastName = appleIDCredential.fullName?.familyName
+        let userEmail = appleIDCredential.email
+        let fullname = (userFirstName ?? "") + " " + (userLastName ?? "")
+        
+        UserDefaults.standard.set(userIdentifier, forKey: "apple_id")
+        
+        if appleIDCredential.fullName != nil {
+            UserDefaults.standard.set(fullname, forKey: "apple_fullname")
+        }
+        if userEmail != nil {
+            UserDefaults.standard.set(userEmail, forKey: "apple_email")
+        }
+        
+        print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
+        
+        self.loginWithApple()
+
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("AppleID Credential failed with error: \(error.localizedDescription)")
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func loginWithApple() {
+        let email = UserDefaults.standard.string(forKey: "apple_email")
+        let userId = UserDefaults.standard.string(forKey: "apple_id")
+        let fullName = UserDefaults.standard.string(forKey: "apple_fullname")
+        
+        let param = [
+            "email": email,
+            "password":"",
+            "deviceId": kDeviceID,
+            "DeviceType": kDeviceType,
+            "deviceToken" : self.appPreference.getDeviceToken(),
+            "loginType": kLoginTypeApple,
+            "profile_image":"",
+            "socialId":userId,
+            "name":fullName,
+            "model": UIDevice.current.model,
+            "version": UIDevice.current.systemVersion
+        ]
+        
+        self.loginWithSocial(param: param as Dictionary<String, Any>)
+    }
+    
     
     
     func continueWithFacebook() {

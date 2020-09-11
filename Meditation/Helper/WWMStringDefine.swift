@@ -28,6 +28,7 @@ let  kPOSTHeader : String!                    = "POST"
 let  kLoginTypeEmail : String!                = "eml"
 let  kLoginTypeGoogle : String!               = "ggl"
 let  kLoginTypeFacebook : String!             = "fb"
+let  kLoginTypeApple : String!                = "apple"
 let  kDeviceType : String!                    = "ios"
 let  kDeviceID : String!                      = UIDevice.current.identifierForVendor!.uuidString
 let  KFORCETOUPDATETITLE : String = "titleForceToUpdate"
