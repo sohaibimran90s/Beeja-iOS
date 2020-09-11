@@ -101,7 +101,8 @@ class WWMWalkThoughVC1: WWMBaseViewController {
     }
     
     @IBAction func btnSignUpAction(_ sender: UIButton){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupSocialVC") as! WWMSignupSocialVC
+        vc.pushToLogin = true
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

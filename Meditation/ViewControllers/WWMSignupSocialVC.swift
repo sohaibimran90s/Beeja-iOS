@@ -1,21 +1,19 @@
 //
-//  WWMLoginVC.swift
+//  WWMSignupSocialVC.swift
 //  Meditation
 //
-//  Created by Roshan Kumawat on 03/12/18.
-//  Copyright © 2018 Cedita. All rights reserved.
+//  Created by Prashant Tayal on 25/08/20.
+//  Copyright © 2020 Cedita. All rights reserved.
 //
 
 import UIKit
-import GoogleSignIn
-import FBSDKLoginKit
 import Lottie
 import FirebaseCrashlytics
+import GoogleSignIn
+import FBSDKLoginKit
 import AuthenticationServices
 
-class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
-
-    var isFromWelcomeBack = false
+class WWMSignupSocialVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     
     @IBOutlet weak var viewStartBeeja: UIView!
     @IBOutlet weak var lblSignup: UILabel!
@@ -23,37 +21,33 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
     @IBOutlet weak var viewLottieAnimation: UIView!
     
     var animationView = AnimationView()
-    var timer = Timer()
-    
+    let appPreference = WWMAppPreference()
+    var pushToLogin = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if WWMHelperClass.loginSignupBool{
-            
-            WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
-            self.navigationController?.pushViewController(vc, animated: false)
-            
-            WWMHelperClass.loginSignupBool = false
-            return
+        self.lblSignup.textColor = UIColor.white
+        self.imgSignup.image = UIImage.init(named: "startBeeja_Icon")
+        self.viewStartBeeja.backgroundColor = UIColor.clear
+        viewStartBeeja.layer.borderWidth = 2.0
+        viewStartBeeja.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+    }
+    
+    @IBAction func clickBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func clickLogin() {
+        if pushToLogin {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
+                   self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.imgSignup.isHidden = true
-        self.viewLottieAnimation.isHidden = false
-        setupView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        self.imgSignup.isHidden = true
-        self.viewLottieAnimation.isHidden = false
-        animationView.play()
-    }
-    
     @IBAction func btnSignupTouchDown(_ sender: Any) {
-        
         animationView.stop()
         self.viewLottieAnimation.isHidden = true
         self.imgSignup.isHidden = false
@@ -61,37 +55,14 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
         self.lblSignup.textColor = UIColor.black
         self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")
-        
-//        self.viewStartBeeja.backgroundColor = UIColor.white
-//        viewStartBeeja.layer.borderColor = UIColor.clear.cgColor
-//        self.lblSignup.textColor = UIColor.black
-//        self.imgSignup.image = UIImage.init(named: "iconToAnimateCopy2")
     }
     
-    func setupView(){
+    @IBAction func btnSignupTouchupInside() {
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupEmailVC") as! WWMSignupEmailVC
+        self.navigationController?.pushViewController(vc, animated: true)
         
-        self.setNavigationBar(isShow: false, title: "")
-        
-        //self.timer = Timer.scheduledTimer(timeInterval: 1.3, target: self, selector: #selector(animateView), userInfo: nil, repeats: false)
-        
-        animationView = AnimationView(name: "login11")
-        animationView.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
-        animationView.contentMode = .scaleAspectFit
-        animationView.loopMode = .playOnce
-        viewLottieAnimation.addSubview(animationView)
-        view.addSubview(viewLottieAnimation)
-        animationView.play()
-        
-        self.lblSignup.textColor = UIColor.white
-        self.imgSignup.image = UIImage.init(named: "startBeeja_Icon")
-        self.viewStartBeeja.backgroundColor = UIColor.clear
-        viewStartBeeja.layer.borderWidth = 2.0
-        viewStartBeeja.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-//        if isFromWelcomeBack {
-//            viewStartBeeja.isHidden = false
-//        }else {
-//            viewStartBeeja.isHidden = true
-//        }
+        WWMHelperClass.loginSignupBool = false
     }
     
     //MARK: Animate View
@@ -99,15 +70,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         animationView.stop()
     }
     
-    // MARK: Button Action
-    
-    @IBAction func btnLoginWithEmailAction(_ sender: UIButton) {
-        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "LOG_IN", itemName: "")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func btnLoginWithAppleAction(_ sender: UIButton) {
+    //Apple button
+    @IBAction func AppleButtonTapped() {
         let authorizationProvider = ASAuthorizationAppleIDProvider()
         let request = authorizationProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -118,7 +82,8 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         authorizationController.performRequests()
     }
     
-    @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
+    //Facebook button
+    @IBAction func FacebookButtonTapped() {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
         let loginManager = LoginManager()
         loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (loginResult, error) in
@@ -167,35 +132,13 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
             }
         }
     }
- 
     
-    @IBAction func btnStartBe(_ sender: UIButton) {
-        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "START_BEEJA", itemName: "")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupSocialVC") as! WWMSignupSocialVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        })
-    }
-    
-    @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
+    //Google button
+    @IBAction func GoogleButtonTapped(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
         GIDSignIn.sharedInstance()?.delegate = self
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance()?.signIn()
-    }
-    
-    @IBAction func btnPrivacyPolicyAction(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-            vc.strUrl = URL_PrivacyPolicy
-            vc.strType = "Privacy Policy"
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func btnTermsOfUseAction(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        vc.strUrl = URL_TermsnCondition
-        vc.strType = "Terms & Conditions"
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     // Google Login Delegate Method
@@ -207,10 +150,10 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
         } else {
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-           // let idToken = user.authentication.idToken // Safe to send to the server
+            // let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
-           // let givenName = user.profile.givenName
-           // let familyName = user.profile.familyName
+            // let givenName = user.profile.givenName
+            // let familyName = user.profile.familyName
             let email = user.profile.email
             let profileImage = user.profile.imageURL(withDimension: 400)
             let param = [
@@ -228,12 +171,10 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
             ]
             
             self.loginWithSocial(param: param as Dictionary<String, Any>)
-            
         }
     }
     
     func loginWithSocial(param:[String : Any]) {
-        
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
@@ -242,12 +183,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     //print("userProfile WWMLoginVC... \(userProfile)")
                     
-                    DispatchQueue.global(qos: .background).async {
-                        self.getInviteAcceptAPI(context1: "WWMLoginVC")
-                    }
-                    
                     if let isProfileCompleted = userProfile["IsProfileCompleted"] as? Bool {
-                        Logger.shared.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
                         //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
@@ -299,8 +235,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
 }
 
 
-//MARK:- Apple login delegates
-extension WWMLoginVC: ASAuthorizationControllerDelegate {
+extension WWMSignupSocialVC: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
@@ -332,7 +267,6 @@ extension WWMLoginVC: ASAuthorizationControllerDelegate {
     }
     
     func loginWithApple() {
-        
         let email = UserDefaults.standard.string(forKey: "apple_email")
         let userId = UserDefaults.standard.string(forKey: "apple_id")
         let fullName = UserDefaults.standard.string(forKey: "apple_fullname")
@@ -355,7 +289,7 @@ extension WWMLoginVC: ASAuthorizationControllerDelegate {
     }
 }
 
-extension WWMLoginVC: ASAuthorizationControllerPresentationContextProviding {
+extension WWMSignupSocialVC: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }

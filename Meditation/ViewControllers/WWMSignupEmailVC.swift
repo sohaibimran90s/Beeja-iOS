@@ -9,10 +9,10 @@
 import UIKit
 import IQKeyboardManagerSwift
 import FirebaseCrashlytics
-import GoogleSignIn
-import FBSDKLoginKit
+//import GoogleSignIn
+//import FBSDKLoginKit
 
-class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDelegate, GIDSignInUIDelegate {
+class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak var txtViewName: UITextField!
     @IBOutlet weak var viewName: UIView!
@@ -191,12 +191,12 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else {
-                    GIDSignIn.sharedInstance()?.signOut()
+//                    GIDSignIn.sharedInstance()?.signOut()
                     WWMHelperClass.showPopupAlertController(sender: self, message:  result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
                 }
                 
             }else {
-                GIDSignIn.sharedInstance()?.signOut()
+//                GIDSignIn.sharedInstance()?.signOut()
                 if error?.localizedDescription == "The Internet connection appears to be offline."{
                     WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
                 }else{
@@ -210,7 +210,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
     }
     
     //MARK: Social Login & Terms n Condition button
-    
+    /*
     @IBAction func btnLoginWithFacebookAction(_ sender: UIButton) {
         WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "FACEBOOK", itemName: "")
         let loginManager = LoginManager()
@@ -267,6 +267,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance()?.signIn()
     }
+    */
     
     @IBAction func btnPrivacyPolicyAction(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
@@ -284,7 +285,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
     
     
     // Google Login Delegate Method
-    
+    /*
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
         if let error = error {
@@ -316,6 +317,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate, GIDSignInDel
             
         }
     }
+ */
     
     func loginWithSocial(param:[String : Any]) {
         self.view.endEditing(true)
