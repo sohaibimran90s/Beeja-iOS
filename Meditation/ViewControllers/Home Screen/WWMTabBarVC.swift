@@ -67,7 +67,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         navigationVCLearn.tabBarItem = ESTabBarItem.init(extractedExpr, title: "Learn", image: nil, selectedImage: nil)
         navigationVCWisdom.tabBarItem = ESTabBarItem.init(WWMWisdomAnimateContentView(), title: "Wisdom", image: nil, selectedImage: nil)
         navigationVCProgress.tabBarItem = ESTabBarItem.init(WWMProgressAnimateContentView(), title: "Progress", image: nil, selectedImage: nil)
-        self.viewControllers = [navigationVCHome, navigationVCCommunity,navigationVCTimer,navigationVCGuided,navigationVCLearn, navigationVCWisdom, navigationVCProgress]
+        self.viewControllers = [navigationVCHome, navigationVCTimer, navigationVCGuided, navigationVCLearn, navigationVCWisdom, navigationVCProgress, navigationVCCommunity]
         
         if let restoreValue = KUSERDEFAULTS.string(forKey: "restore"){
             //print("restore.... \(restoreValue)")
@@ -231,37 +231,37 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     func setupView() {
         
         if self.appPreffrence.getType() == "timer"{
-            self.viewControllers?.remove(at: 3)
-            self.viewControllers?.remove(at: 3)
+            self.viewControllers?.remove(at: 2)
+            self.viewControllers?.remove(at: 2)
             self.appPreffrence.setType(value: "timer")
             
         }else if self.appPreffrence.getType() == "guided"{
+            self.viewControllers?.remove(at: 1)
             self.viewControllers?.remove(at: 2)
-            self.viewControllers?.remove(at: 3)
             self.appPreffrence.setType(value: "guided")
             
         }else if self.appPreffrence.getType() == "learn"{
             self.appPreffrence.setType(value: "learn")
-            self.viewControllers?.remove(at: 2)
-            self.viewControllers?.remove(at: 2)
+            self.viewControllers?.remove(at: 1)
+            self.viewControllers?.remove(at: 1)
         }else {
-            self.viewControllers?.remove(at: 3)
-            self.viewControllers?.remove(at: 3)
+            self.viewControllers?.remove(at: 2)
+            self.viewControllers?.remove(at: 2)
             self.appPreffrence.setType(value: "timer")
         }
         
         if WWMHelperClass.milestoneType == "hours_meditate"{
-            self.selectedIndex = 4
+            self.selectedIndex = 3
         }else if WWMHelperClass.milestoneType == "consecutive_days"{
-            self.selectedIndex = 4
+            self.selectedIndex = 3
         }else if WWMHelperClass.milestoneType == "sessions"{
-            self.selectedIndex = 4
+            self.selectedIndex = 3
         }else{
-            self.selectedIndex = 2
+            self.selectedIndex = 1
         }
         
         if self.appPreffrence.getForceLogout() == "force_logout_true"{
-            self.selectedIndex = 4
+            self.selectedIndex = 3
         }
         
         layerGradient.colors = [UIColor.init(hexString: "#5732a3")!.cgColor, UIColor.init(hexString: "#001252")!.cgColor]

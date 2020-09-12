@@ -184,9 +184,9 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
         }
         
         if isSetting{
-            self.callHomeController(selectedIndex: 2)
+            self.callHomeController(selectedIndex: 1)
         }else{
-            self.callHomeController(selectedIndex: 4)
+            self.callHomeController(selectedIndex: 3)
         }
     }
     
@@ -198,7 +198,7 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             if isSetting{
                 self.callHomeVC1()
             }else{
-                self.callHomeController(selectedIndex: 4)
+                self.callHomeController(selectedIndex: 3)
             }
             return
         }else if self.type == "8_week"{
@@ -206,15 +206,15 @@ class WWM21DaySetReminder1VC: WWMBaseViewController {
             if isSetting{
                 self.callHomeVC1()
             }else{
-                self.callHomeController(selectedIndex: 4)
+                self.callHomeController(selectedIndex: 3)
             }
             return
         }
         
         if isSetting{
-            self.callHomeController(selectedIndex: 2)
+            self.callHomeController(selectedIndex: 1)
         }else{
-            self.callHomeController(selectedIndex: 4)
+            self.callHomeController(selectedIndex: 3)
         }
     }
     
@@ -479,7 +479,7 @@ extension WWM21DaySetReminder1VC{
                     if self.isSetting{
                         self.callHomeVC1()
                     }else{
-                        self.callHomeController(selectedIndex: 4)
+                        self.callHomeController(selectedIndex: 3)
                     }
                 }
             }

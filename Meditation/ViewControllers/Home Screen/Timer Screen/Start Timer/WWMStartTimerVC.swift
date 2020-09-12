@@ -999,11 +999,11 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         self.navigationController?.isNavigationBarHidden = false
         if let tabController = self.tabBarController as? WWMTabBarVC {
-            tabController.selectedIndex = 2
+            tabController.selectedIndex = 1
             for index in 0..<tabController.tabBar.items!.count {
                 let item = tabController.tabBar.items![index]
                 item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal)
-                if index == 2 {
+                if index == 1 {
                     item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.init(hexString: "#00eba9")!], for: .normal)
                 }
             }
