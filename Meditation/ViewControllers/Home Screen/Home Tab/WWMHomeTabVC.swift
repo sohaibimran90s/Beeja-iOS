@@ -142,9 +142,17 @@ class WWMHomeTabVC: WWMBaseViewController {
         //print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         
         let fullname = self.appPreffrence.getUserName()
-        let arrName = fullname.split(separator: " ")
-        let firstName = arrName[0].localizedCapitalized
-        self.setUpImage(firstName: firstName)
+        if fullname != ""{
+            if fullname.contains(" "){
+                let arrName = fullname.split(separator: " ")
+                let firstName = arrName[0].localizedCapitalized
+                self.setUpImage(firstName: firstName)
+            }else{
+                self.setUpImage(firstName: fullname)
+            }
+        }else{
+            self.setUpImage(firstName: "")
+        }
         
         self.lblName.alpha = 0
         self.lblStartedText.alpha = 0
