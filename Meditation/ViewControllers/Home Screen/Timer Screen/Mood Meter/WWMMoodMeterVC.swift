@@ -675,7 +675,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             
         }else{
             self.navigationController?.isNavigationBarHidden = false
-            self.callHomeVC(index: 4)
+            self.callHomeVC(index: 3)
         }
     }
     

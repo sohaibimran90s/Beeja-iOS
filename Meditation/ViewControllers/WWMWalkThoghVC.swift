@@ -239,7 +239,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
         self.timer.invalidate()
         
         if (value == "help" || value == "learnStepList" || value == "curatedCards"){
-            self.callHomeVC(index: 2)
+            self.callHomeVC(index: 1)
         }else if (value == "21_days" || value == "30days" || value == "8weeks") {
             if challenge_type == "30days" || challenge_type == "8weeks"{
                 if vc == "HomeTabVC"{
@@ -323,7 +323,7 @@ class WWMWalkThoghVC: WWMBaseViewController {
     }
     
     @IBAction func btnCloseAction(_ sender: Any){
-        self.callHomeVC(index: 2)
+        self.callHomeVC(index: 1)
         self.challengePopupView.removeFromSuperview()
     }
     
@@ -940,7 +940,7 @@ extension WWMWalkThoghVC{
                     }
                     
                 }else{
-                   self.callHomeVC(index: 2)
+                   self.callHomeVC(index: 1)
                 }
                 return
             }else{
@@ -955,7 +955,7 @@ extension WWMWalkThoghVC{
                         self.callHomeVC1()
                     }
                 }else{
-                   self.callHomeVC(index: 2)
+                   self.callHomeVC(index: 1)
                 }
             }
         }

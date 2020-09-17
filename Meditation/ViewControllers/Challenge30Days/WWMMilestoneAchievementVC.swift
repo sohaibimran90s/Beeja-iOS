@@ -38,10 +38,10 @@ class WWMMilestoneAchievementVC: WWMBaseViewController {
     }
     
     @IBAction func btnHomeAction(_ sender: UIButton){
-        self.callHomeVC(index: 2)
+        self.callHomeVC(index: 1)
     }
     
     @IBAction func btnProgressAction(_ sender: UIButton){
-        self.callHomeVC(index: 4)
+        self.callHomeVC(index: 3)
     }
 }
