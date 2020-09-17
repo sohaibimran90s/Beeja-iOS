@@ -45,23 +45,23 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         }else{
             self.btnBackTopConstraint.constant = 10
         }
-
+        
         self.underLineLbl()
         self.setupView()
         // Do any additional setup after loading the view.
     }
     
     func underLineLbl(){
-    
+        
         let underLineColor: UIColor = UIColor.init(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0)
         let underLineStyle = NSUnderlineStyle.single.rawValue
-
+        
         let labelAtributes:[NSAttributedString.Key : Any]  = [NSAttributedString.Key.underlineStyle: underLineStyle,
-            NSAttributedString.Key.underlineColor: underLineColor
+                                                              NSAttributedString.Key.underlineColor: underLineColor
         ]
-
+        
         let underlineAttributedString = NSAttributedString(string: "Forgot password?", attributes: labelAtributes)
-
+        
         lblFogetPass.attributedText = underlineAttributedString
     }
     
@@ -90,53 +90,53 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             
             if let userEmail = getuserdata["email"] as? String{
                 self.userEmail = userEmail
-            let userLoginTypeArray = userEmail.components(separatedBy: "@")
-            if userLoginTypeArray.count > 1 {
-                if userLoginTypeArray[0].count > 3{
-                    var myString: String = String(userLoginTypeArray[0].prefix(3))
-                    print(myString)
-                    
-                    let abc = myString.count
-                    let pqr = userLoginTypeArray[0].count
-                    let mno = pqr - abc
-                    
-                    for _ in 0..<mno{
-                        myString.append(contentsOf: "*")
+                let userLoginTypeArray = userEmail.components(separatedBy: "@")
+                if userLoginTypeArray.count > 1 {
+                    if userLoginTypeArray[0].count > 3{
+                        var myString: String = String(userLoginTypeArray[0].prefix(3))
+                        print(myString)
+                        
+                        let abc = myString.count
+                        let pqr = userLoginTypeArray[0].count
+                        let mno = pqr - abc
+                        
+                        for _ in 0..<mno{
+                            myString.append(contentsOf: "*")
+                        }
+                        
+                        myString.append(contentsOf: "@")
+                        myString.append(contentsOf: userLoginTypeArray[1])
+                        print(myString)
+                        
+                        self.lblUserEmail.text = myString
+                        
+                    }else if userLoginTypeArray[0].count > 1{
+                        var myString: String = String(userLoginTypeArray[0].prefix(1))
+                        print(myString)
+                        
+                        let abc = myString.count
+                        let pqr = userLoginTypeArray[0].count
+                        let mno = pqr - abc
+                        
+                        for _ in 0..<mno{
+                            myString.append(contentsOf: "*")
+                        }
+                        
+                        myString.append(contentsOf: "@")
+                        myString.append(contentsOf: userLoginTypeArray[1])
+                        print(myString)
+                        
+                        self.lblUserEmail.text = myString
+                    }else{
+                        
+                        self.lblUserEmail.text = userEmail
                     }
-                    
-                    myString.append(contentsOf: "@")
-                    myString.append(contentsOf: userLoginTypeArray[1])
-                    print(myString)
-                    
-                    self.lblUserEmail.text = myString
-                    
-                }else if userLoginTypeArray[0].count > 1{
-                    var myString: String = String(userLoginTypeArray[0].prefix(1))
-                    print(myString)
-                    
-                    let abc = myString.count
-                    let pqr = userLoginTypeArray[0].count
-                    let mno = pqr - abc
-                    
-                    for _ in 0..<mno{
-                        myString.append(contentsOf: "*")
-                    }
-                    
-                    myString.append(contentsOf: "@")
-                    myString.append(contentsOf: userLoginTypeArray[1])
-                    print(myString)
-                    
-                    self.lblUserEmail.text = myString
+                    print(userLoginTypeArray[0])
+                    print(userLoginTypeArray[1])
                 }else{
-                    
                     self.lblUserEmail.text = userEmail
                 }
-                print(userLoginTypeArray[0])
-                print(userLoginTypeArray[1])
-            }else{
-                self.lblUserEmail.text = userEmail
             }
-          }
         }else {
             self.stackViewTopConstraint.constant = -126
             viewContinueAsEmail.isHidden = true
@@ -254,7 +254,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                         Logger.shared.setIsLogging(value: true)
                         self.appPreference.setIsLogin(value: true)
                         self.appPreference.setUserID(value:"\(userProfile["user_id"] as? Int ?? 0)")
-                                                
+                        
                         //self.appPreference.setUserID(value:"1715")
                         
                         //Crashlytics.sharedInstance().setUserIdentifier("userId \(userProfile["user_id"] as? Int ?? 0)")
@@ -292,7 +292,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                     WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? KFAILTORECOGNISEEMAIL, title: kAlertTitle)
                 }
                 
-
+                
             }
             //WWMHelperClass.dismissSVHud()
             WWMHelperClass.hideLoaderAnimate(on: self.view)
@@ -342,7 +342,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                                 }else {
                                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
                                     vc.fbData = fbData
-                                self.navigationController?.pushViewController(vc, animated: true)
+                                    self.navigationController?.pushViewController(vc, animated: true)
                                 }
                             }
                         }else {
@@ -353,64 +353,64 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             }
         }
     }
-       
-       @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
-           WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
-            GIDSignIn.sharedInstance()?.delegate = self
-           GIDSignIn.sharedInstance()?.uiDelegate = self
-           GIDSignIn.sharedInstance()?.signIn()
-       }
-       
-       @IBAction func btnPrivacyPolicyAction(_ sender: Any) {
-           let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-               vc.strUrl = URL_PrivacyPolicy
-               vc.strType = "Privacy Policy"
-           self.navigationController?.pushViewController(vc, animated: true)
-       }
-       
-       @IBAction func btnTermsOfUseAction(_ sender: Any) {
-           let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-           vc.strUrl = URL_TermsnCondition
-           vc.strType = "Terms & Conditions"
-           self.navigationController?.pushViewController(vc, animated: true)
-       }
-       
-       
-       // Google Login Delegate Method
-       
-       func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
-                 withError error: Error!) {
-           if let error = error {
-               print("\(error.localizedDescription)")
-           } else {
-               // Perform any operations on signed in user here.
-               let userId = user.userID                  // For client-side use only!
-              // let idToken = user.authentication.idToken // Safe to send to the server
-               let fullName = user.profile.name
-              // let givenName = user.profile.givenName
-              // let familyName = user.profile.familyName
-               let email = user.profile.email
-               let profileImage = user.profile.imageURL(withDimension: 400)
-               let param = [
-                   "email": email,
-                   "password":"",
-                   "deviceId": kDeviceID,
-                   "DeviceType": kDeviceType,
-                   "deviceToken" : self.appPreference.getDeviceToken(),
-                   "loginType": kLoginTypeGoogle,
-                   "profile_image":profileImage?.absoluteString,
-                   "socialId":userId,
-                   "name":fullName,
-                   "model": UIDevice.current.model,
-                   "version": UIDevice.current.systemVersion
-               ]
-               
-               
-               self.loginWithSocial(param: param as Dictionary<String, Any>)
-               
-           }
-       }
-       
+    
+    @IBAction func btnLoginWithGoogleAction(_ sender: UIButton) {
+        WWMHelperClass.sendEventAnalytics(contentType: "SIGN_IN", itemId: "GOOGLE", itemName: "")
+        GIDSignIn.sharedInstance()?.delegate = self
+        GIDSignIn.sharedInstance()?.uiDelegate = self
+        GIDSignIn.sharedInstance()?.signIn()
+    }
+    
+    @IBAction func btnPrivacyPolicyAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        vc.strUrl = URL_PrivacyPolicy
+        vc.strType = "Privacy Policy"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func btnTermsOfUseAction(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+        vc.strUrl = URL_TermsnCondition
+        vc.strType = "Terms & Conditions"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    // Google Login Delegate Method
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
+        if let error = error {
+            print("\(error.localizedDescription)")
+        } else {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            // let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            // let givenName = user.profile.givenName
+            // let familyName = user.profile.familyName
+            let email = user.profile.email
+            let profileImage = user.profile.imageURL(withDimension: 400)
+            let param = [
+                "email": email,
+                "password":"",
+                "deviceId": kDeviceID,
+                "DeviceType": kDeviceType,
+                "deviceToken" : self.appPreference.getDeviceToken(),
+                "loginType": kLoginTypeGoogle,
+                "profile_image":profileImage?.absoluteString,
+                "socialId":userId,
+                "name":fullName,
+                "model": UIDevice.current.model,
+                "version": UIDevice.current.systemVersion
+            ]
+            
+            
+            self.loginWithSocial(param: param as Dictionary<String, Any>)
+            
+        }
+    }
+    
     func loginWithSocial(param:[String : Any]) {
         
         //WWMHelperClass.showSVHud()
@@ -450,8 +450,20 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                         }
                     }
                 }else {
-                    GIDSignIn.sharedInstance()?.signOut()
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    if let display_email_screen = result["display_email_screen"] as? Bool{
+                        WWMHelperClass.hideLoaderAnimate(on: self.view)
+                        if display_email_screen{
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
+                            vc.type = "apple"
+                            self.navigationController?.pushViewController(vc, animated: true)
+                            
+                            return
+                        }
+                    }
+                    
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                    GIDSignIn.sharedInstance()?.signOut()
                 }
                 
             }else {
@@ -508,7 +520,7 @@ extension WWMLoginWithEmailVC: ASAuthorizationControllerDelegate {
         print("AppleID Credential Authorization: userId: \(appleIDCredential.user), email: \(String(describing: appleIDCredential.email))")
         
         self.loginWithApple()
-
+        
     }
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("AppleID Credential failed with error: \(error.localizedDescription)")

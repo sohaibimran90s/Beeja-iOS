@@ -19,6 +19,7 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
     
     var fbData = [String:Any]()
     var tap = UITapGestureRecognizer()
+    var type = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,7 +108,9 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
-        
+
+        let userId = UserDefaults.standard.string(forKey: "apple_id")
+        let fullName = UserDefaults.standard.string(forKey: "apple_fullname")
         
         let param = [
             "email": txtViewEmail.text ?? "",
@@ -115,17 +118,25 @@ class WWMSignUpFacebookVC: WWMBaseViewController, UITextFieldDelegate {
             "deviceId": kDeviceID,
             "deviceToken" : appPreference.getDeviceToken(),
             "DeviceType": kDeviceType,
-            "loginType": kLoginTypeFacebook,
-            "profile_image":"http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large",
-            "socialId":"\(fbData["id"] ?? -1)",
-            "name":"\(fbData["name"] ?? "")",
+            "loginType": type == "" ? kLoginTypeFacebook: kLoginTypeApple ?? "apple",
+            "profile_image": type == "" ? "http://graph.facebook.com/\(fbData["id"] ?? "")/picture?type=large": "",
+            "socialId": type == "" ? "\(fbData["id"] ?? -1)": userId!,
+            "name": type == "" ? "\(fbData["name"] ?? "")": fullName ?? "",
             "model": UIDevice.current.model,
             "version": UIDevice.current.systemVersion
             ] as [String : Any]
         
-        //print("param2... \(param)")
+        print("param2... \(param)")
         WWMWebServices.requestAPIWithBody(param:param , urlString: URL_LOGIN, context: "WWMSignupEmailVC", headerType: kPOSTHeader, isUserToken: false) { (result, error, sucess) in
             if sucess {
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if let success1 = result["success"] as? Bool{
+                    if !success1{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+                        
+                        return
+                    }
+                }
                 
                 if let userProfile = result["userprofile"] as? [String:Any] {
                     

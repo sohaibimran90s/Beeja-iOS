@@ -352,7 +352,20 @@ import AuthenticationServices
                         }
                     }
                 }else {
-                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "", title: kAlertTitle)
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    if let display_email_screen = result["display_email_screen"] as? Bool{
+                        WWMHelperClass.hideLoaderAnimate(on: self.view)
+                        if display_email_screen{
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
+                            vc.type = "apple"
+                            self.navigationController?.pushViewController(vc, animated: true)
+                            
+                            return
+                        }
+                    }
+                    
+                    WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                    GIDSignIn.sharedInstance()?.signOut()
                 }
                 
             }else {

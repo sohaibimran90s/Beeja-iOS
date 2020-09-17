@@ -39,12 +39,8 @@ class WWMSignupSocialVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegat
     }
     
     @IBAction func clickLogin() {
-        if pushToLogin {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
-                   self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginWithEmailVC") as! WWMLoginWithEmailVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnSignupTouchDown(_ sender: Any) {
@@ -212,11 +208,23 @@ class WWMSignupSocialVC: UIViewController, GIDSignInDelegate, GIDSignInUIDelegat
                         }
                     }
                 }else {
-                    GIDSignIn.sharedInstance()?.signOut()
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    if let display_email_screen = result["display_email_screen"] as? Bool{
+                        WWMHelperClass.hideLoaderAnimate(on: self.view)
+                        if display_email_screen{
+                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignUpFacebookVC") as! WWMSignUpFacebookVC
+                            vc.type = "apple"
+                            self.navigationController?.pushViewController(vc, animated: true)
+                            
+                            return
+                        }
+                    }
+                    
                     WWMHelperClass.showPopupAlertController(sender: self, message: result["message"] as? String ?? "Unauthorized request", title: kAlertTitle)
+                    GIDSignIn.sharedInstance()?.signOut()
                 }
-                
             }else {
+                
                 GIDSignIn.sharedInstance()?.signOut()
                 if error != nil {
                     if error?.localizedDescription == "The Internet connection appears to be offline."{
@@ -270,7 +278,7 @@ extension WWMSignupSocialVC: ASAuthorizationControllerDelegate {
         let email = UserDefaults.standard.string(forKey: "apple_email")
         let userId = UserDefaults.standard.string(forKey: "apple_id")
         let fullName = UserDefaults.standard.string(forKey: "apple_fullname")
-        
+
         let param = [
             "email": email,
             "password":"",
