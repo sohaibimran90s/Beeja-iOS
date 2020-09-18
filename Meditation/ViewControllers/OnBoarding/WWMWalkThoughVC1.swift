@@ -42,6 +42,7 @@ class WWMWalkThoughVC1: WWMBaseViewController {
     
     func apiCall(){
         
+        self.offlineJsonFileCall()
         if !self.appPreffrence.getOnBoardingData().isEmpty{
             //print("not empty")
             self.decodeModel(json: self.appPreffrence.getOnBoardingData() as AnyObject)
@@ -53,8 +54,6 @@ class WWMWalkThoughVC1: WWMBaseViewController {
     }
     
     func getOnBoardingAPI(){
-        
-        self.offlineJsonFileCall()
         
         WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_ONBOARDING, context: "WWMSplashLoaderVC", headerType: kGETHeader, isUserToken: false) { (result, error, sucess) in
            
