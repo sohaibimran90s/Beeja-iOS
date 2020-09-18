@@ -3,27 +3,27 @@
   "data":[
      {
        "title": "Meditate",
-       "description": "",
+       "description": "Guided and timed meditations that suit your mood and experience",
        "imageName": "onboardingImg1"
      },
      {
        "title": "Sleep",
-       "description": "",
+       "description": "Bedtime tales to help you achieve a blissful night’s rest",
        "imageName": "onboardingImg2"
      },
      {
        "title": "Wisdom",
-       "description": "",
+       "description": "Worldly learnings to help you\r\nimprove your overall wellbeing",
        "imageName": "onboardingImg3"
      },
      {
        "title": "Progress",
-       "description": "",
+       "description": "Build the right habits to grow into a self-sufficient daily meditator",
        "imageName": "onboardingImg4"
      },
      {
        "title": "Community",
-       "description": "",
+       "description": "Connect with millions of likewise meditators around the world",
        "imageName": "onboardingImg5"
      }
   ]
