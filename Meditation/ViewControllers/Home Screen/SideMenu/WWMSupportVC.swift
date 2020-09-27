@@ -18,6 +18,9 @@ class WWMSupportVC: WWMBaseViewController {
     @IBOutlet weak var btnLogs: UIButton!
     //var alertPopupView = WWMAlertController()
     var alertLogsView = LoggerView()
+    
+    var datePickerView = UIDatePicker()
+    let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,6 +195,7 @@ extension WWMSupportVC{
             alertLogsView.btnSwitch.isOn = false
         }
         
+        self.showDatePicker()
         alertLogsView.btnSendLogs.addTarget(self, action: #selector(btnSendLogsAction(_:)), for: .touchUpInside)
         
         alertLogsView.btnDeleteLogs.addTarget(self, action: #selector(btnDeleteLogsAction(_:)), for: .touchUpInside)
@@ -218,3 +222,58 @@ extension WWMSupportVC{
         Logger.shared.deleteLogFile()
     }
 }
+
+extension WWMSupportVC{
+    
+    func showDatePicker(){
+        //Formate Date
+        datePickerView.datePickerMode = .date
+        datePickerView.maximumDate = Date()
+        
+        //ToolBar
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donedatePicker))
+        toolbar.setItems([doneButton], animated: true)
+        
+        alertLogsView.txtFDateTo.delegate = self
+        alertLogsView.txtFDateFrom.delegate = self
+        
+        alertLogsView.txtFDateFrom.inputAccessoryView = toolbar
+        alertLogsView.txtFDateFrom.inputView = datePickerView
+        
+        alertLogsView.txtFDateTo.inputAccessoryView = toolbar
+        alertLogsView.txtFDateTo.inputView = datePickerView
+        
+    }
+    
+    @objc func donedatePicker(){
+       
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-dd"
+        
+        if alertLogsView.txtFDateFrom.isFirstResponder{
+            alertLogsView.txtFDateFrom.text = formatter.string(from: datePickerView.date)
+        }
+        if alertLogsView.txtFDateTo.isFirstResponder{
+            alertLogsView.txtFDateTo.text = formatter.string(from: datePickerView.date)
+        }
+        alertLogsView.endEditing(true)
+    }
+}
+
+extension WWMSupportVC: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField == alertLogsView.txtFDateFrom{
+            alertLogsView.txtFDateTo.tag = 1
+            print("abc....")
+        }else{
+            alertLogsView.txtFDateTo.tag = 2
+            print("pqr...")
+        }
+        self.showDatePicker()
+    }
+}
+
