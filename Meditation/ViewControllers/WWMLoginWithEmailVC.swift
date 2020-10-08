@@ -272,6 +272,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
                             
+                            self.getProfileDataInBackground(lat: "", long: "")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                             
@@ -440,6 +441,8 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
                             
+                            self.getProfileDataInBackground(lat: "", long: "")
+                            
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                             
@@ -556,3 +559,39 @@ extension WWMLoginWithEmailVC: ASAuthorizationControllerPresentationContextProvi
     }
 }
 
+extension WWMLoginWithEmailVC{
+    func getProfileDataInBackground(lat: String, long: String){
+        let param = [
+            "user_id":self.appPreffrence.getUserID(),
+            "email":self.appPreffrence.getEmail(),
+            "lat": lat,
+            "long": long,
+            "city":"",
+            "country":""
+            ] as [String : Any]
+        
+        //print("param... \(param)")
+        
+        WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMLoginEmailVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            
+            //print(result)
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+            if sucess {
+                if let success = result["success"] as? Bool {
+                    if success {
+                        
+                        var userSubscription = WWMUserData.sharedInstance
+                        userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
+                        let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
+                        
+                        self.appPreffrence.setExpiryDate(value: false)
+                        
+                        if difference != 1{
+                            self.appPreffrence.setExpiryDate(value: true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

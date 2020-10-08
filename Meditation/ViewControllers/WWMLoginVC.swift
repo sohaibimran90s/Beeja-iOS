@@ -266,6 +266,7 @@ class WWMLoginVC: WWMBaseViewController, GIDSignInDelegate,GIDSignInUIDelegate {
                         if isProfileCompleted {
                             self.appPreference.setGetProfile(value: true)
                             
+                            self.getProfileDataInBackground(lat: "", long: "")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                             UIApplication.shared.keyWindow?.rootViewController = vc
                             
@@ -370,5 +371,42 @@ extension WWMLoginVC: ASAuthorizationControllerDelegate {
 extension WWMLoginVC: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
+    }
+}
+
+extension WWMLoginVC{
+    func getProfileDataInBackground(lat: String, long: String){
+            let param = [
+                "user_id":self.appPreference.getUserID(),
+                "email":self.appPreference.getEmail(),
+                "lat": lat,
+                "long": long,
+                "city":"",
+                "country":""
+                ] as [String : Any]
+            
+            //print("param... \(param)")
+            
+            WWMWebServices.requestAPIWithBody(param: param, urlString: URL_GETPROFILE, context: "WWMLoginVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+                
+                //print(result)
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if sucess {
+                    if let success = result["success"] as? Bool {
+                        if success {
+                            var userSubscription = WWMUserData.sharedInstance
+                            userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])
+                            let difference = WWMHelperClass.dateComparison(expiryDate: userSubscription.expiry_date)
+                            
+                            self.appPreference.setExpiryDate(value: false)
+                            
+                            if difference != 1{
+                                self.appPreference.setExpiryDate(value: true)
+                            }
+                        }
+                    }
+                }
+            }
+        
     }
 }
