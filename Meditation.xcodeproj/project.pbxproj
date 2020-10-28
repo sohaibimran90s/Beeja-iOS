@@ -3853,7 +3853,7 @@
 				CODE_SIGN_ENTITLEMENTS = Meditation/MeditationDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3871,7 +3871,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.201008;
+				MARKETING_VERSION = 5.2.201028;
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3893,7 +3893,7 @@
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Will Williams Meditation Limited (5QJX36A56H)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3911,7 +3911,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.201008;
+				MARKETING_VERSION = 5.2.201028;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
