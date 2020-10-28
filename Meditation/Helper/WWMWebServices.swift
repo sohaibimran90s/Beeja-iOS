@@ -38,6 +38,7 @@ class WWMWebServices {
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+        var localTimeZoneIdentifier: String { return TimeZone.current.identifier }
         
         x_Params["app_ver"] = WWMHelperClass.getVersion()
         x_Params["build_no"] = WWMHelperClass.getBuildVersion()
@@ -50,7 +51,7 @@ class WWMWebServices {
         x_Params["Missing Permissions"] = appPreffrence.getLoctionDenied()
         x_Params["Architecture"] = ""
         x_Params["Connection_type"] = appPreffrence.getConnectionType()
-        
+        x_Params["timezone"] = localTimeZoneIdentifier
         
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: x_Params,
@@ -61,7 +62,7 @@ class WWMWebServices {
             //print("JSON string = \(theJSONText!)")
         }
         
-        print("X_Params.... \(X_Params)")
+        //print("X_Params.... \(X_Params)")
         
         var request = URLRequest(url: URL(string: urlString as String)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 45)
         
@@ -365,6 +366,7 @@ class WWMWebServices {
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+        var localTimeZoneIdentifier: String { return TimeZone.current.identifier }
         
         x_Params["app_ver"] = WWMHelperClass.getVersion()
         x_Params["build_no"] = WWMHelperClass.getBuildVersion()
@@ -377,7 +379,7 @@ class WWMWebServices {
         x_Params["Missing Permissions"] = appPreffrence.getLoctionDenied()
         x_Params["Architecture"] = ""
         x_Params["Connection_type"] = appPreffrence.getConnectionType()
-        
+        x_Params["timezone"] = localTimeZoneIdentifier
         
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: x_Params,
@@ -449,6 +451,7 @@ class WWMWebServices {
         
         let os = ProcessInfo().operatingSystemVersion
         let os_version: String = String(os.majorVersion) + "." + String(os.minorVersion) + "." + String(os.patchVersion)
+        var localTimeZoneIdentifier: String { return TimeZone.current.identifier }
         
         x_Params["app_ver"] = WWMHelperClass.getVersion()
         x_Params["build_no"] = WWMHelperClass.getBuildVersion()
@@ -461,7 +464,7 @@ class WWMWebServices {
         x_Params["Missing Permissions"] = appPreffrence.getLoctionDenied()
         x_Params["Architecture"] = ""
         x_Params["Connection_type"] = appPreffrence.getConnectionType()
-        
+        x_Params["timezone"] = localTimeZoneIdentifier
         
         if let theJSONData = try? JSONSerialization.data(
             withJSONObject: x_Params,
