@@ -1693,8 +1693,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             // CONNECTION IS NOT REACHABLE
             if !reachable.isConnectedToNetwork() {
                 if !self.flagConnAlertShow{
-                    self.connectionLost()
-                    self.flagConnAlertShow = true
+                    if self.appPreffrence.getType() != "timer"{
+                        self.connectionLost()
+                        self.flagConnAlertShow = true
+                    }
                 }else{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         self.popUpForOfflineMode()
@@ -2161,8 +2163,10 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         }else{
             if !reachable.isConnectedToNetwork() {
                 if !self.flagConnAlertShow{
-                    self.connectionLost()
-                    self.flagConnAlertShow = true
+                    if self.appPreffrence.getType() != "timer"{
+                        self.connectionLost()
+                        self.flagConnAlertShow = true
+                    }
                 }else{
                     //print("no alert...")
                     self.getUserProfileData(lat: self.lat, long: self.long)
