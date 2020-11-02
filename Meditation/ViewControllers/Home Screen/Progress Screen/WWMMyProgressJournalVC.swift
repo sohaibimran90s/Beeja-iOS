@@ -297,7 +297,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
     }
     
     @IBAction func btnAddJournalAction(_ sender: Any) {
-        
+       /*
         // Ehsan
         let vc = UIStoryboard(name: "Journal", bundle: nil).instantiateViewController(withIdentifier: "AddJournal") as! AddJournalVC
         let navController = UINavigationController(rootViewController: vc)
@@ -306,23 +306,21 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         self.present(navController, animated: false, completion: nil)
         
         return
+ */
         
         if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
             let getPostJournalCount = self.appPreference.getPostJournalCount()
             if getPostJournalCount == 0{
                 self.getFreeMoodMeterAlert(freeMoodMeterCount: "", title: KSUBSPLANEXP, subTitle: KNOFREEJOURNAL, type: "post")
             }else{
-                                
                 if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-                    xibJournalView()
-                    
+                    callAddjournal()
                 }else{
                     self.alertPopupView1.removeFromSuperview()
-                    
                 }
             }
         }else{
-            xibJournalView()
+            callAddjournal()
         }
     }
     
@@ -338,98 +336,34 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
         
         self.alertPopupView1.lblTitle.text = title
         self.alertPopupView1.lblSubtitle.text = subTitle
-        self.alertPopupView1.btnClose.isHidden = true
-        
+        self.alertPopupView1.btnClose.setTitle("no thanks", for: .normal)
+        self.alertPopupView1.btnOK.setTitle("ok", for: .normal)
+        self.alertPopupView1.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView1)
     }
     
+    @objc func btnCloseAction(_ sender: Any){
+        self.alertPopupView1.removeFromSuperview()
+    }
+    
     @objc func btnAlertDoneAction(_ sender: Any){
         
-        if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
-            let getPostJournalCount = self.appPreference.getPostJournalCount()
-            if getPostJournalCount == 0{
-                self.alertPopupView1.removeFromSuperview()
-            }else{
-                xibJournalView()
-            }
-        }else{
-            self.alertPopupView1.removeFromSuperview()
-        }
-    }
-    
-    func xibJournalView(){
-        journalView = UINib(nibName: "WWMAddJournalView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAddJournalView
-        let window = UIApplication.shared.keyWindow!
+        self.alertPopupView1.removeFromSuperview()
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
         
-        journalView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        journalView.addGestureRecognizer(self.tap)
-        
-        journalView.btnSubmit.alpha = 0
-        journalView.viewJournal.alpha = 0
-        journalView.lblEntryText.alpha = 0
-        journalView.lblTextCount.alpha = 0
-        
-        journalView.btnSubmit.layer.borderWidth = 2.0
-        journalView.btnSubmit.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        journalView.btnSubmit.isUserInteractionEnabled = true
-        
-        journalView.txtViewJournal.delegate = self
-        journalView.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
-        journalView.btnSubmit.addTarget(self, action: #selector(btnSubmitJournalAction(_:)), for: .touchUpInside)
-        journalView.btnEditText.addTarget(self, action: #selector(btnEditTextAction(_:)), for: .touchUpInside)
-        window.rootViewController?.view.addSubview(journalView)
-        
-        self.animatedLblEntryText()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
-    func animatedLblEntryText(){
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-            self.journalView.lblEntryText.alpha = 1
-            self.journalView.lblEntryText.center.y = self.journalView.lblEntryText.center.y - 70
-        }, completion: { _ in
-            self.animatedViewJournal()
-        })
+    func callAddjournal(){
+        let vc = UIStoryboard(name: "Journal", bundle: nil).instantiateViewController(withIdentifier: "AddJournal") as! AddJournalVC
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen //.overFullScreen
+        vc.isAddJournal = true
+        self.present(navController, animated: false, completion: nil)
     }
-    
-    func animatedViewJournal(){
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-            self.journalView.viewJournal.alpha = 1
-            self.journalView.viewJournal.center.y = self.journalView.viewJournal.center.y - 50
-            self.journalView.lblTextCount.alpha = 1
-            self.journalView.lblTextCount.center.y = self.journalView.lblTextCount.center.y - 50
-        }, completion: { _ in
-            self.animatedBtnSubmit()
-        })
-        
-    }
-    
-    func animatedBtnSubmit(){
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-            self.journalView.btnSubmit.alpha = 1
-            self.journalView.btnSubmit.center.y = self.journalView.btnSubmit.center.y - 50
-        }, completion: nil)
-    }
-    
-    @IBAction func btnCloseAction(_ sender: Any) {
-        journalView.removeFromSuperview()
-    }
-    
-    @IBAction func btnSubmitJournalAction(_ sender: Any) {
-        if journalView.txtViewJournal.text == "" {
-            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERJOURNAL, title: kAlertTitle)
-        }else {
-            self.addJournalAPI()
-        }
-    }
-    
-    @IBAction func btnEditTextAction(_ sender: Any) {
-        journalView.txtViewJournal.isEditable = true
-        journalView.txtViewJournal.becomeFirstResponder()
-    }
-    
-    
+
+
     func xibJournalPopupCall(){
         alertJournalPopup = UINib(nibName: "WWMJouranlPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMJouranlPopUp
         let window = UIApplication.shared.keyWindow!
@@ -533,18 +467,6 @@ extension WWMMyProgressJournalVC: UITextViewDelegate{
         let newText = (journalView.txtViewJournal.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.count
         return numberOfChars < 1501
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        //self.view.removeGestureRecognizer(tap)
-        journalView.btnSubmit.isUserInteractionEnabled = false
-        if journalView.txtViewJournal.text == "" {
-            journalView.btnSubmit.isUserInteractionEnabled = true
-            WWMHelperClass.showPopupAlertController(sender: self, message: KENTERJOURNAL, title: kAlertTitle)
-        }else {
-            journalView.btnSubmit.isUserInteractionEnabled = false
-            self.addJournalAPI()
-        }
     }
 }
 

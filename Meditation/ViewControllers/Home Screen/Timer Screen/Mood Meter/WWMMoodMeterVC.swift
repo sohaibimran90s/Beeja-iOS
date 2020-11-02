@@ -175,8 +175,13 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     }
     
     @objc func btnCloseAction(_ sender: Any){
-        DispatchQueue.global(qos: .background).async {
-            self.completeMeditationAPI()
+        self.alertPopupView1.removeFromSuperview()
+        if type == "pre" {
+            self.callHomeVC1()
+        }else{
+            DispatchQueue.global(qos: .background).async {
+                self.completeMeditationAPI()
+            }
         }
     }
     
@@ -185,7 +190,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         DispatchQueue.global(qos: .background).async {
             self.completeMeditationAPI()
         }
-        
+        self.alertPopupView1.removeFromSuperview()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
         
         vc.isCallHome = "moodMeter"

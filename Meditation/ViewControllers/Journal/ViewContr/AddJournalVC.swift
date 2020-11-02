@@ -348,6 +348,9 @@ class AddJournalVC: WWMBaseViewController {
         guard let imgArray = textJournalObj.image, imgArray.count > 0 else {
             WWMHelperClass.hideLoaderAnimate(on: self.view)
             if (self.isAddJournal){
+                if KUSERDEFAULTS.bool(forKey: "getPrePostMoodBool"){
+                    self.appPreference.setPostJournalCount(value: self.appPreference.getPostJournalCount() - 1)
+                }
                 self.dismiss(animated: false, completion: nil)
             }
             else {

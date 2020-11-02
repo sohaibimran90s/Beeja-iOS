@@ -1487,7 +1487,6 @@
 				2EB9072521B653EE009891E8 /* Models */,
 				2EB9072421B653DD009891E8 /* Resources */,
 				2EB9072321B653D1009891E8 /* Views */,
-				2EB9072221B653BF009891E8 /* Supporting Files */,
 				2E4B1B9D21B5044B002F8A25 /* AppDelegate.swift */,
 				2E4B1BA121B5044B002F8A25 /* Main.storyboard */,
 				E838011924B44C90008CDB89 /* 8week.storyboard */,
@@ -1743,13 +1742,6 @@
 				2EB1F10D21D60BA300F98EC2 /* WWMExtension.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		2EB9072221B653BF009891E8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		2EB9072321B653D1009891E8 /* Views */ = {

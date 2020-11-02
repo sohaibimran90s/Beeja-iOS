@@ -1736,7 +1736,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                         if success {
                             
                             WWMHelperClass.hideLoaderAnimate(on: self.view)
-                            //print("user_id****** \(self.appPreffrence.getUserID()) result***** \(result)")
+                            print("user_id****** \(self.appPreffrence.getUserID()) result***** \(result)")
                             
                             var userSubscription = WWMUserData.sharedInstance
                             userSubscription = WWMUserData.init(subscriptionJson: result["subscription"] as! [String : Any])

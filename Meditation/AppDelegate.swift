@@ -426,7 +426,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/updatetwo.json", context: "AppDelegate") { (result, error, success) in
             if success {
                 
-                //print("appdelegate result... \(result)")
+                print("appdelegate result... \(result)")
                 
                 //set url from backend using constant*
                 if kBETA_ENABLED{
