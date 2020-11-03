@@ -585,6 +585,10 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         
+        if selectedIndex >= 72 {
+            selectedIndex = 71
+        }
+        
         print("moodIndex... \(selectedIndex) self.arrMoodData... \(self.arrMoodData.count) self.arrMoodData[selectedIndex].name... \(self.arrMoodData[selectedIndex].name)")
         
         self.appPreference.setMoodId(value: "\(self.arrMoodData[selectedIndex].id)")
