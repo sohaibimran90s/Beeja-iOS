@@ -256,7 +256,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func pushToViewController(){
         if self.appPreference.isLogin() {
             if !self.appPreference.isProfileComplete() {
-                //let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMSignupLetsStartVC") as! WWMSignupLetsStartVC
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMConOnboardingVC") as! WWMConOnboardingVC
                 self.navigationController?.pushViewController(vc, animated: true)
             }else if self.appPreference.isLogout() {
@@ -264,7 +263,6 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                 self.appPreference.setGetProfile(value: true)
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
                 UIApplication.shared.keyWindow?.rootViewController = vc
-                
             }else {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
                 self.navigationController?.pushViewController(vc, animated: false)
@@ -273,9 +271,8 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWelcomeBackVC") as! WWMWelcomeBackVC
             self.navigationController?.pushViewController(vc, animated: false)
         }else {
-            
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoughVC1") as! WWMWalkThoughVC1
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+            self.navigationController?.pushViewController(vc, animated: false)
             
         }
         
