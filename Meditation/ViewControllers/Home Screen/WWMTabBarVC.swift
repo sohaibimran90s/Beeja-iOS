@@ -1749,6 +1749,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                             self.appPreffrence.setOffers(value: result["offers"] as! [String])
+                            self.appPreffrence.setIsProfileCompleted(value: true)
                             
                             if let userProfile = result["user_profile"] as? [String : Any]{
                                 //setEmail
