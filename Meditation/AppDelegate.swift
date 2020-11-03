@@ -143,15 +143,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //Branch.getInstance().continue(userActivity)
         
         print("path = \(path)")
-        
-        let actionType = path.components(separatedBy: "/")[2]
-        print("Action Type", actionType)
-        
-        if actionType == "login" {
-            //navigate user to login screen
-            self.manageLogout()
+// BASS-808 ----- Starts
+        if path.components(separatedBy: "/").count > 2 {
+            let actionType = path.components(separatedBy: "/")[2]
+            print("Action Type", actionType)
+            
+            if actionType == "login" {
+                //navigate user to login screen
+                self.manageLogout()
+            }
         }
-        
+// BASS-808 ----- Ends
         return true
     }
     

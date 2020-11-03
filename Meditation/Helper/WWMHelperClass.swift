@@ -224,12 +224,15 @@ class WWMHelperClass {
         return "b\(buildNo ?? "")"
     }
     
+// BASS-801 ----- Starts
     class func daysLeft(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
 //        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         dateFormatter.locale = Locale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -257,6 +260,7 @@ class WWMHelperClass {
         dateFormatter.locale = Locale.current
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if let _ = dateFormatter.date(from: expiryDate){
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -283,20 +287,22 @@ class WWMHelperClass {
 //        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.locale = Locale.current
         formatter.locale = Locale(identifier: formatter.locale.identifier)
-        
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         guard let expireDate = formatter.date(from: expiryDate)
-            else {
+        else {
                 formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-                let newExpireDate = formatter.date(from: expiryDate)
-                //print("12 Hour - \(newExpireDate ?? Date())")
-                return newExpireDate!
+                if let newExpireDate = formatter.date(from: expiryDate){
+                    //print("12 Hour - \(newExpireDate ?? Date())")
+                    return newExpireDate
+                } else {
+                    return Date()
+                }
         }
-        
         //print("24 Hour - \(expireDate)")
         return expireDate
     }
+// BASS-801 ----- Ends
     
     class func dateComparison1(expiryDate: String) -> (Int, Int, Int){
         
