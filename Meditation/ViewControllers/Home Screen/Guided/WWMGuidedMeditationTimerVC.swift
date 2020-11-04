@@ -121,8 +121,12 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.player = AVPlayer(playerItem:playerItem)
             
             let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-            self.totalDuration  = Int(round(duration)/60)
-            //print("totalDuration... \(totalDuration)")
+            if (duration.isNaN) || (duration.isInfinite) {
+                self.callHomeVC1()
+                return
+            }else{
+                self.totalDuration  = Int(round(duration)/60)
+            }
             
             player?.volume = 1.0
             player?.play()
