@@ -143,15 +143,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //Branch.getInstance().continue(userActivity)
         
         print("path = \(path)")
-        
-        let actionType = path.components(separatedBy: "/")[2]
-        print("Action Type", actionType)
-        
-        if actionType == "login" {
-            //navigate user to login screen
-            self.manageLogout()
+// BASS-808 ----- Starts
+        if path.components(separatedBy: "/").count > 2 {
+            let actionType = path.components(separatedBy: "/")[2]
+            print("Action Type", actionType)
+            
+            if actionType == "login" {
+                //navigate user to login screen
+                self.manageLogout()
+            }
         }
-        
+// BASS-808 ----- Ends
         return true
     }
     
@@ -650,54 +652,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             settingData = data[0]
             
             var meditation_data = [[String:Any]]()
-            let meditationData = settingData.meditationData!.array as? [DBMeditationData]
-            for dic in meditationData!{
-                
-                if dic.meditationName == "Beeja"{
-                    self.min_limit = dic.min_limit ?? "94"
-                    self.max_limit = dic.max_limit ?? "97"
-                }
-                
-                let levels = dic.levels?.array as? [DBLevelData]
-                var levelDic = [[String:Any]]()
-                for level in levels! {
-                    let leveldata = [
-                        "level_id": level.levelId,
-                        "isSelected": level.isLevelSelected,
-                        "name": level.levelName ?? "",
-                        "prep_time": "\(level.prepTime)",
-                        "meditation_time": "\(level.meditationTime)",
-                        "rest_time": "\(level.restTime)",
-                        "prep_min": "\(level.minPrep)",
-                        "prep_max": "\(level.maxPrep)",
-                        "med_min": "\(level.minMeditation)",
-                        "med_max": "\(level.maxMeditation)",
-                        "rest_min": "\(level.minRest)",
-                        "rest_max": "\(level.maxRest)"
-                        ] as [String : Any]
-                    levelDic.append(leveldata)
-                }
-                
-                if dic.min_limit == "" || dic.min_limit == nil{
-                    let data = ["meditation_id":dic.meditationId,
-                                "meditation_name":dic.meditationName ?? "",
-                                "isSelected":dic.isMeditationSelected,
-                                "setmyown" : dic.setmyown,
-                                "min_limit" : self.min_limit,
-                                "max_limit" : self.max_limit,
-                                "levels":levelDic] as [String : Any]
-                    meditation_data.append(data)
-                }else{
-                    let data = ["meditation_id":dic.meditationId,
-                                "meditation_name":dic.meditationName ?? "",
-                                "isSelected":dic.isMeditationSelected,
-                                "setmyown" : dic.setmyown,
-                                "min_limit" : dic.min_limit ?? "94",
-                                "max_limit" : dic.max_limit ?? "97",
-                                "levels":levelDic] as [String : Any]
-                    meditation_data.append(data)
+            // EH - BASS-802 iOS : Crashlytics ----- Starts
+            // added if let expression before forece unwrap
+            if let _ = settingData.meditationData?.array {
+                if let meditationData = settingData.meditationData!.array as? [DBMeditationData] {
+                    for dic in meditationData { // EH - BASS-802 removed force unwrap
+                        if dic.meditationName == "Beeja"{
+                            self.min_limit = dic.min_limit ?? "94"
+                            self.max_limit = dic.max_limit ?? "97"
+                        }
+                        
+                        var levelDic = [[String:Any]]()
+                        if let levels = dic.levels?.array as? [DBLevelData] {
+                            for level in levels { // EH - BASS-802 removed force unwrap
+                                let leveldata = [
+                                    "level_id": level.levelId,
+                                    "isSelected": level.isLevelSelected,
+                                    "name": level.levelName ?? "",
+                                    "prep_time": "\(level.prepTime)",
+                                    "meditation_time": "\(level.meditationTime)",
+                                    "rest_time": "\(level.restTime)",
+                                    "prep_min": "\(level.minPrep)",
+                                    "prep_max": "\(level.maxPrep)",
+                                    "med_min": "\(level.minMeditation)",
+                                    "med_max": "\(level.maxMeditation)",
+                                    "rest_min": "\(level.minRest)",
+                                    "rest_max": "\(level.maxRest)"
+                                    ] as [String : Any]
+                                levelDic.append(leveldata)
+                            }
+                        }
+                            
+                        if dic.min_limit == "" || dic.min_limit == nil{
+                            let data = ["meditation_id":dic.meditationId,
+                                        "meditation_name":dic.meditationName ?? "",
+                                        "isSelected":dic.isMeditationSelected,
+                                        "setmyown" : dic.setmyown,
+                                        "min_limit" : self.min_limit,
+                                        "max_limit" : self.max_limit,
+                                        "levels":levelDic] as [String : Any]
+                            meditation_data.append(data)
+                        } else {
+                            let data = ["meditation_id":dic.meditationId,
+                                        "meditation_name":dic.meditationName ?? "",
+                                        "isSelected":dic.isMeditationSelected,
+                                        "setmyown" : dic.setmyown,
+                                        "min_limit" : dic.min_limit ?? "94",
+                                        "max_limit" : dic.max_limit ?? "97",
+                                        "levels":levelDic] as [String : Any]
+                            meditation_data.append(data)
+                        }
+                    }
                 }
             }
+            // EH - BASS-802 iOS : Crashlytics ----- Ends
             //"IsMilestoneAndRewards"
             let group = [
                 "startChime": settingData.startChime ?? "JAI GURU DEVA",
