@@ -121,9 +121,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.player = AVPlayer(playerItem:playerItem)
             
             let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+            //BASS-800
             if (duration.isNaN) || (duration.isInfinite) {
-                self.callHomeVC1()
-                return
+                self.totalDuration = 0
             }else{
                 self.totalDuration  = Int(round(duration)/60)
             }
@@ -272,10 +272,17 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         if isPlayer {
+            if self.player?.currentTime().seconds != nil{
+                self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
+            }
             
-            self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
-            
-            //print("self.meditationGuidedPlayPercentage... \(self.meditationGuidedPlayPercentage)")
+            //BASS-805
+            var watched_duration = "0"
+            var complete_percentage = 0
+            if self.player?.currentTime().seconds != nil{
+                watched_duration = "\(Int(round((self.player?.currentTime().seconds)!)))"
+                complete_percentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
+            }
             
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
@@ -285,32 +292,30 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             offlineCompleteData["emotion_id"] = "\(self.emotion_Id)"
             offlineCompleteData["audio_id"] = "\(audioData.audio_Id)"
             offlineCompleteData["guided_type"] = self.appPreference.getGuideType()
-            offlineCompleteData["watched_duration"] = "\(Int(round((self.player?.currentTime().seconds)!)))"
+            offlineCompleteData["watched_duration"] = watched_duration
             offlineCompleteData["rating"] = "\(self.rating)"
             offlineCompleteData["user_id"] = self.appPreference.getUserID()
             offlineCompleteData["meditation_type"] = "post"
             offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
             offlineCompleteData["tell_us_why"] = ""
             offlineCompleteData["prep_time"] = ""
-            offlineCompleteData["meditation_time"] = Int(round((self.player?.currentTime().seconds)!))
+            offlineCompleteData["meditation_time"] = watched_duration
             offlineCompleteData["rest_time"] = ""
             offlineCompleteData["meditation_id"] = "0"
             offlineCompleteData["level_id"] = "0"
             offlineCompleteData["mood_id"] = "0"
-            offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
+            offlineCompleteData["complete_percentage"] = complete_percentage
             offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
-             
+            
+            //print("offlineCompleteData guidedMeditationTimer+++ \(offlineCompleteData)")
+            
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
             }else{
                 let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
-                    
-                    //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
                 }
-                
-                //print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
             
             if meditationGuidedPlayPercentage < Int(self.min_limit) ?? 95{

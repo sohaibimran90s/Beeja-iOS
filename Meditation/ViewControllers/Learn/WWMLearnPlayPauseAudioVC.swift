@@ -104,6 +104,7 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     }
     
     @objc func updateTime(_ timer: Timer) {
+        //BASS-806
         if self.player?.currentTime() != nil{
             let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
             //print("currentTime... \(currentTime)")
