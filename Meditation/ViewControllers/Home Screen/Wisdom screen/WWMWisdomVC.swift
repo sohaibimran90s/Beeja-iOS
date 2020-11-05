@@ -170,7 +170,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         if self.playerViewController.view.frame.origin.y > 0.0  {
             self.playerViewController.removeObserver(self, forKeyPath: #keyPath(UIViewController.view.frame))
             
-            print(self.playerViewController.player?.currentTime().seconds ?? 0)
+            //print(self.playerViewController.player?.currentTime().seconds ?? 0)
             let watchDuration = self.playerViewController.player?.currentTime().seconds ?? 0
             let param = [
                 "user_id": self.appPreference.getUserID(),
