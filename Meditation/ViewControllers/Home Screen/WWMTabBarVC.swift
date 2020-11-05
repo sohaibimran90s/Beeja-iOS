@@ -1746,7 +1746,13 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                             self.appPreffrence.set30DaysURL(value: result["30days_intro_url"] as! String)
                             self.appPreffrence.setInvitationCode(value: result["Invitation_code"] as! String)
                             self.appPreffrence.setLearnPageURL(value: result["learn_page_url"] as! String)
+                            // EH - BASS-803 ----- Starts
+                            // Attempt to insert non-property list object - make instance of corresponding object and test
+                            // This issues occured due to null in meta [] object value key, which was later changed to "".
+                            // Refer BASS-703 related to it.
                             self.appPreffrence.setUserData(value: result["user_profile"] as! [String : Any])
+                            
+                            // EH - BASS-803 ----- Ends
                             self.appPreffrence.setUserSubscription(value: result["subscription"] as! [String : Any])
                             self.appPreffrence.setOffers(value: result["offers"] as! [String])
                             self.appPreffrence.setIsProfileCompleted(value: true)
