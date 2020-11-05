@@ -68,7 +68,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
             }
             
         }else if textField == self.txtViewEmail{
-            self.txtViewEmail.text = self.txtViewEmail.text?.trimmingTrailingSpaces()
+            self.txtViewEmail.text = self.txtViewEmail.text?.replacingOccurrences(of: " ", with: "")
             if txtViewEmail.text ?? "" == ""{
                 self.viewEmail.layer.borderColor = UIColor.clear.cgColor
             }
@@ -100,7 +100,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
                 return false
             }
         }else if textField == self.txtViewEmail{
-            let str = txtViewEmail.text! + string
+            let str = txtViewEmail.text ?? "" + string
             
             if (self.isValidEmail(strEmail: str)) {
                 self.viewEmail.layer.borderWidth = 1.0
@@ -135,7 +135,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
         
         if txtViewEmail.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message:Validation_EmailMessage , title: kAlertTitle)
-        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!.trimmingTrailingSpaces())){
+        }else if !(self.isValidEmail(strEmail: txtViewEmail.text!.replacingOccurrences(of: " ", with: ""))){
             WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
         }else if txtViewPassword.text == "" {
             WWMHelperClass.showPopupAlertController(sender: self, message: KENTERPASS, title: kAlertTitle)
@@ -151,7 +151,7 @@ class WWMSignupEmailVC: WWMBaseViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "email": txtViewEmail.text ?? "",
+            "email": txtViewEmail.text?.replacingOccurrences(of: " ", with: "") ?? "",
             "deviceToken" : appPreference.getDeviceToken(),
             "deviceId": kDeviceID,
             "DeviceType": kDeviceType,
