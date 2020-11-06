@@ -161,11 +161,18 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.view .removeGestureRecognizer(tap)
-        if txtViewPassword.text! == ""{
-            self.viewUserPass.layer.borderColor = UIColor.clear.cgColor
-            self.btnLogin.setTitleColor(UIColor.white, for: .normal)
-            self.btnLogin.backgroundColor = UIColor.clear
+        self.view.removeGestureRecognizer(tap)
+        if textField == self.txtViewEmail{
+            self.txtViewEmail.text = self.txtViewEmail.text?.replacingOccurrences(of: " ", with: "")
+            if txtViewEmail.text ?? "" == ""{
+                self.viewUserEmail.layer.borderColor = UIColor.clear.cgColor
+            }
+        }else if textField == self.txtViewPassword{
+            if txtViewPassword.text ?? "" == ""{
+                self.viewUserPass.layer.borderColor = UIColor.clear.cgColor
+                self.btnLogin.setTitleColor(UIColor.white, for: .normal)
+                self.btnLogin.backgroundColor = UIColor.clear
+            }
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -176,7 +183,15 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         if string == "" {
             return true
         }
-        if textField == txtViewPassword {
+        if textField == self.txtViewEmail{
+            let str = txtViewEmail.text ?? "" + string
+            
+            if (self.isValidEmail(strEmail: str)) {
+                self.viewUserEmail.layer.borderWidth = 1.0
+                self.viewUserEmail.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+            }
+            return true
+        }else if textField == txtViewPassword {
             let str = txtViewPassword.text! + string
             if str.count > 0 {
                 self.viewUserPass.layer.borderWidth = 1.0
@@ -204,7 +219,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
             if txtViewEmail.text == "" {
                 WWMHelperClass.showPopupAlertController(sender: self, message: KDONTFORGETEMAIL, title: kAlertTitle)
                 return
-            }else if !(self.isValidEmail(strEmail: txtViewEmail.text!)){
+            }else if !(self.isValidEmail(strEmail: (txtViewEmail.text?.replacingOccurrences(of: " ", with: ""))!)){
                 WWMHelperClass.showPopupAlertController(sender: self, message: Validation_invalidEmailMessage, title: kAlertTitle)
                 return
             }
@@ -226,7 +241,7 @@ class WWMLoginWithEmailVC:WWMBaseViewController, UITextFieldDelegate, GIDSignInD
         //WWMHelperClass.showSVHud()
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
-            "email": isFromWelcomeBack ? self.userEmail: txtViewEmail.text!,
+            "email": isFromWelcomeBack ? self.userEmail: txtViewEmail.text?.replacingOccurrences(of: " ", with: ""),
             "password":txtViewPassword.text!,
             "deviceId": kDeviceID,
             "deviceToken" : appPreference.getDeviceToken(),

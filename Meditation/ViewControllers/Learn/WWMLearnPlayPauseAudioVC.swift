@@ -104,15 +104,18 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
     }
     
     @objc func updateTime(_ timer: Timer) {
-        let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
-        //print("currentTime... \(currentTime)")
-        self.slider.value = Float(currentTime)
-        self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
-        
-        if self.beginTimeLbl.text == self.endTimeLbl.text{
-            self.timer.invalidate()
-            if !self.isPlayComplete{
-                self.beginTimeLbl.text = "00:00"
+        //BASS-806
+        if self.player?.currentTime() != nil{
+            let currentTime = CMTimeGetSeconds((self.player?.currentTime())!)
+            //print("currentTime... \(currentTime)")
+            self.slider.value = Float(currentTime)
+            self.beginTimeLbl.text = "\(self.secondToMinuteSecond(second : Int(currentTime)))"
+            
+            if self.beginTimeLbl.text == self.endTimeLbl.text{
+                self.timer.invalidate()
+                if !self.isPlayComplete{
+                    self.beginTimeLbl.text = "00:00"
+                }
             }
         }
     }

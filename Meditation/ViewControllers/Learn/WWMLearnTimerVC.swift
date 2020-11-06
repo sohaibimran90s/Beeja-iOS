@@ -11,7 +11,7 @@ import Lottie
 import CoreData
 
 class WWMLearnTimerVC: WWMBaseViewController {
-
+    
     @IBOutlet weak var viewPause: UIView!
     @IBOutlet weak var lblTimer: UILabel!
     @IBOutlet weak var lblTimerType: UILabel!
@@ -19,7 +19,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     @IBOutlet weak var backView: UIView!
     //notificationCenter.removeObserver(self)
     var notificationCenter = NotificationCenter.default
-
+    
     var gradientLayer: CAGradientLayer!
     var colorSets = [[CGColor]]()
     var currentColorSet: Int!
@@ -34,7 +34,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     var settingData = DBSettings()
     var animationView = AnimationView()
     var timer = Timer()
-
+    
     var isPlayer = false
     var isStop = false
     var player: AVPlayer?
@@ -52,7 +52,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     var ninetyFiveCompletedFlag = "1"
     var isComplete = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +78,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         self.lblTimer.text = self.secondToMinuteSecond(second: self.seconds)
         animationView.play()
-
+        
         if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
             self.combinedMantraAPI()
         }else{
@@ -204,7 +204,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             WWMHelperClass.hideLoaderAnimate(on: self.view)
         }
     }
-
+    
     
     func xibCall(){
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
@@ -289,26 +289,26 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
                 var analyticStepTitle = WWMHelperClass.step_title.uppercased()
                 analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
-                    
+                
                 var audioPlayPercentageCompleteStatus = ""
-                if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+                if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))){
                     if audioPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95{
                         audioPlayPercentageCompleteStatus = "_COMPLETED"
                     }
                 }
-                    
+                
                 WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName: "\(self.totalAudioLengthAnalytics)\(audioPlayPercentageCompleteStatus)")
-                    
+                
                 ismove = true
                 self.timer.invalidate()
                 self.animationView.stop()
                 self.player?.pause()
-                    
+                
                 self.animateBool = 1
                 self.pauseAnimation()
                 self.timer1.invalidate()
                 
-                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "0", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds)!)))", watched_duration: "\(Int(round((self.player?.currentTime().seconds)!)))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "learn", guided_type: "", audio_id: "0", step_id: "\(WWMHelperClass.step_id)", mantra_id: "\(WWMHelperClass.mantra_id)")
+                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "0", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "learn", guided_type: "", audio_id: "0", step_id: "\(WWMHelperClass.step_id)", mantra_id: "\(WWMHelperClass.mantra_id)")
             }
         }else{
             self.moveToFeedBack()
@@ -351,7 +351,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
             "journal_type": "",
             "challenge_day_id":"",
             "challenge_type":""
-            ] as [String : Any]
+        ] as [String : Any]
         
         //background thread meditation api*
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -423,7 +423,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
         }
     }
     
-    
     func navigateToDashboard() {
         
         self.navigationController?.isNavigationBarHidden = false
@@ -470,8 +469,13 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.player = AVPlayer(playerItem:playerItem)
             
             let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-            self.totalDuration  = Int(round(duration))
-            self.totalAudioLengthAnalytics = self.totalDuration/60
+            if (duration.isNaN) || (duration.isInfinite) {
+                self.totalDuration  = 0
+                self.totalAudioLengthAnalytics = self.totalDuration/60
+            }else{
+                self.totalDuration  = Int(round(duration))
+                self.totalAudioLengthAnalytics = self.totalDuration/60
+            }
             
             self.totalAudioLength = self.secondToMinuteSecond(second : self.totalDuration)
             
@@ -489,7 +493,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
             print(error.localizedDescription)
         }
     }
-    
     
     func pauseAnimation() {
         let pausedTime = gradientLayer.convertTime(CACurrentMediaTime(), from: nil)
@@ -545,7 +548,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         
-        self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
+        self.meditationLTMPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
         
         if meditationLTMPlayPercentage < Int(self.appPreference.getLearnMin_limit()) ?? 95{
             self.ninetyFiveCompletedFlag = "0"
@@ -560,10 +563,17 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.ninetyFiveCompletedFlag = WWMHelperClass.checkNinetyFivePercentData(type: "Learn")
         }
         
-        if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+        if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))){
             if audioPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95{
                 self.fetchStepsDataFromDB()
             }
+        }
+        
+        var watched_duration = "0"
+        var complete_percentage = 0
+        if self.player?.currentTime().seconds != nil{
+            watched_duration = "\(Int(round((self.player?.currentTime().seconds ?? 0))))"
+            complete_percentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
         }
         
         //offline for meditation to insert into database
@@ -574,21 +584,21 @@ class WWMLearnTimerVC: WWMBaseViewController {
         offlineCompleteData["emotion_id"] = "0"
         offlineCompleteData["audio_id"] = "0"
         offlineCompleteData["guided_type"] = ""
-        offlineCompleteData["watched_duration"] = "\(Int(round((self.player?.currentTime().seconds)!)))"
+        offlineCompleteData["watched_duration"] = watched_duration
         offlineCompleteData["rating"] = "0"
         offlineCompleteData["user_id"] = self.appPreference.getUserID()
         offlineCompleteData["meditation_type"] = "post"
         offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
         offlineCompleteData["tell_us_why"] = ""
         offlineCompleteData["prep_time"] = ""
-        offlineCompleteData["meditation_time"] = Int(round((self.player?.currentTime().seconds)!))
+        offlineCompleteData["meditation_time"] = watched_duration
         offlineCompleteData["rest_time"] = ""
         offlineCompleteData["meditation_id"] = "0"
         offlineCompleteData["level_id"] = "0"
         offlineCompleteData["mood_id"] = "0"
-        offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
+        offlineCompleteData["complete_percentage"] = complete_percentage
         offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
-         
+        
         if !self.dataAppendFlag{
             self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
         }else{
@@ -626,9 +636,9 @@ class WWMLearnTimerVC: WWMBaseViewController {
     func updateNintyFiveCompletionDataFromDB(id: String, data: [String: Any]){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "DBNintyFiveCompletionData")
         fetchRequest.predicate = NSPredicate(format: "id = %@", id)
-
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                
+        
         if let fetchResults = try? appDelegate.managedObjectContext.fetch(fetchRequest) as? [NSManagedObject] {
             if fetchResults?.count != 0 {
                 // update
@@ -659,9 +669,8 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 if dict.id == "\(WWMHelperClass.step_id)"{
                     
                     dict.completed = true
-                    
                     let dateFormatter = DateFormatter()
-//                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    //                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.locale = Locale.current
                     dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
                     
@@ -676,13 +685,9 @@ class WWMLearnTimerVC: WWMBaseViewController {
         }
     }
     
-    
     @objc func playerDidFinishPlaying(sender: Notification) {
         if !ismove {
-            
-
             //for 95% LTM
-            
             ismove = true
             self.timer.invalidate()
             self.animationView.stop()
@@ -697,14 +702,14 @@ class WWMLearnTimerVC: WWMBaseViewController {
             analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
             var analyticStepTitle = WWMHelperClass.step_title.uppercased()
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
-                   
+            
             var audioPlayPercentageCompleteStatus = ""
             if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round(self.player!.currentTime().seconds)))){
                 if audioPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
             }
-                       
+            
             WWMHelperClass.sendEventAnalytics(contentType: "LEARN", itemId: "\(analyticStepName)_\(analyticStepTitle)", itemName: "\(self.totalAudioLengthAnalytics)\(audioPlayPercentageCompleteStatus)")
             
             
@@ -746,10 +751,10 @@ class WWMLearnTimerVC: WWMBaseViewController {
             analyticStepName = analyticStepName.replacingOccurrences(of: " ", with: "_")
             var analyticStepTitle = WWMHelperClass.step_title.uppercased()
             analyticStepTitle = analyticStepTitle.replacingOccurrences(of: " ", with: "_")
-        
+            
             
             var audioPlayPercentageCompleteStatus = ""
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))){
                 if audioPlayPercentage >= Int(self.appPreference.getLearnMin_limit()) ?? 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
@@ -779,7 +784,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 vc.watched_duration = "\(self.watched_duration)"
                 self.navigationController?.pushViewController(vc, animated: false)
             }
-            
         }
     }
     
@@ -796,7 +800,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
             self.player?.pause()
         }, completion: nil)
     }
-
 }
 
 

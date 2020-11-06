@@ -121,8 +121,12 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             self.player = AVPlayer(playerItem:playerItem)
             
             let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-            self.totalDuration  = Int(round(duration)/60)
-            //print("totalDuration... \(totalDuration)")
+            //BASS-800
+            if (duration.isNaN) || (duration.isInfinite) {
+                self.totalDuration = 0
+            }else{
+                self.totalDuration  = Int(round(duration)/60)
+            }
             
             player?.volume = 1.0
             player?.play()
@@ -268,10 +272,17 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         if isPlayer {
+            if self.player?.currentTime().seconds != nil{
+                self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
+            }
             
-            self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0
-            
-            //print("self.meditationGuidedPlayPercentage... \(self.meditationGuidedPlayPercentage)")
+            //BASS-805
+            var watched_duration = "0"
+            var complete_percentage = 0
+            if self.player?.currentTime().seconds != nil{
+                watched_duration = "\(Int(round((self.player?.currentTime().seconds ?? 0))))"
+                complete_percentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
+            }
             
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
@@ -281,32 +292,30 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             offlineCompleteData["emotion_id"] = "\(self.emotion_Id)"
             offlineCompleteData["audio_id"] = "\(audioData.audio_Id)"
             offlineCompleteData["guided_type"] = self.appPreference.getGuideType()
-            offlineCompleteData["watched_duration"] = "\(Int(round((self.player?.currentTime().seconds)!)))"
+            offlineCompleteData["watched_duration"] = watched_duration
             offlineCompleteData["rating"] = "\(self.rating)"
             offlineCompleteData["user_id"] = self.appPreference.getUserID()
             offlineCompleteData["meditation_type"] = "post"
             offlineCompleteData["date_time"] = "\(Int(Date().timeIntervalSince1970*1000))"
             offlineCompleteData["tell_us_why"] = ""
             offlineCompleteData["prep_time"] = ""
-            offlineCompleteData["meditation_time"] = Int(round((self.player?.currentTime().seconds)!))
+            offlineCompleteData["meditation_time"] = watched_duration
             offlineCompleteData["rest_time"] = ""
             offlineCompleteData["meditation_id"] = "0"
             offlineCompleteData["level_id"] = "0"
             offlineCompleteData["mood_id"] = "0"
-            offlineCompleteData["complete_percentage"] = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!))))
+            offlineCompleteData["complete_percentage"] = complete_percentage
             offlineCompleteData["is_complete"] = self.ninetyFiveCompletedFlag
-             
+            
+            //print("offlineCompleteData guidedMeditationTimer+++ \(offlineCompleteData)")
+            
             if !self.dataAppendFlag{
                 self.addNintyFiveCompletionDataFromDB(dict: offlineCompleteData)
             }else{
                 let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
                 if nintyFivePercentDB.count > 0{
                     self.updateNintyFiveCompletionDataFromDB(id: "\(nintyFivePercentDB.count - 1)", data: offlineCompleteData)
-                    
-                    //print("nintyFivePercentDB... \(nintyFivePercentDB.count)")
                 }
-                
-                //print("nintyFivePercentDB...++++ \(nintyFivePercentDB.count)")
             }//offline data meditation*
             
             if meditationGuidedPlayPercentage < Int(self.min_limit) ?? 95{
@@ -317,7 +326,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 self.ninetyFiveCompletedFlag = "1"
             }
             
-            let remainingTime = self.seconds - Int((self.player?.currentTime().seconds)!)
+            let remainingTime = self.seconds - Int((self.player?.currentTime().seconds ?? 0))
             self.lblTimer.text = self.secondsToMinutesSeconds(second: remainingTime)
             if remainingTime == 0 {
                 self.moveToFeedBack()
@@ -393,7 +402,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             analyticEmotionName = analyticEmotionName.replacingOccurrences(of: " ", with: "_")
             
             var audioPlayPercentageCompleteStatus = ""
-            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+            if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))){
                 if audioPlayPercentage >= Int(self.min_limit) ?? 95{
                     audioPlayPercentageCompleteStatus = "_COMPLETED"
                 }
@@ -442,7 +451,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds)!)))"
+                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds ?? 0))))"
                 self.navigationController?.pushViewController(vc, animated: false)
             }else{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMoodMeterLogVC") as! WWMMoodMeterLogVC
@@ -456,7 +465,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 vc.emotion_Id = self.emotion_Id
                 vc.audio_Id = "\(audioData.audio_Id)"
                 vc.rating = "\(self.rating)"
-                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds)!)))"
+                vc.watched_duration = "\(Int(round((self.player?.currentTime().seconds ?? 0))))"
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -604,7 +613,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 analyticEmotionName = analyticEmotionName.replacingOccurrences(of: " ", with: "_")
                 
                 var audioPlayPercentageCompleteStatus = ""
-                if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))){
+                if let audioPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))){
                     if audioPlayPercentage >= Int(self.min_limit) ?? 95{
                         audioPlayPercentageCompleteStatus = "_COMPLETED"
                     }
@@ -637,7 +646,7 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                     }
                 }
                 
-                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds)!)))", watched_duration: "\(Int(round((self.player?.currentTime().seconds)!)))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds)!)))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "")
+                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "")
                 
             }//ismovefinish
         }else{
