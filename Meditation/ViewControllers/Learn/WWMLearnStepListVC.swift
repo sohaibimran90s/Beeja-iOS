@@ -21,10 +21,9 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     let appPreffrence = WWMAppPreference()
     var selectedIndex = 0
     var total_paid: Int = 0
-    
     var learnStepsListData: [LearnStepsListData] = []
     var alertPopup = WWMAlertPopUp()
-    
+    var alertPopupView1 = WWMAlertController()
     let reachable = Reachabilities()
     
     override func viewDidLoad() {
@@ -200,6 +199,37 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
         }
     }
     
+    func getAnnualPopUp(){
+        self.alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        
+        self.alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        
+        self.alertPopupView1.lblTitle.numberOfLines = 0
+        self.alertPopupView1.btnOK.layer.borderWidth = 2.0
+        self.alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        
+        self.alertPopupView1.lblTitle.text = KSUBSPLANEXP
+        self.alertPopupView1.lblSubtitle.text = KLEARNANNUALSUBS
+        self.alertPopupView1.btnClose.setTitle("no thanks", for: .normal)
+        self.alertPopupView1.btnOK.setTitle("ok", for: .normal)
+        
+        self.alertPopupView1.btnClose.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
+        self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView1)
+    }
+    
+    @objc func btnCloseAction(_ sender: Any){
+        self.alertPopupView1.removeFromSuperview()
+    }
+    
+    @objc func btnAlertDoneAction(_ sender: Any){
+        self.alertPopupView1.removeFromSuperview()
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
+        vc.isCallHome = "LearnStepListVC"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     //MARK: StepFAQ
     func fetchStepFaqDataFromDB(time_stamp: Any) {
         let stepFaqDataDB = WWMHelperClass.fetchDB(dbName: "DBStepFaq") as! [DBStepFaq]
@@ -370,7 +400,7 @@ extension WWMLearnStepListVC: UITableViewDelegate, UITableViewDataSource{
         
         if !self.appPreffrence.getExpiryDate(){
             if sender.tag > 2{
-                self.xibCall(title1: KLEARNANNUALSUBS)
+                self.getAnnualPopUp()
                 return
             }
         }
