@@ -238,6 +238,14 @@ class WWMTimerHomeVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMUpgradeBeejaVC") as! WWMUpgradeBeejaVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func resetMeditationTime(){
+        self.sliderMeditationTime.minimumValue = Float(selectedLevelData.minMeditation)
+        self.sliderMeditationTime.maximumValue = Float(selectedLevelData.maxMeditation)
+        self.sliderMeditationTime.value = Float(selectedLevelData.meditationTime)
+        self.lblMeditationTime.text = self.secondsToMinutesSeconds(second: Int(self.sliderMeditationTime.value))
+        self.meditationTime = Int(self.sliderMeditationTime.value)
+    }
 
     
     override func viewDidLayoutSubviews() {
@@ -339,6 +347,11 @@ class WWMTimerHomeVC: WWMBaseViewController {
         
         if self.prepTime == 0 && self.meditationTime == 0 && self.restTime == 0{
             self.setUpSliderTimesAccordingToLevels()
+            return
+        }
+        
+        if self.meditationTime == 0{
+            self.resetMeditationTime()
             return
         }
         

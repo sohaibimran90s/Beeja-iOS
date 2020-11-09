@@ -88,7 +88,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         
         cell.imgView.sd_setImage(with: URL.init(string: data.video_Image), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.video_Name
-        
+        cell.lblDuration.text = "\(self.secondsToMinutesSeconds(second: Int(data.video_Duration) ?? 0))"
         
         return cell
     }
@@ -132,6 +132,14 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             
          }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+        }
+    }
+    
+    func secondsToMinutesSeconds (second : Int) -> String {
+        if second<60 {
+            return String.init(format: "%d:%02d", 00,second)
+        }else {
+            return String.init(format: "%d:%02d", second/60,second%60)
         }
     }
     
