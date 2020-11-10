@@ -167,11 +167,12 @@ class WWMJournalAudioTableViewCell: UITableViewCell {
             let playerItem = AVPlayerItem.init(url:URL.init(string: data.assets_audios[0].name)!)
             self.player = AVPlayer(playerItem: playerItem)
             
-            let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-            let duration1 = Int(round(duration))
-            let totalAudioLength = self.secondToMinuteSecond(second : duration1)
-            
-            self.endTimeLbl.text = "\(totalAudioLength)"
+            if let cmTime = self.player?.currentItem?.asset.duration {
+                let duration = CMTimeGetSeconds(cmTime)
+                let duration1 = Int(round(duration))
+                let totalAudioLength = self.secondToMinuteSecond(second : duration1)
+                self.endTimeLbl.text = "\(totalAudioLength)"
+            }
         }
     }
     
