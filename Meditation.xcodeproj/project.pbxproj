@@ -3856,6 +3856,7 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/FBSDK",
+					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -3896,6 +3897,7 @@
 					"$(PROJECT_DIR)/Meditation/ThirdParty/New\\ Group",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/FBSDK",
+					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Meditation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
