@@ -18,12 +18,17 @@ import FirebaseCrashlytics
 //import Fabric
 import CallKit
 import FirebaseAnalytics
-
+// EH - AppCenter
+import AppCenter
+import AppCenterDistribute
 
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate, CXCallObserverDelegate {
     
+    
+    // EH - Appcenter key
+    let appCenterSecretKey = "a0296868-62b7-4fe5-af14-bae041aff2e2"
 
     fileprivate let redirectUri = URL(string:"beeja-med-test-app://beeja-med-test-callback")!
     fileprivate let clientIdentifier = "2fd82c511bd74915b2b16ff1903eeb2b"
@@ -126,6 +131,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
         Logger.shared.setUpLogger()
+        
+        
+        // EH - AppCenter
+        MSAppCenter.start(appCenterSecretKey, withServices: [MSDistribute.self])
         
         return true
     }
