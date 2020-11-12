@@ -37,5 +37,9 @@ target 'Meditation' do
 
   # Recommended: Add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
+  
+  # CI CD with AppCenter
+  pod 'AppCenter'
+  pod 'AppCenter/Distribute'
 
 end
