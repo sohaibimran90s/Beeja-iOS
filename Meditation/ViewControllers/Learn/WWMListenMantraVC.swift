@@ -11,17 +11,15 @@ import UIKit
 class WWMListenMantraVC: WWMBaseViewController {
 
     @IBOutlet weak var playPauseBtn: UIButton!
-    
     var player: AVPlayer?
     var mantraData: [WWMMantraData] = []
     var isPlay: Bool = false
-    
+    var value: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.playPauseBtn.setImage(UIImage(named: "pauseAudio"), for: .normal)
-        
         //getMantrasAPI()
         self.fetchMantrasDataFromDB()
     }
@@ -127,6 +125,7 @@ class WWMListenMantraVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMChooseMantraListVC") as! WWMChooseMantraListVC
         self.player?.pause()
         vc.delegate = self
+        vc.value = self.value
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

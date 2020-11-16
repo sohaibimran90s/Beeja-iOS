@@ -1446,7 +1446,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func getMantrasAPI() {
         
-        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMListenMantraVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMTabBarVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
                 if let data = result["data"] as? [[String: Any]]{
