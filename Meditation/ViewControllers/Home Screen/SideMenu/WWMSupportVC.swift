@@ -181,6 +181,12 @@ extension WWMSupportVC{
         let window = UIApplication.shared.keyWindow!
         alertLogsView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         
+        if WWMHelperClass.hasTopNotch{
+            alertLogsView.btnCloseTopC.constant = 42
+        }else{
+            alertLogsView.btnCloseTopC.constant = 26
+        }
+        
         alertLogsView.btnSendLogs.layer.borderWidth = 2.0
         alertLogsView.btnSendLogs.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
         alertLogsView.btnSendLogs.layer.cornerRadius = 20
