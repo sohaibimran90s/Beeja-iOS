@@ -13,20 +13,26 @@ protocol WWMChooseMantraListDelegate {
 }
 
 class WWMChooseMantraListVC: WWMBaseViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     var selectedIndex = 0
     var mantraData: [WWMMantraData] = []
     var settingData = DBSettings()
     var delegate: WWMChooseMantraListDelegate?
-
+    var type = ""
     var min_limit = ""
     var max_limit = ""
+    var value: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.setNavigationBar(isShow: false, title: "")
+        
+        if self.value == "mantra"{
+            self.setUpCrossNavigationBar(title: "ChooseMantra")
+        }else{
+            self.setNavigationBar(isShow: false, title: "")
+        }
+        
         //getMantrasAPI()
         self.fetchMantrasDataFromDB()
         let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
@@ -52,52 +58,52 @@ class WWMChooseMantraListVC: WWMBaseViewController {
             self.getMantrasAPI()
         }
     }
-
+    
     
     //MARK: API call
-     func getMantrasAPI() {
-           
-           WWMHelperClass.showLoaderAnimate(on: self.view)
-           
-           WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMChooseMantraListVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
-               if sucess {
-                   if let data = result["data"] as? [[String: Any]]{
-                       let mantrasData = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
-                       if mantrasData.count > 0 {
-                           WWMHelperClass.deletefromDb(dbName: "DBMantras")
-                       }
-                       for dict in data{
-                           
-                           //print("mantras result... \(result) choosemantralist getmantras api")
-                           
-                           
-                           let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
-                           let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
-                           let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
-                           dbMantrasData.data = myString
-                           
-                           let timeInterval = Int(Date().timeIntervalSince1970)
-                           print("timeInterval.... \(timeInterval)")
-                           
-                           dbMantrasData.last_time_stamp = "\(timeInterval)"
-                           WWMHelperClass.saveDb()
-                           
-                           self.fetchMantrasDataFromDB()
-                           
-                       }
-                   }
-               }else {
-                   if error != nil {
-                       if error?.localizedDescription == "The Internet connection appears to be offline."{
-                           WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
-                       }else{
-                           WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
-                       }
-                   }
-               }
-               WWMHelperClass.hideLoaderAnimate(on: self.view)
-           }
-       }
+    func getMantrasAPI() {
+        
+        WWMHelperClass.showLoaderAnimate(on: self.view)
+        
+        WWMWebServices.requestAPIWithBody(param: [:], urlString: URL_MANTRAS, context: "WWMChooseMantraListVC", headerType: kGETHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                if let data = result["data"] as? [[String: Any]]{
+                    let mantrasData = WWMHelperClass.fetchDB(dbName: "DBMantras") as! [DBMantras]
+                    if mantrasData.count > 0 {
+                        WWMHelperClass.deletefromDb(dbName: "DBMantras")
+                    }
+                    for dict in data{
+                        
+                        //print("mantras result... \(result) choosemantralist getmantras api")
+                        
+                        
+                        let dbMantrasData = WWMHelperClass.fetchEntity(dbName: "DBMantras") as! DBMantras
+                        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: dict, options:.prettyPrinted)
+                        let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
+                        dbMantrasData.data = myString
+                        
+                        let timeInterval = Int(Date().timeIntervalSince1970)
+                        print("timeInterval.... \(timeInterval)")
+                        
+                        dbMantrasData.last_time_stamp = "\(timeInterval)"
+                        WWMHelperClass.saveDb()
+                        
+                        self.fetchMantrasDataFromDB()
+                        
+                    }
+                }
+            }else {
+                if error != nil {
+                    if error?.localizedDescription == "The Internet connection appears to be offline."{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
+                    }else{
+                        WWMHelperClass.showPopupAlertController(sender: self, message: error?.localizedDescription ?? "", title: kAlertTitle)
+                    }
+                }
+            }
+            WWMHelperClass.hideLoaderAnimate(on: self.view)
+        }
+    }
 }
 
 extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
@@ -116,7 +122,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             cell.lblStepDescription.isHidden = false
             cell.btnProceed.isHidden = false
             cell.imgArraow.image = UIImage(named: "upArrow")
-        
+            
         }else{
             cell.lblStepDescription.isHidden = true
             cell.btnProceed.isHidden = true
@@ -166,8 +172,8 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             if self.appPreference.isLogin(){
                 DispatchQueue.global(qos: .background).async {
                     let data = WWMHelperClass.fetchDB(dbName: "DBSettings") as! [DBSettings]
-                           if data.count > 0 {
-                               self.settingAPI()
+                    if data.count > 0 {
+                        self.settingAPI()
                     }
                 }
             }
@@ -208,7 +214,7 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
                     "med_max": "\(level.maxMeditation)",
                     "rest_min": "\(level.minRest)",
                     "rest_max": "\(level.maxRest)"
-                    ] as [String : Any]
+                ] as [String : Any]
                 levelDic.append(leveldata)
             }
             
@@ -256,13 +262,13 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             "isEightWeekReminder":self.settingData.isEightWeekReminder,
             "eightWeekReminder":self.settingData.eightWeekReminder ?? "",
             "meditation_data" : meditation_data
-            ] as [String : Any]
+        ] as [String : Any]
         
         let param = [
             "user_id": self.appPreference.getUserID(),
             "isJson": true,
             "group": group
-            ] as [String : Any]
+        ] as [String : Any]
         
         WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "WWMChooseMantraListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             

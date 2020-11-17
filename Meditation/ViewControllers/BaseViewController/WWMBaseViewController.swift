@@ -138,6 +138,38 @@ class WWMBaseViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
+    func setUpCrossNavigationBar(title:String) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        
+        self.title1 = title
+        sideMenuBtn.setImage(UIImage.init(named: "crossMenu"), for: .normal)
+        sideMenuBtn.addTarget(self, action: #selector(buttonCrossAction(_:)), for: .touchUpInside)
+        sideMenuBtn.contentMode = .scaleAspectFit
+        
+        let backButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
+        backButton.setImage(UIImage.init(named: ""), for: .normal)
+        backButton.contentMode = .scaleAspectFit
+        
+        let leftBarButtonItem = UIBarButtonItem.init(customView: backButton)
+        let rightBarButtonItem = UIBarButtonItem.init(customView: sideMenuBtn)
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    @IBAction func buttonCrossAction(_ sender: UIButton) {
+        if self.title1 == "ChooseMantra"{
+            let arrVc = self.navigationController?.viewControllers
+            for vc in arrVc! {
+                if vc.isKind(of: WWMSettingsVC.classForCoder()){
+                    self.navigationController?.popToViewController(vc, animated: true)
+                }
+            }
+        }
+    }
+    
     @objc func btnBackAction(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -158,7 +190,6 @@ class WWMBaseViewController: UIViewController {
         self.title = title
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.barTintColor = UIColor.clear
-        
         
         let sideMenuBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 25, height: 25))
         sideMenuBtn.setImage(UIImage.init(named: "sideMenu_Icon"), for: .normal)

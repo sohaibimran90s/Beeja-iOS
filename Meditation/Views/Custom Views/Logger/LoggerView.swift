@@ -17,6 +17,7 @@ class LoggerView: UIView {
     @IBOutlet weak var txtFDateFrom: UITextField!
     @IBOutlet weak var txtFDateTo: UITextField!
     @IBOutlet weak var btnCloseTrailC: NSLayoutConstraint!
+    @IBOutlet weak var btnCloseTopC: NSLayoutConstraint!
     
     @IBAction func btnClose(_ sender: UIButton) {
         self.removeFromSuperview()
