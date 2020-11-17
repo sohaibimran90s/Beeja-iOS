@@ -736,7 +736,8 @@ class AddJournalVC: WWMBaseViewController {
                     
                     if WWMHelperClass.day_30_name == "7" || WWMHelperClass.day_30_name == "14" || WWMHelperClass.day_30_name == "21" || WWMHelperClass.day_30_name == "28"{
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
+                        let story = UIStoryboard.init(name: "Main", bundle: nil)
+                        let vc = story.instantiateViewController(withIdentifier: "WWMMilestoneAchievementVC") as! WWMMilestoneAchievementVC
                         self.navigationController?.pushViewController(vc, animated: true)
                     }else{
                         self.nextVC()
@@ -783,7 +784,8 @@ class AddJournalVC: WWMBaseViewController {
                 
                 WWMHelperClass.days21StepNo = ""
                 WWMHelperClass.stepsCompleted = false
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
+                let story = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = story.instantiateViewController(withIdentifier: "WWM21DaySetReminderVC") as! WWM21DaySetReminderVC
                 self.navigationController?.pushViewController(vc, animated: true)
                 
             }else{
