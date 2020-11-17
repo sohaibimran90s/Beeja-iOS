@@ -3908,7 +3908,7 @@
 				MARKETING_VERSION = 5.1.201117;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = beeja_Development_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.2;
