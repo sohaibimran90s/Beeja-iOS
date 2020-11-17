@@ -3845,7 +3845,7 @@
 				CODE_SIGN_ENTITLEMENTS = Meditation/MeditationDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3886,7 +3886,7 @@
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Will Williams Meditation Limited (5QJX36A56H)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
 				FRAMEWORK_SEARCH_PATHS = (
