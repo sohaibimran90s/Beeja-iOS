@@ -83,6 +83,7 @@ class WWMVedioPlayerVC: AVPlayerViewController,AVPlayerViewControllerDelegate {
                 //print("Playing")
                 self.playerStatus = "Playing"
                 self.playerAudio?.play()
+                self.playerAudio?.volume = 0.1
                 self.navigationController?.navigationBar.isHidden = false
                 self.timerInterval = Int(4.6)
                 self.timerNavigation()
@@ -273,11 +274,11 @@ extension WWMVedioPlayerVC: AVAudioPlayerDelegate{
             
             /// change fileTypeHint according to the type of your audio file (you can omit this)
             playerAudio = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
-            
             playerAudio?.delegate = self
             
             // no need for prepareToPlay because prepareToPlay is happen automatically when calling play()
             playerAudio?.play()
+            playerAudio?.volume = 0.1
         } catch let error as NSError {
             print("error: \(error.localizedDescription)")
         }
