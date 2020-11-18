@@ -69,10 +69,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         view.insertSubview(animationView, belowSubview: viewPause)
-        
         spinnerImage.isHidden = true
-        
-        
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
         
@@ -174,13 +171,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
         var param: [String: Any] = [:]
-        
-        if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
-            param = ["step_id": WWMHelperClass.step_id, "mantra_id": WWMHelperClass.mantra_id] as [String : Any]
-        }else{
-            param = ["step_id": WWMHelperClass.step_id, "mantra_id": self.settingData.mantraID] as [String : Any]
-        }
-        
+        param = ["step_id": WWMHelperClass.step_id, "mantra_id": self.appPreference.getMyntraId()] as [String : Any]
         //print("param learn timer... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_COMBINEDMANTRA, context: "WWMLearnTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
@@ -308,7 +299,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
                 self.pauseAnimation()
                 self.timer1.invalidate()
                 
-                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "0", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "learn", guided_type: "", audio_id: "0", step_id: "\(WWMHelperClass.step_id)", mantra_id: "\(WWMHelperClass.mantra_id)")
+                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "0", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "learn", guided_type: "", audio_id: "0", step_id: "\(WWMHelperClass.step_id)", mantra_id: self.appPreference.getMyntraId())
             }
         }else{
             self.moveToFeedBack()
@@ -579,7 +570,7 @@ class WWMLearnTimerVC: WWMBaseViewController {
         //offline for meditation to insert into database
         offlineCompleteData["type"] = "learn"
         offlineCompleteData["step_id"] = WWMHelperClass.step_id
-        offlineCompleteData["mantra_id"] = WWMHelperClass.mantra_id
+        offlineCompleteData["mantra_id"] = self.appPreference.getMyntraId()
         offlineCompleteData["category_id"] = "0"
         offlineCompleteData["emotion_id"] = "0"
         offlineCompleteData["audio_id"] = "0"

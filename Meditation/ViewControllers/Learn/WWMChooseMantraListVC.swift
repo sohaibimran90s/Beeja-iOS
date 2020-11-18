@@ -159,8 +159,10 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
     
     @objc func btnProceedClicked(_ sender: UIButton){
         
+        self.settingData.mantraID = self.mantraData[sender.tag].id
+        self.appPreference.setMyntraId(value: "\(self.mantraData[sender.tag].id)")
+        
         if WWMHelperClass.value == "mantra"{
-            self.settingData.mantraID = self.mantraData[sender.tag].id
             WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LEARN_MANTRA", itemName: self.mantraData[sender.tag].title.uppercased().replacingOccurrences(of: " ", with: "_"))
             let arrVc = self.navigationController?.viewControllers
             for vc in arrVc! {
@@ -179,8 +181,6 @@ extension WWMChooseMantraListVC: UITableViewDelegate, UITableViewDataSource{
             }
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnLetsMeditateVC") as! WWMLearnLetsMeditateVC
-            
-            WWMHelperClass.mantra_id = self.mantraData[sender.tag].id
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

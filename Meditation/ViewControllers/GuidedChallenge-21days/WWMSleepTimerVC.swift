@@ -257,7 +257,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
             //offline for meditation to insert into database
             offlineCompleteData["type"] = "guided"
             offlineCompleteData["step_id"] = ""
-            offlineCompleteData["mantra_id"] = ""
+            offlineCompleteData["mantra_id"] = "\(self.appPreference.getMyntraId())"
             offlineCompleteData["category_id"] = "\(self.cat_id)"
             offlineCompleteData["emotion_id"] = "\(self.emotion_Id)"
             offlineCompleteData["audio_id"] = "\(audioData.audio_Id)"
@@ -578,7 +578,7 @@ class WWMSleepTimerVC: WWMBaseViewController {
                 //self.pauseAnimation()
                 //self.timer1.invalidate()
                 
-                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "")
+                self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "", emotion_id: "\(self.emotion_Id)", tell_us_why: "", prep_time: "", meditation_time: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", watched_duration: "\(Int(round((self.player?.currentTime().seconds ?? 0))))", level_id: "0", complete_percentage: "\(Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0)", rating: "\(self.rating)", meditation_type: "post", category_id: "\(self.cat_id)", meditation_id: "0", date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "guided", guided_type: self.appPreference.getGuideType(), audio_id: "\(audioData.audio_Id)", step_id: "", mantra_id: "\(self.appPreference.getMyntraId())")
                 
             }//ismovefinish
         }else{

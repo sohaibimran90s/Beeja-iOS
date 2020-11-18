@@ -1414,6 +1414,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
                 self.appPreference.setGetProfile(value: true)
                 self.appPreffrence.setCheckEnterSignupLogin(value: false)
                 self.appPreffrence.setEmail(value: "")
+                self.appPreffrence.setMyntraId(value: "1")
                 KUSERDEFAULTS.set("0", forKey: "restore")
                 self.appPreffrence.setPracticalChallenge(value: false)
                 self.appPreffrence.setSpiritualChallenge(value: false)

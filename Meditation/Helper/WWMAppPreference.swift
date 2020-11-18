@@ -265,6 +265,16 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    //set myntra id
+    func setMyntraId(value: String) {
+        defaults.set(value, forKey: "myntraId")
+    }
+    
+    //get myntra id
+    func getMyntraId() -> String {
+        return UserDefaults.standard.string(forKey: "myntraId") ?? "1"
+    }
+    
     //Invitation_url
     func getInvitationURL() -> String {
         return UserDefaults.standard.string(forKey: "invitationURL") ?? ""
