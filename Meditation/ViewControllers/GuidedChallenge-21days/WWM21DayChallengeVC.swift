@@ -477,6 +477,7 @@ extension WWM21DayChallengeVC: UITableViewDelegate, UITableViewDataSource{
         cell.daysLbl.text = "DAY \(data.step_id)"
         cell.titleLbl.text = data.emotion_Name
         cell.authorLbl.text = "Guided Meditation By \(data.author_name)"
+        cell.imgIcon.sd_setImage(with: URL(string: data.emotion_Image), placeholderImage: UIImage(named: "girlImg"))
         
         if data.completed{
             cell.imgTick.isHidden = false
