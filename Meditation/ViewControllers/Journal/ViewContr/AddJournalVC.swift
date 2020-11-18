@@ -321,8 +321,11 @@ class AddJournalVC: WWMBaseViewController {
         }
         else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_TEXT_ENTRY")
-            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
+//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
+//                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
+                                                  textDescrip: textJournal.textDescription ?? "",
+                                                  type: Constant.JournalType.TEXT)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -408,9 +411,12 @@ class AddJournalVC: WWMBaseViewController {
         }
         else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_IMAGE_ENTRY")
-            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
-                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj,
-                                                          type: Constant.JournalType.IMAGE)
+//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
+//                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj,
+//                                                          type: Constant.JournalType.IMAGE)
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
+                                                      title: "", textDescrip: imageJournal.title ?? "",
+                                                      type: Constant.JournalType.IMAGE)
         }
         
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -482,10 +488,13 @@ class AddJournalVC: WWMBaseViewController {
                                                   textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
         }else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
-            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
-                                                          title: "",
-                                                          textDescrip: audioJournal.caption ?? "",
-                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE)
+//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
+//                                                          title: "",
+//                                                          textDescrip: audioJournal.caption ?? "",
+//                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE)
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
+                                                  title: "",
+                                                  textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
         }
 
         WWMHelperClass.showLoaderAnimate(on: self.view)
@@ -555,10 +564,14 @@ class AddJournalVC: WWMBaseViewController {
         }
         else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
-            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
-                                                          title: audioToTextJournal.caption ?? "",
-                                                          textDescrip: audioToTextJournal.transcribingText ?? "",
-                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE_TO_TEXT)
+//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
+//                                                          title: audioToTextJournal.caption ?? "",
+//                                                          textDescrip: audioToTextJournal.transcribingText ?? "",
+//                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE_TO_TEXT)
+            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
+                                                  title: audioToTextJournal.caption ?? "",
+                                                  textDescrip: audioToTextJournal.transcribingText ?? "",
+                                                  type: Constant.JournalType.VOICE_TO_TEXT)
         }
 
         WWMHelperClass.showLoaderAnimate(on: self.view)
