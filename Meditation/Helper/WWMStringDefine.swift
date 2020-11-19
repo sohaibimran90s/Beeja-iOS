@@ -339,8 +339,20 @@ let kNO = "NO"
 /**/
 
 
+enum API_ENDPOINTS {
+    case LIVE
+    case BETA
+    case STAGEING
+    case UAT
+}
+
+
 // If kBETA_ENABLED is true its mean we are using beta_url else using staging_url
 let kBETA_ENABLED = true
+
+// we will use buildType for poinintg to backend API endpoints
+let kBUILD_TYPE = API_ENDPOINTS.UAT
+
 
 /*dynamic webView URLs
  let URL_PrivacyPolicy   =  URL_BASE_WEBVIEW + "/privacy-policy?mobile_view=1"

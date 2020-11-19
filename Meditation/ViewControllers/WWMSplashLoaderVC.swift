@@ -54,25 +54,40 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
             if success {
                 
                 //set url from backend using constant*
-                if kBETA_ENABLED{
+//                if kBETA_ENABLED{
+//                    if let baseUrl = result["base_url"] as? String{
+//                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+//                    }else {
+//                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+//                    }
+//                }else{
+//                    if let baseUrl = result["staging_url"] as? String{
+//                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+//                    }else {
+//                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+//                    }
+//                }//*end
+                
+                var baseUrlKey = "base_url"
+                switch kBUILD_TYPE {
+                    case .BETA, .LIVE:
+                            print(".BETA OR .LIVE")
+                            baseUrlKey = "base_url"
                     
-                    //print("I'm running in a non-DEBUG mode")
+                    case .STAGEING:
+                            print(".STAGEING")
+                            baseUrlKey = "staging_url"
                     
-                    if let baseUrl = result["base_url"] as? String{
-                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                    }else {
-                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
-                    }
-                }else{
-                    
-                    //print("I'm running in DEBUG mode")
-                    
-                    if let baseUrl = result["staging_url"] as? String{
-                        KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
-                    }else {
-                        KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
-                    }
-                }//*end
+                    case .UAT:
+                            print(".UAT")
+                            baseUrlKey = "testing_url"
+                }
+                
+                if let baseUrl = result[baseUrlKey] as? String{
+                    KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
+                }else {
+                    KUSERDEFAULTS.set("https://beta.beejameditation.com", forKey: KBASEURL)
+                }
                 
                 if let title = result["title"] as? String{
                     KUSERDEFAULTS.set(title, forKey: KFORCETOUPDATETITLE)
