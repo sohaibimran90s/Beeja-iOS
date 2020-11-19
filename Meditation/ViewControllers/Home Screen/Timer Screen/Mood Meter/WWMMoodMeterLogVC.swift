@@ -236,7 +236,7 @@ class WWMMoodMeterLogVC: WWMBaseViewController {
         param = [
             "type": self.appPreffrence.getType(),
             "step_id": WWMHelperClass.step_id,
-            "mantra_id": WWMHelperClass.mantra_id,
+            "mantra_id": self.appPreference.getMyntraId(),
             "category_id" : self.category_Id,
             "emotion_id" : self.emotion_Id,
             "audio_id" : self.audio_Id,

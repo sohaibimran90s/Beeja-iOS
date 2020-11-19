@@ -644,7 +644,7 @@ class AddJournalVC: WWMBaseViewController {
         param = [
             "type": self.appPreference.getType(),
             "step_id": WWMHelperClass.step_id,
-            "mantra_id": WWMHelperClass.mantra_id,
+            "mantra_id": self.appPreference.getMyntraId(),
             "category_id" : mediCompleteObj.category_Id,
             "emotion_id" : mediCompleteObj.emotion_Id,
             "audio_id" : mediCompleteObj.audio_Id,

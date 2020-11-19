@@ -746,7 +746,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 "group": group
                 ] as [String : Any]
             
-            //print("param delegte ... \(param)")
+            print("param delegte ... \(param)")
             
             WWMWebServices.requestAPIWithBody(param:param, urlString: URL_SETTINGS, context: "sync with appdelegate", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             }
