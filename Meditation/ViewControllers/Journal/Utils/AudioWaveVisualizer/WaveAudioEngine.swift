@@ -17,7 +17,7 @@ class WaveAudioEngine: NSObject {
     private var recordingTs: Double = 0
     private var silenceTs: Double = 0
     
-    let settings = [AVFormatIDKey: kAudioFormatLinearPCM, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: true, AVSampleRateKey: AVAudioSession.sharedInstance().sampleRate, AVNumberOfChannelsKey: 1] as [String : Any]
+    let settings = [AVFormatIDKey: kAudioFormatLinearPCM, AVLinearPCMBitDepthKey: 16, AVLinearPCMIsFloatKey: true, AVSampleRateKey: Utilities.getAudioSessionSampleRate(), AVNumberOfChannelsKey: 1] as [String : Any]
     
     func startAudioEngine(audioView: AudioVisualizerView) {
         let inputNode = self.audioEngine.inputNode
