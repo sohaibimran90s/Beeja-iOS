@@ -129,8 +129,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
 //      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
-        Crashlytics.crashlytics().setUserID("userId Ehsan Test II")
-        fatalError()
+//        Crashlytics.crashlytics().setUserID("userId Ehsan Test II")
+//        fatalError()
         
 //        Crashlytics.sharedInstance().crash()
 //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
