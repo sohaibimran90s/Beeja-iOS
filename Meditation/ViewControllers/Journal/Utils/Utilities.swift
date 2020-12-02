@@ -37,4 +37,24 @@ class Utilities: NSObject {
         vc.modalPresentationStyle = .fullScreen
         container.present(vc, animated: true, completion: nil)
     }
+    
+    class func getAudioSessionSampleRate () -> Double{
+        var sampleRate:Double = 44100
+        let deviceModelName = UIDevice.deviceModelName
+        switch deviceModelName {
+            case "iPhone 6", "iPhone 6 Plus", "iPhone 6s", "iPhone 6s Plus":
+                    sampleRate =  44100
+            case let str where str.contains("iPhone SE") :
+                    sampleRate =  44100
+            case "iPhone 7", "iPhone 7 Plus":
+                    sampleRate = 44100
+            case "iPhone 8", "iPhone 8 Plus":
+                    sampleRate =  44100
+            case "iPhone X", "iPhone XS", "iPhone XS Max", "iPhone XR":
+                    sampleRate =  44100
+            default :
+                    sampleRate =  AVAudioSession.sharedInstance().sampleRate
+        }
+        return sampleRate
+    }
 }
