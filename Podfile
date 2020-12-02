@@ -7,11 +7,7 @@ target 'Meditation' do
 
   # Pods for Meditation
 
-  #pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
-  pod 'Firebase/Auth'
-  #pod 'Firebase/Crash'
-  pod 'GoogleSignIn'
+  pod 'GoogleSignIn', '~> 4.4.0'
   pod 'FBSDKLoginKit'
   pod 'FBSDKCoreKit'
   pod 'lottie-ios', '~> 3.0.4'
@@ -32,12 +28,17 @@ target 'Meditation' do
   pod 'UICircularProgressRing', '~> 6.1.0'
   pod 'EFCountingLabel', '~> 5.0.0'
   pod 'Alamofire', '~> 4.9.0'
-  pod 'Firebase/Crashlytics'
   pod 'CocoaLumberjack/Swift'
 
   # Recommended: Add the Firebase pod for Google Analytics
+  pod 'Firebase/CoreOnly'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Auth'
+  #pod 'Firebase/Crash'
   pod 'Firebase/Analytics'
-  
+  pod 'Firebase/Installations'
+  pod 'Firebase/Crashlytics'#, '~> 6.3.1'
+
   # CI CD with AppCenter
   pod 'AppCenter'
   pod 'AppCenter/Distribute'
