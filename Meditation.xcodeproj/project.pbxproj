@@ -188,7 +188,6 @@
 		4F5CED4424DE71BE0070CA93 /* green_check.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F5CED4124DE71BC0070CA93 /* green_check.png */; };
 		4F5CED4524DE71BE0070CA93 /* green_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F5CED4224DE71BD0070CA93 /* green_check@2x.png */; };
 		4F5CED4624DE71BE0070CA93 /* green_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F5CED4324DE71BD0070CA93 /* green_check@3x.png */; };
-		57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */; };
 		61083F4022D32E23001B770D /* WWMMilestoneCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F3F22D32E23001B770D /* WWMMilestoneCell1.swift */; };
 		61083F4222D32E34001B770D /* WWMMilestoneCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4122D32E34001B770D /* WWMMilestoneCell2.swift */; };
 		61083F4422D354E4001B770D /* WWMMilestoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61083F4322D354E4001B770D /* WWMMilestoneData.swift */; };
@@ -602,6 +601,7 @@
 		CE54B0DC24785E7200BC9F01 /* selectedChkMark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE54B0D924785E7200BC9F01 /* selectedChkMark.png */; };
 		CE54B0DD24785E7200BC9F01 /* selectedChkMark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE54B0DA24785E7200BC9F01 /* selectedChkMark@2x.png */; };
 		CE54B0DE24785E7200BC9F01 /* selectedChkMark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE54B0DB24785E7200BC9F01 /* selectedChkMark@3x.png */; };
+		D289E2375FB6BBB02FA82F26 /* Pods_Meditation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2AE2DF5922895BDDDDD835 /* Pods_Meditation.framework */; };
 		E01232182361AEE200BA2A7A /* WWMTimerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01232172361AEE200BA2A7A /* WWMTimerHomeVC.swift */; };
 		E07831F1235E3BCA00B352ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E07831D6235E3BCA00B352ED /* Localizable.strings */; };
 		E07831F2235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07831D8235E3BCA00B352ED /* ESTabBarItemMoreContentView.swift */; };
@@ -670,7 +670,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.debug.xcconfig"; sourceTree = "<group>"; };
 		2E25CDC2222674FD002BDE15 /* WWMTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTabBarItem.swift; sourceTree = "<group>"; };
 		2E25CDC422267DAF002BDE15 /* WWMJournalProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMJournalProgressData.swift; sourceTree = "<group>"; };
 		2E25CDC622269BB9002BDE15 /* WWMAddJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMAddJournalView.swift; sourceTree = "<group>"; };
@@ -861,6 +860,7 @@
 		2EEF9ADD221AEC900016A77C /* DBTimerData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBTimerData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADE221AEC900016A77C /* DBMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2EEF9ADF221AEC900016A77C /* DBJournalList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBJournalList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4B2AE2DF5922895BDDDDD835 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5CED4124DE71BC0070CA93 /* green_check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_check.png; sourceTree = "<group>"; };
 		4F5CED4224DE71BD0070CA93 /* green_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green_check@2x.png"; sourceTree = "<group>"; };
 		4F5CED4324DE71BD0070CA93 /* green_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green_check@3x.png"; sourceTree = "<group>"; };
@@ -1248,9 +1248,9 @@
 		63F8894124C01066001F424A /* PaymentBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PaymentBG.png; sourceTree = "<group>"; };
 		63F8894224C01066001F424A /* PaymentBG@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PaymentBG@3x.png"; sourceTree = "<group>"; };
 		63F8894324C01066001F424A /* PaymentBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PaymentBG@2x.png"; sourceTree = "<group>"; };
+		6CDD9D7EFDBF6FD2132646F4 /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
 		6FE80E8C224E40D5007EA306 /* DBAllMeditationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6FE80E8D224E40D5007EA306 /* DBAllMeditationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBAllMeditationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meditation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE212739247430F300815BD7 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		CE21273A247430F300815BD7 /* challenge@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "challenge@3x.png"; sourceTree = "<group>"; };
 		CE21273B247430F300815BD7 /* challenge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "challenge@2x.png"; sourceTree = "<group>"; };
@@ -1305,7 +1305,7 @@
 		E07831EE235E3BCA00B352ED /* guided.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = guided.json; sourceTree = "<group>"; };
 		E07831EF235E3BCA00B352ED /* graph.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = graph.json; sourceTree = "<group>"; };
 		E07831F0235E3BCA00B352ED /* home.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home.json; sourceTree = "<group>"; };
-		E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.release.xcconfig"; path = "Pods/Target Support Files/Pods-Meditation/Pods-Meditation.release.xcconfig"; sourceTree = "<group>"; };
+		E7D3A20D1058CF7A7C1F872C /* Pods-Meditation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meditation.debug.xcconfig"; path = "Target Support Files/Pods-Meditation/Pods-Meditation.debug.xcconfig"; sourceTree = "<group>"; };
 		E819BDBB24FD27B500179410 /* MeditationDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeditationDebug.entitlements; sourceTree = "<group>"; };
 		E825C0F924498292004A0F16 /* WWMProgressNavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMProgressNavVC.swift; sourceTree = "<group>"; };
 		E825C0FB24498F0A004A0F16 /* WWMyProgressDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMyProgressDashboardViewController.swift; sourceTree = "<group>"; };
@@ -1325,10 +1325,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E9CCCBB225C978B001465AD /* SpotifyMetadata.framework in Frameworks */,
-				57D20D2899D1AFC050B9E9BC /* Pods_Meditation.framework in Frameworks */,
 				2E9CCCBA225C978B001465AD /* SpotifyAuthentication.framework in Frameworks */,
 				2E49661D22182DCC00BC6219 /* StoreKit.framework in Frameworks */,
 				2E9CCCBC225C978B001465AD /* SpotifyAudioPlayback.framework in Frameworks */,
+				D289E2375FB6BBB02FA82F26 /* Pods_Meditation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1457,8 +1457,8 @@
 				2E4B1BB121B5044D002F8A25 /* MeditationTests */,
 				2E4B1BBC21B5044D002F8A25 /* MeditationUITests */,
 				2E4B1B9B21B5044B002F8A25 /* Products */,
-				D200258925E7DF8DEF7C6C8C /* Pods */,
 				694E3E18891251E63B22C887 /* Frameworks */,
+				FECCFE64EC8C7828B9E34A5F /* Pods */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -2678,7 +2678,7 @@
 			children = (
 				61416F5622BBBA1800C9339E /* Charts.framework */,
 				2E49661C22182DCC00BC6219 /* StoreKit.framework */,
-				863FB459141C0647F41A6AD7 /* Pods_Meditation.framework */,
+				4B2AE2DF5922895BDDDDD835 /* Pods_Meditation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2725,15 +2725,6 @@
 				CE212747247430F300815BD7 /* close@3x.png */,
 			);
 			path = BGImage;
-			sourceTree = "<group>";
-		};
-		D200258925E7DF8DEF7C6C8C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */,
-				E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		E07831D4235E3BCA00B352ED /* TabBar */ = {
@@ -2800,6 +2791,15 @@
 			path = Challenge8Weeks;
 			sourceTree = "<group>";
 		};
+		FECCFE64EC8C7828B9E34A5F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7D3A20D1058CF7A7C1F872C /* Pods-Meditation.debug.xcconfig */,
+				6CDD9D7EFDBF6FD2132646F4 /* Pods-Meditation.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2807,14 +2807,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E4B1BC221B5044D002F8A25 /* Build configuration list for PBXNativeTarget "Meditation" */;
 			buildPhases = (
-				03E6E106CF3F05353F77CC6C /* [CP] Check Pods Manifest.lock */,
+				008AD90F28291ED10FB5FEA3 /* [CP] Check Pods Manifest.lock */,
 				2E4B1B9621B5044B002F8A25 /* Sources */,
 				2E4B1B9721B5044B002F8A25 /* Frameworks */,
 				2E4B1B9821B5044B002F8A25 /* Resources */,
 				2E567A0E2248D65F00CAC1DE /* ShellScript */,
-				1FE6B0E5715D10E9CF321A8A /* [CP] Embed Pods Frameworks */,
-				1F7E5053179BCEF04AD2D59F /* [CP] Copy Pods Resources */,
 				E8E6971F2416475F0021F5D8 /* Embed Frameworks */,
+				26992A85954F185ACACD71D4 /* [CP] Embed Pods Frameworks */,
+				7DB65967CDBF6D471812DE07 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2869,7 +2869,7 @@
 			attributes = {
 				CLASSPREFIX = WWM;
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Cedita;
 				TargetAttributes = {
 					2E4B1B9921B5044B002F8A25 = {
@@ -3138,7 +3138,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03E6E106CF3F05353F77CC6C /* [CP] Check Pods Manifest.lock */ = {
+		008AD90F28291ED10FB5FEA3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3160,24 +3160,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1F7E5053179BCEF04AD2D59F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1FE6B0E5715D10E9CF321A8A /* [CP] Embed Pods Frameworks */ = {
+		26992A85954F185ACACD71D4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3205,10 +3188,8 @@
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 				"$(SRCROOT)/GoogleService-Info.plist",
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-				"${PODS_ROOT}/Fabric/run cf8a914070962839333227b1c8251f76a5ae404f\n/path/to/pods/directory/Fabric/upload-symbols",
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"${PODS_ROOT}/FirebaseCrashlytics/run\n/path/to/pods/directory/FirebaseCrashlytics/upload-symbols",
-				"/path/to/pods/directory/FirebaseCrashlytics/upload-symbols\n-gsp/path/to/GoogleService-Info.plist -p ios /path/to/dSYMs",
 			);
 			outputFileListPaths = (
 			);
@@ -3217,6 +3198,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp \"${PROJECT_DIR}/Meditation/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n\nfind dSYM_directory -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/Meditation/GoogleService-Info.plist -p platform \\{\\}\n";
+		};
+		7DB65967CDBF6D471812DE07 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Meditation/Pods-Meditation-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3740,6 +3738,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3804,6 +3803,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3838,7 +3838,7 @@
 		};
 		2E4B1BC321B5044D002F8A25 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CBEB3ECA0BC5E36768EABC4 /* Pods-Meditation.debug.xcconfig */;
+			baseConfigurationReference = E7D3A20D1058CF7A7C1F872C /* Pods-Meditation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3879,7 +3879,7 @@
 		};
 		2E4B1BC421B5044D002F8A25 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7C05DDDFFD77F6AF0DD480A /* Pods-Meditation.release.xcconfig */;
+			baseConfigurationReference = 6CDD9D7EFDBF6FD2132646F4 /* Pods-Meditation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

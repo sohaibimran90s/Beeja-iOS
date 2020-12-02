@@ -119,8 +119,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         self.addShortCuts(application: application)
         NotificationCenter.default.addObserver(self, selector: #selector(addShortCutsRefresh), name: NSNotification.Name(rawValue: "logoutSuccessful"), object: nil)
         
+        Installations.installations().installationID { (id, error) in
+          if let error = error {
+            print("Error fetching id: \(error)")
+            return
+          }
+          guard let id = id else { return }
+          print("Installation ID: \(id)")
+        }
+        
 //      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
-//        Crashlytics.crashlytics().setUserID("userId Ehsan Test")
+//        Crashlytics.crashlytics().setUserID("userId Ehsan Test II")
 //        fatalError()
         
 //        Crashlytics.sharedInstance().crash()
@@ -134,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         
         // EH - AppCenter
-        MSAppCenter.start(appCenterSecretKey, withServices: [MSDistribute.self])
+       // MSAppCenter.start(appCenterSecretKey, withServices: [MSDistribute.self])
         
         return true
     }
@@ -1456,13 +1465,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
 extension AppDelegate : MessagingDelegate {
     // [START refresh_token]
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    //func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
         
-        let dataDict:[String: String] = ["token": fcmToken]
+        let dataDict:[String: String] = ["token": fcmToken ?? ""]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         
-        appPreference.setDeviceToken(value: fcmToken)
+        appPreference.setDeviceToken(value: fcmToken ?? "")
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
@@ -1470,9 +1480,9 @@ extension AppDelegate : MessagingDelegate {
     // [START ios_10_data_message]
     // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
     // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print("Received data message: \(remoteMessage.appData)")
-    }
+//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+//        print("Received data message: \(remoteMessage.appData)")
+//    }
     // [END ios_10_data_message]
     
     func animatedTabBarController()-> UITabBarController? {
