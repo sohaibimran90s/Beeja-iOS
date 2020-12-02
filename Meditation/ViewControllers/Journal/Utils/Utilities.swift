@@ -44,7 +44,7 @@ class Utilities: NSObject {
         switch deviceModelName {
             case "iPhone 6", "iPhone 6 Plus", "iPhone 6s", "iPhone 6s Plus":
                     sampleRate =  44100
-            case "iPhone SE":
+            case let str where str.contains("iPhone SE") :
                     sampleRate =  44100
             case "iPhone 7", "iPhone 7 Plus":
                     sampleRate = 44100
