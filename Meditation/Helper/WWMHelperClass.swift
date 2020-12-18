@@ -244,13 +244,35 @@ class WWMHelperClass {
         let currentDate = self.getExpireDate(expiryDate: currentDateString, formatter: dateFormatter)
         let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
         
-        if expireDate > currentDate{
+        if expireDate >= currentDate{
             let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate ).day ?? 0
             //print("day..... \(day) currentDate++ \(currentDate) expireDate... \(expireDate)")
             return day
         }else{
             return -1
         }
+    }
+    
+    class func daysLeftByMin(expiryDate: String) -> Int{
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        if let _ = dateFormatter.date(from: expiryDate){
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        }else{
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        }
+        
+        let currentDateString = dateFormatter.string(from: Date())
+        let currentDate = self.getExpireDate(expiryDate: currentDateString, formatter: dateFormatter)
+        let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
+        
+        let day =  Calendar.current.dateComponents([.minute], from: currentDate, to: expireDate ).minute ?? 0
+        return day
     }
     
     class func dateComparison(expiryDate: String) -> Int{
