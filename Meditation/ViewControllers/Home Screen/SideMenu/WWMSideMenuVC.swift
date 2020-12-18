@@ -71,8 +71,8 @@ class WWMSideMenuVC: WWMBaseViewController {
                      self.lblDaysLeft.text = "\(daysLeft) days left"
                  }
              }else{
-                self.freeView.isHidden = true
-                self.premiumView.isHidden = true
+                self.lblPremium.text = "PREMIUM MEMBER"
+                self.lblDaysLeft.text = ""
              }
              //print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
          }else{
