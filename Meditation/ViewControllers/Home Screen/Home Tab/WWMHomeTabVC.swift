@@ -12,7 +12,7 @@ import AVKit
 import FirebaseCrashlytics
 
 class WWMHomeTabVC: WWMBaseViewController {
-
+    
     @IBOutlet weak var lblMedHistoryText: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblStartedText: UILabel!
@@ -57,7 +57,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     let dateFormatter = DateFormatter()
     var currentDateString: String = ""
     var currentDate: Date!
-
+    
     var shareTheLovePopUp = WWMShareLovePopUp()
     var alertJournalPopup = WWMJouranlPopUp()
     var data: [WWMMeditationHistoryListData] = []
@@ -91,7 +91,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
         
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
         
         self.currentDateString = dateFormatter.string(from: Date())
@@ -135,10 +135,10 @@ class WWMHomeTabVC: WWMBaseViewController {
         //print("timercount... \(timerCount)")
         
         self.fetchMeditationHistDataFromDB()
-
+        
         self.setNavigationBar(isShow: false, title: "")
         scrollView.setContentOffset(.zero, animated: true)
-
+        
         //print("self.appPreffrence.getSessionAvailableData()... \(self.appPreffrence.getSessionAvailableData())")
         
         let fullname = self.appPreffrence.getUserName()
@@ -282,15 +282,15 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     func animatedStartedText(){
-          UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-              self.lblStartedText.alpha = 1
-              self.lblStartedText.center.y = self.lblStartedText.center.y - 16
-          }, completion: { _ in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+            self.lblStartedText.alpha = 1
+            self.lblStartedText.center.y = self.lblStartedText.center.y - 16
+        }, completion: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 self.animatedIntroText()
             })
-          })
-      }
+        })
+    }
     
     func animatedIntroText(){
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
@@ -300,12 +300,12 @@ class WWMHomeTabVC: WWMBaseViewController {
             self.animatedImgPlayIcon()
         })
     }
-
+    
     func animatedImgPlayIcon(){
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
             self.imgPlayIcon.alpha = 1
             self.imgPlayIcon.center.y = self.imgPlayIcon.center.y - 24
-            }, completion: {_ in
+        }, completion: {_ in
         })
     }
     
@@ -345,7 +345,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     }
     
     @objc func btnInviteFriendsAction(_ sender: Any){
-
+        
         self.shareTheLovePopUp.removeFromSuperview()
         self.shareData()
     }
@@ -420,9 +420,9 @@ class WWMHomeTabVC: WWMBaseViewController {
         UIApplication.shared.keyWindow?.rootViewController = vc
         
     }
-
+    
     @IBAction func btnGuidedClicked(_ sender: UIButton) {
-
+        
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "GUIDED", itemName: "PRACTICAL")
         
         guided_type = "practical"
@@ -442,7 +442,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
         UIApplication.shared.keyWindow?.rootViewController = vc
     }
-
+    
     @IBAction func btnLearnClicked(_ sender: UIButton) {
         // Analytics
         WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "LEARN", itemName: "")
@@ -465,11 +465,11 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     //MARK:- API Calling
     
-     func fetchMeditationHistDataFromDB() {
+    func fetchMeditationHistDataFromDB() {
         
         self.data.removeAll()
-         let meditationHistDB = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
-         if meditationHistDB.count > 0 {
+        let meditationHistDB = WWMHelperClass.fetchDB(dbName: "DBMeditationHistory") as! [DBMeditationHistory]
+        if meditationHistDB.count > 0 {
             var data = WWMMeditationHistoryListData()
             for dict in meditationHistDB {
                 if let jsonResult = self.convertToDictionary(text: dict.data ?? "") {
@@ -481,16 +481,16 @@ class WWMHomeTabVC: WWMBaseViewController {
             }
             
             if self.data.count > 0{
-                    self.medHisViewHeightConstraint.constant = 416
-                    self.lblMedHistoryText.textColor = UIColor.white
-                    self.collectionView.reloadData()
-                }else{
-                    self.medHisViewHeightConstraint.constant = 0
-                    self.lblMedHistoryText.textColor = UIColor.clear
-                }
+                self.medHisViewHeightConstraint.constant = 416
+                self.lblMedHistoryText.textColor = UIColor.white
+                self.collectionView.reloadData()
+            }else{
+                self.medHisViewHeightConstraint.constant = 0
+                self.lblMedHistoryText.textColor = UIColor.clear
+            }
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationMeditationHistory"), object: nil)
-         }else{
+        }else{
             //print("no meditation list data...")
             self.medHisViewHeightConstraint.constant = 0
             self.lblMedHistoryText.textColor = UIColor.clear
@@ -617,71 +617,71 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "WWMHomeMedHistoryCVC", for: indexPath) as! WWMHomeMedHistoryCVC
         
-            cell.layer.cornerRadius = 8
+        cell.layer.cornerRadius = 8
         
-            cell.lblSubTitle.numberOfLines = 2
-            cell.lblSubTitle.sizeToFit()
+        cell.lblSubTitle.numberOfLines = 2
+        cell.lblSubTitle.sizeToFit()
         
-            if self.data[indexPath.row].type == "timer"{
-                cell.lblTitle.text = kTIMER
-                cell.lblSubTitle.text = kMEDITATIONSESSINO
-                
+        if self.data[indexPath.row].type == "timer"{
+            cell.lblTitle.text = kTIMER
+            cell.lblSubTitle.text = kMEDITATIONSESSINO
+            
+            cell.heartLbl.isHidden = true
+            cell.heartImg.isHidden = true
+            cell.lblLTMStep.isHidden = true
+            
+            cell.imgTitle.image = UIImage(named: self.data[indexPath.row].timerImage)
+            
+        }else if self.data[indexPath.row].type == "learn"{
+            cell.lblTitle.text = kLEARN
+            cell.lblSubTitle.text = "\(self.data[indexPath.row].title)"
+            
+            cell.heartLbl.isHidden = true
+            cell.heartImg.isHidden = true
+            cell.lblLTMStep.isHidden = false
+            
+            cell.imgTitle.image = UIImage(named: "LTMBg")
+            cell.lblLTMStep.text = "\(self.data[indexPath.row].level_id)"
+        }else{
+            cell.lblTitle.text = kGUIDED
+            cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].title)"
+            cell.lblLTMStep.isHidden = true
+            
+            cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
+            
+            if self.data[indexPath.row].like < 1{
                 cell.heartLbl.isHidden = true
                 cell.heartImg.isHidden = true
-                cell.lblLTMStep.isHidden = true
-                
-                cell.imgTitle.image = UIImage(named: self.data[indexPath.row].timerImage)
-        
-            }else if self.data[indexPath.row].type == "learn"{
-                cell.lblTitle.text = kLEARN
-                cell.lblSubTitle.text = "\(self.data[indexPath.row].title)"
-                
-                cell.heartLbl.isHidden = true
-                cell.heartImg.isHidden = true
-                cell.lblLTMStep.isHidden = false
-                
-                cell.imgTitle.image = UIImage(named: "LTMBg")
-                cell.lblLTMStep.text = "\(self.data[indexPath.row].level_id)"
             }else{
-                cell.lblTitle.text = kGUIDED
-                cell.lblSubTitle.text = "\(KMEDITATIONFOR) \(self.data[indexPath.row].title)"
-                cell.lblLTMStep.isHidden = true
-                
-                cell.imgTitle.sd_setImage(with: URL(string: self.data[indexPath.row].image), placeholderImage: UIImage(named: "rectangle-1"))
-                
-                if self.data[indexPath.row].like < 1{
-                    cell.heartLbl.isHidden = true
-                    cell.heartImg.isHidden = true
-                }else{
-                    cell.heartLbl.isHidden = false
-                    cell.heartImg.isHidden = false
-                }
+                cell.heartLbl.isHidden = false
+                cell.heartImg.isHidden = false
             }
-
-            //print("meditation history title... \(self.data[indexPath.row].title)")
-            
-            cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+        }
         
-            if self.data[indexPath.row].duration < 60 && self.data[indexPath.row].duration != 0{
-                cell.lblMin.text = "\(self.data[indexPath.row].duration) sec"
-            }else{
-                //print("duration..... \(self.data[indexPath.row].duration)")
-                cell.lblMin.text = "\(Int(round(Double(self.data[indexPath.row].duration)/60.0))) min"
-            }
-            
+        //print("meditation history title... \(self.data[indexPath.row].title)")
         
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-
-            let date_completed = self.data[indexPath.row].date
-            if date_completed != ""{
+        cell.heartLbl.text = "\(self.data[indexPath.row].like)"
+        
+        if self.data[indexPath.row].duration < 60 && self.data[indexPath.row].duration != 0{
+            cell.lblMin.text = "\(self.data[indexPath.row].duration) sec"
+        }else{
+            //print("duration..... \(self.data[indexPath.row].duration)")
+            cell.lblMin.text = "\(Int(round(Double(self.data[indexPath.row].duration)/60.0))) min"
+        }
+        
+        let date_completed = self.data[indexPath.row].date
+        if date_completed != ""{
             let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                
+            
             //print("dateCompare.... \(dateCompare)")
-            if dateCompare.0 == 1{
-                //equal
+            if dateCompare.0 > 0{
+                let daysText = "\(dateCompare.0) d ago".replacingOccurrences(of:
+                                                                                "-", with: "")
+                cell.lblHr.text = daysText
+                
+            }else{
                 let sec: Int = Int("\(dateCompare.2)".replacingOccurrences(of:
-                    "-", with: "")) ?? 0
-                //print("dateCompare.2... \(sec)")
+                                                                            "-", with: "")) ?? 0
                 if sec < 60{
                     cell.lblHr.text = KJUSTNOW
                 }else if sec < 3600{
@@ -689,12 +689,8 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }else{
                     cell.lblHr.text = "\(sec/3600) h ago"
                 }
-            }else{
-                let daysText = "\(dateCompare.1) d ago".replacingOccurrences(of:
-                    "-", with: "")
-                cell.lblHr.text = daysText
-                }
             }
+        }
         
         return cell
     }
