@@ -1978,7 +1978,7 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
                                     
                                     if serverDate > expireDate{
                                         //print("product_id... \(self.product_id) repurchased")
-                                        
+                                        self.appPreffrence.setExpiryDate(value: true)
                                         Logger.shared.generateLogs(type: "API: receiptValidation", user_id: self.appPreffrence.getUserID(), filePath: #file, line: #line, column: #column, function: #function, logText: "apple server date greater than backend server date")
                                         
                                         self.getSubscriptionPlanId()

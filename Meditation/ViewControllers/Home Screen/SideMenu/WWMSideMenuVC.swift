@@ -62,11 +62,17 @@ class WWMSideMenuVC: WWMBaseViewController {
              let daysLeft = WWMHelperClass.daysLeft(expiryDate: self.appPreffrence.getExpireDateBackend())
              if daysLeft != -1{
                  self.lblPremium.text = "PREMIUM MEMBER | \(self.appPreffrence.getSubscriptionPlan().uppercased())"
-                 if daysLeft > 30{
+                if daysLeft == 0{
+                    let daysLeft = WWMHelperClass.daysLeftByMin(expiryDate: self.appPreffrence.getExpireDateBackend())
+                    self.lblDaysLeft.text = "\(daysLeft) min left"
+                }else if daysLeft > 30{
                      self.lblDaysLeft.text = ""
                  }else{
                      self.lblDaysLeft.text = "\(daysLeft) days left"
                  }
+             }else{
+                self.lblPremium.text = "PREMIUM MEMBER"
+                self.lblDaysLeft.text = ""
              }
              //print("self.appPreffrence.getExpireDateBackend()... \(self.appPreffrence.getExpireDateBackend())")
          }else{
