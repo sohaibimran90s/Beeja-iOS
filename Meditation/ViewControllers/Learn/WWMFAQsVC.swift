@@ -30,7 +30,7 @@ class WWMFAQsVC: WWMBaseViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnDiscountVC") as! WWMLearnDiscountVC
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            //self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.isNavigationBarHidden = false
             
             if let tabController = self.tabBarController as? WWMTabBarVC {
                 tabController.selectedIndex = 3
