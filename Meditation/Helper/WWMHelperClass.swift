@@ -379,6 +379,9 @@ class WWMHelperClass {
     }
     
     class func deleteRowfromDb(dbName: String, id: String, type: String) {
+        if id == "" && dbName == "" && type == ""{
+            return
+        }
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: dbName)
         fetchRequest.predicate = NSPredicate(format: "\(type) = %@", id)
         
