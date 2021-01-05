@@ -671,7 +671,7 @@ extension WWMHomeTabVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         
         let date_completed = self.data[indexPath.row].date
         if date_completed != ""{
-            let dateCompare = WWMHelperClass.dateComparison2(expiryDate: date_completed)
+            let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
             
             //print("dateCompare.... \(dateCompare)")
             if dateCompare.0 > 0{

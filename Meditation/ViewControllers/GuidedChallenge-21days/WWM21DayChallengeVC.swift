@@ -710,7 +710,7 @@ extension WWM21DayChallengeVC: UICollectionViewDelegate, UICollectionViewDataSou
                     let date_completed = self.arrGuidedList[0].cat_EmotionList[i].completed_date
                     if date_completed != ""{
                         let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                        if dateCompare.0 == 1{
+                        if dateCompare.0 == 0{
                             flag = 1
                             break
                         }
