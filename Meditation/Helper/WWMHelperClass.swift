@@ -350,6 +350,31 @@ class WWMHelperClass {
         return (day, min, second)
     }
     
+    class func dateComparison2(expiryDate: String) -> (Int, Int, Int){
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: .iso8601)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        if let _ = dateFormatter.date(from: expiryDate){
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        }else{
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        }
+        
+        let currentDateString = dateFormatter.string(from: Date())
+        let currentDate = dateFormatter.date(from: currentDateString)
+        let expireDate = self.getExpireDate(expiryDate: expiryDate, formatter: dateFormatter)
+        
+        let day =  Calendar.current.dateComponents([.day], from: currentDate!, to: expireDate ).day ?? 0
+        let min =  Calendar.current.dateComponents([.minute], from: currentDate!, to: expireDate ).minute ?? 0
+        let second =  Calendar.current.dateComponents([.second], from: currentDate!, to: expireDate ).second ?? 0
+        print("expireDate... \(expireDate) currentDate... \(String(describing: currentDate)) min... \(min) second... \(second) day... \(day)")
+        
+        return (day, min, second)
+    }
+    
     //MARK:- Database Methods
     
     class func fetchDB(dbName:String) -> [Any] {
