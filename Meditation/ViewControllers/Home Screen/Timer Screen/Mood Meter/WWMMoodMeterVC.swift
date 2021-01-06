@@ -360,9 +360,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func completeMeditationAPI() {
         
-        let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
-        if nintyFivePercentDB.count > 0{
-            WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
+        DispatchQueue.main.async {
+            let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
+            if nintyFivePercentDB.count > 0{
+                WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: "\(nintyFivePercentDB.count - 1)", type: "id")
+            }
         }
         
         var param: [String: Any] = [:]

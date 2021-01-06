@@ -98,15 +98,16 @@ class ChartApi{
     
     let session = URLSession.shared
     let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-        print("response.... \(response) data.... \(data)")
+        //print("response.... \(response) data.... \(data)")
+        var defaultData = 0
        
         do {
-            let json = try JSONSerialization.jsonObject(with: data!) as! Dictionary<String, AnyObject>
+            _ = try JSONSerialization.jsonObject(with: data ?? Data(bytes: &defaultData, count: 0)) as? Dictionary<String, AnyObject>
             //print("json++++++.. \(json)")
             if let data = data{
                 
                 let response = try! JSONDecoder().decode(Response<MoodResponse>.self, from: data)
-                print("response.result!.graph_score... \(response.result!.graph_score)")
+                //print("response.result!.graph_score... \(response.result!.graph_score)")
                 
                 var model1: [MoodData] = []
                 model1 = response.result!.graph_score
