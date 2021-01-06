@@ -324,8 +324,45 @@ class WWMHelperClass {
         return expireDate
     }
 // BASS-801 ----- Ends
-    
     class func dateComparison1(expiryDate: String) -> (Int, Int, Int){
+            
+            var date_completed: String = ""
+            if expiryDate != ""{
+               let date1 = expiryDate.components(separatedBy: " ")
+                date_completed = date1[0]
+            }
+                    
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale.current
+            dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            let currentDateString = dateFormatter.string(from: Date())
+            var currentDate = dateFormatter.date(from: currentDateString)!
+            let expireDate = dateFormatter.date(from: date_completed) ?? currentDate
+            let day =  Calendar.current.dateComponents([.day], from: currentDate, to: expireDate).day ?? 0
+            
+            if currentDate == expireDate{
+                if let _ = dateFormatter.date(from: expiryDate){
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                }else{
+                    dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                }
+                
+                dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+                currentDate = dateFormatter.date(from: dateFormatter.string(from: Date()))!
+                let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate
+                
+                let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
+                let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
+                //print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min) date_completed... \(date_completed)")
+                return (1, day, second)
+            }else{
+                return (0, day, 0)
+            }
+        }
+    
+    class func dateComparison2(expiryDate: String) -> (Int, Int, Int){
         let dateFormatter = DateFormatter()
         dateFormatter.calendar = Calendar(identifier: .iso8601)
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
