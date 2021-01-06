@@ -214,7 +214,7 @@ class WWMHelperClass {
     class func getVersion() -> String {
         let version = Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString")
         let buildNo = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String)
-        print(buildNo ?? "")
+        //print(buildNo ?? "")
         return "v\(version ?? "")"
     }
     
@@ -276,11 +276,9 @@ class WWMHelperClass {
     
     class func dateComparison(expiryDate: String) -> Int{
         let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        dateFormatter.locale = Locale.current
-        dateFormatter.locale = Locale(identifier: dateFormatter.locale.identifier)
-        dateFormatter.timeZone = TimeZone(abbreviation: dateFormatter.timeZone.abbreviation() ?? "GMT")
+        dateFormatter.calendar = Calendar(identifier: .iso8601)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if let _ = dateFormatter.date(from: expiryDate){
@@ -354,7 +352,7 @@ class WWMHelperClass {
                 let expirDate = dateFormatter.date(from: expiryDate) ?? currentDate
                 
                 let second =  Calendar.current.dateComponents([.second], from: currentDate, to: expirDate).second ?? 0
-                let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
+                //let min =  Calendar.current.dateComponents([.minute], from: currentDate, to: expirDate).minute ?? 0
                 //print("day..... \(day) second..... \(second) expiryDate... \(expirDate) currentDate... \(currentDate) min... \(min) date_completed... \(date_completed)")
                 return (1, day, second)
             }else{
@@ -382,9 +380,11 @@ class WWMHelperClass {
         let day =  Calendar.current.dateComponents([.day], from: currentDate!, to: expireDate ).day ?? 0
         let min =  Calendar.current.dateComponents([.minute], from: currentDate!, to: expireDate ).minute ?? 0
         let second =  Calendar.current.dateComponents([.second], from: currentDate!, to: expireDate ).second ?? 0
-        print("expireDate... \(expireDate) currentDate... \(String(describing: currentDate)) min... \(min) second... \(second) day... \(day)")
+        //print("expireDate... \(expireDate) currentDate... \(String(describing: currentDate)) min... \(min) second... \(second) day... \(day)")
         
-        return (day, min, second)
+        let finalDayDiff = Int("\(day)".replacingOccurrences(of:
+                                                    "-", with: "")) ?? 0
+        return (finalDayDiff, min, second)
     }
     
     //MARK:- Database Methods
@@ -598,7 +598,7 @@ class WWMHelperClass {
     
     class func checkNinetyFivePercentForOfflineData(type: String) -> String{
         
-        print("selectedMeditation*** \(type)")
+        //print("selectedMeditation*** \(type)")
         
         let data = WWMHelperClass.fetchDB(dbName: "DBNinetyFivePercent") as! [DBNinetyFivePercent]
         if data.count > 0 {
