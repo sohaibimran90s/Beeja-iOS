@@ -297,7 +297,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
             let date_completed = self.daysListData[i].date_completed
             if date_completed != ""{
                 let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
-                if dateCompare.0 == 0{
+                if dateCompare.0 == 1{
                     flag = 1
                     break
                 }
