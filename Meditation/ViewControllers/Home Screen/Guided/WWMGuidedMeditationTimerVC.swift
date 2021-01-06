@@ -272,8 +272,10 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     @objc func updateTimer() {
         if isPlayer {
-            if self.player?.currentTime().seconds != nil{
-                self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
+            if self.player?.currentTime().seconds != nil {
+                // BASS-889 - No reason found so bifurcated code for future crash analysis if any
+                let dur = Int(round((self.player?.currentTime().seconds ?? 0)))
+                self.meditationGuidedPlayPercentage = Int(self.convertDurationIntoPercentage(duration: dur)) ?? 0
             }
             
             //BASS-805
@@ -281,7 +283,9 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
             var complete_percentage = 0
             if self.player?.currentTime().seconds != nil{
                 watched_duration = "\(Int(round((self.player?.currentTime().seconds ?? 0))))"
-                complete_percentage = Int(self.convertDurationIntoPercentage(duration:Int(round((self.player?.currentTime().seconds ?? 0))))) ?? 0
+                // BASS-889 - No reason found so bifurcated code for future crash analysis if any
+                let dur = Int(round((self.player?.currentTime().seconds ?? 0)))
+                complete_percentage = Int(self.convertDurationIntoPercentage(duration: dur)) ?? 0
             }
             
             //offline for meditation to insert into database
