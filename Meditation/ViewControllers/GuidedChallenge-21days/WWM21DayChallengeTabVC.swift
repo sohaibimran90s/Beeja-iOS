@@ -38,6 +38,10 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
         self.layout()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.appPreference.set21ChallengeName(value: "21 Days challenge")
+    }
+    
     func layout(){
         self.lblPracticalSessionCount.layer.cornerRadius = 16
         self.lblPracticalSessionCount.layer.borderWidth = 1.0

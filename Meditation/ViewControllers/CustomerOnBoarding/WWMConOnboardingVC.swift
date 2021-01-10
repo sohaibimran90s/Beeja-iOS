@@ -302,9 +302,9 @@ class WWMConOnboardingVC: WWMBaseViewController {
         
         var groupType = "timer"
         switch type {
-          case "pratical", "8 week", "8week", "21", "21day", "moments", "playlist", "7", "guided":
+          case "pratical", "21", "21day", "moments", "playlist", "7", "guided", "dabble":
             groupType = "guided"
-          case "learn":
+          case "learn", "8 week", "8week":
             groupType = "learn"
           default:
             groupType = "timer"
@@ -312,17 +312,21 @@ class WWMConOnboardingVC: WWMBaseViewController {
 
         self.appPreference.setType(value: groupType)
         self.appPreference.setGuideTypeFor3DTouch(value: groupType)
+        self.appPreference.set21ChallengeName(value: type.capitalized)
 
         if (groupType == "guided") {
             //var finalType = type
             if (type == "21day" || type == "21" ) {
                 self.appPreference.set21ChallengeName(value: "21 Days challenge")
-            } else if (type == "8 week" || type == "8week" ) {
-                self.appPreference.set21ChallengeName(value: "8 Weeks challenge")
             } else if (type == "playlist") {
                 self.appPreference.set21ChallengeName(value: "My Playlist")
             } else {
                 self.appPreference.set21ChallengeName(value: type.capitalized)
+            }
+        }
+        else if (groupType == "learn") {
+           if (type == "8 week" || type == "8week" ) {
+                self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             }
         }
     }

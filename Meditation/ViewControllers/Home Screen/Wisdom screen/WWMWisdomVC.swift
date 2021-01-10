@@ -13,6 +13,7 @@ import AVKit
 class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     var itemInfo: IndicatorInfo = "View"
+    var subTabName: String = ""
     var wisdomData = WWMWisdomData()
     var playerViewController = WWMVedioPlayerVC()
     var video_id: String = ""
@@ -94,6 +95,9 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print(self.subTabName)
+        self.appPreference.setWisdomName(value: self.subTabName)
         
         if reachable.isConnectedToNetwork() {
             let data = self.wisdomData1[indexPath.row]

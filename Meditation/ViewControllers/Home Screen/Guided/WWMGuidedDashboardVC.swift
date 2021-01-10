@@ -169,7 +169,7 @@ class WWMGuidedDashboardVC: ButtonBarPagerTabStripViewController {
             }
             
             pagerTabStripController.moveToViewController(at: index, animated: false)
-            appPreference.set21ChallengeName(value: "")
+            //appPreference.set21ChallengeName(value: "")
         }//end*
         
         return arrVC as! [UIViewController]

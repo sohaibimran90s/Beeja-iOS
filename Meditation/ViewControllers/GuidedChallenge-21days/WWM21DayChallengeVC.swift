@@ -82,6 +82,10 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         self.fetchGuidedDataFromDB()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.appPreference.set21ChallengeName(value: "21 Days challenge")
+    }
+    
     func showHidRetakeView(){
         //print("retakeFlag... \(self.retakeFlag) guided_id... \(self.id)")
         if self.retakeFlag == 21{

@@ -512,6 +512,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setWisdomName(value:String) {
+        defaults.set(value, forKey: "wisdomeName")
+        defaults.synchronize()
+    }
+    
     //set view controller for setting api
     func setVCName(value:String) {
         defaults.set(value, forKey: "vcName")
@@ -631,6 +636,10 @@ class WWMAppPreference: NSObject {
     
     func get21ChallengeName() -> String {
         return UserDefaults.standard.string(forKey: "21ChallengeName") ?? ""
+    }
+    
+    func getWisdomName() -> String {
+        return UserDefaults.standard.string(forKey: "wisdomeName") ?? ""
     }
     
     func getForceLogout() -> String {

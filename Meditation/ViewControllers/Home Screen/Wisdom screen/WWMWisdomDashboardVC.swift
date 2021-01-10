@@ -13,6 +13,9 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
 
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrWisdomList = [WWMWisdomData]()
+    let appPreference = WWMAppPreference()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,8 +67,31 @@ class WWMWisdomDashboardVC: ButtonBarPagerTabStripViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWisdomVC") as! WWMWisdomVC
             vc.itemInfo = IndicatorInfo.init(title: data.cat_Name)
             vc.wisdomData = data
+            vc.subTabName = data.cat_Name
             arrVC.add(vc)
         }
+        
+        //to jump in particular index
+        let name = self.appPreference.getWisdomName()
+        if name != ""{
+            var index = 0
+            let name = self.appPreference.getWisdomName()
+            for dic in self.arrWisdomList{
+                if name == dic.cat_Name{
+                    break
+                }
+                index = index + 1
+            }
+            
+            if index > self.arrWisdomList.count - 1{
+                index = 0
+            }
+            
+            pagerTabStripController.moveToViewController(at: index, animated: false)
+            //appPreference.set21ChallengeName(value: "")
+        }//end*
+        
+        
         return arrVC as! [UIViewController]
     }
 }
