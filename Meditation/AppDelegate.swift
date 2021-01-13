@@ -669,8 +669,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncDataWithServer() {
         if self.appPreference.isLogout() {
-            
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.main.async {
                 self.syncSettingAPI()
             }
         }
