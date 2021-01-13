@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //Fabric.with([Crashlytics.self])
         //Fabric.sharedSDK().debug = true
         
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().clientID = "67011826526-9k01vqtvtnk6c59kn8qmmdu9f8glrpb2.apps.googleusercontent.com"
         print(UIDevice.current.identifierForVendor!.uuidString)
         // GIDSignIn.sharedInstance().delegate = self
         
@@ -669,8 +669,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func syncDataWithServer() {
         if self.appPreference.isLogout() {
-            
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.main.async {
                 self.syncSettingAPI()
             }
         }

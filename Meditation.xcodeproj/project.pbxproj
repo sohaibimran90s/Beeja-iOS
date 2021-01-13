@@ -207,7 +207,6 @@
 		6120F13924863BF300F790A7 /* WWM30DaysGearUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120F13724863BF300F790A7 /* WWM30DaysGearUpVC.swift */; };
 		6120F13A24863BF300F790A7 /* WWM30DaysChallengeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120F13824863BF300F790A7 /* WWM30DaysChallengeVC.swift */; };
 		6123B453248A6CA0000F6343 /* WWMShareLoveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6123B452248A6CA0000F6343 /* WWMShareLoveVC.swift */; };
-		612751D7242A009A00B53276 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 612751D6242A009900B53276 /* GoogleService-Info.plist */; };
 		6129200B2361BF1F006991C2 /* WWMEditMeditationTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5EA5C921EDFB650076328A /* WWMEditMeditationTimeVC.swift */; };
 		612A888222DDB29F00E1CC2A /* WWMListenMantraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */; };
 		612A888422DDB32200E1CC2A /* WWMLearnReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */; };
@@ -438,6 +437,7 @@
 		617C284723525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */; };
 		617E8B4C2493B72A004A65D8 /* WWMTodaysChallengeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E8B4B2493B72A004A65D8 /* WWMTodaysChallengeVC.swift */; };
 		617E8B4E2493B754004A65D8 /* WWMMilestoneAchievementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E8B4D2493B754004A65D8 /* WWMMilestoneAchievementVC.swift */; };
+		618E6F5E25AEDE44003E7FD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 618E6F5D25AEDE41003E7FD3 /* GoogleService-Info.plist */; };
 		6197CD5123574A26001E5E4B /* Burn.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6197CD5023574A26001E5E4B /* Burn.mov */; };
 		619EA419246D4CF7000B32FF /* WWMSleepTimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EA418246D4CF7000B32FF /* WWMSleepTimerVC.swift */; };
 		61A1964823C5C1F00085E97F /* WWMEditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */; };
@@ -884,7 +884,6 @@
 		6120F13724863BF300F790A7 /* WWM30DaysGearUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM30DaysGearUpVC.swift; sourceTree = "<group>"; };
 		6120F13824863BF300F790A7 /* WWM30DaysChallengeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWM30DaysChallengeVC.swift; sourceTree = "<group>"; };
 		6123B452248A6CA0000F6343 /* WWMShareLoveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMShareLoveVC.swift; sourceTree = "<group>"; };
-		612751D6242A009900B53276 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		612A888122DDB29E00E1CC2A /* WWMListenMantraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMListenMantraVC.swift; sourceTree = "<group>"; };
 		612A888322DDB32200E1CC2A /* WWMLearnReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnReminderVC.swift; sourceTree = "<group>"; };
 		612D929B22DDD6D400F0F477 /* WWMLearnDiscountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMLearnDiscountVC.swift; sourceTree = "<group>"; };
@@ -1115,6 +1114,7 @@
 		617C284523525DA400A3F544 /* DBGuidedAudioData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBGuidedAudioData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		617E8B4B2493B72A004A65D8 /* WWMTodaysChallengeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMTodaysChallengeVC.swift; sourceTree = "<group>"; };
 		617E8B4D2493B754004A65D8 /* WWMMilestoneAchievementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMMilestoneAchievementVC.swift; sourceTree = "<group>"; };
+		618E6F5D25AEDE41003E7FD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6197CD5023574A26001E5E4B /* Burn.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Burn.mov; sourceTree = "<group>"; };
 		619EA418246D4CF7000B32FF /* WWMSleepTimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMSleepTimerVC.swift; sourceTree = "<group>"; };
 		61A1964723C5C1F00085E97F /* WWMEditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWMEditProfileVC.swift; sourceTree = "<group>"; };
@@ -1491,7 +1491,7 @@
 				2E4B1BA121B5044B002F8A25 /* Main.storyboard */,
 				E838011924B44C90008CDB89 /* 8week.storyboard */,
 				2E4B1BA621B5044D002F8A25 /* LaunchScreen.storyboard */,
-				612751D6242A009900B53276 /* GoogleService-Info.plist */,
+				618E6F5D25AEDE41003E7FD3 /* GoogleService-Info.plist */,
 				2E4B1BA921B5044D002F8A25 /* Info.plist */,
 				2E93D2FD21F5FFC300163E57 /* WWMDatabase.xcdatamodeld */,
 			);
@@ -2990,6 +2990,7 @@
 				63F8894B24C01066001F424A /* Payment.storyboard in Resources */,
 				CE212766247430F500815BD7 /* cellBG@2x.png in Resources */,
 				2E4A473E220DB22B00DF0C68 /* BIRDSONG 2.mp3 in Resources */,
+				618E6F5E25AEDE44003E7FD3 /* GoogleService-Info.plist in Resources */,
 				CE21275C247430F500815BD7 /* cellSelectedBG.png in Resources */,
 				2EC9585E220AC1BA009D5144 /* Maax-Medium.otf in Resources */,
 				614259F92386B29900DE7CE5 /* LOADERSOUND.wav in Resources */,
@@ -3032,7 +3033,6 @@
 				CE212752247430F500815BD7 /* back@2x.png in Resources */,
 				63F8897324C01066001F424A /* TextDisabled@2x.png in Resources */,
 				2EB08668228AE46F008BF6E4 /* dataTimer.json in Resources */,
-				612751D7242A009A00B53276 /* GoogleService-Info.plist in Resources */,
 				63F8899024C01066001F424A /* VoicetoTextLockedDis@3x.png in Resources */,
 				63F8899924C01066001F424A /* VoicetoTextDisabled@3x.png in Resources */,
 				63F8898224C01066001F424A /* VoiceLockedEn@2x.png in Resources */,
@@ -3864,7 +3864,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.210110;
+				MARKETING_VERSION = 5.1.210113;
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3905,7 +3905,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.210110;
+				MARKETING_VERSION = 5.1.210113;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
