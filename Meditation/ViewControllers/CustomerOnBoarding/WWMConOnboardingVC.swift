@@ -131,7 +131,7 @@ class WWMConOnboardingVC: WWMBaseViewController {
             self.boardingTable.isScrollEnabled = false
         }
         else {
-            self.tableHeightConstraints.constant = CGFloat(tableReqH + diff - 10)
+            self.tableHeightConstraints.constant = CGFloat(tableReqH + diff - 10 - 25)
             self.boardingTable.isScrollEnabled = true
         }
     }
