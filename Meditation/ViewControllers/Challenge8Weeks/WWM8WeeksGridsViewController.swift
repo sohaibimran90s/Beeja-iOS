@@ -275,7 +275,10 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     
     //start challenge from button
     func startChallengeFunc() -> Int{
+        print("self.daysListData.count+++ \(self.daysListData.count)")
+        var count = 0
         for i in 0..<self.daysListData.count{
+            count = count + 1
             let date_completed = self.daysListData[i].date_completed
             if date_completed == ""{
                 return i
@@ -283,6 +286,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         }
         return 0
     }
+    
     
     func pushViewController(sender_Tag: Int){
         
@@ -293,7 +297,7 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
         var flag = 0
         
         //to check if todays challenge completed or not
-        for i in 0..<sender_Tag{
+        for i in 0..<self.daysListData.count{
             let date_completed = self.daysListData[i].date_completed
             if date_completed != ""{
                 let dateCompare = WWMHelperClass.dateComparison1(expiryDate: date_completed)
