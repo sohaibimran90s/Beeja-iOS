@@ -180,7 +180,7 @@ let KLEARNJUMPSTEP1 = "to get the most from your learning."
 
 //WWMLearnCongratsVC
 let KSTEPCONGMSG = "You've completed step"
-let KSTEPCONGMSG1 = "of the learn too meditate flow"
+let KSTEPCONGMSG1 = "of the learn to meditate flow"
 
 //WWMHomeTabVC
 let KWELCOME = "Welcome"
