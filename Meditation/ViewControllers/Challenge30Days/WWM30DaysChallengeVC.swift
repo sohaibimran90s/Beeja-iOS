@@ -42,7 +42,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        appPreference.set21ChallengeName(value: "30 Day Challenge")
+        //appPreference.set21ChallengeName(value: "30 Day Challenge")
         self.setUpView()
     }
     

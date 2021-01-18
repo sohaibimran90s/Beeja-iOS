@@ -10,7 +10,7 @@ import UIKit
 import XLPagerTabStrip
 
 class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
-
+    
     @IBOutlet weak var tabBarView: ButtonBarView!
     var arrLearnList = [WWMLearnData]()
     var name = ""
@@ -21,7 +21,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         
         self.setUpUI()
     }
-
+    
     func setUpUI() {
         
         buttonBarView.frame.origin.y = -4
@@ -93,7 +93,7 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
             var index = 0
             let name = self.appPreference.get21ChallengeName()
             for dic in self.arrLearnList{
-
+                
                 if name == dic.name{
                     break
                 }
@@ -105,9 +105,20 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
             }
             
             pagerTabStripController.moveToViewController(at: index, animated: true)
-            appPreference.set21ChallengeName(value: "")
+            //appPreference.set21ChallengeName(value: "")
         }//end*
         
         return arrVC as! [UIViewController]
+    }
+    
+    override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat, indexWasChanged: Bool) {
+        
+        if toIndex == 0 {
+            appPreference.set21ChallengeName(value: "12 Steps")
+        }else if toIndex == 1 {
+            appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+        }else {
+            appPreference.set21ChallengeName(value: "30 Day Challenge")
+        }
     }
 }

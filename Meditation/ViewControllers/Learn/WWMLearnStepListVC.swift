@@ -29,9 +29,8 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appPreference.set21ChallengeName(value: "12 Steps")
+        //appPreference.set21ChallengeName(value: "12 Steps")
         self.offlineDatatoServerCall()
-        
         DispatchQueue.global(qos: .background).async {
             self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         }
