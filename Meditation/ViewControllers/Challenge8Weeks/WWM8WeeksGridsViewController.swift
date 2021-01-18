@@ -37,7 +37,8 @@ class WWM8WeeksGridsViewController: WWMBaseViewController, IndicatorInfoProvider
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //appPreference.set21ChallengeName(value: "8 Weeks Challenge")
+        self.appPreference.setFor8Weeks(value: false)
+        appPreference.set21ChallengeName(value: "8 Weeks Challenge")
         UISetup()
     }
     

@@ -110,15 +110,4 @@ class WWMLearnDashboardVC: ButtonBarPagerTabStripViewController {
         
         return arrVC as! [UIViewController]
     }
-    
-    override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat, indexWasChanged: Bool) {
-        
-        if toIndex == 0 {
-            appPreference.set21ChallengeName(value: "12 Steps")
-        }else if toIndex == 1 {
-            appPreference.set21ChallengeName(value: "8 Weeks Challenge")
-        }else {
-            appPreference.set21ChallengeName(value: "30 Day Challenge")
-        }
-    }
 }

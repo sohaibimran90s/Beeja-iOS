@@ -41,6 +41,11 @@ class WWMAppPreference: NSObject {
         defaults.synchronize()
     }
     
+    func setFor8Weeks(value:Bool) {
+        defaults.set(value, forKey: "8WeekTab")
+        defaults.synchronize()
+    }
+    
     func setIsLogin(value:Bool) {
         defaults.set(value, forKey: "login")
         defaults.synchronize()
@@ -311,6 +316,11 @@ class WWMAppPreference: NSObject {
     
     func getEmail() -> String{
         return UserDefaults.standard.string(forKey: "email") ?? ""
+    }
+    
+    //tab for 8 week enabled
+    func getFor8Weeks() -> Bool {
+        return defaults.bool(forKey: "8WeekTab")
     }
     
     //set to check if 30 days is expired or not
