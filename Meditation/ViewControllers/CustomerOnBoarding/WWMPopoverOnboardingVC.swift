@@ -93,6 +93,7 @@ class WWMPopoverOnboardingVC: WWMBaseViewController {
         }
         else if (groupType == "learn") {
            if (type == "8 week" || type == "8week" ) {
+                self.appPreference.setFor8Weeks(value: true)
                 self.appPreference.set21ChallengeName(value: "8 Weeks Challenge")
             }
         }

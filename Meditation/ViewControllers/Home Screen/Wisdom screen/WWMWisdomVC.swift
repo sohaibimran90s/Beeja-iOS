@@ -96,7 +96,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        print(self.subTabName)
+        //print(self.subTabName)
         self.appPreference.setWisdomName(value: self.subTabName)
         
         if reachable.isConnectedToNetwork() {
