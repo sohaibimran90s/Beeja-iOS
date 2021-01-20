@@ -588,7 +588,7 @@ class WWMStartTimerVC: WWMBaseViewController {
             offlineCompleteData["emotion_id"] = "0"
             offlineCompleteData["audio_id"] = "0"
             offlineCompleteData["guided_type"] = ""
-            offlineCompleteData["watched_duration"] = "0"
+            offlineCompleteData["watched_duration"] = Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: ""))
             offlineCompleteData["rating"] = "0"
             offlineCompleteData["user_id"] = self.appPreference.getUserID()
             offlineCompleteData["meditation_type"] = "post"
@@ -828,7 +828,7 @@ class WWMStartTimerVC: WWMBaseViewController {
                  WWMHelperClass.sendEventAnalytics(contentType: "TIMER", itemId: "BEEJA_BEGINNER", itemName: "\(self.meditationPlayPercentage)")
               }
                                   
-            self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "\(self.restTime)", emotion_id: "0", tell_us_why: "", prep_time: "\(self.prepTime)", meditation_time: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", watched_duration: "0", level_id: self.levelID, complete_percentage: "\(self.meditationLTMPlayPercentage)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: self.meditationID, date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "timer", guided_type: "", audio_id: "0", step_id: "", mantra_id: "")
+            self.completeMeditationAPI(mood_id: "0", user_id: self.appPreference.getUserID(), rest_time: "\(self.restTime)", emotion_id: "0", tell_us_why: "", prep_time: "\(self.prepTime)", meditation_time: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", watched_duration: "\(Int("\(meditationTimeSecondsAnalytics)".replacingOccurrences(of: "-", with: "")) ?? 0)", level_id: self.levelID, complete_percentage: "\(self.meditationLTMPlayPercentage)", rating: "0", meditation_type: "post", category_id: "0", meditation_id: self.meditationID, date_time: "\(Int(Date().timeIntervalSince1970*1000))", type: "timer", guided_type: "", audio_id: "0", step_id: "", mantra_id: "")
             
         }else{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMFinishTimerVC") as! WWMFinishTimerVC
@@ -879,9 +879,9 @@ class WWMStartTimerVC: WWMBaseViewController {
         
         var param: [String: Any] = [:]
         param = [
-            "type": type,
-            "step_id": step_id,
-            "mantra_id": mantra_id,
+            "type": self.appPreffrence.getType(),
+            "step_id": WWMHelperClass.step_id,
+            "mantra_id": self.appPreference.getMyntraId(),
             "category_id": category_id,
             "emotion_id": emotion_id,
             "audio_id": audio_id,
@@ -893,9 +893,9 @@ class WWMStartTimerVC: WWMBaseViewController {
             "meditation_type": meditation_type,
             "date_time": date_time,
             "tell_us_why": tell_us_why,
-            "prep_time": prep_time,
-            "meditation_time": meditation_time,
-            "rest_time": rest_time,
+            "prep_time": Int(prep_time) ?? 0,
+            "meditation_time": Int(meditation_time) ?? 0,
+            "rest_time": Int(rest_time) ?? 0,
             "meditation_id": meditation_id,
             "level_id": level_id,
             "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
@@ -903,10 +903,13 @@ class WWMStartTimerVC: WWMBaseViewController {
             "is_complete": self.ninetyFiveCompletedFlag,
             "title": "",
             "journal_type": "",
-            "challenge_day_id":"",
-            "challenge_type":""
+            "challenge_day_id":WWMHelperClass.day_30_name,
+            "challenge_type":WWMHelperClass.day_type,
+            "mood_text": "",
+            "mood_color": ""
             ] as [String : Any]
         
+        print("param___ \(param)")
         //background thread meditation api*
         DispatchQueue.global(qos: .background).async {
             WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMStartTimerVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in

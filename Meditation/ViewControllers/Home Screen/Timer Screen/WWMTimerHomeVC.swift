@@ -57,7 +57,7 @@ class WWMTimerHomeVC: WWMBaseViewController {
         self.getSettingData()
         
         if self.appPreference.get21ChallengeName() == "30 Day Challenge" || self.appPreference.get21ChallengeName() == "8 Weeks Challenge"{
-            self.appPreference.setType(value: "timer")
+            self.appPreference.setType(value: "learn")
             self.tabBarController?.tabBar.isHidden = true
             self.viewPrePost.isHidden = true
         }else{
