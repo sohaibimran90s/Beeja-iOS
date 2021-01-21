@@ -111,6 +111,7 @@ class WWMFinishTimerVC: UIViewController {
                 vc.meditationTime = self.meditationTime
                 vc.restTime = self.restTime
                 vc.meditationID = self.meditationID
+                vc.watched_duration = "\(self.meditationTime)"
                 vc.levelID = self.levelID
                 vc.hidShowMoodMeter = "Hide"
                 self.navigationController?.pushViewController(vc, animated: false)
@@ -151,7 +152,7 @@ class WWMFinishTimerVC: UIViewController {
             vc.prepTime = self.prepTime
             vc.meditationTime = self.meditationTime
             vc.restTime = self.restTime
-            
+            vc.watched_duration = "\(self.meditationTime)"
             vc.meditationID = self.meditationID
             vc.levelID = self.levelID
             self.navigationController?.pushViewController(vc, animated: false)

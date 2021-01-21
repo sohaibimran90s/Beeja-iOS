@@ -399,6 +399,7 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
             "challenge_type":WWMHelperClass.day_type
             ] as [String : Any]
         
+        print("param___ \(param)")
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "WWMMoodMeterVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 
