@@ -582,8 +582,12 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let angle = self.translatedAngle(angle: newAngle)
         //self.moodView?.isHidden = false
         self.lblMoodMeter.isHidden = false
-        let diff = Double(360) / Double(self.arrMoodData.count)
-        let selectedMood = angle / diff
+        
+        var selectedMood = 1.0;
+        if (self.arrMoodData.count > 0) {
+            let diff = Double(360) / Double(self.arrMoodData.count)
+            selectedMood = angle / diff
+        }
         
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
@@ -610,8 +614,11 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
     
     func circularSlider(slidingDidEnd circularSlider: CircularSlider) -> Void {
         let angle = self.translatedAngle(angle: circularSlider.angleInDegrees())
-        let diff = Double(360) / Double(self.arrMoodData.count)
-        let selectedMood = angle / diff
+        var selectedMood = 1.0;
+        if (self.arrMoodData.count > 0) {
+            let diff = Double(360) / Double(self.arrMoodData.count)
+            selectedMood = angle / diff
+        }
         let moodIndex = Int(selectedMood)
         selectedIndex = moodIndex
         let mood = self.arrMoodData[selectedIndex]
