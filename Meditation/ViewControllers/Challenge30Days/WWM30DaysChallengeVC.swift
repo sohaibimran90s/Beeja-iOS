@@ -44,7 +44,9 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
 
         self.appPreference.setFor8Weeks(value: false)
         appPreference.set21ChallengeName(value: "30 Day Challenge")
-        self.setUpView()
+        DispatchQueue.main.async {
+            self.setUpView()
+        }
     }
     
     // MARK: - IndicatorInfoProvider
@@ -446,7 +448,9 @@ extension WWM30DaysChallengeVC{
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             if let _ = result["success"] as? Bool {
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                DispatchQueue.main.async {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                }
                 
                 if let total_paid = result["total_paid"] as? Double{
                     WWMHelperClass.total_paid = Int(round(total_paid))
@@ -755,8 +759,11 @@ extension WWM30DaysChallengeVC{
                         WWMHelperClass.saveDb()
                     }
                 }
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-                self.callHomeVC1()
+                
+                DispatchQueue.main.async {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.callHomeVC1()
+                }
             }
         }
     }
