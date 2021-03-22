@@ -1936,7 +1936,12 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         do {
             let receipt = try Data(contentsOf: receiptUrl!)
             let encodedString = receipt.base64EncodedString()
-            let requestContents = ["receipt-data" : encodedString  as AnyObject, "password": "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject] as [String : Any]
+            // BASS-839 : Resolution on Subscription issue on iOS.
+            // Query changed to include just the latest purchase info to get purchase_date from latest_receipt_info
+            // to prevent fetching of the wrong purchase date as the json returned by app kit may not provide the details in
+            // reverse-chronological order.
+            let requestContents = ["receipt-data" : encodedString  as AnyObject, "password": "ec9270a657eb4b3e877be4c92cf3f8c2" as AnyObject,
+                                   "exclude-old-transactions" : true as AnyObject] as [String : Any]
             do {
                 let requestJsonData = try JSONSerialization.data(withJSONObject: requestContents, options: [])
                 let session = URLSession.shared
