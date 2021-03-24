@@ -1068,8 +1068,11 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                                 self.lbl21DaysTitle.text = ""
                             }
                         }
-                        self.view8Week.isHidden = true
-                        self.imgBg21Days.isHidden = false
+                        
+                        DispatchQueue.main.async {
+                            self.view8Week.isHidden = true
+                            self.imgBg21Days.isHidden = false
+                        }
                     }
                 }
                 DispatchQueue.main.async {
