@@ -34,6 +34,7 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
         }
         
         self.offlineDatatoServerCall()
+        //BASS-976
         self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationLearnSteps(notification:)), name: Notification.Name("notificationLearnSteps"), object: nil)
         self.appPreference.setMoodId(value: "")

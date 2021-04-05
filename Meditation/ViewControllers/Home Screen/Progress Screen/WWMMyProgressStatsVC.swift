@@ -149,6 +149,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     }
     
     @objc func notificationProgressMoodMeter(notification: Notification) {
+        //BASS-977
         DispatchQueue.main.async {
             self.collectionView21Chall.reloadData()
             self.collectionViewCal.reloadData()
@@ -276,6 +277,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.challType = "Practical"
         self.lblSpiriLine.isHidden = true
         self.lblPracLine.isHidden = false
+        //BASS-977
         DispatchQueue.main.async {
             self.collectionView21Chall.reloadData()
         }
@@ -285,6 +287,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
         self.challType = "Spiritual"
         self.lblSpiriLine.isHidden = false
         self.lblPracLine.isHidden = true
+        //BASS-977
         DispatchQueue.main.async {
             self.collectionView21Chall.reloadData()
         }
@@ -975,6 +978,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                 self.setData()
                 
                 if self.appPreference.getType() == "guided" || self.appPreference.getType() == "Guided" && self.appPreffrence.getExpiryDate(){
+                    //BASS-977
                     DispatchQueue.main.async {
                         self.viewChallenge21Days.isHidden = false
                         self.viewChallenge21DaysHeightConstraint.constant = 355
@@ -1040,6 +1044,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                         }
                     }else if self.appPreference.get21ChallengeName() == "30 Day Challenge"{
                         if self.statsData.days30Challenge.count > 0{
+                            //BASS-977
                             DispatchQueue.main.async {
                                 //print(self.statsData.days30Challenge.count)
                                 self.stackViewPraSpiritual.isHidden = true
@@ -1075,6 +1080,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
                         }
                     }
                 }
+                //BASS-977
                 DispatchQueue.main.async {
                     self.collectionViewCal.reloadData()
                 }
@@ -1101,6 +1107,7 @@ class WWMMyProgressStatsVC: WWMBaseViewController,UICollectionViewDelegate,UICol
             if sucess {
                 if let data = result["result"] as? [String:Any] {
                     self.milestoneData = WWMMilestoneData.init(json: data)
+                    //BASS-977
                     DispatchQueue.main.async {
                         self.tableView.delegate = self
                         self.tableView.dataSource = self

@@ -523,6 +523,7 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
         // Analytics
+        //BASS-974
         DispatchQueue.main.async {
             WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "BUY_NOW")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC

@@ -44,6 +44,7 @@ class WWM30DaysChallengeVC: WWMBaseViewController, IndicatorInfoProvider {
 
         self.appPreference.setFor8Weeks(value: false)
         appPreference.set21ChallengeName(value: "30 Day Challenge")
+        //BASS-978
         DispatchQueue.main.async {
             self.setUpView()
         }
@@ -448,6 +449,7 @@ extension WWM30DaysChallengeVC{
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_LEARN_, context: "WWMLearnStepListVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             
             if let _ = result["success"] as? Bool {
+                //BASS-978
                 DispatchQueue.main.async {
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                 }
@@ -759,7 +761,7 @@ extension WWM30DaysChallengeVC{
                         WWMHelperClass.saveDb()
                     }
                 }
-                
+                //BASS-978
                 DispatchQueue.main.async {
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
                     self.callHomeVC1()
