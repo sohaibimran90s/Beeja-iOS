@@ -34,12 +34,9 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
         }
         
         self.offlineDatatoServerCall()
-        DispatchQueue.global(qos: .background).async {
-            self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
-        }
-        
+        //BASS-976
+        self.fetchStepFaqDataFromDB(time_stamp: self.appPreffrence.getStepFAQTimeStamp())
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationLearnSteps(notification:)), name: Notification.Name("notificationLearnSteps"), object: nil)
-        
         self.appPreference.setMoodId(value: "")
     }
     
@@ -124,7 +121,6 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
                         self.getLearnAPI()
                     }
                 }
-                
                 WWMHelperClass.deleteRowfromDb(dbName: "DBNintyFiveCompletionData", id: id, type: "id")
             }
         }
@@ -132,12 +128,8 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
     
     //MARK: Fetch Steps Data From DB
     func fetchStepsDataFromDB() {
-        
         var flag = 0
-        
         for i in 0..<self.learnStepsListData.count{
-            //print("date_completed... \(self.learnStepsListData[i].date_completed) completed... \(self.learnStepsListData[i].completed) WWMHelperClass.total_paid... \(WWMHelperClass.total_paid) learnStepsListData count... \(self.learnStepsListData.count)")
-            
             if i !=  self.learnStepsListData.count - 1{
                 if self.learnStepsListData[i].completed == true{
                     self.selectedIndex = i + 1
@@ -150,9 +142,9 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
             self.selectedIndex = 0
         }
         //*end here
-        
-        self.tableView.reloadData()
-        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         NotificationCenter.default.removeObserver(self, name: Notification.Name("notificationLearnSteps"), object: nil)
     }
     
@@ -246,7 +238,9 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
                 let apiTimeStamp: String = "\(time_stamp)"
 
                 if systemTimeStamp == "nil" || apiTimeStamp == "nil"{
-                    self.stepFaqAPI()
+                    DispatchQueue.global(qos: .background).async {
+                        self.stepFaqAPI()
+                    }
                     return
                 }
                 
@@ -256,11 +250,15 @@ class WWMLearnStepListVC: WWMBaseViewController, IndicatorInfoProvider {
                 
                 //print("date1... \(systemDate) date2... \(apiDate)")
                 if systemDate < apiDate{
-                    self.stepFaqAPI()
+                    DispatchQueue.global(qos: .background).async {
+                        self.stepFaqAPI()
+                    }
                 }
             }
         }else{
-            self.stepFaqAPI()
+            DispatchQueue.global(qos: .background).async {
+                self.stepFaqAPI()
+            }
         }
     }
     

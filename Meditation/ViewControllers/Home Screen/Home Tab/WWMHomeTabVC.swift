@@ -523,17 +523,16 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnBookBuyNowClicked(_ sender: UIButton) {
         // Analytics
-        WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "BUY_NOW")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
-        
-        let url = self.appPreffrence.getOffers()
-        //print("url /.... \(url[0])")
-        
-        vc.strType = KBUYBOOK
-        vc.strUrl = url[0] 
-        self.navigationController?.pushViewController(vc, animated: true)
+        //BASS-974
+        DispatchQueue.main.async {
+            WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "BOOK", itemName: "BUY_NOW")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWebViewVC") as! WWMWebViewVC
+            let url = self.appPreffrence.getOffers()
+            vc.strType = KBUYBOOK
+            vc.strUrl = url[0]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
-    
 }
 
 extension WWMHomeTabVC{
