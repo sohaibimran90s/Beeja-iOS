@@ -87,14 +87,19 @@ extension WWMPodcastListVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
-           let data = self.podData[indexPath.row]
-
+            let data = self.podData[indexPath.row]
+            //BASS-999
+            let videoAsset = AVAsset(url: URL.init(string: data.url_link)!)
+            let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+            if assetLength <= 0 {
+                self.invalidURLPopUp(pushVC: "homeTab", title1: "Sorry something went wrong, Please try again later.")
+                return
+            }
             // Analytics
-           WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
-            
+            WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
             self.selectedAudioIndex = indexPath.row
             self.podCastXib(index: self.selectedAudioIndex)
-         }else {
+        }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
     }

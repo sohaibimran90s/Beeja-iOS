@@ -101,6 +101,14 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
         
         if reachable.isConnectedToNetwork() {
             let data = self.wisdomData1[indexPath.row]
+            //BASS-999
+            let videoAsset = AVAsset(url: URL.init(string: data.video_Url)!)
+            let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+            if assetLength <= 0 {
+                self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+                return
+            }
+            
             self.video_id = String(data.video_Id)
             self.videoURL = data.video_Url
             self.videoTitle = data.video_Name

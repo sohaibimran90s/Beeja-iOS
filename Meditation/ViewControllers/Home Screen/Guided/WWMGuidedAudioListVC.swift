@@ -139,17 +139,13 @@ class WWMGuidedAudioListVC: WWMBaseViewController,UICollectionViewDelegate,UICol
     func getFreeMoodMeterAlert(title: String, subTitle: String){
         self.alertPopupView1 = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
         let window = UIApplication.shared.keyWindow!
-        
         self.alertPopupView1.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
-        
         self.alertPopupView1.lblTitle.numberOfLines = 0
         self.alertPopupView1.btnOK.layer.borderWidth = 2.0
         self.alertPopupView1.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
         self.alertPopupView1.lblTitle.text = title
         self.alertPopupView1.lblSubtitle.text = subTitle
         self.alertPopupView1.btnClose.isHidden = true
-        
         self.alertPopupView1.btnOK.addTarget(self, action: #selector(btnAlertDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView1)
     }
