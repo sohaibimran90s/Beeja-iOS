@@ -23,23 +23,17 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     var long = ""
     let appPreffrence = WWMAppPreference()
     let reachable = Reachabilities()
-    
     var alertPopupView = WWMAlertController()
-    
     var isGetProfileCall = false
-    
     var alertPopup = WWMAlertPopUp()
     var milestoneType: String = ""
-    
     var product_id: String = ""
     var responseArray: [[String: Any]] = []
     var date_time: Any?
     var transaction_id: Any?
-    
     //community
     var strMonthYear = ""
     var communityData = WWMCommunityData()
-    
     var flagConnAlertShow = false
     var forceLogoutPopupView = WWMAlertController()
     
@@ -2131,19 +2125,15 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     }
     
     func connectionLost(){
-        
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
         let window = UIApplication.shared.keyWindow!
-        
         alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
         alertPopupView.lblTitle.text = kAlertTitle
         alertPopupView.lblSubtitle.text = internetConnectionLostMsg
         alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
         alertPopupView.btnClose.isHidden = true
-        
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
         window.rootViewController?.view.addSubview(alertPopupView)
     }
@@ -2152,18 +2142,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
         
         alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
         let window = UIApplication.shared.keyWindow!
-        
         alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         alertPopupView.btnOK.layer.borderWidth = 2.0
         alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
-        
         alertPopupView.lblTitle.text = kAlertTitle
         alertPopupView.lblSubtitle.text = "Seems this is your first time after login. \nYou will have to get online once to setup your account and support the offline functionality."
         alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
         alertPopupView.btnClose.isHidden = true
-        
         alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneOfflinePopUP(_:)), for: .touchUpInside)
-        
         window.rootViewController?.view.addSubview(alertPopupView)
     }
     

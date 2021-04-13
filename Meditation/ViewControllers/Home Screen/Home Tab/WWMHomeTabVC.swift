@@ -516,7 +516,6 @@ class WWMHomeTabVC: WWMBaseViewController {
     
     @IBAction func btnPodcastShowAllClicked(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMPodcastListVC") as! WWMPodcastListVC
-        
         vc.podData = self.podData
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -873,7 +872,6 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachable.isConnectedToNetwork() {
             if tableView == self.tableViewBanners{
-                
                 if self.bannerLaunchData.count == 1{
                     self.bannerClicked(guided_type: self.bannerLaunchData[indexPath.row]["name"] as? String ?? "21 Days challenge", guided_id: "\(self.bannerLaunchData[indexPath.row]["guided_id"] as? Int ?? 0)", emotion_id: "\(self.bannerLaunchData[indexPath.row]["emotion_id"] as? Int ?? 0)", type: "launch", intro_video: self.bannerLaunchData[indexPath.row]["intro_video"] as? String ?? "")
                 }else{
@@ -910,14 +908,18 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                 }
             }else{
                 let data = self.podData[indexPath.row]
-                
+                //BASS-999
+                let videoAsset = AVAsset(url: URL.init(string: data.url_link)!)
+                let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+                if assetLength <= 0 {
+                    self.invalidURLPopUp(pushVC: "homeTab", title1: "Sorry something went wrong, Please try again later.")
+                    return
+                }
                 // Analytics
                 WWMHelperClass.sendEventAnalytics(contentType: "HOMEPAGE", itemId: "PODCASTPLAY", itemName: data.analyticsName)
-                
                 self.selectedAudioIndex = indexPath.row
                 self.podCastXib(index: self.selectedAudioIndex)
             }
-            
         }else {
             WWMHelperClass.showPopupAlertController(sender: self, message: internetConnectionLostMsg, title: kAlertTitle)
         }
@@ -1015,12 +1017,9 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
     func podCastXib(index: Int){
         podcastMusicPlayerPopUp = UINib(nibName: "WWWMPodCastPlayerView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWWMPodCastPlayerView
         let window = UIApplication.shared.keyWindow!
-        
         podcastMusicPlayerPopUp.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         //print("index... \(index)")
-        
         self.selectedAudioIndex = index
-        
         podcastMusicPlayerPopUp.slider.value = Float(currentTimePlay)
         podcastMusicPlayerPopUp.slider.setThumbImage(UIImage(named: "spinCircle"), for: .normal)
         podcastMusicPlayerPopUp.lblTitle.text = self.podData[index].title
@@ -1051,7 +1050,6 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
         playPauseAudio(index: index)
-        
         window.rootViewController?.view.addSubview(podcastMusicPlayerPopUp)
     }
     
@@ -1200,18 +1198,17 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
             currentTimePlay = 0
             self.podcastMusicPlayerPopUp.lblTitle.text = self.podData[index].title
             self.podcastMusicPlayerPopUp.slider.value = Float(currentTimePlay)
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                let playerItem = AVPlayerItem.init(url:URL.init(string: self.podData[index].url_link)!)
+                self.player = AVPlayer(playerItem:playerItem)
+            }catch let error as NSError {
+                print(error.localizedDescription)
+            }
             
-                do {
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                    try AVAudioSession.sharedInstance().setActive(true)
-                    let playerItem = AVPlayerItem.init(url:URL.init(string: self.podData[index].url_link)!)
-                    self.player = AVPlayer(playerItem:playerItem)
-                }catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-        
-                self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
-                    if self.player?.currentItem?.status == .readyToPlay {
+            self.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { time in
+                if self.player?.currentItem?.status == .readyToPlay {
                     let currentTime = CMTimeGetSeconds(self.player!.currentTime())
                     //print("currentTime... \(currentTime)")
                     let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
@@ -1257,12 +1254,12 @@ extension WWMHomeTabVC: UITableViewDelegate, UITableViewDataSource{
                                 self.podcastMusicPlayerPopUp.btnNext.isUserInteractionEnabled = false
                             }
                             //print("self.selectedAudioIndex+++++ \(self.selectedAudioIndex)")
-
+                            
                         }
                     }
                 }
             })
-                self.selectedAudio = "1"
+            self.selectedAudio = "1"
         }
         
         if !audioBool {

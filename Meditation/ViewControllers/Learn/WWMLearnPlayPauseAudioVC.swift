@@ -55,10 +55,15 @@ class WWMLearnPlayPauseAudioVC: WWMBaseViewController {
         self.btnStart.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnStart.isHidden = true
         self.slider.isUserInteractionEnabled = false
-        
         self.btnReplay.setImage(UIImage(named: "pauseAudio"), for: .normal)
+        //BASS-999
+        let videoAsset = AVAsset(url: URL.init(string: WWMHelperClass.step_audio)!)
+        let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+        if assetLength <= 0 {
+            self.invalidURLPopUp(pushVC: "learnIntro", title1: "Sorry something went wrong, Please try again later.")
+            return
+        }
         
-        //print("timeraudio... \(WWMHelperClass.timer_audio)")
         self.audioPlay()
     }
     

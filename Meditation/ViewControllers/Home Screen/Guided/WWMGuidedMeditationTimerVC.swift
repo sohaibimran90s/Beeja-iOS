@@ -94,20 +94,24 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.methodOfCallEndedIdentifier(notification:)), name: Notification.Name("NotificationCallEndedIdentifier"), object: nil)
+        //BASS-999
+        let videoAsset = AVAsset(url: URL.init(string: self.audioData.audio_Url)!)
+        let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+        if assetLength > 0 {
+            self.play(url: URL.init(string: self.audioData.audio_Url)!)
+        }else{
+            self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+            return
+        }
 
-        self.play(url: URL.init(string: self.audioData.audio_Url)!)
         self.lblTimer.text = self.secondsToMinutesSeconds(second: self.seconds)
         self.lblGuidedName.text = "\(self.audioData.audio_Name) \(self.audioData.author_name)"
-
-        print(self.appPreference.getGuideType())
         self.lblGuidedFlowType.text = "\(self.cat_Name.capitalized) ~ \(self.emotion_Name)"
-        
         if self.audioData.vote {
             self.btnFavourite.setImage(UIImage.init(named: "favouriteIconON"), for: .normal)
             self.isFavourite = true
             self.rating = 1
         }
-        
         self.appPreference.setMoodId(value: "")
     }
     

@@ -14,7 +14,8 @@ class WWMBaseViewController: UIViewController {
     var userData = WWMUserData.sharedInstance
     var alertPopupView = WWMAlertController()
     var title1: String = ""
-
+    var pushVC: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUserDataFromPreference()
@@ -873,6 +874,38 @@ extension WWMBaseViewController{
                 }
                  NotificationCenter.default.post(name: Notification.Name(rawValue: "notificationLearn"), object: nil)
             }
+        }
+    }
+}
+
+//BASS-999
+extension WWMBaseViewController{
+    func invalidURLPopUp(pushVC: String, title1: String){
+        self.pushVC = pushVC
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertPopupView.lblTitle.text = title1
+        alertPopupView.lblSubtitle.isHidden = true
+        alertPopupView.btnOK.setTitle(KOK, for: .normal)
+        alertPopupView.btnClose.isHidden = true
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnPopUpAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @IBAction func btnPopUpAction(_ sender: Any) {
+        self.alertPopupView.removeFromSuperview()
+        if self.pushVC == "guidedTimer"{
+            self.navigationController?.popViewController(animated: true)
+        }else if self.pushVC == "learnIntro"{
+            self.callHomeVC1()
+        }else if self.pushVC == "learnOutro"{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
+            self.appPreference.setType(value: "learn")
+            vc.watched_duration = ""
+            self.navigationController?.pushViewController(vc, animated: false)
         }
     }
 }

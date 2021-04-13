@@ -501,12 +501,20 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
 //    }
     
     func playVideoURL(url: String){
-        let videoURL = URL(string: url)
-        let player = AVPlayer(url: videoURL!)
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            self.playerViewController.player!.play()
-        }
+        //BASS-999
+        let videoAsset = AVAsset(url: URL.init(string: url)!)
+        let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+        if assetLength > 0 {
+            let videoURL = URL(string: url)
+            let player = AVPlayer(url: videoURL!)
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                self.playerViewController.player!.play()
+            }
+        }else{
+            self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+            return
+        }        
     }
     
     func xibCall(imgURL: String){

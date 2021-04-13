@@ -79,7 +79,17 @@ class WWMLearnTimerVC: WWMBaseViewController {
         if WWMHelperClass.step_id == 4 || WWMHelperClass.step_id == 5{
             self.combinedMantraAPI()
         }else{
-            self.play(url: URL.init(string: WWMHelperClass.timer_audio)!)
+            //BASS-999
+            print("WWMHelperClass.timer_audio \(WWMHelperClass.timer_audio)")
+            let videoAsset = AVAsset(url: URL.init(string: WWMHelperClass.timer_audio)!)
+            let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+            if assetLength > 0 {
+                self.play(url: URL.init(string: WWMHelperClass.timer_audio)!)
+                print("WWMHelperClass.timer_audio... \(WWMHelperClass.timer_audio)")
+            }else{
+                self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+                return
+            }
         }
     }
     
@@ -178,7 +188,19 @@ class WWMLearnTimerVC: WWMBaseViewController {
             if sucess {
                 if let data = result["data"] as? [String: Any]{
                     if let audio_url = data["audio_url"] as? String{
-                        self.play(url: URL(string: audio_url)!)
+                        //BASS-999
+                        print("audio_url \(audio_url)")
+                        let videoAsset = AVAsset(url: URL.init(string: audio_url)!)
+                        let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+                        if assetLength > 0 {
+                            self.play(url: URL(string: audio_url)!)
+                            print("audio_url... \(audio_url)")
+                        }else{
+                            DispatchQueue.main.async {
+                                self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+                                return
+                            }
+                        }
                     }
                 }
                 //print("combinedMantra.... \(result)")
@@ -451,8 +473,6 @@ class WWMLearnTimerVC: WWMBaseViewController {
     }
     
     func play(url:URL) {
-        //print("playing \(url)")
-        
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             try AVAudioSession.sharedInstance().setActive(true)

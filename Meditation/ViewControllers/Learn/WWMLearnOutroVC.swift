@@ -20,9 +20,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
     var player: AVPlayer?
     var isPlayComplete: Bool = false
     var isPlay: Bool = false
-    
     var timer = Timer()
-    
     var watched_duration: String = ""
     
     override func viewDidLoad() {
@@ -56,9 +54,14 @@ class WWMLearnOutroVC: WWMBaseViewController {
         self.btnStart.layer.borderColor = UIColor(red: 0.0/255.0, green: 235.0/255.0, blue: 169.0/255.0, alpha: 1.0).cgColor
         self.btnStart.isHidden = true
         self.slider.isUserInteractionEnabled = false
-        
         self.btnReplay.setImage(UIImage(named: "pauseAudio"), for: .normal)
-        
+        //BASS-999
+        let videoAsset = AVAsset(url: URL.init(string: WWMHelperClass.outro_audio)!)
+        let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
+        if assetLength <= 0 {
+            self.invalidURLPopUp(pushVC: "learnOutro", title1: "Sorry something went wrong, Please try again later.")
+            return
+        }
         //print("outroaudio... \(WWMHelperClass.outro_audio)")
         self.audioPlay()
     }
@@ -139,9 +142,7 @@ class WWMLearnOutroVC: WWMBaseViewController {
     @IBAction func btnBeginClicked(_ sender: UIButton) {
         self.player?.pause()
         self.timer.invalidate()
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC
-        
         self.appPreference.setType(value: "learn")
         vc.watched_duration = self.watched_duration
         self.navigationController?.pushViewController(vc, animated: false)
