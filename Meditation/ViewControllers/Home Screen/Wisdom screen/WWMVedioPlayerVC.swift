@@ -262,7 +262,7 @@ extension WWMVedioPlayerVC: UIGestureRecognizerDelegate {
 
 extension WWMVedioPlayerVC: AVAudioPlayerDelegate{
     func playSound(name: String ) {
-        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
             //print("url not found")
             return
         }

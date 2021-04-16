@@ -398,7 +398,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     }
     
     func playAudioFile(fileName:String) {
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "wav") else { return }
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
         
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
@@ -497,7 +497,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
 
 extension WWMSplashLoaderVC{
     func playSound(name: String ) {
-        guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else {
             print("url not found")
             return
         }
