@@ -112,6 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         self.requestAuthorization()
+        //BASS-1000
         DispatchQueue.main.async {
             self.setLocalPush()
         }

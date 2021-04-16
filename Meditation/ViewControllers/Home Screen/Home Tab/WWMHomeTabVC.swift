@@ -197,6 +197,7 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillDisappear(true)
         
         //UIApplication.shared.isStatusBarHidden = false
+        //BASS-890
         DispatchQueue.main.async {
             self.lblName.center.y = self.lblName.center.y + 20
             self.lblStartedText.center.y = self.lblStartedText.center.y + 16
