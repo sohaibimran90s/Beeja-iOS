@@ -197,11 +197,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         super.viewWillDisappear(true)
         
         //UIApplication.shared.isStatusBarHidden = false
-        self.lblName.center.y = self.lblName.center.y + 20
-        self.lblStartedText.center.y = self.lblStartedText.center.y + 16
-        self.lblIntroText.center.y = self.lblIntroText.center.y + 20
-        self.imgPlayIcon.center.y = self.imgPlayIcon.center.y + 24
-        
+        //BASS-890
+        DispatchQueue.main.async {
+            self.lblName.center.y = self.lblName.center.y + 20
+            self.lblStartedText.center.y = self.lblStartedText.center.y + 16
+            self.lblIntroText.center.y = self.lblIntroText.center.y + 20
+            self.imgPlayIcon.center.y = self.imgPlayIcon.center.y + 24
+        }
         self.introView.isHidden = false
         
         if audioBool{

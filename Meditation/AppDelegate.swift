@@ -73,9 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         auth.sessionUserDefaultsKey = "current session"
         
         IQKeyboardManager.shared.enable = true
-      //  IQKeyboardManager.shared.enableDebugging = true
+        //  IQKeyboardManager.shared.enableDebugging = true
         //IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "Next"
-
+        
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         //Fabric.with([Crashlytics.self])
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         application.registerForRemoteNotifications()
         // To check the internet reachability
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do{
             try reachability!.startNotifier()
@@ -112,38 +112,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         
         self.requestAuthorization()
-        self.setLocalPush()
-        
+        //BASS-1000
+        DispatchQueue.main.async {
+            self.setLocalPush()
+        }
         callObserver.setDelegate(self, queue: nil)
         
         self.addShortCuts(application: application)
         NotificationCenter.default.addObserver(self, selector: #selector(addShortCutsRefresh), name: NSNotification.Name(rawValue: "logoutSuccessful"), object: nil)
         
         Installations.installations().installationID { (id, error) in
-          if let error = error {
-            print("Error fetching id: \(error)")
-            return
-          }
-          guard let id = id else { return }
-          print("Installation ID: \(id)")
+            if let error = error {
+                print("Error fetching id: \(error)")
+                return
+            }
+            guard let id = id else { return }
+            print("Installation ID: \(id)")
         }
         
-//      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
-//        Crashlytics.crashlytics().setUserID("userId Ehsan Test II")
-//        fatalError()
+        //      EH - forced crash for FB Crashlytics testing purpose only - don't uncomment
+        //        Crashlytics.crashlytics().setUserID("userId Ehsan Test II")
+        //        fatalError()
         
-//        Crashlytics.sharedInstance().crash()
-//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-//            AnalyticsParameterItemID: "id-Beeja-App-Started-123",
-//            AnalyticsParameterContentType: "App Login 123"
-//            ])
+        //        Crashlytics.sharedInstance().crash()
+        //        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+        //            AnalyticsParameterItemID: "id-Beeja-App-Started-123",
+        //            AnalyticsParameterContentType: "App Login 123"
+        //            ])
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         
         Logger.shared.setUpLogger()
         
         
         // EH - AppCenter
-       // MSAppCenter.start(appCenterSecretKey, withServices: [MSDistribute.self])
+        // MSAppCenter.start(appCenterSecretKey, withServices: [MSDistribute.self])
         
         return true
     }
