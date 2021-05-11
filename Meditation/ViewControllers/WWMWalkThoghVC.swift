@@ -209,6 +209,9 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreference.get30DaysURL()
         }else if value == "8weeks"{
             videoURL = self.appPreference.get8WeekURL()
+        }else if value == "21_days"{
+            // https://iris-worldwide.atlassian.net/browse/BASS-1021
+            // no need to assing a value as already set from WWM21DayChallengeVC.swift (videoURL = self.videoURL)
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }
