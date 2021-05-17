@@ -55,18 +55,20 @@ class WWMJournalImageTableViewCell: UITableViewCell {
         
         lblJournalDesc.adjustsFontSizeToFitWidth = false
         lblJournalDesc.lineBreakMode = .byTruncatingTail
-        
-        lblJournalDesc.text = data.text
-        
+
+        lblJournalDesc.text = data.title
         if data.mood_status.lowercased() == "post" {
             lblMeditationType.text = KPOSTMEDITATION
         }else if data.mood_status.lowercased() == "pre" {
             lblMeditationType.text = KPREMEDITATION
-        }else if lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
+        }else if data.text.contains("Journaling works best when we simply pour out a stream of consciousness into our") {
+            lblJournalDesc.text = data.text
             lblMeditationType.text = "How to journal"
-        }else if lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+        }else if data.text.contains("Keeping a journal is an amazing way to start and end your day"){
+            lblJournalDesc.text = data.text
             lblMeditationType.text = "Why Journal"
         }else{
+            lblJournalDesc.text = data.text
             lblMeditationType.text = "Journal Entry"
         }
         
@@ -129,15 +131,15 @@ class WWMJournalAudioTableViewCell: UITableViewCell {
         lblJournalDesc.adjustsFontSizeToFitWidth = false
         lblJournalDesc.lineBreakMode = .byTruncatingTail
         
-        lblJournalDesc.text = data.text
+        lblJournalDesc.text = data.title
         
         if data.mood_status.lowercased() == "post" {
             lblMeditationType.text = KPOSTMEDITATION
         }else if data.mood_status.lowercased() == "pre" {
             lblMeditationType.text = KPREMEDITATION
-        }else if lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
+        }else if data.text.contains("Journaling works best when we simply pour out a stream of consciousness into our"){
             lblMeditationType.text = "How to journal"
-        }else if lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+        }else if data.text.contains("Keeping a journal is an amazing way to start and end your day"){
             lblMeditationType.text = "Why Journal"
         }else{
             lblMeditationType.text = "Journal Entry"
