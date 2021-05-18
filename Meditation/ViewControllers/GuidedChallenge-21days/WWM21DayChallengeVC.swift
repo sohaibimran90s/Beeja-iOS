@@ -77,13 +77,13 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         
         self.lblTitle.text = "\(self.category.capitalized): \(self.subCategory.capitalized)"
         self.setNavigationBar(isShow: false, title: "21Day Challenge: Practical")
-        //print("guideTitleCount+++++++ \(guideTitleCount) id+++ \(id) self.category+++ \(self.category)")
-        //self.appPreference.set21ChallengeName(value: self.category)
+        print("self.category+++... \(self.category) self.catName+++... \(self.cat_name)")
         self.fetchGuidedDataFromDB()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.appPreference.set21ChallengeName(value: "21 Days challenge")
+        //BASS-937
+        self.appPreference.set21ChallengeName(value: self.cat_name)
     }
     
     func showHidRetakeView(){
@@ -102,7 +102,6 @@ class WWM21DayChallengeVC: WWMBaseViewController {
     }
     
     @IBAction func btnBack21DaysAction(_ sender: UIButton) {
-        
         self.appPreference.set21ChallengeName(value: self.cat_name)
         self.navigationController?.isNavigationBarHidden = false
         if self.type == "curatedCards"{
@@ -1220,7 +1219,8 @@ extension WWM21DayChallengeVC{
                 if let _ = result["success"] as? Bool {
                     print("success result... getGuidedListAPI \(result)")
                     WWMHelperClass.hideLoaderAnimate(on: self.view)
-                    self.appPreference.set21ChallengeName(value: "21 Days challenge")
+                    //BASS-937
+                    self.appPreference.set21ChallengeName(value: self.cat_name)
                     if let result = result["result"] as? [[String:Any]] {
                         
                         //print("audioList... \(result)")

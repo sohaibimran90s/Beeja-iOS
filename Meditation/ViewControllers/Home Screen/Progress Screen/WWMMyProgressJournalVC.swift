@@ -81,18 +81,22 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
                 cell.lblJournalDesc.adjustsFontSizeToFitWidth = false
                 cell.lblJournalDesc.lineBreakMode = .byTruncatingTail
                 
-                cell.lblJournalDesc.text = data.text
+                cell.lblJournalDesc.text = data.title
                 
+                print("data.mood_status### \(data.mood_status)")
                 if data.mood_status.lowercased() == "post" {
                     cell.lblMeditationType.text = KPOSTMEDITATION
                 }else if data.mood_status.lowercased() == "pre" {
                     cell.lblMeditationType.text = KPREMEDITATION
-                }else if cell.lblJournalDesc.text?.contains("Journaling works best when we simply pour out a stream of consciousness into our") ?? false{
+                }else if data.text.contains("Journaling works best when we simply pour out a stream of consciousness into our") {
+                    cell.lblJournalDesc.text = data.text
                     cell.lblMeditationType.text = "How to journal"
-                }else if cell.lblJournalDesc.text?.contains("Keeping a journal is an amazing way to start and end your day") ?? false{
+                }else if data.text.contains("Keeping a journal is an amazing way to start and end your day") {
                     cell.lblMeditationType.text = "Why Journal"
+                    cell.lblJournalDesc.text = data.text
                 }else{
                     cell.lblMeditationType.text = "Journal Entry"
+                    cell.lblJournalDesc.text = data.text
                 }
                 
                 let date = Date(timeIntervalSince1970: Double(data.date_time)!/1000)
@@ -130,7 +134,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalTableViewCell
 
             vc.lblTitle = cell.lblMeditationType.text ?? ""
-            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDesc = data.text
             vc.lblDateDay1 = cell.lblDateDay.text ?? ""
             vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
             vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
@@ -145,7 +149,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalImageTableViewCell
             
             vc.lblTitle = cell.lblMeditationType.text ?? ""
-            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDesc = data.text
             vc.lblDateDay1 = cell.lblDateDay.text ?? ""
             vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
             vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
@@ -161,7 +165,7 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             let cell = tableView.cellForRow(at: indexPath) as! WWMJournalAudioTableViewCell
             
             vc.lblTitle = cell.lblMeditationType.text ?? ""
-            vc.lblDesc = cell.lblJournalDesc.text ?? ""
+            vc.lblDesc = data.text
             vc.lblDateDay1 = cell.lblDateDay.text ?? ""
             vc.lblDateMonth1 = cell.lblDateMonth.text ?? ""
             vc.lblWeekDayAndTime1 = cell.lblWeekDayAndTime.text ?? ""
@@ -265,7 +269,6 @@ class WWMMyProgressJournalVC: WWMBaseViewController,UITableViewDelegate,UITableV
             for dict in journalDataDB {
                 if dict.meditation_type == "\(self.appPreference.getType())" {
                     if let jsonResult = self.convertToDictionaryArray(text: dict.data ?? "") {
-                        
                         self.journalData.removeAll()
                         for dict in jsonResult {
                             let journal = WWMJournalProgressData.init(json: dict)

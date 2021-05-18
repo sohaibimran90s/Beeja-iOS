@@ -318,29 +318,37 @@ class AddJournalVC: WWMBaseViewController {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
                                                   textDescrip: textJournal.textDescription ?? "",
                                                   type: Constant.JournalType.TEXT)
-        }
-        else {
-            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_TEXT_ENTRY")
-//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-//                                                          textDescrip: textJournal.textDescription ?? "", medCompObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
-            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference, title: textJournal.title ?? "",
-                                                  textDescrip: textJournal.textDescription ?? "",
-                                                  type: Constant.JournalType.TEXT)
-        }
-        
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
-            if (isSuccess) {
-                self.uploadTextAssets(journalId: journalId, textJournalObj: textJournal)
+            
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if (isSuccess) {
+                    self.uploadTextAssets(journalId: journalId, textJournalObj: textJournal)
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                    //save request in core-data
+                    self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                    //----------------
+                }
             }
-            else {
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-                self.errorAlert(title: "Error!", msg: error)
-                
-                //Prashant
-                //save request in core-data
-                self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
-                //----------------
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_TEXT_ENTRY")
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: textJournal.title ?? "", textDescrip: textJournal.textDescription ?? "", mediCompleteObj: self.mediCompleteObj, type: Constant.JournalType.TEXT)
+            
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.completeMeditationAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if (isSuccess) {
+                    print(journalId)
+                    self.uploadTextAssets(journalId: journalId, textJournalObj: textJournal)
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                    
+                    //Prashant
+                    //save request in core-data
+                    self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                    //----------------
+                }
             }
         }
     }
@@ -357,11 +365,12 @@ class AddJournalVC: WWMBaseViewController {
                 self.dismiss(animated: false, completion: nil)
             }
             else {
-                //Prashant
-                //self.navigateToDashboard()
-                self.completeMeditationAPI()
-//                self.navigationController!.popToRootViewController(animated: true)
-                //-------------------------
+                //prema BASS-1015
+                self.appPreference.setSessionAvailableData(value: true)
+                self.meditationHistoryListAPI()
+                WWMHelperClass.complete_percentage = "0"
+                self.navigationController?.isNavigationBarHidden = true
+                self.navigateToDashboard()
             }
             return
         }
@@ -380,13 +389,13 @@ class AddJournalVC: WWMBaseViewController {
             if (isSuccess) {
                 if (self.isAddJournal){
                     self.dismiss(animated: false, completion: nil)
-                }
-                else {
-                    //Prashant
-                    //self.navigateToDashboard()
-                    self.completeMeditationAPI()
-//                    self.navigationController!.popToRootViewController(animated: true)
-                    //-------------------------
+                }else {
+                    //prema BASS-1015
+                    self.appPreference.setSessionAvailableData(value: true)
+                    self.meditationHistoryListAPI()
+                    WWMHelperClass.complete_percentage = "0"
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigateToDashboard()
                 }
             }
             else {
@@ -408,25 +417,34 @@ class AddJournalVC: WWMBaseViewController {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                       title: "", textDescrip: imageJournal.title ?? "",
                                                       type: Constant.JournalType.IMAGE)
-        }
-        else {
-            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_IMAGE_ENTRY")
-//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: "",
-//                                                          textDescrip: imageJournal.title ?? "", medCompObj: self.mediCompleteObj,
-//                                                          type: Constant.JournalType.IMAGE)
-            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
-                                                      title: "", textDescrip: imageJournal.title ?? "",
-                                                      type: Constant.JournalType.IMAGE)
-        }
-        
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
-            if (isSuccess) {
-                self.uploadImageAssets(journalId: journalId, imageJournalObj: imageJournal)
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if (isSuccess) {
+                    self.uploadImageAssets(journalId: journalId, imageJournalObj: imageJournal)
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                }
             }
-            else {
-                WWMHelperClass.hideLoaderAnimate(on: self.view)
-                self.errorAlert(title: "Error!", msg: error)
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_IMAGE_ENTRY")
+            
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: imageJournal.title ?? "", textDescrip: imageJournal.title ?? "", mediCompleteObj: self.mediCompleteObj, type: Constant.JournalType.IMAGE )
+           
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.completeMeditationAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if (isSuccess) {
+                    print(journalId)
+                    self.uploadImageAssets(journalId: journalId, imageJournalObj: imageJournal)
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                    
+                    //Prashant
+                    //save request in core-data
+                    self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                    //----------------
+                }
             }
         }
     }
@@ -459,13 +477,13 @@ class AddJournalVC: WWMBaseViewController {
             if (isSuccess) {
                 if (self.isAddJournal){
                     self.dismiss(animated: false, completion: nil)
-                }
-                else {
-                    //Prashant
-                    //self.navigateToDashboard()
-                    self.completeMeditationAPI()
-//                    self.navigationController!.popToRootViewController(animated: true)
-                    //-------------------------
+                }else{
+                    //prema BASS-1015
+                    self.appPreference.setSessionAvailableData(value: true)
+                    self.meditationHistoryListAPI()
+                    WWMHelperClass.complete_percentage = "0"
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigateToDashboard()
                 }
             }
             else {
@@ -486,26 +504,35 @@ class AddJournalVC: WWMBaseViewController {
             jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
                                                   title: "",
                                                   textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if (isSuccess) {
+                    self.uploadAudioAssets(journalId: journalId, audioJournalObj: audioJournal)
+                }else {
+                    self.errorAlert(title: "Error!", msg: error)
+                }
+            }
         }else {
             WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_ENTRY")
-//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
-//                                                          title: "",
-//                                                          textDescrip: audioJournal.caption ?? "",
-//                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE)
-            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
-                                                  title: "",
-                                                  textDescrip: audioJournal.caption ?? "", type: Constant.JournalType.VOICE)
-        }
 
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
-            
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-            if (isSuccess) {
-                self.uploadAudioAssets(journalId: journalId, audioJournalObj: audioJournal)
-            }
-            else {
-                self.errorAlert(title: "Error!", msg: error)
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: audioJournal.caption ?? "", textDescrip: audioJournal.caption ?? "", mediCompleteObj: self.mediCompleteObj, type: Constant.JournalType.VOICE)
+           
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.completeMeditationAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if (isSuccess) {
+                    print(journalId)
+                    self.uploadAudioAssets(journalId: journalId, audioJournalObj: audioJournal)
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                    
+                    //Prashant
+                    //save request in core-data
+                    self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                    //----------------
+                }
             }
         }
     }
@@ -534,16 +561,15 @@ class AddJournalVC: WWMBaseViewController {
             if (isSuccess) {
                 if (self.isAddJournal){
                     self.dismiss(animated: false, completion: nil)
+                }else {
+                    //prema BASS-1015
+                    self.appPreference.setSessionAvailableData(value: true)
+                    self.meditationHistoryListAPI()
+                    WWMHelperClass.complete_percentage = "0"
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigateToDashboard()
                 }
-                else {
-                    //Prashant
-                    //self.navigateToDashboard()
-                    self.completeMeditationAPI()
-//                    self.navigationController!.popToRootViewController(animated: true)
-                    //-------------------------
-                }
-            }
-            else {
+            }else {
                self.errorAlert(title: "", msg: errorMsg)
             }
         }
@@ -553,7 +579,7 @@ class AddJournalVC: WWMBaseViewController {
     func audioToTextJournalLog() {
         
         guard let audioToTextJournal = self.audioToTextContainerVC?.audioToTextJournalExperienceLog() else {return}
-
+        
         var jsonBody: Any = ""
         if (self.isAddJournal) {
             WWMHelperClass.sendEventAnalytics(contentType: "PRE_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
@@ -561,37 +587,38 @@ class AddJournalVC: WWMBaseViewController {
                                                   title: audioToTextJournal.caption ?? "",
                                                   textDescrip: audioToTextJournal.transcribingText ?? "",
                                                   type: Constant.JournalType.VOICE_TO_TEXT)
-        }
-        else {
-            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
-//            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference,
-//                                                          title: audioToTextJournal.caption ?? "",
-//                                                          textDescrip: audioToTextJournal.transcribingText ?? "",
-//                                                          medCompObj: self.mediCompleteObj, type: Constant.JournalType.VOICE_TO_TEXT)
-            jsonBody = RequestBody.addJournalBody(appPreference: self.appPreference,
-                                                  title: audioToTextJournal.caption ?? "",
-                                                  textDescrip: audioToTextJournal.transcribingText ?? "",
-                                                  type: Constant.JournalType.VOICE_TO_TEXT)
-        }
-
-        WWMHelperClass.showLoaderAnimate(on: self.view)
-        DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
-            
-            WWMHelperClass.hideLoaderAnimate(on: self.view)
-            if (isSuccess) {
-                if (self.isAddJournal){
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.addJournalAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                
+                WWMHelperClass.hideLoaderAnimate(on: self.view)
+                if (isSuccess) {
                     self.dismiss(animated: false, completion: nil)
-                }
-                else {
-                    //Prashant
-                    //self.navigateToDashboard()
-                    self.completeMeditationAPI()
-//                    self.navigationController!.popToRootViewController(animated: true)
-                    //-------------------------
+                }else{
+                    self.errorAlert(title: "Error!", msg: error)
                 }
             }
-            else {
-                self.errorAlert(title: "Error!", msg: error)
+        }else {
+            WWMHelperClass.sendEventAnalytics(contentType: "POST_JOURNAL ", itemId: "SUBMIT", itemName: "ADD_VOICE_TO_TEXT_ENTRY")
+
+            jsonBody = RequestBody.meditationCompleteBody(appPreference: self.appPreference, title: audioToTextJournal.caption ?? "", textDescrip: audioToTextJournal.transcribingText ?? "", mediCompleteObj: self.mediCompleteObj, type: Constant.JournalType.VOICE_TO_TEXT)
+            
+            WWMHelperClass.showLoaderAnimate(on: self.view)
+            DataManager.sharedInstance.completeMeditationAPI(body: jsonBody) { (isSuccess, journalId, error) in
+                if isSuccess {
+                    self.appPreference.setSessionAvailableData(value: true)
+                    self.meditationHistoryListAPI()
+                    WWMHelperClass.complete_percentage = "0"
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.navigateToDashboard()
+                }else {
+                    WWMHelperClass.hideLoaderAnimate(on: self.view)
+                    self.errorAlert(title: "Error!", msg: error)
+                    
+                    //Prashant
+                    //save request in core-data
+                    self.saveJournalDatatoDB(param: jsonBody as! [String:Any])
+                    //----------------
+                }
             }
         }
     }
@@ -632,8 +659,8 @@ class AddJournalVC: WWMBaseViewController {
         WWMHelperClass.saveDb()
     }
     //----------------
-    
-    func completeMeditationAPI() {
+    /*
+    func completeMeditationAPI(title: String, desc: String) {
         
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
         if nintyFivePercentDB.count > 0{
@@ -655,7 +682,7 @@ class AddJournalVC: WWMBaseViewController {
             "user_id":self.appPreference.getUserID(),
             "meditation_type":mediCompleteObj.type,
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":"",
+            "tell_us_why":desc,
             "prep_time":mediCompleteObj.prepTime,
             "meditation_time":mediCompleteObj.meditationTime,
             "rest_time":mediCompleteObj.restTime,
@@ -664,14 +691,14 @@ class AddJournalVC: WWMBaseViewController {
             "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
             "complete_percentage": WWMHelperClass.complete_percentage,
             "is_complete": "1",
-            "title": "",
+            "title": title,
             "journal_type": "",
             "challenge_day_id":WWMHelperClass.day_30_name,
             "challenge_type":WWMHelperClass.day_type
 
             ] as [String : Any]
         
-        //print("param meterlog... \(param)")
+        print("param meterlog... \(param)")
         
         WWMWebServices.requestAPIWithBody(param: param, urlString: URL_MEDITATIONCOMPLETE, context: "AddJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
@@ -687,6 +714,7 @@ class AddJournalVC: WWMBaseViewController {
             }
         }
     }
+     */
     
     func saveToDB(param:[String:Any]) {
         let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete

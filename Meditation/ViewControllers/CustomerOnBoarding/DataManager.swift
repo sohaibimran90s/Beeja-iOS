@@ -67,6 +67,25 @@ class DataManager: NSObject {
             }
         }
     }
+    
+    func completeMeditationAPI(body: Any, completion:@escaping (Bool, Int, String) -> Void) {
+        
+        WWMWebServices.requestAPIWithBody(param: body as! [String : Any], urlString: URL_MEDITATIONCOMPLETE, context: "WWMMyProgressJournalVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
+            if sucess {
+                let journalID = (result["journal_id"] as AnyObject? as? Int) ?? 0
+                if (journalID != 0) {
+                    
+                    completion(true, journalID, "")
+                }
+                else {
+                    completion(false, 0, "")
+                }
+            }
+            else {
+                completion(false, 0, error!.localizedDescription)
+            }
+        }
+    }
 //    multipartFormData.append(imageData, withName: "audios[]",
 //                             fileName: "\(Date().timeIntervalSince1970).m4a", mimeType: "audio/m4a")
 
