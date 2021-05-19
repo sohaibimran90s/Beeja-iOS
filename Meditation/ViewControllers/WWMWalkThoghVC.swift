@@ -211,7 +211,14 @@ class WWMWalkThoghVC: WWMBaseViewController {
             videoURL = self.appPreference.get8WeekURL()
         }else if value == "21_days"{
             // https://iris-worldwide.atlassian.net/browse/BASS-1021
-            // no need to assing a value as already set from WWM21DayChallengeVC.swift (videoURL = self.videoURL)
+            // no need to assing a value if already set from WWM21DayChallengeVC.swift (videoURL = self.videoURL)
+            if videoURL == "" {
+                if self.subCategory == "practical" {
+                    videoURL = self.appPreference.getPracticalIntroURL()
+                } else if self.subCategory == "spiritual" {
+                    videoURL = self.appPreference.getSpiritualIntroURL()
+                }
+            }
         }else{
             videoURL = self.appPreffrence.getLearnPageURL()
         }

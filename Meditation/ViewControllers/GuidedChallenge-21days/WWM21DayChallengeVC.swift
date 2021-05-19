@@ -441,6 +441,7 @@ class WWM21DayChallengeVC: WWMBaseViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
 
         vc.videoURL = self.intro_url
+        vc.subCategory = self.subCategory
         vc.value = "21_days"
         self.navigationController?.pushViewController(vc, animated: false)
     }

@@ -174,8 +174,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         if reachable.isConnectedToNetwork() {
                             WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_PRAC", itemName: "21DAYS")
+                            self.appPreference.setPracticalIntroURL(value: (dict as AnyObject).intro_url ?? "")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                                                        
                             vc.value = "curatedCards"
                             vc.emotionId = ""
                             vc.id = (dict as AnyObject).guided_id ?? ""
@@ -222,8 +222,8 @@ class WWM21DayChallengeTabVC: WWMBaseViewController, IndicatorInfoProvider {
                         
                         if reachable.isConnectedToNetwork() {
                             WWMHelperClass.sendEventAnalytics(contentType: "CHALLENGE", itemId: "CHALLENGE_ACTIONED_SPIR", itemName: "21DAYS")
+                            self.appPreference.setSpiritualIntroURL(value: (dict as AnyObject).intro_url ?? "")
                             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMWalkThoghVC") as! WWMWalkThoghVC
-                                                        
                             vc.value = "curatedCards"
                             vc.emotionId = ""
                             vc.id = (dict as AnyObject).guided_id ?? ""
