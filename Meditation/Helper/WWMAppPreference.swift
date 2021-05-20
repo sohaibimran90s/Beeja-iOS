@@ -275,6 +275,14 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "myntraId")
     }
     
+    func setServerError(value: String) {
+        defaults.set(value, forKey: "serverError")
+    }
+    
+    func getServerError() -> String {
+        return UserDefaults.standard.string(forKey: "serverError") ?? "0"
+    }
+    
     //get myntra id
     func getMyntraId() -> String {
         return UserDefaults.standard.string(forKey: "myntraId") ?? "1"

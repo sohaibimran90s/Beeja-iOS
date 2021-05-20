@@ -13,13 +13,13 @@ import SwiftyRSA
 
 class WWMWebServices {
     
-    
-    
     typealias ASCompletionBlockAsDictionary = (_ result: Dictionary<String, Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsArray = (_ result: Array<Any>, _ error: Error?, _ success: Bool) -> Void
     typealias ASCompletionBlockAsImage = (_ result: UIImage, _ error: Error?, _ success: Bool) -> Void
     
     //MARK: - Service Methods
+    static var alertPopupView = WWMAlertController()
+    static var appPreffrence = WWMAppPreference()
     
     class func requestAPIWithBody(param:[String:Any], urlString:String, context: String, headerType:String, isUserToken:Bool, completionHandler:@escaping ASCompletionBlockAsDictionary) -> Void {
         let configuration = URLSessionConfiguration.default
@@ -123,6 +123,15 @@ class WWMWebServices {
                     let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
                     print("Result: \(myString ?? "")")
                     
+                    if let httpResponse = response as? HTTPURLResponse {
+                        print("error....... \(httpResponse.statusCode) urlString... \(urlString)")
+                        if httpResponse.statusCode == 500 || httpResponse.statusCode == 404{
+                            
+                            //self.connectionLost()
+                        }
+                    }
+                    
+                    
                     completionHandler(json  as! Dictionary<String, Any>, nil, true)
                     return
                 }catch {
@@ -139,6 +148,30 @@ class WWMWebServices {
             }
         })
         postDataTask.resume()
+    }
+    
+    class func connectionLost(){
+        alertPopupView = UINib(nibName: "WWMAlertController", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMAlertController
+        let window = UIApplication.shared.keyWindow!
+        alertPopupView.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
+        alertPopupView.btnOK.layer.borderWidth = 2.0
+        alertPopupView.btnOK.layer.borderColor = UIColor.init(hexString: "#00eba9")!.cgColor
+        alertPopupView.lblTitle.text = kAlertTitle
+        alertPopupView.lblSubtitle.text = internetConnectionLostMsg
+        alertPopupView.btnOK.setTitle(KRETRY, for: .normal)
+        alertPopupView.btnClose.isHidden = true
+        alertPopupView.btnOK.addTarget(self, action: #selector(btnDoneAction(_:)), for: .touchUpInside)
+        window.rootViewController?.view.addSubview(alertPopupView)
+    }
+    
+    @objc class func btnDoneAction(_ sender: Any) {
+        WWMWebServices.appPreffrence.set21ChallengeName(value: "")
+        WWMWebServices.appPreffrence.setIsProfileCompleted(value: true)
+        WWMWebServices.appPreffrence.setType(value: "timer")
+        WWMWebServices.appPreffrence.setServerError(value: "1")
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "WWMTabBarVC") as! WWMTabBarVC
+        UIApplication.shared.keyWindow?.rootViewController = vc
     }
     
     class func request(params : [String:Any], urlString : String, imgData : Data?, image: UIImage?, isHeader : Bool , completionHandler: @escaping ASCompletionBlockAsDictionary) -> Void {

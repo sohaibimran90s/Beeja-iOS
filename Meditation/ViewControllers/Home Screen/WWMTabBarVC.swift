@@ -509,6 +509,8 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
             "user_id": self.appPreffrence.getUserID()
         ]
         
+        print("param... \(param)")
+        
         WWMWebServices.requestAPIWithBody(param: param as [String : Any] , urlString: URL_FORCELOGOUT, context: "check_user", headerType: kPOSTHeader, isUserToken: true){ (result, error, sucess) in
             if sucess {
                 //print(result["success"] as? Bool ?? true)
