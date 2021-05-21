@@ -512,7 +512,7 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 self.playerViewController.player!.play()
             }
         }else{
-            self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+            self.invalidURLPopUp(pushVC: "community", title1: "Sorry something went wrong, Please try again later.")
             return
         }        
     }

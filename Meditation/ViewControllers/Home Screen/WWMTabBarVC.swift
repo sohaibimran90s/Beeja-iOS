@@ -556,12 +556,14 @@ class WWMTabBarVC: ESTabBarController,UITabBarControllerDelegate,CLLocationManag
     
     func logoutAPI() {
         
+        self.appPreffrence.setServerError(value: "0")
         WWMHelperClass.sendEventAnalytics(contentType: "WWMTabBarVC", itemId: "LOGOUT", itemName: "")
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [
             "token" : self.appPreffrence.getToken(),
             "user_id": self.appPreffrence.getUserID()
         ]
+        
         WWMWebServices.requestAPIWithBody(param:param as [String : Any] , urlString: URL_LOGOUT, context: "WWMSettingsVC", headerType: kPOSTHeader, isUserToken: true) { (result, error, sucess) in
             if sucess {
                 self.appPreffrence.setIsLogin(value: false)

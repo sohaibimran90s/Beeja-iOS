@@ -1395,7 +1395,7 @@ class WWMSettingsVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func logoutAPI() {
-
+        self.appPreference.setServerError(value: "0")
         WWMHelperClass.sendEventAnalytics(contentType: "SETTINGS", itemId: "LOGOUT", itemName: "")
         WWMHelperClass.showLoaderAnimate(on: self.view)
         let param = [

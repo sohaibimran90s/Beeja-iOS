@@ -279,6 +279,17 @@ class WWMAppPreference: NSObject {
         defaults.set(value, forKey: "serverError")
     }
     
+    //server_down_message
+    func setServerDownMessage(value: String) {
+        defaults.set(value, forKey: "server_down_message")
+    }
+    
+    //The Beeja server is currently undergoing maintenance. Try our Timer Meditations for Joy and check back soon. Thanks!
+    
+    func getServerDownMessage() -> String {
+        return UserDefaults.standard.string(forKey: "server_down_message") ?? ""
+    }
+    
     func getServerError() -> String {
         return UserDefaults.standard.string(forKey: "serverError") ?? "0"
     }
