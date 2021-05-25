@@ -124,6 +124,7 @@ class WWMWebServices {
                     let myString = String(data: jsonData!, encoding: String.Encoding.utf8)
                     print("Result: \(myString ?? "")")
                     
+                    //BASS-984
                     if let httpResponse = response as? HTTPURLResponse {
                         print("error....... \(httpResponse.statusCode) urlString... \(urlString)")
                         if httpResponse.statusCode == 500 || httpResponse.statusCode == 404{

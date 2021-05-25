@@ -285,7 +285,7 @@ class WWMAppPreference: NSObject {
     }
     
     //The Beeja server is currently undergoing maintenance. Try our Timer Meditations for Joy and check back soon. Thanks!
-    
+    //BASS-984
     func getServerDownMessage() -> String {
         return UserDefaults.standard.string(forKey: "server_down_message") ?? ""
     }
@@ -293,6 +293,7 @@ class WWMAppPreference: NSObject {
     func getServerError() -> String {
         return UserDefaults.standard.string(forKey: "serverError") ?? "0"
     }
+    //BASS-984
     
     //get myntra id
     func getMyntraId() -> String {
