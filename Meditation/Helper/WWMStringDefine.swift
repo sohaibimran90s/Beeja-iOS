@@ -351,7 +351,7 @@ enum API_ENDPOINTS {
 let kBETA_ENABLED = true
 
 // we will use buildType for poinintg to backend API endpoints
-let kBUILD_TYPE = API_ENDPOINTS.LIVE
+let kBUILD_TYPE = API_ENDPOINTS.STAGEING
 
 
 /*dynamic webView URLs
