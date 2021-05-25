@@ -480,6 +480,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                             baseUrlKey = "testing_url"
                 }
                 
+                if let server_down_message = result["server_down_message"] as? String{
+                    self.appPreffrence.setServerDownMessage(value: server_down_message)
+                }
+                
                 if let baseUrl = result[baseUrlKey] as? String{
                     KUSERDEFAULTS.set(baseUrl, forKey: KBASEURL)
                 }else {
@@ -809,6 +813,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                 self.appPreference.set21ChallengeName(value: "")
             }
         }
+        self.appPreference.setServerError(value: "0")
         
         self.saveContext()
     }

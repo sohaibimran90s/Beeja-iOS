@@ -407,7 +407,6 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         self.type = "timer"
         self.guided_type = ""
-        
         self.view.endEditing(true)
         self.appPreffrence.set21ChallengeName(value: "")
         self.appPreference.setIsProfileCompleted(value: true)
@@ -429,13 +428,13 @@ class WWMHomeTabVC: WWMBaseViewController {
         
         guided_type = "practical"
         self.type = "guided"
-        
         self.view.endEditing(true)
         self.appPreffrence.set21ChallengeName(value: "")
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
         self.appPreference.setGuideType(value: self.guided_type)
         self.appPreference.setGuideTypeFor3DTouch(value: guided_type)
+        self.appPreference.setServerError(value: "0")
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()
@@ -452,10 +451,10 @@ class WWMHomeTabVC: WWMBaseViewController {
         self.type = "learn"
         self.guided_type = ""
         self.appPreffrence.set21ChallengeName(value: "")
-        
         self.view.endEditing(true)
         self.appPreference.setIsProfileCompleted(value: true)
         self.appPreference.setType(value: self.type)
+        self.appPreference.setServerError(value: "0")
         
         DispatchQueue.global(qos: .background).async {
             self.meditationApi()

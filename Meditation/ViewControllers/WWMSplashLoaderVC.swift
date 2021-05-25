@@ -20,7 +20,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     var animationSonicLogoView = AnimationView()
     var player: AVAudioPlayer?
     var playerLoaderAudio:  AVAudioPlayer?
-    
+    let appPreffrence = WWMAppPreference()
     
     //to check which audio is play
     var flag = false
@@ -52,7 +52,7 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
     func showForceUpdate() {
         WWMWebServices.requestAPIWithBodyForceUpdate(urlString: "https://beeja.s3.eu-west-2.amazonaws.com/mobile/config/updatetwo.json", context: "WWMSplashLoaderVC") { (result, error, success) in
             if success {
-                
+                                
                 //set url from backend using constant*
 //                if kBETA_ENABLED{
 //                    if let baseUrl = result["base_url"] as? String{
@@ -81,6 +81,10 @@ class WWMSplashLoaderVC: WWMBaseViewController, AVAudioPlayerDelegate {
                     case .UAT:
                             print(".UAT")
                             baseUrlKey = "testing_url"
+                }
+                
+                if let server_down_message = result["server_down_message"] as? String{
+                    self.appPreffrence.setServerDownMessage(value: server_down_message)
                 }
                 
                 if let baseUrl = result[baseUrlKey] as? String{

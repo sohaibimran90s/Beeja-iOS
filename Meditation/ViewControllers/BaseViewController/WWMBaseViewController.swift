@@ -897,9 +897,11 @@ extension WWMBaseViewController{
     
     @IBAction func btnPopUpAction(_ sender: Any) {
         self.alertPopupView.removeFromSuperview()
-        if self.pushVC == "guidedTimer"{
+        if self.pushVC == "homeTab"{
             self.navigationController?.popViewController(animated: true)
         }else if self.pushVC == "learnIntro"{
+            self.callHomeVC1()
+        }else if self.pushVC == "timer"{
             self.callHomeVC1()
         }else if self.pushVC == "learnOutro"{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "WWMLearnCongratsVC") as! WWMLearnCongratsVC

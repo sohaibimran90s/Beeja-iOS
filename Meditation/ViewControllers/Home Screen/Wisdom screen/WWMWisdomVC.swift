@@ -105,7 +105,7 @@ class WWMWisdomVC: WWMBaseViewController,IndicatorInfoProvider,UICollectionViewD
             let videoAsset = AVAsset(url: URL.init(string: data.video_Url)!)
             let assetLength = Float(videoAsset.duration.value) / Float(videoAsset.duration.timescale)
             if assetLength <= 0 {
-                self.invalidURLPopUp(pushVC: "timer", title1: "Sorry something went wrong, Please try again later.")
+                self.invalidURLPopUp(pushVC: "wisdom", title1: "Sorry something went wrong, Please try again later.")
                 return
             }
             
