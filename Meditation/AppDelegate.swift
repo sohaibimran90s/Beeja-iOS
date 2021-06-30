@@ -370,14 +370,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         
                 }
             }else{
-                
-                WWMHelperClass.loginSignupBool = true
-                    
-                let rootViewController = self.window!.rootViewController as! UINavigationController
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                rootViewController.pushViewController(profileViewController, animated: false)
-                
+                //BASS-1043
+                DispatchQueue.main.async {
+                    WWMHelperClass.loginSignupBool = true
+                    let rootViewController = self.window!.rootViewController as! UINavigationController
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                    rootViewController.pushViewController(profileViewController, animated: false)
+                }
             }
             
             break
