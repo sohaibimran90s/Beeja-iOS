@@ -1059,12 +1059,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
                     }else{
                         strDate = dateFormate.string(from: Date())
-                                                    
-                        if reminderTime!.contains("AM") || reminderTime!.contains("am") || reminderTime!.contains("pm") || reminderTime!.contains("PM"){
+                        //BASS-1044
+                        if reminderTime?.contains("AM") ?? false || reminderTime?.contains("am") ?? false || reminderTime?.contains("pm") ?? false || reminderTime?.contains("PM") ?? false{
 
-                            strDate = strDate + " \(reminderTime!)"
+                            strDate = strDate + " \(reminderTime ?? "00:00:0000")"
                         }else{
-                            strDate = strDate + " \(reminderTime!) AM"
+                            strDate = strDate + " \(reminderTime ?? "00:00:0000") AM"
                         }
                         
                         dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"
