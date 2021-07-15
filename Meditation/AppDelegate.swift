@@ -370,14 +370,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         
                 }
             }else{
-                
-                WWMHelperClass.loginSignupBool = true
-                    
-                let rootViewController = self.window!.rootViewController as! UINavigationController
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
-                rootViewController.pushViewController(profileViewController, animated: false)
-                
+                //BASS-1043
+                DispatchQueue.main.async {
+                    WWMHelperClass.loginSignupBool = true
+                    let rootViewController = self.window!.rootViewController as! UINavigationController
+                    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let profileViewController = mainStoryboard.instantiateViewController(withIdentifier: "WWMLoginVC") as! WWMLoginVC
+                    rootViewController.pushViewController(profileViewController, animated: false)
+                }
             }
             
             break
@@ -1059,12 +1059,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                         date = self.getRequiredFormat(dateStrInTwentyFourHourFomat: strDate)
                     }else{
                         strDate = dateFormate.string(from: Date())
-                                                    
-                        if reminderTime!.contains("AM") || reminderTime!.contains("am") || reminderTime!.contains("pm") || reminderTime!.contains("PM"){
+                        //BASS-1044
+                        if reminderTime?.contains("AM") ?? false || reminderTime?.contains("am") ?? false || reminderTime?.contains("pm") ?? false || reminderTime?.contains("PM") ?? false{
 
-                            strDate = strDate + " \(reminderTime!)"
+                            strDate = strDate + " \(reminderTime ?? "00:00:0000")"
                         }else{
-                            strDate = strDate + " \(reminderTime!) AM"
+                            strDate = strDate + " \(reminderTime ?? "00:00:0000") AM"
                         }
                         
                         dateFormate.dateFormat = "dd:MM:yyyy hh:mm a"

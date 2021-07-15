@@ -624,13 +624,15 @@ class WWMMoodMeterVC: WWMBaseViewController,CircularSliderDelegate {
         let mood = self.arrMoodData[selectedIndex]
 
         //print("selected index slider... \(selectedIndex) name+++ \(self.arrMoodData[selectedIndex].name) ")
-        self.lblMoodMeter.text = self.arrMoodData[selectedIndex].name
-        self.imgMoodMeter.image = UIImage(named: self.arrMoodData[selectedIndex].name)
-        
-        //print("selected mood = \(mood.name) selected mood id = \(mood.id)")
-        self.appPreference.setMoodId(value: "\(mood.id)")
-        self.btnConfirm.isHidden = false
-        self.lblMoodselect.text = KMOVEDOTSELECT
+        //BASS-1042
+        DispatchQueue.main.async {
+            self.lblMoodMeter.text = self.arrMoodData[self.selectedIndex].name
+            self.imgMoodMeter.image = UIImage(named: self.arrMoodData[self.selectedIndex].name)
+            //print("selected mood = \(mood.name) selected mood id = \(mood.id)")
+            self.appPreference.setMoodId(value: "\(mood.id)")
+            self.btnConfirm.isHidden = false
+            self.lblMoodselect.text = KMOVEDOTSELECT
+        }
     }
     
 

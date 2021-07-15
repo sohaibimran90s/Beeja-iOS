@@ -130,12 +130,12 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
                 self.totalDuration = 0
             }else{
                 self.totalDuration  = Int(round(duration)/60)
+                player?.volume = 1.0
+                player?.play()
+                //BASS-1041
+                timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+                self.isPlayer = true
             }
-            
-            player?.volume = 1.0
-            player?.play()
-            self.isPlayer = true
-            
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -172,10 +172,8 @@ class WWMGuidedMeditationTimerVC: WWMBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        UIApplication.shared.isIdleTimerDisabled = true
-        
+        UIApplication.shared.isIdleTimerDisabled = true        
         self.createColorSets()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
     }
     
     //MARK: Stop Payer
