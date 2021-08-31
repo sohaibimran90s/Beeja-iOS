@@ -103,15 +103,15 @@ class AudioContainerVC: UIViewController {
     func checkRecordPermission()
     {
         switch AVAudioSession.sharedInstance().recordPermission {
-        case AVAudioSessionRecordPermission.granted:
+        case AVAudioSession.RecordPermission.granted:
             isAudioRecordingGranted = true
             self.checkPermission()
             break
-        case AVAudioSessionRecordPermission.denied:
+        case AVAudioSession.RecordPermission.denied:
             isAudioRecordingGranted = false
             self.checkPermission()
             break
-        case AVAudioSessionRecordPermission.undetermined:
+        case AVAudioSession.RecordPermission.undetermined:
             AVAudioSession.sharedInstance().requestRecordPermission({ (allowed) in
                     if allowed {
                         self.isAudioRecordingGranted = true

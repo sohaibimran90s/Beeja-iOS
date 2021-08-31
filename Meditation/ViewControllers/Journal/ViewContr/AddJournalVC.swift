@@ -82,7 +82,14 @@ class AddJournalVC: WWMBaseViewController {
         self.navigationController?.view.backgroundColor = .clear
         
         let button: UIButton = UIButton(type: UIButton.ButtonType.custom)
-        button.setImage(UIImage(named: "CloseBtn.png"), for: UIControl.State.normal)
+        if (self.isAddJournal) {
+            button.setImage(UIImage(named: "CloseBtn.png"), for: UIControl.State.normal)
+        } else {
+            let attributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white]
+            let attributeString = NSMutableAttributedString(string: KSKIP,
+                                                                attributes: attributes)
+            button.setAttributedTitle(attributeString, for: .normal)
+        }
         button.addTarget(self, action: #selector(closeButtonAction), for: UIControl.Event.touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         button.contentHorizontalAlignment = .right
@@ -135,7 +142,12 @@ class AddJournalVC: WWMBaseViewController {
             self.dismiss(animated: false, completion: nil)
         }
         else {
-            self.navigationController?.popViewController(animated: true)
+            //self.navigationController?.popViewController(animated: true)
+            self.appPreference.setSessionAvailableData(value: true)
+            self.meditationHistoryListAPI()
+            WWMHelperClass.complete_percentage = "0"
+            self.navigationController?.isNavigationBarHidden = true
+            self.navigateToDashboard()
         }
     }
     

@@ -136,7 +136,7 @@ class WWMWebServices {
                                     WWMWebServices.popUp = "1"
                                 }
                                 
-                                self.serverDownTimePopUp()
+                                //self.serverDownTimePopUp()
                             }
                         }
                     }
