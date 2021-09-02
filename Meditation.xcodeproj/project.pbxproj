@@ -3864,7 +3864,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.210901;
+				MARKETING_VERSION = 5.1.210902;
 				MTL_ENABLE_DEBUG_INFO = "DEBUG = 1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3884,8 +3884,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Meditation/Meditation.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Will Williams Meditation Limited (5QJX36A56H)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QJX36A56H;
@@ -3905,10 +3905,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.1.210901;
+				MARKETING_VERSION = 5.1.210902;
 				PRODUCT_BUNDLE_IDENTIFIER = com.beejameditation.beeja;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Beeja_Distribution_Profile;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Meditation/ThirdParty/Crypto/Meditation-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.2;
