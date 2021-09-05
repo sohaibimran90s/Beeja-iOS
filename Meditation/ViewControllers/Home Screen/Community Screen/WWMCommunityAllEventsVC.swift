@@ -37,7 +37,7 @@ class WWMCommunityAllEventsVC: WWMBaseViewController,UICollectionViewDelegate,UI
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EventCell", for: indexPath) as! WWMCommunityCollectionViewCell
         let data = self.arrAllEvent[indexPath.row]
                 
-        cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
         cell.lblTitle.text = data.eventTitle
         
         

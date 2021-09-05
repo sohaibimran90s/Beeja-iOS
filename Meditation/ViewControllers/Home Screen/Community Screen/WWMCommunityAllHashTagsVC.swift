@@ -47,10 +47,10 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         let data = self.arrAllHashTag[indexPath.row]
         if data.type == "image" || data.type == "Image"{
             cell.thumbImg.isHidden = true
-            cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
         }else{
             cell.thumbImg.isHidden = false
-            cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+            cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
         }
         
         return cell
@@ -89,7 +89,7 @@ class WWMCommunityAllHashTagsVC: WWMBaseViewController,UICollectionViewDelegate,
         alertZoomImgPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         
         
-        alertZoomImgPopup.imgView.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        alertZoomImgPopup.imgView.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
         alertZoomImgPopup.backBtn.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         window.rootViewController?.view.addSubview(alertZoomImgPopup)

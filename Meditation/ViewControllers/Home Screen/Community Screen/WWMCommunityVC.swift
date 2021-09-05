@@ -287,8 +287,8 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 for imageDictionary in images {
                     
                     let imageUrl = imageDictionary["url"] as? String ?? ""
-                    //print("\(imageUrl)")
-                    cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### imageUrl = \(imageUrl)")
+                    cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }
             }else if collectionView.tag == 2 {
                 if indexPath.row == 5 {
@@ -299,10 +299,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 let data = self.communityData.hashtags[indexPath.row]
                 if data.type == "image" || data.type == "Image"{
                     cell.thumbImg.isHidden = true
-                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### data.url = \(data.url)")
+                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }else{
                     cell.thumbImg.isHidden = false
-                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### data.thumbnail = \(data.thumbnail)")
+                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }
             }
         }else {
@@ -315,15 +317,16 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 for imageDictionary in images {
                     
                     let imageUrl = imageDictionary["url"] as? String ?? ""
-                    //print("\(imageUrl)")
-                    cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### imageUrl = \(imageUrl)")
+                    cell.imgView.sd_setImage(with: URL.init(string: imageUrl), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }
                 
             }else if collectionView.tag == 1 {
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EventCell", for: indexPath) as! WWMCommunityCollectionViewCell
                 let data = self.communityData.events[indexPath.row]
                 
-                cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                //print("###### image with placeholder ###### data.imageUrl = \(data.imageUrl)")
+                cell.imgView.sd_setImage(with: URL.init(string: data.imageUrl), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 cell.lblTitle.text = data.eventTitle
         
             }else if collectionView.tag == 2 {
@@ -336,10 +339,12 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
                 
                 if data.type == "image" || data.type == "Image"{
                     cell.thumbImg.isHidden = true
-                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### data.url = \(data.url)")
+                    cell.imgView.sd_setImage(with: URL.init(string: data.url), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }else{
                     cell.thumbImg.isHidden = false
-                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+                    //print("###### image with placeholder ###### data.thumbnail = \(data.thumbnail)")
+                    cell.imgView.sd_setImage(with: URL.init(string: data.thumbnail), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
                 }
             }
         }
@@ -521,12 +526,10 @@ class WWMCommunityVC: WWMBaseViewController,UITableViewDelegate,UITableViewDataS
         alertZoomImgPopup = UINib(nibName: "WWMZoomImgViewPopUp", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! WWMZoomImgViewPopUp
         let window = UIApplication.shared.keyWindow!
         
-        //print("imgURL..... \(imgURL)")
-        
         alertZoomImgPopup.frame = CGRect.init(x: 0, y: 0, width: window.bounds.size.width, height: window.bounds.size.height)
         
-        
-        alertZoomImgPopup.imgView.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage.init(named: "AppIcon"), options: .scaleDownLargeImages, completed: nil)
+        //print("###### image with placeholder ###### imgURL = \(imgURL)")
+        alertZoomImgPopup.imgView.sd_setImage(with: URL(string: imgURL), placeholderImage: UIImage.init(named: "AppIconLogo"), options: .scaleDownLargeImages, completed: nil)
         alertZoomImgPopup.backBtn.addTarget(self, action: #selector(btnCloseAction(_:)), for: .touchUpInside)
         
         window.rootViewController?.view.addSubview(alertZoomImgPopup)
