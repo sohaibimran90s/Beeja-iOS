@@ -60,7 +60,7 @@ public enum EFLabelCountingMethod: Int, EFLabelCounter {
             }
         case .easeInBounce:
             if t < 4.0 / 11.0 {
-                return 1.0 - (pow(11.0 / 4.0, 2) * pow(t, 2)) - t
+                return 1.0 - (pow(11.0 / 4.0, 2) * pow(t - 0.0 / 1, 2)) - t
             } else if t < 8.0 / 11.0 {
                 return 1.0 - (3.0 / 4.0 + pow(11.0 / 4.0, 2) * pow(t - 6.0 / 11.0, 2)) - t
             } else if t < 10.0 / 11.0 {
@@ -69,7 +69,7 @@ public enum EFLabelCountingMethod: Int, EFLabelCounter {
             return 1.0 - (63.0 / 64.0 + pow(11.0 / 4.0, 2) * pow(t - 21.0 / 22.0, 2)) - t
         case .easeOutBounce:
             if t < 4.0 / 11.0 {
-                return pow(11.0 / 4.0, 2) * pow(t, 2)
+                return pow(11.0 / 4.0, 2) * pow(t - 0.0 / 1, 2)
             } else if t < 8.0 / 11.0 {
                 return 3.0 / 4.0 + pow(11.0 / 4.0, 2) * pow(t - 6.0 / 11.0, 2)
             } else if t < 10.0 / 11.0 {
