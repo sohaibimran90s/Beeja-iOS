@@ -142,12 +142,7 @@ class AddJournalVC: WWMBaseViewController {
             self.dismiss(animated: false, completion: nil)
         }
         else {
-            //self.navigationController?.popViewController(animated: true)
-            self.appPreference.setSessionAvailableData(value: true)
-            self.meditationHistoryListAPI()
-            WWMHelperClass.complete_percentage = "0"
-            self.navigationController?.isNavigationBarHidden = true
-            self.navigateToDashboard()
+            self.completeMeditationAPI()
         }
     }
     
@@ -671,8 +666,8 @@ class AddJournalVC: WWMBaseViewController {
         WWMHelperClass.saveDb()
     }
     //----------------
-    /*
-    func completeMeditationAPI(title: String, desc: String) {
+    
+    func completeMeditationAPI() {
         
         let nintyFivePercentDB = WWMHelperClass.fetchDB(dbName: "DBNintyFiveCompletionData") as! [DBNintyFiveCompletionData]
         if nintyFivePercentDB.count > 0{
@@ -694,7 +689,7 @@ class AddJournalVC: WWMBaseViewController {
             "user_id":self.appPreference.getUserID(),
             "meditation_type":mediCompleteObj.type,
             "date_time":"\(Int(Date().timeIntervalSince1970*1000))",
-            "tell_us_why":desc,
+            "tell_us_why":"",
             "prep_time":mediCompleteObj.prepTime,
             "meditation_time":mediCompleteObj.meditationTime,
             "rest_time":mediCompleteObj.restTime,
@@ -703,7 +698,7 @@ class AddJournalVC: WWMBaseViewController {
             "mood_id": Int(self.appPreference.getMoodId()) ?? 0,
             "complete_percentage": WWMHelperClass.complete_percentage,
             "is_complete": "1",
-            "title": title,
+            "title": "",
             "journal_type": "",
             "challenge_day_id":WWMHelperClass.day_30_name,
             "challenge_type":WWMHelperClass.day_type
@@ -726,7 +721,7 @@ class AddJournalVC: WWMBaseViewController {
             }
         }
     }
-     */
+     
     
     func saveToDB(param:[String:Any]) {
         let meditationDB = WWMHelperClass.fetchEntity(dbName: "DBMeditationComplete") as! DBMeditationComplete
